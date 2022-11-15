@@ -32,12 +32,13 @@
         //Warning Message
         $('#sa-warning').on('click', function () {
             swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this imaginary file!",
+                title: "Apakah anda yakin ?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonClass: 'btn-warning',
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: "Ya, hapus!",
+                CancelButtonText: "Ya!",
                 closeOnConfirm: false
             }, function () {
                 swal("Deleted!", "Your imaginary file has been deleted.", "success");
@@ -46,21 +47,24 @@
 
         //Parameter
         $('#sa-params').on('click', function () {
+            var hapus = $('#sa-params').attr('');            
             swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this imaginary file!",
+                title: "Apakah anda yakin?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan lagi!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel plx!",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Tidak, batalkan!",
                 closeOnConfirm: false,
                 closeOnCancel: false
             }, function (isConfirm) {
                 if (isConfirm) {
-                    swal("Deleted!", "Your imaginary file has been deleted.", "success");
+
+                    
+                    swal("Terhapus!", "Data berhasil dihapus.", "success");
                 } else {
-                    swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    swal("Dibatalkan", "Data batal dihapus", "error");
                 }
             });
         });

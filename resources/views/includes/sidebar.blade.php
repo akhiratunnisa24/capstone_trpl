@@ -9,12 +9,10 @@
                         <div class="user-info">
                             <div class="dropdown">
                                 <br>
-                                <a class="text-info panel-title">Kenny Rigdon</a>
-                                
+                                <a class="text-info panel-title">Kenny Rigdon</a>                                
                             </div>
-
-                            
                         </div>
+                        
                     </div>
                     <!--- Divider -->
                     <div id="sidebar-menu">
@@ -23,7 +21,7 @@
                                 <a href="/" class="waves-effect"><i class="ti-home"></i><span> Dashboard </span></a>
                             </li>
                             <li>
-                                <a href="{{ route('pegawai.index') }}" class="waves-effect"><i class="mdi mdi-account-multiple"></i><span>Data Karyawan</span></a>
+                                <a href="{{ route('karyawan.index') }}" class="waves-effect"><i class="mdi mdi-account-multiple"></i><span>Data Karyawan</span></a>
                             </li>
                             <li>
                                 <a href="#" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>Absensi</span></a>

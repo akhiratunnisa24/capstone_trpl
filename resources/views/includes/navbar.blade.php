@@ -8,8 +8,8 @@
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="text-center">
-                        <a href="index.html" class="logo"><img src="assets/images/logo_white_3.png" height="135" width="195"></a>
-                        <a href="index.html" class="logo-sm"><img src="assets/images/logo_sm2.png" height="36"></a>
+                        <a href="/" class="logo"><img src="assets/images/logo_white_3.png" height="135" width="195"></a>
+                        <a href="/" class="logo-sm"><img src="assets/images/logo_sm2.png" height="36"></a>
                     </div>
                 </div>
                 <!-- Button mobile view to collapse sidebar menu -->
@@ -17,7 +17,7 @@
                     <div class="container">
                         <div class="">
                             <div class="pull-left">
-                                <button type="button" class="button-menu-mobile open-left waves-effect waves-light">
+                                <button type="button" class="button-menu-mobile open-left  waves-light">
                                     <i class="ion-navicon"></i>
                                 </button>
                                 <span class="clearfix"></span>
