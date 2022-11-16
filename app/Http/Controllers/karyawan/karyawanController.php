@@ -30,10 +30,13 @@ class karyawanController extends Controller
     }
 
   
-    public function show()
+    public function show($id)
     {
-        //
-    }
+        $karyawan = karyawan::find($id);
+        return view ('karyawan.show',[
+            'karyawan' => $karyawan,
+        ]);
+    }    
 
 
     public function edit()
@@ -48,14 +51,17 @@ class karyawanController extends Controller
       
         $karyawan->nik = $request->nik;
         $karyawan->nama = $request->nama;
+        $karyawan->tgllahir = $request->tgllahir;
         $karyawan->email = $request->email;
         $karyawan->jenis_kelamin = $request->jenis_kelamin;
         $karyawan->alamat = $request->alamat;
+        $karyawan->no_hp = $request->no_hp;
+        $karyawan->status_karyawan = $request->status_karyawan;
+        $karyawan->tipe_karyawan = $request->tipe_karyawan;
         $karyawan->tglmasuk = $request->tglmasuk;
         $karyawan->tglkeluar = $request->tglkeluar;
 
         $karyawan->save();  
-        
         return redirect('karyawan');
     }
 
