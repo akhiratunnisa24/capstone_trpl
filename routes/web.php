@@ -32,3 +32,4 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 
 });
     Route::get('karyawanshow{id}', [karyawanController::class, 'show'])->name('show');
+    Route::get('karyawanedit{id}', [karyawanController::class, 'edit'])->name('edit');

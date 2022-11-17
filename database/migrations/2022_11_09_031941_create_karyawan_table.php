@@ -34,10 +34,10 @@ return new class extends Migration
             $table->integer('cuti_tahunan')->nullable();
             $table->string('divisi')->nullable();
             $table->number('no_rek');
-            $table->number('no_bpjs_kes');
-            $table->number('no_npwp');
-            $table->number('no_bpjs_ket');
-            $table->string('kontrak');
+            $table->number('no_bpjs_kes')->nullable();
+            $table->number('no_npwp')->nullable();
+            $table->number('no_bpjs_ket')->nullable();
+            $table->string('kontrak')->nullable();
             $table->string('jabatan');
             $table->string('gaji');
 

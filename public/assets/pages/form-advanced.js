@@ -40,6 +40,18 @@
             autoclose: true,
             todayHighlight: true
         });
+        jQuery('#datepicker-autoclose5').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        jQuery('#datepicker-autoclose6').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        jQuery('#datepicker-autoclose7').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
         jQuery('#datepicker-inline').datepicker();
         jQuery('#datepicker-multiple-date').datepicker({
             format: "mm/dd/yyyy",

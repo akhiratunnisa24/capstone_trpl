@@ -39,9 +39,13 @@ class karyawanController extends Controller
     }    
 
 
-    public function edit()
+    public function edit($id)
     {
-        //
+        $karyawan = karyawan::findOrFail($id);
+
+        return view('karyawan.edit')->with([
+            'karyawan' => $karyawan,
+        ]);
     }
 
 
@@ -49,7 +53,9 @@ class karyawanController extends Controller
     {
         $karyawan = karyawan::find($id);
       
+        $karyawan->nip = $request->nip;
         $karyawan->nik = $request->nik;
+        $karyawan->no_kk = $request->no_kk;
         $karyawan->nama = $request->nama;
         $karyawan->tgllahir = $request->tgllahir;
         $karyawan->email = $request->email;
@@ -57,9 +63,18 @@ class karyawanController extends Controller
         $karyawan->alamat = $request->alamat;
         $karyawan->no_hp = $request->no_hp;
         $karyawan->status_karyawan = $request->status_karyawan;
+        $karyawan->status_kerja = $request->status_kerja;
         $karyawan->tipe_karyawan = $request->tipe_karyawan;
         $karyawan->tglmasuk = $request->tglmasuk;
+        $karyawan->no_npwp = $request->no_npwp;
+        $karyawan->divisi = $request->divisi;
+        $karyawan->no_rek = $request->no_rek;
+        $karyawan->no_bpjs_kes = $request->no_bpjs_kes;
+        $karyawan->no_bpjs_ket = $request->no_bpjs_ket;
+        $karyawan->kontrak = $request->kontrak;
         $karyawan->tglkeluar = $request->tglkeluar;
+        $karyawan->jabatan = $request->jabatan;
+        $karyawan->gaji = $request->gaji;
 
         $karyawan->save();  
         return redirect('karyawan');

@@ -118,14 +118,14 @@
                 <table class="table table-bordered table-striped">
                     <tbody>
                         <tr style="background-color: #2B323A; color: #FFFFFF">
-                            <td><label  class="text-bold">NIP : {{$karyawan->nik}}</label></td>
+                            <td><label  class="text-bold">NIP : {{$karyawan->nip}}</label></td>
                             <td><span  class="text-bold" ></span></td>
                             <td></td>
                             <td><label for="name" class="text-bold">Nama Lengkap : {{$karyawan->nama}}</label></td>
                             <td><span id="name" class="text-bold"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="dob">Tanggal Lahir: </label></td>
+                            <td><label for="dob">Tanggal Lahir: {{$karyawan->tgllahir}} </label></td>
                             <td><span id="dob"></span></td>
                             <td rowspan="13"></td>        
                             <td rowspan="4" colspan="2" class="text-center">
@@ -133,63 +133,63 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><label for="phone_number">Nomor Handphone: </label></td>
+                            <td><label for="phone_number">Nomor Handphone: {{$karyawan->no_hp}} </label></td>
                             <td><span id="phone_number"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="ktp_number">No. KTP: </label></td>
+                            <td><label for="ktp_number">No. KTP: {{$karyawan->nik}}</label></td>
                             <td><span id="ktp_number"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="kk_number">No. KK: </label></td>
+                            <td><label for="kk_number">No. KK: {{$karyawan->no_kk}}</label></td>
                             <td><span id="kk_number"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="gender">Jenis Kelamin: </label></td>
+                            <td><label for="gender">Jenis Kelamin: {{$karyawan->jenis_kelamin}}</label></td>
                             <td><span id="gender"></span></td>
-                            <td><label for="email">Email: </label></td>
+                            <td><label for="email">Email: {{$karyawan->email}}</label></td>
                             <td><span id="email"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="employee_status">Status Staff: </label></td>
+                            <td><label for="employee_status">Status Karyawan: {{$karyawan->status_karyawan}}</label></td>
                             <td><span id="employee_status"></span></td>
-                            <td><label for="contract_duration">Durasi Kontrak: </label></td>
+                            <td><label for="contract_duration">Durasi Kontrak: {{$karyawan->kontrak}}</label></td>
                             <td><span id="contract_duration"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="status">Status Kerja: </label></td>
+                            <td><label for="status">Status Kerja: {{$karyawan->status_kerja}} </label></td>
                             <td><span id="status"></span></td>
-                            <td><label for="employee_type">Tipe Staff: </label></td>
+                            <td><label for="employee_type">Tipe Karyawan: {{$karyawan->tipe_karyawan}}</label></td>
                             <td><span id="employee_type"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="start_work_date">Tanggal Mulai Bekerja: </label></td>
+                            <td><label for="start_work_date">Tanggal Mulai Bekerja: {{$karyawan->tglmasuk}}</label></td>
                             <td><span id="start_work_date"></span></td>
-                            <td><label for="end_work_date">Tanggal Akhir Bekerja: </label></td>
+                            <td><label for="end_work_date">Tanggal Akhir Bekerja: {{$karyawan->tglkeluar}}</label></td>
                             <td><span id="end_work_date"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="npwp_number">No. NPWP </label></td>
+                            <td><label for="npwp_number">No. NPWP {{$karyawan->no_npwp}}</label></td>
                             <td><span id="npwp_number"></span></td>
-                            <td><label for="role_name">Hak Akses: </label></td>
+                            <td><label for="role_name">Alamat: {{$karyawan->alamat}}</label></td>
                             <td><span id="role_name"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="division_name">Divisi: </label></td>
+                            <td><label for="division_name">Divisi: {{$karyawan->divisi}}</label></td>
                             <td><span id="division_name"></span></td>
-                            <td><label for="position_name">Jabatan: </label></td>
+                            <td><label for="position_name">Jabatan: {{$karyawan->jabatan}}</label></td>
                             <td><span id="position_name"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="cc_number">No. Rekening: </label></td>
+                            <td><label for="cc_number">No. Rekening: {{$karyawan->no_rek}}</label></td>
                             <td><span id="cc_number"></span></td>
-                            <td><label for="salary">Gaji Pokok: </label></td>
+                            <td><label for="salary">Gaji Pokok: Rp. {{($karyawan->gaji) }}</label></td>
                             <td><span id="salary"></span></td>
                         </tr>
                         <tr>
-                            <td><label for="bpjskes_number">No. BPJS Kesehatan: </label></td>
+                            <td><label for="bpjskes_number">No. BPJS Kesehatan: {{$karyawan->no_bpjs_kes}}</label></td>
                             <td><span id="bpjskes_number"></span></td>
-                            <td><label for="bpjsket_number">No. BPJS Ketenagakerjaan: </label></td>
+                            <td><label for="bpjsket_number">No. BPJS Ketenagakerjaan: {{$karyawan->no_bpjs_ket}}</label></td>
                             <td><span id="bpjsket_number"></span></td>
                         </tr>
                       
@@ -199,13 +199,15 @@
             </div>
             <div class="modal-footer">
                 
-                    <a href="#" type="button" class="btn btn-sm btn-primary " data-toggle="modal" data-target="#myModal">Edit Karyawan</a>
+                    <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a>
                     
-                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Kembali</button>
+                    
+                <a href="karyawan"  class="btn btn-sm btn-danger">Kembali</a>
             </div>
         </div>
     </div>
 </div>
+
 
 
 @endsection

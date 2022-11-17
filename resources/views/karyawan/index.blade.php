@@ -45,17 +45,14 @@
                             <thead >
                                 <tr>
                                     <th>No</th>
-                                    <th>NIK</th>
                                     <th>Nama</th>
                                     <th>Tanggal Lahir</th>
-                                    <th>Email</th>
-                                    <th>Jenis Kelamin</th>
+                                    <th>L / P</th>
                                     <th>Alamat</th>
                                     <th>No. Handphone</th>
                                     <th>Status Karyawan</th>
                                     <th>Tipe Karyawan</th>
                                     <th>Tanggal Masuk</th>
-                                    <th>Tanggal Keluar</th>
                                     <th>Action</th>
 
                                     <?php $no = 1 ?>
@@ -67,17 +64,14 @@
                                 @foreach ($karyawan as $k)
                                 <tr>
                                     <td>{{$no++}}</td>
-                                    <td>{{$k->nik}}</td>
                                     <td>{{$k->nama}}</td>
                                     <td>{{$k->tgllahir}}</td>
-                                    <td>{{$k->email}}</td>
                                     <td>{{$k->jenis_kelamin}}</td>
                                     <td>{{$k->alamat}}</td>
                                     <td>{{$k->no_hp}}</td>
                                     <td>{{$k->status_karyawan}}</td>
                                     <td>{{$k->tipe_karyawan}}</td>
                                     <td>{{$k->tglmasuk}}</td>
-                                    <td>{{$k->tglkeluar}}</td>
                                     <td>
 
 
@@ -87,11 +81,7 @@
 
                                             <a href="karyawanshow{{$k->id}}" class="btn btn-info btn-sm">
                                             <!-- <a href="{{url('/karyawanshow'.$k->id)}}" class="btn btn-info btn-sm"> -->
-                                                <i class="fa fa-eye"></i>
-
-                                                <a class="btn btn-success btn-sm" href="#" type="button" data-toggle="modal" data-target="#myModal2{{ $k->id }}">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
+                                            <i class="fa fa-eye"></i></a>
 
                                                 @csrf
                                                 @method ('delete')
