@@ -14,20 +14,16 @@
 
             <div class="modal-body">
 
-                <form action="/karyawan/store" method="POST">
+                <form action="/karyawan/store" method="POST" enctype="multipart/form-data">
 
                     @csrf
 
-                    <div class="row">
-                            <div class="col-md-12">
-                                <div class="m-b-30">
-                                <label for="exampleInputEmail1" class="form-label" >Pilih Foto</label>
-                                      <div class="fallback">
-                                        <input name="foto" type="file" multiple="multiple">
-                                      </div>
-                                </div>
-                            </div>
-                        </div>
+                    
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Pilih Foto Karyawan</label>
+                        <input type="file" name="foto" class="form-control" id="foto" accept="image/*" >
+                    </div>
+
 
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">NIP</label>

@@ -25,19 +25,17 @@ class karyawanController extends Controller
 
     public function store(Request $request)
     {
+        $data = $request->all();
+        $data['foto'] = $request->file('foto')->store(
+            'assets/product', 'public'
+        );
+        
+
         Karyawan::create($request->except(['_token', 'submit']));      
         return redirect('karyawan');
     }
 
-  
-    public function show($id)
-    {
-        $karyawan = karyawan::find($id);
-        return view ('karyawan.show',[
-            'karyawan' => $karyawan,
-        ]);
-    }    
-
+   
 
     public function edit($id)
     {

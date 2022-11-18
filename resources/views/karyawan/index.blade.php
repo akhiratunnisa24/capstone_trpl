@@ -49,7 +49,6 @@
                                     <th>Tanggal Lahir</th>
                                     <th>L / P</th>
                                     <th>Alamat</th>
-                                    <th>No. Handphone</th>
                                     <th>Status Karyawan</th>
                                     <th>Tipe Karyawan</th>
                                     <th>Tanggal Masuk</th>
@@ -68,7 +67,6 @@
                                     <td>{{$k->tgllahir}}</td>
                                     <td>{{$k->jenis_kelamin}}</td>
                                     <td>{{$k->alamat}}</td>
-                                    <td>{{$k->no_hp}}</td>
                                     <td>{{$k->status_karyawan}}</td>
                                     <td>{{$k->tipe_karyawan}}</td>
                                     <td>{{$k->tglmasuk}}</td>
