@@ -45,6 +45,40 @@
             });
         });
 
+        //Warning Message
+      
+    $('#sa-warning3').on('click', '.hapus_karyawan', function () {
+        var id_edit = $(this).attr('data-id');
+        swal.fire({
+            title: "Apakah anda yakin ?",
+            text: "Data yang sudah terhapus tidak dapat dikembalikan kembali",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "Ya, hapus!",
+            CancelButtonText: "Ya!",
+            closeOnConfirm: false
+        }, 
+        function (isConfirm) {
+            if (isConfirm){
+                
+                alert("tes")
+                location.href = '<? php echo "http://localhost:8000/karyawan/destroy/" ?>' + id_edit;
+                swal.fire({
+                    title : "Deleted!",
+                    text: "Your imaginary file has been deleted.",
+                    type: "success",
+                    confirmButtonColor: '#3085d6',
+                });
+            }else{
+
+            }
+            swal("Deleted!", "Your imaginary file has been deleted.", "success");
+        });
+    });
+       
+
         //Parameter
         $('#sa-params').on('click', function () {
             var hapus = $('#sa-params').attr('');            

@@ -20,8 +20,9 @@
 
                     
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Pilih Foto Karyawan</label>
-                        <input type="file" name="foto" class="form-control" id="foto" accept="image/*" >
+                        <label for="exampleInputEmail1" class="form-label col-sm-4" >Pilih Foto Karyawan</label>
+                        <img class="img-preview img-fluid mb-3 col-sm-4">
+                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()">
                     </div>
 
 
@@ -157,6 +158,7 @@
                         <label for="exampleInputEmail1" class="form-label">Alamat</label>
                         <textarea class="form-control" name="alamat" rows="10"></textarea><br>
                     </div>
+                   
 
         
                     <div class="modal-footer">
@@ -164,12 +166,16 @@
                         <button type="submit" name="submit" value="save" class="btn btn-primary waves-effect waves-light">Save changes</button>
                     </div>
 
+                    
+
                     <!-- <div class="alert alert-success">
                         Data berhasil disimpan <a href="#" class="alert-link"></a>.
                     </div> -->
 
 
                 </form>
+
+                
             </div>
 
         </div>
@@ -202,6 +208,37 @@ function formatRupiah(angka, prefix){
     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
     return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
 }
+
+function previewImage(){
+
+    const image = document.querySelector('#foto');
+    const imgPreview =document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+
+    const oFReader = new FileReader();
+    oFReader.readAsDataURL(image.files[0]);
+
+    oFReader.onload = function(oFREvent){
+        imgPreview.src = oFREvent.target.result;
+    }
+}
+
+function save_karyawan()
+Swal.fire({
+  title: 'Do you want to save the changes?',
+  showDenyButton: true,
+  showCancelButton: true,
+  confirmButtonText: 'Save',
+  denyButtonText: `Don't save`,
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    Swal.fire('Saved!', '', 'success')
+  } else if (result.isDenied) {
+    Swal.fire('Changes are not saved', '', 'info')
+  }
+})
 </script>
 
 <!-- jQuery  -->

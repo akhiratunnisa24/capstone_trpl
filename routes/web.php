@@ -28,8 +28,9 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('/', [karyawanController::class, 'index'])->name('index');
     Route::post('/store', [karyawanController::class, 'store'])->name('store');
     Route::put('/update/{id}', [karyawanController::class, 'update'])->name('update'); 
-    Route::delete('/destroy/{id}', [karyawanController::class, 'destroy']) ->name('destroy');
+    Route::get('/destroy/{id}', [karyawanController::class, 'destroy']) ->name('destroy');
 
 });
     Route::get('karyawanshow{id}', [karyawanController::class, 'show'])->name('show');
     Route::get('karyawanedit{id}', [karyawanController::class, 'edit'])->name('edit');
+    Route::put('karyawanupdate{id}', [karyawanController::class, 'update'])->name('update'); 

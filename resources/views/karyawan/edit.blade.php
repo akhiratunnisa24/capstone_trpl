@@ -32,7 +32,7 @@
                    
                     </div>
 
-                    <form action="karyawan/update/{{$karyawan->id}}" method="POST">
+                    <form action="karyawanupdate{{$karyawan->id}}" method="POST" enctype="multipart/form-data">
 
                     @csrf
                     @method('put')
@@ -57,14 +57,19 @@
                         </tr>
                        
                         <tr>
+
                             <td><label for="dob">Tanggal Lahir </label>
                             <div>
                             <input id="datepicker-autoclose5" class="form-control" name="tgllahir" value="{{$karyawan->tgllahir}}"></td>
                             <td><span id="dob"></span></td>
+
                             <td rowspan="13"></td>
                             <td rowspan="4" colspan="2" class="text-center">
-                                <img id="img-modal" src="" alt="Tidak ada foto profil." style="width:128px;">
+                                <img  class="img-preview img-fluid mb-3 col-sm-5" src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="Tidak ada foto profil." style="width:185px; ">
+                                <label >Pilih Foto Karyawan</label>
+                                <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()" >
                             </td>
+
                         </tr>
 
                         <tr>
@@ -221,6 +226,23 @@ function formatRupiah(angka, prefix){
     rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
     return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
 }
+
+function previewImage(){
+
+const image = document.querySelector('#foto');
+const imgPreview =document.querySelector('.img-preview');
+
+    imgPreview.style.display = 'block';
+
+const oFReader = new FileReader();
+oFReader.readAsDataURL(image.files[0]);
+
+oFReader.onload = function(oFREvent){
+    imgPreview.src = oFREvent.target.result;
+}
+}
+
+
 </script>
 
 

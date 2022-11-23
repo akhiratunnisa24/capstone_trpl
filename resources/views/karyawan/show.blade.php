@@ -129,7 +129,7 @@
                             <td><span id="dob"></span></td>
                             <td rowspan="13"></td>        
                             <td rowspan="4" colspan="2" class="text-center">
-                                <img id="img-modal" src="{{ url($karyawan->foto)}}" alt="Tidak ada foto profil." style="width:128px;">
+                                <img  src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="" style="width:128px;">
                             </td>
                         </tr>
                         <tr>

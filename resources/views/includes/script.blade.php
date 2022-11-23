@@ -44,4 +44,14 @@
 
         <script src="assets/js/app.js"></script>
 
-<!-- date picker -->
+        <!-- date picker -->
+   
+
+        <!-- Sweet-Alert  -->
+        <script src="assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+        <script src="assets/pages/sweet-alert.init.js"></script>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
