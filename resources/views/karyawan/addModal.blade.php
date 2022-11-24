@@ -92,7 +92,7 @@
 
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">No. NPWP</label>
-                        <input type="text" name="no_npwp" class="form-control" id="no_npwp" placeholder="Masukkan No NPWP">
+                        <input type="number" name="no_npwp" class="form-control" id="no_npwp" placeholder="Masukkan No NPWP">
                     </div>
 
                     <div class="mb-3">
@@ -224,21 +224,6 @@ function previewImage(){
     }
 }
 
-function save_karyawan()
-Swal.fire({
-  title: 'Do you want to save the changes?',
-  showDenyButton: true,
-  showCancelButton: true,
-  confirmButtonText: 'Save',
-  denyButtonText: `Don't save`,
-}).then((result) => {
-  /* Read more about isConfirmed, isDenied below */
-  if (result.isConfirmed) {
-    Swal.fire('Saved!', '', 'success')
-  } else if (result.isDenied) {
-    Swal.fire('Changes are not saved', '', 'info')
-  }
-})
 </script>
 
 <!-- jQuery  -->

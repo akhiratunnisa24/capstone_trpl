@@ -26,6 +26,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('da
 Route::prefix('/karyawan')->name('karyawan.')->group(function () {
         
     Route::get('/', [karyawanController::class, 'index'])->name('index');
+    
     Route::post('/store', [karyawanController::class, 'store'])->name('store');
     Route::put('/update/{id}', [karyawanController::class, 'update'])->name('update'); 
     Route::get('/destroy/{id}', [karyawanController::class, 'destroy']) ->name('destroy');
@@ -33,4 +34,6 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 });
     Route::get('karyawanshow{id}', [karyawanController::class, 'show'])->name('show');
     Route::get('karyawanedit{id}', [karyawanController::class, 'edit'])->name('edit');
-    Route::put('karyawanupdate{id}', [karyawanController::class, 'update'])->name('update'); 
+    Route::put('karyawanupdate{id}', [karyawanController::class, 'update'])->name('update');
+    Route::get('karyawancreate', [karyawanController::class, 'create'])->name('create');
+    

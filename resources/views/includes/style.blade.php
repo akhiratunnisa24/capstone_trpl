@@ -20,6 +20,9 @@
 
       <!-- Sweet Alert -->
       <link href="assets/plugins/bootstrap-sweetalert/sweet-alert.css" rel="stylesheet" type="text/css">
+      
+         <!-- Sweet-Alert  -->
+         
 
 
 

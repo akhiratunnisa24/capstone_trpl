@@ -14,16 +14,10 @@
 
         <script src="assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
 
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="sweetalert2.all.min.js"></script>
+      
 
         <!-- Datatables-->
-     
-
         <script src="assets/pages/dashborad.js"></script>
-
-        
-        <!-- Datatables-->
         <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
         <script src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
         <script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
