@@ -16,30 +16,32 @@ return new class extends Migration
         Schema::create('karyawan', function (Blueprint $table) {
             $table->id();
 
-            $table->number('nip');
+            $table->integer('nip')->nullable();
 
-            $table->number('nik');
+            $table->integer('nik')->nullable();
             
-            $table->string('nama');            
-            $table->string('tgllahir');            
+            $table->string('nama')->nullable();
+            $table->string('tgllahir')->nullable();           
             $table->string('email')->unique();         
+            $table->string('agama')->nullable(); 
+            $table->enum('gol_darah ',['A','B','AB','O'])->nullable();   
             $table->enum('jenis_kelamin',['L','P']);
-            $table->text('alamat');
-            $table->text('no_hp');
+            $table->text('alamat')->nullable();
+            $table->text('no_hp')->nullable();
             $table->enum('status_karyawan',['Tetap','Kontrak','Probation']);
             $table->enum('tipe_karyawan',['Fulltime','Freelance','Magang']);
 
-            $table->number('no_kk');
+            $table->integer('no_kk');
             $table->enum('status_kerja',['Aktif','Non-Aktif']);
             $table->integer('cuti_tahunan')->nullable();
             $table->string('divisi')->nullable();
-            $table->number('no_rek');
-            $table->number('no_bpjs_kes')->nullable();
-            $table->number('no_npwp')->nullable();
-            $table->number('no_bpjs_ket')->nullable();
+            $table->integer('no_rek');
+            $table->integer('no_bpjs_kes')->nullable();
+            $table->integer('no_npwp')->nullable();
+            $table->integer('no_bpjs_ket')->nullable();
             $table->string('kontrak')->nullable();
-            $table->string('jabatan');
-            $table->string('gaji');
+            $table->string('jabatan')->nullable();
+            $table->string('gaji')->nullable();
 
 
             $table->date('tglmasuk');

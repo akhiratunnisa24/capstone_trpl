@@ -30,7 +30,12 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading  col-sm-15 m-b-10">
-                        <a href="karyawancreate" type="button" class="btn btn-sm btn-dark " >Tambah Karyawan</a>
+
+                        <a href="karyawancreate" type="button" class="btn btn-sm btn-dark " >Tambah Karyawan Page</a>
+                        
+                        <a type="button" class="btn btn-sm btn-dark " data-toggle="modal" data-target="#myModal" >Tambah Karyawan</a>
+                        
+                        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_menu">Add Staff</button> -->
                     </div>
                     @include('karyawan.addModal')
                     <div class="panel-body">
@@ -74,7 +79,7 @@
                                                     <i class="fa fa-trash"></i>
                                             </button>
                                             
-                                                    <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button>
+                                                    <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
                                                 
                                     </td>               
                     </div>

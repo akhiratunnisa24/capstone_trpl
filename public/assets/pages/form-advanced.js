@@ -52,6 +52,40 @@
             autoclose: true,
             todayHighlight: true
         });
+        jQuery('#datepicker-autoclose8').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        jQuery('#datepicker-autoclose9').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        jQuery('#datepicker-autoclose10').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        jQuery('#datepicker-autoclose11').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        
+        jQuery('#datepicker-autoclose12').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        
+        jQuery('#datepicker-autoclose13').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        jQuery('#datepicker-autoclose14').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        jQuery('#datepicker-autoclose15').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
         jQuery('#datepicker-inline').datepicker();
         jQuery('#datepicker-multiple-date').datepicker({
             format: "mm/dd/yyyy",

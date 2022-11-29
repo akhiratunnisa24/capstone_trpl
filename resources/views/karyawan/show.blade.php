@@ -19,192 +19,240 @@
         </div>
     </div>
 </div>
-<!-- Close Header -->
-
-<!-- 
-                    <form action="karyawan/update/{{$karyawan->id}}" method="POST">
-
-                    @csrf
-                    @method('put')
-
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">NIK</label>
-                        <input type="text" class="form-control" name="nik" id="nik" value="{{$karyawan->nik}}">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Nama</label>
-                        <input type="text" name="nama" class="form-control" id="exampleInputEmail1"  value="{{$karyawan->nama}}">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
-                        <input id="datepicker-autoclose4" class="form-control" name="tgllahir" rows="10" value="{{$karyawan->tgllahir}}"></input>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email</label>
-                        <input type="text" name="email" class="form-control" id="exampleInputEmail1"  value="{{$karyawan->email}}">
-                    </div>
-                    <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
-                    <select class="form-control" name="jenis_kelamin" required>
-                        <option value="">Pilih Jenis Kelamin</option>
-                        <option value="L">Laki-Laki</option>
-                        <option value="P">Perempuan</option>
-                    </select>
-
-
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                        <textarea class="form-control" name="alamat" rows="10">{{$karyawan->alamat}}</textarea><br>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
-                        <input type="text" class="form-control" name="no_hp" id="no_hp" value="{{$karyawan->no_hp}}">
-                    </div>
-
-                    <label for="exampleInputEmail1" class="form-label">Status Karyawan</label>
-                    <select class="form-control" name="status_karyawan" required>
-                        <option value="">Pilih Status Karyawan</option>
-                        <option value="Tetap">Tetap</option>
-                        <option value="Kontrak">Kontrak</option>
-                        <option value="Probation">Probation</option>
-                    </select>
-
-                   
-                    <label for="exampleInputEmail1" class="form-label">Tipe Karyawan</label>
-                    <select class="form-control" name="tipe_karyawan" required>
-                        <option value="">Pilih Tipe Karyawan</option>
-                        <option value="Fulltime">Fulltime</option>
-                        <option value="Freelance">Freelance</option>
-                        <option value="Magang">Magang</option>
-                    </select>
-
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Tanggal Masuk</label>
-                        <input id="datepicker-autoclose2" class="form-control" name="tglmasuk" rows="10" value="{{$karyawan->tglmasuk}}"></input><br>
-                    </div>
-
-                    <div class="mb-3">                        
-                        <input type="hidden" class="form-control" name="tglkeluar" rows="10" value="{{$karyawan->tglkeluar}}" id="datepicker-autoclose2" disabled></input><br>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                        <button type="submit" name="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div> -->
-
 
 
 
 <div class="panel panel-primary">
-                    <div class=" col-sm-0 m-b-0">
-                   
-                    </div>
+    <div class=" col-sm-0 m-b-0">
 
-                    <form action="karyawan/update/{{$karyawan->id}}" method="POST">
+    </div>
 
-                    @csrf
-                    @method('put')
-                    
-            <div class="modal-body">
-                <table class="table table-bordered table-striped">
-                    <tbody>
-                        <tr style="background-color: #2B323A; color: #FFFFFF">
-                            <td><label  class="text-bold">NIP : {{$karyawan->nip}}</label></td>
-                            <td><span  class="text-bold" ></span></td>
-                            <td></td>
-                            <td><label for="name" class="text-bold">Nama Lengkap : {{$karyawan->nama}}</label></td>
-                            <td><span id="name" class="text-bold"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="dob">Tanggal Lahir: {{$karyawan->tgllahir}} </label></td>
-                            <td><span id="dob"></span></td>
-                            <td rowspan="13"></td>        
-                            <td rowspan="4" colspan="2" class="text-center">
-                                <img  src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="" style="width:128px;">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label for="phone_number">Nomor Handphone: {{$karyawan->no_hp}} </label></td>
-                            <td><span id="phone_number"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="ktp_number">No. KTP: {{$karyawan->nik}}</label></td>
-                            <td><span id="ktp_number"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="kk_number">No. KK: {{$karyawan->no_kk}}</label></td>
-                            <td><span id="kk_number"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="gender">Jenis Kelamin: {{$karyawan->jenis_kelamin}}</label></td>
-                            <td><span id="gender"></span></td>
-                            <td><label for="email">Email: {{$karyawan->email}}</label></td>
-                            <td><span id="email"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="employee_status">Status Karyawan: {{$karyawan->status_karyawan}}</label></td>
-                            <td><span id="employee_status"></span></td>
-                            <td><label for="contract_duration">Durasi Kontrak: {{$karyawan->kontrak}}</label></td>
-                            <td><span id="contract_duration"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="status">Status Kerja: {{$karyawan->status_kerja}} </label></td>
-                            <td><span id="status"></span></td>
-                            <td><label for="employee_type">Tipe Karyawan: {{$karyawan->tipe_karyawan}}</label></td>
-                            <td><span id="employee_type"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="start_work_date">Tanggal Mulai Bekerja: {{$karyawan->tglmasuk}}</label></td>
-                            <td><span id="start_work_date"></span></td>
-                            <td><label for="end_work_date">Tanggal Akhir Bekerja: {{$karyawan->tglkeluar}}</label></td>
-                            <td><span id="end_work_date"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="npwp_number">No. NPWP {{$karyawan->no_npwp}}</label></td>
-                            <td><span id="npwp_number"></span></td>
-                            <td><label for="role_name">Alamat: {{$karyawan->alamat}}</label></td>
-                            <td><span id="role_name"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="division_name">Divisi: {{$karyawan->divisi}}</label></td>
-                            <td><span id="division_name"></span></td>
-                            <td><label for="position_name">Jabatan: {{$karyawan->jabatan}}</label></td>
-                            <td><span id="position_name"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="cc_number">No. Rekening: {{$karyawan->no_rek}}</label></td>
-                            <td><span id="cc_number"></span></td>
-                            <td><label for="salary">Gaji Pokok: Rp. {{($karyawan->gaji) }}</label></td>
-                            <td><span id="salary"></span></td>
-                        </tr>
-                        <tr>
-                            <td><label for="bpjskes_number">No. BPJS Kesehatan: {{$karyawan->no_bpjs_kes}}</label></td>
-                            <td><span id="bpjskes_number"></span></td>
-                            <td><label for="bpjsket_number">No. BPJS Ketenagakerjaan: {{$karyawan->no_bpjs_ket}}</label></td>
-                            <td><span id="bpjsket_number"></span></td>
-                        </tr>
-                      
-                        </form>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                
-                    <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a>
-                    
-                    
-                <a href="karyawan"  class="btn btn-sm btn-danger">Kembali</a>
-            </div>
+    <form action="karyawan/update/{{$karyawan->id}}" method="POST">
+
+        @csrf
+        @method('put')
+
+        <div class="modal-body">
+            <table class="table table-bordered table-striped">
+                <tbody class="col-sm-16">
+
+                    <tr>
+                        <td><span class="text-bold badge bg-dark ">A. IDENTITAS </span></td>
+                        <td><span class="text-bold"></span></td>
+                        <td></td>
+                        <td><label for="name" class="text-bold"></label></td>
+                        <td><span id="name" class="text-bold"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="dob">Nama Lengkap : {{$karyawan->nama}} </label></td>
+                        <td><span id="dob"></span></td>
+                        <td rowspan="33" colspan="0"></td>
+                        <td rowspan="5" colspan="2" class="text-center">
+                            <img src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="" style="width:128px;">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="phone_number">NIK : {{$karyawan->nik}} </label></td>
+                        <td><span id="phone_number"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="ktp_number">Tanggal Lahir : {{$karyawan->tgllahir}}</label></td>
+                        <td><span id="ktp_number"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="kk_number">Jenis Kelamin : {{$karyawan->jenis_kelamin}}</label></td>
+                        <td><span id="kk_number"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="email">Alamat : {{$karyawan->alamat}}</label></td>
+                        <td><span id="email"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="employee_status">Nomor Handphone : {{$karyawan->no_hp}}</label></td>
+                        <td><span id="employee_status"></span></td>
+                        <td><label for="contract_duration">NIP: {{$karyawan->nip}}</label></td>
+                        <td><span id="contract_duration"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="status">Golongan Darah : {{$karyawan->gol_darah}} </label></td>
+                        <td><span id="status"></span></td>
+                        <td><label for="employee_type">Status Karyawan : {{$karyawan->status_karyawan}}</label></td>
+                        <td><span id="employee_type"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="text-bold text-white badge bg-dark">B. KELUARGA</label></td>
+                        <td><span class="text-bold"></span></td>
+                        <td><label for="name" class="text-bold"></label></td>
+                        <td><span id="name" class="text-bold"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td><label class="text-white badge bg-dark">Data Istri / Suami *)</label></td>
+                        <td><span id="start_work_date"></span></td>
+                        <td><label class="text-white badge bg-dark">Data Anak *)</label></td>
+                        <td><span id="end_work_date"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="npwp_number">Status Pernikahan : </label></td>
+                        <td><span id="npwp_number"></span></td>
+                        <td><label for="role_name">Nama Anak :</label></td>
+                        <td><span id="role_name"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="division_name">Nama Pasangan : </label></td>
+                        <td><span id="division_name"></span></td>
+                        <td><label for="position_name">Tanggal Lahir : </label></td>
+                        <td><span id="position_name"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="cc_number">Tanggal Lahir : </label></td>
+                        <td><span id="cc_number"></span></td>
+                        <td><label for="salary">Pendidikan Terakhir : </label></td>
+                        <td><span id="salary"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Alamat : </label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number">Data Ayah dan Ibu *)</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Pendidikan Terakhir : </label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number">Nama Lengkap :</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="text-bold text-white badge bg-dark">C. RIWAYAT PENDIDIKAN</label></td>
+                        <td></td>
+                        <td><label for="bpjsket_number">Tanggal Lahir :</label></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><label class="text-white badge bg-dark">Pendidikan Formal</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number">Alamat :</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number"> Tingkat : </label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number">Pekerjaan :</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label>Nama Sekolah : </label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="end_work_date" class=" text-white badge bg-dark">Pendidikan Non Formal</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Kota : </label></td>
+                        <td><span id="start_work_date"></span></td>
+                        <td><label for="bpjsket_number">Bidang / Jenis :</label></td>
+                        <td><span id="end_work_date"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Tingkat :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number">Tempat / Kota :</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Jurusan :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number">Lulus Tahun :</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Lulus Tahun :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label class="text-bold text-white badge bg-dark">E. KONTAK DARURAT</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="text-bold text-white badge bg-dark">D. RIWAYAT PEKERJAAN</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number">Nama Lengkap :</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label >Nama Perusahaan :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number">Alamat :</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Alamat Perusahaan :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number">Nomor Handphone :</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Jenis Usaha :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number">Hubungan :</label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Jabatan :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number"></label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Nama Atasan Langsung :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number"></label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Nama Direktur :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number"></label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Lama Kerja :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number"></label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Alasan Berhenti :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number"></label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Gaji :</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number"></label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+
+
+
+            </table>
         </div>
+    </form>
+
+
+    <div class="modal-footer">
+
+        <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a>
+
+
+        <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
     </div>
 </div>
 

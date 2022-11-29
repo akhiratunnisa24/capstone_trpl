@@ -28,6 +28,7 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('/', [karyawanController::class, 'index'])->name('index');
     
     Route::post('/store', [karyawanController::class, 'store'])->name('store');
+    Route::post('/store_page', [karyawanController::class, 'store_page'])->name('store_page');
     Route::put('/update/{id}', [karyawanController::class, 'update'])->name('update'); 
     Route::get('/destroy/{id}', [karyawanController::class, 'destroy']) ->name('destroy');
 
