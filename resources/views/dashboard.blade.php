@@ -69,7 +69,19 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-lg-6">
+    <div class="panel panel-border panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Pengajuan Cuti dan Izin</h3>
+      </div>
+      <div class="panel-body">
+        <canvas id="lineChart" height="300"></canvas>
+      </div>
+    </div>
+  </div>
 
-</div>
-<!-- END wrapper -->
-@endsection
+  
+
+  <!-- END wrapper -->
+  @endsection

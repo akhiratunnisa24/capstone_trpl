@@ -25,7 +25,7 @@ class karyawanController extends Controller
         $output = [
             'row' => $row
         ];
-        return view('karyawan.index', $output, compact(['karyawan']));
+        return view('karyawan.index', compact(['karyawan','row']));
     }
     
     public function karyawanDashboard()

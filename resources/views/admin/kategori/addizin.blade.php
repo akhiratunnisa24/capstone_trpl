@@ -1,0 +1,27 @@
+  {{-- FORM TAMBAH KATEGORI IZIN--}}
+  <div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="smallModal">Tambah Kategori Izin</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{route ('izin.store')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('POST')
+                    <div class="form-group col-sm">
+                        <label for="jenis_izin" class="col-form-label">Kategori Baru</label>
+                        <input type="text" class="form-control" name="jenis_izin" id="jenis_izin" required>
+                    </div>
+        
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                        <button type="submit" name="submit" value="save" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div> 

@@ -48,6 +48,7 @@ Chartjs
         // run function - render chart at first load
         generateChart();
     },
+
     //init
     ChartJs.prototype.init = function() {
         //creating lineChart
@@ -91,6 +92,53 @@ Chartjs
         };
 
         this.respChart($("#lineChart"),'Line',lineChart, lineOpts);
+
+        
+         //init
+    ChartJs.prototype.init = function() {
+        //creating lineChart
+        var lineChart = {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September"],
+            datasets: [
+                {
+                    label: "Sales Analytics",
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: "#03a9f4",
+                    borderColor: "#03a9f4",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "#03a9f4",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "#03a9f4",
+                    pointHoverBorderColor: "#eef0f2",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: [65, 59, 80, 81, 56, 55, 40, 35, 30]
+                }
+            ]
+        };
+
+        var lineOpts = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        max: 100,
+                        min: 20,
+                        stepSize: 10
+                    }
+                }]
+            }
+        };
+
+        this.respChart($("#lineChart2"),'Line',lineChart, lineOpts);
+
+        
 
         //donut chart
         var donutChart = {
