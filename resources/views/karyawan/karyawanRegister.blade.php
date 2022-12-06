@@ -29,7 +29,7 @@
                     </h3>
                     <h4 class="text-muted text-center m-t-0"><b>Sign Up</b></h4>
 
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="/karyawan/createRegister">
                     @csrf
 
                     <div class="form-group">

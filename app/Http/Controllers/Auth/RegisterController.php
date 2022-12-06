@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Karyawan;
 
 
 class RegisterController extends Controller
@@ -37,10 +38,11 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
+
+    // public function __construct()
+    // {
+    //     $this->middleware('guest');
+    // }
 
     /**
      * Get a validator for an incoming registration request.
@@ -51,7 +53,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            
+            'role' => ['required'],
+            'id_pegawai' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -65,11 +69,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // $namaKaryawan = Karyawan::pluck('nama', 'id');
+        // $namaKaryawan = Karyawan::all();
+        $karyawan = Karyawan::where('id',$data['id_pegawai'])->first();
+
         return User::create([
-            'name' => $data['name'],
+            'role' => $data['role'],
+            'id_pegawai' => $data['id_pegawai'],
+            'name' => $karyawan['nama'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
     }
 }
+
+
 

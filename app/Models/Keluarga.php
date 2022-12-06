@@ -17,14 +17,6 @@ class Keluarga extends Model
 
     public function karyawan()
     {
-        return $this->belongsTo(Karyawan::class, 
-        'id_pegawai', 
-        'status_pernikahan', 
-        'hubungan', 
-        'nama', 
-        'tgllahir', 
-        'alamat', 
-        'pendidikan_terakhir', 
-        'pekerjaan');
+        return $this->belongsTo(Karyawan::class, 'id_pegawai', 'id');
     }
 }

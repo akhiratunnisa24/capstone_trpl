@@ -4,6 +4,9 @@
 
 @section('content')
 
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+</head>
 <!-- Header -->
 <div class="row">
     <div class="col-sm-12">
@@ -33,21 +36,24 @@
     </div>
 
     <form action="/karyawan/store_page" method="POST" enctype="multipart/form-data">
+        <div class="control-group after-add-more">
 
-        @csrf
-        @method('post')
+            @csrf
+            @method('post')
 
-        <!-- Judul 1 -->
-        <div class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
-            <label class="  ">A. IDENTITAS </label>
-        </div>
-
-        <div class="modal-body">
-            <table class="table table-bordered table-striped">
-                <form role="form" method="post" action="tambah_alumni.php">
-                    <div class="card-body">
+            <div class="modal-body">
+                <table class="table table-bordered table-striped">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
+
+                              <!-- judul 1 -->
+                        <div class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
+                            <label class="  ">A. IDENTITAS </label>
+                        </div>
+                            <table class="table table-bordered table-striped">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
 
 
                                 <div class="form-group">
@@ -118,7 +124,7 @@
                                     <div class="form-group">
                                         <div class="mb-3">
                                             <label for="exampleInputEmail1" class="form-label">NIK</label>
-                                            <input type="number" name="nikKaryawan" class="form-control" id="nik" placeholder="Masukkan NIK" required>
+                                            <input type="number" name="nikKaryawan" class="form-control" placeholder="Masukkan NIK" required>
                                         </div>
                                     </div>
 
@@ -134,7 +140,7 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label col-sm-4" >Pilih Foto Karyawan</label>
+                                        <label for="exampleInputEmail1" class="form-label col-sm-4">Pilih Foto Karyawan</label>
                                         <img class="img-preview img-fluid mb-3 col-sm-4">
                                         <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()">
                                     </div>
@@ -147,7 +153,6 @@
                         <div class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
                             <label class="  ">B. KELUARGA </label>
                         </div>
-                        <div class="modal-body">
                             <table class="table table-bordered table-striped">
                                 <div class="card-body">
                                     <div class="row">
@@ -155,9 +160,10 @@
 
                                             <!-- sub judul 2 -->
                                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5 ">
-                                                <label class="  ">Data Suami/Istri *)</label>
+                                                <label class="  ">Data Keluarga</label>
                                             </div>
 
+                                            
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1" class="form-label">Status Pernikahan</label>
                                                 <select class="form-control" name="status_pernikahan" required>
@@ -165,6 +171,22 @@
                                                     <option value="Sudah">Sudah Menikah</option>
                                                     <option value="Belum">Belum Menikah</option>
                                                 </select>
+                                            </div>
+
+                                            <!-- <div class="form-group">
+                                                <label for="exampleInputEmail1" class="form-label">Hubungan Keluarga</label>
+                                                <select class="form-control" name="status_pernikahan" required>
+                                                    <option value="">Pilih Hubungan Keluarga</option>
+                                                    <option value="Sudah">Orang Tua</option>
+                                                    <option value="Belum">Istri</option>
+                                                    <option value="Belum">Saudara Kandung</option>
+                                                    <option value="Belum">Anak</option>
+                                                </select>
+                                            </div> -->
+
+                                             <!-- sub judul 2 -->
+                                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5 ">
+                                                <label class="  ">Data Istri / Suami *) </label>
                                             </div>
 
                                             <div class="form-group">
@@ -188,14 +210,14 @@
                                             <div class="form-group">
                                                 <div class="mb-3">
                                                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                    <input class="form-control" name="alamatPasangan" rows="9"></input>
+                                                    <input class="form-control" name="alamatPasangan" rows="9" placeholder="Masukkan Alamat"></input>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1" class="form-label">Pendidikan Terakhir</label>
                                                 <select class="form-control" name="pendidikan_terakhirPasangan" required>
-                                                <option value="">Pilih Pendidikan Terakhir</option>
+                                                    <option value="">Pilih Pendidikan Terakhir</option>
                                                     <option value="SD">SD</option>
                                                     <option value="SMP">SMP</option>
                                                     <option value="SMA/K">SMA/K</option>
@@ -211,54 +233,23 @@
                                                     <div id="emailHelp" class="form-text"></div>
                                                 </div>
                                             </div>
-
-                                            
-                                                <!-- sub judul 4 -->
-                                                <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5  ">
-                                                    <label class="  ">Data Saudara ( Kakak / Adik ) *)</label>
-                                                </div>
-
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-                                                        <input type="text" name="namaSaudara" class="form-control" placeholder="Masukkan Nama" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose11" name="tgllahirSaudara" rows="10" required></input><br>
-                                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                                        </div><!-- input-group -->
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                <label for="exampleInputEmail1" class="form-label">Pendidikan Terakhir</label>
-                                                <select class="form-control" name="pendidikan_terakhirSaudara" required>
-                                                    <option value="">Pilih Pendidikan Terakhir</option>
-                                                    <option value="SD">SD</option>
-                                                    <option value="SMP">SMP</option>
-                                                    <option value="SMA/K">SMA/K</option>
-                                                    <option value="D-3">D-3</option>
-                                                    <option value="S-1">S-1</option>
-                                                </select>
-                                            </div>
-
                                             
 
                                             <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <button class="btn btn-success btn-sm">
+                                                <div class="mb-3">
+
+                                                    <!-- <button class="btn btn-success btn-sm add-more" type="button">
                                                             <i class="fa fa-user-plus"></i>
-                                                        </button>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
+                                                        </button> -->
+
+                                                    <!-- <button class="btn btn-success add-more" type="button">
+                                                        <i class="glyphicon glyphicon-plus"></i> Add
+                                                    </button> -->
+                                                    
+
                                                 </div>
+                                            </div>
+                                            
 
                                         </div>
 
@@ -268,119 +259,42 @@
                                             <div class="form-group ">
 
 
-                                                <!-- sub judul 3 -->
+
+
+                                                <!-- sub judul 5 -->
                                                 <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5  ">
-                                                    <label class="  ">Data Anak *)</label>
+                                                    <label class="  ">Kontak Darurat</label>
                                                 </div>
 
 
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-                                                        <input type="text" name="namaAnak" class="form-control" placeholder="Masukkan Nama" required>
+                                                        <input type="text" name="namaKdarurat" class="form-control" placeholder="Masukkan Nama" required>
                                                         <div id="emailHelp" class="form-text"></div>
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose9" name="tgllahirAnak" rows="10" required></input><br>
-                                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                                        </div><!-- input-group -->
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                <label for="exampleInputEmail1" class="form-label">Pendidikan Terakhir</label>
-                                                <select class="form-control" name="pendidikan_terakhirAnak" required>
-                                                    <option value="">Pilih Pendidikan Terakhir</option>
-                                                    <option value="SD">SD</option>
-                                                    <option value="SMP">SMP</option>
-                                                    <option value="SMA/K">SMA/K</option>
-                                                    <option value="D-3">D-3</option>
-                                                    <option value="S-1">S-1</option>
-                                                </select>
-                                            </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <button class="btn btn-success btn-sm">
-                                                            <i class="fa fa-user-plus"></i>
-                                                        </button>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- sub judul 4 -->
-                                                <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5  ">
-                                                    <label class="  ">Data Ayah dan Ibu *)</label>
-                                                </div>
-
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-                                                        <input type="text" name="namaOrtu" class="form-control" placeholder="Masukkan Nama" required>
-                                                        <div id="emailHelp" class="form-text"></div>
+                                                <div class="form-group ">
+                                                    <div class="mb-3 ">
+                                                        <label for="exampleInputEmail1" class="form-label">Alamat</label>
+                                                        <input class="form-control" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat"></input>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose10" name="tgllahirOrtu" rows="10" required></input><br>
-                                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                                        </div><!-- input-group -->
+                                                        <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
+                                                        <input type="number" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Pekerjaan</label>
-                                                        <input type="text" name="pekerjaanOrtu" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Email" required>
-                                                        <div id="emailHelp" class="form-text"></div>
+                                                        <label for="exampleInputEmail1" class="form-label">Hubungan</label>
+                                                        <input type="text" name="hubunganKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Hubungan" required>
                                                     </div>
                                                 </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <button class="btn btn-success btn-sm">
-                                                            <i class="fa fa-user-plus"></i>
-                                                        </button>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                            <!-- sub judul 5 -->
-                                            <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5  ">
-                                                <label class="  ">Kontak Darurat</label>
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <div class="mb-3">
-                                                    <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-                                                    <input type="text" name="namaKdarurat" class="form-control" placeholder="Masukkan Nama" required>
-                                                    <div id="emailHelp" class="form-text"></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group ">
-                                                <div class="mb-3 ">
-                                                    <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                    <input class="form-control" name="alamatKdarurat" rows="9"></input>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="mb-3">
-                                                    <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
-                                                    <input type="number" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
-                                                </div>
-                                            </div>
 
 
                                             </div>
@@ -392,248 +306,253 @@
                                                 <label class="  ">C. Riwayat Pendidikan </label>
                                             </div>
 
-                                            <div class="modal-body">
                                                 <table class="table table-bordered table-striped">
-                                                    <form role="form" method="post" action="tambah_alumni.php">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
 
 
                                                                 <!-- sub judul 2 -->
-                                            <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5 ">
-                                                <label class="  ">Pendidikan Formal</label>
-                                            </div>
+                                                                <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5 ">
+                                                                    <label class="  ">Pendidikan Formal</label>
+                                                                </div>
 
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1" class="form-label">Tingkat</label>
-                                                <select class="form-control" name="tingkat_pendidikan" required>
-                                                    <option value="">Pilih Tingkat Pendidikan</option>
-                                                    <option value="SD">SD</option>
-                                                    <option value="SMP">SMP</option>
-                                                    <option value="SMA/K">SMA/K</option>
-                                                    <option value="Universitas">Universitas</option>
-                                                </select>
-                                            </div>
+                                                                <div class="form-group">
+                                                                    <label for="exampleInputEmail1" class="form-label">Tingkat</label>
+                                                                    <select class="form-control" name="tingkat_pendidikan" required>
+                                                                        <option value="">Pilih Tingkat Pendidikan</option>
+                                                                        <option value="SD">SD</option>
+                                                                        <option value="SMP">SMP</option>
+                                                                        <option value="SMA/K">SMA/K</option>
+                                                                        <option value="Universitas">Universitas</option>
+                                                                    </select>
+                                                                </div>
 
-                                            <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Nama Sekolah</label>
-                                                        <input type="text" name="nama_sekolah" class="form-control" placeholder="Masukkan Nama" required>
-                                                        <div id="emailHelp" class="form-text"></div>
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">Nama Sekolah</label>
+                                                                        <input type="text" name="nama_sekolah" class="form-control" placeholder="Masukkan Nama" required>
+                                                                        <div id="emailHelp" class="form-text"></div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label"> Kota</label>
+                                                                        <input type="text" name="kotaPendidikanFormal" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Kota" required>
+                                                                        <div id="emailHelp" class="form-text"></div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label"> Jurusan</label>
+                                                                        <input type="text" name="jurusan" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Jurusan" required>
+                                                                        <div id="emailHelp" class="form-text"></div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">Lulus Tahun</label>
+                                                                        <div class="input-group">
+                                                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose12" name="tahun_lulusFormal" rows="10" required></input><br>
+                                                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                                                        </div><!-- input-group -->
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+
+                                                                    <!-- baris sebelah kanan  -->
+                                                                    <!-- sub judul 3 -->
+                                                                    <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5  ">
+                                                                        <label class="  ">Pendidikan Non Formal</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="mb-3">
+                                                                            <label for="exampleInputEmail1" class="form-label">Bidang / Jenis</label>
+                                                                            <input type="text" name="jenis_pendidikan" class="form-control" placeholder="Masukkan Nama" required>
+                                                                            <div id="emailHelp" class="form-text"></div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="mb-3">
+                                                                            <label for="exampleInputEmail1" class="form-label"> Kota</label>
+                                                                            <input type="text" name="kotaPendidikanNonFormal" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Kota" required>
+                                                                            <div id="emailHelp" class="form-text"></div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="mb-3">
+                                                                            <label for="exampleInputEmail1" class="form-label">Lulus Tahun</label>
+                                                                            <div class="input-group">
+                                                                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose14" name="tahunLulusNonFormal" rows="10" required></input><br>
+                                                                                <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                                                            </div><!-- input-group -->
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                <!-- Judul 1 -->
+                                                                <div class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
+                                                                    <label class="  ">D. Riwayat Pekerjaan </label>
+                                                                </div>
+                                                                
+                                                                    <table class="table table-bordered table-striped">
+                                                                        <form role="form" method="post" action="tambah_alumni.php">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6">
+
+
+                                                                                        <!-- sub judul 2 -->
+
+                                                                                        <div class="form-group">
+                                                                                            <div class="mb-3">
+                                                                                                <label for="exampleInputEmail1" class="form-label">Nama Perusahaan</label>
+                                                                                                <input type="text" name="namaPerusahaan" class="form-control" placeholder="Masukkan Nama Perusahaan" required>
+                                                                                                <div id="emailHelp" class="form-text"></div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            <div class="mb-3">
+                                                                                                <label for="exampleInputEmail1" class="form-label"> Alamat </label>
+                                                                                                <input type="text" name="alamatPerusahaan" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Alamat" required>
+                                                                                                <div id="emailHelp" class="form-text"></div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            <div class="mb-3">
+                                                                                                <label for="exampleInputEmail1" class="form-label"> Jenis Usaha</label>
+                                                                                                <input type="text" name="jenisUsaha" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Jenis Usaha" required>
+                                                                                                <div id="emailHelp" class="form-text"></div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            <div class="mb-3">
+                                                                                                <label for="exampleInputEmail1" class="form-label"> Jabatan</label>
+                                                                                                <input type="text" name="jabatan" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Jabatan" required>
+                                                                                                <div id="emailHelp" class="form-text"></div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            <div class="mb-3">
+                                                                                                <label for="exampleInputEmail1" class="form-label"> Nama Atasan Langsung</label>
+                                                                                                <input type="text" name="namaAtasan" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Nama Atasan" required>
+                                                                                                <div id="emailHelp" class="form-text"></div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            <div class="mb-3">
+                                                                                                <button class="btn btn-success btn-sm">
+                                                                                                    <i class="fa fa-user-plus"></i>
+                                                                                                </button>
+                                                                                                <div id="emailHelp" class="form-text"></div>
+                                                                                            </div>
+                                                                                        </div>
+
+
+                                                                                    </div>
+
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group ">
+
+                                                                                            <!-- baris sebelah kanan  -->
+                                                                                            <!-- sub judul 3 -->
+
+                                                                                            <div class="form-group">
+                                                                                                <div class="mb-3">
+                                                                                                    <label for="exampleInputEmail1" class="form-label"> Nama Direktur</label>
+                                                                                                    <input type="text" name="namaDirektur" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Nama Direktur" required>
+                                                                                                    <div id="emailHelp" class="form-text"></div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group">
+                                                                                                <div class="mb-3">
+                                                                                                    <label for="exampleInputEmail1" class="form-label"> Lama Kerja</label>
+                                                                                                    <input type="text" name="lamaKerja" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Lama Kerja" required>
+                                                                                                    <div id="emailHelp" class="form-text"></div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group">
+                                                                                                <div class="mb-3">
+                                                                                                    <label for="exampleInputEmail1" class="form-label"> Alasan Berhenti</label>
+                                                                                                    <input type="text" name="alasanBerhenti" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Alasan Berhenti" required>
+                                                                                                    <div id="emailHelp" class="form-text"></div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group">
+                                                                                                <div class="mb-3">
+                                                                                                    <label for="exampleInputEmail1" class="form-label"> Gaji</label>
+                                                                                                    <input type="text" name="gajiRpekerjaan" no_kk class="form-control" id="gaji" aria-describedby="emailHelp" placeholder="Masukkan Gaji" required>
+                                                                                                    <div id="emailHelp" class="form-text"></div>
+                                                                                                </div>
+                                                                                            </div>
+
+
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                        </form>
+                                                                    </table>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+
+                                                                    <button type="submit" name="submit" class="btn btn-sm btn-primary">Simpan</button>
+                                                                    <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Kota</label>
-                                                        <input type="text" name="kota" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Kota" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Jurusan</label>
-                                                        <input type="text" name="jurusan" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Jurusan" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Lulus Tahun</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose12" name="tahun_lulus" rows="10" required></input><br>
-                                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                                        </div><!-- input-group -->
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <button class="btn btn-success btn-sm">
-                                                            <i class="fa fa-user-plus"></i>
-                                                        </button>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-                                            
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-
-                                                <!-- baris sebelah kanan  -->
-                                                <!-- sub judul 3 -->
-                                                <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5  ">
-                                                    <label class="  ">Pendidikan Non Formal</label>
-                                                </div>
-
-                                            <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Bidang / Jenis</label>
-                                                        <input type="text" name="jenis_pendidikan" class="form-control" placeholder="Masukkan Nama" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Kota</label>
-                                                        <input type="text" name="kotaPendidikanNonFormal" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Kota" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Lulus Tahun</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose14" name="tahunLulusNonFormal" rows="10" required></input><br>
-                                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                                        </div><!-- input-group -->
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <button class="btn btn-success btn-sm">
-                                                            <i class="fa fa-user-plus"></i>
-                                                        </button>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <!-- Judul 1 -->
-                                            <div class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
-                                                <label class="  ">D. Riwayat Pekerjaan </label>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <table class="table table-bordered table-striped">
-                                                    <form role="form" method="post" action="tambah_alumni.php">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-
-
-                                                                <!-- sub judul 2 -->
-
-                                            <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">Nama Perusahaan</label>
-                                                        <input type="text" name="namaPerusahaan" class="form-control" placeholder="Masukkan Nama" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Alamat </label>
-                                                        <input type="text" name="alamatPerusahaan" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Email" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Jenis Usaha</label>
-                                                        <input type="text" name="jenisUsaha" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Email" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Jabatan</label>
-                                                        <input type="text" name="jabatan" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Email" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Nama Atasan Langsung</label>
-                                                        <input type="text" name="namaAtasan" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Email" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <button class="btn btn-success btn-sm">
-                                                            <i class="fa fa-user-plus"></i>
-                                                        </button>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-                                                
-                                            
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-
-                                                <!-- baris sebelah kanan  -->
-                                                <!-- sub judul 3 -->
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Nama Direktur</label>
-                                                        <input type="text" name="namaDirektur" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Email" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Lama Kerja</label>
-                                                        <input type="text" name="lamaKerja" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Email" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Alasan Berhenti</label>
-                                                        <input type="text" name="alasanBerhenti" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Email" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label"> Gaji</label>
-                                                        <input type="text" name="gajiRpekerjaan" no_kk class="form-control" id="gaji" aria-describedby="emailHelp" placeholder="Masukkan Email" required>
-                                                        <div id="emailHelp" class="form-text"></div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-
-                                                    </form>
                                                 </table>
                                             </div>
-                                            
-                                            <div class="modal-footer">
-
-                                                <button type="submit" name="submit" class="btn btn-sm btn-primary">Simpan</button>
-                                                <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
                                         </div>
-                </form>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+                </table>
+            </div>
         </div>
-</div>
-</div>
+    </form>
 </div>
 
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $(".add-more").click(function(){ 
+          var html = $(".copy").html();
+          $(".after-add-more").after(html);
+      });
+
+      // saat tombol remove dklik control group akan dihapus 
+      $("body").on("click",".remove",function(){ 
+          $(this).parents(".control-group").remove();
+      });
+    });
+</script>
 
     <script>
         var rupiah = document.getElementById('gaji');

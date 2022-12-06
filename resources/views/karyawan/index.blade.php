@@ -1,8 +1,8 @@
 @extends('layouts.default')
 @section('content')
 
-           
 <!-- Header -->
+
 <div class="row">
     <div class="col-sm-12">
 
@@ -31,13 +31,15 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading  col-sm-15 m-b-10">
 
-                        <a href="karyawancreate" type="button" class="btn btn-sm btn-dark " >Tambah Karyawan Page</a>
+                        <a href="karyawancreate" type="button" class="btn btn-sm btn-dark " >Tambah Karyawan</a>
+                        <!-- <a href="{{ route('register') }}" type="button" class="btn btn-sm btn-dark " >Buat Akun Karyawan</a> -->
                         
-                        <a type="button" class="btn btn-sm btn-dark " data-toggle="modal" data-target="#myModal" >Tambah Karyawan</a>
+                        <!-- <a type="button" class="btn btn-sm btn-dark " data-toggle="modal" data-target="#myModal" >Buat Akun Karyawan</a> -->
+                        <a type="button" class="btn btn-sm btn-dark " href="{{ route('register') }}" >Buat Akun Karyawan</a>
                         
                         <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_menu">Add Staff</button> -->
                     </div>
-                    @include('karyawan.addModal')
+                    @include('karyawan.addAkunModal')
                     <div class="panel-body">
                         <table id="datatable" class="table table-striped table-bordered ">
 
@@ -48,9 +50,8 @@
                                     <th>Tanggal Lahir</th>
                                     <th>L / P</th>
                                     <th>Alamat</th>
-                                    <th>Status Karyawan</th>
-                                    <th>Tipe Karyawan</th>
-                                    <th>Tanggal Masuk</th>
+                                    <th>Email</th>
+                                    <th>Agama</th>
                                     <th>Action</th>
 
                                     <?php $no = 1 ?>
@@ -66,9 +67,8 @@
                                     <td>{{$k->tgllahir}}</td>
                                     <td>{{$k->jenis_kelamin}}</td>
                                     <td>{{$k->alamat}}</td>
-                                    <td>{{$k->status_karyawan}}</td>
-                                    <td>{{$k->tipe_karyawan}}</td>
-                                    <td>{{$k->tglmasuk}}</td>
+                                    <td>{{$k->email}}</td>
+                                    <td>{{$k->agama}}</td>
                                     <td>
                                         <div class="d-grid gap-2 " role="group" aria-label="Basic example">
 

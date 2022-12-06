@@ -11,6 +11,7 @@ class Karyawan extends Model
 
     protected $table = 'karyawan';
 
+    protected $fillable = ['id'];
     protected $guarded = [];
 
     public function kdarurat()
@@ -25,7 +26,7 @@ class Karyawan extends Model
     
     public function keluarga()
     {
-        return $this->hasMany(Kdarurat::class, 
+        return $this->hasMany(Keluarga::class, 
         'id_pegawai', 
         'status_pernikahan', 
         'hubungan', 
@@ -61,5 +62,13 @@ class Karyawan extends Model
         'jurusan', 
         'tahun_lulus', 
         'jenis_pendidikan' );
+    }
+
+    public function user()
+    {
+        return $this->hasMany(user::class, 
+        'role',
+        'name',
+        'email' );
     }
 }

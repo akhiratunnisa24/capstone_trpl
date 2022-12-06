@@ -81,7 +81,7 @@
                                 <a href="{{ route('password.request') }}" class="text-muted"> </a>
                             </div>
                             <div class="col-sm-5 text-right">
-                                <a href="{{ route('register') }}" class="nav-link">Create an account</a>                               
+                                <!-- <a href="{{ route('register') }}" class="nav-link">Create an account</a>                                -->
                             </div>
                         </div>
                     </form>

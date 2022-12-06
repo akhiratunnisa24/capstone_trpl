@@ -14,6 +14,7 @@
 
         <script src="assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
 
+
       
 
         <!-- Datatables-->
@@ -46,6 +47,9 @@
         <script src="assets/pages/sweet-alert.init.js"></script>
 
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
+        
 
 
 
+        

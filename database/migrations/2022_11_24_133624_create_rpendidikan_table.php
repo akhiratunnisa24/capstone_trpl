@@ -13,16 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('_rpendidikan', function (Blueprint $table) {
+        Schema::create('rpendidikan', function (Blueprint $table) {
             $table->id();
 
             $table->integer('id_pegawai');
             $table->enum('tingkat',['SD','SMP','SMA/K','Universitas'])->nullable();
 
             $table->string('nama_sekolah');            
-            $table->string('kota');
+            $table->string('kota_pformal');
+            $table->string('kota_pnonformal');
             $table->string('jurusan');
-            $table->text('tahun_lulus');
+            $table->text('tahun_lulus_formal');
+            $table->text('tahun_lulus_nonformal');
             $table->text('jenis_pendidikan');
 
 
@@ -37,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_rpendidikan');
+        Schema::dropIfExists('rpendidikan');
     }
 };

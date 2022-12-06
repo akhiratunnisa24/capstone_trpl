@@ -45,8 +45,8 @@
                     </tr>
 
                     <tr>
-                        <td><label >Nama Lengkap : {{$karyawan->nama}} </label></td>
-                        <td><span ></span></td>
+                        <td><label for="dob">Nama Lengkap : {{$karyawan->nama}} </label></td>
+                        <td><span id="dob"></span></td>
                         <td rowspan="33" colspan="0"></td>
                         <td rowspan="5" colspan="2" class="text-center">
                             <img src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="" style="width:280px;">
@@ -54,57 +54,57 @@
                     </tr>
 
                     <tr>
-                        <td><label >NIK : {{$karyawan->nik}} </label></td>
-                        <td><span ></span></td>
+                        <td><label for="phone_number">NIK : {{$karyawan->nik}} </label></td>
+                        <td><span id="phone_number"></span></td>
                     </tr>
 
                     <tr>
-                        <td><label >Tanggal Lahir : {{$karyawan->tgllahir}}</label></td>
-                        <td><span ></span></td>
+                        <td><label for="ktp_number">Tanggal Lahir : {{$karyawan->tgllahir}}</label></td>
+                        <td><span id="ktp_number"></span></td>
                     </tr>
 
                     <tr>
-                        <td><label >Jenis Kelamin : {{$karyawan->jenis_kelamin}}</label></td>
-                        <td><span ></span></td>
+                        <td><label for="kk_number">Jenis Kelamin : {{$karyawan->jenis_kelamin}}</label></td>
+                        <td><span id="kk_number"></span></td>
                     </tr>
 
                     <tr>
-                        <td><label >Alamat : {{$karyawan->alamat}}</label></td>
-                        <td><span ></span></td>
+                        <td><label for="email">Alamat : {{$karyawan->alamat}}</label></td>
+                        <td><span id="email"></span></td>
                     </tr>
 
                     <tr>
-                        <td><label >Nomor Handphone : {{$karyawan->no_hp}}</label></td>
-                        <td><span ></span></td>
-                        <td><label >Email : {{$karyawan->email}}</label></td>
-                        <td><span ></span></td>
+                        <td><label for="employee_status">Nomor Handphone : {{$karyawan->no_hp}}</label></td>
+                        <td><span id="employee_status"></span></td>
+                        <td><label for="contract_duration">Email : {{$karyawan->email}}</label></td>
+                        <td><span id="contract_duration"></span></td>
                     </tr>
                     <tr>
-                        <td><label>Golongan Darah : {{$karyawan->gol_darah}} </label></td>
-                        <td><span></span></td>
-                        <td><label>Agama : {{$karyawan->agama}}</label></td>
-                        <td><span></span></td>
+                        <td><label for="status">Golongan Darah : {{$karyawan->gol_darah}} </label></td>
+                        <td><span id="status"></span></td>
+                        <td><label for="employee_type">Agama : {{$karyawan->agama}}</label></td>
+                        <td><span id="employee_type"></span></td>
                     </tr>
 
                     <tr>
                         <td><label class="text-bold text-white badge bg-dark">B. KELUARGA</label></td>
                         <td><span class="text-bold"></span></td>
                         <td><label class="text-bold text-white badge bg-dark">C. RIWAYAT PENDIDIKAN</label></td>
-                        <td><span class="text-bold"></span></td>
+                        <td><span id="name" class="text-bold"></span></td>
                     </tr>
 
                     <tr>
                         <td><label class="text-white badge bg-dark">Data Istri / Suami *)</label></td>
-                        <td><span></span></td>
+                        <td><span id="start_work_date"></span></td>
                         <td><label class="text-white badge bg-dark">Pendidikan Formal</label></td>
-                        <td><span></span></td>
+                        <td><span id="end_work_date"></span></td>
                     </tr>
 
                     <tr>
-                        <td><label>Status Pernikahan : {{$keluarga->status_pernikahan}} </label></td>
-                        <td><span ></span></td>
-                        <td><label> Tingkat : {{$rpendidikan->tingkat}} </label></td>
-                        <td><span></span></td>
+                        <td><label for="npwp_number">Status Pernikahan : {{$keluarga->status_pernikahan}} </label></td>
+                        <td><span id="npwp_number"></span></td>
+                        <td><label for="bpjskes_number"> Tingkat : {{$rpendidikan->tingkat}} </label></td>
+                        <td><span id="role_name"></span></td>
                     </tr>
                     <tr>
                         <td><label for="division_name">Nama Pasangan : {{$keluarga->nama}}</label></td>
@@ -199,10 +199,6 @@
 
 
     <div class="modal-footer">
-
-        <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a>
-
-
         <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
     </div>
 </div>
