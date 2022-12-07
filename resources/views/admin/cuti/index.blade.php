@@ -46,17 +46,17 @@
                                         <div class="panel-body m-b-5">
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                                                    <table  id="datatable-responsive3" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th scope="col">Karyawan</th>
-                                                                <th scope="col">Kategori Cuti</th>
-                                                                <th scope="col">Keperluan</th>
-                                                                <th scope="col">Tanggal Mulai</th>
-                                                                <th scope="col">Tanggal Selesai</th>
-                                                                <th scope="col">Jumlah Cuti</th>
-                                                                <th scope="col">Status</th>
-                                                                <th scope="col">Action</th>
+                                                                <th>Karyawan</th>
+                                                                <th>Kategori Cuti</th>
+                                                                <th>Keperluan</th>
+                                                                <th>Tanggal Mulai</th>
+                                                                <th>Tanggal Selesai</th>
+                                                                <th>Jumlah Cuti</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -151,18 +151,18 @@
                                         <div class="panel-body m-b-5">
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <table id="datatable" class="table table-striped table-bordered">
+                                                    <table  id="datatable-responsive4" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th scope="col">Karyawan</th>
-                                                                <th scope="col">K. Izin</th>
-                                                                <th scope="col">Keperluan</th>
-                                                                <th scope="col">Tanggal</th>
-                                                                <th scope="col">Jml</th>
-                                                                <th scope="col">Jam M-S</th>
-                                                                <th scope="col">Jml. Jam</th>
-                                                                <th scope="col">Status</th>
-                                                                <th scope="col">Action</th>
+                                                                <th>Karyawan</th>
+                                                                <th>K. Izin</th>
+                                                                <th>Keperluan</th>
+                                                                <th>Tanggal</th>
+                                                                <th>Jml</th>
+                                                                <th>Jam M-S</th>
+                                                                <th>Jml. Jam</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -290,23 +290,7 @@
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
-
-    <!-- Datatables-->
-    <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
-    <script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
-    <script src="assets/plugins/datatables/buttons.bootstrap.min.js"></script>
-    <script src="assets/plugins/datatables/jszip.min.js"></script>
-    <script src="assets/plugins/datatables/pdfmake.min.js"></script>
-    <script src="assets/plugins/datatables/vfs_fonts.js"></script>
-    <script src="assets/plugins/datatables/buttons.html5.min.js"></script>
-    <script src="assets/plugins/datatables/buttons.print.min.js"></script>
-    <script src="assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
-    <script src="assets/plugins/datatables/dataTables.keyTable.min.js"></script>
-    <script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
-    <script src="assets/plugins/datatables/responsive.bootstrap.min.js"></script>
-    <script src="assets/plugins/datatables/dataTables.scroller.min.js"></script> 
-
+    
     <!-- Datatable init js -->
     <script src="assets/pages/datatables.init.js"></script>
     <script src="assets/js/app.js"></script>

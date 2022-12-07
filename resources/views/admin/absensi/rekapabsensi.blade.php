@@ -3,10 +3,8 @@
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
-
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Rekap Absensi</h4>
-
                 <ol class="breadcrumb pull-right">
                     <li><a href="#">Human Resources Management System</a></li>
                     <li class="active">Data Absensi</li>
@@ -154,7 +152,7 @@
                             <div class="panel-body m-b-5">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <table id="datatable" class="table table-responsive table-striped table-bordered">
+                                        <table id="datatable-responsive" class="table dt-responsive table-striped table-bordered" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Karyawan</th>
@@ -210,21 +208,7 @@
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
-    <!-- Datatables-->
-    <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
-    <script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
-    <script src="assets/plugins/datatables/buttons.bootstrap.min.js"></script>
-    <script src="assets/plugins/datatables/jszip.min.js"></script>
-    <script src="assets/plugins/datatables/pdfmake.min.js"></script>
-    <script src="assets/plugins/datatables/vfs_fonts.js"></script>
-    <script src="assets/plugins/datatables/buttons.html4.min.js"></script>
-    <script src="assets/plugins/datatables/buttons.print.min.js"></script>
-    <script src="assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
-    <script src="assets/plugins/datatables/dataTables.keyTable.min.js"></script>
-    <script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
-    <script src="assets/plugins/datatables/responsive.bootstrap.min.js"></script>
-    <script src="assets/plugins/datatables/dataTables.scroller.min.js"></script> 
+    
     <!-- Datatable init js -->
     <script src="assets/pages/datatables.init.js"></script>
     <script src="assets/js/app.js"></script>

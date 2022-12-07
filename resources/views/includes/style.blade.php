@@ -1,5 +1,4 @@
 <link rel="shortcut icon" href="{{ asset('') }}assets/images/favicon2.png">
-
 <!-- Datapicker -->
 <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('tgllahir')->nullable();           
             $table->string('email')->unique();         
             $table->string('agama')->nullable(); 
-            $table->enum('gol_darah ',['A','B','AB','O'])->nullable();   
+            $table->enum('gol_darah',['A','B','AB','O'])->nullable();   
             $table->enum('jenis_kelamin',['L','P']);
             $table->text('alamat')->nullable();
             $table->text('no_hp')->nullable();

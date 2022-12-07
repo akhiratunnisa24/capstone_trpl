@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use App\Models\Jeniscuti;
 use App\Models\Jenisizin;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class JeniscutiController extends Controller
 {

@@ -82,8 +82,8 @@
         <script src="assets/plugins/datatables/responsive.bootstrap.min.js"></script>
         <script src="assets/plugins/datatables/dataTables.scroller.min.js"></script> --}} --}}
 
-    {{-- <!-- Datatable init js -->
+     <!-- Datatable init js -->
     <script src="assets/pages/datatables.init.js"></script>
-    <script src="assets/js/app.js"></script> --}}
+    <script src="assets/js/app.js"></script>
 
 @endsection

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use PDF;
 use Carbon\Carbon;
@@ -13,6 +13,7 @@ use App\Imports\AbsensiImport;
 use App\Imports\AttendanceImport;
 use Illuminate\Support\Facades\DB;
 use App\Exports\RekapabsensiExport;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;

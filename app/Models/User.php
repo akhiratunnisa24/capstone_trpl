@@ -56,5 +56,10 @@ class User extends Authenticatable
         'name',
         'email' );
     }
+
+    //hrms_git
+    public function karyawans(){
+        return $this->hasOne(Karyawan::class,'id_pegawai','id');
+    }
 }
 
