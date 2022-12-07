@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use App\Models\Jenisizin;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class JenisizinController extends Controller
 {

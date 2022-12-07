@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\user;
 
 use Carbon\Carbon;
 use App\Models\Cuti;
@@ -8,6 +8,7 @@ use App\Models\Izin;
 use App\Models\Jeniscuti;
 use App\Models\Jenisizin;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class CutikaryawanController extends Controller

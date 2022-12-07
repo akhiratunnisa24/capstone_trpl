@@ -35,7 +35,7 @@
                                         <div class="panel-body m-b-5">
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <table id="datatable" class="table table-responsive table-striped table-bordered">
+                                                    <table id="datatable-responsive" class="table dt-responsive nowrap table-striped table-bordered" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">No.</th>
@@ -101,7 +101,7 @@
                                         <div class="panel-body m-b-5">
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <table id="datatable" class="table table-striped table-bordered">
+                                                    <table id="datatable-responsive1" class="table dt-responsive nowrap table-striped table-bordered" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">No.</th>
@@ -184,14 +184,52 @@
     <script src="assets/pages/datatables.init.js"></script>
     <script src="assets/js/app.js"></script>
     <script src="{{ asset('public/assets/js/jquery-3.1.1.min.js') }}"></script>
+    <!-- sweet alert -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <!-- jangan lupa menambahkan script js sweet alert di bawah ini  -->
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+
 
     {{-- Direct halaman tambah data --}}
     <script type="text/javascript">
+        function cuti(id){
+            swal.fire({
+                title:"Apakah anda yakin?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swal.fire({
+                        title : "Terhapus!",
+                        text: "Data berhasil di hapus..",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                    })
+                    location.href = '<?= "http://localhost:8000/kategoridelete" ?>' + id;
+                }
+            })
+        }
+
         let tp = `{{$type}}`;
         if(tp == 1) {
             $('#tab1').click();
         } else {
             $('#tab2').click();
         }
-    </script>                   
+    </script>
+     <?php if(@$_SESSION['sukses']){ ?>
+        <script>
+            swal.fire("Good job!", "<?php echo $_SESSION['sukses']; ?>", "success");
+        </script>
+    <!-- jangan lupa untuk menambahkan unset agar sweet alert tidak muncul lagi saat di refresh -->
+    
+    <?php unset($_SESSION['sukses']); } ?>
+                   
 @endsection

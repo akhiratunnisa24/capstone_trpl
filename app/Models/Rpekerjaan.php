@@ -29,4 +29,9 @@ class Rpekerjaan extends Model
         'alasan_berhenti',
         'gaji');
     }
+
+    ///icha
+    public function karyawans(){
+        return $this->hasOne(Karyawan::class,'id_user','id');
+    }
 }

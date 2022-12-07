@@ -3,10 +3,8 @@
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
-
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Rekap Absensi</h4>
-
                 <ol class="breadcrumb pull-right">
                     <li><a href="#">Human Resources Management System</a></li>
                     <li class="active">Data Absensi</li>
@@ -154,7 +152,7 @@
                             <div class="panel-body m-b-5">
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <table id="datatable" class="table table-responsive table-striped table-bordered">
+                                        <table id="datatable-responsive" class="table dt-responsive table-striped table-bordered" width="100%">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Karyawan</th>

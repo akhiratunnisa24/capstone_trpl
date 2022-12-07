@@ -71,4 +71,14 @@ class Karyawan extends Model
         'name',
         'email' );
     }
+
+    //hrms_git
+    public function userss(){
+        return $this->hasOne(User::class,'id_user','id');
+    }
+
+    public function departemens(){
+        return $this->belongsTo(Departemen::class,'id_departemen','id');
+    }
+
 }

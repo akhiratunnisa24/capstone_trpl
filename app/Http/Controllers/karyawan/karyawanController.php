@@ -72,9 +72,8 @@ class karyawanController extends Controller
                 
                 public function store(Request $request)
                 {
-                    if( $request->hasfile('foto')){
-                        
-                        
+                    if( $request->hasfile('foto'))
+                    {
                         $fileFoto = $request->file('foto');
                         $namaFile = ''.time().$fileFoto->getClientOriginalName();
                         $tujuan_upload = 'Foto_Profile';
@@ -379,11 +378,8 @@ class karyawanController extends Controller
                             'alamat' => $request->post('alamatKdarurat'),
                             'no_hp' => $request->post('no_hpKdarurat'),
                             'hubungan' => $request->post('hubunganKdarurat'),
-                            
-                            
                         ); 
-                        
-                        
+                    
                         Karyawan::insert($data);
                         Keluarga::insert($data_keluarga);
                         Kdarurat::insert($data_kdarurat);
@@ -394,9 +390,6 @@ class karyawanController extends Controller
                     }
                     
                 }
-                
-                
-                
                 
                 public function edit($id)
                 {

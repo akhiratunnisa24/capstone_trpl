@@ -1,20 +1,25 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CutiController;
+use App\Http\Controllers\Auth\RegisterController;
+
+use App\Http\Controllers\HomeController;
+
+use App\Http\Controllers\admin\AbsensiController;
+use App\Http\Controllers\admin\CutiadminController;
+use App\Http\Controllers\admin\IzinAdminController;
+use App\Http\Controllers\admin\JeniscutiController;
+use App\Http\Controllers\admin\JenisizinController;
+use App\Http\Controllers\admin\AlokasicutiController;
+use App\Http\Controllers\admin\SettingalokasicutiController;
+
 use App\Http\Controllers\karyawan\karyawanController;
 
-use App\Http\Controllers\CutiController;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\AbsensiController;
-use App\Http\Controllers\CutiadminController;
-use App\Http\Controllers\IzinAdminController;
-use App\Http\Controllers\JeniscutiController;
-use App\Http\Controllers\JenisizinController;
-use App\Http\Controllers\CutikaryawanController;
-use App\Http\Controllers\IzinkaryawanController;
-use App\Http\Controllers\alokasi\AlokasicutiController;
-use App\Http\Controllers\alokasi\SettingalokasicutiController;
+use App\Http\Controllers\user\CutikaryawanController;
+use App\Http\Controllers\user\IzinkaryawanController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +31,9 @@ use App\Http\Controllers\alokasi\SettingalokasicutiController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 Route::post('/registrasi', [App\Http\Controllers\HomeController::class, 'registrasi'])->name('registrasi');
 
 

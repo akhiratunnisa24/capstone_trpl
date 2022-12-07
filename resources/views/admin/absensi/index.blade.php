@@ -4,17 +4,13 @@
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
-
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Data Absensi</h4>
-
                 <ol class="breadcrumb pull-right">
                     <li><a href="#">Human Resources Management System</a></li>
                     <li class="active">Data Absensi</li>
                 </ol>
-
                 <div class="clearfix">
-
                 </div>
             </div>
         </div>
@@ -46,7 +42,7 @@
                         <div class="panel-body m-b-5">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <table id="datatable" class="table table-responsive table-striped table-bordered">
+                                    <table id="datatable-responsive3" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Karyawan</th>
