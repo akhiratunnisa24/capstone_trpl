@@ -311,9 +311,9 @@
         //initializing various charts and components
         FlotChart.prototype.init = function() {
           //plot graph data
-          var uploads = [[0, 9], [1, 8], [2, 5], [3, 8], [4, 5], [5, 14], [6, 10]];
+          var uploads = [[0, 5],[1, 9], [2, 8], [3, 5], [4, 8], [5, 5], [6, 14], [7, 10]];
           var downloads = [[0, 5], [1, 12], [2,4], [3, 3], [4, 12], [5, 8], [6, 4]];
-          var plabels = ["Service One", "Service Two"];
+          var plabels = ["Cuti", "Izin"];
           var pcolors = ['#6e8cd7', '#03a9f4'];
           var borderColor = '#efefef';
           var bgColor = '#fff';
