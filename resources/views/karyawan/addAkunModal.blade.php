@@ -14,7 +14,7 @@
 
             <div class="modal-body">
 
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="{{ url('/registrasi') }}">
                     @csrf
 
                     <div class="form-group">

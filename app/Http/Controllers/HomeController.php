@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,19 @@ class HomeController extends Controller
     *
     * @return \Illuminate\Contracts\Support\Renderable
     */
+
+    public function registrasi(Request $data){
+        $karyawan = Karyawan::where('id',$data['id_pegawai'])->first();
+        $data = array(
+            'role' => $data['role'],
+            'id_pegawai' => $data['id_pegawai'],
+            'name' => $karyawan['nama'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ); 
+        User::insert($data);
+        return redirect('/karyawan')->with("sukses", "Berhasil di tambah");
+    }
     public function index()
     {
         $role = Auth::user()->role;

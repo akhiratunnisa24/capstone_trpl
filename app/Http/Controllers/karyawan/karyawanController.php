@@ -41,7 +41,12 @@ class karyawanController extends Controller
     
     public function create()
     {
-        return view('karyawan.create');
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        
+        $output = [
+            'row' => $row
+        ];
+        return view('karyawan.create', $output);
     }
     
     

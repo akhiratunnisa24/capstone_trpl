@@ -31,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME; 
 
     /**
      * Create a new controller instance.
@@ -73,13 +73,25 @@ class RegisterController extends Controller
         // $namaKaryawan = Karyawan::all();
         $karyawan = Karyawan::where('id',$data['id_pegawai'])->first();
 
-        return User::create([
+        $data = array(
             'role' => $data['role'],
             'id_pegawai' => $data['id_pegawai'],
             'name' => $karyawan['nama'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-        ]);
+        ); 
+        User::insert($data);
+        return redirect('/')->with("sukses", "Berhasil di tambah");
+
+        // return User::create([
+        //     'role' => $data['role'],
+        //     'id_pegawai' => $data['id_pegawai'],
+        //     'name' => $karyawan['nama'],
+        //     'email' => $data['email'],
+        //     'password' => Hash::make($data['password']),
+        // ]);
+
+        
     }
 }
 
