@@ -85,7 +85,7 @@ class IzinkaryawanController extends Controller
     public function show($id)
     {
         $izin = Izin::findOrFail($id);
-        $karyawan = Auth::user()->karyawans->id;
+        $karyawan = Auth::user()->id_pegawai;
 
         return view('karyawan.kategori.index',compact('cuti','karyawan'));
     }

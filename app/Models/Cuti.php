@@ -9,11 +9,9 @@ class Cuti extends Model
 {
     use HasFactory;
     protected $table ='cuti';
-    protected $fillable = ['id_karyawan','id_jeniscuti','keperluan','tgl_mulai','tgl_selesai','jml_cuti','status'];
-
-    public function karyawans(){
-        return $this->belongsTo(Karyawan::class,'id_karyawan','id');
-    }
+    protected $fillable = ['id_karyawan','id_jeniscuti','keperluan',
+                            'tgl_mulai','tgl_selesai','jml_cuti','status'
+                        ];
     
     public function jeniscutis(){
         return $this->belongsTo(Jeniscuti::class,'id_jeniscuti','id');

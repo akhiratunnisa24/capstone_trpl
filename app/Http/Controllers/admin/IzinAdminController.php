@@ -12,7 +12,7 @@ class IzinAdminController extends Controller
     public function show($id)
     {
         $izin = Izin::findOrFail($id);
-        $karyawan = Auth::user()->karyawans->id;
+        $karyawan = Auth::user()->id_pegawai;
  
         return view('admin.cuti.index',compact('izin','karyawan',['type'=>2]));
     }

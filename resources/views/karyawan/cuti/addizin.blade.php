@@ -10,16 +10,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">Form Permohonan Izin</h4>
                 </div> 
-                @if ($errors->any()) 
-                    <div class="alert alert-danger show" role="alert">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br> 
-                            <ul> 
-                                @foreach ($errors->all() as $error) 
-                                    <li>{{ $error }}</li> 
-                                @endforeach 
-                            </ul> 
-                    </div> 
-                @endif 
+        
                 <div class="modal-body">
                     <form class="input" action="{{ route('izinstore')}}" method="POST" enctype="multipart/form-data">
                         @csrf

@@ -1,5 +1,7 @@
 @extends('layouts.default')
 @section('content')
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
 <!-- Header -->
     <div class="row">
         <div class="col-lg-12">
@@ -49,20 +51,17 @@
                                                                     <td>{{$loop->iteration}}</td>
                                                                     <td>{{$data->jenis_cuti}}</td>
                                                                     <td class="text-center" > 
-                                                                        <form action="" method="POST"> 
+                                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                                             <a id="bs" class="btn btn-info btn-sm Modalshowcuti" data-toggle="modal" data-target="#Modalshowcuti{{$data->id}}">
                                                                                 <i class="fa fa-eye"></i>
                                                                             </a> 
                                                                             <a id="bs" class="btn btn-success btn-sm Modaleditcuti" data-toggle="modal" data-target="#Modaleditcuti{{$data->id}}">
                                                                                 <i class="fa fa-edit"></i>
                                                                             </a> 
-
-                                                                            @csrf 
-                                                                            @method('DELETE') 
-                                                                            <button id="bs" type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                                            <button onclick="cuti({{$data->id}})"  class="btn btn-danger btn-sm">
                                                                                 <i class="fa fa-trash"></i>
-                                                                            </button> 
-                                                                        </form> 
+                                                                            </button>
+                                                                        </div>
                                                                     </td> 
                                                                 </tr>
                                                                 {{-- modals show cuti --}}
@@ -115,20 +114,19 @@
                                                                     <td>{{$loop->iteration}}</td>
                                                                     <td>{{$data->jenis_izin}}</td>
                                                                     <td class="text-center"> 
-                                                                            {{-- {{ route('posts.edit',$post->id) }} --}}
-                                                                        <form action="" method="POST" id="bs"> 
-                                                                                <a id="bs" class="btn btn-info btn-sm Modalshowizin" data-toggle="modal" data-target="#Modalshowizin{{$data->id}}">
-                                                                                    <i class="fa fa-eye"></i>
-                                                                                </a> 
-                                                                                <a id="bs" class="btn btn-sm btn-success Modaleditizin" data-toggle="modal" data-target="#Modaleditizin{{$data->id}}">
-                                                                                    <i class="fa fa-edit"></i>
-                                                                                </a> 
-                                                                                @csrf 
-                                                                                @method('DELETE') 
-                                                                                <button id="bs" type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                                                                    <i class="fa fa-trash"></i>
-                                                                                </button> 
-                                                                        </form> 
+                                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                                            <a id="bs" class="btn btn-info btn-sm Modalshowizin" data-toggle="modal" data-target="#Modalshowizin{{$data->id}}">
+                                                                                <i class="fa fa-eye"></i>
+                                                                            </a> 
+                                                                            <a id="bs" class="btn btn-sm btn-success Modaleditizin" data-toggle="modal" data-target="#Modaleditizin{{$data->id}}">
+                                                                                <i class="fa fa-edit"></i>
+                                                                            </a> 
+                                                                            @csrf 
+                                                                            {{-- @method('DELETE') 
+                                                                            <button id="bs" type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </button>  --}}
+                                                                        </div>
                                                                     </td> 
                                                                 </tr>
                                                                 {{-- modals show izin --}}
@@ -172,10 +170,12 @@
     <!-- sweet alert -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    
     <!-- jangan lupa menambahkan script js sweet alert di bawah ini  -->
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
     {{-- Direct halaman tambah data --}}
     <script type="text/javascript">
@@ -197,7 +197,7 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= "http://localhost:8000/kategoridelete" ?>' + id;
+                    location.href = '<?= "http://localhost:8000/kategoridelete" ?>';
                 }
             })
         }

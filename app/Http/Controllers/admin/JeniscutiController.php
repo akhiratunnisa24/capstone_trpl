@@ -39,7 +39,6 @@ class JeniscutiController extends Controller
     public function update(Request $request, $id)
     {
         $jeniscuti = Jeniscuti::find($id);
-
         $jeniscuti->update($request->all());
 
         return redirect('/kategori_cuti');
@@ -48,6 +47,9 @@ class JeniscutiController extends Controller
 
     public function destroy($id)
     {
-        //
+        $jeniscuti = Jeniscuti::find($id);
+        $jeniscuti->delete();
+
+        return redirect('/kategori_cuti');
     }
 }

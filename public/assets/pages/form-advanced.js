@@ -16,11 +16,11 @@
         jQuery('#timepicker2').timepicker({showMeridian: false});
         jQuery('#timepicker3').timepicker({minuteStep: 15});
 
-        //colorpicker start
-        $('.colorpicker-default').colorpicker({
-            format: 'hex'
-        });
-        $('.colorpicker-rgba').colorpicker();
+        // //colorpicker start
+        // $('.colorpicker-default').colorpicker({
+        //     format: 'hex'
+        // });
+        // $('.colorpicker-rgba').colorpicker();
 
         // Date Picker
         jQuery('#datepicker').datepicker();
