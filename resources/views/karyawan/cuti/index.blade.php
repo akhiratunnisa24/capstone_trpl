@@ -51,7 +51,7 @@
                                                     </thead>
                                                     <tbody>
                                                         @foreach($cuti as $data)
-                                                            @if($data->id_pegawai == Auth::user()->karyawan->id)
+                                                            @if($data->id_karyawan == Auth::user()->id_pegawai)
                                                                 <tr>
                                                                     <td>{{$data->karyawans->nama}}</td>
                                                                     <td>{{$data->jeniscutis->jenis_cuti}}</td>
@@ -134,7 +134,7 @@
                                                     </thead>
                                                     <tbody>
                                                         @foreach($izin as $data)
-                                                            @if($data->id_karyawan == Auth::user()->karyawans->id)
+                                                            @if($data->id_karyawan == Auth::user()->id_pegawai)
                                                                 <tr>
                                                                     <td>{{$data->karyawans->nama}}</td>
                                                                     <td>{{$data->jenisizins->jenis_izin}}</td>

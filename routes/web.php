@@ -103,6 +103,7 @@ Route::get('/kategori_cuti', [JeniscutiController::class,'index'])->name('katego
 Route::post('/kategori_cuti', [JeniscutiController::class, 'store'])->name('kategori.store');
 Route::put('/cuti_update/{id}', [JeniscutiController::class, 'update'])->name('cuti_update');
 Route::get('/cuti_show/{id}', [JeniscutiController::class, 'show'])->name('cuti_show');
+Route::get('/kategoridelete/{id}', [JeniscutiController::class, 'destroy']) ->name('kategoridelete');
 
 //kategori izin
 Route::post('/kategori_izin', [JenisizinController::class, 'store'])->name('izin.store');

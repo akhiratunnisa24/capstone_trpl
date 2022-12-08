@@ -1,5 +1,7 @@
 {{-- FORM PENGAJUAN CUTI --}}
-    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
+<link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <div class="modal" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
@@ -94,7 +96,31 @@
         </div>
     </div>
   
-    <script type="text/javascript">
+     <!-- jQuery  -->
+     <script src="assets/js/jquery.min.js"></script>
+     <script src="assets/js/bootstrap.min.js"></script>
+     <script src="assets/js/modernizr.min.js"></script>
+     <script src="assets/js/detect.js"></script>
+     <script src="assets/js/fastclick.js"></script>
+     <script src="assets/js/jquery.slimscroll.js"></script>
+     <script src="assets/js/jquery.blockUI.js"></script>
+     <script src="assets/js/waves.js"></script>
+     <script src="assets/js/wow.min.js"></script>
+     <script src="assets/js/jquery.nicescroll.js"></script>
+     <script src="assets/js/jquery.scrollTo.min.js"></script>
+ 
+     {{-- plugin js --}}
+     <script src="assets/plugins/timepicker/bootstrap-timepicker.js"></script>
+     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+   
+     <!-- Datatable init js -->
+     <script src="assets/pages/datatables.init.js"></script>
+     <script src="assets/js/app.js"></script>
+ 
+     <!-- Plugins Init js -->
+     <script src="assets/pages/form-advanced.js"></script>
+
+     <script type="text/javascript">
         $('#datepicker-autoclosea').datepicker({
             autoclose: true,
         });
@@ -139,28 +165,5 @@
         };
     </script>
 
-     <!-- jQuery  -->
-     <script src="assets/js/jquery.min.js"></script>
-     <script src="assets/js/bootstrap.min.js"></script>
-     <script src="assets/js/modernizr.min.js"></script>
-     <script src="assets/js/detect.js"></script>
-     <script src="assets/js/fastclick.js"></script>
-     <script src="assets/js/jquery.slimscroll.js"></script>
-     <script src="assets/js/jquery.blockUI.js"></script>
-     <script src="assets/js/waves.js"></script>
-     <script src="assets/js/wow.min.js"></script>
-     <script src="assets/js/jquery.nicescroll.js"></script>
-     <script src="assets/js/jquery.scrollTo.min.js"></script>
- 
-     {{-- plugin js --}}
-     <script src="assets/plugins/timepicker/bootstrap-timepicker.js"></script>
-     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-   
-     <!-- Datatable init js -->
-     <script src="assets/pages/datatables.init.js"></script>
-     <script src="assets/js/app.js"></script>
- 
-     <!-- Plugins Init js -->
-     <script src="assets/pages/form-advanced.js"></script>
     
    

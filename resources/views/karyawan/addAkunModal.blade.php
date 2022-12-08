@@ -1,6 +1,5 @@
 <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
-
 <!-- MODAL BEGIN -->
 
 <!-- sample modal content -->

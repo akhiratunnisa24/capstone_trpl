@@ -40,8 +40,8 @@
                             <h3 class="panel-title">Data Absensi Karyawan</h3>
                         </div>
                         <div class="panel-body m-b-5">
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12">
+                            {{-- <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12"> --}}
                                     <table id="datatable-responsive3" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
                                         <thead>
                                             <tr>
@@ -68,8 +68,8 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
+                                {{-- </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
     </div> <!-- content -->
 
     {{-- Modal Import Data Excel --}}
-    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
+    <div class="modal fade" id="Modal" data-backdrop="-1" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -88,7 +88,7 @@
                 <form action="{{ route('importexcel') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div class="row mb-3">
+                        <div class="form-group">
                             <div class="col-lg-5">
                                 <input type="file" name="file" required>
                             </div>

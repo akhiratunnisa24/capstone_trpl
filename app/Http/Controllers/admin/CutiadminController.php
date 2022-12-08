@@ -23,7 +23,7 @@ class CutiadminController extends Controller
     public function show($id)
     {
         $cuti = Cuti::findOrFail($id);
-        $karyawan = Auth::user()->karyawans->id;
+        $karyawan = Auth::user()->id_pegawai;
  
         return view('admin.cuti.index',compact('cuti','karyawan'));
     }

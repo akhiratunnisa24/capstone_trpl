@@ -1,8 +1,8 @@
     {{-- FORM PENGAJUAN IZIN--}}
     {{-- bbootsrapt clockpicker  --}}
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
-    
+    <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
     <div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
@@ -10,16 +10,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">Form Permohonan Izin</h4>
                 </div> 
-                @if ($errors->any()) 
-                    <div class="alert alert-danger show" role="alert">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br> 
-                            <ul> 
-                                @foreach ($errors->all() as $error) 
-                                    <li>{{ $error }}</li> 
-                                @endforeach 
-                            </ul> 
-                    </div> 
-                @endif 
+        
                 <div class="modal-body">
                     <form class="input" action="{{ route('izinstore')}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -136,29 +127,34 @@
     <script src="assets/js/jquery.nicescroll.js"></script>
     <script src="assets/js/jquery.scrollTo.min.js"></script>
     {{--  plugin js --}}
+    <script src="assets/js/jquery.min.js"></script>
     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    {{-- clockpicker --}}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
     {{-- // Datatable init js  --}}
     <script src="assets/pages/datatables.init.js"></script>
     <script src="assets/js/app.js"></script>
     {{-- // Plugins Init js --}}
     <script src="assets/pages/form-advanced.js"></script>
-        
-    <script type="text/javascript">
+
+    <script>
         //show clockpicker 
-        jQuery(function(j){
-            j('.clockpicker').clockpicker()
+        jQuery(function($){
+            $('.clockpicker').clockpicker()
                 .find('input').change(function()
                 {
                     console.log(this.value);
                 });
-            var input = j('#single-input').clockpicker({
+            var input = $('#single-input').clockpicker({
                 placement: 'bottom',
                 align: 'left',
                 autoclose: true,
                 'default': 'now'
             });
         });
-    
+    </script>
+        
+    <script type="text/javascript">
         //show/hide clockpicker when id_jenisizin selected
         $(function()
         {

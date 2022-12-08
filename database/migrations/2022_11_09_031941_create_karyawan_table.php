@@ -17,9 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->integer('nip')->nullable();
-
-            $table->integer('nik')->nullable();
-            
+            $table->string('nik')->nullable();
             $table->string('nama')->nullable();
             $table->string('tgllahir')->nullable();           
             $table->string('email')->unique();         
@@ -28,14 +26,14 @@ return new class extends Migration
             $table->enum('jenis_kelamin',['L','P']);
             $table->text('alamat')->nullable();
             $table->text('no_hp')->nullable();
-            $table->enum('status_karyawan',['Tetap','Kontrak','Probation']);
-            $table->enum('tipe_karyawan',['Fulltime','Freelance','Magang']);
+            $table->enum('status_karyawan',['Tetap','Kontrak','Probation'])->nullable();
+            $table->enum('tipe_karyawan',['Fulltime','Freelance','Magang'])->nullable();
 
-            $table->integer('no_kk');
-            $table->enum('status_kerja',['Aktif','Non-Aktif']);
+            $table->integer('no_kk')->nullable();
+            $table->enum('status_kerja',['Aktif','Non-Aktif'])->nullable();
             $table->integer('cuti_tahunan')->nullable();
             $table->string('divisi')->nullable();
-            $table->integer('no_rek');
+            $table->integer('no_rek')->nullable();
             $table->integer('no_bpjs_kes')->nullable();
             $table->integer('no_npwp')->nullable();
             $table->integer('no_bpjs_ket')->nullable();
@@ -44,8 +42,8 @@ return new class extends Migration
             $table->string('gaji')->nullable();
 
 
-            $table->date('tglmasuk');
-            $table->date('tglkeluar');
+            $table->date('tglmasuk')->nullable();
+            $table->date('tglkeluar')->nullable();
 
             $table->timestamps();
         });

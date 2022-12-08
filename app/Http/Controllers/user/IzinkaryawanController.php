@@ -18,7 +18,8 @@ class IzinkaryawanController extends Controller
 
     public function store(Request $request)
     {
-        $karyawan = Auth::user()->karyawans->id;
+        $karyawan = Auth::user()->id_pegawai;
+        // $karyawan = Auth::user()->karyawans->id;
         // dd($request->all());
         if($request->id_jenisizin == 1 || $request->id_jenisizin == 2)
         {
@@ -84,7 +85,7 @@ class IzinkaryawanController extends Controller
     public function show($id)
     {
         $izin = Izin::findOrFail($id);
-        $karyawan = Auth::user()->karyawans->id;
+        $karyawan = Auth::user()->id_pegawai;
 
         return view('karyawan.kategori.index',compact('cuti','karyawan'));
     }

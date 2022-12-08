@@ -33,16 +33,10 @@ class AbsensiController extends Controller
         return view('admin.absensi.index',compact('absensi'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        
         // $absensi=Absensi::where('id_user',Auth::user()->id)
-        $absensi=Absensi::where('id_karyawan',Auth::user()->id)
+        $absensi=Absensi::where('id_karyawan',Auth::user()->id_pegawai)
         ->whereDate('tanggal', Carbon::now()->format("Y-m-d"))
         ->first();//untuk memunculkan data absen pagi dengan pengecekan tanggal
 
@@ -51,20 +45,11 @@ class AbsensiController extends Controller
         return view('karyawan.absensi.absensi_karyawan',compact('absensi','jk'));
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //ambil data karyawan dari tabel user dan pengecekan ke tabel karyawan
-        $karyawan = Auth::user()->karyawans->id;
+        $karyawan = Auth::user()->id_pegawai;
         // dd($karyawan);
-        // $krywn = Karyawan::where('id',$karyawan)->first();
-       
 
         //mencari nilai keterlambatan karyawan
         $jdm = "08:00:00";
@@ -74,26 +59,36 @@ class AbsensiController extends Controller
 
         //kalau pakai button, tidak perlu adanya validasi, yg memakai validasi adalah data yg diambil dengan menggunakan form
         $absensi = New Absensi;
-        //$absensi->id_user = Auth::id();-> data user dari tabel user
-        $absensi->id_karyawan = $karyawan;
-        $absensi->tanggal= Carbon::now()->format("Y-m-d");
-        $absensi->jam_masuk = $jmas;
-        $absensi->jam_keluar = null;
-        $absensi->jam_kerja = null;
-        $absensi->terlambat = $tl;
-        $absensi->plg_cepat = null;
-       
+        $absensi->id_karyawan  = $karyawan;
+        $absensi->nik          = null;
+        $absensi->tanggal      = Carbon::now()->format("Y-m-d");
+        $absensi->shift        = 'NORMAL';
+        $absensi->jadwal_masuk = $jdm;
+        $absensi->jadwal_pulang= null;
+        $absensi->jam_masuk    = $jmas;
+        $absensi->jam_keluar   = null;
+        $absensi->normal       = '1';
+        $absensi->riil         = '0';
+        $absensi->terlambat    = $tl;
+        $absensi->plg_cepat    = null;
+        $absensi->absent       = null;
+        $absensi->lembur       = null;
+        $absensi->jml_jamkerja = null;
+        $absensi->pengecualian = null;
+        $absensi->hci          = 'True';
+        $absensi->hco          = 'True';
+        $absensi->id_departemen= 'KONVENSIONAL';
+        $absensi->h_normal     = 0;
+        $absensi->ap           = 0;
+        $absensi->hl           = 0;
+        $absensi->jam_kerja    = $tl;
+        $absensi->lemhanor     = 0;
+        $absensi->lemakpek     = 0;
+        $absensi->lemhali      = 0;
         $absensi->save();
         return redirect()->back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $absensi = Absensi::where('id',$id)->first(); //mendapatkan data absensi berdasarkan id masing2 user
@@ -112,6 +107,7 @@ class AbsensiController extends Controller
 
         //update data abbsensi
         Absensi::where('id',$id)->update([
+            'jadwal_pulang' => $jdp,
             'jam_keluar' => $jk,
             'jam_kerja' =>$diff,
             'plg_cepat' =>$plcpt,
