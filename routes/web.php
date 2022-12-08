@@ -33,6 +33,7 @@ use App\Http\Controllers\user\IzinkaryawanController;
 */
 Auth::routes();
 
+// Dashboard
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 Route::post('/registrasi', [App\Http\Controllers\HomeController::class, 'registrasi'])->name('registrasi');
 

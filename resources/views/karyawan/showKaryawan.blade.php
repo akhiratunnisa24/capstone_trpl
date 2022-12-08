@@ -199,7 +199,7 @@
 
 
     <div class="modal-footer">
-        <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
+        <a href="karyawandashboard" class="btn btn-sm btn-danger">Kembali</a>
     </div>
 </div>
 

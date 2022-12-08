@@ -31,11 +31,11 @@
 
                             <ul class="nav navbar-nav navbar-right pull-right">
                                 <li class="dropdown hidden-xs">
-                                    <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
+                                    {{-- <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
                                         <i class="fa fa-bell"></i> <span class="badge badge-xs badge-danger">3</span>
-                                    </a>
+                                    </a> --}}
                                     <ul class="dropdown-menu dropdown-menu-lg">
-                                        <li class="text-center notifi-title">Notification <span class="badge badge-xs badge-success">3</span></li>
+                                        <li class="text-center notifi-title">Pemberitahuan <span class="badge badge-xs badge-success">3</span></li>
                                         <li class="list-group">
                                            <!-- list item-->
                                            <a href="javascript:void(0);" class="list-group-item">
@@ -75,12 +75,18 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <?php
+            
+                                use Illuminate\Support\Facades\Auth;
+                                $id = Auth::user()->id_pegawai;
+                                { ?>
+
                                 <li class="dropdown">
                                     <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="{{ !empty($row->foto) ? asset('Foto_Profile/' . $row->foto) : asset('assets/images/users/avatar-1.jpg') }}" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0)"> Profile</a></li>
+                                        <li><a href="showkaryawan{{$id}}"> Profile</a></li>
                                         <li><a href="javascript:void(0)"><span class="badge badge-success pull-right">5</span> Settings </a></li>
-                                        <li><a href="javascript:void(0)"> Lock screen</a></li>
+                                        {{-- <li><a href="javascript:void(0)"> Lock screen</a></li> --}}
                                         <li class="divider"></li>
                                     
                                         <li><a href="{{ route('logout') }}"
@@ -94,6 +100,7 @@
                                        
                                     </ul>
                                 </li>
+                                <?php  } ?>
                             </ul>
                         </div>
                         <!--/.nav-collapse -->

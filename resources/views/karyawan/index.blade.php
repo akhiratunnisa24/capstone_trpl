@@ -31,7 +31,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading  col-sm-15 m-b-10">
 
-                        <a href="karyawancreate" type="button" class="btn btn-sm btn-dark " >Tambah Karyawan</a>
+                        <a href="karyawancreate" type="button" class="btn btn-sm btn-dark " >Tambah Data Karyawan</a>
                         <!-- <a href="{{ route('register') }}" type="button" class="btn btn-sm btn-dark " >Buat Akun Karyawan</a> -->
                         
                         <a type="button" class="btn btn-sm btn-dark " data-toggle="modal" data-target="#myModal" >Buat Akun Karyawan</a>

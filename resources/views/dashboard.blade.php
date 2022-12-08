@@ -21,11 +21,11 @@
 <div class="row">
   <div class="col-sm-6 col-lg-3">
     <div class="panel panel-primary text-center">
-      <div class="panel-heading">
-        <h4 class="panel-title">Pengajuan Cuti dan Izin Bulan Ini</h4>
+      <div class="panel-heading btn-info">
+        <h4 class="panel-title ">Cuti dan Izin Bulan Ini</h4>
       </div>
       <div class="panel-body">
-        <h3 class=""><b>2568</b></h3>
+        <h3 class=""><b>{{$totalCuti}}</b></h3>
         <p class="text-muted"><b>Total Pengajuan Cuti dan Izin </b> </p>
       </div>
     </div>
@@ -33,7 +33,7 @@
   
   <div class="col-sm-6 col-lg-3">
     <div class="panel panel-primary text-center">
-      <div class="panel-heading">
+      <div class="panel-heading btn-warning">
         <h4 class="panel-title">Dinas Luar Kota Bulan Ini</h4>
       </div>
       <div class="panel-body">
@@ -45,7 +45,7 @@
   
   <div class="col-sm-6 col-lg-3">
     <div class="panel panel-primary text-center">
-      <div class="panel-heading">
+      <div class="panel-heading btn-success">
         <h4 class="panel-title">Absen Masuk Hari Ini</h4>
       </div>
       <div class="panel-body">
@@ -57,7 +57,7 @@
   
   <div class="col-sm-6 col-lg-3">
     <div class="panel panel-primary text-center">
-      <div class="panel-heading">
+      <div class="panel-heading btn-danger">
         <h4 class="panel-title">Absen Tidak Masuk Hari Ini</h4>
       </div>
       <div class="panel-body">
@@ -71,19 +71,19 @@
 <div class="row">
   <div class="col-sm-6 col-lg-3">
     <div class="panel panel-primary text-center">
-      <div class="panel-heading">
-        <h4 class="panel-title">Pengajuan Cuti dan Izin Bulan Lalu</h4>
+      <div class="panel-heading btn-info">
+        <h4 class="panel-title">Cuti dan Izin Bulan Lalu</h4>
       </div>
       <div class="panel-body">
         <h3 class=""><b>68</b></h3>
-        <p class="text-muted"><b>Total Pengajuan Cuti dan Izin</b> </p>
+        <p class="text-muted"><b>Total Cuti dan Izin</b> </p>
       </div>
     </div>
   </div>
   
   <div class="col-sm-6 col-lg-3">
     <div class="panel panel-primary text-center">
-      <div class="panel-heading">
+      <div class="panel-heading btn-warning">
         <h4 class="panel-title">Dinas Luar Kota Bulan Lalu</h4>
       </div>
       <div class="panel-body">
@@ -95,8 +95,8 @@
   
   <div class="col-sm-6 col-lg-3">
     <div class="panel panel-primary text-center">
-      <div class="panel-heading">
-        <h4 class="panel-title">Absen Masuk Bulan Lalu note:% </h4>
+      <div class="panel-heading btn-success">
+        <h4 class="panel-title">Absen Masuk Bulan Lalu</h4>
       </div>
       <div class="panel-body">
         <h3 class=""><b>50</b></h3>
@@ -107,8 +107,8 @@
   
   <div class="col-sm-6 col-lg-3">
     <div class="panel panel-primary text-center">
-      <div class="panel-heading">
-        <h4 class="panel-title">Absen Tidak Masuk Bulan Lalu note:%</h4>
+      <div class="panel-heading btn-danger">
+        <h4 class="panel-title">Absen Tidak Masuk Bulan Lalu </h4>
       </div>
       <div class="panel-body">
         <h3 class=""><b>10</b></h3>
@@ -122,8 +122,8 @@
   <!-- BAR Chart -->
   <div class="col-lg-12">
     <div class="panel panel-border panel-info">
-      <div class="panel-heading">
-        <h3 class="panel-title">Pengajuan Cuti dan Izin</h3>
+      <div class="panel-heading ">
+        <h3 class="panel-title text-white">Cuti dan Izin</h3>
       </div>
       <div class="panel-body">
         <div id="morris-bar-example" style="height: 300px"></div>
@@ -135,7 +135,7 @@
   <div class="col-lg-12">
     <div class="panel panel-border panel-warning">
       <div class="panel-heading">
-        <h3 class="panel-title">Dinas Luar Kota</h3>
+        <h3 class="panel-title text-white">Dinas Luar Kota</h3>
       </div>
       <div class="panel-body">
         <div id="morris-bar-example2" style="height: 300px"></div>
@@ -147,7 +147,7 @@
   <div class="col-lg-12">
     <div class="panel panel-border panel-success">
       <div class="panel-heading">
-        <h3 class="panel-title">Absen Masuk</h3>
+        <h3 class="panel-title text-white">Absen Masuk</h3>
       </div>
       <div class="panel-body">
         <div id="morris-bar-example3" style="height: 300px"></div>
@@ -159,7 +159,7 @@
   <div class="col-lg-12">
     <div class="panel panel-border panel-danger">
       <div class="panel-heading">
-        <h3 class="panel-title">Absen Tidak Masuk</h3>
+        <h3 class="panel-title text-white">Absen Tidak Masuk</h3>
       </div>
       <div class="panel-body">
         <div id="morris-bar-example4" style="height: 300px"></div>

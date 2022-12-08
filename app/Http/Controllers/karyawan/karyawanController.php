@@ -16,6 +16,20 @@ use Illuminate\Support\Facades\Hash;
 
 class karyawanController extends Controller
 {
+     /**
+         * Create a new controller instance.
+         *
+         * @return void
+         */
+        public function __construct()
+        {
+            $this->middleware('auth');
+        }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     
     public function index()
     {
@@ -31,9 +45,12 @@ class karyawanController extends Controller
     public function karyawanDashboard()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $cuti = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         
         $output = [
-            'row' => $row
+            'row' => $row,
+            'cuti' => $cuti
+
         ];
         return view('karyawan.dashboardKaryawan', $output);
     }
@@ -398,8 +415,13 @@ class karyawanController extends Controller
                     $kdarurat = Kdarurat::where('id_pegawai', $id )->first();
                     $rpendidikan = Rpendidikan::where('id_pegawai', $id)->first();
                     $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->first();
+                    $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
                     
-                    return view('karyawan.edit')->with([
+                    $output = [
+                        'row' => $row
+                    ];
+                    
+                    return view('karyawan.edit', $output)->with([
                         'karyawan' => $karyawan,
                         'keluarga' => $keluarga,
                         'kdarurat' => $kdarurat,
@@ -531,7 +553,13 @@ class karyawanController extends Controller
                     $kdarurat = Kdarurat::where('id_pegawai', $id )->first();
                     $rpendidikan = Rpendidikan::where('id_pegawai', $id)->first();
                     $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->first();
-                    return view('karyawan.show')->with([
+                    $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+                    $output = [
+                        'row' => $row
+                    ];
+                  
+                    return view('karyawan.show', $output)->with([
                         'karyawan' => $karyawan,
                         'keluarga' => $keluarga,
                         'kdarurat' => $kdarurat,

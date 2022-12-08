@@ -42,16 +42,20 @@ class HomeController extends Controller
     {
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $totalCuti = Karyawan::all()->sum('cuti_tahunan');
+
         if ($role == 1){
             
             $output = [
-                'row' => $row
+                'row' => $row,
+                'totalCuti' => $totalCuti
             ];
             return view('dashboard', $output);
+
         }else{
             
             $output = [
-                'row' => $row
+                'row' => $row,
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }

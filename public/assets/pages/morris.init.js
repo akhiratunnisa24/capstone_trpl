@@ -85,71 +85,140 @@
 
         //creating bar chart Pengajuan Cuti dan Izin
         var $barData  = [
-            { y: 'Januari', a: 100, b: 90 },
-            { y: 'Februari', a: 75,  b: 65 },
-            { y: 'Maret', a: 50,  b: 40 },
-            { y: 'April', a: 75,  b: 65 },
+            { y: 'Jan', a: 100, b: 90 },
+            { y: 'Feb', a: 75,  b: 65 },
+            { y: 'Mar', a: 50,  b: 40 },
+            { y: 'Apr', a: 75,  b: 65 },
             { y: 'Mei', a: 50,  b: 40 },
-            { y: 'Juni', a: 75,  b: 65 },
-            { y: 'Juli', a: 100, b: 90 },
-            { y: 'Agustus', a: 100, b: 90 },
-            { y: 'September', a: 100, b: 90 },
-            { y: 'Oktober', a: 100, b: 90 },
-            { y: 'November', a: 100, b: 90 },
-            { y: 'Desember', a: 100, b: 90 }
+            { y: 'Jun', a: 75,  b: 65 },
+            { y: 'Jul', a: 100, b: 90 },
+            { y: 'Agu', a: 100, b: 90 },
+            { y: 'Sept', a: 100, b: 90 },
+            { y: 'Okt', a: 100, b: 90 },
+            { y: 'Nov', a: 100, b: 90 },
+            { y: 'Des', a: 100, b: 90 }
         ];
         this.createBarChart('morris-bar-example', $barData, 'y', ['a', 'b'], ['Bulan Ini', 'Bulan Lalu'], ['#18bae2', '#dcdcdc']);
 
         //creating bar chart Dinas Luar Kota
         var $barData  = [
-            { y: 'Januari', a: 74, b: 53 },
-            { y: 'Februari', a: 64,  b: 65 },
-            { y: 'Maret', a: 34,  b: 98 },
-            { y: 'April', a: 52,  b: 32 },
+            { y: 'Jan', a: 74, b: 53 },
+            { y: 'Feb', a: 64,  b: 65 },
+            { y: 'Mar', a: 34,  b: 98 },
+            { y: 'Apr', a: 52,  b: 32 },
             { y: 'Mei', a: 50,  b: 40 },
-            { y: 'Juni', a: 75,  b: 65 },
-            { y: 'Juli', a: 35, b: 90 },
-            { y: 'Agustus', a: 56, b: 87 },
-            { y: 'September', a: 64, b: 98 },
-            { y: 'Oktober', a: 63, b: 73 },
-            { y: 'November', a: 73, b: 45 },
-            { y: 'Desember', a: 63, b: 53 }
+            { y: 'Jun', a: 75,  b: 65 },
+            { y: 'Jul', a: 35, b: 90 },
+            { y: 'Agu', a: 56, b: 87 },
+            { y: 'Sept', a: 64, b: 98 },
+            { y: 'Okt', a: 63, b: 73 },
+            { y: 'Nov', a: 73, b: 45 },
+            { y: 'Des', a: 63, b: 53 }
         ];
         this.createBarChart('morris-bar-example2', $barData, 'y', ['a', 'b'], ['Bulan Ini', 'Bulan Lalu'], ['#f8ca4e', '#dcdcdc']);
 
         //creating bar chart Absen Masuk
         var $barData  = [
-            { y: 'Januari', a: 74, b: 53 },
-            { y: 'Februari', a: 64,  b: 65 },
-            { y: 'Maret', a: 34,  b: 98 },
-            { y: 'April', a: 52,  b: 32 },
+            { y: 'Jan', a: 74, b: 53 },
+            { y: 'Feb', a: 64,  b: 65 },
+            { y: 'Mar', a: 34,  b: 98 },
+            { y: 'Apr', a: 52,  b: 32 },
             { y: 'Mei', a: 50,  b: 40 },
-            { y: 'Juni', a: 75,  b: 65 },
-            { y: 'Juli', a: 35, b: 90 },
-            { y: 'Agustus', a: 56, b: 87 },
-            { y: 'September', a: 64, b: 98 },
-            { y: 'Oktober', a: 63, b: 73 },
-            { y: 'November', a: 73, b: 45 },
-            { y: 'Desember', a: 63, b: 53 }
+            { y: 'Jun', a: 75,  b: 65 },
+            { y: 'Jul', a: 35, b: 90 },
+            { y: 'Agu', a: 56, b: 87 },
+            { y: 'Sept', a: 64, b: 98 },
+            { y: 'Okt', a: 63, b: 73 },
+            { y: 'Nov', a: 73, b: 45 },
+            { y: 'Des', a: 63, b: 53 }
         ];
         this.createBarChart('morris-bar-example3', $barData, 'y', ['a', 'b'], ['Bulan Ini', 'Bulan Lalu'], ['#01ba9a', '#dcdcdc']);
 
         //creating bar chart Absen Tidak Masuk
         var $barData  = [
-            { y: 'Januari', a: 74, b: 53 },
-            { y: 'Februari', a: 64,  b: 65 },
-            { y: 'Maret', a: 34,  b: 98 },
-            { y: 'April', a: 52,  b: 32 },
+            { y: 'Jan', a: 74, b: 53 },
+            { y: 'Feb', a: 64,  b: 65 },
+            { y: 'Mar', a: 34,  b: 98 },
+            { y: 'Apr', a: 52,  b: 32 },
             { y: 'Mei', a: 50,  b: 40 },
-            { y: 'Juni', a: 75,  b: 65 },
-            { y: 'Juli', a: 35, b: 90 },
-            { y: 'Agustus', a: 56, b: 87 },
-            { y: 'September', a: 64, b: 98 },
-            { y: 'Oktober', a: 63, b: 73 },
-            { y: 'November', a: 73, b: 45 },
-            { y: 'Desember', a: 63, b: 53 }
+            { y: 'Jun', a: 75,  b: 65 },
+            { y: 'Jul', a: 35, b: 90 },
+            { y: 'Agu', a: 56, b: 87 },
+            { y: 'Sept', a: 64, b: 98 },
+            { y: 'Okt', a: 63, b: 73 },
+            { y: 'Nov', a: 73, b: 45 },
+            { y: 'Des', a: 63, b: 53 }
         ];
         this.createBarChart('morris-bar-example4', $barData, 'y', ['a', 'b'], ['Bulan Ini', 'Bulan Lalu'], ['#f62f37', '#dcdcdc']);
+        // Grafik Karyawan
+
+         //creating bar chart Cuti dan Izin Karyawan
+         var $barData  = [
+            { y: 'Jan', a: 74, b: 53 },
+            { y: 'Feb', a: 64,  b: 65 },
+            { y: 'Mar', a: 34,  b: 98 },
+            { y: 'Apr', a: 52,  b: 32 },
+            { y: 'Mei', a: 50,  b: 40 },
+            { y: 'Jun', a: 75,  b: 65 },
+            { y: 'Jul', a: 35, b: 90 },
+            { y: 'Agu', a: 56, b: 87 },
+            { y: 'Sept', a: 64, b: 98 },
+            { y: 'Okt', a: 63, b: 73 },
+            { y: 'Nov', a: 73, b: 45 },
+            { y: 'Des', a: 63, b: 53 }
+        ];
+        this.createBarChart('morris-bar-example5', $barData, 'y', ['a', 'b'], ['Bulan Ini', 'Bulan Lalu'], ['#18bae2', '#dcdcdc']);
+
+        //creating bar chart Dinas Luar Kota Karyawan
+        var $barData  = [
+            { y: 'Jan', a: 74, b: 53 },
+            { y: 'Feb', a: 64,  b: 65 },
+            { y: 'Mar', a: 34,  b: 98 },
+            { y: 'Apr', a: 52,  b: 32 },
+            { y: 'Mei', a: 50,  b: 40 },
+            { y: 'Jun', a: 75,  b: 65 },
+            { y: 'Jul', a: 35, b: 90 },
+            { y: 'Agu', a: 56, b: 87 },
+            { y: 'Sept', a: 64, b: 98 },
+            { y: 'Okt', a: 63, b: 73 },
+            { y: 'Nov', a: 73, b: 45 },
+            { y: 'Des', a: 63, b: 53 }
+        ];
+        this.createBarChart('morris-bar-example6', $barData, 'y', ['a', 'b'], ['Bulan Ini', 'Bulan Lalu'], ['#f8ca4e', '#dcdcdc']);
+
+        //creating bar chart Absen Masuk Karyawan
+        var $barData  = [
+            { y: 'Jan', a: 74, b: 53 },
+            { y: 'Feb', a: 64,  b: 65 },
+            { y: 'Mar', a: 34,  b: 98 },
+            { y: 'Apr', a: 52,  b: 32 },
+            { y: 'Mei', a: 50,  b: 40 },
+            { y: 'Jun', a: 75,  b: 65 },
+            { y: 'Jul', a: 35, b: 90 },
+            { y: 'Agu', a: 56, b: 87 },
+            { y: 'Sept', a: 64, b: 98 },
+            { y: 'Okt', a: 63, b: 73 },
+            { y: 'Nov', a: 73, b: 45 },
+            { y: 'Des', a: 63, b: 53 }
+        ];
+        this.createBarChart('morris-bar-example7', $barData, 'y', ['a', 'b'], ['Bulan Ini', 'Bulan Lalu'], ['#01ba9a', '#dcdcdc']);
+
+        //creating bar chart Absen Tidak Masuk Karyawan
+        var $barData  = [
+            { y: 'Jan', a: 74, b: 53 },
+            { y: 'Feb', a: 64,  b: 65 },
+            { y: 'Mar', a: 34,  b: 98 },
+            { y: 'Apr', a: 52,  b: 32 },
+            { y: 'Mei', a: 50,  b: 40 },
+            { y: 'Jun', a: 75,  b: 65 },
+            { y: 'Jul', a: 35, b: 90 },
+            { y: 'Agu', a: 56, b: 87 },
+            { y: 'Sept', a: 64, b: 98 },
+            { y: 'Okt', a: 63, b: 73 },
+            { y: 'Nov', a: 73, b: 45 },
+            { y: 'Des', a: 63, b: 53 }
+        ];
+        this.createBarChart('morris-bar-example8', $barData, 'y', ['a', 'b'], ['Bulan Ini', 'Bulan Lalu'], ['#f62f37', '#dcdcdc']);
 
         //creating donut chart
         var $donutData = [
