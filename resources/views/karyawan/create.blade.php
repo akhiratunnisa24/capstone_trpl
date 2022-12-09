@@ -84,9 +84,20 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1" class="form-label">Divisi</label>
+                                    <select class="form-control" name="divisi" required>
+                                        <option value="">Pilih Divisi</option>
+                                        <option value="KONVENSIONAL">KONVENSIONAL</option>
+                                        <option value="KEUANGAN">KEUANGAN</option>
+                                        <option value="TEKNOLOGI INFORMASI">TEKNOLOGI INFORMASI</option>
+                                        <option value="HUMAN RESOURCE">HUMAN RESOURCE</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                        <textarea class="form-control" name="alamatKaryawan" rows="9"></textarea><br>
+                                        <textarea class="form-control" name="alamatKaryawan" rows="5"></textarea><br>
                                     </div>
                                 </div>
 

@@ -10,5 +10,13 @@ class Departemen extends Model
     use HasFactory;
 
     protected $table='departemen';
-    protected $fillable=['departemen'];
+    protected $fillable=['departemen']; 
+    
+    public function karyawans()
+    {
+        return $this->hasMany(Karyawan::class, 
+            'departemen',
+        );
+    }
+
 }

@@ -18,94 +18,84 @@
                     </div> 
                 @endif 
                 <div class="modal-body">
-                    <form class="input" action="" method="POST" enctype="multipart/form-data">
+                    <form class="input" action="{{ route('setting_alokasi.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="panel-body">
                             <div class="col-md-6">
                                 <div class="form-group col-sm" id="jenicuti">
                                     <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
-                                    <select name="id_jenisizin" id="id_jenisizin" class="form-control">
-                                        <option value="">-- Pilih Kategori --</option>
-                                        <option value="1">Cuti Tahunan</option>
-                                        <option value="2">Cuti Melahirkan</option>
-                                        <option value="3">Cuti Keluarga Meninggal</option>
-                                        <option value="4">Cuti Menikahkan Anak</option>
-                                    </select>
-                                     {{-- @foreach ($jenisizin as $data)
-                                            <option value="{{ $data->id}}" 
-                                                {{-- {{ old('id_jenisizin') == $data->id ? 'selected' : '' }}
-                                                >{{ $data->jenis_izin }}
+                                    <select name="id_jeniscuti" id="id_jeniscuti" class="form-control">
+                                        <option value="">Pilih Kategori Cuti</option>
+                                        @foreach ($jeniscuti as $data)
+                                            <option value="{{ $data->id}}"
+                                                @if ($data->id ==request()->id_jeniscuti)
+                                                selected
+                                                @endif
+                                                >{{ $data->jenis_cuti }}
                                             </option>
-                                        @endforeach --}}
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="tipe_alokasi" class="col-form-label">Tipe Alokasi</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div class="radio">
-                                            <input type="radio" name="tipe_alokasi" id="radio1" value="Reguler" checked>
-                                            <label for="tipe_alokasi">
-                                                Reguler
-                                            </label>
-                                        </div>
-                                        <div class="radio">
-                                            <input type="radio" name="tipe_alokasi" id="radio2" value="Aktual">
-                                            <label for="tipe_alokasi">
-                                                Aktual
-                                            </label>
-                                        </div>
-                                    </div>
+                                <div class="form-group col-sm">
+                                    <label for="tipe_alokasi" class="col-form-label">Tipe Alokasi</label>
+                                    <select name="tipe_alokasi" id="tipe_alokasi" class="form-control">
+                                        <option value="">Pilih Tipe Alokasi</option>
+                                        <option value="Reguler">Reguler</option>
+                                        <option value="Aktual">Aktual</option>
+                                    </select>
                                 </div>
-                                <div class="form-group" id="duration">
+                                <div class="form-group">
                                     <label for="durasi" class="col-form-label">Durasi</label>
-                                    <input type="number" class="form-control" name="durasi" id="durasi">
+                                    <input type="number" class="form-control" name="durasi" placeholder="durasi" id="durasi">
                                 </div>
                             </div>
 
-                            <div class="col-md-6" id="modealokasi">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-group col-sm" id="modealokasi">
-                                        <label for="mode" class="col-form-label">Mode Alokasi</label>
-                                        <select name="mode" id="mode" class="form-control">
-                                            <option value="">-- Pilih Mode Alokasi --</option>
+                                        <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
+                                        <select name="mode_alokasi" id="mode_alokasi" class="form-control">
+                                            <option value="">Pilih Mode Alokasi</option>
                                             <option value="Berdasarkan Departemen">Berdasarkan Departemen</option>
                                             <option value="Berdasarkan Karyawan">Berdasarkan Karyawan</option>
                                         </select>
                                     </div> 
                                 </div>
+                                
                                 <div class="form-group col-sm" id="mode_departemen">
-                                    <label for="id_departemen" class="col-form-label">Departemen</label>
-                                    <select name="id_departemen" id="id_departemen" class="form-control">
-                                        <option value="">-- Pilih Departemen --</option>
+                                    <label for="departemen" class="col-form-label">Departemen</label>
+                                    <select name="departemen" id="departemen" class="form-control">
+                                        <option value="">Pilih Departemen</option>
                                         <option value="KONVENSIONAL">KONVENSIONAL</option>
-                                        <option value="IT DEPARTEMEN">IT DEPARTEMEN</option>
                                         <option value="KEUANGAN">KEUANGAN</option>
+                                        <option value="TEKNOLOGI INFORMASI">TEKNOLOGI INFORMASI</option>
+                                        <option value="HUMAN RESOURCE">HUMAN RESOURCE</option>
                                     </select>
-                                </div> <div class="form-group col-sm" id="mode_employee">
-                                    <label for="tags" class="col-form-label">Karyawan</label>
-                                    <select name="tags" id="tags" class="form-control">
-                                        <option value="">-- Pilih  --</option>
+                                </div> 
+                                <div class="form-group col-sm" id="mode_employee">
+                                    <label for="mode_karyawan" class="col-form-label">Karyawan</label>
+                                    <select name="mode_karyawan" id="mode_karyawan" class="form-control">
+                                        <option value="">Pilih</option>
                                         <option value="Jenis Kelamin">Jenis Kelamin</option>
                                         <option value="Status">Status</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-sm" id="jk_employee">
-                                    <label for="tags" class="col-form-label">Jenis Kelamin</label>
-                                    <select name="tags" id="tags" class="form-control">
+                                    <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin</label>
+                                    <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
                                         <option value="">-- Pilih Jenis Kelamin --</option>
-                                        <option value="Laki-laki">Laki-laki</option>
-                                        <option value="Perempuan">Perempuan</option>
+                                        <option value="L">Laki-laki</option>
+                                        <option value="P">Perempuan</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group col-sm" id="sm_employee">
-                                    <label for="tags" class="col-form-label">Stat. Menikah</label>
-                                    <select name="tags" id="tags" class="form-control">
-                                        <option value="">-- Pilih Status Menikah --</option>
-                                        <option value="Sudah">Sudah</option>
-                                        <option value="Belum">Belum</option>
+                                    <label for="status_pernikahan" class="col-form-label">Status Pernikahan</label>
+                                    <select name="status_pernikahan" id="status_pernikahan" class="form-control">
+                                        <option value="">Pilih Status Menikah</option>
+                                        <option value="Sudah">Sudah Menikah</option>
+                                        <option value="Belum">Belum Menikah</option>
                                     </select>
                                 </div>
                             </div>
@@ -148,43 +138,36 @@
             $('#jk_employee').prop("hidden", true);
             $('#sm_employee').prop("hidden", true);
 
-            $('#modealokasi').on('change', function(e)
+            $('#modealokasi').on('change', function(b)
             {
-                if(e.target.value== 'Berdasarkan Departemen')
-                {
-                    $('#mode_departemen').prop("hidden", false);
-                    $('#mode_employee').prop("hidden", true);
-                    $('#jk_employee').prop("hidden", true);
-                    $('#sm_employee').prop("hidden", true);
-                }
-                if(e.target.value== 'Berdasarkan Karyawan')
+                if(b.target.value== 'Berdasarkan Karyawan')
                 {
                     $('#mode_departemen').prop("hidden", true);
                     $('#mode_employee').prop("hidden", false);
 
-                    $('#mode_employee').on('change', function(a)
+                    $('#mode_employee').on('change', function(c)
                     {
-                        if(a.target.value== 'Jenis Kelamin')
+                        if(c.target.value== 'Jenis Kelamin')
                         {
                             $('#jk_employee').prop("hidden", false);
                             $('#sm_employee').prop("hidden", true);
                         }
-                        if(a.target.value== 'Status')
+                        if(c.target.value== 'Status')
                         {
                             $('#jk_employee').prop("hidden", true);
                             $('#sm_employee').prop("hidden", false);
                         }
                     });
                 }
-                // }else
-                // {
-                //     $('#mode_departemen').prop("hidden", false);
-                //     $('#mode_employee').prop("hidden", true);
-                // }
+                if(b.target.value== 'Berdasarkan Departemen')
+                {
+                    $('#mode_departemen').prop("hidden", false);
+                    $('#mode_employee').prop("hidden", true);
+                    $('#jk_employee').prop("hidden", true);
+                    $('#sm_employee').prop("hidden", true);
+                }
             });
         });
-
-
     </script>
 
 

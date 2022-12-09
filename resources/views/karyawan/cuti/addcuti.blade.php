@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-group col-sm">
                             <label for="keperluan" class="col-form-label">Keperluan</label>
-                            <input type="text" class="form-control" name="keperluan" id="keperluan" required>
+                            <input type="text" class="form-control" name="keperluan" id="keperluan" placeholder="Masukkan keperluan" required>
                         </div>
 
                         <div class="row">

@@ -25,7 +25,7 @@
                             <h4 for="" class="col-form-label">Opsi</h4>
                             <div class="form-group" id="kode">
                                 <label for="code_p" class="col-form-label">Kode</label>
-                                <input type="text" class="form-control" name="code_p" id="code_p">
+                                <input type="text" class="form-control" name="code_p" id="code_p" placeholder="Masukkan Kode">
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
@@ -33,21 +33,21 @@
                                 </div>
                                 <div class="col-md-9">
                                     <div class="radio">
-                                        <input type="radio" name="take_timeoff1" id="radio1" value="Day" checked>
+                                        <input type="radio" name="take_timeoff1" id="radio1" value="Harian" checked>
                                         <label for="take_timeoff">
-                                            Day
+                                            Harian
                                         </label>
                                     </div>
                                     <div class="radio">
-                                        <input type="radio" name="take_timeoff2" id="radio2" value="Half Day">
+                                        <input type="radio" name="take_timeoff2" id="radio2" value="Setengah Hari">
                                         <label for="take_timeoff">
-                                            Half Day
+                                            Setengah Hari
                                         </label>
                                     </div>
                                     <div class="radio">
-                                        <input type="radio" name="take_timeoff3" id="radio3" value="Hours">
+                                        <input type="radio" name="take_timeoff3" id="radio3" value="Per Jam">
                                         <label for="take_timeoff">
-                                            Hours
+                                            Per Jam
                                         </label>
                                     </div>
                                 </div>
@@ -59,28 +59,28 @@
                                 </div>
                                 <div class="col-md-9">
                                     <div class="radio">
-                                        <input type="radio" name="take_timeoff4" id="radio4" value="Day" checked>
+                                        <input type="radio" name="take_timeoff4" id="radio4" value="Tanpa Batas" checked>
                                         <label for="take_timeoff">
-                                            No Limit
+                                            Tanpa Batas
                                         </label>
                                     </div>
                                     <div class="radio">
-                                        <input type="radio" name="take_timeoff5" id="radio5" value="Half Day">
+                                        <input type="radio" name="take_timeoff5" id="radio5" value="Izinkan Permintaan Karyawan">
                                         <label for="take_timeoff">
-                                           Allow Employee Request
+                                            Izinkan Permintaan Karyawan
                                         </label>
                                     </div>
                                     <div class="radio">
-                                        <input type="radio" name="take_timeoff6" id="radio6" value="Hours">
+                                        <input type="radio" name="take_timeoff6" id="radio6" value="Berdasarkan Jam Kantor">
                                         <label for="take_timeoff">
-                                            Set By Time Office
+                                            Berdasarkan Jam Kantor
                                         </label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group" id="responsible">
                                 <label for="respon" class="col-form-label">Responsible</label>
-                                <input type="text" class="form-control" name="respon" id="respon">
+                                <input type="text" class="form-control" name="respon" id="respon" placeholder="Responsible">
                             </div>
                         </div>
 
@@ -113,25 +113,25 @@
                                     <div class="radio">
                                         <input type="radio" name="take_timeoff7" id="radio7" value="No Validation" checked>
                                         <label for="take_timeoff">
-                                            No Validation
+                                            Tanpa Validasi
                                         </label>
                                     </div>
                                     <div class="radio">
-                                        <input type="radio" name="take_timeoff8" id="radio8" value="By time off officer">
+                                        <input type="radio" name="take_timeoff8" id="radio8" value=" Berdasarkan Cuti Karyawan">
                                         <label for="take_timeoff">
-                                           By time off officer
+                                           Berdasarkan Cuti Karyawan
                                         </label>
                                     </div>
                                     <div class="radio">
-                                        <input type="radio" name="take_timeoff9" id="radio9" value="HBy Employees Manager">
+                                        <input type="radio" name="take_timeoff9" id="radio9" value="Oleh Manager Karyawan">
                                         <label for="take_timeoff">
-                                            By Employees Manager
+                                            Oleh Manager Karyawan
                                         </label>
                                     </div>
                                     <div class="radio">
-                                        <input type="radio" name="take_timeoff9" id="radio9" value="By Employees Manager & Time off officer">
+                                        <input type="radio" name="take_timeoff9" id="radio9" value="Oleh Manajer Karyawan & Petugas cuti">
                                         <label for="take_timeoff">
-                                            By Employees Manager & Time off officer
+                                            Oleh Manajer Karyawan & Petugas cuti
                                         </label>
                                     </div>
                                 </div>

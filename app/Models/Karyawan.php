@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Departemen;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Karyawan extends Model
 {
@@ -77,8 +78,11 @@ class Karyawan extends Model
         return $this->hasOne(User::class,'id_user','id');
     }
 
-    public function departemens(){
-        return $this->belongsTo(Departemen::class,'id_departemen','id');
+    public function departemens()
+    {
+        return $this->belongsTo(Departemen::class, 
+        'divisi',
+        'id',
+        'departemen',);
     }
-
 }
