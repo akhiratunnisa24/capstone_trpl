@@ -84,6 +84,15 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1" class="form-label">Jabatan</label>
+                                    <select class="form-control" name="jabatanKaryawan" required>
+                                        <option value="">Pilih Jabatan</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Staff">Staff IT</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Alamat</label>
                                         <textarea class="form-control" name="alamatKaryawan" rows="9"></textarea><br>
@@ -118,6 +127,16 @@
                                             <label for="exampleInputEmail1" class="form-label">Agama</label>
                                             <input type="text" name="agamaKaryawan" class="form-control" placeholder="Masukkan Agama" required>
                                             <div class="form-text"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label">Tanggal Masuk</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose2" name="tglmasukKaryawan" rows="10" required></input><br>
+                                                <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -445,7 +464,7 @@
                                                                                         <div class="form-group">
                                                                                             <div class="mb-3">
                                                                                                 <label for="exampleInputEmail1" class="form-label"> Jabatan</label>
-                                                                                                <input type="text" name="jabatan" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Jabatan" required>
+                                                                                                <input type="text" name="jabatanRpkerejaan" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Jabatan" required>
                                                                                                 <div id="emailHelp" class="form-text"></div>
                                                                                             </div>
                                                                                         </div>
