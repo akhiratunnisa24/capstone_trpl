@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
+use App\Models\Cuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -42,13 +45,17 @@ class HomeController extends Controller
     {
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $totalCuti = Karyawan::all()->sum('cuti_tahunan');
+        // $cutiPerbulan = Cuti::where('id_jeniscuti',1)->whereMonth('tgl_mulai','12')->sum('jml_cuti');
+        $cutiPerbulan = Cuti::whereMonth('created_at', '=', Carbon::now()->month)->sum('jml_cuti');
+        $cutiBulanlalu = Cuti::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->sum('jml_cuti');
 
         if ($role == 1){
             
             $output = [
                 'row' => $row,
-                'totalCuti' => $totalCuti
+                'cutiPerbulan'=>$cutiPerbulan,
+                'cutiBulanlalu' => $cutiBulanlalu
+
             ];
             return view('dashboard', $output);
 
@@ -59,9 +66,8 @@ class HomeController extends Controller
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }
-        
-        
     }
+    
     public function cuti()
     {
         return view('cuti');

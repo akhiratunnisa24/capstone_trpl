@@ -77,11 +77,11 @@
 
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Tanggal Masuk</label>
-                        <input id="datepicker-autoclose2" class="form-control" name="tglmasuk" rows="10" value="{{$k->tglmasuk}}"></input><br>
+                        <input id="" class="form-control" name="tglmasuk" rows="10" value="{{$k->tglmasuk}}"></input><br>
                     </div>
 
                     <div class="mb-3">                        
-                        <input type="hidden" class="form-control" name="tglkeluar" rows="10" value="{{$k->tglkeluar}}" id="datepicker-autoclose2" disabled></input><br>
+                        <input type="hidden" class="form-control" name="tglkeluar" rows="10" value="{{$k->tglkeluar}}" id="" disabled></input><br>
                     </div>
 
                     <div class="modal-footer">
