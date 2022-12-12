@@ -12,92 +12,47 @@ class SettingalokasicutiController extends Controller
 {
     public function index()
     {
+        $settingalokasi = Settingalokasi::all();
         $jeniscuti= Jeniscuti::all();
-        return view('admin.settingcuti.setting_index', compact('jeniscuti'));
+        return view('admin.settingcuti.setting_index', compact('settingalokasi','jeniscuti'));
     } 
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $settingalokasi = New Settingalokasi;
-        $settingalokasi->id_jeniscuti= $request->id_jeniscuti;
-        $settingalokasi->tipe_alokasi= $request->tipe_alokasi;
-        $settingalokasi->durasi      = $request->durasi;
-        $settingalokasi->mode_alokasi= $request->mode_alokasi;
-        $settingalokasi->departemen   = $request->departemen; 
-        $settingalokasi->mode_karyawan=$request->mode_karyawan;
-        $settingalokasi->jenis_kelamin=$request->jenis_kelamin; 
-        $settingalokasi->status_pernikahan= $request->status; 
-        $settingalokasi->save();
-         dd($settingalokasi);
-        return redirect()->back()->withInput();
-       
-        // if(isset($request->mode_alokasi) === 'Berdasarkan Karyawan')
-        // {
-        //     // dd($reques);
-        //     if($request->mode_karyawan ='Jenis Kelamin')
-        //     {
-        //         $validate = $request->validate([
-        //             'id_jeniscuti' => 'required',
-        //             'tipe_alokasi' => 'required',
-        //             'durasi'       => 'required',
-        //             'mode_alokasi' => 'required',
-        //             'mode_karyawan'=> 'required',
-        //             'jenis_kelamin'=> 'required',
-        //         ]);
-            
-        //     // dd($validate);
-        //     $settingalokasi = New Settingalokasi;
-        //     $settingalokasi->id_jeniscuti= $request->id_jeniscuti;
-        //     $settingalokasi->tipe_alokasi= $request->tipe_alokasi;
-        //     $settingalokasi->durasi      = $request->durasi;
-        //     $settingalokasi->mode_alokasi= $request->mode_alokasi;
-        //     $settingalokasi->mode_karyawan=$request->mode_karyawan;
-        //     $settingalokasi->jenis_kelamin=$request->jenis_kelamin; 
-        //     $settingalokasi->save();
-        //      // dd($settingalokasi);
-        //     return redirect()->back()->withInput();
 
-        //     } else
-        //         {
-        //             $validate = $request->validate([
-        //                 'id_jeniscuti' => 'required',
-        //                 'tipe_alokasi' => 'required',
-        //                 'durasi'       => 'required',
-        //                 'mode_alokasi' => 'required',
-        //                 'mode_karyawan'=> 'required',
-        //                 'status'       => 'required',
-        //             ]);
-        //         // dd($validate);
-        //             $settingalokasi = New Settingalokasi;
-        //             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
-        //             $settingalokasi->tipe_alokasi = $request->tipe_alokasi;
-        //             $settingalokasi->durasi       = $request->durasi;
-        //             $settingalokasi->mode_alokasi = $request->mode_alokasi;
-        //             $settingalokasi->mode_karyawan= $request->mode_karyawan;
-        //             $settingalokasi->status       = $request->status; 
-        //             $settingalokasi->save();
-        //             // dd($settingalokasi);
-        //             return redirect()->back()->withInput();
-        //         }
-        // }else
-        // {
-        //     $validate = $request->validate([
-        //         'id_jeniscuti' => 'required',
-        //         'tipe_alokasi' => 'required',
-        //         'durasi'       => 'required',
-        //         'mode_alokasi' => 'required',
-        //         'departemen'   => 'required',
-        //     ]);
-        //     //  dd($validate);
-        //     $settingalokasi = New Settingalokasi;
-        //     $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
-        //     $settingalokasi->tipe_alokasi = $request->tipe_alokasi;
-        //     $settingalokasi->durasi       = $request->durasi;
-        //     $settingalokasi->mode_alokasi = $request->mode_alokasi;
-        //     $settingalokasi->departemen   = $request->departemen; 
-        //     $settingalokasi->save();
-        //     // dd($settingalokasi);
-        //     return redirect()->back()->withInput();
-        // }     
+        $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
+        $settingalokasi->tipe_alokasi = $request->tipe_alokasi;
+        $settingalokasi->durasi       = $request->durasi;
+        $settingalokasi->mode_alokasi = $request->mode_alokasi;
+        $settingalokasi->departemen   = $request->departemen; 
+        $settingalokasi['mode_karyawan']= json_encode($request->mode_karyawan);
+
+        $settingalokasi->save();
+        
+        return redirect()->back()->withInput();
+    }
+
+    public function show($id)
+    {
+        $settingalokasi = Settingalokasi::find($id);
+        return view('admin.settingcuti.showsetting',compact('settingalokasi'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $settingalokasi = Settingalokasi::find($id);
+        $settingalokasi->update($request->all());
+
+        return redirect('/settingalokasi');
+    }
+
+    public function destroy($id)
+    {
+        $settingalokasi = Settingalokasi::find($id);
+        $settingalokasi->delete();
+
+        return redirect('/settingalokasi');
     }
 }

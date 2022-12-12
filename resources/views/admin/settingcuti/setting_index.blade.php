@@ -1,5 +1,7 @@
 @extends('layouts.default')
 @section('content')
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
@@ -23,53 +25,52 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <a href="" class="btn btn-dark" data-toggle="modal" data-target="#newsetting">Form Setting</a>
-                            <a href="" class="btn btn-dark" data-toggle="modal" data-target="#editsetting">Edit Setting</a>
-                            <a href="" class="btn btn-dark" data-toggle="modal" data-target="#showsetting">View Detail</a>
                         </div>
                         {{-- form setting --}}
                         @include('admin.settingcuti.formsetting')
-                        @include('admin.settingcuti.editsetting')
-                        @include('admin.settingcuti.showsetting')
                         
                         <div class="panel-body m-b-5">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <table  id="datatable-responsive3" class="table dt-responsive table-striped table-bordered" width="100%">
+                                    <table  id="datatable-responsive3" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Kategori Cuti</th>
                                                 <th scope="col">Tipe Alokasi</th>
                                                 <th scope="col">Durasi</th>
-                                                <th scope="col">Mode</th>
-                                                <th scope="col">Nama Mode</th>
+                                                <th scope="col">Mode Alokasi</th>
+                                                <th scope="col">Departemen</th>
+                                                <th scope="col">Mode Karyawan</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @foreach($absensi as $data) --}}
+                                            @foreach($settingalokasi as $data)
                                                 <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>{{$data->jeniscutis->jenis_cuti}}</td>
+                                                    <td>{{$data->tipe_alokasi}}</td>
+                                                    <td>{{$data->durasi}}</td>
+                                                    <td>{{$data->mode_alokasi}}</td>
+                                                    <td>{{$data->departemen}}</td>
+                                                    <td>{{$data->mode_karyawan}}</td>
                                                     <td class="text-center"> 
-                                                        <form action="" method="POST" id="bs"> 
-                                                            <a id="bs" class="btn btn-info btn-sm Modalshowdetail" data-toggle="modal" data-target="#showdetail">
+                                                        <div class="row">
+                                                            <a id="bs" class="btn btn-info btn-sm Modalshowsetting" data-toggle="modal" data-target="#Modalshowsetting{{$data->id}}">
                                                                 <i class="fa fa-eye"></i>
                                                             </a> 
-                                                            <a id="bs" class="btn btn-sm btn-success Modaleditalokasi" data-toggle="modal" data-target="#editalokasi">
+                                                            <a id="bs" class="btn btn-sm btn-success editsetting" data-toggle="modal" data-target="#editsetting{{$data->id}}">
                                                                 <i class="fa fa-edit"></i>
                                                             </a> 
-                                                            @csrf 
-                                                            @method('DELETE') 
-                                                            <button id="bs" type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                            <button onclick="settingalokasi({{$data->id}})"  class="btn btn-danger btn-sm">
                                                                 <i class="fa fa-trash"></i>
                                                             </button> 
-                                                        </form> 
+                                                        </div> 
                                                     </td> 
                                                 </tr>
-                                            {{-- @endforeach --}}
+                                                 {{-- modals show setting --}}
+                                                 @include('admin.settingcuti.showsetting')
+                                                 @include('admin.settingcuti.editsetting')
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -82,7 +83,7 @@
     </div> <!-- content -->
     
     <!-- jQuery  -->
-    <script src="assets/js/jquery.min.js"></script>
+    {{-- <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/modernizr.min.js"></script>
     <script src="assets/js/detect.js"></script>
@@ -92,10 +93,53 @@
     <script src="assets/js/waves.js"></script>
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script> --}}
 
     <!-- Datatable init js -->
     <script src="assets/pages/datatables.init.js"></script>
 
     <script src="assets/js/app.js"></script>
+     <!-- sweet alert -->
+     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+     
+     <!-- jangan lupa menambahkan script js sweet alert di bawah ini  -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+ 
+      {{-- Direct halaman tambah data --}}
+    <script type="text/javascript">
+        function settingalokasi(id){
+            swal.fire({
+                title:"Apakah anda yakin?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swal.fire({
+                        title : "Terhapus!",
+                        text: "Data berhasil di hapus..",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                    })
+                    location.href = '<?= "http://localhost:8000/kategoridelete" ?>';
+                }
+            })
+        }
+    </script>
+
+     <?php if(@$_SESSION['sukses']){ ?>
+        <script>
+            swal.fire("Good job!", "<?php echo $_SESSION['sukses']; ?>", "success");
+        </script>
+    <!-- jangan lupa untuk menambahkan unset agar sweet alert tidak muncul lagi saat di refresh -->
+    
+    <?php unset($_SESSION['sukses']); } ?>
 @endsection
