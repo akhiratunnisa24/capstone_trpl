@@ -20,9 +20,7 @@ return new class extends Migration
             $table->integer('durasi');
             $table->string('mode_alokasi',50)->nullable();
             $table->string('departemen',50)->nullable();
-            $table->string('mode_karyawan',50)->nullable();
-            $table->enum('jenis_kelamin',['L','P'])->nullable();
-            $table->string('status_pernikahan')->nullable();
+            $table->string('mode_karyawan',100)->nullable();
             $table->timestamps();
 
             $table->foreign('id_jeniscuti')->references('id')->on('jeniscuti')->onDelete('cascade');

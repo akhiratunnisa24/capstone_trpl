@@ -114,6 +114,11 @@ Route::get('/izin_show/{id}', [JenisizinController::class, 'show'])->name('izin_
 //alokasi & setting cuti
 Route::get('/settingalokasi', [SettingalokasicutiController::class, 'index'])->name('setting_alokasi.index');
 Route::post('/settingalokasi', [SettingalokasicutiController::class, 'store'])->name('setting_alokasi.store');
+//Route::get('/showsettingalokasi/{id}', [SettingalokasicutiController::class, 'show'])->name('showsettingalokasi');
+Route::get('/settingalokasi/{id}', [SettingalokasicutiController::class, 'destroy']) ->name('deletesetting');
+Route::put('/updatesettingalokasi/{id}', [SettingalokasicutiController::class, 'update'])->name('updatesettingalokasi');
+
+
 
 Route::get('/alokasicuti', [AlokasicutiController::class, 'index'])->name('alokasi.index');
 

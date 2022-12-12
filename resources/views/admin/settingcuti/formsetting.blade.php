@@ -50,10 +50,9 @@
                                     <input type="number" class="form-control" name="durasi" placeholder="durasi" id="durasi">
                                 </div>
                             </div>
-
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <div class="form-group col-sm" id="modealokasi">
+                                    <div class="form-group col-sm" id="modalokasi">
                                         <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
                                         <select name="mode_alokasi" id="mode_alokasi" class="form-control">
                                             <option value="">Pilih Mode Alokasi</option>
@@ -62,7 +61,6 @@
                                         </select>
                                     </div> 
                                 </div>
-                                
                                 <div class="form-group col-sm" id="mode_departemen">
                                     <label for="departemen" class="col-form-label">Departemen</label>
                                     <select name="departemen" id="departemen" class="form-control">
@@ -75,27 +73,13 @@
                                 </div> 
                                 <div class="form-group col-sm" id="mode_employee">
                                     <label for="mode_karyawan" class="col-form-label">Karyawan</label>
-                                    <select name="mode_karyawan" id="mode_karyawan" class="form-control">
-                                        <option value="">Pilih</option>
-                                        <option value="Jenis Kelamin">Jenis Kelamin</option>
-                                        <option value="Status">Status</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-sm" id="jk_employee">
-                                    <label for="jenis_kelamin" class="col-form-label">Jenis Kelamin</label>
-                                    <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
-                                        <option value="">-- Pilih Jenis Kelamin --</option>
+                                    <select id="mode_karyawan" name="mode_karyawan[]" multiple="multiple" class="form-control">
+                                        {{-- <option value=""> ----- Pilih -----</option> --}}
                                         <option value="L">Laki-laki</option>
                                         <option value="P">Perempuan</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group col-sm" id="sm_employee">
-                                    <label for="status_pernikahan" class="col-form-label">Status Pernikahan</label>
-                                    <select name="status_pernikahan" id="status_pernikahan" class="form-control">
-                                        <option value="">Pilih Status Menikah</option>
                                         <option value="Sudah">Sudah Menikah</option>
                                         <option value="Belum">Belum Menikah</option>
+                                        <option value=">= 1 Tahun">>= 1 Tahun</option>
                                     </select>
                                 </div>
                             </div>
@@ -113,15 +97,8 @@
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/modernizr.min.js"></script>
-    <script src="assets/js/detect.js"></script>
-    <script src="assets/js/fastclick.js"></script>
-    <script src="assets/js/jquery.slimscroll.js"></script>
-    <script src="assets/js/jquery.blockUI.js"></script>
-    <script src="assets/js/waves.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/jquery.nicescroll.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     {{-- // Datatable init js  --}}
     <script src="assets/pages/datatables.init.js"></script>
@@ -135,43 +112,25 @@
         {
             $('#mode_departemen').prop("hidden", true);
             $('#mode_employee').prop("hidden", true);
-            $('#jk_employee').prop("hidden", true);
-            $('#sm_employee').prop("hidden", true);
-
-            $('#modealokasi').on('change', function(b)
+        
+            $('#modalokasi').on('change', function(a)
             {
-                if(b.target.value== 'Berdasarkan Karyawan')
-                {
-                    $('#mode_departemen').prop("hidden", true);
-                    $('#mode_employee').prop("hidden", false);
-
-                    $('#mode_employee').on('change', function(c)
-                    {
-                        if(c.target.value== 'Jenis Kelamin')
-                        {
-                            $('#jk_employee').prop("hidden", false);
-                            $('#sm_employee').prop("hidden", true);
-                        }
-                        if(c.target.value== 'Status')
-                        {
-                            $('#jk_employee').prop("hidden", true);
-                            $('#sm_employee').prop("hidden", false);
-                        }
-                    });
-                }
-                if(b.target.value== 'Berdasarkan Departemen')
+                if(a.target.value== 'Berdasarkan Departemen')
                 {
                     $('#mode_departemen').prop("hidden", false);
                     $('#mode_employee').prop("hidden", true);
-                    $('#jk_employee').prop("hidden", true);
-                    $('#sm_employee').prop("hidden", true);
+                }
+                if(a.target.value== 'Berdasarkan Karyawan')
+                {
+                    $('#mode_departemen').prop("hidden", true);
+                    $('#mode_employee').prop("hidden", false);
                 }
             });
         });
+       
+        $(document).ready(function () {
+            $("#mode_karyawan").select2();
+        });
     </script>
-
-
-    
-
     
              
