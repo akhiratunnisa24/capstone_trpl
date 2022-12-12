@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group">
                             <label for="keperluan" class="col-form-label">Keperluan</label>
-                            <input type="text" class="form-control" name="keperluan" id="keperluan">
+                            <input type="text" class="form-control" name="keperluan" placeholder="Masukkan keperluan" id="keperluan">
                         </div>
 
                         <div class="row">

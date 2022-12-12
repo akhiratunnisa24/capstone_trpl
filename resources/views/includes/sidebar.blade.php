@@ -28,6 +28,9 @@
                         <a href="/" class="waves-effect"><i class="ti-home"></i><span> Dashboard HRD </span></a>
                     </li>
                     <li>
+                        <a href="/absensi_karyawan" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>Absensi HRD</span></a>
+                    </li>
+                    <li>
                         <a href="{{ route('karyawan.index') }}" class="waves-effect"><i class="mdi mdi-account-multiple"></i><span>Data Karyawan</span></a>
                     </li>
                     {{-- <li>
@@ -69,10 +72,10 @@
                             <a href="karyawandashboard" class="waves-effect"><i class="ti-home"></i><span> Dashboard Karyawan </span></a>
                         </li>
                         <li>
-                            <a href="showkaryawan{{$id}}" class="waves-effect"><i class="mdi mdi-account-multiple"></i><span>Profile Karyawan</span></a>
+                            <a href="/absensi_karyawan" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>Absensi</span></a>
                         </li>
                         <li>
-                            <a href="/absensi_karyawan" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>Absensi</span></a>
+                            <a href="showkaryawan{{$id}}" class="waves-effect"><i class="mdi mdi-account-multiple"></i><span>Profile Karyawan</span></a>
                         </li>
                         <li>
                             <a href="/cuti_karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Cuti & Izin</span></a>

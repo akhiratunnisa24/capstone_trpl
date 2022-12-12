@@ -40,8 +40,8 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <strong>Data Permintaan Cuti</strong>
-                                            <a href="/settingalokasi" class="btn btn-dark btn-sm">Setting Alokasi</a>
-                                            <a href="/alokasicuti" class="btn btn-dark btn-sm">Alokasi Cuti</a>
+                                            <a href="/settingalokasi" class="btn btn-dark">Setting Alokasi</a>
+                                            <a href="/alokasicuti" class="btn btn-dark">Alokasi Cuti</a>
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">

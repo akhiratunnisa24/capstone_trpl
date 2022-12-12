@@ -32,16 +32,14 @@
                     <div class="panel-heading  col-sm-15 m-b-10">
 
                         <a href="karyawancreate" type="button" class="btn btn-sm btn-dark " >Tambah Data Karyawan</a>
-                        <!-- <a href="{{ route('register') }}" type="button" class="btn btn-sm btn-dark " >Buat Akun Karyawan</a> -->
-                        
                         <a type="button" class="btn btn-sm btn-dark " data-toggle="modal" data-target="#myModal" >Buat Akun Karyawan</a>
                         {{-- <a type="button" class="btn btn-sm btn-dark " href="{{ route('register') }}" >Buat Akun Karyawan</a> --}}
-                        
                         <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_menu">Add Staff</button> -->
+                        <!-- <a href="{ route('register') }}" type="button" class="btn btn-sm btn-dark " >Buat Akun Karyawan</a> -->
                     </div>
                     @include('karyawan.addAkunModal')
                     <div class="panel-body">
-                        <table id="datatable" class="table table-striped table-bordered ">
+                        <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                             <thead >
                                 <tr>
@@ -52,6 +50,7 @@
                                     <th>Alamat</th>
                                     <th>Email</th>
                                     <th>Agama</th>
+                                    <th>Departemen</th>
                                     <th>Action</th>
 
                                     <?php $no = 1 ?>
@@ -69,6 +68,7 @@
                                     <td>{{$k->alamat}}</td>
                                     <td>{{$k->email}}</td>
                                     <td>{{$k->agama}}</td>
+                                    <td>{{$k->divisi}}</td>
                                     <td>
                                         <div class="d-grid gap-2 " role="group" aria-label="Basic example">
 
@@ -80,7 +80,7 @@
                                             </button>
                                             
                                                     <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
-                                                
+ 
                                     </td>               
                     </div>
                 </div>
