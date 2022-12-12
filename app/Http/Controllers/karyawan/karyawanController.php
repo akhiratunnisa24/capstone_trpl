@@ -200,6 +200,8 @@ class karyawanController extends Controller
                             'nik' => $request->post('nikKaryawan'),
                             'gol_darah' => $request->post('gol_darahKaryawan'),
                             'foto' => $namaFile,
+                            'jabatan' => $request->post('jabatanKaryawan'),
+                            'tglmasuk' => $request->post('tglmasukKaryawan'),
                             'created_at' => new \DateTime(),
                             'updated_at' => new \DateTime(),
                             
@@ -215,9 +217,8 @@ class karyawanController extends Controller
                             'no_npwp' => $request->post('no_npwp'),
                             'no_bpjs_ket' => $request->post('no_bpjs_ket'),
                             'kontrak' => $request->post('kontrak'),
-                            'jabatan' => $request->post('jabatan'),
                             'gaji' => $request->post('gaji'),
-                            'tglmasuk' => $request->post('tglmasuk'),
+                            
                             'tglkeluar' => $request->post('tglkeluar'),
                         ); 
                         
@@ -266,7 +267,7 @@ class karyawanController extends Controller
                             'nama_perusahaan' => $request->post('namaPerusahaan'),
                             'alamat' => $request->post('alamatPerusahaan'),
                             'jenis_usaha' => $request->post('jenisUsaha'),
-                            'jabatan' => $request->post('jabatan'),
+                            'jabatan' => $request->post('jabatanRpkerejaan'),
                             'nama_atasan' => $request->post('namaAtasan'),
                             'nama_direktur' => $request->post('namaDirektur'),
                             'lama_kerja' => $request->post('lamaKerja'),
@@ -315,6 +316,8 @@ class karyawanController extends Controller
                             'agama' => $request->post('agamaKaryawan'),
                             'nik' => $request->post('nikKaryawan'),
                             'gol_darah' => $request->post('gol_darahKaryawan'),
+                            'jabatan' => $request->post('jabatanKaryawan'),
+                            'tglmasuk' => $request->post('tglmasukKaryawan'),
                             'created_at' => new \DateTime(),
                             'updated_at' => new \DateTime(),
                             
@@ -330,9 +333,8 @@ class karyawanController extends Controller
                             'no_npwp' => $request->post('no_npwp'),
                             'no_bpjs_ket' => $request->post('no_bpjs_ket'),
                             'kontrak' => $request->post('kontrak'),
-                            'jabatan' => $request->post('jabatan'),
+                            
                             'gaji' => $request->post('gaji'),
-                            'tglmasuk' => $request->post('tglmasuk'),
                             'tglkeluar' => $request->post('tglkeluar'),
                         ); 
                         
@@ -376,7 +378,7 @@ class karyawanController extends Controller
                             'nama_perusahaan' => $request->post('namaPerusahaan'),
                             'alamat' => $request->post('alamatPerusahaan'),
                             'jenis_usaha' => $request->post('jenisUsaha'),
-                            'jabatan' => $request->post('jabatan'),
+                            'jabatan' => $request->post('jabatanRpkerejaan'),
                             'nama_atasan' => $request->post('namaAtasan'),
                             'nama_direktur' => $request->post('namaDirektur'),
                             'lama_kerja' => $request->post('lamaKerja'),
