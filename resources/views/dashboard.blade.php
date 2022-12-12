@@ -33,24 +33,24 @@
 
         <div class="col-sm-6 col-lg-3">
             <div class="panel panel-primary text-center">
-                <div class="panel-heading btn-warning">
-                    <h4 class="panel-title">Dinas Luar Kota Bulan Ini</h4>
+                <div class="panel-heading btn-success">
+                    <h4 class="panel-title">Absen Masuk Hari Ini</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>666</b></h3>
-                    <p class="text-muted"><b>Total Dinas Keluar Kota </b> </p>
+                    <h3 class=""><b>{{ $absenHariini }}</b></h3>
+                    <p class="text-muted"><b>Total Absen Masuk </b> </p>
                 </div>
             </div>
         </div>
 
         <div class="col-sm-6 col-lg-3">
             <div class="panel panel-primary text-center">
-                <div class="panel-heading btn-success">
-                    <h4 class="panel-title">Absen Masuk Hari Ini</h4>
+                <div class="panel-heading btn-warning">
+                    <h4 class="panel-title">Terlambat Hari Ini</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>77</b></h3>
-                    <p class="text-muted"><b>Total Absen Masuk </b> </p>
+                    <h3 class=""><b>{{ $absenTerlambat }}</b></h3>
+                    <p class="text-muted"><b>Lorem Ipsum </b> </p>
                 </div>
             </div>
         </div>
@@ -61,11 +61,12 @@
                     <h4 class="panel-title">Absen Tidak Masuk Hari Ini</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>14</b></h3>
+                    <h3 class=""><b>{{ $absenTidakmasuk }}</b></h3>
                     <p class="text-muted"><b>Total Absen Tidak Masuk </b> </p>
                 </div>
             </div>
         </div>
+
     </div>
 
     <div class="row">
@@ -83,24 +84,24 @@
 
         <div class="col-sm-6 col-lg-3">
             <div class="panel panel-primary text-center">
-                <div class="panel-heading btn-warning">
-                    <h4 class="panel-title">Dinas Luar Kota Bulan Lalu</h4>
+                <div class="panel-heading btn-success">
+                    <h4 class="panel-title">Absen Masuk Bulan Lalu</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>444</b></h3>
-                    <p class="text-muted"><b>Total Dinas Keluar Kota </b> </p>
+                    <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
+                    <p class="text-muted"><b>Total Absen Masuk</b> </p>
                 </div>
             </div>
         </div>
 
         <div class="col-sm-6 col-lg-3">
             <div class="panel panel-primary text-center">
-                <div class="panel-heading btn-success">
-                    <h4 class="panel-title">Absen Masuk Bulan Lalu</h4>
+                <div class="panel-heading btn-warning">
+                    <h4 class="panel-title">Terlambat Bulan Lalu</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>50</b></h3>
-                    <p class="text-muted"><b>Total Absen Masuk</b> </p>
+                    <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
+                    <p class="text-muted"><b>Lorem Ipsum </b> </p>
                 </div>
             </div>
         </div>
@@ -116,6 +117,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <div class="row">
@@ -133,24 +135,24 @@
 
         <!-- BAR Chart -->
         <div class="col-lg-12">
-            <div class="panel panel-border panel-warning">
-                <div class="panel-heading">
-                    <h3 class="panel-title text-white">Dinas Luar Kota</h3>
-                </div>
-                <div class="panel-body">
-                    <div id="morris-bar-example2" style="height: 300px"></div>
-                </div>
-            </div>
-        </div> <!-- col -->
-
-        <!-- BAR Chart -->
-        <div class="col-lg-12">
             <div class="panel panel-border panel-success">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white">Absen Masuk</h3>
                 </div>
                 <div class="panel-body">
                     <div id="morris-bar-example3" style="height: 300px"></div>
+                </div>
+            </div>
+        </div> <!-- col -->
+
+        <!-- BAR Chart -->
+        <div class="col-lg-12">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white">Lorem Ipsum</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="morris-bar-example2" style="height: 300px"></div>
                 </div>
             </div>
         </div> <!-- col -->

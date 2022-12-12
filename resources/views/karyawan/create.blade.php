@@ -84,13 +84,6 @@
                                 </div>
 
                                 <div class="form-group">
-<<<<<<<<< Temporary merge branch 1
-                                    <label for="exampleInputEmail1" class="form-label">Jabatan</label>
-                                    <select class="form-control" name="jabatanKaryawan" required>
-                                        <option value="">Pilih Jabatan</option>
-                                        <option value="Manager">Manager</option>
-                                        <option value="Staff">Staff IT</option>
-=========
                                     <label for="exampleInputEmail1" class="form-label">Divisi</label>
                                     <select class="form-control" name="divisi" required>
                                         <option value="">Pilih Divisi</option>
@@ -98,7 +91,15 @@
                                         <option value="KEUANGAN">KEUANGAN</option>
                                         <option value="TEKNOLOGI INFORMASI">TEKNOLOGI INFORMASI</option>
                                         <option value="HUMAN RESOURCE">HUMAN RESOURCE</option>
->>>>>>>>> Temporary merge branch 2
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1" class="form-label">Jabatan</label>
+                                    <select class="form-control" name="jabatanKaryawan" required>
+                                        <option value="">Pilih Jabatan</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Staff">Staff IT</option>
                                     </select>
                                 </div>
 

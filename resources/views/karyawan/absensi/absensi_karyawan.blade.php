@@ -23,7 +23,7 @@
                         <div class="panel-body">
                             {{-- TAMPILAN ABSENSI karyawan --}}
                             <h3 class="text-center m-t-0 m-b-30">
-                                <span class=""><img id="img" src="{{asset('assets/images/absensi.png') }}" alt="logo" class="img-circle" width="140" height="140"></span>
+                                <span class=""><img id="img" src="{{ !empty($row->foto) ? asset('Foto_Profile/' . $row->foto) : asset('assets/images/users/avatar-1.jpg') }}"  alt="logo" class="img-circle" width="140" height="140"></span>
                                 <h3 align="center"><strong>{{Auth::user()->name}}</strong></h3>
                                 <div>
                                     @if(!isset($absensi->jam_masuk))

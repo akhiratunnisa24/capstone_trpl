@@ -35,6 +35,7 @@ class AbsensiController extends Controller
 
     public function create()
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         // $absensi=Absensi::where('id_user',Auth::user()->id)
         $absensi=Absensi::where('id_karyawan',Auth::user()->id_pegawai)
         ->whereDate('tanggal', Carbon::now()->format("Y-m-d"))
@@ -42,14 +43,16 @@ class AbsensiController extends Controller
 
         // dd($absensi);
         $jk =  Carbon::now()->format("H:i:s");
-        return view('karyawan.absensi.absensi_karyawan',compact('absensi','jk'));
+        return view('karyawan.absensi.absensi_karyawan',compact('absensi','jk','row'));
     }
 
     public function store(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         //ambil data karyawan dari tabel user dan pengecekan ke tabel karyawan
         $karyawan = Auth::user()->id_pegawai;
         // dd($karyawan);
+
 
         //mencari nilai keterlambatan karyawan
         $jdm = "08:00:00";
