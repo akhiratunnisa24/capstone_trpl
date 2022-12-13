@@ -58,7 +58,7 @@ class HomeController extends Controller
         // $absenTerlambat = Absensi::whereDay('created_at', '>',  $time)->count('jam_masuk');
         $absenTerlambatbulanlalu = Absensi::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count('terlambat');
 
-        $absenTidakmasuk = karyawan::whereDay('created_at', '=', Carbon::now())->whereNull('id_karyawan')->count('jam_masuk');
+        
 
         
 
@@ -72,7 +72,6 @@ class HomeController extends Controller
                 'absenBulanlalu' => $absenBulanlalu,
                 'absenTerlambat' => $absenTerlambat,
                 'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
-                'absenTidakmasuk' => $absenTidakmasuk
 
 
             ];

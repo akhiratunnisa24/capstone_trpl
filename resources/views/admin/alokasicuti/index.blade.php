@@ -27,9 +27,9 @@
                             <a href="" class="btn btn-dark" data-toggle="modal" data-target="#showalokasi">View Detail</a>
                         </div>
                          {{-- form setting --}}
-                         @include('admin.settingcuti.addalokasi')
-                         @include('admin.settingcuti.editalokasi')
-                         @include('admin.settingcuti.showalokasi')
+                         @include('admin.alokasicuti.addalokasi')
+                         @include('admin.alokasicuti.editalokasi')
+                         @include('admin.alokasicuti.showalokasi')
 
                         <div class="panel-body m-b-5">
                             <div class="row">
@@ -39,12 +39,12 @@
                                             <tr>
                                                 <th scope="col">No.</th>
                                                 <th scope="col">Karyawan</th>
-                                                <th scope="col">Kode</th>
-                                                <th scope="col">Mode</th>
-                                                <th scope="col">Val. Cuti</th>
-                                                <th scope="col">Val. Alokasi</th>
-                                                <th scope="col">Tgl Mulai</th>
-                                                <th scope="col">Tgl Selesai</th>
+                                                <th scope="col">Kategori Cuti</th>
+                                                <th scope="col">Durasi</th>
+                                                <th scope="col">Tanggal Masuk</th>
+                                                <th scope="col">Mode Alokasi</th>
+                                                <th scope="col">Aktif Dari</th>
+                                                <th scope="col">Sampai</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>

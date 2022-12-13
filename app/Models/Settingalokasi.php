@@ -9,7 +9,7 @@ class Settingalokasi extends Model
 {
     use HasFactory;
     protected $table = 'settingalokasi';
-    protected $fillable = ['id','id_jeniscuti','tipe_alokasi','durasi','mode_alokasi','lama_kerja'];
+    protected $fillable = ['id','id_jeniscuti','durasi','mode_alokasi','lama_kerja'];
 
     public function jeniscutis()
     {

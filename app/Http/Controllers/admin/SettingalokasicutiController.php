@@ -12,10 +12,16 @@ class SettingalokasicutiController extends Controller
 {
     public function index()
     {
+        $id = Settingalokasi::find('id');
+
         $settingalokasi = Settingalokasi::all();
+
+        //untuk edit
+        $setal = Settingalokasi::find($id);
         $jeniscuti= Jeniscuti::all();
-        return view('admin.settingcuti.setting_index', compact('settingalokasi','jeniscuti'));
+        return view('admin.settingcuti.setting_index', compact('settingalokasi','jeniscuti','setal'));
     } 
+
 
     public function store(Request $request)
     {
@@ -23,11 +29,14 @@ class SettingalokasicutiController extends Controller
         $settingalokasi = New Settingalokasi;
 
         $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
-        $settingalokasi->tipe_alokasi = $request->tipe_alokasi;
         $settingalokasi->durasi       = $request->durasi;
         $settingalokasi->mode_alokasi = $request->mode_alokasi;
         $settingalokasi->departemen   = $request->departemen; 
-        $settingalokasi['mode_karyawan']= json_encode($request->mode_karyawan);
+
+        $mode = implode(',', $request->mode_karyawan);
+        $settingalokasi['mode_karyawan']= $mode;
+
+        // dd($settingalokasi['mode_karyawan']);
 
         $settingalokasi->save();
         

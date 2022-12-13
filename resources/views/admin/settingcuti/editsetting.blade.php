@@ -26,60 +26,55 @@
                             <div class="form-group col-sm" id="jenicuti">
                                 <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
                                 <select name="id_jeniscuti" class="form-control">
-                                    @foreach ($jeniscuti as $data)
-                                    <option value="{{ $data->id }}"
-                                        @if($data->id_jeniscuti == $jeniscuti->id_jeniscuti) 
-                                            selected
-                                        @endif
-                                        >{{ $data->jenis_cuti }}</option>
+                                    @foreach ($jeniscuti as $item)
+                                        <option value="{{$item->id}}"
+                                            @if($item->id == $data->id_jeniscuti)
+                                                selected
+                                            @endif
+                                            >{{$item->jenis_cuti}}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-sm">
-                                <label for="tipe_alokasi" class="col-form-label">Tipe Alokasi</label>
-                                <select name="tipe_alokasi" id="tipe_alokasi" class="form-control">
-                                    <option value="">Pilih Tipe Alokasi</option>
-                                    <option value="Reguler">Reguler</option>
-                                    <option value="Aktual">Aktual</option>
-                                </select>
-                            </div>
                             <div class="form-group" id="duration">
-                                <label for="durasi" class="col-form-label">Durasi</label>
-                                <input type="number" class="form-control" name="durasi" id="durasi">
+                                <label for="durasi" class="col-form-label">Durasi (Hari)</label>
+                                <input type="number" class="form-control" value="{{$data->durasi}}" name="durasi" id="durasi">
                             </div>
                         </div>
 
                         <div class="col-md-6" id="modealokasii">
                             <div class="form-group">
                                 <div class="form-group col-sm" id="modealokasii">
-                                    <label for="mode" class="col-form-label">Mode Alokasi</label>
-                                    <select name="mode" id="mode" class="form-control">
-                                        <option value="">-- Pilih Mode Alokasi --</option>
+                                    <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
+                                    <select name="mode_lokasi" id="mode_lokasi" class="form-control">
+                                        <option value="{{$data->mode_alokasi}}" selected>{{$data->mode_alokasi}}</option>
                                         <option value="Berdasarkan Departemen">Berdasarkan Departemen</option>
                                         <option value="Berdasarkan Karyawan">Berdasarkan Karyawan</option>
                                     </select>
                                 </div> 
                             </div>
-                            <div class="form-group col-sm" id="mode_departement">
-                                <label for="id_departemen" class="col-form-label">Departemen</label>
-                                <select name="id_departemen" id="id_departemen" class="form-control">
-                                    <option value="">-- Pilih Departemen --</option>
-                                    <option value="KONVENSIONAL">KONVENSIONAL</option>
-                                    <option value="IT DEPARTEMEN">IT DEPARTEMEN</option>
-                                    <option value="KEUANGAN">KEUANGAN</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-sm" id="mode_employe">
-                                <label for="mode_karyawan" class="col-form-label">Karyawan</label>
-                                <select id="mode_karyawant" name="mode_karyawan[]" multiple="multiple" class="form-control">
-                                    {{-- <option value=""> ----- Pilih -----</option> --}}
-                                    <option value="L">Laki-laki</option>
-                                    <option value="P">Perempuan</option>
-                                    <option value="Sudah">Sudah Menikah</option>
-                                    <option value="Belum">Belum Menikah</option>
-                                    <option value=">= 1 Tahun">>= 1 Tahun</option>
-                                </select>
-                            </div>
+                            @if($data->departemen != null)
+                                <div class="form-group col-sm" id="mode_Alokasi_departement">
+                                    <label for="departemen" class="col-form-label">Departemen</label>
+                                    <select name="departemen" id="departemen" class="form-control">
+                                        <option value="{{$data->departemen}}" selected>{{$data->departemen}}</option>
+                                        <option value="KONVENSIONAL">KONVENSIONAL</option>
+                                        <option value="IT DEPARTEMEN">IT DEPARTEMEN</option>
+                                        <option value="KEUANGAN">KEUANGAN</option>
+                                    </select>
+                                </div>
+                            @else
+                                <div class="form-group col-sm" id="mode_employe">
+                                    <label for="mode_karyawan" class="col-form-label">Karyawan</label>
+                                    <select id="mode_karyawant" name="mode_karyawan[]" multiple="multiple" class="form-control">
+                                        <option value="{{$data->mode_karyawan}}" selected>{{$data->mode_karyawan}}</option>
+                                        <option value="L">Laki-laki</option>
+                                        <option value="P">Perempuan</option>
+                                        <option value="Sudah">Sudah Menikah</option>
+                                        <option value="Belum">Belum Menikah</option>
+                                        <option value=">= 1 Tahun">>= 1 Tahun</option>
+                                    </select>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="modal-footer">
