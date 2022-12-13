@@ -15,6 +15,12 @@
             </div>
         </div>    
     </div>
+    <div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
+        <a href="" class="btn btn-dark" data-toggle="modal" data-target="#Modal1">Import Excel</a>
+        <a href="" class="btn btn-dark" data-toggle="modal" data-target="#smallModal">Import CSV</a>
+         {{-- form import --}}
+        @include('admin.alokasicuti.importexcel')
+    </div>
     <!-- Start content -->
     <div class="content">
         <div class="container">

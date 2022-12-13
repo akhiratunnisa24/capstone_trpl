@@ -17,7 +17,7 @@
                 </div> 
             @endif 
             <div class="modal-body">
-                <form class="input" action="" method="POST" enctype="multipart/form-data">
+                <form class="input" action="{{route('alokasi.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="panel-body">
@@ -56,7 +56,7 @@
                                 <div class="form-group">
                                     <label for="tgl_masuk" class="form-label">Tanggal Masuk</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="tgl_masuk" name="tgl_masuk" value="" autocomplete="off" readonly>
+                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="tgl_masuk" name="tgl_masuk" autocomplete="off" readonly>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
@@ -128,23 +128,24 @@
         });
     });
 
-    function isi_otomatis(){
-        var id_jeniscuti = $("#id_jeniscuti").val();
-        $.ajax({
-            url: 'ajax.php',
-            data:"id_jeniscuti="+id_jeniscuti ,
-        }).success(function (data) {
-            var json = data,
-            obj = JSON.parse(json);
-            $('#durasi').val(obj.durasi);
-            $('#mode_alokasi').val(obj.mode_alokasi);
-        });
-    }
+    // function isi_otomatis(){
+    //     var id_jeniscuti = $("#id_jeniscuti").val();
+    //     $.ajax({
+    //         url: 'ajax.php',
+    //         data:"id_jeniscuti="+id_jeniscuti ,
+    //     }).success(function (data) {
+    //         var json = data,
+    //         obj = JSON.parse(json);
+    //         $('#durasi').val(obj.durasi);
+    //         $('#mode_alokasi').val(obj.mode_alokasi);
+    //     });
+    // }
 
     function otomatis(){
         var id_pegawai = $("#id_pegawai").val();
         $.ajax({
-            url: 'ajax.php',
+            url: '{{ route('alokasi.store')}}',
+            method: 'GET',
             data:"id_pegawai="+id_pegawai ,
         }).success(function (data) {
             var json = data,
