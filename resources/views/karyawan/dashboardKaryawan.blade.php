@@ -33,11 +33,39 @@
         <div class="col-sm-6 col-lg-3">
             <div class="panel panel-primary text-center">
                 <div class="panel-heading btn-info">
-                    <h4 class="panel-title">Dinas Luar Kota Anda</h4>
+                    <h4 class="panel-title">Absen Hari Ini</h4>
+                </div>
+
+                
+        <?php
+            use Illuminate\Support\Facades\Auth;
+            use App\Models\Absensi;
+
+            if ($absenKaryawan == 2) { ?>
+              <div class="panel-body">
+                  <h3 class=""><b class= "text text-success" >Sukses</b></h3>
+                  <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
+              </div>  
+                    <?php
+                } else { ?>
+                    <div class="panel-body">
+                      <h3 class=""><b class= "text text-success" >Belum Absen</b></h3>
+                      <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
+                  </div>
+                    <?php } ?>
+
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-lg-3">
+            <div class="panel panel-primary text-center">
+                <div class="panel-heading btn-warning">
+                    <h4 class="panel-title">Jumlah Terlambat Anda</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>666</b></h3>
-                    <p class="text-muted"><b>Total Dinas Keluar Kota Anda</b> </p>
+                    <h3 class=""><b>{{$absenTerlambatkaryawan}}</b></h3>
+                    <p class="text-muted"><b>Total Jumlah Terlambat Anda</b> </p>
                 </div>
             </div>
         </div>
@@ -50,18 +78,6 @@
                 <div class="panel-body">
                     <h3 class=""><b>77</b></h3>
                     <p class="text-muted"><b>Total Jumlah Tidak Hadir Anda</b> </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
-                <div class="panel-heading btn-warning">
-                    <h4 class="panel-title">Jumlah Terlambat Anda</h4>
-                </div>
-                <div class="panel-body">
-                    <h3 class=""><b>14</b></h3>
-                    <p class="text-muted"><b>Total Jumlah Terlambat Anda</b> </p>
                 </div>
             </div>
         </div>
