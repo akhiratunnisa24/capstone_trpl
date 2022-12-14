@@ -41,7 +41,7 @@
             use Illuminate\Support\Facades\Auth;
             use App\Models\Absensi;
 
-            if ($absenKaryawan == 2) { ?>
+            if ($absenKaryawan == 1 ) { ?>
               <div class="panel-body">
                   <h3 class=""><b class= "text text-success" >Sukses</b></h3>
                   <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
@@ -73,14 +73,29 @@
         <div class="col-sm-6 col-lg-3">
             <div class="panel panel-primary text-center">
                 <div class="panel-heading btn-danger">
-                    <h4 class="panel-title">Jumlah Tidak Hadir Anda</h4>
+                    <h4 class="panel-title">Tidak Hadir Anda Bulan Ini</h4>
                 </div>
+
                 <div class="panel-body">
-                    <h3 class=""><b>77</b></h3>
+                    
+        <?php
+
+        if ($absenTidakmasuk == 2 ) { ?>
+              <h3 class=""><b class= "text text-success" >Masuk</b></h3>
+                <?php
+            } else { ?>
+                  <h3 class=""><b class= "text text-success" >Total cuti + Total izin + tidak ada keterangan</b></h3>
+                <?php } ?>
+
                     <p class="text-muted"><b>Total Jumlah Tidak Hadir Anda</b> </p>
                 </div>
+
             </div>
         </div>
+
+
+        </div>
+
     </div>
 
 
