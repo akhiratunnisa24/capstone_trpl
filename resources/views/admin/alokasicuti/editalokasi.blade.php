@@ -32,12 +32,12 @@
                     <div class="panel-body">
                         <div class="col-md-6">
                             <div class="form-group col-sm" id="jenicuti">
-                                <label for="id_pegawai" class="col-form-label">Karyawan</label>
-                                <select name="id_pegawai" id="id_pegawai" class="form-control">
+                                <label for="id_karyawan" class="col-form-label">Karyawan</label>
+                                <select name="id_karyawan" id="id_karyawan" class="form-control">
                                     <option value="">Pilih Karyawan</option>
                                     @foreach ($karyawan as $data)
                                         <option value="{{ $data->id}}"
-                                            @if ($data->id ==request()->id_pegawai)
+                                            @if ($data->id ==request()->id_karyawan)
                                             selected
                                             @endif
                                             >{{ $data->nama }}

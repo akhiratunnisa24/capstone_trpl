@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('alokasicuti', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_pegawai');
-            $table->unsignedBigInteger('id_settingalokasi');
+            $table->unsignedBigInteger('id_karyawan');
+            $table->unsignedBigInteger('id_settingalokasi')->nullable();
             $table->unsignedBigInteger('id_jeniscuti');
             $table->integer('durasi')->nullable();
             $table->string('mode_alokasi')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('aktif_dari')->nullable();
             $table->date('sampai')->nullable();
 
-            $table->foreign('id_pegawai')->references('id')->on('karyawan')->onDelete('cascade');
+            $table->foreign('id_karyawan')->references('id')->on('karyawan')->onDelete('cascade');
             $table->foreign('id_settingalokasi')->references('id')->on('settingalokasi')->onDelete('cascade');
             $table->foreign('id_jeniscuti')->references('id')->on('jeniscuti')->onDelete('cascade');
 

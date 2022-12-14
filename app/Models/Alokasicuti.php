@@ -22,7 +22,7 @@ class Alokasicuti extends Model
 
     public function karyawans()
     {
-        return $this->belongsTo(Karyawan::class,'id_pegawai','id');
+        return $this->belongsTo(Karyawan::class,'id_karyawan','id');
     }
 
     public function settingalokasis()
