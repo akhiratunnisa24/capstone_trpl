@@ -7,29 +7,18 @@ use App\Models\Kdarurat;
 use App\Models\Keluarga;
 use App\Models\Rpekerjaan;
 use App\Models\Rpendidikan;
+use App\Models\Absensi;
 use App\Models\Users;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class karyawanController extends Controller
 {
-     /**
-         * Create a new controller instance.
-         *
-         * @return void
-         */
-        public function __construct()
-        {
-            $this->middleware('auth');
-        }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     
     public function index()
     {
@@ -46,10 +35,17 @@ class karyawanController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $cuti = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $absenKaryawan = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk'); 
+        $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai, )->count('terlambat');
+        // Absen Tidak Masuk
+        $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk');
         
         $output = [
             'row' => $row,
-            'cuti' => $cuti
+            'cuti' => $cuti,
+            'absenKaryawan' => $absenKaryawan,
+            'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
+            'absenTidakmasuk' => $absenTidakmasuk,
 
         ];
         return view('karyawan.dashboardKaryawan', $output);

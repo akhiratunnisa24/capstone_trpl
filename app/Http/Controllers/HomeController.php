@@ -46,11 +46,14 @@ class HomeController extends Controller
     {
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        // $absen= Absensi::where('id', Auth::user()->id_pegawai)->count('terlambat');
+
+        // Absen Terlambat Karyawan
         $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai, )->count('terlambat');
-        
-        // belum bisa data per bulan
-        $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai, )->count('jam_masuk');
+        // Absen Karyawan Hari Ini
+        $absenKaryawan = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk');
+
+        // Absen Tidak Masuk
+        $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereMonth('created_at', '=', Carbon::now()->month)->count('jam_masuk');
 
         // $cutiPerbulan = Cuti::where('id_jeniscuti',1)->whereMonth('tgl_mulai','12')->sum('jml_cuti');
         $cutiPerbulan = Cuti::whereMonth('created_at', '=', Carbon::now()->month)->sum('jml_cuti');
@@ -77,7 +80,7 @@ class HomeController extends Controller
                 'absenBulanlalu' => $absenBulanlalu,
                 'absenTerlambat' => $absenTerlambat,
                 'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
-                // 'absenTidakmasuk' => $absenTidakmasuk
+               
 
 
             ];
@@ -89,6 +92,7 @@ class HomeController extends Controller
                 'row' => $row,
                 'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
                 'absenKaryawan' => $absenKaryawan,
+                'absenTidakmasuk' => $absenTidakmasuk
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }
