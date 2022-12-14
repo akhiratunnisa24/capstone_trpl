@@ -58,10 +58,10 @@
         <div class="col-sm-6 col-lg-3">
             <div class="panel panel-primary text-center">
                 <div class="panel-heading btn-danger">
-                    <h4 class="panel-title">Absen Tidak Masuk Hari Ini</h4>
+                    <h4 class="panel-title"> Belum / Tidak Masuk Hari Ini</h4>
                 </div>
                 <div class="panel-body">
-                    
+                    <h3 class=""><b>0</b></h3>
                     <p class="text-muted"><b>Total Absen Tidak Masuk </b> </p>
                 </div>
             </div>
@@ -109,7 +109,7 @@
         <div class="col-sm-6 col-lg-3">
             <div class="panel panel-primary text-center">
                 <div class="panel-heading btn-danger">
-                    <h4 class="panel-title">Absen Tidak Masuk Bulan Lalu </h4>
+                    <h4 class="panel-title">Tidak Masuk Bulan Lalu </h4>
                 </div>
                 <div class="panel-body">
                     <h3 class=""><b>10</b></h3>

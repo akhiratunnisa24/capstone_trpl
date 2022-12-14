@@ -46,6 +46,12 @@ class HomeController extends Controller
     {
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        // $absen= Absensi::where('id', Auth::user()->id_pegawai)->count('terlambat');
+        $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai, )->count('terlambat');
+        
+        // belum bisa data per bulan
+        $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai, )->count('jam_masuk');
+
         // $cutiPerbulan = Cuti::where('id_jeniscuti',1)->whereMonth('tgl_mulai','12')->sum('jml_cuti');
         $cutiPerbulan = Cuti::whereMonth('created_at', '=', Carbon::now()->month)->sum('jml_cuti');
         $cutiBulanlalu = Cuti::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->sum('jml_cuti');
@@ -57,8 +63,7 @@ class HomeController extends Controller
         $absenTerlambat = Absensi::whereDay('created_at', '=', Carbon::now())->count('terlambat');
         // $absenTerlambat = Absensi::whereDay('created_at', '>',  $time)->count('jam_masuk');
         $absenTerlambatbulanlalu = Absensi::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count('terlambat');
-
-        
+        // $absenTidakmasuk = karyawan::whereDay('created_at', '=', Carbon::now())->whereNull('id_karyawan')->count('jam_masuk');
 
         
 
@@ -72,6 +77,7 @@ class HomeController extends Controller
                 'absenBulanlalu' => $absenBulanlalu,
                 'absenTerlambat' => $absenTerlambat,
                 'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
+                // 'absenTidakmasuk' => $absenTidakmasuk
 
 
             ];
@@ -81,6 +87,8 @@ class HomeController extends Controller
             
             $output = [
                 'row' => $row,
+                'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
+                'absenKaryawan' => $absenKaryawan,
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }
