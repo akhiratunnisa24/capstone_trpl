@@ -36,11 +36,10 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Kategori Cuti</th>
-                                                <th scope="col">Tipe Alokasi</th>
-                                                <th scope="col">Durasi</th>
+                                                <th scope="col">Durasi (Hari)</th>
                                                 <th scope="col">Mode Alokasi</th>
                                                 <th scope="col">Departemen</th>
-                                                <th scope="col">Mode Karyawan</th>
+                                                <th scope="col">JK/Stat. Karyawan</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -48,7 +47,6 @@
                                             @foreach($settingalokasi as $data)
                                                 <tr>
                                                     <td>{{$data->jeniscutis->jenis_cuti}}</td>
-                                                    <td>{{$data->tipe_alokasi}}</td>
                                                     <td>{{$data->durasi}}</td>
                                                     <td>{{$data->mode_alokasi}}</td>
                                                     <td>{{$data->departemen}}</td>

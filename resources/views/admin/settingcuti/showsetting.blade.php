@@ -21,12 +21,12 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label for="tipe_alokasi" class="col-sm-3 col-form-label">Tipe Alokasi</label>
                     <div class="col-sm-9">
                         <label>: {{$data->tipe_alokasi}}</label>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-group row">
                     <label for="durasi" class="col-sm-3 col-form-label">Durasi Cuti</label>
@@ -41,6 +41,21 @@
                         <label>: {{$data->mode_alokasi}}</label>
                     </div>
                 </div>
+                @if($data->mode_alokasi == 'Berdasarkan Departemen')
+                    <div class="form-group row">
+                        <label for="departemen" class="col-sm-3 col-form-label">Departemen</label>
+                        <div class="col-sm-9">
+                            <label>: {{$data->departemen}}</label>
+                        </div>
+                    </div>
+                @else
+                    <div class="form-group row">
+                        <label for="mode_karyawan" class="col-sm-3 col-form-label">Mode Karyawan</label>
+                        <div class="col-sm-9">
+                            <label>: {{$data->mode_karyawan}}</label>
+                        </div>
+                    </div> 
+                @endif
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

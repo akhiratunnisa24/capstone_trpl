@@ -1,4 +1,6 @@
 {{-- FORM SETTING ALOKASI--}}
+<link rel="stylesheet"  type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.2/select2.css"/>
+
     <div class="modal fade" id="newsetting" tabindex="-1" role="dialog" aria-labelledby="newsetting" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -10,11 +12,11 @@
                 @if ($errors->any()) 
                     <div class="alert alert-danger show" role="alert">
                         <strong>Whoops!</strong> There were some problems with your input.<br><br> 
-                            <ul> 
-                                @foreach ($errors->all() as $error) 
-                                    <li>{{ $error }}</li> 
-                                @endforeach 
-                            </ul> 
+                        <ul> 
+                            @foreach ($errors->all() as $error) 
+                                <li>{{ $error }}</li> 
+                            @endforeach 
+                        </ul> 
                     </div> 
                 @endif 
                 <div class="modal-body">
@@ -37,16 +39,8 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-sm">
-                                    <label for="tipe_alokasi" class="col-form-label">Tipe Alokasi</label>
-                                    <select name="tipe_alokasi" id="tipe_alokasi" class="form-control">
-                                        <option value="">Pilih Tipe Alokasi</option>
-                                        <option value="Reguler">Reguler</option>
-                                        <option value="Aktual">Aktual</option>
-                                    </select>
-                                </div>
                                 <div class="form-group">
-                                    <label for="durasi" class="col-form-label">Durasi</label>
+                                    <label for="durasi" class="col-form-label">Durasi (Hari)</label>
                                     <input type="number" class="form-control" name="durasi" placeholder="durasi" id="durasi">
                                 </div>
                             </div>
@@ -73,8 +67,7 @@
                                 </div> 
                                 <div class="form-group col-sm" id="mode_employee">
                                     <label for="mode_karyawan" class="col-form-label">Karyawan</label>
-                                    <select id="mode_karyawan" name="mode_karyawan[]" multiple="multiple" class="form-control">
-                                        {{-- <option value=""> ----- Pilih -----</option> --}}
+                                    <select id="mode_karyawan" name="mode_karyawan[]" multiple style="width:300px">
                                         <option value="L">Laki-laki</option>
                                         <option value="P">Perempuan</option>
                                         <option value="Sudah">Sudah Menikah</option>
@@ -97,9 +90,9 @@
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.2/select2.min.js"></script>
     {{-- // Datatable init js  --}}
     <script src="assets/pages/datatables.init.js"></script>
     <script src="assets/js/app.js"></script>
