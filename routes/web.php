@@ -120,6 +120,8 @@ Route::put('/updatesettingalokasi/{id}', [SettingalokasicutiController::class, '
 
 //alokasi cuti
 Route::get('/alokasicuti', [AlokasicutiController::class, 'index'])->name('alokasi.index');
+Route::post('/gettglmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tglmasuk');
+Route::post('/getsettingalokasi', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Settingalokasi');
 Route::post('/alokasicuti', [AlokasicutiController::class, 'store'])->name('alokasi.store');
 Route::post('/alokasiimporexcel',[AlokasicutiController::class,'importexcel'])->name('alokasi.importexcel');
 

@@ -18,10 +18,10 @@ class AlokasicutiImport implements ToModel
     {
         if(isset($row[0]) && isset($row[2]))
         {
-            if(!Alokasicuti::where('id_pegawai',$row[0])->where('id_jeniscuti',$row[2])->exists())
+            if(!Alokasicuti::where('id_karyawan',$row[0])->where('id_jeniscuti',$row[2])->exists())
             {
                 $data = [
-                    'id_pegawai'       => $row[0] ?? null,
+                    'id_karyawan'      => $row[0] ?? null,
                     'id_settingalokasi'=> $row[1] ?? null,
                     'id_jeniscuti'     => $row[2] ?? null,
                     'durasi'           => $row[3] ?? null,
@@ -35,8 +35,6 @@ class AlokasicutiImport implements ToModel
                 //  dd($row[2]);
                 // dd(Carbon::parse($row[2])->format("Y-m-d"));
                 // Log::info($row[2] ?? null);
-                // Log::info($row[3] ?? null);
-                // Log::info($row[4] ?? null);
                 Alokasicuti::create($data);
             
             }else{
