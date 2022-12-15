@@ -13,7 +13,10 @@ class Alokasicuti extends Model
     use HasFactory;
 
     protected $table ='alokasicuti';
-    protected $guard = [];
+    protected $fillable = [
+        'id_karyawan','settingalokasi','id_jeniscuti','durasi',
+        'mode_alokasi','aktif_dari','sampai'
+    ];
 
     public function jeniscutis()
     {

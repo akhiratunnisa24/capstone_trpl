@@ -40,9 +40,9 @@
                                                     <table id="datatable-responsive" class="table dt-responsive nowrap table-striped table-bordered" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th scope="col">No.</th>
-                                                                <th scope="col">Kategori Cuti</th>
-                                                                <th scope="col">Action</th>
+                                                                <th>#</th>
+                                                                <th>Kategori Cuti</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -103,9 +103,9 @@
                                                     <table id="datatable-responsive1" class="table dt-responsive nowrap table-striped table-bordered" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th scope="col">No.</th>
-                                                                <th scope="col">Kategori Izin</th>
-                                                                <th scope="col">Action</th>
+                                                                <th>#</th>
+                                                                <th>Kategori Izin</th>
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>

@@ -21,13 +21,6 @@
                     </div>
                 </div>
 
-                {{-- <div class="form-group row">
-                    <label for="tipe_alokasi" class="col-sm-3 col-form-label">Tipe Alokasi</label>
-                    <div class="col-sm-9">
-                        <label>: {{$data->tipe_alokasi}}</label>
-                    </div>
-                </div> --}}
-
                 <div class="form-group row">
                     <label for="durasi" class="col-sm-3 col-form-label">Durasi Cuti</label>
                     <div class="col-sm-9">

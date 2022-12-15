@@ -45,20 +45,22 @@
                                     <table id="datatable-responsive3" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Karyawan</th>
-                                                <th scope="col">Tanggal</th>
-                                                <th scope="col">Jam Masuk</th>
-                                                <th scope="col">Jam Keluar</th>
-                                                <th scope="col">Jml Hadir</th>
-                                                <th scope="col">Telat</th>
-                                                <th scope="col">P. cepat</th>
+                                                <th>#</th>
+                                                <th>Karyawan</th>
+                                                <th>Tanggal</th>
+                                                <th>Jam Masuk</th>
+                                                <th>Jam Keluar</th>
+                                                <th>Jml Hadir</th>
+                                                <th>Telat</th>
+                                                <th>P. cepat</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($absensi as $data)
                                                 <tr>
+                                                    <td>{{$loop->iteration}}</td>
                                                     <td>{{$data->karyawans->nama}}</td>
-                                                    <td>{{$data->tanggal}}</td>
+                                                    <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
                                                     <td>{{$data->jam_masuk}}</td>
                                                     <td>{{$data->jam_keluar}}</td>
                                                     <td>{{$data->jam_kerja}}</td>

@@ -29,61 +29,69 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <a href="" class="btn btn-dark" data-toggle="modal" data-target="#newalokasi">Tambah Alokasi</a>
-                            <a href="" class="btn btn-dark" data-toggle="modal" data-target="#editalokasi">Edit Alokasi</a>
-                            <a href="" class="btn btn-dark" data-toggle="modal" data-target="#showalokasi">View Detail</a>
                         </div>
                          {{-- form setting --}}
                          @include('admin.alokasicuti.addalokasi')
-                         @include('admin.alokasicuti.editalokasi')
-                         @include('admin.alokasicuti.showalokasi')
 
                         <div class="panel-body m-b-5">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <table  id="datatable-responsive3" class="table dt-responsive table-striped table-bordered" width="100%">
+                                    <table  id="datatable-responsive7" class="table dt-responsive table-striped nowrap table-bordered" cellpadding="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th scope="col">No.</th>
-                                                <th scope="col">Karyawan</th>
-                                                <th scope="col">Kategori Cuti</th>
-                                                <th scope="col">Durasi</th>
-                                                <th scope="col">Tanggal Masuk</th>
-                                                <th scope="col">Mode Alokasi</th>
-                                                <th scope="col">Aktif Dari</th>
-                                                <th scope="col">Sampai</th>
-                                                <th scope="col">Action</th>
+                                                {{-- <th>ID</th>
+                                                <th>id settingalokasi</th>
+                                                <th>id j.cuti</th>
+                                                <th>kategori</th> --}}
+                                                <th>#</th>
+                                                <th>Karyawan</th>
+                                                <th>Kategori Cuti</th>
+                                                <th>Durasi (Hari)</th>
+                                                {{-- <th>Tanggal Masuk</th> --}}
+                                                <th>Mode Alokasi</th>
+                                                <th>Aktif Dari</th>
+                                                <th>Sampai</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                        
                                         <tbody>
-                                            {{-- @foreach($alokasi as $data) --}}
-                                            {{-- {{$loop->iteration}} --}}
+                                            @foreach($alokasicuti as $data)
                                                 <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    {{-- <td>{{$data->id}}</td>
+                                                    <td>{{$data->id_settingalokasi}}</td>
+                                                    <td>{{$data->id_jeniscuti}}</td>
+                                                    <td>{{$data->jeniscutis->jenis_cuti}}</td> --}}
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$data->karyawans->nama}}</td>
+                                                    <td>{{$data->jeniscutis->jenis_cuti}}</td>
+                                                    <td>{{$data->durasi}}</td>
+                                                    {{-- @if($data->tgl_masuk != NULL)
+                                                        <td>{{\Carbon\Carbon::parse($data->tgl_masuk)->format('d/m/Y')}}</td>
+                                                    @else
+                                                        <td></td>
+                                                    @endif --}}
+                                                    <td>{{$data->mode_alokasi}}</td>
+                                                    <td>{{\Carbon\Carbon::parse($data->aktif_dari)->format('d/m/Y')}}</td>
+                                                    <td>{{\Carbon\Carbon::parse($data->sampai)->format('d/m/Y')}}</td>
                                                     <td class="text-center"> 
-                                                       <form action="" method="POST" id="bs"> 
-                                                           <a id="bs" class="btn btn-info btn-sm Modalshowdetail" data-toggle="modal" data-target="#showdetail">
-                                                               <i class="fa fa-eye"></i>
-                                                           </a> 
-                                                           <a id="bs" class="btn btn-sm btn-success Modaleditalokasi" data-toggle="modal" data-target="#editalokasi">
-                                                               <i class="fa fa-edit"></i>
-                                                           </a> 
-                                                           @csrf 
-                                                           @method('DELETE') 
-                                                           <button id="bs" type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                                               <i class="fa fa-trash"></i>
-                                                           </button> 
-                                                       </form> 
+                                                        <div class="row">
+                                                            <a id="bs" class="btn btn-info btn-sm showalokasi" data-toggle="modal" data-target="#showalokasi{{$data->id}}">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a> 
+                                                            <a id="bs" class="btn btn-sm btn-success editalokasi" data-toggle="modal" data-target="#editalokasi{{$data->id}}">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a> 
+                                                            <button onclick="alokasicuti({{$data->id}})"  class="btn btn-danger btn-sm">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button> 
+                                                        </div> 
                                                    </td> 
                                                 </tr>
-                                            {{-- @endforeach --}}
+                                                 <!-- modals show -->
+                                                @include('admin.alokasicuti.showalokasi')
+                                                @include('admin.alokasicuti.editalokasi')
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
