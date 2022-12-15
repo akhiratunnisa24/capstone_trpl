@@ -6,16 +6,6 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="newalokasi">Tambah Alokasi Cuti</h4>
             </div>  
-            @if ($errors->any()) 
-                <div class="alert alert-danger show" role="alert">
-                    <strong>Whoops!</strong> There were some problems with your input.<br><br> 
-                    <ul> 
-                        @foreach ($errors->all() as $error) 
-                            <li>{{ $error }}</li> 
-                        @endforeach 
-                    </ul> 
-                </div> 
-            @endif 
             <div class="modal-body">
                 <form class="input" action="{{route('alokasi.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -24,7 +14,7 @@
                         <div class="col-md-6">
                             <div class="form-group col-sm" id="jeniscuti">
                                 <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
-                                <select name="id_jeniscuti" id="id_jeniscuti" class="form-control"> 
+                                <select name="id_jeniscuti" id="id_jeniscuti" class="form-control" required> 
                                     <option value="">Pilih Kategori Cuti</option>
                                         @foreach ($jeniscuti as $jenis)
                                             <option value="{{ $jenis->id }}">{{ $jenis->jenis_cuti }}</option>
@@ -35,7 +25,7 @@
                             
                             <div class="form-group col-sm" id="id_karyawan">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
-                                <select name="id_karyawan" id="id_karyawan" class="form-control">
+                                <select name="id_karyawan" id="id_karyawan" class="form-control" required>
                                     <option value="">Pilih Karyawan</option>
                                     @foreach ($karyawan as $data)
                                         <option value="{{ $data->id }}">{{ $data->nama }}</option>
@@ -73,18 +63,18 @@
                             </div>
                             <div class=""  id="start">
                                 <div class="form-group">
-                                    <label for="tgl_mulai" class="form-label">Aktif Dari</label>
+                                    <label for="aktif_dari" class="form-label">Aktif Dari</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea1" name="tgl_mulai" autocomplete="off">
+                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea1" name="aktif_dari" autocomplete="off" required>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="" id="end">
                                 <div class="form-group">
-                                    <label for="tgl_selesai" class="form-label">Sampai</label>
+                                    <label for="sampai" class="form-label">Sampai</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea2" name="tgl_selesai" autocomplete="off">
+                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea2" name="sampai" autocomplete="off" required>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
@@ -107,30 +97,8 @@
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/app.js"></script>
 <script src="assets/pages/form-advanced.js"></script>
-<script type="text/javascript">
-    $(function()
-    {
-        $('#tanggalmulai').prop("hidden", true);
-        $('#tanggalselesai').prop("hidden", true);
 
-        $('#jeniscuti').on('change', function(e)
-        {
-            if(e.target.value== 1)
-            {
-                $('#tanggalmulai').prop("hidden", false);
-                $('#tanggalselesai').prop("hidden", false);
-
-                let d = new Date(Date.now());
-                $('#tgl_sekarang').val(d);
-
-            } else
-                {
-                    $('#tanggalmulai').prop("hidden", true);
-                    $('#tanggalselesai').prop("hidden", true);
-                }
-        });
-    });
-</script>
+<!-- Script untuk mengambil nilai settingalokasi  -->
 <script>
     $('#id_jeniscuti').on('change',function(e){
         var id_jeniscuti = e.target.value;
@@ -148,11 +116,12 @@
                 $('#id_settingalokasi').val(data.id);
                 $('#durasi').val(data.durasi);
                 $('#mode_alokasi').val(data.mode_alokasi);
-                // console.log(data?.tglmasuk);
             }
         });
     });
 </script>
+
+<!-- script untuk mengambil data tanggalmasuk  -->
 <script>
     $('#id_karyawan').on('change',function(e){
         var id_karyawan = e.target.value;
@@ -174,56 +143,31 @@
     });
 </script>
 
+<!-- Script untuk memunculkan form tanggal masuk dan tanggal sekarang -->
+<script type="text/javascript">
+    $(function()
+    {
+        $('#tanggalmulai').prop("hidden", true);
+        $('#tanggalselesai').prop("hidden", true);
 
-{{-- <script>
-    function otomatis(){
-        var id_karyawan = $("#id_karyawan").val();
-        $.ajax({
-            url: '{{ route('alokasi.store')}}',
-            method: 'GET',
-            data:"id_karyawan="+id_karyawan ,
-        }).success(function (data) {
-            var json = data,
-            obj = JSON.parse(json);
-            $('#tgl_masuk').val(obj.tgl_masuk);
+        $('#jeniscuti').on('change', function(e)
+        {
+            if(e.target.value== 1)
+            {
+                $('#tanggalmulai').prop("hidden", false);
+                $('#tanggalselesai').prop("hidden", false);
+
+                var date = new Date(Date.now());
+                var tgl  = (((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear());
+                $('#tgl_sekarang').val(tgl);
+
+            } else
+                {
+                    $('#tanggalmulai').prop("hidden", true);
+                    $('#tanggalselesai').prop("hidden", true);
+            }
         });
-    }
-</script> --}}
-
-{{-- <script type="text/javascript">
-    $(document).ready(function(){
-        $(document).on('change','.id_karyawan', function(){
-            var id_karyawan = $(this).val();
-            var tgl = $(this).parent().parent().parent();
-            var tglmasuk =" ";
-            $.ajax({
-                type: 'get',
-                url : '{{ route('alokasi.store')}}',
-                data : {'id_karyawan':id_karyawan},
-                success:function(data){
-                    tglmasuk+='<option value="0" selected disabled</option>';
-                    for(var i = 0;i<data.length;i++){
-                        tglmasuk+='<option value="'+data[1].id+'">'+data[i].tgl_masuk+'</option>';
-                    }
-                }
-            })
-        })
-    })
-</script> --}}
-
-<script>
-    // function isi_otomatis(){
-    //     var id_jeniscuti = $("#id_jeniscuti").val();
-    //     $.ajax({
-    //         url: 'ajax.php',
-    //         data:"id_jeniscuti="+id_jeniscuti ,
-    //     }).success(function (data) {
-    //         var json = data,
-    //         obj = JSON.parse(json);
-    //         $('#durasi').val(obj.durasi);
-    //         $('#mode_alokasi').val(obj.mode_alokasi);
-    //     });
-    // }
+    });
 </script>
 
 

@@ -49,6 +49,7 @@
                                                     <table  id="datatable-responsive3" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
+                                                                <th>#</th>
                                                                 <th>Karyawan</th>
                                                                 <th>Kategori Cuti</th>
                                                                 <th>Keperluan</th>
@@ -62,6 +63,7 @@
                                                         <tbody>
                                                             @foreach($cuti as $data)
                                                             <tr>
+                                                                <td>{{$loop->iteration}}</td>
                                                                 <td>{{$data->karyawans->nama}}</td>
                                                                 <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                                                 <td>{{$data->keperluan}}</td>
@@ -154,6 +156,7 @@
                                                     <table  id="datatable-responsive4" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
+                                                                <th>#</th>
                                                                 <th>Karyawan</th>
                                                                 <th>K. Izin</th>
                                                                 <th>Keperluan</th>
@@ -168,15 +171,16 @@
                                                         <tbody>
                                                             @foreach($izin as $data)
                                                                 <tr>
+                                                                    <td>{{$loop->iteration}}</td>
                                                                     <td>{{$data->karyawans->nama}}</td>
                                                                     <td>{{$data->jenisizins->jenis_izin}}</td>
                                                                     <td>{{$data->keperluan}}</td>
 
                                                                     {{-- tanggal mulai & tanggal selesai --}}
                                                                     @if($data->tgl_mulai != $data->tgl_selesai)
-                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d M ")}} s/d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d M Y")}}</td>
+                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s/d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d M Y")}}</td>
                                                                     @else
-                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d M Y")}}</td>
+                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/M/Y")}}</td>
                                                                     @endif
 
                                                                     {{-- Jumlah hari izin --}}

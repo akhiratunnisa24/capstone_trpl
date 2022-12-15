@@ -18,16 +18,16 @@ class AlokasicutiController extends Controller
 {
     public function index()
     {
-        $jenis_cuti = Jeniscuti::all();
+        //index
+        $alokasicuti = Alokasicuti::all();
 
         //create
+        $karyawan = Karyawan::all();
         $settingalokasi = Settingalokasi::all();
         $jeniscuti= DB::table('settingalokasi')
         ->join('jeniscuti', 'settingalokasi.id_jeniscuti','=','jeniscuti.id')
         ->get();
-        $karyawan = Karyawan::all();
-
-        return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','jenis_cuti','settingalokasi'));
+        return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','alokasicuti','settingalokasi'));
     }
 
     public function getTglmasuk(Request $request)
@@ -69,24 +69,19 @@ class AlokasicutiController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         // dd($request->id_jeniscuti);
+       
         if($request->id_jeniscuti == 1)
         {
-            // dd($request->all());
-            // dd($request->id_jeniscuti);
-            // $validate = $request->validate([
-            //     'id_karyawan'  => 'required',
-            //     'id_jeniscuti' => 'required',
-            //     'durasi'       => 'required',
-            //     'mode_alokasi' => 'required',
-            //     'tgl_masuk'    => 'required',
-            //     'tgl_sekarang' => 'required',
-            //     'aktif_dari'   => 'required',
-            //     'sampai'       => 'required',
-            // ]);
-
-            // dd($validate);
+            $validate = $request->validate([
+                'id_karyawan'  => 'required',
+                'id_settingalokasi'=> 'required',
+                'id_jeniscuti' => 'required',
+                'tgl_masuk'    => 'required',
+                'tgl_sekarang' => 'required',
+                'aktif_dari'   => 'required',
+                'sampai'       => 'required',
+            ]);
 
             $alokasicuti = New Alokasicuti;
             $alokasicuti->id_karyawan  = $request->id_karyawan;
@@ -99,28 +94,27 @@ class AlokasicutiController extends Controller
             $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d'); 
             $alokasicuti->sampai       = Carbon::parse($request->sampai)->format('Y-m-d');
 
-            dd($alokasicuti);
+            // dd($alokasicuti);
             $alokasicuti->save();
             return redirect()->back()->withInput();
         }else
         {
             $validate = $request->validate([
                 'id_karyawan'  => 'required',
+                'id_settingalokasi'=> 'required',
                 'id_jeniscuti' => 'required',
-                'durasi'       => 'required',
-                'mode_alokasi' => 'required',
                 'aktif_dari'   => 'required',
                 'sampai'       => 'required',
             ]);
-
             // dd($validate);
             $alokasicuti = New Alokasicuti;
-            $alokasicuti->id_karyawan   = $request->id_karyawan;
+            $alokasicuti->id_karyawan  = $request->id_karyawan;
+            $alokasicuti->id_settingalokasi= $request->id_settingalokasi?? NULL;
             $alokasicuti->id_jeniscuti = $request->id_jeniscuti;
             $alokasicuti->durasi       = $request->durasi;
             $alokasicuti->mode_alokasi = $request->mode_alokasi;
-            $alokasicuti->tgl_masuk    = $request->tgl_masuk ?? NULL; 
-            $alokasicuti->tgl_sekarang = $request->tgl_sekarang ?? NULL; 
+            $alokasicuti->tgl_masuk    = NULL; 
+            $alokasicuti->tgl_sekarang = NULL; 
             $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d'); 
             $alokasicuti->sampai       = Carbon::parse($request->sampai)->format('Y-m-d');
 
@@ -134,6 +128,14 @@ class AlokasicutiController extends Controller
     {
         $alokasicuti = Alokasicuti::find($id);
         return view('admin.alokasicuti.showalokasi',compact('alokasicuti'));
+    }
+
+    public function edit($id)
+    {
+        $karyawan = Karyawan::find($id);
+        $alokasicuti = Alokasicuti::find($id);
+        $settingalokasi = Settingalokasi::find($id);
+        return view('admin.alokasicuti.editalokasi',compact('alokasicuti','karyawan','settingalokasi'));
     }
 
     public function update(Request $request, $id)

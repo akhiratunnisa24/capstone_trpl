@@ -36,14 +36,14 @@
                     <div class="form-group row">
                         <label for="tgl_mulai" class="col-sm-3 col-form-label">Tanggal Izin</label>
                         <div class="col-sm-9">
-                            <label>: {{\Carbon\Carbon::parse($data->tgl_mulai)->format("d M Y")}} s/d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d M Y")}}</label>
+                            <label>: {{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s/d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</label>
                         </div>
                     </div>
                 @else
                     <div class="form-group row">
                         <label for="tgl_mulai" class="col-sm-3 col-form-label">Tanggal Izin</label>
                         <div class="col-sm-9">
-                            <label>: {{\Carbon\Carbon::parse($data->tgl_mulai)->format("d M Y")}}</label>
+                            <label>: {{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</label>
                         </div>
                     </div>    
                 @endif

@@ -43,7 +43,7 @@
 
                             <thead >
                                 <tr>
-                                    <th>No</th>
+                                    <th>#</th>
                                     <th>Nama</th>
                                     <th>Tanggal Lahir</th>
                                     <th>L / P</th>
@@ -52,8 +52,6 @@
                                     <th>Agama</th>
                                     <th>Departemen</th>
                                     <th>Action</th>
-
-                                    <?php $no = 1 ?>
                                 </tr>
                             </thead>
 
@@ -61,7 +59,7 @@
                             <tbody>
                                 @foreach ($karyawan as $k)
                                 <tr>
-                                    <td>{{$no++}}</td>
+                                    <td>{{$loop->iteration}}</td>
                                     <td>{{$k->nama}}</td>
                                     <td>{{$k->tgllahir}}</td>
                                     <td>{{$k->jenis_kelamin}}</td>

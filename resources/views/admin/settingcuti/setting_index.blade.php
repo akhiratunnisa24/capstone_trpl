@@ -35,17 +35,26 @@
                                     <table  id="datatable-responsive3" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Kategori Cuti</th>
-                                                <th scope="col">Durasi (Hari)</th>
-                                                <th scope="col">Mode Alokasi</th>
-                                                <th scope="col">Departemen</th>
-                                                <th scope="col">JK/Stat. Karyawan</th>
-                                                <th scope="col">Action</th>
+                                                {{-- <th>ID</th>
+                                                <th>id j.cuti</th>
+                                                <th>kategori</th> --}}
+                                                <th>#</th>
+                                                <th>Kategori Cuti</th>
+                                                <th>Durasi (Hari)</th>
+                                                <th>Mode Alokasi</th>
+                                                <th>Departemen</th>
+                                                <th>JK/Stat. Karyawan</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
+                                        <?php $no=1; ?>
                                         <tbody>
                                             @foreach($settingalokasi as $data)
                                                 <tr>
+                                                    {{-- <td>{{$data->id}}</td>
+                                                    <td>{{$data->id_jeniscuti}}</td>
+                                                    <td>{{$data->jeniscutis->jenis_cuti}}</td> --}}
+                                                    <td>{{$no++}}</td>
                                                     <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                                     <td>{{$data->durasi}}</td>
                                                     <td>{{$data->mode_alokasi}}</td>

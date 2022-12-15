@@ -39,6 +39,7 @@
                                                 <table id="datatable-responsive" class="table dt-responsive nowrap table-striped table-bordered" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
+                                                            <th>#</th>
                                                             <th>Karyawan</th>
                                                             <th>Kategori Cuti</th>
                                                             <th>Keperluan</th>
@@ -53,6 +54,7 @@
                                                         @foreach($cuti as $data)
                                                             @if($data->id_karyawan == Auth::user()->id_pegawai)
                                                                 <tr>
+                                                                    <td>{{$loop->iteration}}</td>
                                                                     <td>{{$data->karyawans->nama}}</td>
                                                                     <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                                                     <td>{{$data->keperluan}}</td>
@@ -121,6 +123,7 @@
                                                 <table id="datatable-responsive5" class="table dt-responsive table-striped table-bordered" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
+                                                            <td>#</td>
                                                             <th>Karyawan</th>
                                                             <th>K. Izin</th>
                                                             <th>Keperluan</th>
@@ -132,19 +135,21 @@
                                                             <th>Action</th>   
                                                         </tr>
                                                     </thead>
+                                                    <?php $no=1; ?>
                                                     <tbody>
                                                         @foreach($izin as $data)
                                                             @if($data->id_karyawan == Auth::user()->id_pegawai)
                                                                 <tr>
+                                                                    <td>{{$no++}}</td>
                                                                     <td>{{$data->karyawans->nama}}</td>
                                                                     <td>{{$data->jenisizins->jenis_izin}}</td>
                                                                     <td>{{$data->keperluan}}</td>
 
                                                                     <!-- tanggal mulai & tanggal selesai -->
                                                                     @if($data->tgl_mulai != $data->tgl_selesai)
-                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d M ")}} s/d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d M Y")}}</td>
+                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s/d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                                     @else
-                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d M Y")}}</td>
+                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
                                                                     @endif
 
                                                                     <!-- Jumlah hari izin -->

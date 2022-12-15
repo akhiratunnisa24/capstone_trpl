@@ -32,12 +32,12 @@
                                 <table id="datatable-responsive" class="table table-striped dt-responsive table-bordered" width="100%">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Nama</th>
-                                            <th scope="col">NIK</th>
-                                            <th scope="col">Departemen</th>
-                                            <th scope="col">Alamat</th>
-                                            <th scope="col">Tgl. Masuk</th>
-                                            <th scope="col">Tgl. Keluar</th>
+                                            <th>Nama</th>
+                                            <th>NIK</th>
+                                            <th>Departemen</th>
+                                            <th>Alamat</th>
+                                            <th>Tgl. Masuk</th>
+                                            <th>Tgl. Keluar</th>
                                         </tr>
                                     </thead>
                                     <tbody>

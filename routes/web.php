@@ -114,15 +114,22 @@ Route::get('/izin_show/{id}', [JenisizinController::class, 'show'])->name('izin_
 //setting alokasi
 Route::get('/settingalokasi', [SettingalokasicutiController::class, 'index'])->name('setting_alokasi.index');
 Route::post('/settingalokasi', [SettingalokasicutiController::class, 'store'])->name('setting_alokasi.store');
-//Route::get('/showsettingalokasi/{id}', [SettingalokasicutiController::class, 'show'])->name('showsettingalokasi');
+Route::get('/showsettingalokasi/{id}', [SettingalokasicutiController::class, 'show'])->name('showsettingalokasi');
 Route::get('/settingalokasi/{id}', [SettingalokasicutiController::class, 'destroy']) ->name('deletesetting');
 Route::put('/updatesettingalokasi/{id}', [SettingalokasicutiController::class, 'update'])->name('updatesettingalokasi');
 
 //alokasi cuti
 Route::get('/alokasicuti', [AlokasicutiController::class, 'index'])->name('alokasi.index');
-Route::post('/gettglmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tglmasuk');
-Route::post('/getsettingalokasi', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Settingalokasi');
 Route::post('/alokasicuti', [AlokasicutiController::class, 'store'])->name('alokasi.store');
+Route::get('/showalokasi/{id}', [AlokasicutiController::class, 'show'])->name('showalokasi');
+// Route::get('/editalokasi/{id}', [AlokasicutiController::class, 'edit'])->name('editalokasi');
+Route::put('/updatealokasi/{id}', [AlokasicutiController::class, 'update'])->name('updatealokasi');
 Route::post('/alokasiimporexcel',[AlokasicutiController::class,'importexcel'])->name('alokasi.importexcel');
+
+Route::post('/gettglmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tglmasuk');
+Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');
+Route::post('/getsettingalokasi', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Settingalokasi');
+Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
+
 
     

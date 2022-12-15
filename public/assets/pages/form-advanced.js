@@ -114,6 +114,10 @@
             autoclose: true,
             todayHighlight: true
         });
+        jQuery('#datepicker-autoclosea4').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
         jQuery('#datepicker-inline').datepicker();
         jQuery('#datepicker-multiple-date').datepicker({
             format: "mm/dd/yyyy",
