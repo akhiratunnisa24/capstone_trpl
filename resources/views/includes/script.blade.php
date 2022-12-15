@@ -32,6 +32,9 @@
         });
 </script>  --}}
 
+
+
+
 <!-- jQuery  -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
@@ -80,8 +83,11 @@
 <!-- Plugins Init js -->
 <script src="assets/pages/form-advanced.js"></script>
 
+
+
 <script type="text/javascript">
         $(function() {
            $('#datepicker').datepicker();
         });
 </script>
+

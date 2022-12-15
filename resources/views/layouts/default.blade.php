@@ -1,17 +1,16 @@
 <!doctype html>
-
 <head>
-    @include('includes.meta')
+@include('includes.meta')
 
-    <!-- Style -->
-    @stack('before-style')
-    @include('includes.style')
-    @stack('after-style')
+<!-- Style -->
+@stack('before-style')
+@include('includes.style')
+@stack('after-style')
 
 </head>
 
 <body>
-    @include('sweetalert::alert')
+@include('sweetalert::alert')
 
     <!-- Navbar -->
     @include('includes.navbar')
@@ -20,23 +19,17 @@
     @include('includes.sidebar')
 
 
-
-    <!-- Start right Content here -->
-    <div class="content-page">
-        <!-- Start content -->
         <div class="content">
-            <div class="container">
-            <div class="content">
 
+         
 
+          <!-- Content -->
+          @yield('content')
 
-                <!-- Content -->
-                @yield('content')
-
-            </div>
         </div>
-    </div>
 
+        <div class="clearfix"></div>
+    </div>
 
     @include('includes.footer')
 
@@ -45,5 +38,4 @@
     @include('includes.script')
     @stack('after-script')
 </body>
-
 </html>
