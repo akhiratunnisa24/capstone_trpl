@@ -82,7 +82,7 @@
             <tr align="center">
                 <td>{{$d->id}}</td>
                 <td id="n">{{$d->karyawans->nama}}</td>
-                <td>{{$d->tanggal}}</td>
+                <td>{{\Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
                 <td>{{$d->jam_masuk}}</td>
                 <td>{{$d->jam_keluar}}</td>
                 <td>{{$d->terlambat}}</td>

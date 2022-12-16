@@ -130,13 +130,13 @@ class AlokasicutiController extends Controller
         return view('admin.alokasicuti.showalokasi',compact('alokasicuti'));
     }
 
-    public function edit($id)
-    {
-        $karyawan = Karyawan::find($id);
-        $alokasicuti = Alokasicuti::find($id);
-        $settingalokasi = Settingalokasi::find($id);
-        return view('admin.alokasicuti.editalokasi',compact('alokasicuti','karyawan','settingalokasi'));
-    }
+    // public function edit($id)
+    // {
+    //     $karyawan = Karyawan::find($id);
+    //     $alokasicuti = Alokasicuti::find($id);
+    //     $settingalokasi = Settingalokasi::find($id);
+    //     return view('admin.alokasicuti.editalokasi',compact('alokasicuti','karyawan','settingalokasi'));
+    // }
 
     public function update(Request $request, $id)
     {

@@ -17,7 +17,7 @@
                     </a>
                 </li>
                     
-                <div class="btn-group btn-lg">
+                {{-- <div class="btn-group btn-lg">
                     <button type="button" class="btn btn-secondary">Kategori Data</button>
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="caret"></span>
@@ -27,7 +27,7 @@
                         <li><a href="/kategori_cuti">Kategori Cuti</a></li>
                         <li><a href="#">Kategori Izin</a></li>
                     </ul>
-                </div>
+                </div> --}}
             </ul>
             <div class="tab-content">
                 {{-- LIST CUTI --}}
@@ -37,6 +37,10 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
+                                    {{-- <div class="btn btn-group">
+                                        <a href="/settingalokasi" class="btn btn-dark">Setting Alokasi</a>
+                                        <a href="/alokasicuti" class="btn btn-dark">Alokasi Cuti</a>
+                                    </div> --}}
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <strong>Data Permintaan Cuti</strong>

@@ -3,16 +3,22 @@
 namespace App\Exports;
 
 use App\Models\Absensi;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class RekapabsensiExport implements FromCollection
+class RekapabsensiExport implements FromCollection, WithHeadings
 {
-    protected $id_karyawan;
+    protected $idkaryawan;
+    protected $data;
 
-    // function __construct($id_karyawan) {
-    //     $this->id_karyawan = $id_karyawan;
-    // }
-     public function headings(): array {
+    function __construct($data, $idkaryawan) {
+        $this->data = $data;
+        $this->idkaryawan = $idkaryawan;
+
+        // dd($data,$idkaryawan);
+    }
+
+    public function headings(): array {
         return [
             "No. ID","ID Karyawan","NIK","Tanggal","Jam Kerja","Jam Masuk","Jam Pulang",
             "Scan Masuk","Scan Pulang","Normal","Riil","Terlambat","Plg Cepat","Absent",
@@ -26,6 +32,11 @@ class RekapabsensiExport implements FromCollection
     */
     public function collection()
     {
-        return Absensi::where('id_karyawan',$this->id_karyawan)->get();
+        return Absensi::where('id_karyawan',$this->idkaryawan)->get();
     }
+
+    // public function collection()
+    // {
+    //     return Absensi::all();
+    // }
 }
