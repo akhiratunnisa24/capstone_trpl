@@ -103,8 +103,44 @@
 <script src="assets/js/app.js"></script>
 <script src="assets/pages/form-advanced.js"></script>
 
+<!-- script untuk mengambil data tanggalmasuk  -->
+<script type="text/javascript">
+    //button create alokasicuti event
+    $('body').on('click','#btn-editalokasi',function() {
+        Let id_alokasi =  $(this).data("id");
+
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                        .attr('content')
+                    }
+        });
+        //fetch detail post with ajax
+        $.ajax({
+            url: `/edit-alokasi/${id_alokasi}`,  //url untuk mengambil data ajax, otomatis harus ada 1 route untuk menampilkan datanya
+            type: "GET",
+            cache: false,
+            success: function(response){
+                //fill data to form
+                $("#idjeniscuti").val(data.alokasicuti.id_jeniscuti);
+                $("#idsettingalokasi").val(data.alokasicuti.id_settingalokasi);
+                $("#idkaryawana").val(data.alokasicuti.id_karyawan);
+                $("#durasi").val(data.alokasicuti.durasi);
+                $("#modealokasi").val(data.alokasicuti.mode_alokasi);
+                $("#tglmasuk").val(data.alokasicuti.tgl_masuk);
+                $("#tglsekarang").val(data.alokasicuti.tgl_Sekarang);
+                $("#aktifdari").val(data.alokasicuti.aktif_dari);
+                $("#sampai").val(data.alokasicuti.sampai);
+                $('#id_alokasi').val(response.data.id);
+                
+                //open modal
+                $('#editalokasi').modal('show');
+            }
+        });
+    });
+</script>
+
 <!-- Script untuk mengambil nilai settingalokasi  -->
-<script>
+<script type="text/javascript">
     $('#idjeniscuti').on('change',function(e){
         var id_jeniscuti = e.target.value;
         $.ajaxSetup({
@@ -127,7 +163,7 @@
 </script>
 
 <!-- script untuk mengambil data tanggalmasuk  -->
-<script>
+<script type="text/javascript">
     $('#id_karyawan').on('change',function(e){
         var id_karyawan = e.target.value;
         $.ajaxSetup({
@@ -148,6 +184,7 @@
     });
 </script> 
 
+<!-- script untuk memunculkan form tglmasuk dan tglsekarang ketika kategori cuti == Cuti Tahunan -->
 <script type="text/javascript">
     $(function()
     {
