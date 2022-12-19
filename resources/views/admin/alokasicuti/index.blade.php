@@ -79,8 +79,9 @@
                                                             <a id="bs" class="btn btn-info btn-sm showalokasi" data-toggle="modal" data-target="#showalokasi{{$data->id}}">
                                                                 <i class="fa fa-eye"></i>
                                                             </a> 
-                                                            <a id="bs" class="btn btn-sm btn-success editalokasi" data-toggle="modal" id="btn-editalokasi" data-target="#editalokasi{{$data->id}}">
+                                                            <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal" data-alokasi="{{$data->id}}" data-target="#editalokasi">
                                                                 <i class="fa fa-edit"></i>
+                                                                {{-- {{$data->id}} --}}
                                                             </a> 
                                                             <button onclick="alokasicuti({{$data->id}})"  class="btn btn-danger btn-sm">
                                                                 <i class="fa fa-trash"></i>
