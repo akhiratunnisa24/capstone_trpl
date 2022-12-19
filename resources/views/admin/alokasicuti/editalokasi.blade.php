@@ -1,5 +1,5 @@
 {{-- FORM SETTING ALOKASI--}}
-<div class="modal fade" id="editalokasi{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="editalokasi" aria-hidden="true">
+<div class="modal fade"  data-alokasi="{{$data->id}}" id="editalokasi" tabindex="-1" role="dialog" aria-labelledby="editalokasi" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,9 +9,12 @@
             <div class="modal-body">
                 <form class="input" action="/updatealokasi/{{$data->id}}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('POST')
+                    @method('PUT')
                     <div class="panel-body">
                         <div class="col-md-6">
+                            <input type="hidden" id="id_alokasi" name="id" value="{{$data->id}}">
+                            <input type="hidden" name="id_settingalokasi" id="idsettingalokasi" value="{{$data->id_settingalokasi}}">
+                    
                             <div class="form-group col-sm">
                                 <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
                                 <select name="id_jeniscuti" id="idjeniscuti" class="form-control">
@@ -21,14 +24,6 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <input type="text" class="form-control" name="durasi" placeholder="durasi" id="idsettingalokasi" value="{{$data->id_settingalokasi}} --> id settingalokasi" readonly>
-                            <input type="text" class="form-control" name="durasi" placeholder="durasi" id="idjeniscutis" value="{{$data->id_jeniscuti}} --> id kategori" readonly>
-                            <input type="text" class="form-control" name="durasi" placeholder="durasi" id="idjeniscutis" value="{{$data->id_karyawan}} -->id karyawan" readonly>
-                            <input type="text" class="form-control" name="durasi" placeholder="durasi" id="idjeniscutis" value="{{$data->durasi}} Hari --> durasi" readonly>
-                            <input type="text" class="form-control" name="durasi" placeholder="durasi" id="idjeniscutis" value="{{$data->mode_alokasi}} -->mode alokasi" readonly>
-                            <input type="text" class="form-control" name="durasi" placeholder="durasi" id="idjeniscutis" value="{{\Carbon\carbon::parse($data->aktif_dari)->format('m/d/Y')}} -->aktif dari" readonly>
-                            <input type="text" class="form-control" name="durasi" placeholder="durasi" id="idjeniscutis" value="{{\Carbon\carbon::parse($data->sampai)->format('m/d/Y')}} -->sampai tanggal"readonly>
-
                             <div class="form-group col-sm" id="idkaryawan">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
                                 <select name="id_karyawan" id="id_karyawan" class="form-control">
@@ -40,11 +35,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="durasi" class="col-form-label">Durasi (Hari)</label>
-                                <input type="text" class="form-control" name="durasi" placeholder="durasi" id="duration" value="{{$data->durasi}}" readonly>
+                                <input type="text" class="form-control" name="durasi" placeholder="durasi" id="duration" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
-                                <input type="text" class="form-control" name="mode_alokasi" placeholder="mode alokasi" value="{{$data->mode_alokasi}}" id="modealokasi" readonly>
+                                <input type="text" class="form-control" name="mode_alokasi" placeholder="mode alokasi" id="modealokasi" readonly>
                             </div>
                         </div>
 
@@ -71,7 +66,7 @@
                                 <div class="form-group">
                                     <label for="tgl_mulai" class="form-label">Aktif Dari</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea3" name="aktif_dari" value="{{\Carbon\carbon::parse($data->aktif_dari)->format('m/d/Y')}}"  autocomplete="off">
+                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea3" name="aktif_dari" autocomplete="off">
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
@@ -80,7 +75,7 @@
                                 <div class="form-group">
                                     <label for="sampai" class="form-label">Sampai</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea4" name="sampai" value="{{\Carbon\carbon::parse($data->sampai)->format('m/d/Y')}}" autocomplete="off">
+                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea4" name="sampai" autocomplete="off">
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
@@ -90,7 +85,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-info" name="submit" value="save">Save Changes</button>
+                        <button type="submit" class="btn btn-info" name="submit" value="save" id="update">Update</button>
                     </div>
                 </form>
             </div>
@@ -103,39 +98,37 @@
 <script src="assets/js/app.js"></script>
 <script src="assets/pages/form-advanced.js"></script>
 
-<!-- script untuk mengambil data tanggalmasuk  -->
+<!-- script untuk mengambil data alokasi cuti  -->
 <script type="text/javascript">
-    //button create alokasicuti event
-    $('body').on('click','#btn-editalokasi',function() {
-        Let id_alokasi =  $(this).data("id");
+    $('body').on('click','.btn-editalokasi',function() 
+    {
+        var id_alokasi =$(this).data('alokasi');
 
+        // console.log(id_alokasi);
         $.ajaxSetup({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
                         .attr('content')
                     }
         });
-        //fetch detail post with ajax
         $.ajax({
-            url: `/edit-alokasi/${id_alokasi}`,  //url untuk mengambil data ajax, otomatis harus ada 1 route untuk menampilkan datanya
+            url: "/edit-alokasi/"+id_alokasi,
             type: "GET",
             cache: false,
-            success: function(response){
-                //fill data to form
-                $("#idjeniscuti").val(data.alokasicuti.id_jeniscuti);
-                $("#idsettingalokasi").val(data.alokasicuti.id_settingalokasi);
-                $("#idkaryawana").val(data.alokasicuti.id_karyawan);
-                $("#durasi").val(data.alokasicuti.durasi);
-                $("#modealokasi").val(data.alokasicuti.mode_alokasi);
-                $("#tglmasuk").val(data.alokasicuti.tgl_masuk);
-                $("#tglsekarang").val(data.alokasicuti.tgl_Sekarang);
-                $("#aktifdari").val(data.alokasicuti.aktif_dari);
-                $("#sampai").val(data.alokasicuti.sampai);
+            success: function (response) {
+                // console.log(response);
                 $('#id_alokasi').val(response.data.id);
-                
-                //open modal
-                $('#editalokasi').modal('show');
+                $("#idjeniscuti").val(response.data.id_jeniscuti);
+                $("#idsettingalokasi").val(response.data.id_settingalokasi);
+                $("#id_karyawan").val(response.data.id_karyawan);
+                $("#duration").val(response.data.durasi);
+                $("#modealokasi").val(response.data.mode_alokasi);
+                $("#tglmasuk").val(response.data.tgl_masuk);
+                $("#tglsekarang").val(response.data.tgl_sekarang);
+                $("#datepicker-autoclosea3").val(response.data.aktif_dari);
+                $("#datepicker-autoclosea4").val(response.data.sampai);
             }
         });
+    
     });
 </script>
 
@@ -205,6 +198,66 @@
         });
     });
 </script>
+
+<!-- script untuk menyimpan data update-->
+<script type="text/javascript">
+    $("#update").click(function(e) {
+        e.preventDefault();
+        //nama variabel | id field pada form | value
+        var id_alokasi       = $("#id_alokasi").val();
+        var id_settingalokasi= $("idsettingalokasi").val();
+        var id_jeniscuti     = $("#idjeniscuti").val();
+        var id_karyawan      = $("#id_karyawan").val();
+        var durasi           = $("#duration").val();
+        var mode_alokasi     = $("#modealokasi").val();
+        var tgl_masuk        = $("#tglmasuk").val();
+        var tgl_sekarang     = $("#tglsekarang").val();
+        var aktif_dari       = $("#datepicker-autoclosea3").val();
+        var sampai           = $("#datepicker-autoclosea4").val();
+        var token            = $('meta[name="csrf-token"]').attr('content');
+    });
+    $.ajax({
+        type:"PUT",
+        url: "/updatealokasi/{$id_alokasi}",
+        data: {
+            "id_jeniscuti": id_jeniscuti,
+            "id_settingalokasi": id_settingalokasi,
+            "id_karyawan": id_karyawan,
+            "durasi": durasi,
+            "mode_alokasi": mode_alokasi,
+            "tgl_masuk": tgl_masuk,
+            "tgl_sekarang": tgl_sekarang,
+            "aktif_dari": aktif_dari,
+            "sampai": sampai,
+            "_token": token,
+        },
+        success: function (response) {
+            swal.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: `${response.message}`,
+                    showConfirmButton: false,
+                    timer: 3000
+            }); 
+
+            // var alokasicuti = `<tr id="index_${response.data.id}">
+            //             <td>${response.data.}</td>
+            //             <td>${response.data.}</td>
+            //             <td class="text-center">
+            //                 <a href="javascript:void(0)" id="btn-edit-post" data-id="${response.data.id}" class="btn btn-primary btn-sm">EDIT</a>
+            //                 <a href="javascript:void(0)" id="btn-delete-post" data-id="${response.data.id}" class="btn btn-danger btn-sm">DELETE</a>
+            //             </td>
+            //         </tr>
+            //     `;
+
+
+        },
+        error: function(error){
+
+        }
+    });
+</script>
+
 
 
 
