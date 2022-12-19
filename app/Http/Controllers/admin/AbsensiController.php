@@ -241,16 +241,11 @@ class AbsensiController extends Controller
         }else{
             $data = Absensi::all();
         }
-        return Excel::download(new RekapabsensiExport(['data'=>$data, 'idkaryawan'=>$idkaryawan]),'rekap_absensi_bulanan.xlsx');
+        return Excel::download(new RekapabsensiExport($data,$idkaryawan),'rekap_absensi_bulanan.xlsx');
+        // return Excel::download(new RekapabsensiExport(['data'=>$data, 'idkaryawan'=>$idkaryawan]),'rekap_absensi_bulanan.xlsx');
         // return Excel::download(new RekapabsensiExport($request->$idkaryawan),'rekap_absensi_bulanan.xlsx');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

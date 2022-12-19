@@ -37,19 +37,15 @@
                 </li>
 
                 <li>
-
-                <li><a><span class="text-info panel-title">DATA ABSENSI</span></a></li>
-                <li><a href="/absensi"><i class="mdi mdi-account-check"></i><span>Absensi karyawan</span></a></li>
-                <li><a href="/rekapabsensi"><i class="mdi mdi-account-card-details"></i><span>Rekap Absensi</span></a></li>
-                
+                    <li><a><span class="text-info panel-title">DATA ABSENSI</span></a></li>
+                    <li><a href="/absensi"><i class="mdi mdi-account-check"></i><span>Absensi karyawan</span></a></li>
+                    <li><a href="/rekapabsensi"><i class="mdi mdi-account-card-details"></i><span>Rekap Absensi</span></a></li>
                 </li>
 
                 <li>
-
-                <li><a><span class="text-info panel-title">CUTI & IZIN</span></a></li>
-                <li><a href="/permintaan_cuti"><i class="mdi mdi-calendar-check"></i><span>Data Cuti & Izin</span></a></li>
-                <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
-
+                    <li><a><span class="text-info panel-title">CUTI & IZIN</span></a></li>
+                    <li><a href="/permintaan_cuti"><i class="mdi mdi-calendar-check"></i><span>Data Cuti & Izin</span></a></li>
+                    <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
                 </li>
 
             </ul>

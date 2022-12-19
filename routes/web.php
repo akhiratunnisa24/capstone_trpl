@@ -126,10 +126,14 @@ Route::get('/showalokasi/{id}', [AlokasicutiController::class, 'show'])->name('s
 Route::put('/updatealokasi/{id}', [AlokasicutiController::class, 'update'])->name('updatealokasi');
 Route::post('/alokasiimporexcel',[AlokasicutiController::class,'importexcel'])->name('alokasi.importexcel');
 
+//create alokasi cuti
 Route::post('/gettglmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tglmasuk');
-Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');
 Route::post('/getsettingalokasi', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Settingalokasi');
+
+//update alokasi cuti
+Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');
 Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
+Route::get('/edit-alokasi/{id}',[AlokasicutiController::class,'edit'])->name('alokasi.edit');
 
 
     

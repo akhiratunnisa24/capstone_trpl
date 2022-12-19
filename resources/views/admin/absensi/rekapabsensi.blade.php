@@ -63,7 +63,7 @@
                                         {{-- </select>                                                  
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>   --}}
                             <div class="col-sm-2 col-xs-12">
                                 <div class="m-t-20">
                                     <div class="form-group">
@@ -139,7 +139,7 @@
     <!-- Start content -->
     @if (!empty($absensi)) 
         <div class="data" style="margin-left:15px;margin-bottom:10px">
-            <a href="/rekapabsensiExcel" class="btn btn-dark">Download Excel</a>
+            <a href="/rekapabsensiExcel" class="btn btn-dark">Export Excel</a>
             <a href="{{ route('rekapabsensipdf')}}" class="btn btn-dark">Download PDF</a>
         </div>
         <div class="content">

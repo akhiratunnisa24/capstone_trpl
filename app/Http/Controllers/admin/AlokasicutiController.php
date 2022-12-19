@@ -130,13 +130,45 @@ class AlokasicutiController extends Controller
         return view('admin.alokasicuti.showalokasi',compact('alokasicuti'));
     }
 
+    //get data alokascuti
+    //public function edit($id)
+    // {
+    //     $karyawan = Karyawan::find($id);
+    //     $alokasicuti = Alokasicuti::find($id);
+    //     $settingalokasi = Settingalokasi::find($id);
+    //     if( $alokasicuti)
+    //     {
+    //         return response()->json([
+    //             'status'=>200,
+    //             'data'=>$alokasicuti, 
+    //         ]);
+    //     }else
+    //     {
+    //         return response()->json([
+    //             'status'=>404,
+    //             'message'=>'Alokasi Cuti Not Found', 
+    //         ]);
+    //     }
+       
+    // }
+
     public function edit($id)
     {
-        $karyawan = Karyawan::find($id);
-        $alokasicuti = Alokasicuti::find($id);
-        $settingalokasi = Settingalokasi::find($id);
-        return view('admin.alokasicuti.editalokasi',compact('alokasicuti','karyawan','settingalokasi'));
+        try {
+            $alokasicuti = Alokasicuti::find($id);
+
+            if(!$alokasicuti) {
+                throw new \Exception('Alokasi Data not found');
+            }
+            return response()->json($alokasicuti,200);
+
+        } catch (\Exception $e){
+            return response()->json([
+                'message' =>$e->getMessage()
+            ], 500);
+        }
     }
+
 
     public function update(Request $request, $id)
     {
