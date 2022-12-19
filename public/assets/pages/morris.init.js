@@ -48,7 +48,7 @@
             gridLineColor: '#eef0f2',
             barColors: lineColors
         });
-    },
+    }, 
     //creates Donut chart
     MorrisCharts.prototype.createDonutChart = function(element, data, colors) {
         Morris.Donut({

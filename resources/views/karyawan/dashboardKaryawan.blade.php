@@ -24,7 +24,7 @@
                     <h4 class="panel-title">Sisa Cuti Anda</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>{{$row->cuti_tahunan}}</b></h3>
+                    <h3 class=""><b>{{ $row->cuti_tahunan }}</b></h3>
                     <p class="text-muted"><b>Total Sisa Cuti Anda</b> </p>
                 </div>
             </div>

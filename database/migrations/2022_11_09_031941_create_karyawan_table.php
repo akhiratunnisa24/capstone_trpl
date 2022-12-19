@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('nip')->nullable();
             $table->string('nik')->nullable();
             $table->string('nama')->nullable();
-            $table->string('tgllahir')->nullable();           
+            $table->date('tgllahir')->nullable();           
             $table->string('email')->unique();         
             $table->string('agama')->nullable(); 
             $table->enum('gol_darah',['A','B','AB','O'])->nullable();   

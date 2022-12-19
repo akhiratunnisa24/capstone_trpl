@@ -29,76 +29,94 @@
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose2').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose3').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose4').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose5').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose6').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose7').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose8').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose9').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose10').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose11').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         
         jQuery('#datepicker-autoclose12').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         
         jQuery('#datepicker-autoclose13').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose14').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose15').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose16').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose17').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose18').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose19').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });

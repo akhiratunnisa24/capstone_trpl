@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('kota_pformal');
             $table->string('kota_pnonformal');
             $table->string('jurusan');
-            $table->text('tahun_lulus_formal');
-            $table->text('tahun_lulus_nonformal');
+            $table->date('tahun_lulus_formal');
+            $table->date('tahun_lulus_nonformal');
             $table->text('jenis_pendidikan');
 
 

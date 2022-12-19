@@ -68,7 +68,7 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
                                         <div class="input-group">
-                                            <input id="datepicker-autoclose15" type="text" class="form-control" placeholder="dd/mm/yyyy" id="4" name="tgllahirKaryawan" rows="10" required></input><br>
+                                            <input id="datepicker-autoclose15" type="text" class="form-control" placeholder="yyyy/mm/dd" id="4" name="tgllahirKaryawan" rows="10" required></input><br>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div><!-- input-group -->
                                     </div>
@@ -145,7 +145,7 @@
                                         <div class="mb-3">
                                             <label for="exampleInputEmail1" class="form-label">Tanggal Masuk</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose2" name="tglmasukKaryawan" rows="10" required></input><br>
+                                                <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose2" name="tglmasukKaryawan" rows="10" required></input><br>
                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                             </div>
                                         </div>
@@ -231,7 +231,7 @@
                                                 <div class="mb-3">
                                                     <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose8" name="tgllahirPasangan" rows="10" required></input><br>
+                                                        <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose8" name="tgllahirPasangan" rows="10" required></input><br>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
@@ -386,7 +386,7 @@
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Lulus Tahun</label>
                                                                         <div class="input-group">
-                                                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose12" name="tahun_lulusFormal" rows="10" required></input><br>
+                                                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose12" name="tahun_lulusFormal" rows="10" required></input><br>
                                                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                         </div><!-- input-group -->
                                                                     </div>
@@ -423,7 +423,7 @@
                                                                         <div class="mb-3">
                                                                             <label for="exampleInputEmail1" class="form-label">Lulus Tahun</label>
                                                                             <div class="input-group">
-                                                                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose14" name="tahunLulusNonFormal" rows="10" required></input><br>
+                                                                                <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose14" name="tahunLulusNonFormal" rows="10" required></input><br>
                                                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                             </div><!-- input-group -->
                                                                         </div>

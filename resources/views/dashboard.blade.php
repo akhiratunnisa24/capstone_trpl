@@ -1,6 +1,5 @@
 @extends('layouts.default')
 
-
 @section('content')
     <!-- Page-Title -->
     <div class="row">
@@ -120,6 +119,7 @@
 
     </div>
 
+
     <div class="row">
         <!-- BAR Chart -->
         <div class="col-lg-12">
@@ -222,4 +222,7 @@
     <script src="assets/plugins/morris/morris.min.js"></script>
     <script src="assets/plugins/raphael/raphael-min.js"></script>
     <script src="assets/pages/morris.init.js"></script>
+
+
+
 @endsection

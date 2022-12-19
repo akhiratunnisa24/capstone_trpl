@@ -42,6 +42,7 @@ class HomeController extends Controller
         User::insert($data);
         return redirect('/karyawan')->with("sukses", "Berhasil di tambah");
     }
+
     public function index()
     {
         $role = Auth::user()->role;
@@ -68,6 +69,29 @@ class HomeController extends Controller
         $absenTerlambatbulanlalu = Absensi::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count('terlambat');
         // $absenTidakmasuk = karyawan::whereDay('created_at', '=', Carbon::now())->whereNull('id_karyawan')->count('jam_masuk');
 
+        // $label = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+        // for($bulan=1;$bulan < 13;$bulan++){
+        //     $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        //     $chartuser     = collect(Cuti::SELECT("SELECT count('jml_cuti') AS jumlah from cuti where month(created_at)='$bulan'"))->first();
+        //     $jumlah_user[] = $chartuser->jumlah;
+        //     }
+
+        $record = Cuti::select(\DB::raw("COUNT(*) as count"), \DB::raw("DAYNAME(created_at) as day_name"), \DB::raw("DAY(created_at) as day"))
+        ->where('created_at', '>', Carbon::today()->subDay(6))
+        ->groupBy('day_name','day')
+        ->orderBy('day')
+        ->get();
+      
+         $data = [];
+     
+         foreach($record as $row) {
+            $data['label'][] = $row->day_name;
+            $data['data'][] = (int) $row->count;
+          }
+     
+        $data['chart_data'] = json_encode($data);
+
+
         
 
         if ($role == 1){
@@ -80,11 +104,13 @@ class HomeController extends Controller
                 'absenBulanlalu' => $absenBulanlalu,
                 'absenTerlambat' => $absenTerlambat,
                 'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
+                // 'label' => $label,
+                // 'jumlah_user' => $jumlah_user,
                
 
 
             ];
-            return view('dashboard', $output);
+            return view('dashboard', $output , $data);
 
         }else{
             

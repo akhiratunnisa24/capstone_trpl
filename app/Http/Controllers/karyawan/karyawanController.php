@@ -34,7 +34,6 @@ class karyawanController extends Controller
     public function karyawanDashboard()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $cuti = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $absenKaryawan = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk'); 
         $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai, )->count('terlambat');
         // Absen Tidak Masuk
@@ -42,7 +41,6 @@ class karyawanController extends Controller
         
         $output = [
             'row' => $row,
-            'cuti' => $cuti,
             'absenKaryawan' => $absenKaryawan,
             'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
             'absenTidakmasuk' => $absenTidakmasuk,

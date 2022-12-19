@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('hubungan')->nullable();
             $table->string('status_pernikahan')->nullable();
             $table->string('nama');            
-            $table->string('tgllahir');
+            $table->date('tgllahir');
             $table->text('alamat');
             $table->string('pendidikan_terakhir');
             $table->text('pekerjaan');
