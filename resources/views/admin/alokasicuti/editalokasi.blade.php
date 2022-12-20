@@ -122,8 +122,8 @@
                 $("#id_karyawan").val(response.data.id_karyawan);
                 $("#duration").val(response.data.durasi);
                 $("#modealokasi").val(response.data.mode_alokasi);
-                $("#tglmasuk").val(response.data.tgl_masuk);
-                $("#tglsekarang").val(response.data.tgl_sekarang);
+                // $("#tglmasuk").val(response.data.tgl_masuk);
+                // $("#tglsekarang").val(response.data.tgl_sekarang);
                 $("#datepicker-autoclosea3").val(response.data.aktif_dari);
                 $("#datepicker-autoclosea4").val(response.data.sampai);
             }
@@ -201,7 +201,7 @@
 
 <!-- script untuk menyimpan data update-->
 <script type="text/javascript">
-    $("#update").click(function(e) {
+    $(".input").click(function(e) {
         e.preventDefault();
         //nama variabel | id field pada form | value
         var id_alokasi       = $("#id_alokasi").val();
@@ -217,44 +217,34 @@
         var token            = $('meta[name="csrf-token"]').attr('content');
     });
     $.ajax({
-        type:"PUT",
         url: "/updatealokasi/{$id_alokasi}",
+        type:"PUT",
         data: {
-            "id_jeniscuti": id_jeniscuti,
+            "id":id_alokasi, 
             "id_settingalokasi": id_settingalokasi,
+            "id_jeniscuti": id_jeniscuti,
             "id_karyawan": id_karyawan,
             "durasi": durasi,
             "mode_alokasi": mode_alokasi,
             "tgl_masuk": tgl_masuk,
             "tgl_sekarang": tgl_sekarang,
-            "aktif_dari": aktif_dari,
+            "aktif_dari":aktif_dari,
             "sampai": sampai,
             "_token": token,
         },
-        success: function (response) {
-            swal.fire({
-                    type: 'success',
-                    icon: 'success',
-                    title: `${response.message}`,
-                    showConfirmButton: false,
-                    timer: 3000
-            }); 
+        success: function(response) {
+            // $('#aid'+ response.id +' td:nth-child(1)').text(response.id_settingalokasi);
+            $('#aid'+ response.id +' td:nth-child(2)').text(response.id_jeniscuti);
+            $('#aid'+ response.id +' td:nth-child(1)').text(response.id_karyawan);
+            $('#aid'+ response.id +' td:nth-child(3)').text(response.durasi);
+            $('#aid'+ response.id +' td:nth-child(4)').text(response.mode_alokasi);
+            // $('#aid'+ response.id +' td:nth-child(6)').text(response.tgl_masuk);
+            // $('#aid'+ response.id +' td:nth-child(7)').text(response.tgl_sekarang);
+            $('#aid'+ response.id +' td:nth-child(5)').text(response.aktif_dari);
+            $('#aid'+ response.id +' td:nth-child(6)').text(response.sampai);
 
-            // var alokasicuti = `<tr id="index_${response.data.id}">
-            //             <td>${response.data.}</td>
-            //             <td>${response.data.}</td>
-            //             <td class="text-center">
-            //                 <a href="javascript:void(0)" id="btn-edit-post" data-id="${response.data.id}" class="btn btn-primary btn-sm">EDIT</a>
-            //                 <a href="javascript:void(0)" id="btn-delete-post" data-id="${response.data.id}" class="btn btn-danger btn-sm">DELETE</a>
-            //             </td>
-            //         </tr>
-            //     `;
-
-
+            $(".input")[0].reset();
         },
-        error: function(error){
-
-        }
     });
 </script>
 

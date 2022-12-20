@@ -14,7 +14,7 @@ class Alokasicuti extends Model
 
     protected $table ='alokasicuti';
     protected $fillable = [
-        'id_karyawan','settingalokasi','id_jeniscuti','durasi',
+        'id_karyawan','id_settingalokasi','id_jeniscuti','durasi',
         'mode_alokasi','aktif_dari','sampai'
     ];
 

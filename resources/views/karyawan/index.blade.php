@@ -58,40 +58,35 @@
 
                             <tbody>
                                 @foreach ($karyawan as $k)
-                                <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>{{$k->nama}}</td>
-                                    <td>{{$k->tgllahir}}</td>
-                                    <td>{{$k->jenis_kelamin}}</td>
-                                    <td>{{$k->alamat}}</td>
-                                    <td>{{$k->email}}</td>
-                                    <td>{{$k->agama}}</td>
-                                    <td>{{$k->divisi}}</td>
-                                    <td>
-                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-
-                                            <a href="karyawanshow{{$k->id}}" class="btn btn-info btn-sm">
-                                            <i class="fa fa-eye"></i></a>
-                                             
-                                            <button onclick="hapus_karyawan({{$k->id}})"  class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-trash"></i>
-                                            </button>
-                                            
-                                                    <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
- 
-                                    </td>               
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$k->nama}}</td>
+                                        <td>{{$k->tgllahir}}</td>
+                                        <td>{{$k->jenis_kelamin}}</td>
+                                        <td>{{$k->alamat}}</td>
+                                        <td>{{$k->email}}</td>
+                                        <td>{{$k->agama}}</td>
+                                        <td>{{$k->divisi}}</td>
+                                        <td>
+                                            <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                <a href="karyawanshow{{$k->id}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                                <button onclick="hapus_karyawan({{$k->id}})"  class="btn btn-danger btn-sm">
+                                                        <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                                        <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
+                                        </td>               
+                                    
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                </tr>
-                @endforeach
-                </tbody>
-                </table>
             </div>
         </div>
     </div>
 </div>
-</div>
-
 
 
 <script>
@@ -135,7 +130,7 @@ function hapus_karyawan(id){
         </script>
     <!-- jangan lupa untuk menambahkan unset agar sweet alert tidak muncul lagi saat di refresh -->
     
-    <?php unset($_SESSION['sukses']); } ?>
+<?php unset($_SESSION['sukses']); } ?>
     
 
 

@@ -18,6 +18,18 @@
                         <span class="hidden-xs">Kategori Izin</span>
                     </a>
                 </li>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary">Manajemen Cuti</button>
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/permintaan_cuti"></i>Data Cuti</a></li>
+                        <li><a href="/settingalokasi"></i>Setting Alokasi</a></li>
+                        <li><a href="/alokasicuti"></i>Alokasi Cuti</a></li>
+                    </ul>
+                </div>
             </ul>
             <div class="tab-content">
                 {{-- LIST CUTI --}}
@@ -37,7 +49,7 @@
                                         <div class="panel-body m-b-5">
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <table id="datatable-responsive" class="table dt-responsive nowrap table-striped table-bordered" cellspacing="0" width="100%">
+                                                    <table id="datatable-responsive" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
