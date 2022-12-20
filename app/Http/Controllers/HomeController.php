@@ -76,20 +76,16 @@ class HomeController extends Controller
         //     $jumlah_user[] = $chartuser->jumlah;
         //     }
 
-        $record = Cuti::select(\DB::raw("COUNT(*) as count"), \DB::raw("DAYNAME(created_at) as day_name"), \DB::raw("DAY(created_at) as day"))
-        ->where('created_at', '>', Carbon::today()->subDay(6))
-        ->groupBy('day_name','day')
-        ->orderBy('day')
-        ->get();
-      
-         $data = [];
+        
+            // $users = Karyawan::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
+            //             ->whereYear('created_at', date('Y'))
+            //             ->groupBy(DB::raw("Month(created_at)"))
+            //             ->pluck('count', 'month_name');
      
-         foreach($record as $row) {
-            $data['label'][] = $row->day_name;
-            $data['data'][] = (int) $row->count;
-          }
-     
-        $data['chart_data'] = json_encode($data);
+            // $labels = $users->keys();
+            // $data = $users->values();
+            
+        
 
 
         
@@ -110,7 +106,7 @@ class HomeController extends Controller
 
 
             ];
-            return view('dashboard', $output , $data);
+            return view('dashboard', $output );
 
         }else{
             
