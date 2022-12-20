@@ -155,6 +155,12 @@
                         <td><span ></span></td>
                     </tr>
                     <tr>
+                        <td><label >Pekerjaan : <input type="text" name="pekerjaanPasangan" class="form-control"  value="{{$keluarga->pekerjaan}}" > </label></td>
+                        <td><span ></span></td>
+                        <td><label > </label></td>
+                        <td><span ></span></td>
+                    </tr>
+                    <tr>
                         <td><label  class="text-bold text-white badge bg-dark">D. RIWAYAT PEKERJAAN</label></td>
                         <td></td>
                         <td><label class=" text-white badge bg-dark">Pendidikan Non Formal</label></td>

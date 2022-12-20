@@ -83,6 +83,9 @@
 <!-- Plugins Init js -->
 <script src="assets/pages/form-advanced.js"></script>
 
+<!-- Chart JS -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.1/chart.min.js"></script>
 
 
 <script type="text/javascript">
