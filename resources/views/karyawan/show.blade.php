@@ -131,6 +131,12 @@
                         <td><span id="bpjsket_number"></span></td>
                     </tr>
                     <tr>
+                        <td><label for="bpjskes_number">Pekerjaan : {{$keluarga->pekerjaan}}</label></td>
+                        <td><span id="bpjskes_number"></span></td>
+                        <td><label for="bpjsket_number"></label></td>
+                        <td><span id="bpjsket_number"></span></td>
+                    </tr>
+                    <tr>
                         <td><label for="bpjskes_number" class="text-bold text-white badge bg-dark">D. RIWAYAT PEKERJAAN</label></td>
                         <td></td>
                         <td><label for="end_work_date" class=" text-white badge bg-dark">Pendidikan Non Formal</label></td>
