@@ -17,7 +17,7 @@
                     </a>
                 </li>
                     
-                {{-- <div class="btn-group btn-lg">
+                <div class="btn-group">
                     <button type="button" class="btn btn-secondary">Kategori Data</button>
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="caret"></span>
@@ -25,9 +25,20 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a href="/kategori_cuti">Kategori Cuti</a></li>
-                        <li><a href="#">Kategori Izin</a></li>
+                        <li><a href="/kategori_cuti?type=2">Kategori Izin</a></li>
                     </ul>
-                </div> --}}
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary">Manajemen Cuti</button>
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/settingalokasi"></i>Setting Alokasi</a></li>
+                        <li><a href="/alokasicuti"></i>Alokasi Cuti</a></li>
+                    </ul>
+                </div>
             </ul>
             <div class="tab-content">
                 {{-- LIST CUTI --}}
@@ -37,15 +48,11 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    {{-- <div class="btn btn-group">
-                                        <a href="/settingalokasi" class="btn btn-dark">Setting Alokasi</a>
-                                        <a href="/alokasicuti" class="btn btn-dark">Alokasi Cuti</a>
-                                    </div> --}}
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <strong>Data Permintaan Cuti</strong>
-                                            <a href="/settingalokasi" class="btn btn-dark">Setting Alokasi</a>
-                                            <a href="/alokasicuti" class="btn btn-dark">Alokasi Cuti</a>
+                                            {{-- <a href="/settingalokasi" class="btn btn-dark">Setting Alokasi</a>
+                                            <a href="/alokasicuti" class="btn btn-dark">Alokasi Cuti</a> --}}
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">
@@ -107,15 +114,15 @@
                                                                                     <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                 </form>
                                                                             </div>
-                                                                        @elseif($data->status == 'Disetujui')
-                                                                            <div class="col-sm-3" style="margin-left:8px">
-                                                                                <form action="{{ url('')}}/permintaan/<?php echo $data->id ?>" method="POST"> 
+                                                                        
+                                                                            {{-- <div class="col-sm-3" style="margin-left:8px">
+                                                                                <form action="{{ url('')}}/permintaan/<php echo $data->id ?>" method="POST"> 
                                                                                     @csrf
                                                                                     @method('POST')
                                                                                     <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
                                                                                     <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                 </form>
-                                                                            </div>
+                                                                            </div> --}}
                                                                         @endif
 
                                                                         <div class="col-sm-3" style="margin-left:6px">
@@ -241,15 +248,15 @@
                                                                                         <button type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
                                                                                 </div>
-                                                                            @elseif($data->status == 'Disetujui')
+                                                                               {{-- @elseif($data->status == 'Disetujui')
                                                                                 <div class="col-sm-3" style="margin-left:7px">
-                                                                                    <form action="{{ url('')}}/permintaanizinreject/<?php echo $data->id ?>" method="POST"> 
+                                                                                    <form action="{{ url('')}}/permintaanizinreject/<php echo $data->id ?>" method="POST"> 
                                                                                         @csrf
                                                                                         @method('POST')
                                                                                         <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
                                                                                         <button type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
-                                                                                </div>
+                                                                                </div> --}}
                                                                             @endif
                 
                                                                             <div class="col-sm-3" style="margin-left:5px">
@@ -288,7 +295,7 @@
 
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+    {{-- <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/modernizr.min.js"></script>
     <script src="assets/js/detect.js"></script>
     <script src="assets/js/fastclick.js"></script>
@@ -297,7 +304,7 @@
     <script src="assets/js/waves.js"></script>
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script> --}}
     
     <!-- Datatable init js -->
     <script src="assets/pages/datatables.init.js"></script>

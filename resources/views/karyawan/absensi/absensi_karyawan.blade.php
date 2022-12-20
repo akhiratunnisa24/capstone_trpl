@@ -31,14 +31,14 @@
                                             @csrf
                                             @method('POST')
                                             <button type="submit" class="btn btn-info btn-lg">
-                                            <i class="fa fa-hourglass-start fa-spin fa-3x"></i>
+                                            <i class="fa fa-sign-in fa-3x"></i>
                                             </button> 
                                         </form>
                                     @elseif(!isset($absensi->jam_keluar))
                                         <form action="{{route('absen_pulang',$absensi->id)}}" method="POST" align="center">
                                             @csrf
                                             <button type="submit" class="btn btn-warning btn-lg m-10">
-                                                <i class="fa fa-hourglass-half fa-spin fa-3x"></i>
+                                                <i class="fa fa-sign-out fa-3x"></i>
                                             </button>
                                         </form>
                                     @else

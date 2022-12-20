@@ -156,6 +156,7 @@
                                         <table id="datatable-responsive" class="table dt-responsive table-striped table-bordered" width="100%">
                                             <thead>
                                                 <tr>
+                                                    <th>#</th>
                                                     <th>Karyawan</th>
                                                     <th>Tanggal</th>
                                                     <th>Jam Masuk</th>
@@ -165,13 +166,10 @@
                                                     <th>P. cepat</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                {{-- <tr>
-                                                    <td colspan="12" class="text-center">Data Tidak Ditemukan</td>
-                                                </tr> --}}
-                                                                
+                                            <tbody>    
                                                 @forelse($absensi as $key => $d)
                                                     <tr>
+                                                        <td>{{$loop->iteration}}</td>
                                                         <td>{{$d->karyawans->nama}}</td>
                                                         <td>{{\Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
                                                         <td>{{$d->jam_masuk}}</td>

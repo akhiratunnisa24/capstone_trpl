@@ -45,7 +45,7 @@
                 <li>
                     <li><a><span class="text-info panel-title">CUTI & IZIN</span></a></li>
                     <li><a href="/permintaan_cuti"><i class="mdi mdi-calendar-check"></i><span>Data Cuti & Izin</span></a></li>
-                    <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
+                    {{-- <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li> --}}
                 </li>
 
             </ul>

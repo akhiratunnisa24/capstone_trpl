@@ -26,11 +26,12 @@ class AlokasicutiImport implements ToModel
                     'id_jeniscuti'     => $row[2] ?? null,
                     'durasi'           => $row[3] ?? null,
                     'mode_alokasi'     => $row[4] ?? null,
-                    'tgl_masuk'        => Carbon::parse($row[5])->format("Y-m-d"),
-                    'tgl_sekarang'     => Carbon::parse($row[6])->format("Y-m-d"),
-                    'aktif_dari'       => $row[7] ?? null,
-                    'sampai'           => $row[8] ?? null,
+                    'tgl_masuk'        => Carbon::parse($row[5])->format("Y-m-d") ?? null,
+                    'tgl_sekarang'     => Carbon::parse($row[6])->format("Y-m-d") ?? null,
+                    'aktif_dari'       => Carbon::parse($row[7])->format("Y-m-d") ?? null,
+                    'sampai'           => Carbon::parse($row[8])->format("Y-m-d") ?? null,
                 ];
+                dd($row[7]);
                 //  dd($data,$row);
                 //  dd($row[2]);
                 // dd(Carbon::parse($row[2])->format("Y-m-d"));

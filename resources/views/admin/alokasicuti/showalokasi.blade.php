@@ -31,32 +31,32 @@
                         <label>: {{$data->mode_alokasi}}</label>
                     </div>
                 </div>
-                {{-- @if($data->tgl_masuk == NULL && $data->tgl_sekarang == NULL) --}}
+                {{-- @if($data->tgl_masuk != NULL) --}}
                     <div class="form-group row">
                         <label for="tgl_masuk" class="col-sm-3 col-form-label">Tanggal Masuk</label>
                         <div class="col-sm-9">
-                            <label>: {{$data->tgl_masuk}}</label>
+                            <label>: {{\Carbon\Carbon::parse($data->tgl_masuk)->format("d/m/Y")}}</label>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="tgl_sekarang" class="col-sm-3 col-form-label">Tanggal Sekarang</label>
                         <div class="col-sm-9">
-                            <label>: {{$data->tgl_sekarang}}</label>
+                            <label>: {{\Carbon\Carbon::parse($data->tgl_sekarang)->format("d/m/Y")}}</label>
                         </div>
                     </div>
-                {{-- @else
-                    <td></td>
-                @endif --}}
+                {{-- @else --}}
+                    {{-- <td></td> --}}
+                {{-- @endif --}}
                 <div class="form-group row">
                     <label for="aktif_dari" class="col-sm-3 col-form-label">Aktif dari</label>
                     <div class="col-sm-9">
-                        <label>: {{$data->aktif_dari}}</label>
+                        <label>: {{\Carbon\Carbon::parse($data->aktif_dari)->format("d/m/Y")}}</label>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="sampai" class="col-sm-3 col-form-label">Sampai Tanggal</label>
                     <div class="col-sm-9">
-                        <label>: {{$data->sampai}}</label>
+                        <label>: {{\Carbon\Carbon::parse($data->sampai)->format("d/m/Y")}}</label>
                     </div>
                 </div>
 
