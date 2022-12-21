@@ -135,5 +135,5 @@ Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingaloka
 Route::get('/edit-alokasi/{id}',[AlokasicutiController::class,'edit']);
 Route::put('/updatealokasi/{id}', [AlokasicutiController::class, 'update'])->name('updatealokasi');
 
-
+// Route::put('/updatealokasi', [AlokasicutiController::class, 'update'])->name('update.alokasi');
     
