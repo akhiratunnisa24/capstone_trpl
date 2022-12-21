@@ -121,8 +121,23 @@
 
 
 <div class="row">
+
+ <!-- Chart JS -->
+ <div class="col-lg-12">
+        <div class="panel panel-border panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title text-white">Cuti dan Izin</h3>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <canvas id="myChart" style="height: 300px"></canvas>
+                </div>
+            </div>
+        </div>
+    </div> <!-- col -->
+    
     <!-- BAR Chart -->
-    <div class="col-lg-12">
+    <!-- <div class="col-lg-12">
         <div class="panel panel-border panel-info">
             <div class="panel-heading ">
                 <h3 class="panel-title text-white">Cuti dan Izin</h3>
@@ -131,7 +146,8 @@
                 <div id="morris-bar-example" style="height: 300px"></div>
             </div>
         </div>
-    </div> <!-- col -->
+    </div> -->
+     <!-- col -->
 
     <!-- BAR Chart -->
     <div class="col-lg-12">
@@ -169,19 +185,7 @@
         </div>
     </div> <!-- col -->
 
-    <!-- Chart JS -->
-    <div class="col-lg-12">
-        <div class="panel panel-border panel-danger">
-            <div class="panel-heading">
-                <h3 class="panel-title text-white">Chart JS</h3>
-            </div>
-            <div class="panel-body">
-                <div>
-                    <canvas id="myChart" style="height: 300px"></canvas>
-                </div>
-            </div>
-        </div>
-    </div> <!-- col -->
+   
 
 
 
@@ -245,7 +249,7 @@
 
 <!--Chart JS-->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<!-- 
 <script>
     (async function() {
   const data = [
@@ -279,6 +283,33 @@
     }
   );
 })();
+</script> -->
+
+<script>
+    var labels =  {{ Js::from($labels) }};
+      var users =  {{ Js::from($data) }};
+      var cuti =  {{ Js::from($cutiPerbulan) }};
+  
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'Cuti dan Izin',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: users,
+        }]
+      };
+  
+      const config = {
+        type: 'line',
+        data: data,
+        options: {}
+      };
+  
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
 </script>
 
 

@@ -57,7 +57,7 @@ class HomeController extends Controller
         $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereMonth('created_at', '=', Carbon::now()->month)->count('jam_masuk');
 
         // $cutiPerbulan = Cuti::where('id_jeniscuti',1)->whereMonth('tgl_mulai','12')->sum('jml_cuti');
-        $cutiPerbulan = Cuti::whereMonth('created_at', '=', Carbon::now()->month)->sum('jml_cuti');
+        $cutiPerbulan = Karyawan::whereMonth('created_at', '=', Carbon::now()->month)->sum('cuti_tahunan');
         $cutiBulanlalu = Cuti::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->sum('jml_cuti');
 
         $absenHariini = Absensi::whereDay('created_at', '=', Carbon::now())->count('jam_masuk');
@@ -78,12 +78,16 @@ class HomeController extends Controller
 
         
             // $users = Karyawan::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
-            //             ->whereYear('created_at', date('Y'))
-            //             ->groupBy(DB::raw("Month(created_at)"))
-            //             ->pluck('count', 'month_name');
+            $users = User::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
+                    // Karyawan::whereMonth('created_at', '=', Carbon::now()->month)->sum('cuti_tahunan');
+                      
+                        ->whereYear('created_at', date('Y'))
+                        ->groupBy(DB::raw('MONTHNAME(created_at)'))
+                        ->pluck('count', 'month_name');
+
      
-            // $labels = $users->keys();
-            // $data = $users->values();
+            $labels = $users->keys();
+            $data = $users->values();
             
         
 
@@ -100,6 +104,8 @@ class HomeController extends Controller
                 'absenBulanlalu' => $absenBulanlalu,
                 'absenTerlambat' => $absenTerlambat,
                 'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
+                'data' => $data,
+                'labels' => $labels,
                 // 'label' => $label,
                 // 'jumlah_user' => $jumlah_user,
                
