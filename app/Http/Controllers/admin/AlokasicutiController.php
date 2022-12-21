@@ -169,11 +169,10 @@ class AlokasicutiController extends Controller
                 'sampai'       => Carbon::parse($request->sampai)->format('Y-m-d'),
             ]);
 
-            // return redirect()->back();
-            
             return response()->json([
                 'success' => true,
                 'message' => 'Data Berhasil Diudapte!',
+                'statusCode'=>200,
                 'data'    => $alokasicuti 
             ]);
         }else
@@ -197,10 +196,10 @@ class AlokasicutiController extends Controller
                 'sampai'       => Carbon::parse($request->sampai)->format('Y-m-d'),
             ]);
 
-            // return redirect()->back();
             return response()->json([
                 'success' => true,
                 'message' => 'Data Berhasil Diudapte!',
+                'statusCode'=>200,
                 'data'    => $alokasicuti 
             ]);
            

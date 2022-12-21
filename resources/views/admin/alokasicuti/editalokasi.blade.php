@@ -7,6 +7,7 @@
                 <h4 class="modal-title" id="editalokasi">Edit Alokasi Cuti</h4>
             </div>  
             <div class="modal-body">
+                {{-- action="/updatealokasi/{{$data->id}}" --}}
                 <form class="input" action="/updatealokasi/{{$data->id}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -85,7 +86,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-info" name="submit" value="save" id="update">Update</button>
+                        <button type="submit" class="btn btn-info" name="submit" value="submit" id="update_data">Update</button>
                     </div>
                 </form>
             </div>
@@ -217,7 +218,7 @@
         var token            = $('meta[name="csrf-token"]').attr('content');
     });
     $.ajax({
-        url: "/updatealokasi/{$id_alokasi}",
+        url: "/updatealokasi/{$id_alokasi}"
         type:"PUT",
         data: {
             "id":id_alokasi, 
@@ -232,18 +233,56 @@
             "sampai": sampai,
             "_token": token,
         },
-        success: function(response) {
-            // $('#aid'+ response.id +' td:nth-child(1)').text(response.id_settingalokasi);
-            $('#aid'+ response.id +' td:nth-child(2)').text(response.id_jeniscuti);
+        success: function(response) { 
+            //CARA 1
             $('#aid'+ response.id +' td:nth-child(1)').text(response.id_karyawan);
+            $('#aid'+ response.id +' td:nth-child(2)').text(response.id_jeniscuti);
             $('#aid'+ response.id +' td:nth-child(3)').text(response.durasi);
             $('#aid'+ response.id +' td:nth-child(4)').text(response.mode_alokasi);
-            // $('#aid'+ response.id +' td:nth-child(6)').text(response.tgl_masuk);
-            // $('#aid'+ response.id +' td:nth-child(7)').text(response.tgl_sekarang);
             $('#aid'+ response.id +' td:nth-child(5)').text(response.aktif_dari);
             $('#aid'+ response.id +' td:nth-child(6)').text(response.sampai);
-
+           
             $(".input")[0].reset();
+
+            if(response.statusCode)
+             {
+                window.location.href = "/alokasicuti";
+             }
+             else{
+                 alert("Internal Server Error");
+             }
+          
+            //window.location.replace("http://127.0.0.1:8000/alokasicuti");
+
+            // $('#aid'+ response.id +' td:nth-child(1)').text(response.id_settingalokasi);
+            // $('#aid'+ response.id +' td:nth-child(6)').text(response.tgl_masuk);
+            // $('#aid'+ response.id +' td:nth-child(7)').text(response.tgl_sekarang);
+
+            //CARA 2
+            // let alokasicuti = '<tr id="aid${response.data.id}">
+            //                         <td>${response.data.id_karyawan}</td>
+            //                         <td>${response.data.id_jeniscuti}</td>
+            //                         <td>${response.data.durasi}</td>
+            //                         <td>${response.data.mode_alokasi}</td>
+            //                         <td>${response.data.aktif_dari}</td>
+            //                         <td>${response.data.sampai}</td>
+            //                         <td class="text-center"> 
+            //                             <div class="row">
+            //                                 <a id="bs" class="btn btn-info btn-sm showalokasi" data-toggle="modal" data-target="#showalokasi{{$data->id}}">
+            //                                     <i class="fa fa-eye"></i>
+            //                                 </a> 
+            //                                 <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal" data-alokasi="{{$data->id}}" data-target="#editalokasi">
+            //                                     <i class="fa fa-edit"></i>
+            //                                     {{-- {{$data->id}} --}}
+            //                                 </a> 
+            //                                 <button onclick="alokasicuti({{$data->id}})"  class="btn btn-danger btn-sm">
+            //                                     <i class="fa fa-trash"></i>
+            //                                 </button> 
+            //                             </div> 
+            //                         </td> 
+            //                     </tr>';
+            //     //append to post data
+            //     $(`#aid${response.data.id}`).replaceWith(alokasicuti);
         },
     });
 </script>
