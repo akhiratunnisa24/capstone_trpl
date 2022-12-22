@@ -78,14 +78,14 @@ class HomeController extends Controller
 
         
             // $users = Karyawan::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
-            $users = User::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
-                    // Karyawan::whereMonth('created_at', '=', Carbon::now()->month)->sum('cuti_tahunan');
-                      
+            $users = Karyawan::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
+                    // Karyawan::whereMonth('created_at', '=', Carbon::now()->month)->sum('cuti_tahunan');   
                         ->whereYear('created_at', date('Y'))
                         ->groupBy(DB::raw('MONTHNAME(created_at)'))
                         ->pluck('count', 'month_name');
+            
 
-     
+                 
             $labels = $users->keys();
             $data = $users->values();
             
