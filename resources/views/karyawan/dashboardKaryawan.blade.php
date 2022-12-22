@@ -84,7 +84,8 @@
               <h3 class=""><b class= "text text-success" >Masuk</b></h3>
                 <?php
             } else { ?>
-                  <h3 class=""><b class= "text text-success" >Total cuti + Total izin + tidak ada keterangan</b></h3>
+                  <h4 class=""><b class= "text text-success" >Total cuti + Total izin</b></h4>
+                  {{-- + tidak ada keterangan --}}
                 <?php } ?>
 
                     <p class="text-muted"><b>Total Jumlah Tidak Hadir Anda</b> </p>
@@ -96,6 +97,102 @@
 
         </div>
 
+    </div>
+
+    <!-- baris kedua -->
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <h4 class="m-t-0">Kategori Cuti</h4>
+                    <ul class="list-inline m-t-30 widget-chart text-center">
+                      @if($ct == 0)
+                        <li>
+                          {{-- <i class="mdi mdi-arrow-up-bold-circle text-success"></i> --}}
+                          <h4 class=""><b>{{$ct}}</b></h4>
+                          <h5 class="text-muted m-b-0">Cuti tahunan</h5>
+                        </li>
+                      @else
+                        <li>
+                          {{-- <i class="mdi mdi-arrow-up-bold-circle text-success"></i> --}}
+                          <h4 class=""><b>{{$ct}}</b></h4>
+                          <h5 class="text-muted m-b-0">Cuti tahunan</h5>
+                        </li>
+                      @endif
+
+                        @if($cma == 0)
+                          <li>
+                              {{-- <i class="mdi mdi-arrow-down-bold-circle text-danger"></i> --}}
+                              <h4 class=""><b>{{$cma}}</b></h4>
+                              <h5 class="text-muted m-b-0">Cuti Keluarga Meninggal</h5>
+                          </li>
+                        @else
+                          <li>
+                            {{-- <i class="mdi mdi-arrow-down-bold-circle text-danger"></i> --}}
+                            <h4 class=""><b>{{$cma}}</b></h4>
+                            <h5 class="text-muted m-b-0">Cuti Keluarga Meninggal</h5>
+                          </li>
+                        @endif
+                        <li>
+                            {{-- <i class="mdi mdi-arrow-up-bold-circle text-success"></i> --}}
+                            <h4 class=""><b>964</b></h4>
+                            <h5 class="text-muted m-b-0">Last Month</h5>
+                        </li>
+                    </ul>
+                    <div id="sparkline1" style="margin: 0 -21px -22px -22px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="panel panel-primary">
+              <div class="panel-body">
+                  <h4 class="m-t-0">Revenue</h4>
+                  <ul class="list-inline m-t-30 widget-chart text-center">
+                      <li>
+                          <i class="mdi mdi-arrow-up-bold-circle text-success"></i>
+                          <h4 class=""><b>5248</b></h4>
+                          <h5 class="text-muted m-b-0">Marketplace</h5>
+                      </li>
+                      <li>
+                          <i class="mdi mdi-arrow-down-bold-circle text-danger"></i>
+                          <h4 class=""><b>321</b></h4>
+                          <h5 class="text-muted m-b-0">Last week</h5>
+                      </li>
+                      <li>
+                          <i class="mdi mdi-arrow-up-bold-circle text-success"></i>
+                          <h4 class=""><b>964</b></h4>
+                          <h5 class="text-muted m-b-0">Last Month</h5>
+                      </li>
+                  </ul>
+                  <div id="sparkline1" style="margin: 0 -21px -22px -22px;"></div>
+              </div>
+          </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <h4 class="m-t-0">Revenue</h4>
+                <ul class="list-inline m-t-30 widget-chart text-center">
+                    <li>
+                        <i class="mdi mdi-arrow-up-bold-circle text-success"></i>
+                        <h4 class=""><b>5248</b></h4>
+                        <h5 class="text-muted m-b-0">Marketplace</h5>
+                    </li>
+                    <li>
+                        <i class="mdi mdi-arrow-down-bold-circle text-danger"></i>
+                        <h4 class=""><b>321</b></h4>
+                        <h5 class="text-muted m-b-0">Last week</h5>
+                    </li>
+                    <li>
+                        <i class="mdi mdi-arrow-up-bold-circle text-success"></i>
+                        <h4 class=""><b>964</b></h4>
+                        <h5 class="text-muted m-b-0">Last Month</h5>
+                    </li>
+                </ul>
+                <div id="sparkline1" style="margin: 0 -21px -22px -22px;"></div>
+            </div>
+        </div>
+      </div>
     </div>
 
 

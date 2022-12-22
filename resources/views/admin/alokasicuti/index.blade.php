@@ -1,5 +1,7 @@
 @extends('layouts.default')
 @section('content')
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
@@ -75,7 +77,7 @@
                                                                 <i class="fa fa-edit"></i>
                                                                 {{-- {{$data->id}} --}}
                                                             </a> 
-                                                            <button onclick="alokasicuti({{$data->id}})"  class="btn btn-danger btn-sm">
+                                                            <button onclick="hapus_alokasi({{$data->id}})"  class="btn btn-danger btn-sm">
                                                                 <i class="fa fa-trash"></i>
                                                             </button> 
                                                         </div> 
@@ -101,4 +103,46 @@
     <script src="assets/pages/datatables.init.js"></script>
 
     <script src="assets/js/app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    
+    <!-- jangan lupa menambahkan script js sweet alert di bawah ini  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+
+     {{-- Direct halaman tambah data --}}
+   <script type="text/javascript">
+       function hapus_alokasi(id){
+           swal.fire({
+               title:"Apakah anda yakin?",
+               text: "Data yang sudah terhapus tidak dapat dikembalikan kembali",
+               icon: "warning",
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: "Ya, hapus!",
+               closeOnConfirm: false
+           }).then((result) => {
+               if (result.isConfirmed) {
+                   swal.fire({
+                       title : "Terhapus!",
+                       text: "Data berhasil di hapus..",
+                       icon: "success",
+                       confirmButtonColor: '#3085d6',
+                   })
+                   location.href = '<?= "http://localhost:8000/deletealokasi" ?>'+id;
+               }
+           })
+       }
+   </script>
+
+    <?php if(@$_SESSION['sukses']){ ?>
+       <script>
+           swal.fire("Good job!", "<?php echo $_SESSION['sukses']; ?>", "success");
+       </script>
+   <!-- jangan lupa untuk menambahkan unset agar sweet alert tidak muncul lagi saat di refresh -->
+   
+   <?php unset($_SESSION['sukses']); } ?>
 @endsection
