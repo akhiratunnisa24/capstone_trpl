@@ -4,17 +4,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="editalokasi">Edit Alokasi Cuti</h4>
+                <h4 class="modal-title" id="editalokas">Edit Alokasi Cuti</h4>
             </div>  
             <div class="modal-body">
-                {{-- action="/updatealokasi/{{$data->id}}" --}}
-                <form class="input" action="/updatealokasi/{{$data->id}}" method="POST" enctype="multipart/form-data">
+                {{-- <form class="input" action="/updatealokasi/{{$data->id}}" method="POST" enctype="multipart/form-data"> --}}
+                <form class="input" action="" id="input">
                     @csrf
-                    @method('PUT')
+                    {{-- @method('PUT') --}}
                     <div class="panel-body">
                         <div class="col-md-6">
-                            <input type="hidden" id="id_alokasi" name="id" value="{{$data->id}}">
-                            <input type="hidden" name="id_settingalokasi" id="idsettingalokasi" value="{{$data->id_settingalokasi}}">
+                            <input type="hidden" id="id_alokasi" name="id">
+                            <input type="hidden" id="idsettingalokasi" name="id_settingalokasi">
                     
                             <div class="form-group col-sm">
                                 <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
@@ -25,15 +25,19 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-sm" id="idkaryawan">
+                            <div class="form-group">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
-                                <select name="id_karyawan" id="id_karyawan" class="form-control">
-                                    <option value="{{$data->id_karyawan}}" selected>{{$data->karyawans->nama}}</option>
-                                    @foreach ($karyawan as $data)
-                                        <option value="{{ $data->id }}">{{ $data->nama }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" name="id_karyawan" id="id_karyawan" value="{{$data->karyawans->nama}}" readonly>
                             </div>
+                            {{-- <div class="form-group col-sm" id="idkaryawan">
+                                <label for="id_karyawan" class="col-form-label">Karyawan</label>
+                                <select name="id_karyawan" id="id_karyawan" class="form-control" readonly>
+                                    <option value="{{$data->id_karyawan}}" selected>{{$data->karyawans->nama}}</option>
+                                    {{-- @foreach ($karyawan as $data)
+                                        <option value="{{ $data->id }}">{{ $data->nama }}</option>
+                                    @endforeach --}}
+                                {{-- </select>
+                            </div> --}}
                             <div class="form-group">
                                 <label for="durasi" class="col-form-label">Durasi (Hari)</label>
                                 <input type="text" class="form-control" name="durasi" placeholder="durasi" id="duration" readonly>
@@ -86,7 +90,8 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-info" name="submit" value="submit" id="update_data">Update</button>
+                        {{-- <button type="submit" class="btn btn-info" name="submit" value="submit" id="update_data">Update</button> --}}
+                        <button type="button" class="btn btn-info" name="submit" id="update_data">Update</button>
                     </div>
                 </form>
             </div>
@@ -202,6 +207,59 @@
 
 <!-- script untuk menyimpan data update-->
 <script type="text/javascript">
+    $("#update_data").click(function(e){
+        e.preventDefault();
+        let id_alokasi       = $("#id_alokasi").val();
+        let id_settingalokasi= $("#idsettingalokasi").val();
+        let id_jeniscuti     = $("#idjeniscuti").val();
+        let id_karyawan      = $("#id_karyawan").val();
+        let durasi           = $("#duration").val();
+        let mode_alokasi     = $("#modealokasi").val();
+        let tgl_masuk        = $("#tglmasuk").val();
+        let tgl_sekarang     = $("#tglsekarang").val();
+        let aktif_dari       = $("#datepicker-autoclosea3").val();
+        let sampai           = $("#datepicker-autoclosea4").val();
+        let _token           = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            url: "/updatealokasi/"+id_alokasi,
+            type: "PUT",
+            data: {
+                    "id":id_alokasi, 
+                    "id_settingalokasi": id_settingalokasi,
+                    "id_jeniscuti": id_jeniscuti,
+                    "id_karyawan": id_karyawan,
+                    "durasi": durasi,
+                    "mode_alokasi": mode_alokasi,
+                    "tgl_masuk": tgl_masuk,
+                    "tgl_sekarang": tgl_sekarang,
+                    "aktif_dari":aktif_dari,
+                    "sampai": sampai,
+                    "_token": _token,
+                },
+                success: function (response) {
+                    $('#aid'+ response.id +' td:nth-child(1)').text(response.id_karyawan);
+                    $('#aid'+ response.id +' td:nth-child(2)').text(response.id_jeniscuti);
+                    $('#aid'+ response.id +' td:nth-child(3)').text(response.durasi);
+                    $('#aid'+ response.id +' td:nth-child(4)').text(response.mode_alokasi);
+                    $('#aid'+ response.id +' td:nth-child(5)').text(response.aktif_dari);
+                    $('#aid'+ response.id +' td:nth-child(6)').text(response.sampai);
+                    
+                    modal.hide();
+                    // $('#editalokasi').modal('hide');
+                    // $("#editalokasi").modal(toggle);
+                    $(".input")[0].reset();
+                   
+                    // $('#aid'+ response.id +' td:nth-child(1)').text(response.id_settingalokasi);
+                    // $('#aid'+ response.id +' td:nth-child(6)').text(response.tgl_masuk);
+                    // $('#aid'+ response.id +' td:nth-child(7)').text(response.tgl_sekarang);
+                }
+        });
+    });
+</script>
+
+<!-- script untuk menyimpan data update-->
+{{-- <script type="text/javascript">
     $(".input").click(function(e) {
         e.preventDefault();
         //nama variabel | id field pada form | value
@@ -274,7 +332,7 @@
             //                                 <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal" data-alokasi="{{$data->id}}" data-target="#editalokasi">
             //                                     <i class="fa fa-edit"></i>
             //                                     {{-- {{$data->id}} --}}
-            //                                 </a> 
+            {{-- //                                 </a> 
             //                                 <button onclick="alokasicuti({{$data->id}})"  class="btn btn-danger btn-sm">
             //                                     <i class="fa fa-trash"></i>
             //                                 </button> 
@@ -285,7 +343,7 @@
             //     $(`#aid${response.data.id}`).replaceWith(alokasicuti);
         },
     });
-</script>
+</script> --}}
 
 
 

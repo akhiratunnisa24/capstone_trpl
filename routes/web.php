@@ -115,15 +115,17 @@ Route::get('/izin_show/{id}', [JenisizinController::class, 'show'])->name('izin_
 Route::get('/settingalokasi', [SettingalokasicutiController::class, 'index'])->name('setting_alokasi.index');
 Route::post('/settingalokasi', [SettingalokasicutiController::class, 'store'])->name('setting_alokasi.store');
 Route::get('/showsettingalokasi/{id}', [SettingalokasicutiController::class, 'show'])->name('showsettingalokasi');
-Route::get('/settingalokasi/{id}', [SettingalokasicutiController::class, 'destroy']) ->name('deletesetting');
 Route::put('/updatesettingalokasi/{id}', [SettingalokasicutiController::class, 'update'])->name('updatesettingalokasi');
+Route::get('/deletesetting/{id}', [SettingalokasicutiController::class, 'destroy']) ->name('deletesetting');
 
 //alokasi cuti
 Route::get('/alokasicuti', [AlokasicutiController::class, 'index'])->name('alokasi.index');
 Route::post('/alokasicuti', [AlokasicutiController::class, 'store'])->name('alokasi.store');
 Route::get('/showalokasi/{id}', [AlokasicutiController::class, 'show'])->name('showalokasi');
-// Route::get('/editalokasi/{id}', [AlokasicutiController::class, 'edit'])->name('editalokasi');
+Route::get('/edit-alokasi/{id}',[AlokasicutiController::class,'edit']);
+Route::put('/updatealokasi/{id}', [AlokasicutiController::class,'update']);
 Route::post('/alokasiimporexcel',[AlokasicutiController::class,'importexcel'])->name('alokasi.importexcel');
+Route::get('/deletealokasi{id}', [AlokasicutiController::class, 'destroy']) ->name('deletealokasi');
 
 //create alokasi cuti
 Route::post('/gettglmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tglmasuk');
@@ -132,8 +134,5 @@ Route::post('/getsettingalokasi', [AlokasicutiController::class, 'getSettingalok
 //update alokasi cuti
 Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');
 Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
-Route::get('/edit-alokasi/{id}',[AlokasicutiController::class,'edit']);
-Route::put('/updatealokasi/{id}', [AlokasicutiController::class, 'update'])->name('updatealokasi');
 
-// Route::put('/updatealokasi', [AlokasicutiController::class, 'update'])->name('update.alokasi');
     

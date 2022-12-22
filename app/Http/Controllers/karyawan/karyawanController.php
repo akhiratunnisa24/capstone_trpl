@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\karyawan;
 
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Users;
+use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Kdarurat;
 use App\Models\Keluarga;
 use App\Models\Rpekerjaan;
+use App\Models\Alokasicuti;
 use App\Models\Rpendidikan;
-use App\Models\Absensi;
-use App\Models\Users;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
 
 class karyawanController extends Controller
 {
@@ -34,16 +35,28 @@ class karyawanController extends Controller
     public function karyawanDashboard()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $absenKaryawan = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk'); 
+
+        $absenKaryawan = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
+        ->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk'); 
+
         $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai, )->count('terlambat');
         // Absen Tidak Masuk
-        $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk');
+        $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
+        ->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk');
+
+        //pie chart untuk jumlah cuti karyawan
+        $ct = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
+        ->where('id_jeniscuti','=',1)->sum('durasi');
+        $cma = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
+        ->where('id_jeniscuti','=',6)->sum('durasi');
         
         $output = [
             'row' => $row,
             'absenKaryawan' => $absenKaryawan,
             'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
             'absenTidakmasuk' => $absenTidakmasuk,
+            'ct'=> $ct,
+            'cma' => $cma,
 
         ];
         return view('karyawan.dashboardKaryawan', $output);

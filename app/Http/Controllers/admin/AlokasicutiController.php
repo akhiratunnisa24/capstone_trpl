@@ -137,7 +137,7 @@ class AlokasicutiController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Data Alokasi cuti',
+            'message' => 'Data Alokasi Didapatkan',
             'data'    => $alokasicuti
         ]); 
         // dd($alokasicuti);
@@ -146,11 +146,11 @@ class AlokasicutiController extends Controller
     public function update(Request $request, $id)
     {
         $alokasicuti = Alokasicuti::find($id);
+        // dd($request->all());
         if($request->id_jeniscuti == 1)
         {
             $validate = $request->validate([
                 'id_karyawan'  => 'required',
-                'id_settingalokasi'=> 'required',
                 'id_jeniscuti' => 'required',
                 'tgl_masuk'    => 'required',
                 'tgl_sekarang' => 'required',
@@ -179,23 +179,25 @@ class AlokasicutiController extends Controller
         {
             $validate = $request->validate([
                 'id_karyawan'  => 'required',
-                'id_settingalokasi'=> 'required',
                 'id_jeniscuti' => 'required',
                 'aktif_dari'   => 'required',
                 'sampai'       => 'required',
             ]);
+
+            // dd($validate);
             $alokasicuti->update([
-                'id_karyawan'  =>$request->id_karyawan,
+                'id_karyawan'=>$request->id_karyawan,
                 'id_settingalokasi'=> $request->id_settingalokasi,
-                'id_jeniscuti' =>$request->id_jeniscuti,
-                'durasi'       =>$request->durasi,
-                'mode_alokasi' =>$request->mode_alokasi,
-                'tgl_masuk'    =>NULL,
+                'id_jeniscuti'=>$request->id_jeniscuti,
+                'durasi'=>$request->durasi,
+                'mode_alokasi'=>$request->mode_alokasi,
+                'tgl_masuk' =>NULL,
                 'tgl_sekarang' =>NULL,
-                'aktif_dari'   => Carbon::parse($request->aktif_dari)->format('Y-m-d'),
-                'sampai'       => Carbon::parse($request->sampai)->format('Y-m-d'),
+                'aktif_dari'=> Carbon::parse($request->aktif_dari)->format('Y-m-d'),
+                'sampai' => Carbon::parse($request->sampai)->format('Y-m-d'),
             ]);
 
+            // dd($alokasicuti);
             return response()->json([
                 'success' => true,
                 'message' => 'Data Berhasil Diudapte!',
@@ -206,6 +208,15 @@ class AlokasicutiController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        $alokasicuti = Alokasicuti::find($id);
+        $alokasicuti->delete();
+
+        return redirect('/alokasicuti');
+    }
+
+
     public function importexcel(Request $request)
     {
         Excel::import(new AlokasicutiImport, request()->file('file'));
@@ -213,32 +224,4 @@ class AlokasicutiController extends Controller
     }
 }
 
-  // return response()->json($alokasicuti);
-            // $alokasicuti->id_karyawan  = $request->id_karyawan;
-            // $alokasicuti->id_settingalokasi= $request->id_settingalokasi?? NULL;
-            // $alokasicuti->id_jeniscuti = $request->id_jeniscuti;
-            // $alokasicuti->durasi       = $request->durasi;
-            // $alokasicuti->mode_alokasi = $request->mode_alokasi;
-            // $alokasicuti->tgl_masuk    = Carbon::parse($request->tgl_masuk)->format('Y-m-d');
-            // $alokasicuti->tgl_sekarang = Carbon::parse($request->tgl_sekarang)->format('Y-m-d'); 
-            // $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d'); 
-            // $alokasicuti->sampai       = Carbon::parse($request->sampai)->format('Y-m-d');
-
-            // dd($alokasicuti);
-            // $alokasicuti->update();
-
-
- // dd($validate);
-            // $alokasicuti->id_karyawan  = $request->id_karyawan;
-            // $alokasicuti->id_settingalokasi= $request->id_settingalokasi?? NULL;
-            // $alokasicuti->id_jeniscuti = $request->id_jeniscuti;
-            // $alokasicuti->durasi       = $request->durasi;
-            // $alokasicuti->mode_alokasi = $request->mode_alokasi;
-            // $alokasicuti->tgl_masuk    = NULL; 
-            // $alokasicuti->tgl_sekarang = NULL; 
-            // $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d'); 
-            // $alokasicuti->sampai       = Carbon::parse($request->sampai)->format('Y-m-d');
-
-            // dd($alokasicuti);
-            // $alokasicuti->update();
            
