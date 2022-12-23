@@ -16,29 +16,6 @@
                         <span class="hidden-xs">Izin</span>
                     </a>
                 </li>
-                    
-                <div class="btn-group">
-                    <button type="button" class="btn btn-secondary">Kategori Data</button>
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="/kategori_cuti">Kategori Cuti</a></li>
-                        <li><a href="/kategori_cuti?type=2">Kategori Izin</a></li>
-                    </ul>
-                </div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-secondary">Manajemen Cuti</button>
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="/settingalokasi"></i>Setting Alokasi</a></li>
-                        <li><a href="/alokasicuti"></i>Alokasi Cuti</a></li>
-                    </ul>
-                </div>
             </ul>
             <div class="tab-content">
                 {{-- LIST CUTI --}}

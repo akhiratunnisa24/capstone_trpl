@@ -31,7 +31,7 @@ class Rpekerjaan extends Model
     }
 
     ///icha
-    public function karyawans(){
-        return $this->hasOne(Karyawan::class,'id_user','id');
-    }
+    // public function karyawans(){
+    //     return $this->hasOne(Karyawan::class,'id_user','id');
+    // }
 }

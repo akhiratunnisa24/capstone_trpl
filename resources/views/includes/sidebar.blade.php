@@ -45,7 +45,9 @@
                 <li>
                     <li><a><span class="text-info panel-title">CUTI & IZIN</span></a></li>
                     <li><a href="/permintaan_cuti"><i class="mdi mdi-calendar-check"></i><span>Data Cuti & Izin</span></a></li>
-                    {{-- <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li> --}}
+                    <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
+                    <li><a href="/settingalokasi"><i class="mdi mdi-calendar"></i><span>Setting Alokasi</span></a></li>
+                    <li><a href="/alokasicuti"><i class="mdi mdi-calendar"></i><span>Alokasi Cuti</span></a></li>
                 </li>
 
             </ul>
@@ -60,7 +62,7 @@
             </div>
 
         </div>
-        <!--- Role HRD -->
+        <!--- Role Karyawan -->
         <div id="sidebar-menu">
             <ul>
                 <li>
@@ -70,6 +72,10 @@
                 <li>
                     <a href="/absensi_karyawan" class="waves-effect"><i
                             class="mdi mdi-clipboard-check"></i><span>Absensi</span></a>
+                </li>
+                <li>
+                    <a href="#" class="waves-effect"><i
+                            class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a>
                 </li>
                 <li>
                     <a href="showkaryawan{{ $id }}" class="waves-effect"><i

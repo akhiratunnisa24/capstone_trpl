@@ -178,10 +178,10 @@
                                                         <td>{{$d->terlambat}}</td>
                                                         <td>{{$d->plg_cepat}}</td>
                                                     </tr>
-                                                    @empty
-                                                        <tr>
-                                                            <td colspan="12" class="text-center">Data Tidak Ditemukan</td>
-                                                        </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="12" class="text-center">Data Tidak Ditemukan</td>
+                                                    </tr>
                                                 @endforelse
                                             </tbody>
                                         </table> 
@@ -195,19 +195,6 @@
         </div> <!-- content -->
     @endif
                    
-    <!-- jQuery  -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/modernizr.min.js"></script>
-    <script src="assets/js/detect.js"></script>
-    <script src="assets/js/fastclick.js"></script>
-    <script src="assets/js/jquery.slimscroll.js"></script>
-    <script src="assets/js/jquery.blockUI.js"></script>
-    <script src="assets/js/waves.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/jquery.nicescroll.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script>
-    
     <!-- Datatable init js -->
     <script src="assets/pages/datatables.init.js"></script>
     <script src="assets/js/app.js"></script>
