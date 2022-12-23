@@ -209,6 +209,7 @@ class karyawanController extends Controller
                             'foto' => $namaFile,
                             'jabatan' => $request->post('jabatanKaryawan'),
                             'tglmasuk' => $request->post('tglmasukKaryawan'),
+                            'manager' => $request->post('manager'),
                             'created_at' => new \DateTime(),
                             'updated_at' => new \DateTime(),
                             
@@ -325,6 +326,7 @@ class karyawanController extends Controller
                             'gol_darah' => $request->post('gol_darahKaryawan'),
                             'jabatan' => $request->post('jabatanKaryawan'),
                             'tglmasuk' => $request->post('tglmasukKaryawan'),
+                            'manager' => $request->post('manager'),
                             'created_at' => new \DateTime(),
                             'updated_at' => new \DateTime(),
                             

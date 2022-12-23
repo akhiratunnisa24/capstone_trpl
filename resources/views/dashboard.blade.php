@@ -124,7 +124,7 @@
 
  <!-- Chart JS -->
  <div class="col-lg-12">
-        <div class="panel panel-border panel-danger">
+        <div class="panel panel-border panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title text-white">Cuti dan Izin</h3>
             </div>
@@ -286,17 +286,16 @@
 </script> -->
 
 <script>
-    var labels =  {{ Js::from($labels) }};
-      var users =  {{ Js::from($data) }};
-      var cuti =  {{ Js::from($cutiPerbulan) }};
+      var users2 =  {{ Js::from($data) }};   
+      var labelBulan = {{ Js::from($labelBulan) }}
   
       const data = {
-        labels: labels,
+        labels: labelBulan,
         datasets: [{
           label: 'Cuti dan Izin',
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
-          data: users,
+          backgroundColor: '#18bae2',
+          borderColor: '#18bae2',
+          data: users2,
         }]
       };
   

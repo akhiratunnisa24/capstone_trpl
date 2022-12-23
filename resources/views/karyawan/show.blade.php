@@ -133,7 +133,7 @@
                     <tr>
                         <td><label for="bpjskes_number">Pekerjaan : {{$keluarga->pekerjaan}}</label></td>
                         <td><span id="bpjskes_number"></span></td>
-                        <td><label for="bpjsket_number"></label></td>
+                        <td><label for="bpjsket_number">Lulus Tahun : {{$rpendidikan->tahun_lulus_formal}}</label></td>
                         <td><span id="bpjsket_number"></span></td>
                     </tr>
                     <tr>

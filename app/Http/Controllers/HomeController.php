@@ -78,18 +78,27 @@ class HomeController extends Controller
 
         
             // $users = Karyawan::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
-            $users = Karyawan::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
-                    // Karyawan::whereMonth('created_at', '=', Carbon::now()->month)->sum('cuti_tahunan');   
-                        ->whereYear('created_at', date('Y'))
-                        ->groupBy(DB::raw('MONTHNAME(created_at)'))
-                        ->pluck('count', 'month_name');
-            
+            // $users = user::select(DB::raw("COUNT(*) as jumlah"), DB::raw("MONTHNAME(created_at) as month_name"))
+                    // Karyawan::whereMonth('created_at', '=', Carbon::now()->month)->sum('cuti_tahunan');
 
-                 
-            $labels = $users->keys();
-            $data = $users->values();
+                        // ->whereYear('created_at', date('Y'))
+                        // ->groupBy(DB::raw('MONTHNAME(created_at)'))
+                        // ->pluck('jumlah', 'month_name');
+
+            // $labels = $users->keys();
+            // $data2 = $users->values();
+            // dd($data);
+
+            $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(created_at) as month_name"))
+                ->groupBy(DB::raw('MONTHNAME(created_at)'))
+                ->pluck('jumlah', 'month_name');
+
+            $labelBulan = $getLabel->keys();
+            $data = $getLabel->values();
+// dd($data2);
             
-        
+// dd(date('d M Y', strtotime($labelBulan)));
+// dd($labelBulan); 
 
 
         
@@ -105,10 +114,7 @@ class HomeController extends Controller
                 'absenTerlambat' => $absenTerlambat,
                 'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
                 'data' => $data,
-                'labels' => $labels,
-                // 'label' => $label,
-                // 'jumlah_user' => $jumlah_user,
-               
+                'labelBulan' =>$labelBulan,
 
 
             ];

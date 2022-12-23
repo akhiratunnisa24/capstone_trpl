@@ -95,6 +95,15 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1" class="form-label">Manager</label>
+                                    <select class="form-control" name="manager" required>
+                                        <option value="">Pilih Manager</option>
+                                        <option value="Manager1">manager1</option>
+                                        <option value="manager2">manager2</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="exampleInputEmail1" class="form-label">Jabatan</label>
                                     <select class="form-control" name="jabatanKaryawan" required>
                                         <option value="">Pilih Jabatan</option>

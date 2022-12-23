@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('no_hp')->nullable();
             $table->enum('status_karyawan',['Tetap','Kontrak','Probation'])->nullable();
             $table->enum('tipe_karyawan',['Fulltime','Freelance','Magang'])->nullable();
+            $table->string('manager')->nullable();
 
             $table->integer('no_kk')->nullable();
             $table->enum('status_kerja',['Aktif','Non-Aktif'])->nullable();
