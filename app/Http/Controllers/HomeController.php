@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Karyawan;
+use Carbon\Carbon;
 use App\Models\Cuti;
+use App\Models\User;
 use App\Models\Absensi;
+use App\Models\Karyawan;
+use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -94,6 +95,8 @@ class HomeController extends Controller
 
         
 
+            $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
+
         if ($role == 1){
             
             $output = [
@@ -120,7 +123,8 @@ class HomeController extends Controller
                 'row' => $row,
                 'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
                 'absenKaryawan' => $absenKaryawan,
-                'absenTidakmasuk' => $absenTidakmasuk
+                'absenTidakmasuk' => $absenTidakmasuk,
+                'alokasicuti' => $alokasicuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }

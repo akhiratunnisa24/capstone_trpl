@@ -6,12 +6,10 @@
         <div class="col-sm-12">
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Dashboard Karyawan</h4>
-
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
                     <li class="active">Dashboard Karyawan</li>
                 </ol>
-
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -19,7 +17,7 @@
 
     <div class="row">
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
+            <div id="a" class="panel panel-teal text-center">
                 <div class="panel-heading btn-info">
                     <h4 class="panel-title">Sisa Cuti Anda</h4>
                 </div>
@@ -31,35 +29,31 @@
         </div>
 
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
+            <div id="a" class="panel panel-primary text-center">
                 <div class="panel-heading btn-info">
                     <h4 class="panel-title">Absen Hari Ini</h4>
-                </div>
-
-                
-        <?php
-            use Illuminate\Support\Facades\Auth;
-            use App\Models\Absensi;
-
-            if ($absenKaryawan == 1 ) { ?>
-              <div class="panel-body">
-                  <h3 class=""><b class= "text text-success" >Sukses</b></h3>
-                  <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
-              </div>  
-                    <?php
-                } else { ?>
-                    <div class="panel-body">
-                      <h3 class=""><b class= "text text-success" >Belum Absen</b></h3>
-                      <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
-                  </div>
-                    <?php } ?>
-
+                </div>   
+                <?php
+                    use Illuminate\Support\Facades\Auth;
+                    use App\Models\Absensi;
+                    if ($absenKaryawan == 1 ) { 
+                ?>
+                      <div class="panel-body">
+                          <h3 class=""><b class= "text text-success" >Sukses</b></h3>
+                          <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
+                      </div>  
+                <?php
+                    } else { 
+                ?>
+                      <div class="panel-body">
+                          <h3 class=""><b class= "text text-success" >Belum Absen</b></h3>
+                          <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
+                      </div>
+                <?php } ?>
             </div>
         </div>
-
-
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
+            <div id="a" class="panel panel-primary text-center">
                 <div class="panel-heading btn-warning">
                     <h4 class="panel-title">Jumlah Terlambat Anda</h4>
                 </div>
@@ -69,133 +63,104 @@
                 </div>
             </div>
         </div>
-
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
+            <div id="a" class="panel panel-primary text-center">
                 <div class="panel-heading btn-danger">
                     <h4 class="panel-title">Tidak Hadir Anda Bulan Ini</h4>
                 </div>
-
                 <div class="panel-body">
-                    
-        <?php
-
-        if ($absenTidakmasuk == 2 ) { ?>
-              <h3 class=""><b class= "text text-success" >Masuk</b></h3>
-                <?php
-            } else { ?>
-                  <h4 class=""><b class= "text text-success" >Total cuti + Total izin</b></h4>
-                  {{-- + tidak ada keterangan --}}
-                <?php } ?>
-
-                    <p class="text-muted"><b>Total Jumlah Tidak Hadir Anda</b> </p>
+                  <?php
+                    if($absenTidakmasuk == 2 ) { 
+                  ?>
+                      <h3 class=""><b class= "text text-success" >Masuk</b></h3>
+                  <?php
+                    } else { 
+                  ?>
+                      <h4 class=""><b class= "text text-success" >Total cuti + Total izin</b></h4>
+                      {{-- + tidak ada keterangan --}}
+                  <?php } ?>
+                      <p class="text-muted"><b>Total Jumlah Tidak Hadir Anda</b> </p>
                 </div>
-
             </div>
         </div>
-
-
-        </div>
-
+      </div>
     </div>
 
     <!-- baris kedua -->
     <div class="row">
-        <div class="col-sm-4">
-            <div class="panel panel-primary">
-                <div class="panel-body">
-                    <h4 class="m-t-0">Kategori Cuti</h4>
-                    <ul class="list-inline m-t-30 widget-chart text-center">
-                      @if($ct == 0)
-                        <li>
-                          {{-- <i class="mdi mdi-arrow-up-bold-circle text-success"></i> --}}
-                          <h4 class=""><b>{{$ct}}</b></h4>
-                          <h5 class="text-muted m-b-0">Cuti tahunan</h5>
-                        </li>
-                      @else
-                        <li>
-                          {{-- <i class="mdi mdi-arrow-up-bold-circle text-success"></i> --}}
-                          <h4 class=""><b>{{$ct}}</b></h4>
-                          <h5 class="text-muted m-b-0">Cuti tahunan</h5>
-                        </li>
-                      @endif
-
-                        @if($cma == 0)
-                          <li>
-                              {{-- <i class="mdi mdi-arrow-down-bold-circle text-danger"></i> --}}
-                              <h4 class=""><b>{{$cma}}</b></h4>
-                              <h5 class="text-muted m-b-0">Cuti Keluarga Meninggal</h5>
-                          </li>
-                        @else
-                          <li>
-                            {{-- <i class="mdi mdi-arrow-down-bold-circle text-danger"></i> --}}
-                            <h4 class=""><b>{{$cma}}</b></h4>
-                            <h5 class="text-muted m-b-0">Cuti Keluarga Meninggal</h5>
-                          </li>
-                        @endif
-                        <li>
-                            {{-- <i class="mdi mdi-arrow-up-bold-circle text-success"></i> --}}
-                            <h4 class=""><b>964</b></h4>
-                            <h5 class="text-muted m-b-0">Last Month</h5>
-                        </li>
-                    </ul>
-                    <div id="sparkline1" style="margin: 0 -21px -22px -22px;"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="panel panel-primary">
+      <div id="a" class="col-md-9">
+          <div  id="a" class="panel panel-secondary">
               <div class="panel-body">
-                  <h4 class="m-t-0">Revenue</h4>
-                  <ul class="list-inline m-t-30 widget-chart text-center">
-                      <li>
-                          <i class="mdi mdi-arrow-up-bold-circle text-success"></i>
-                          <h4 class=""><b>5248</b></h4>
-                          <h5 class="text-muted m-b-0">Marketplace</h5>
-                      </li>
-                      <li>
-                          <i class="mdi mdi-arrow-down-bold-circle text-danger"></i>
-                          <h4 class=""><b>321</b></h4>
-                          <h5 class="text-muted m-b-0">Last week</h5>
-                      </li>
-                      <li>
-                          <i class="mdi mdi-arrow-up-bold-circle text-success"></i>
-                          <h4 class=""><b>964</b></h4>
-                          <h5 class="text-muted m-b-0">Last Month</h5>
-                      </li>
-                  </ul>
-                  <div id="sparkline1" style="margin: 0 -21px -22px -22px;"></div>
+                  <div class="row">
+                      <div class="col-xs-12">
+                          <table class="table table-striped">
+                              <thead>
+                                  <tr class="info">
+                                      <th>#</th>
+                                      <th>Nama Karyawan</th>
+                                      <th>Cuti Yang Didapat</th>
+                                      <th>Durasi Cuti</th>
+                                      <th>Sisa Cuti</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @forelse($alokasicuti as $key => $alokasi)
+                                      {{-- @if($alokasi->id_karyawan == Auth::user()->id_pegawai) --}}
+                                          <tr>
+                                              <td>{{$loop->iteration}}</td>
+                                              <td>{{$alokasi->karyawans->nama}}</td>
+                                              <td>{{$alokasi->jeniscutis->jenis_cuti}}</td>
+                                              <td>{{$alokasi->durasi}} hari</td>
+                                              <td>3 hari</td>
+                                          </tr>
+                                      {{-- @endif --}}
+                                  @empty
+                                      <tr>
+                                          <td colspan="12" class="text-center">Belum Ada Data</td>
+                                      </tr>
+                                  @endforelse
+
+                                  <!-- mencari jumlah cuti -->
+                                  @php
+                                    $jml = 0;
+                                  @endphp
+                                  @foreach($alokasicuti as $key => $alokasi)
+                                    @php
+                                        $jml += $alokasi->durasi;
+                                    @endphp
+                                  @endforeach
+                                  <tr>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line text-right"><strong>Jumlah Cuti</strong></td>
+                                    <td class="thick-line text-left">{{$jml}} hari</td>
+                                    <td class="thick-line"></td>
+                                </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
               </div>
           </div>
       </div>
-      <div class="col-sm-4">
-        <div class="panel panel-primary">
+      <div class="col-md-3">
+        <div id="a" class="panel panel-light text-center">
+            <div class="panel-heading">
+                <h4 class="panel-title">Cuti Bulan Ini</h4>
+            </div>
             <div class="panel-body">
-                <h4 class="m-t-0">Revenue</h4>
-                <ul class="list-inline m-t-30 widget-chart text-center">
-                    <li>
-                        <i class="mdi mdi-arrow-up-bold-circle text-success"></i>
-                        <h4 class=""><b>5248</b></h4>
-                        <h5 class="text-muted m-b-0">Marketplace</h5>
-                    </li>
-                    <li>
-                        <i class="mdi mdi-arrow-down-bold-circle text-danger"></i>
-                        <h4 class=""><b>321</b></h4>
-                        <h5 class="text-muted m-b-0">Last week</h5>
-                    </li>
-                    <li>
-                        <i class="mdi mdi-arrow-up-bold-circle text-success"></i>
-                        <h4 class=""><b>964</b></h4>
-                        <h5 class="text-muted m-b-0">Last Month</h5>
-                    </li>
-                </ul>
-                <div id="sparkline1" style="margin: 0 -21px -22px -22px;"></div>
+                <h3 class="text text-success">3</h3>
+                <p class="text-muted"><b>Cuti Terpakai</b> </p>
             </div>
         </div>
-      </div>
     </div>
-
-
+  </div> <!-- End Row -->
+  <style>
+    #a {
+      border-radius: 10px;
+    }
+  </style>
+@endsection
 {{--     
 <div class="row">
   <!-- BAR Chart -->
@@ -247,7 +212,6 @@
   </div> <!-- col -->
 
 </div> <!-- End Row -->
-
 <div class="row" hidden>
   
   <!--  Line Chart -->
@@ -263,8 +227,6 @@
   </div> <!-- col -->
   
 </div> <!-- End row-->
-
-
 <div class="row" hidden>
   
   <!-- Area Chart -->
@@ -280,18 +242,12 @@
   </div> <!-- col -->
    
 </div> <!-- End row-->
-
 </div> <!-- container -->
-
 </div> <!-- content -->
-
 </div>
 <!-- End Right content here -->
-
 </div>
 <!-- END wrapper -->
-
-
 <!-- jQuery  -->
 <script src="assets/js/jquery.min.js"></script>
 
@@ -299,8 +255,5 @@
 <script src="assets/plugins/morris/morris.min.js"></script>
 <script src="assets/plugins/raphael/raphael-min.js"></script>
 <script src="assets/pages/morris.init.js"></script> --}}
+<!-- END wrapper -->
 
-
-
-    <!-- END wrapper -->
-@endsection

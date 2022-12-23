@@ -135,12 +135,11 @@
                                                             <th>Action</th>   
                                                         </tr>
                                                     </thead>
-                                                    <?php $no=1; ?>
                                                     <tbody>
                                                         @foreach($izin as $data)
                                                             @if($data->id_karyawan == Auth::user()->id_pegawai)
                                                                 <tr>
-                                                                    <td>{{$no++}}</td>
+                                                                    <td>{{$loop->iteration}}</td>
                                                                     <td>{{$data->karyawans->nama}}</td>
                                                                     <td>{{$data->jenisizins->jenis_izin}}</td>
                                                                     <td>{{$data->keperluan}}</td>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\karyawan;
 
 use Carbon\Carbon;
+use App\Models\Cuti;
 use App\Models\User;
 use App\Models\Users;
 use App\Models\Absensi;
@@ -13,6 +14,7 @@ use App\Models\Rpekerjaan;
 use App\Models\Alokasicuti;
 use App\Models\Rpendidikan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -44,20 +46,13 @@ class karyawanController extends Controller
         $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
         ->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk');
 
-        //pie chart untuk jumlah cuti karyawan
-        $ct = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
-        ->where('id_jeniscuti','=',1)->sum('durasi');
-        $cma = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
-        ->where('id_jeniscuti','=',6)->sum('durasi');
-        
+        $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
         $output = [
             'row' => $row,
             'absenKaryawan' => $absenKaryawan,
             'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
             'absenTidakmasuk' => $absenTidakmasuk,
-            'ct'=> $ct,
-            'cma' => $cma,
-
+            'alokasicuti'=> $alokasicuti,
         ];
         return view('karyawan.dashboardKaryawan', $output);
     }

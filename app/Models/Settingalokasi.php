@@ -15,14 +15,4 @@ class Settingalokasi extends Model
     {
         return $this->belongsTo(Jeniscuti::class,'id_jeniscuti','id');
     }
-
-    // public function setModekaryawanAttribute($value)
-    // {
-    //     $this->attributes['mode_karyawan'] = json_encode($value);
-    // }
-  
-    // public function getModekaryawanAttribute($value)
-    // {
-    //     return $this->attributes['mode_karyawan'] = json_decode($value);
-    // }
 }

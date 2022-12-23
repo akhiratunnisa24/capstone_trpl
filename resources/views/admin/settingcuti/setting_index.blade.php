@@ -74,12 +74,10 @@
                                                         </div> 
                                                     </td> 
                                                 </tr>
-                                                 {{-- modals show setting --}}
-                                                 @include('admin.settingcuti.showsetting')
-                                                 @include('admin.settingcuti.editsetting')
                                             @endforeach
                                         </tbody>
                                     </table>
+
                                 </div>
                             </div>
                         </div>
@@ -88,6 +86,9 @@
             </div>
         </div> 
     </div> <!-- content -->
+     {{-- modals show setting --}}
+     @include('admin.settingcuti.showsetting')
+     @include('admin.settingcuti.editsetting')
     
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
