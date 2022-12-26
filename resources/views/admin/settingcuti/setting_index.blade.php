@@ -26,9 +26,6 @@
                         <div class="panel-heading">
                             <a href="" class="btn btn-dark" data-toggle="modal" data-target="#newsetting">Form Setting</a>
                         </div>
-                        {{-- form setting --}}
-                        @include('admin.settingcuti.formsetting')
-                        
                         <div class="panel-body m-b-5">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -61,19 +58,20 @@
                                                     <td>{{$data->departemen}}</td>
                                                     <td>{{$data->mode_karyawan}}</td>
                                                     <td class="text-center"> 
-                                                        <div class="row">
-                                                            <a id="bs" class="btn btn-info btn-sm Modalshowsetting" data-toggle="modal" data-target="#Modalshowsetting{{$data->id}}">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a> 
-                                                            <a id="bs" class="btn btn-sm btn-success editsetting" data-toggle="modal" data-target="#editsetting{{$data->id}}">
-                                                                <i class="fa fa-edit"></i>
-                                                            </a> 
-                                                            <button onclick="settingalokasi({{$data->id}})"  class="btn btn-danger btn-sm">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button> 
-                                                        </div> 
+                                                        <a id="bs" class="btn btn-info btn-sm Modalshowsetting" data-toggle="modal" data-target="#Modalshowsetting{{$data->id}}">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a> 
+                                                        <a id="bs" class="btn btn-sm btn-success editsetting" data-toggle="modal" data-target="#editsetting{{$data->id}}">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a> 
+                                                        <button onclick="settingalokasi({{$data->id}})"  class="btn btn-danger btn-sm">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button> 
                                                     </td> 
                                                 </tr>
+                                                {{-- modals show setting --}}
+                                                @include('admin.settingcuti.showsetting')
+                                                @include('admin.settingcuti.editsetting')
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -86,16 +84,17 @@
             </div>
         </div> 
     </div> <!-- content -->
-     {{-- modals show setting --}}
-     @include('admin.settingcuti.showsetting')
-     @include('admin.settingcuti.editsetting')
+     {{-- form setting --}}
+     @include('admin.settingcuti.formsetting')
     
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
+    {{-- <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script> --}}
+
     <!-- Datatable init js -->
     <script src="assets/pages/datatables.init.js"></script>
-
     <script src="assets/js/app.js"></script>
+
      <!-- sweet alert -->
      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>

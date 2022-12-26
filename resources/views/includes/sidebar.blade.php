@@ -19,7 +19,6 @@
                     <a class="text-info panel-title">{{ $user }}</a>
                 </div>
             </div>
-
         </div>
         <!--- Role HRD -->
         <div id="sidebar-menu">
@@ -28,28 +27,45 @@
                     <a href="/" class="waves-effect"><i class="ti-home"></i><span> Dashboard HRD </span></a>
                 </li>
                 <li>
-                    <a href="/absensi_karyawan" class="waves-effect"><i
-                            class="mdi mdi-clipboard-check"></i><span>Absensi HRD</span></a>
+                    <a href="{{ route('karyawan.index') }}" class="waves-effect">
+                        <i class="mdi mdi-account-multiple-plus"></i><span> Data Karyawan</span>
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ route('karyawan.index') }}" class="waves-effect"><i
-                            class="mdi mdi-account-multiple"></i><span> Data Karyawan</span></a>
+                    <a href="/absensi-karyawan" class="waves-effect">
+                        <i class="mdi mdi-account-check"></i><span>Absensi HRD</span>
+                    </a>
                 </li>
+                {{-- <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><span>ABSENSI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                    <ul class="list-unstyled">
+                        <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
+                        <li><a href="/rekapabsensi"><i class="mdi mdi-account-card-details"></i><span>Rekap Absensi</span></a></li>
+                    </ul>
+                </li> --}}
+
+                {{-- <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><span>CUTI & IZIN</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                    <ul class="list-unstyled">
+                        <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a></li>
+                        <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
+                        <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a></li>
+                        <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li>
+                    </ul>
+                </li> --}}
 
                 <li>
-                    <li><a><span class="text-info panel-title">DATA ABSENSI</span></a></li>
-                    <li><a href="/absensi"><i class="mdi mdi-account-check"></i><span>Absensi karyawan</span></a></li>
+                    <li><a><span class="text-info panel-title">ABSENSI</span></a></li>
+                    <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
                     <li><a href="/rekapabsensi"><i class="mdi mdi-account-card-details"></i><span>Rekap Absensi</span></a></li>
                 </li>
-
                 <li>
                     <li><a><span class="text-info panel-title">CUTI & IZIN</span></a></li>
-                    <li><a href="/permintaan_cuti"><i class="mdi mdi-calendar-check"></i><span>Data Cuti & Izin</span></a></li>
+                    <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a></li>
                     <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
-                    <li><a href="/settingalokasi"><i class="mdi mdi-calendar"></i><span>Setting Alokasi</span></a></li>
-                    <li><a href="/alokasicuti"><i class="mdi mdi-calendar"></i><span>Alokasi Cuti</span></a></li>
+                    <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a></li>
+                    <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li>
                 </li>
-
             </ul>
 
             <?php } else { ?>
@@ -60,45 +76,47 @@
                     <a class="text-info panel-title">{{ $user }}</a>
                 </div>
             </div>
-
         </div>
+
         <!--- Role Karyawan -->
         <div id="sidebar-menu">
             <ul>
                 <li>
-                    <a href="karyawandashboard" class="waves-effect"><i class="ti-home"></i><span> Dashboard Karyawan
-                        </span></a>
+                    <a href="karyawandashboard" class="waves-effect">
+                        <i class="ti-home"></i><span> Dashboard Karyawan</span>
+                    </a>
                 </li>
                 <li>
-                    <a href="/absensi_karyawan" class="waves-effect"><i
-                            class="mdi mdi-clipboard-check"></i><span>Absensi</span></a>
+                    <a href="/absensi-karyawan" class="waves-effect">
+                        <i class="mdi mdi-account-check"></i><span>Absensi</span>
+                    </a>
                 </li>
                 <li>
-                    <a href="#" class="waves-effect"><i
-                            class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a>
+                    <a href="/history-absensi" class="waves-effect">
+                        <i class="mdi mdi-clipboard-check"></i><span>History Absensi</span>
+                    </a>
                 </li>
+                {{-- <li>
+                    <a href="showkaryawan{{ $id }}" class="waves-effect">
+                        <i class="mdi mdi-account-multiple"></i><span>Profile Karyawan</span>
+                    </a>
+                </li> --}}
                 <li>
-                    <a href="showkaryawan{{ $id }}" class="waves-effect"><i
-                            class="mdi mdi-account-multiple"></i><span>Profile Karyawan</span></a>
-                </li>
-                <li>
-                    <a href="/cuti_karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Cuti &
-                            Izin</span></a>
+                    <a href="/cuti-karyawan" class="waves-effect">
+                        <i class="mdi mdi-walk"></i><span>Cuti & Izin</span>
+                    </a>
                 </li>
                 <?php
-                    } ?>
+                } ?>
             </ul>
         </div>
         <div class="clearfix"></div>
     </div> <!-- end sidebarinner -->
 </div>
 <!-- Left Sidebar End -->
-
 <!-- Start right Content here -->
-
 <div class="content-page">
     <!-- Start content -->
     <div class="content">
         <div class="container">
-
         </div> <!-- content -->

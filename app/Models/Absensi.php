@@ -18,7 +18,7 @@ class Absensi extends Model
                             'absent','lembur',
                             'jml_jamkerja', 'pengecualian',
                             'hci','hco',
-                            'id_departemen','h_normal',
+                            'id_departement','h_normal',
                             'ap','hl','jam_kerja',
                             'lemhanor','lemakpek','lemhali',
                         ];
@@ -32,8 +32,9 @@ class Absensi extends Model
         return $this->belongsTo(User::class,'id_user','id');
     }
     
+    // 'id_departemen',
     public function departemens(){
-        return $this->belongsTo(Departemen::class,'id_departemen','id');
+        return $this->belongsTo(Departemen::class,'id_departement','id');
     }
 
     public function karyawans()

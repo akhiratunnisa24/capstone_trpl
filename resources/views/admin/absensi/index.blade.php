@@ -1,6 +1,5 @@
 @extends('layouts.default')
 @section('content')
-
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
@@ -22,14 +21,6 @@
         <a href="/exportpdf" class="btn btn-dark">Download PDF</a>
         <a href="" class="btn btn-dark" data-toggle="modal" data-target="#Modal">Import Excel</a>
         <a href="" class="btn btn-dark" data-toggle="modal" data-target="#smallModal">Import CSV</a>
-                
-        {{-- notifikasi sukses --}}
-        @if ($sukses = Session::get('sukses'))
-            <div class="alert alert-success alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button> 
-                <strong>{{ $sukses }}</strong>
-            </div>
-        @endif
     </div>
     <div class="content">
         <div class="container">
@@ -40,8 +31,8 @@
                             <h3 class="panel-title">Data Absensi Karyawan</h3>
                         </div>
                         <div class="panel-body m-b-5">
-                            {{-- <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12"> --}}
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <table id="datatable-responsive3" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
                                         <thead>
                                             <tr>
@@ -70,8 +61,8 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                {{-- </div>
-                            </div> --}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

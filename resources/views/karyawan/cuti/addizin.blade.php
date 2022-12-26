@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group col-sm" id="jenisizin">
                             <label for="id_jenisizin" class="col-form-label">Kategori Izin</label>
-                            <select name="id_jenisizin" id="id_jenisizin" class="form-control">
+                            <select name="id_jenisizin" id="id_jenisizin" class="form-control" required>
                                 <option>-- Pilih Kategori --</option>
                                 @foreach ($jenisizin as $data)
                                     <option value="{{ $data->id}}" 
@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group">
                             <label for="keperluan" class="col-form-label">Keperluan</label>
-                            <input type="text" class="form-control" name="keperluan" placeholder="Masukkan keperluan" id="keperluan">
+                            <input type="text" class="form-control" name="keperluan" placeholder="Masukkan keperluan" id="keperluan" required>
                         </div>
 
                         <div class="row">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\user;
+namespace App\Http\Controllers\karyawan;
 
 use Carbon\Carbon;
 use App\Models\Izin;

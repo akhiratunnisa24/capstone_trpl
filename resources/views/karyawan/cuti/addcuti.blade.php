@@ -30,7 +30,7 @@
                     
                         <div class="form-group col-sm">
                             <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
-                            <select name="id_jeniscuti" id="id_jeniscuti" class="form-control">
+                            <select name="id_jeniscuti" id="id_jeniscuti" class="form-control" required>
                                 <option>-- Pilih Kategori --</option>
                                 @foreach ($jeniscuti as $data)
                                     <option value="{{ $data->id}}"

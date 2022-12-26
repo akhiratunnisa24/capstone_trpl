@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('tipe_alokasi',['Reguler','Aktual'])->nullable();
             $table->integer('durasi');
             $table->string('mode_alokasi',50)->nullable();
-            $table->string('departemen',50)->nullable();
+            $table->unsignedBigInteger('departemen')->nullable();
             $table->string('mode_karyawan',100)->nullable();
             $table->timestamps();
 
