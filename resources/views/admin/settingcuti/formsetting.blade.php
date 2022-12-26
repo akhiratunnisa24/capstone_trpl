@@ -41,14 +41,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="durasi" class="col-form-label">Durasi (Hari)</label>
-                                    <input type="number" class="form-control" name="durasi" placeholder="durasi" id="durasi">
+                                    <input type="number" class="form-control" name="durasi" placeholder="durasi" id="durasi" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-group col-sm" id="modalokasi">
                                         <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
-                                        <select name="mode_alokasi" id="mode_alokasi" class="form-control">
+                                        <select name="mode_alokasi" id="mode_alokasi" class="form-control" required>
                                             <option value="">Pilih Mode Alokasi</option>
                                             <option value="Berdasarkan Departemen">Berdasarkan Departemen</option>
                                             <option value="Berdasarkan Karyawan">Berdasarkan Karyawan</option>
@@ -58,11 +58,10 @@
                                 <div class="form-group col-sm" id="mode_departemen">
                                     <label for="departemen" class="col-form-label">Departemen</label>
                                     <select name="departemen" id="departemen" class="form-control">
-                                        <option value="">Pilih Departemen</option>
-                                        <option value="KONVENSIONAL">KONVENSIONAL</option>
-                                        <option value="KEUANGAN">KEUANGAN</option>
-                                        <option value="TEKNOLOGI INFORMASI">TEKNOLOGI INFORMASI</option>
-                                        <option value="HUMAN RESOURCE">HUMAN RESOURCE</option>
+                                        <option>-- Pilih Departemen --</option>
+                                        @foreach ($departemen as $item)
+                                            <option value="{{ $item->id }}">{{ $item->nama_departemen }}</option>
+                                        @endforeach
                                     </select>
                                 </div> 
                                 <div class="form-group col-sm" id="mode_employee">
@@ -90,15 +89,11 @@
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.2/select2.min.js"></script>
-    {{-- // Datatable init js  --}}
-    <script src="assets/pages/datatables.init.js"></script>
     <script src="assets/js/app.js"></script>
 
     {{-- // Plugins Init js --}}
     <script src="assets/pages/form-advanced.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.2/select2.min.js"></script>
 
     <script type="text/javascript">
         $(function()
@@ -121,9 +116,9 @@
             });
         });
        
-        $(document).ready(function () {
+        // $(document).ready(function () 
             $("#mode_karyawan").select2();
-        });
+        // );
     </script>
     
              

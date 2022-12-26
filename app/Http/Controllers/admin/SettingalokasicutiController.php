@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use Carbon\Carbon;
 use App\Models\Jeniscuti;
+use App\Models\Departemen;
 use Illuminate\Http\Request;
 use App\Models\Settingalokasi;
 use App\Http\Controllers\Controller;
@@ -13,13 +14,13 @@ class SettingalokasicutiController extends Controller
     public function index()
     {
         $id = Settingalokasi::find('id');
-
         $settingalokasi = Settingalokasi::all();
 
         //untuk edit
         $setal = Settingalokasi::find($id);
         $jeniscuti= Jeniscuti::all();
-        return view('admin.settingcuti.setting_index', compact('settingalokasi','jeniscuti','setal'));
+        $departemen = Departemen::all();
+        return view('admin.settingcuti.setting_index', compact('settingalokasi','jeniscuti','setal','departemen'));
     } 
 
 

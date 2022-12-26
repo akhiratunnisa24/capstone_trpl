@@ -2,12 +2,11 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CutiController;
-use App\Http\Controllers\Auth\RegisterController;
 
 use App\Http\Controllers\HomeController;
-
 use App\Http\Controllers\admin\AbsensiController;
+
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\IzinAdminController;
 use App\Http\Controllers\admin\JeniscutiController;
@@ -16,10 +15,9 @@ use App\Http\Controllers\admin\AlokasicutiController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
 
 use App\Http\Controllers\karyawan\karyawanController;
-
-use App\Http\Controllers\user\CutikaryawanController;
-use App\Http\Controllers\user\IzinkaryawanController;
-
+use App\Http\Controllers\karyawan\CutikaryawanController;
+use App\Http\Controllers\karyawan\IzinkaryawanController;
+use App\Http\Controllers\karyawan\AbsensiKaryawanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,8 +62,9 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 
 //HALAMAN KARYAWAN
 //cuti
-Route::get('/absensi_karyawan',[AbsensiController::class,'create'])->name('absensi_karyawan');
-Route::get('/cuti_karyawan',[CutikaryawanController::class,'index'])->name('cuti_karyawan');
+Route::get('/absensi-karyawan',[AbsensiController::class,'create'])->name('absensi_karyawan');
+Route::get('/history-absensi', [AbsensiKaryawanController::class,'index']);
+Route::get('/cuti-karyawan',[CutikaryawanController::class,'index'])->name('cuti_karyawan');
 Route::post('/cuti_karyawan', [CutikaryawanController::class, 'store'])->name('cuti.store');
 Route::get('/cuti_karyawan/{id}', [JeniscutiController::class, 'show'])->name('cutis_show');
 //izin

@@ -1,4 +1,6 @@
 {{-- FORM SETTING ALOKASI--}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
+
 <div class="modal fade" id="editsetting{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="editsetting" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -14,7 +16,7 @@
                         <div class="col-md-6">
                             <div class="form-group col-sm" id="jenicuti">
                                 <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
-                                <select name="id_jeniscuti" class="form-control">
+                                <select name="id_jeniscuti" class="form-control" required>
                                     @foreach ($jeniscuti as $item)
                                         <option value="{{$item->id}}"
                                             @if($item->id == $data->id_jeniscuti)
@@ -26,7 +28,7 @@
                             </div>
                             <div class="form-group" id="duration">
                                 <label for="durasi" class="col-form-label">Durasi (Hari)</label>
-                                <input type="number" class="form-control" value="{{$data->durasi}}" name="durasi" id="durasi">
+                                <input type="number" class="form-control" value="{{$data->durasi}}" name="durasi" id="durasi" required>
                             </div>
                         </div>
 
@@ -79,13 +81,12 @@
   <!-- jQuery  -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 {{-- // Datatable init js  --}}
 <script src="assets/js/app.js"></script>
 {{-- // Plugins Init js --}}
 <script src="assets/pages/form-advanced.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script type="text/javascript">
     $(function()
@@ -106,11 +107,10 @@
                 $('#mode_employe').prop("hidden", false);
             }
         });
-
-        $(document).ready(function () {
-            $("#mode_karyawant").select2();
-        });
     });
+    // $(document).ready(function () 
+    $("#mode_karyawant").select2();
+    // );
 </script>
 
 

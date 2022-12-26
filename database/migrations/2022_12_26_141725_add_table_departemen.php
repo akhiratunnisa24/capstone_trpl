@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('setjadwal', function (Blueprint $table) {
+        Schema::create('departemen', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_user');
-            $table->unsignedBigInteger('id_jadwal');
-
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('id_jadwal') ->references('id')->on('jadwal')->onDelete('cascade');
-            
+            $table->string('nama_departemen',50);
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('setjadwal');
+        Schema::dropIfExists('departemen');
     }
 };

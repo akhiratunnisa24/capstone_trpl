@@ -50,7 +50,7 @@ class AttendanceImport implements ToModel
                     'pengecualian'  => $row[15] ?? null,
                     'hci'           => $row[16] ?? null,
                     'hco'           => $row[17] ?? null,
-                    'id_departemen' => $row[18] ?? null,
+                    'id_departement'=> $row[18] ?? null,
                     'h_normal'      => (Double) $row[19] ?? null,
                     'ap'            => (Double) $row[20] ?? null,
                     'hl'            => (Double) $row[21] ?? null,

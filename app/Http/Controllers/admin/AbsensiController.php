@@ -51,6 +51,7 @@ class AbsensiController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         //ambil data karyawan dari tabel user dan pengecekan ke tabel karyawan
         $karyawan = Auth::user()->id_pegawai;
+        // $departemen = DB::table('absensi')
         // dd($karyawan);
 
 
@@ -80,7 +81,7 @@ class AbsensiController extends Controller
         $absensi->pengecualian = null;
         $absensi->hci          = 'True';
         $absensi->hco          = 'True';
-        $absensi->id_departemen= 'KONVENSIONAL';
+        $absensi->id_departement= 'KONVENSIONAL';
         $absensi->h_normal     = 0;
         $absensi->ap           = 0;
         $absensi->hl           = 0;

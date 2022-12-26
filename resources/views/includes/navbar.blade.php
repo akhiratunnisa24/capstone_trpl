@@ -1,8 +1,6 @@
 <body class="fixed-left">
-
-        <!-- Begin page -->
+    <!-- Begin page -->
         <div id="wrapper">
-
             <!-- Top Bar Start -->
             <div class="topbar">
                 <!-- LOGO -->
@@ -38,15 +36,15 @@
                                         <li class="text-center notifi-title">Pemberitahuan <span class="badge badge-xs badge-success">3</span></li>
                                         <li class="list-group">
                                            <!-- list item-->
-                                           <a href="javascript:void(0);" class="list-group-item">
+                                            <a href="javascript:void(0);" class="list-group-item">
                                               <div class="media">
                                                  <div class="media-heading">Your order is placed</div>
                                                  <p class="m-0">
                                                    <small>Dummy text of the printing and typesetting industry.</small>
                                                  </p>
                                               </div>
-                                           </a>
-                                           <!-- list item-->
+                                            </a>
+                                            <!-- list item-->
                                             <a href="javascript:void(0);" class="list-group-item">
                                               <div class="media">
                                                  <div class="media-body clearfix">
@@ -68,7 +66,7 @@
                                                  </div>
                                               </div>
                                             </a>
-                                           <!-- last list item -->
+                                            <!-- last list item -->
                                             <a href="javascript:void(0);" class="list-group-item">
                                               <small class="text-primary">See all notifications</small>
                                             </a>
@@ -86,26 +84,25 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="showkaryawan{{$id}}"><i class="fa fa-user pull-right"></i>Profile</a></li>
                                         <li><a href="javascript:void(0)"><i class="fa fa-cog pull-right"></i> Settings </a></li>
-                                        {{-- <li><a href="javascript:void(0)"> Lock screen</a></li> --}}
                                         <li class="divider"></li>
-                                    
-                                        <li><a href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Logout</a></li>
+                                        <li>
+                                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Logout
+                                            </a>
+                                        </li>
                                         
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" >
                                             @csrf
-
                                         </form>
-                                       
                                     </ul>
                                 </li>
                                 <?php  } ?>
                             </ul>
                         </div>
-                        <!--/.nav-collapse -->
                     </div>
+                    <!--/.nav-collapse -->
                 </div>
             </div>
-            <!-- Top Bar End -->
+        {{-- </div> --}}
+    <!-- Top Bar End -->
             
