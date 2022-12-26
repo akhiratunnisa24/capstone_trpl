@@ -21,10 +21,10 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-info">
-                <h4 class="panel-title ">Cuti dan Izin Bulan Ini</h4>
+                <h4 class="panel-title ">Cuti dan Izin Hari Ini</h4>
             </div>
             <div class="panel-body">
-                <h3 class=""><b>{{ $cutiPerbulan }}</b></h3>
+                <h3 class=""><b>{{ $cutiHariini }}</b></h3>
                 <p class="text-muted"><b>Total Pengajuan Cuti dan Izin </b> </p>
             </div>
         </div>
@@ -58,6 +58,57 @@
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-danger">
                 <h4 class="panel-title"> Belum / Tidak Masuk Hari Ini</h4>
+            </div>
+            <div class="panel-body">
+                <h3 class=""><b>0</b></h3>
+                <p class="text-muted"><b>Total Absen Tidak Masuk </b> </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-sm-6 col-lg-3">
+        <div class="panel panel-primary text-center">
+            <div class="panel-heading btn-info">
+                <h4 class="panel-title ">Cuti dan Izin Bulan Ini</h4>
+            </div>
+            <div class="panel-body">
+                <h3 class=""><b>{{ $cutiPerbulan }}</b></h3>
+                <p class="text-muted"><b>Total Pengajuan Cuti dan Izin </b> </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="panel panel-primary text-center">
+            <div class="panel-heading btn-success">
+                <h4 class="panel-title">Absen Masuk Bulan Ini</h4>
+            </div>
+            <div class="panel-body">
+                <h3 class=""><b>{{ $absenBulanini }}</b></h3>
+                <p class="text-muted"><b>Total Absen Masuk </b> </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="panel panel-primary text-center">
+            <div class="panel-heading btn-warning">
+                <h4 class="panel-title">Terlambat Bulan Ini</h4>
+            </div>
+            <div class="panel-body">
+                <h3 class=""><b>{{ $absenTerlambat }}</b></h3>
+                <p class="text-muted"><b>Lorem Ipsum </b> </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="panel panel-primary text-center">
+            <div class="panel-heading btn-danger">
+                <h4 class="panel-title"> Belum / Tidak Masuk Bulan Ini</h4>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>0</b></h3>
@@ -126,7 +177,7 @@
  <div class="col-lg-12">
         <div class="panel panel-border panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title text-white">Cuti dan Izin</h3>
+                <h3 class="panel-title text-white">Cuti</h3>
             </div>
             <div class="panel-body">
                 <div>
@@ -135,96 +186,10 @@
             </div>
         </div>
     </div> <!-- col -->
-    
-    <!-- BAR Chart -->
-    <!-- <div class="col-lg-12">
-        <div class="panel panel-border panel-info">
-            <div class="panel-heading ">
-                <h3 class="panel-title text-white">Cuti dan Izin</h3>
-            </div>
-            <div class="panel-body">
-                <div id="morris-bar-example" style="height: 300px"></div>
-            </div>
-        </div>
-    </div> -->
-     <!-- col -->
-
-    <!-- BAR Chart -->
-    <div class="col-lg-12">
-        <div class="panel panel-border panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title text-white">Absen Masuk</h3>
-            </div>
-            <div class="panel-body">
-                <div id="morris-bar-example3" style="height: 300px"></div>
-            </div>
-        </div>
-    </div> <!-- col -->
-
-    <!-- BAR Chart -->
-    <div class="col-lg-12">
-        <div class="panel panel-border panel-warning">
-            <div class="panel-heading">
-                <h3 class="panel-title text-white">Lorem Ipsum</h3>
-            </div>
-            <div class="panel-body">
-                <div id="morris-bar-example2" style="height: 300px"></div>
-            </div>
-        </div>
-    </div> <!-- col -->
-
-    <!-- BAR Chart -->
-    <div class="col-lg-12">
-        <div class="panel panel-border panel-danger">
-            <div class="panel-heading">
-                <h3 class="panel-title text-white">Absen Tidak Masuk</h3>
-            </div>
-            <div class="panel-body">
-                <div id="morris-bar-example4" style="height: 300px"></div>
-            </div>
-        </div>
-    </div> <!-- col -->
-
-   
-
-
 
 </div> <!-- End Row -->
 
-<div class="row" hidden>
 
-    <!--  Line Chart -->
-    <div class="col-lg-12">
-        <div class="panel panel-border panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Absen Tidak Masuk</h3>
-            </div>
-            <div class="panel-body">
-                <div id="morris-line-example" style="height: 300px"></div>
-            </div>
-        </div>
-    </div> <!-- col -->
-
-</div> <!-- End row-->
-
-
-<div class="row" hidden>
-
-    <!-- Area Chart -->
-    <div class="col-lg-12">
-        <div class="panel panel-border panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Absen Tidak Masuk </h3>
-            </div>
-            <div class="panel-body">
-                <div id="morris-area-example" style="height: 300px"></div>
-            </div>
-        </div>
-    </div> <!-- col -->
-
-
-
-</div> <!-- End row-->
 
 </div> <!-- container -->
 

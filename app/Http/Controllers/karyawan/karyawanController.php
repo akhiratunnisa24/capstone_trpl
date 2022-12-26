@@ -469,6 +469,7 @@ class karyawanController extends Controller
                         'agama' => $request->post('agamaKaryawan'),
                         'nik' => $request->post('nikKaryawan'),
                         'gol_darah' => $request->post('gol_darahKaryawan'),
+                        'jabatan' => $request->post('jabatanKaryawan'),
                         'created_at' => new \DateTime(),
                         'updated_at' => new \DateTime(),
                     );
@@ -599,6 +600,46 @@ class karyawanController extends Controller
                     Karyawan::destroy($id);
                     return redirect('karyawan');
                 }
+
+                public function editPassword(Request $data, $id)
+                {
+                    $karyawan = Karyawan::findOrFail($id);
+                    $user = User::where('id_pegawai', $id )->first();
+                    $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+                    
+                    $output = [
+                        'row' => $row
+                    ];
+                    
+                    return view('auth.changePassword', $output)->with([
+                        'karyawan' => $karyawan,
+                        'password' => Hash::make($data['password']),
+                    ]);
+                }
+
+                public function updatePassword(Request $request)
+                {
+                        # Validation
+                        $request->validate([
+                            'old_password' => 'required',
+                            'new_password' => 'required|confirmed', 'min:8',
+                        ]);
+
+
+                        #Match The Old Password
+                        if(!Hash::check($request->old_password, auth()->user()->password)){
+                            return back()->with("error", "Old Password Doesn't match!");
+                        }
+
+
+                        #Update the new Password
+                        User::whereId(auth()->user()->id)->update([
+                            'password' => Hash::make($request->new_password)
+                        ]);
+
+                        return back()->with("status", "Password changed successfully!");
+                }
+                
 
                 // public function showRegistrationForm()
                 // {

@@ -82,16 +82,16 @@
                                 { ?>
 
                                 <li class="dropdown">
-                                    <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true"><img src="{{ !empty($row->foto) ? asset('Foto_Profile/' . $row->foto) : asset('assets/images/users/avatar-1.jpg') }}" alt="user-img" class="img-circle"> </a>
+                                    <a href="" class="dropdown-toggle profile waves-effect waves-light " data-toggle="dropdown" aria-expanded="true"><img src="{{ !empty($row->foto) ? asset('Foto_Profile/' . $row->foto) : asset('assets/images/users/avatar-1.jpg') }}" alt="user-img" class="img-circle"> </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="showkaryawan{{$id}}"><i class="fa fa-user pull-right"></i>Profile</a></li>
-                                        <li><a href="javascript:void(0)"><i class="fa fa-cog pull-right"></i> Settings </a></li>
+                                        <li><a href="editPassword{{$id}}"><i class="fa fa-cog pull-right"></i> Ganti Password </a></li>
                                         {{-- <li><a href="javascript:void(0)"> Lock screen</a></li> --}}
                                         <li class="divider"></li>
                                     
                                         <li><a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Logout</a></li>
+                                        document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Keluar </a></li>
                                         
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" >
                                             @csrf

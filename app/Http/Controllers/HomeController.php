@@ -58,10 +58,12 @@ class HomeController extends Controller
         $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereMonth('created_at', '=', Carbon::now()->month)->count('jam_masuk');
 
         // $cutiPerbulan = Cuti::where('id_jeniscuti',1)->whereMonth('tgl_mulai','12')->sum('jml_cuti');
-        $cutiPerbulan = Karyawan::whereMonth('created_at', '=', Carbon::now()->month)->sum('cuti_tahunan');
+        $cutiHariini = Cuti::whereDay('created_at', '=', Carbon::now())->sum('jml_cuti');
+        $cutiPerbulan = Cuti::whereMonth('created_at', '=', Carbon::now()->month)->sum('jml_cuti');
         $cutiBulanlalu = Cuti::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->sum('jml_cuti');
 
         $absenHariini = Absensi::whereDay('created_at', '=', Carbon::now())->count('jam_masuk');
+        $absenBulanini = Absensi::whereMonth('created_at', '=', Carbon::now()->month)->count('jam_masuk');
         $absenBulanlalu = Absensi::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count('jam_masuk');
 
         // $time = Carbon::createFromFormat('H:i:s', '08:00:00')->format('g:iA');
@@ -111,8 +113,10 @@ class HomeController extends Controller
             $output = [
                 'row' => $row,
                 'cutiPerbulan'=>$cutiPerbulan,
+                'cutiHariini'=>$cutiHariini,
                 'cutiBulanlalu' => $cutiBulanlalu,
                 'absenHariini' => $absenHariini,
+                'absenBulanini' => $absenBulanini,
                 'absenBulanlalu' => $absenBulanlalu,
                 'absenTerlambat' => $absenTerlambat,
                 'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
