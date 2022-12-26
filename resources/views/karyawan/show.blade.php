@@ -89,45 +89,45 @@
                     <tr>
                         <td><label class="text-bold text-white badge bg-dark">B. KELUARGA</label></td>
                         <td><span class="text-bold"></span></td>
-                        <td><label class="text-bold text-white badge bg-dark">C. RIWAYAT PENDIDIKAN</label></td>
-                        <td><span class="text-bold"></span></td>
+                        <td><label > Jabatan : {{$karyawan->jabatan}} </label></td>
+                        <td><span class="text-bold"> </span></td>
                     </tr>
 
                     <tr>
                         <td><label class="text-white badge bg-dark">Data Istri / Suami *)</label></td>
                         <td><span></span></td>
-                        <td><label class="text-white badge bg-dark">Pendidikan Formal</label></td>
+                        <td><label class="text-bold text-white badge bg-dark">C. RIWAYAT PENDIDIKAN</label></td>
                         <td><span></span></td>
                     </tr>
 
                     <tr>
                         <td><label>Status Pernikahan : {{$keluarga->status_pernikahan}} </label></td>
                         <td><span ></span></td>
-                        <td><label> Tingkat : {{$rpendidikan->tingkat}} </label></td>
+                        <td><label  class="text-white badge bg-dark"> Pendidikan Formal </label></td>
                         <td><span></span></td>
                     </tr>
                     <tr>
                         <td><label for="division_name">Nama Pasangan : {{$keluarga->nama}}</label></td>
                         <td><span id="division_name"></span></td>
-                        <td><label>Nama Sekolah : {{$rpendidikan->nama_sekolah}} </label></td>
+                        <td><label>Tingkat : {{$rpendidikan->tingkat}}</label></td>
                         <td><span id="position_name"></span></td>
                     </tr>
                     <tr>
                         <td><label for="cc_number">Tanggal Lahir : {{$keluarga->tgllahir}} </label></td>
                         <td><span id="cc_number"></span></td>
-                        <td><label>Kota : {{$rpendidikan->kota_pformal}} </label></td>
+                        <td><label> Nama Sekolah : {{$rpendidikan->nama_sekolah}} </label></td>
                         <td><span id="salary"></span></td>
                     </tr>
                     <tr>
                         <td><label for="bpjskes_number">Alamat : {{$keluarga->alamat}}</label></td>
                         <td><span id="bpjskes_number"></span></td>
-                        <td><label for="bpjskes_number">Jurusan : {{$rpendidikan->jurusan}} </label></td>
+                        <td><label for="bpjskes_number"> Kota : {{$rpendidikan->kota_pformal}} </label></td>
                         <td><span id="bpjsket_number"></span></td>
                     </tr>
                     <tr>
                         <td><label for="bpjskes_number">Pendidikan Terakhir : {{$keluarga->pendidikan_terakhir}}</label></td>
                         <td><span id="bpjskes_number"></span></td>
-                        <td><label for="bpjsket_number">Lulus Tahun : {{$rpendidikan->tahun_lulus_formal}}</label></td>
+                        <td><label for="bpjsket_number">Jurusan : {{$rpendidikan->jurusan}}</label></td>
                         <td><span id="bpjsket_number"></span></td>
                     </tr>
                     <tr>

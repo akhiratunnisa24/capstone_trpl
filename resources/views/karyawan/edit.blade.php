@@ -88,6 +88,7 @@
                         <td><label >Alamat : <input name="alamatKaryawan" type="text" class="form-control"  value="{{$karyawan->alamat}}" ></input> </label></td>
                         <td><span ></span></td>
                     </tr>
+                    
 
                     <tr>
                         <td><label >Nomor Handphone : <input name="no_hpKaryawan"  type="text" class="form-control"  value="{{$karyawan->no_hp}}" ></input> </label></td>
@@ -112,52 +113,57 @@
                     <tr>
                         <td><label class="text-bold text-white badge bg-dark">B. KELUARGA</label></td>
                         <td><span class="text-bold"></span></td>
-                        <td><label class="text-bold text-white badge bg-dark">C. RIWAYAT PENDIDIKAN</label></td>
+                        <td><label>Jabatan : </label>
+                        <select type="text" class="form-control" name="jabatanKaryawan" required>
+                                <option value="">Pilih Jabatan</option>
+                                <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager</option>
+                                <option value="Staff" @if($karyawan->jabatan == "Staff") selected @endif >Staff</option>
+                        </select></td>
                         <td><span class="text-bold"></span></td>
                     </tr>
 
                     <tr>
                         <td><label class="text-white badge bg-dark">Data Istri / Suami *)</label></td>
                         <td><span ></span></td>
-                        <td><label class="text-white badge bg-dark">Pendidikan Formal</label></td>
+                        <td><label class="text-bold text-white badge bg-dark">C. RIWAYAT PENDIDIKAN</label></td>
                         <td><span></span></td>
                     </tr>
 
                     <tr>
                         <td><label>Status Pernikahan : <input type="text" name="status_pernikahan" class="form-control"  value="{{$keluarga->status_pernikahan}}" > </label></td>
                         <td><span ></span></td>
-                        <td><label > Tingkat : <input type="text" name="tingkat_pendidikan" class="form-control"  value="{{$rpendidikan->tingkat}}" > </label></td>
+                        <td><label class="text-white badge bg-dark"> Pendidikan Formal </label></td>
                         <td><span ></span></td>
                     </tr>
                     <tr>
                         <td><label>Nama Pasangan : <input type="text" name="namaPasangan" class="form-control"  value="{{$keluarga->nama}}" > </label></td>
                         <td><span></span></td>
-                        <td><label>Nama Sekolah : <input type="text" name="nama_sekolah" class="form-control"  value="{{$rpendidikan->nama_sekolah}}" > </label></td>
+                        <td><label> Tingkat : <input type="text" name="tingkat_pendidikan" class="form-control"  value="{{$rpendidikan->tingkat}}" > </label></td>
                         <td><span></span></td>
                     </tr>
 
                     <tr>
                         <td><label >Tanggal Lahir : <input type="text" name="tgllahirPasangan" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose16"   value="{{$keluarga->tgllahir}}" > </label></td>
                         <td ><span></span></td>
-                        <td><label>Kota : <input type="text" name="kotaPendidikanFormal" class="form-control"  value="{{$rpendidikan->kota_pformal}}" > </label></td>
+                        <td><label> Nama Sekolah : <input type="text" name="nama_sekolah" class="form-control"  value="{{$rpendidikan->nama_sekolah}}" > </label></td>
                         <td><span ></span></td>
                     </tr>
                     <tr>
                         <td><label >Alamat : <input type="text" name="alamatPasangan" class="form-control"  value="{{$keluarga->alamat}}" > </label></td>
                         <td><span ></span></td>
-                        <td><label>Jurusan : <input type="text" name="jurusan" class="form-control"  value="{{$rpendidikan->jurusan}}" > </label></td>
+                        <td><label> Kota : <input type="text" name="kotaPendidikanFormal" class="form-control"  value="{{$rpendidikan->kota_pformal}}" > </label></td>
                         <td><span ></span></td>
                     </tr>
                     <tr>
                         <td><label >Pendidikan Terakhir : <input type="text" name="pendidikan_terakhirPasangan" class="form-control"  value="{{$keluarga->pendidikan_terakhir}}" > </label></td>
                         <td><span ></span></td>
-                        <td><label >Lulus Tahun : <input type="text" name="tahun_lulus_formal" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose18"  value="{{$rpendidikan->tahun_lulus_formal}}" > </label></td>
+                        <td><label > Jurusan : <input type="text" name="jurusan" class="form-control"  value="{{$rpendidikan->jurusan}}" > </label></td>
                         <td><span ></span></td>
                     </tr>
                     <tr>
                         <td><label >Pekerjaan : <input type="text" name="pekerjaanPasangan" class="form-control"  value="{{$keluarga->pekerjaan}}" > </label></td>
                         <td><span ></span></td>
-                        <td><label > </label></td>
+                        <td><label >Lulus Tahun : <input type="text" name="tahun_lulus_formal" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose18"  value="{{$rpendidikan->tahun_lulus_formal}}" > </label></td>
                         <td><span ></span></td>
                     </tr>
                     <tr>

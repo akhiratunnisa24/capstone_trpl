@@ -53,6 +53,8 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('karyawanedit{id}', [karyawanController::class, 'edit'])->name('edit');
     Route::put('karyawanupdate{id}', [karyawanController::class, 'update'])->name('update');
     Route::get('karyawancreate', [karyawanController::class, 'create'])->name('create');
+    Route::get('editPassword{id}', [karyawanController::class, 'editPassword'])->name('editPassword');
+    Route::put('updatePassword{id}', [karyawanController::class, 'updatePassword'])->name('updatePassword');
 
 // Role Karyawan
 
