@@ -27,4 +27,12 @@ class Departemen extends Model
             'id_departement','id'
         );
     }
+
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 
+        'id', 
+        'departemen', 
+        );
+    }
 }

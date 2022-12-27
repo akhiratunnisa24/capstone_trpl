@@ -33,6 +33,7 @@
 
                         <a href="karyawancreate" type="button" class="btn btn-sm btn-dark " >Tambah Data Karyawan</a>
                         <a type="button" class="btn btn-sm btn-dark " data-toggle="modal" data-target="#myModal" >Buat Akun Karyawan</a>
+                        <a href="" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#Modal2">Import Excel</a>
                         {{-- <a type="button" class="btn btn-sm btn-dark " href="{{ route('register') }}" >Buat Akun Karyawan</a> --}}
                         <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_menu">Add Staff</button> -->
                         <!-- <a href="{ route('register') }}" type="button" class="btn btn-sm btn-dark " >Buat Akun Karyawan</a> -->
@@ -87,6 +88,32 @@
         </div>
     </div>
 </div>
+
+{{-- Modal Import Data Excel --}}
+    <div class="modal fade" id="Modal2" data-backdrop="-1" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Import Excel</h4>
+                </div>
+                <form action="/import_excel" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="col-lg-5">
+                                <input type="file" name="file" required>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Import Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 <script>

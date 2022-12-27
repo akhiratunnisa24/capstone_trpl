@@ -33,7 +33,7 @@ return new class extends Migration
             $table->integer('no_kk')->nullable();
             $table->enum('status_kerja',['Aktif','Non-Aktif'])->nullable();
             $table->integer('cuti_tahunan')->nullable();
-            $table->string('divisi')->nullable();
+            $table->integer('divisi')->nullable();
             $table->integer('no_rek')->nullable();
             $table->integer('no_bpjs_kes')->nullable();
             $table->integer('no_npwp')->nullable();

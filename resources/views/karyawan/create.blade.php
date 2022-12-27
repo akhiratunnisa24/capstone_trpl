@@ -86,11 +86,10 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1" class="form-label">Divisi</label>
                                     <select class="form-control" name="divisi" required>
-                                        <option value="">Pilih Divisi</option>
-                                        <option value="KONVENSIONAL">KONVENSIONAL</option>
-                                        <option value="KEUANGAN">KEUANGAN</option>
-                                        <option value="TEKNOLOGI INFORMASI">TEKNOLOGI INFORMASI</option>
-                                        <option value="HUMAN RESOURCE">HUMAN RESOURCE</option>
+                                        <option value="">Pilih Departemen</option>
+                                        @foreach ($departemen as $d)
+                                        <option value="{{ $d->id }}">{{ $d->departemen }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 

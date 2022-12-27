@@ -12,7 +12,9 @@ class Karyawan extends Model
 
     protected $table = 'karyawan';
 
-    protected $fillable = ['id'];
+    protected $fillable = [
+        'id'
+    ];
     protected $guarded = [];
 
     public function kdarurat()
@@ -85,4 +87,12 @@ class Karyawan extends Model
         'id',
         'departemen',);
     }
+
+    public function departemen()
+    {
+        return $this->hasMany(Departemen::class, 
+        'id', 
+        'departemen', 
+        );
+    }   
 }

@@ -13,11 +13,14 @@ use App\Models\Keluarga;
 use App\Models\Rpekerjaan;
 use App\Models\Alokasicuti;
 use App\Models\Rpendidikan;
+use App\Models\Departemen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\karyawanImport;
 
 class karyawanController extends Controller
 {
@@ -61,9 +64,11 @@ class karyawanController extends Controller
     public function create()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $departemen = Departemen::all();
         
         $output = [
-            'row' => $row
+            'row' => $row,
+            'departemen' => $departemen,
         ];
         return view('karyawan.create', $output);
     }
@@ -639,6 +644,19 @@ class karyawanController extends Controller
 
                         return back()->with("status", "Password changed successfully!");
                 }
+
+                public function importexcel(Request $request)
+                {
+                    Excel::import(new karyawanImport, request()->file('file'));
+                    return redirect()->back();
+                   
+                }
+
+                // public function import_excel(Request $request)
+                // {
+                //     Excel::import(new SiswasImport, $request->file('file'));
+                //     return redirect()->back();
+                // }
                 
 
                 // public function showRegistrationForm()
