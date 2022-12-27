@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('pengecualian')->nullable()->default(null);
             $table->string('hci',5);
             $table->string('hco',5);
+            $table->unsignedBigInteger('id_departement')->nullable();
             $table->double('h_normal',5,3);
             $table->double('ap',5,3);
             $table->double('hl',5,3);
