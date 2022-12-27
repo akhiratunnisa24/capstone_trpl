@@ -101,6 +101,8 @@
                                       <th>Cuti Yang Didapat</th>
                                       <th>Durasi Cuti</th>
                                       <th>Sisa Cuti</th>
+                                      <th>Aktif Dari</th>
+                                      <th>Berakhir</th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -111,7 +113,9 @@
                                               <td>{{$alokasi->karyawans->nama}}</td>
                                               <td>{{$alokasi->jeniscutis->jenis_cuti}}</td>
                                               <td>{{$alokasi->durasi}} hari</td>
-                                              <td>3 hari</td>
+                                              <td>{{$sisacuti}}</td>
+                                              <td>{{$alokasi->aktif_dari}}</td>
+                                              <td>{{$alokasi->sampai}}</td>
                                           </tr>
                                       {{-- @endif --}}
                                   @empty
@@ -134,6 +138,8 @@
                                     <td class="thick-line"></td>
                                     <td class="thick-line text-right"><strong>Jumlah Cuti</strong></td>
                                     <td class="thick-line text-left">{{$jml}} hari</td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
                                     <td class="thick-line"></td>
                                 </tr>
                               </tbody>

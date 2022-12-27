@@ -24,18 +24,19 @@
         <div id="sidebar-menu">
             <ul>
                 <li>
-                    <a href="/" class="waves-effect"><i class="ti-home"></i><span> Dashboard HRD </span></a>
+                    <a href="/" class="waves-effect"><i class="ti-home"></i><span> Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="/absensi-karyawan" class="waves-effect">
+                        <i class="mdi mdi-account-check"></i><span>Absensi</span>
+                    </a>
                 </li>
                 <li>
                     <a href="{{ route('karyawan.index') }}" class="waves-effect">
                         <i class="mdi mdi-account-multiple-plus"></i><span> Data Karyawan</span>
                     </a>
                 </li>
-                <li>
-                    <a href="/absensi-karyawan" class="waves-effect">
-                        <i class="mdi mdi-account-check"></i><span>Absensi HRD</span>
-                    </a>
-                </li>
+                
                 {{-- <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><span>ABSENSI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">

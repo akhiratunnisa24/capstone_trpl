@@ -18,6 +18,6 @@ class Settingalokasi extends Model
 
     public function departement()
     {
-        return $this->belongsTo(Departemen::class,'id_departement','id');
+        return $this->belongsTo(Departemen::class,'departemen','id');
     }
 }

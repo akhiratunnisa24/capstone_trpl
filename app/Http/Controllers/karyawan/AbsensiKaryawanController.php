@@ -11,8 +11,8 @@ class AbsensiKaryawanController extends Controller
 {
     public function index()
     {
-        $historyabsensi = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->get();
-        // $historyabsensi = Absensi::latest()->orderBy('tanggal')->get();
+        // $historyabsensi = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->get();
+        $historyabsensi = Absensi::latest()->where('id_karyawan',Auth::user()->id_pegawai)->orderBy('tanggal')->get();
         return view('karyawan.absensi.history_absensi',compact('historyabsensi'));
     }
 

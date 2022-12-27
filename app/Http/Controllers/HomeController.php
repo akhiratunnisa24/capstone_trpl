@@ -101,12 +101,20 @@ class HomeController extends Controller
 // dd($data2);
             
 // dd(date('d M Y', strtotime($labelBulan)));
-// dd($labelBulan); 
+// dd($labelBulan);    
 
+        $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
+        //sisa cuti
+        // $jmlcuti    = Cuti::select('jml_cuti')->where('id_karyawan',Auth::user()->id_pegawai)->get();
+        // $durasicuti = Alokasicuti::select('durasi')->where('id_karyawan',Auth::user()->id_pegawai)->get();
 
-        
+        $idkaryawan = Cuti::select('id_karyawan')->where('id_karyawan', Auth::user()->id_pegawai)->get();
+        // $sisacuti =  DB::select('jml_cuti','durasi')->table('cuti')->join('alokasicuti')
+        //             ->where('alokasicuti.id_karyawan','=',$idkaryawan);
 
-            $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
+        $sisacuti = DB::table('alokasicuti')->join('cuti', 'alokasicuti.id_karyawan', $idkaryawan) 
+                    ->selectraw('alokasicuti.durasi - cuti.jml_cuti')
+                    ->get(); 
 
         if ($role == 1){
             
@@ -135,6 +143,7 @@ class HomeController extends Controller
                 'absenKaryawan' => $absenKaryawan,
                 'absenTidakmasuk' => $absenTidakmasuk,
                 'alokasicuti' => $alokasicuti,
+                'sisacuti' => $sisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }

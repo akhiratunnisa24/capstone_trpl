@@ -81,7 +81,7 @@ class AbsensiController extends Controller
         $absensi->pengecualian = null;
         $absensi->hci          = 'True';
         $absensi->hco          = 'True';
-        $absensi->id_departement= 'KONVENSIONAL';
+        $absensi->id_departement= null;
         $absensi->h_normal     = 0;
         $absensi->ap           = 0;
         $absensi->hl           = 0;

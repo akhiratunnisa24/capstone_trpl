@@ -8,6 +8,7 @@ use App\Models\Izin;
 use App\Models\Jeniscuti;
 use App\Models\Jenisizin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,9 +17,18 @@ class CutikaryawanController extends Controller
 
     public function index(Request $request)
     {
-        $jeniscuti = Jeniscuti::all();
+        //form cuti
+        $jeniscuti = DB::table('alokasicuti')
+        ->join('jeniscuti','alokasicuti.id_jeniscuti','=','jeniscuti.id')
+        ->where('alokasicuti.id_karyawan','=', Auth::user()->id_pegawai)->get();
+
+        //form izin
         $jenisizin = Jenisizin::all();
+
+        //index cuti
         $cuti = Cuti::latest()->paginate(10);
+
+        //index izin
         $izin = Izin::latest()->paginate(10);
 
         $karyawan = Auth::user()->id_pegawai;

@@ -27,21 +27,41 @@ class SettingalokasicutiController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $settingalokasi = New Settingalokasi;
+        if($request->mode_alokasi == 'Berdasarkan Departemen')
+        {
+            $validate = $request->validate([
+                'id_jeniscuti' => 'required',
+                'durasi'       => 'required',
+                'mode_alokasi' => 'required',
+                'departemen'   => 'required',
+            ]);
 
-        $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
-        $settingalokasi->durasi       = $request->durasi;
-        $settingalokasi->mode_alokasi = $request->mode_alokasi;
-        $settingalokasi->departemen   = $request->departemen; 
-
-        $mode = implode(',', $request->mode_karyawan);
-        $settingalokasi['mode_karyawan']= $mode;
-
-        // dd($settingalokasi['mode_karyawan']);
-
-        $settingalokasi->save();
+            $settingalokasi = New Settingalokasi;
+            $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
+            $settingalokasi->durasi       = $request->durasi;
+            $settingalokasi->mode_alokasi = $request->mode_alokasi;
+            $settingalokasi->departemen   = $request->departemen; 
+            $settingalokasi->save();
         
-        return redirect()->back()->withInput();
+            return redirect()->back()->withInput();
+        }else{
+            $validate = $request->validate([
+                'id_jeniscuti' => 'required',
+                'durasi'       => 'required',
+                'mode_alokasi' => 'required',
+                'mode_karyawan'=> 'required',
+            ]);
+
+            $settingalokasi = New Settingalokasi;
+            $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
+            $settingalokasi->durasi       = $request->durasi;
+            $settingalokasi->mode_alokasi = $request->mode_alokasi;
+            $mode = implode(',', $request->mode_karyawan);
+            $settingalokasi['mode_karyawan']= $mode;
+            $settingalokasi->save();
+        
+            return redirect()->back()->withInput();
+        }
     }
 
     public function show($id)

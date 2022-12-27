@@ -47,12 +47,16 @@ class karyawanController extends Controller
         ->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk');
 
         $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
+        //sisa cuti
+        $sisacuti = DB::table('alokasicuti')->join('cuti', 'alokasicuti.id_karyawan', 'cuti.id_karyawan') 
+                    ->selectraw('alokasicuti.durasi - cuti.jml_cuti')->get(); 
         $output = [
             'row' => $row,
             'absenKaryawan' => $absenKaryawan,
             'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
             'absenTidakmasuk' => $absenTidakmasuk,
             'alokasicuti'=> $alokasicuti,
+            'sisacuti'=> $sisacuti,
         ];
         return view('karyawan.dashboardKaryawan', $output);
     }
