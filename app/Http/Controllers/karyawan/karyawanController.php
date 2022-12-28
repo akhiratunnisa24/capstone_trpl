@@ -30,11 +30,15 @@ class karyawanController extends Controller
     {
         $karyawan = karyawan::all()->sortByDesc('created_at');
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        
+        // $akun = DB::table('users')
+        // ->join('karyawan','users.id_pegawai','=','karyawan.id')
+        // ->get();
+
+        $akun = Karyawan::where('karyawan.id','!=','users.id_pegawai');
         $output = [
             'row' => $row
         ];
-        return view('karyawan.index', compact(['karyawan','row']));
+        return view('karyawan.index', compact('karyawan','row','akun'));
     }
     
     public function karyawanDashboard()
@@ -51,8 +55,11 @@ class karyawanController extends Controller
 
         $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
         //sisa cuti
-        $sisacuti = DB::table('alokasicuti')->join('cuti', 'alokasicuti.id_karyawan', 'cuti.id_karyawan') 
-                    ->selectraw('alokasicuti.durasi - cuti.jml_cuti')->get(); 
+        $sisacuti = DB::table('alokasicuti')->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti')
+        ->where('alokasicuti.id_karyawan','cuti.id_karyawan')
+        ->selectraw('alokasicuti.durasi-cuti.jml_cuti')
+        ->get();
+
         $output = [
             'row' => $row,
             'absenKaryawan' => $absenKaryawan,
@@ -67,6 +74,7 @@ class karyawanController extends Controller
     
     public function create()
     {
+
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $departemen = Departemen::all();
         

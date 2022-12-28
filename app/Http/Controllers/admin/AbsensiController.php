@@ -51,9 +51,11 @@ class AbsensiController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         //ambil data karyawan dari tabel user dan pengecekan ke tabel karyawan
         $karyawan = Auth::user()->id_pegawai;
-        // $departemen = DB::table('absensi')
-        // dd($karyawan);
+        //$depart = Karyawan::select('divisi')->where('id','=', Auth::user()->id_pegawai)->first();
+        $depart = DB::table('karyawan')->join('departemen', 'karyawan.divisi','=','departemen.id')
+                  ->where('karyawan.id','=',Auth::user()->id_pegawai)->first();
 
+        // dd($depart);
 
         //mencari nilai keterlambatan karyawan
         $jdm = "08:00:00";
@@ -81,7 +83,7 @@ class AbsensiController extends Controller
         $absensi->pengecualian = null;
         $absensi->hci          = 'True';
         $absensi->hco          = 'True';
-        $absensi->id_departement= null;
+        $absensi->id_departement= $depart->divisi;
         $absensi->h_normal     = 0;
         $absensi->ap           = 0;
         $absensi->hl           = 0;
@@ -89,6 +91,7 @@ class AbsensiController extends Controller
         $absensi->lemhanor     = 0;
         $absensi->lemakpek     = 0;
         $absensi->lemhali      = 0;
+
         $absensi->save();
         return redirect()->back();
     }
@@ -97,7 +100,7 @@ class AbsensiController extends Controller
     {
         $absensi = Absensi::where('id',$id)->first(); //mendapatkan data absensi berdasarkan id masing2 user
         //mencari jumlah kehadiran
-        $jk =  Carbon::now()->format("H:i:s"); //mendapatkan jam_keluar pada saat ini
+        $jk = Carbon::now()->format("H:i:s"); //mendapatkan jam_keluar pada saat ini
         $aw=Carbon::parse($absensi->jam_masuk);//mendapatkan data jam masuk
         $ak=Carbon::parse($jk);//mendapatkan data jam keluar yang disimpan pada variabel $jk
         $diff=$aw->diff($ak)->format("%H:%I:%S");//mencari jumlah jam kerja pegawai pada hari itu yang nantinya disimpan ke dalam database

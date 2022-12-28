@@ -22,11 +22,6 @@ class Absensi extends Model
                             'ap','hl','jam_kerja',
                             'lemhanor','lemakpek','lemhali',
                         ];
-    
-    //relasi ke tabel employee/personel
-    // public function jadwals(){
-    //     return $this->belongsTo(Jadwal::class,'id_jadwal','id');
-    // }
 
     public function userss(){
         return $this->belongsTo(User::class,'id_user','id');

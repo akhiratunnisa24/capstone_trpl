@@ -85,14 +85,14 @@ class Karyawan extends Model
         return $this->belongsTo(Departemen::class, 
         'divisi',
         'id',
-        'departemen',);
+        'nama_departemen',);
     }
 
     public function departemen()
     {
         return $this->hasMany(Departemen::class, 
         'id', 
-        'departemen', 
+        'nama_departemen', 
         );
     }   
 }

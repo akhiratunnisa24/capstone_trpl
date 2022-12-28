@@ -152,8 +152,8 @@ class AlokasicutiController extends Controller
             $validate = $request->validate([
                 'id_karyawan'  => 'required',
                 'id_jeniscuti' => 'required',
-                'tgl_masuk'    => 'required',
-                'tgl_sekarang' => 'required',
+                // 'tgl_masuk'    => 'required',
+                // 'tgl_sekarang' => 'required',
                 'aktif_dari'   => 'required',
                 'sampai'       => 'required',
             ]);
@@ -204,7 +204,6 @@ class AlokasicutiController extends Controller
                 'statusCode'=>200,
                 'data'    => $alokasicuti 
             ]);
-           
         }
     }
 
@@ -215,7 +214,6 @@ class AlokasicutiController extends Controller
 
         return redirect('/alokasicuti');
     }
-
 
     public function importexcel(Request $request)
     {
