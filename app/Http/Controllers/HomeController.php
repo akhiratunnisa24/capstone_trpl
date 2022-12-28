@@ -39,7 +39,8 @@ class HomeController extends Controller
             'name' => $karyawan['nama'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-        ); 
+        );
+        
         User::insert($data);
         return redirect('/karyawan')->with("sukses", "Berhasil di tambah");
     }

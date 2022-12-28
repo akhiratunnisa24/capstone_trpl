@@ -88,7 +88,7 @@
                                     <select class="form-control" name="divisi" required>
                                         <option value="">Pilih Departemen</option>
                                         @foreach ($departemen as $d)
-                                        <option value="{{ $d->id }}">{{ $d->departemen }}</option>
+                                        <option value="{{ $d->id }}">{{ $d->nama_departemen }}</option>
                                         @endforeach
                                     </select>
                                 </div>
