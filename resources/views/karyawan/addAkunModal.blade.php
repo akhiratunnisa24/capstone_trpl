@@ -41,8 +41,8 @@
                             <label for="exampleInputEmail1" class="form-label">Karyawan</label>
                             <select id="id_pegawai" type="text" class="form-control  @error('name') is-invalid @enderror" name="id_pegawai" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Nama">
                                 <option value="">Pilih Karyawan</option>
-                                @foreach ($karyawan as $k)
-                                    <option value="{{ $k->id }}">{{ $k->nama }}</option>
+                                @foreach ($akun as $k)
+                                <option value="{{ $k->id }}">{{ $k->nama }}</option>
                                 @endforeach
                             </select>
 

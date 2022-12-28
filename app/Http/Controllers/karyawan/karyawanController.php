@@ -30,11 +30,15 @@ class karyawanController extends Controller
     {
         $karyawan = karyawan::all()->sortByDesc('created_at');
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        // $akun = DB::table('users')
-        // ->join('karyawan','users.id_pegawai','=','karyawan.id')
+
+        // $akun = DB::table('karyawan')
+        // // ->join('karyawan','users.id_pegawai','  =','karyawan.id')
+        // ->whereNotIn('karyawan.id', ['users.id_pegawai'])
         // ->get();
 
-        $akun = Karyawan::where('karyawan.id','!=','users.id_pegawai');
+        $user = DB::table('users')->pluck('id_pegawai');
+        $akun = DB::table('karyawan')->whereNotIn("id",$user)->get();
+        
         $output = [
             'row' => $row
         ];
