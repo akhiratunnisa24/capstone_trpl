@@ -127,7 +127,7 @@ Route::post('/alokasicuti', [AlokasicutiController::class, 'store'])->name('alok
 Route::get('/showalokasi/{id}', [AlokasicutiController::class, 'show'])->name('showalokasi');
 Route::get('/edit-alokasi/{id}',[AlokasicutiController::class,'edit']);
 Route::put('/updatealokasi/{id}', [AlokasicutiController::class,'update']);
-Route::post('/alokasiimporexcel',[AlokasicutiController::class,'importexcel'])->name('alokasi.importexcel');
+Route::post('/alokasi-import-excel',[AlokasicutiController::class,'importexcel'])->name('alokasi.importexcel');
 Route::get('/deletealokasi{id}', [AlokasicutiController::class, 'destroy']) ->name('deletealokasi');
 
 //create alokasi cuti

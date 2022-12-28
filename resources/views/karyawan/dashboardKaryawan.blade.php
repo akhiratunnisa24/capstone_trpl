@@ -114,8 +114,8 @@
                                               <td>{{$alokasi->jeniscutis->jenis_cuti}}</td>
                                               <td>{{$alokasi->durasi}} hari</td>
                                               <td>{{$sisacuti}}</td>
-                                              <td>{{$alokasi->aktif_dari}}</td>
-                                              <td>{{$alokasi->sampai}}</td>
+                                              <td>{{\Carbon\Carbon::parse($alokasi->aktif_dari)->format('d/m/Y')}}</td>
+                                              <td>{{\Carbon\Carbon::parse($alokasi->sampai)->format('d/m/Y')}}</td>
                                           </tr>
                                       {{-- @endif --}}
                                   @empty

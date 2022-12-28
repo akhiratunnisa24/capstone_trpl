@@ -14,6 +14,11 @@ class AlokasicutiImport implements ToModel
         return 2;
     }
 
+     /**
+    * @param array $row
+    *
+    * @return \Illuminate\Database\Eloquent\Model|null
+    */
     public function model(array $row)
     {
         if(isset($row[0]) && isset($row[2]))
@@ -31,11 +36,7 @@ class AlokasicutiImport implements ToModel
                     'aktif_dari'       => Carbon::parse($row[7])->format("Y-m-d") ?? null,
                     'sampai'           => Carbon::parse($row[8])->format("Y-m-d") ?? null,
                 ];
-                dd($row[7]);
-                //  dd($data,$row);
-                //  dd($row[2]);
-                // dd(Carbon::parse($row[2])->format("Y-m-d"));
-                // Log::info($row[2] ?? null);
+                
                 Alokasicuti::create($data);
             
             }else{

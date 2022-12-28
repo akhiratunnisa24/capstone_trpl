@@ -105,17 +105,12 @@ class HomeController extends Controller
 // dd($labelBulan);    
 
         $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
+        
         //sisa cuti
-        // $jmlcuti    = Cuti::select('jml_cuti')->where('id_karyawan',Auth::user()->id_pegawai)->get();
-        // $durasicuti = Alokasicuti::select('durasi')->where('id_karyawan',Auth::user()->id_pegawai)->get();
-
-        $idkaryawan = Cuti::select('id_karyawan')->where('id_karyawan', Auth::user()->id_pegawai)->get();
-        // $sisacuti =  DB::select('jml_cuti','durasi')->table('cuti')->join('alokasicuti')
-        //             ->where('alokasicuti.id_karyawan','=',$idkaryawan);
-
-        $sisacuti = DB::table('alokasicuti')->join('cuti', 'alokasicuti.id_karyawan', $idkaryawan) 
-                    ->selectraw('alokasicuti.durasi - cuti.jml_cuti')
-                    ->get(); 
+        $sisacuti = DB::table('alokasicuti')->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti')
+        ->where('alokasicuti.id_karyawan','cuti.id_karyawan')
+        ->selectraw('alokasicuti.durasi-cuti.jml_cuti')
+        ->get();
 
         if ($role == 1){
             

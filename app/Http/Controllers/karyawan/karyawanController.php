@@ -59,8 +59,11 @@ class karyawanController extends Controller
 
         $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
         //sisa cuti
-        $sisacuti = DB::table('alokasicuti')->join('cuti', 'alokasicuti.id_karyawan', 'cuti.id_karyawan') 
-                    ->selectraw('alokasicuti.durasi - cuti.jml_cuti')->get(); 
+        $sisacuti = DB::table('alokasicuti')->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti')
+        ->where('alokasicuti.id_karyawan','cuti.id_karyawan')
+        ->selectraw('alokasicuti.durasi-cuti.jml_cuti')
+        ->get();
+
         $output = [
             'row' => $row,
             'absenKaryawan' => $absenKaryawan,
@@ -75,6 +78,7 @@ class karyawanController extends Controller
     
     public function create()
     {
+
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $departemen = Departemen::all();
         

@@ -84,7 +84,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Divisi</label>
+                                    <label for="exampleInputEmail1" class="form-label">Departemen</label>
                                     <select class="form-control" name="divisi" required>
                                         <option value="">Pilih Departemen</option>
                                         @foreach ($departemen as $d)
