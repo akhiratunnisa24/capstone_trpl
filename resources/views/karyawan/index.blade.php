@@ -67,7 +67,7 @@
                                         <td>{{$k->alamat}}</td>
                                         <td>{{$k->email}}</td>
                                         <td>{{$k->agama}}</td>
-                                        <td>{{$k->departemens->nama_departemen}}</td>
+                                        <td>{{$k->divisi}}</td>
                                         <td>
                                             <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                 <a href="karyawanshow{{$k->id}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
@@ -90,7 +90,7 @@
 </div>
 
 {{-- Modal Import Data Excel --}}
-    <div class="modal fade" id="Modal2" data-backdrop="-1" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
+    <div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">

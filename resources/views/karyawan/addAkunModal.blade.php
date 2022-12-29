@@ -22,6 +22,10 @@
                             <label class="form-label">Role</label>
                             <select type="text" class="form-control  @error('role') is-invalid @enderror" name="role" required autocomplete="role" autofocus placeholder="Role">
                                 <option value="">Pilih Role</option>
+                                <option value="3">Manager Konvensional</option>
+                                <option value="4">Manager Keuangan</option>
+                                <option value="5">Manager Teknologi Informasi</option>
+                                <option value="6">Manager Human Resource</option>
                                 <option value="1">HRD</option>
                                 <option value="2">Karyawan</option>
                             </select>
@@ -50,7 +54,7 @@
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
-                            @enderror
+                            @enderror   
 
                         </div>
                     </div>
