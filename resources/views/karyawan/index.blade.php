@@ -62,7 +62,7 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$k->nama}}</td>
-                                        <td>{{$k->tgllahir}}</td>
+                                        <td>{{\Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y')}}</td>
                                         <td>{{$k->jenis_kelamin}}</td>
                                         <td>{{$k->alamat}}</td>
                                         <td>{{$k->email}}</td>

@@ -18,7 +18,7 @@
         </div>    
     </div>
     <div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
-        <a href="" class="btn btn-dark" data-toggle="modal" data-target="#Modal1">Import Excel</a>
+        <a href="" class="btn btn-dark" data-toggle="modal" data-target="#ModalImport">Import Excel</a>
         <a href="" class="btn btn-dark" data-toggle="modal" data-target="#smallModal">Import CSV</a>
          {{-- form import --}}
         @include('admin.alokasicuti.importexcel')
@@ -41,11 +41,11 @@
                                     <table  id="datatable-responsive7" class="table dt-responsive table-striped nowrap table-bordered" width="100%">
                                         <thead>
                                             <tr>
-                                                {{-- <th>#</th> --}}
+                                                <th>#</th>
                                                 <th>Karyawan</th>
                                                 <th>Kategori Cuti</th>
                                                 <th>Durasi (Hari)</th>
-                                                <th>Mode Alokasi</th>
+                                                {{-- <th>Mode Alokasi</th> --}}
                                                 {{-- <th>Tanggal Masuk</th> --}}
                                                 <th>Aktif Dari</th>
                                                 <th>Sampai</th>
@@ -56,11 +56,11 @@
                                         <tbody>
                                             @foreach($alokasicuti as $data)
                                                 <tr id="aid{{$data->id}}"></tr>
-                                                    {{-- <td>{{$loop->iteration}}</td> --}}
+                                                    <td>{{$data->id_karyawan}}</td>
                                                     <td>{{$data->karyawans->nama}}</td>
                                                     <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                                     <td>{{$data->durasi}}</td>
-                                                    <td>{{$data->mode_alokasi}}</td>
+                                                    {{-- <td>{{$data->mode_alokasi}}</td> --}}
                                                     {{-- @if($data->tgl_masuk != NULL)
                                                         <td>{{\Carbon\Carbon::parse($data->tgl_masuk)->format('d/m/Y')}}</td>
                                                     @else

@@ -31,19 +31,23 @@ class AlokasicutiImport implements ToModel
                     'id_jeniscuti'     => $row[2] ?? null,
                     'durasi'           => $row[3] ?? null,
                     'mode_alokasi'     => $row[4] ?? null,
-                    'tgl_masuk'        => Carbon::parse($row[5])->format("Y-m-d") ?? null,
-                    'tgl_sekarang'     => Carbon::parse($row[6])->format("Y-m-d") ?? null,
-                    'aktif_dari'       => Carbon::parse($row[7])->format("Y-m-d") ?? null,
-                    'sampai'           => Carbon::parse($row[8])->format("Y-m-d") ?? null,
+                    'tgl_masuk'        => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[5])->format("Y-m-d") ?? null,
+                    'tgl_sekarang'     => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[6])->format("Y-m-d") ?? null,
+                    'aktif_dari'       => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[7])->format("Y-m-d") ?? null,
+                    'sampai'           => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8])->format("Y-m-d") ?? null,
                 ];
-                
+                 Log::info($row[5]);
+
+                //  dd($row[5],$row[6],$row[7],$row[8]);
+                // dd($row[0],$row[1],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7]);
+                // dd(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[5])->format("Y-m-d")?? null,\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[6])->format("Y-m-d"),\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[7])->format("Y-m-d"), \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8])->format("Y-m-d") ?? null);
                 Alokasicuti::create($data);
             
             }else{
                 Log::info('id pegawai dan tanggal absensi sudah ada');
             }
         } else{
-             Log::info('Row 1 kosong');
+             Log::info('Row 0 kosong');
         }
     }
 }

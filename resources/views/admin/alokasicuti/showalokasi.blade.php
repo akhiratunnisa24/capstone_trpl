@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="id" class="col-sm-3 col-form-label">Kategori Cuti</label>
+                    <label for="id_jeniscuti" class="col-sm-3 col-form-label">Kategori Cuti</label>
                     <div class="col-sm-9">
                         <label>: {{$data->jeniscutis->jenis_cuti}}</label>
                     </div>

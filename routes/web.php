@@ -137,5 +137,11 @@ Route::post('/getsettingalokasi', [AlokasicutiController::class, 'getSettingalok
 //update alokasi cuti
 Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');
 Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
+ 
+//================================================================================
+//Route Manager
+Route::post('/permintaan-cuti/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
+
+
 
     

@@ -19,7 +19,6 @@
                             <div class="form-group col-sm">
                                 <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
                                 <select name="id_jeniscuti" id="idjeniscuti" class="form-control">
-                                    <option value="{{$data->id_jeniscuti}}" selected>{{$data->jeniscutis->jenis_cuti}}</option>
                                     @foreach ($jeniscuti as $jenis)
                                         <option value="{{$jenis->id }}">{{ $jenis->jenis_cuti }}</option>
                                     @endforeach
@@ -27,17 +26,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
-                                <input type="text" class="form-control" name="id_karyawan" id="id_karyawan" value="{{$data->karyawans->nama}}" readonly>
+                                <input type="text" class="form-control" name="id_karyawan" id="id_karyawan" value="{{$data->id_karyawan}} - {{$data->karyawans->nama}}" readonly>
                             </div>
                             {{-- <div class="form-group col-sm" id="idkaryawan">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
                                 <select name="id_karyawan" id="id_karyawan" class="form-control" readonly>
-                                    <option value="{{$data->id_karyawan}}" selected>{{$data->karyawans->nama}}</option>
-                                    {{-- @foreach ($karyawan as $data)
-                                        <option value="{{ $data->id }}">{{ $data->nama }}</option>
-                                    @endforeach --}}
+                                    {{-- <option value="{{$data->id_karyawan}}" selected>{{$data->id_karyawan}}{{$data->karyawans->nama}}</option> --}}
+                                    {{-- @foreach ($karyawan as $item)
+                                        <option value="{{$item->id}}"
+                                            @if($item->id == $data->id_karyawan)
+                                                selected
+                                            @endif
+                                            >{{$item->nama}}</option>
+                                    @endforeach --}} 
                                 {{-- </select>
-                            </div> --}}
+                            </div>  --}}
                             <div class="form-group">
                                 <label for="durasi" class="col-form-label">Durasi (Hari)</label>
                                 <input type="text" class="form-control" name="durasi" placeholder="durasi" id="duration" readonly>
@@ -257,94 +260,6 @@
         });
     });
 </script>
-
-<!-- script untuk menyimpan data update-->
-{{-- <script type="text/javascript">
-    $(".input").click(function(e) {
-        e.preventDefault();
-        //nama variabel | id field pada form | value
-        var id_alokasi       = $("#id_alokasi").val();
-        var id_settingalokasi= $("idsettingalokasi").val();
-        var id_jeniscuti     = $("#idjeniscuti").val();
-        var id_karyawan      = $("#id_karyawan").val();
-        var durasi           = $("#duration").val();
-        var mode_alokasi     = $("#modealokasi").val();
-        var tgl_masuk        = $("#tglmasuk").val();
-        var tgl_sekarang     = $("#tglsekarang").val();
-        var aktif_dari       = $("#datepicker-autoclosea3").val();
-        var sampai           = $("#datepicker-autoclosea4").val();
-        var token            = $('meta[name="csrf-token"]').attr('content');
-    });
-    $.ajax({
-        url: "/updatealokasi/{$id_alokasi}"
-        type:"PUT",
-        data: {
-            "id":id_alokasi, 
-            "id_settingalokasi": id_settingalokasi,
-            "id_jeniscuti": id_jeniscuti,
-            "id_karyawan": id_karyawan,
-            "durasi": durasi,
-            "mode_alokasi": mode_alokasi,
-            "tgl_masuk": tgl_masuk,
-            "tgl_sekarang": tgl_sekarang,
-            "aktif_dari":aktif_dari,
-            "sampai": sampai,
-            "_token": token,
-        },
-        success: function(response) { 
-            //CARA 1
-            $('#aid'+ response.id +' td:nth-child(1)').text(response.id_karyawan);
-            $('#aid'+ response.id +' td:nth-child(2)').text(response.id_jeniscuti);
-            $('#aid'+ response.id +' td:nth-child(3)').text(response.durasi);
-            $('#aid'+ response.id +' td:nth-child(4)').text(response.mode_alokasi);
-            $('#aid'+ response.id +' td:nth-child(5)').text(response.aktif_dari);
-            $('#aid'+ response.id +' td:nth-child(6)').text(response.sampai);
-           
-            $(".input")[0].reset();
-
-            if(response.statusCode)
-             {
-                window.location.href = "/alokasicuti";
-             }
-             else{
-                 alert("Internal Server Error");
-             }
-          
-            //window.location.replace("http://127.0.0.1:8000/alokasicuti");
-
-            // $('#aid'+ response.id +' td:nth-child(1)').text(response.id_settingalokasi);
-            // $('#aid'+ response.id +' td:nth-child(6)').text(response.tgl_masuk);
-            // $('#aid'+ response.id +' td:nth-child(7)').text(response.tgl_sekarang);
-
-            //CARA 2
-            // let alokasicuti = '<tr id="aid${response.data.id}">
-            //                         <td>${response.data.id_karyawan}</td>
-            //                         <td>${response.data.id_jeniscuti}</td>
-            //                         <td>${response.data.durasi}</td>
-            //                         <td>${response.data.mode_alokasi}</td>
-            //                         <td>${response.data.aktif_dari}</td>
-            //                         <td>${response.data.sampai}</td>
-            //                         <td class="text-center"> 
-            //                             <div class="row">
-            //                                 <a id="bs" class="btn btn-info btn-sm showalokasi" data-toggle="modal" data-target="#showalokasi{{$data->id}}">
-            //                                     <i class="fa fa-eye"></i>
-            //                                 </a> 
-            //                                 <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal" data-alokasi="{{$data->id}}" data-target="#editalokasi">
-            //                                     <i class="fa fa-edit"></i>
-            //                                     {{-- {{$data->id}} --}}
-            {{-- //                                 </a> 
-            //                                 <button onclick="alokasicuti({{$data->id}})"  class="btn btn-danger btn-sm">
-            //                                     <i class="fa fa-trash"></i>
-            //                                 </button> 
-            //                             </div> 
-            //                         </td> 
-            //                     </tr>';
-            //     //append to post data
-            //     $(`#aid${response.data.id}`).replaceWith(alokasicuti);
-        },
-    });
-</script> --}}
-
 
 
 

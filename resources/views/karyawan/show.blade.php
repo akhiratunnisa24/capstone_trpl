@@ -59,7 +59,7 @@
                     </tr>
 
                     <tr>
-                        <td><label >Tanggal Lahir : {{$karyawan->tgllahir}}</label></td>
+                        <td><label >Tanggal Lahir : {{\Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y')}}</label></td>
                         <td><span ></span></td>
                     </tr>
 
@@ -113,7 +113,7 @@
                         <td><span id="position_name"></span></td>
                     </tr>
                     <tr>
-                        <td><label for="cc_number">Tanggal Lahir : {{$keluarga->tgllahir}} </label></td>
+                        <td><label for="cc_number">Tanggal Lahir : {{\Carbon\Carbon::parse($keluarga->tgllahir)->format('d/m/Y')}} </label></td>
                         <td><span id="cc_number"></span></td>
                         <td><label> Nama Sekolah : {{$rpendidikan->nama_sekolah}} </label></td>
                         <td><span id="salary"></span></td>
@@ -133,7 +133,7 @@
                     <tr>
                         <td><label for="bpjskes_number">Pekerjaan : {{$keluarga->pekerjaan}}</label></td>
                         <td><span id="bpjskes_number"></span></td>
-                        <td><label for="bpjsket_number">Lulus Tahun : {{$rpendidikan->tahun_lulus_formal}}</label></td>
+                        <td><label for="bpjsket_number">Lulus Tahun : {{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y')}}</label></td>
                         <td><span id="bpjsket_number"></span></td>
                     </tr>
                     <tr>
@@ -157,7 +157,7 @@
                     <tr>
                         <td><label for="bpjskes_number">Jenis Usaha : {{$rpekerjaan->jenis_usaha}} </label></td>
                         <td><span id="bpjskes_number"></span></td>
-                        <td><label for="bpjsket_number">Lulus Tahun : {{$rpendidikan->tahun_lulus_nonformal}}</label></td>
+                        <td><label for="bpjsket_number">Lulus Tahun : {{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_nonformal)->format('d/m/Y')}}</label></td>
                         <td><span id="bpjsket_number"></span></td>
                     </tr>
 
