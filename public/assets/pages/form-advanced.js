@@ -121,18 +121,22 @@
             todayHighlight: true
         });
         jQuery('#datepicker-autoclosea1').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclosea2').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclosea3').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });
         jQuery('#datepicker-autoclosea4').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true,
             todayHighlight: true
         });

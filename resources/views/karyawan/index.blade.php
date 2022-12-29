@@ -62,7 +62,7 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$k->nama}}</td>
-                                        <td>{{$k->tgllahir}}</td>
+                                        <td>{{\Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y')}}</td>
                                         <td>{{$k->jenis_kelamin}}</td>
                                         <td>{{$k->alamat}}</td>
                                         <td>{{$k->email}}</td>
@@ -90,7 +90,7 @@
 </div>
 
 {{-- Modal Import Data Excel --}}
-    <div class="modal fade" id="Modal2" data-backdrop="-1" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
+    <div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">

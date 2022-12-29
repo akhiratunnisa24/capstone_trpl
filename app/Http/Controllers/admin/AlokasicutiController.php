@@ -85,7 +85,7 @@ class AlokasicutiController extends Controller
 
             $alokasicuti = New Alokasicuti;
             $alokasicuti->id_karyawan  = $request->id_karyawan;
-            $alokasicuti->id_settingalokasi= $request->id_settingalokasi?? NULL;
+            $alokasicuti->id_settingalokasi= $request->id_settingalokasi;
             $alokasicuti->id_jeniscuti = $request->id_jeniscuti;
             $alokasicuti->durasi       = $request->durasi;
             $alokasicuti->mode_alokasi = $request->mode_alokasi;
@@ -109,7 +109,7 @@ class AlokasicutiController extends Controller
             // dd($validate);
             $alokasicuti = New Alokasicuti;
             $alokasicuti->id_karyawan  = $request->id_karyawan;
-            $alokasicuti->id_settingalokasi= $request->id_settingalokasi?? NULL;
+            $alokasicuti->id_settingalokasi= $request->id_settingalokasi;
             $alokasicuti->id_jeniscuti = $request->id_jeniscuti;
             $alokasicuti->durasi       = $request->durasi;
             $alokasicuti->mode_alokasi = $request->mode_alokasi;
@@ -134,12 +134,12 @@ class AlokasicutiController extends Controller
     public function edit($id)
     {
         $alokasicuti = Alokasicuti::find($id);
-
         return response()->json([
             'success' => true,
             'message' => 'Data Alokasi Didapatkan',
             'data'    => $alokasicuti
         ]); 
+        dd($alokasicuti);
         // dd($alokasicuti);
     }
    
@@ -218,7 +218,7 @@ class AlokasicutiController extends Controller
     public function importexcel(Request $request)
     {
         Excel::import(new AlokasicutiImport, request()->file('file'));
-        return redirect()->back();
+        return back();
     }
 }
 

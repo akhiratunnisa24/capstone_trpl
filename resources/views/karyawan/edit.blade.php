@@ -143,7 +143,7 @@
                     </tr>
 
                     <tr>
-                        <td><label >Tanggal Lahir : <input type="text" name="tgllahirPasangan" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose16"   value="{{$keluarga->tgllahir}}" > </label></td>
+                        <td><label >Tanggal Lahir : <input type="text" name="tgllahirPasangan" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose16"   value="{{$keluarga->tgllahir}}"></label></td>
                         <td ><span></span></td>
                         <td><label> Nama Sekolah : <input type="text" name="nama_sekolah" class="form-control"  value="{{$rpendidikan->nama_sekolah}}" > </label></td>
                         <td><span ></span></td>
