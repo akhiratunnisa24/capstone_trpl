@@ -58,17 +58,17 @@
                 </li> --}}
 
                 <li>
-                <li><a><span class="text-info panel-title">ABSENSI</span></a></li>
-                <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
-                <li><a href="/rekapabsensi"><i class="mdi mdi-account-card-details"></i><span>Rekap Absensi</span></a>
+                    <li><a><span class="text-info panel-title">ABSENSI</span></a></li>
+                    <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
+                    <li><a href="/rekapabsensi"><i class="mdi mdi-account-card-details"></i><span>Rekap Absensi</span></a>
                 </li>
                 </li>
                 <li>
-                <li><a><span class="text-info panel-title">CUTI & IZIN</span></a></li>
-                <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a></li>
-                <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
-                <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a></li>
-                <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li>
+                    <li><a><span class="text-info panel-title">CUTI & IZIN</span></a></li>
+                    <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a></li>
+                    <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
+                    <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a></li>
+                    <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li>
                 </li>
             </ul>
         </div>
@@ -193,23 +193,20 @@
             <ul>
                 <li>
                     <a href="karyawandashboard" class="waves-effect">
-                        <i class="ti-home"></i><span> Dashboard Teknologi Informasi</span>
+                        <i class="ti-home"></i><span> Dashboard Manager TI</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/absensi-karyawan" class="waves-effect">
-                        <i class="mdi mdi-account-check"></i><span>Absensi</span>
-                    </a>
+                    <li><a><span class="text-info panel-title">DATA MANAGER</span></a></li>
+                    <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
+                    <li><a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a></li>
+                    <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a></li>
                 </li>
                 <li>
-                    <a href="/history-absensi" class="waves-effect">
-                        <i class="mdi mdi-clipboard-check"></i><span>History Absensi</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/cuti-karyawan" class="waves-effect">
-                        <i class="mdi mdi-walk"></i><span>Cuti & Izin</span>
-                    </a>
+                    <li><a><span class="text-info panel-title">DATA STAFF</span></a></li>
+                    <li><a href="/data-staff" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a></li>     
+                    <li><a href="#" class="waves-effect"><i class="ion-compose"></i><span>Absensi Staff</span></a></li>                         
+                    <li><a href="#" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a></li>               
                 </li>
             </ul>
         </div>
@@ -250,9 +247,6 @@
             ?>
             </ul>
         </div>
-
-
-
 
         <div class="clearfix"></div>
     </div> <!-- end sidebarinner -->
