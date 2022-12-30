@@ -136,7 +136,7 @@
             data: {'id_karyawan':id_karyawan},
             success:function(data){
                 // console.log(data);
-                $('#tgl_masuk').val(data.tglmasuk);
+                $('#tgl_masuk').val(data.   );
                 console.log(data?.tglmasuk)
             }
         });

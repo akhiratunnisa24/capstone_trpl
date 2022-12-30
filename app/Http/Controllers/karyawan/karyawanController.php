@@ -31,18 +31,34 @@ class karyawanController extends Controller
         $karyawan = karyawan::all()->sortByDesc('created_at');
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-        // $akun = DB::table('karyawan')
-        // // ->join('karyawan','users.id_pegawai','  =','karyawan.id')
-        // ->whereNotIn('karyawan.id', ['users.id_pegawai'])
-        // ->get();
-
         $user = DB::table('users')->pluck('id_pegawai');
         $akun = DB::table('karyawan')->whereNotIn("id",$user)->get();
+
+
         
         $output = [
             'row' => $row
         ];
         return view('karyawan.index', compact('karyawan','row','akun'));
+    }
+
+    public function getEmail(Request $request)
+    {
+        try {
+            $getTEmail = Karyawan::select('email')
+            ->where('id','=',$request->id_pegawai)->first();
+
+            // dd($request->id_karyawan,$getTglmasuk);
+            if(!$getTEmail) {
+                throw new \Exception('Data not found');
+            }
+            return response()->json($getTEmail,200);
+            
+        } catch (\Exception $e){
+            return response()->json([
+                'message' =>$e->getMessage()
+            ], 500);
+        }
     }
     
     public function karyawanDashboard()
@@ -577,6 +593,7 @@ class karyawanController extends Controller
                 {
                     $karyawan = karyawan::findOrFail($id);
                     $keluarga = Keluarga::where('id_pegawai', $id )->first();
+                    
                     
                     $kdarurat = Kdarurat::where('id_pegawai', $id )->first();
                     $rpendidikan = Rpendidikan::where('id_pegawai', $id)->first();

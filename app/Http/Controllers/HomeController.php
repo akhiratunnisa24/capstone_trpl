@@ -93,16 +93,13 @@ class HomeController extends Controller
             // $data2 = $users->values();
             // dd($data);
 
-            $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(created_at) as month_name"))
+            $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(created_at) as month_name"), DB::raw("YEAR(created_at) as year"))
+                ->groupBy(DB::raw('YEAR(created_at)'))
                 ->groupBy(DB::raw('MONTHNAME(created_at)'))
                 ->pluck('jumlah', 'month_name');
 
             $labelBulan = $getLabel->keys();
             $data = $getLabel->values();
-// dd($data2);
-            
-// dd(date('d M Y', strtotime($labelBulan)));
-// dd($labelBulan);    
 
         $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
         

@@ -102,11 +102,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="showkaryawan{{ $id }}" class="waves-effect">
-                        <i class="mdi mdi-account-multiple"></i><span>Profile Karyawan</span>
-                    </a>
-                </li>
-                <li>
                     <a href="/cuti-karyawan" class="waves-effect">
                         <i class="mdi mdi-walk"></i><span>Cuti & Izin</span>
                     </a>
@@ -140,12 +135,7 @@
                     <a href="/history-absensi" class="waves-effect">
                         <i class="mdi mdi-clipboard-check"></i><span>History Absensi</span>
                     </a>
-                </li>
-                <li>
-                    <a href="showkaryawan{{ $id }}" class="waves-effect">
-                        <i class="mdi mdi-account-multiple"></i><span>Profile Karyawan</span>
-                    </a>
-                </li>
+                </li>>
                 <li>
                     <a href="/cuti-karyawan" class="waves-effect">
                         <i class="mdi mdi-walk"></i><span>Cuti & Izin</span>
@@ -179,11 +169,6 @@
                 <li>
                     <a href="/history-absensi" class="waves-effect">
                         <i class="mdi mdi-clipboard-check"></i><span>History Absensi</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="showkaryawan{{ $id }}" class="waves-effect">
-                        <i class="mdi mdi-account-multiple"></i><span>Profile Karyawan</span>
                     </a>
                 </li>
                 <li>
@@ -222,11 +207,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="showkaryawan{{ $id }}" class="waves-effect">
-                        <i class="mdi mdi-account-multiple"></i><span>Profile Karyawan</span>
-                    </a>
-                </li>
-                <li>
                     <a href="/cuti-karyawan" class="waves-effect">
                         <i class="mdi mdi-walk"></i><span>Cuti & Izin</span>
                     </a>
@@ -259,11 +239,6 @@
                 <li>
                     <a href="/history-absensi" class="waves-effect">
                         <i class="mdi mdi-clipboard-check"></i><span>History Absensi</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="showkaryawan{{ $id }}" class="waves-effect">
-                        <i class="mdi mdi-account-multiple"></i><span>Profile Karyawan</span>
                     </a>
                 </li>
                 <li>

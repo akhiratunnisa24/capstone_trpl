@@ -10,52 +10,50 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class karyawanImport implements ToModel
+class karyawanImport implements ToModel, WithHeadingRow
 {
     public function startRow(): int
     {
         return 2;
     }
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
 
-    
+
     public function model(array $row)
     {
-        if(isset($row[2]) && isset($row[3]))
-        {
-            if(!Karyawan::where('nama',$row[2])->where('tgllahir',Carbon::parse($row[3])->format("Y-m-d"))->exists())
-            {
+        if (isset($row[2]) && isset($row[3])) {
+            if (!Karyawan::where('nama', $row[2])->where('tgllahir', Carbon::parse($row[3])->format("Y-m-d"))->exists()) {
                 $karyawan = [
-                    'nip'           => $row[0] ?? null,
-                    'nik'       =>  $row[1] ?? null,
-                    'nama'         => $row[2] ?? null,
-                    'tgllahir'  => Carbon::parse($row[3])->format("Y-m-d"),
-                    'email' => $row[4] ?? null,
-                    'agama'     => $row[5] ?? null,
-                    'gol_darah'    => $row[6] ?? null,
-                    'jenis_kelamin'        => $row[7] ?? null,
-                    'alamat'          => $row[8] ?? null,
-                    'no_hp'     => $row[9] ?? null,
-                    'status_karyawan'     => $row[10] ?? null,
-                    'tipe_karyawan'        => $row[11] ?? null,
-                    'manager'        => $row[12] ?? null,
-                    'no_kk'  => $row[13] ?? null,
-                    'status_kerja'  => $row[14] ?? null,
-                    'cuti_tahunan'           => $row[15] ?? null,
-                    'divisi'           => $row[16] ?? null,
-                    'no_rek'=> $row[17] ?? null,
-                    'no_bpjs_kes'      => (Double) $row[18],
-                    'no_npwp'            => (Double) $row[19],
-                    'no_bpjs_ket'            => (Double) $row[20],
-                    'kontrak'     => $row[21] ?? null,
-                    'jabatan'      => $row[22] ?? null,
-                    'gaji'      => (Double) $row[23],
-                    'tglmasuk'       => Carbon::parse($row[24])->format("Y-m-d"),
-                    'tglkeluar'       => Carbon::parse($row[25])->format("Y-m-d"),
+                    'nip'           => $row['nip'] ?? null,
+                    'nik'       =>  $row['nik'] ?? null,
+                    'nama'         => $row['nama'] ?? null,
+                    'tgllahir'  => Carbon::parse($row['tanggal_lahir'])->format("Y-m-d"),
+                    'email' => $row['email'] ?? null,
+                    'agama'     => $row['agama'] ?? null,
+                    'gol_darah'    => $row['golongan_darah'] ?? null,
+                    'jenis_kelamin'        => $row['jenis_kelamin'] ?? null,
+                    'alamat'          => $row['alamat'] ?? null,
+                    'no_hp'     => $row['nomor_hp'] ?? null,
+                    'status_karyawan'     => $row['status_karyawan'] ?? null,
+                    'tipe_karyawan'        => $row['tipe_karyawan'] ?? null,
+                    'manager'        => $row['manager'] ?? null,
+                    'no_kk'  => $row['no_kk'] ?? null,
+                    'status_kerja'  => $row['status_kerja'] ?? null,
+                    'cuti_tahunan'           => $row['divisi'] ?? null,
+                    'divisi'           => $row['divisi'] ?? null,
+                    'no_rek' => $row['nomor_rekening'] ?? null,
+                    'no_bpjs_kes'      => (float) $row['nomor_bpjs_kesehatan'],
+                    'no_npwp'            => (float) $row['nomor_npwp'],
+                    'no_bpjs_ket'            => (float) $row['nomor_bpjs_ketenagakerjaan'],
+                    'kontrak'     => $row['kontrak'] ?? null,
+                    'jabatan'      => $row['jabatan'] ?? null,
+                    'gaji'      => (float) $row['gaji'],
+                    'tglmasuk'       => Carbon::parse($row['tanggal_masuk'])->format("Y-m-d"),
+                    'tglkeluar'       => Carbon::parse($row['tanggal_keluar'])->format("Y-m-d"),
                 ];
 
                 // $keluarga = [
@@ -76,7 +74,7 @@ class karyawanImport implements ToModel
                 //     'no_hp'         => $row[3] ?? null,
                 //     'hubungan'  => $row[4] ?? null,
                 // ];
-                
+
                 // $rpendidikan = [
                 //     'id_pegawai'   => $row[0],
                 //     'tingkat'           => $row[1] ?? null,
@@ -108,47 +106,11 @@ class karyawanImport implements ToModel
                 Kdarurat::create($kdarurat);
                 Rpendidikan::create($rpendidikan);
                 Rpekerjaan::create($rpekerjaan);
-            
-            }else{
+            } else {
                 Log::info('id karyawan dan tanggal absensi sudah ada');
             }
-        } else{
-             Log::info('Row 1 kosong');
+        } else {
+            Log::info('Row 1 kosong');
         }
     }
-
-    // public function collection(Collection $rows)
-    // {
-    //     foreach ($rows as $index => $row) {
-    //         Karyawan::create([
-    //             'id' => $row['id'],
-    //             'nip' => $row['nip'],
-    //             'nik' => $row['nik'],
-    //             'nama' => $row['nama'],
-    //             'tgllahir' => $row['tgllahir'],
-    //             'email' => $row['email'],
-    //             'agama' => $row['agama'],
-    //             'gol_darah' => $row['gol_darah'],
-    //             'jenis_kelamin' => $row['jenis_kelamin'],
-    //             'alamat' => $row['alamat'],
-    //             'no_hp' => $row['no_hp'],
-    //             'status_karyawan' => $row['status_karyawan'],
-    //             'tipe_karyawan' => $row['tipe_karyawan'],
-    //             'manager' => $row['manager'],
-    //             'no_kk' => $row['no_kk'],
-    //             'status_kerja' => $row['status_kerja'],
-    //             'cuti_tahunan' => $row['cuti_tahunan'],
-    //             'divisi' => $row['divisi'],
-    //             'no_rek' => $row['no_rek'],
-    //             'no_bpjs_kes' => $row['no_bpjs_kes'],
-    //             'no_npwp' => $row['no_npwp'],
-    //             'no_bpjs_ket' => $row['no_bpjs_ket'],
-    //             'kontrak' => $row['kontrak'],
-    //             'jabatan' => $row['jabatan'],
-    //             'gaji' => $row['gaji'],
-    //             'tglmasuk' => $row['tglmasuk'],
-    //             'tglkeluar' => $row['tglkeluar'],
-    //         ]);
-    //     }
-    // }
 }
