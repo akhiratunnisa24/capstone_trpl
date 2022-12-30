@@ -99,10 +99,6 @@ class HomeController extends Controller
 
             $labelBulan = $getLabel->keys();
             $data = $getLabel->values();
-// dd($data2);
-            
-// dd(date('d M Y', strtotime($labelBulan)));
-// dd($labelBulan);    
 
         $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
         

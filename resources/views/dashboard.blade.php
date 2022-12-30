@@ -257,7 +257,7 @@
       const data = {
         labels: labelBulan,
         datasets: [{
-          label: 'Cuti dan Izin',
+          label: 'Cuti',
           backgroundColor: '#18bae2',
           borderColor: '#18bae2',
           data: users2,

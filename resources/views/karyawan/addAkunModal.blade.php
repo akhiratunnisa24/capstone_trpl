@@ -43,7 +43,7 @@
 
                         <div class="col-xs-12">
                             <label for="exampleInputEmail1" class="form-label">Karyawan</label>
-                            <select id="id_pegawai" type="text" class="form-control  @error('name') is-invalid @enderror" name="id_pegawai" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Nama">
+                            <select id="id_pegawai" class="form-control" name="id_pegawai" required>
                                 <option value="">Pilih Karyawan</option>
                                 @foreach ($akun as $k)
                                 <option value="{{ $k->id }}">{{ $k->nama }}</option>
@@ -60,11 +60,9 @@
                     </div>
 
                     <div class="form-group">
-                               
-
                         <div class="col-xs-12">
                             <label for="exampleInputEmail1" class="form-label">Email</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email Address">
+                            <input id="emailKaryawan" type="text" class="form-control" name="emailKaryawan"  autocomplete="off" placeholder="Email Address">
                             @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -172,6 +170,28 @@
             imgPreview.src = oFREvent.target.result;
         }
     }
+</script>
+
+<!-- script untuk mengambil data Email Karyawan  -->
+<script>
+    $('#id_pegawai').on('change',function(e){
+        var id_pegawai = e.target.value;
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                        .attr('content')
+                    }
+        });
+        $.ajax({
+            type:"POST",
+            url: '{{route('getEmail')}}',
+            data: {'id_pegawai':id_pegawai},
+            success:function(data){
+                // console.log(data);
+                $('#tgl_masuk').val(data.   );
+                console.log(data?.email)
+            }
+        });
+    });
 </script>
 
 <!-- jQuery  -->
