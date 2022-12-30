@@ -56,7 +56,7 @@
                             @else
                                 <div class="form-group col-sm" id="mode_employe">
                                     <label for="mode_karyawan" class="col-form-label">Karyawan</label>
-                                    <select id="mode_karyawant" name="mode_karyawan[]" multiple="multiple" class="form-control">
+                                    <select id="mode_karyawant" name="mode_karyawan[]" multiple="multiple" class="form-control" style="width:300px">
                                         <option value="{{$data->mode_karyawan}}" selected>{{$data->mode_karyawan}}</option>
                                         <option value="L">Laki-laki</option>
                                         <option value="P">Perempuan</option>

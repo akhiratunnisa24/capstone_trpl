@@ -75,11 +75,6 @@ class Karyawan extends Model
         'email' );
     }
 
-    //hrms_git
-    public function userss(){
-        return $this->hasOne(User::class,'id_user','id');
-    }
-
     public function departemens()
     {
         return $this->belongsTo(Departemen::class, 
@@ -94,5 +89,10 @@ class Karyawan extends Model
         'id', 
         'nama_departemen', 
         );
-    }   
+    } 
+    
+    //hrms_git
+    // public function userss(){
+    //     return $this->hasOne(User::class,'id_user','id');
+    // }
 }
