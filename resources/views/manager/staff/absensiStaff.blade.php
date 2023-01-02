@@ -100,11 +100,11 @@
     </div>
 
     <div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
-        <a href="#" class="btn btn-dark">Export All to Excel</a>
+        <a href="/export-all-excel" class="btn btn-dark">Export All to Excel</a>
         <a href="/export-pdf" class="btn btn-dark">Export All to PDF</a>
     </div>
     <div class="btn-group pull-right" style="margin-right:15px;margin-bottom:10px" role="group" aria-label="Basic examp">
-        <a href="#" class="btn btn-success">Export Excel</a>
+        <a href="/export-to-excel" class="btn btn-success">Export Excel</a>
         <a href="/export-to-pdf" class="btn btn-success">Export PDF</a>
     </div>
     <div class="content">

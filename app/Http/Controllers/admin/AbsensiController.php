@@ -26,11 +26,35 @@ class AbsensiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //semua data absensi
-        $absensi = Absensi::latest()->orderBy('tanggal')->get();
-        return view('admin.absensi.index',compact('absensi'));
+        // $absensi = Absensi::latest()->orderBy('tanggal')->get();
+
+        //filter data
+        $karyawan = Karyawan::all();
+        $idkaryawan = $request->id_karyawan;
+        // dd($idkaryawan);
+
+        $bulan = $request->query('bulan',Carbon::now()->format('m'));
+        $tahun = $request->query('tahun',Carbon::now()->format('Y'));
+
+        // simpan session
+        $request->session()->put('idkaryawan', $request->id_karyawan);
+        $request->session()->put('bulan', $bulan);
+        $request->session()->put('tahun', $tahun);
+    
+        if(isset($idkaryawan) && isset($bulan) && isset($tahun))
+        {
+            $absensi = Absensi::where('id_karyawan', $idkaryawan)
+            ->whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal',$tahun)
+            ->get();
+        }else
+        {
+            $absensi = Absensi::all();
+        }
+        return view('admin.absensi.index',compact('absensi','karyawan'));
     }
 
     public function create()
@@ -167,6 +191,7 @@ class AbsensiController extends Controller
         return redirect()->back()->with('success','Data Imported Successfully');
     }
 
+    //tidak dipakai
     public function rekapabsensi(Request $request)
     {
         $karyawan = Karyawan::all();

@@ -31,11 +31,10 @@ class karyawanController extends Controller
         $karyawan = karyawan::all()->sortByDesc('created_at');
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
+        //ambil id_karyawan yang belum punya akun
         $user = DB::table('users')->pluck('id_pegawai');
         $akun = DB::table('karyawan')->whereNotIn("id",$user)->get();
 
-
-        
         $output = [
             'row' => $row
         ];
@@ -74,11 +73,14 @@ class karyawanController extends Controller
         ->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk');
 
         $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
+
         //sisa cuti
-        $sisacuti = DB::table('alokasicuti')->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti')
+        $sisacuti = DB::table('alokasicuti')->join('cuti','alokasicuti.id_jeniscuti','=','cuti.id_jeniscuti')
         ->where('alokasicuti.id_karyawan','cuti.id_karyawan')
         ->selectraw('alokasicuti.durasi-cuti.jml_cuti')
         ->get();
+
+        dd($sisacuti);
 
         $output = [
             'row' => $row,

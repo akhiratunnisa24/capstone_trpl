@@ -5,23 +5,18 @@ namespace App\Http\Controllers\manager;
 use PDF;
 use Carbon\Carbon;
 use App\Models\Cuti;
-use App\Models\Karyawan;
 use App\Models\Absensi;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exports\AbsensiFilterExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AbsensiDepartemenExport;
 
 class ManagerController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     $type = $request->query('type', 1);
-    //     $cuti = Cuti::latest()->paginate(10);
-        
-    //     return view('manager.cuti.index', compact('cuti','izin','type'));
-    // }
-
     public function dataStaff(Request $request)
     {
         //mengambil id_departemen manager
@@ -30,7 +25,8 @@ class ManagerController extends Controller
 
         // dd( $manager_iddep);
         //ambil data dengan id_departemen sama dengan manager
-        $staff= Karyawan::where('divisi',$manager_iddep->divisi)->get();
+        //$staff= Karyawan::where('divisi',$manager_iddep->divisi)->get();
+        $staff= Karyawan::with('departemens')->where('divisi',$manager_iddep->divisi)->get();
 
         return view('manager.staff.dataStaff', compact('staff'));
     }
@@ -52,14 +48,17 @@ class ManagerController extends Controller
                         ->select('divisi')->first();
         $karyawan= Karyawan::where('divisi',$manager_iddep->divisi)->get();
 
+        //untuk filter data 
         $idkaryawan = $request->id_karyawan;
         $bulan = $request->query('bulan',Carbon::now()->format('m'));
         $tahun = $request->query('tahun',Carbon::now()->format('Y'));
 
+        //simpan session
         $request->session()->put('idkaryawan', $request->id_karyawan);
         $request->session()->put('bulan', $bulan);
         $request->session()->put('tahun', $tahun);
 
+        //
         if(isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
             $absensi = Absensi::where('id_karyawan', $idkaryawan)
@@ -73,6 +72,50 @@ class ManagerController extends Controller
             $absensi= Absensi::where('id_departement',$middep->id_departement)->get();
         }
         return view('manager.staff.absensiStaff', compact('absensi','karyawan'));
+    }
+
+    public function exportallExcel()
+    {
+        $middep = DB::table('absensi')
+        ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
+        ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
+        ->select('id_departement')->first();
+
+        $data = Absensi::where('id_departement',$middep->id_departement)->get();
+
+        return Excel::download(new AbsensiDepartemenExport($data), 'data_absensi_departemen.xlsx');
+    }
+
+    public function exportToExcel(Request $request)
+    {
+        //mengambil id_departemen manager
+        $middep = DB::table('absensi')
+        ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
+        ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
+        ->select('id_departement')->first();
+
+        $idkaryawan = $request->id_karyawan;
+        $bulan      = $request->query('bulan',Carbon::now()->format('m'));
+        $tahun      = $request->query('tahun',Carbon::now()->format('Y'));
+
+        // simpan session
+        $idkaryawan = $request->session()->get('idkaryawan');
+        $bulan      = $request->session()->get('bulan');
+        $tahun      = $request->session()->get('tahun');
+
+        if(isset($idkaryawan) && isset($bulan) && isset($tahun))
+        {
+            $data = Absensi::where('id_karyawan', $idkaryawan)
+            ->whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal',$tahun)
+            ->where('id_departement',$middep->id_departement)
+            ->get();
+            // dd($data);
+        }else{
+            $data = Absensi::where('id_departement',$middep->id_departement)->get();
+        };
+
+        return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), "data_absensi_departemen{$idkaryawan}.xlsx");
     }
 
     public function exportallpdf()

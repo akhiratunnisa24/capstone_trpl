@@ -108,6 +108,8 @@ class HomeController extends Controller
         ->selectraw('alokasicuti.durasi-cuti.jml_cuti')
         ->get();
 
+        
+
         if ($role == 1){
             
             $output = [
