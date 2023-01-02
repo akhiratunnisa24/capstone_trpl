@@ -40,6 +40,8 @@
         $('#datatable-responsive6').DataTable();
         $('#datatable-responsive7').DataTable();
         $('#datatable-responsive8').DataTable();
+        $('#datatable-responsive9').DataTable();
+        $('#datatable-responsive10').DataTable();
         
         $('#datatable-scroller').DataTable({
             ajax: "assets/plugins/datatables/json/scroller-demo.json",

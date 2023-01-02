@@ -32,9 +32,9 @@
                                     <table  id="datatable-responsive3" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                         <thead>
                                             <tr>
-                                                {{-- <th>ID</th>
-                                                <th>id j.cuti</th>
-                                                <th>kategori</th> --}}
+                                                {{-- <th>ID</th> --}}
+                                                {{-- <th>id j.cuti</th> --}}
+                                                 {{--<th>kategori</th> --}}
                                                 <th>#</th>
                                                 <th>Kategori Cuti</th>
                                                 <th>Durasi (Hari)</th>
@@ -44,18 +44,21 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <?php $no=1; ?>
                                         <tbody>
                                             @foreach($settingalokasi as $data)
                                                 <tr>
-                                                    {{-- <td>{{$data->id}}</td>
-                                                    <td>{{$data->id_jeniscuti}}</td>
-                                                    <td>{{$data->jeniscutis->jenis_cuti}}</td> --}}
-                                                    <td>{{$no++}}</td>
+                                                    {{-- <td>{{$data->id}}</td> --}}
+                                                    {{-- <td>{{$data->id_jeniscuti}}</td> --}}
+                                                    {{-- {<td>{{$data->jeniscutis->jenis_cuti}}</td> --}}
+                                                    <td>{{$loop->iteration}}</td>
                                                     <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                                     <td>{{$data->durasi}}</td>
                                                     <td>{{$data->mode_alokasi}}</td>
-                                                    <td>{{$data->departemen}}</td>
+                                                    @if($data->departemen !=null)
+                                                        <td>{{$data->departemens->nama_departemen}}</td>
+                                                    @else
+                                                         <td>{{$data->departemen}}</td>
+                                                    @endif
                                                     <td>{{$data->mode_karyawan}}</td>
                                                     <td class="text-center"> 
                                                         <a id="bs" class="btn btn-info btn-sm Modalshowsetting" data-toggle="modal" data-target="#Modalshowsetting{{$data->id}}">

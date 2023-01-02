@@ -29,7 +29,7 @@
                     <div class="panel-body m-b-5">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <table id="datatable-responsive" class="table table-striped dt-responsive table-bordered" width="100%">
+                                <table id="datatable-responsive9" class="table table-striped dt-responsive table-bordered" width="100%">
                                     <thead>
                                         <tr>
                                             <th>Nama Staff</th>
@@ -42,6 +42,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($staff as $data)
+                                        {{-- @if($data->) --}}
                                             <tr>
                                                 <td>{{$data->nama}}</td>
                                                 <td>{{$data->nik}}</td>
