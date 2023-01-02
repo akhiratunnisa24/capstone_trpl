@@ -24,7 +24,7 @@
                     <div class="content">
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-15">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             <strong>Data Permintaan Cuti</strong>
@@ -33,7 +33,7 @@
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-20 col-sm-20 col-xs-20">
                                                     <table  id="datatable-responsive3" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
@@ -271,7 +271,7 @@
     </style>
 
     <!-- jQuery  -->
-    <script src="assets/js/jquery.min.js"></script>
+    {{-- <script src="assets/js/jquery.min.js"></script> --}}
     {{-- <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/modernizr.min.js"></script>
     <script src="assets/js/detect.js"></script>
@@ -284,7 +284,7 @@
     <script src="assets/js/jquery.scrollTo.min.js"></script> --}}
     
     <!-- Datatable init js -->
-    <script src="assets/pages/datatables.init.js"></script>
+    {{-- <script src="assets/pages/datatables.init.js"></script>
     <script src="assets/js/app.js"></script>
 
     <script type="text/javascript">
@@ -296,5 +296,5 @@
         }else{
             $('#tab2').click();
         }
-    </script>    
+    </script>     --}}
 @endsection
