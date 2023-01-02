@@ -28,7 +28,7 @@ class karyawanImport implements ToModel, WithHeadingRow
         if (isset($row[2]) && isset($row[3])) {
             if (!Karyawan::where('nama', $row[2])->where('tgllahir', Carbon::parse($row[3])->format("Y-m-d"))->exists()) {
                 $karyawan = [
-                    'nip'           => $row['nip'] ?? null,
+                    'nip'           => (Int) $row['nip'] ?? null,
                     'nik'       =>  $row['nik'] ?? null,
                     'nama'         => $row['nama'] ?? null,
                     'tgllahir'  => Carbon::parse($row['tanggal_lahir'])->format("Y-m-d"),
@@ -41,17 +41,17 @@ class karyawanImport implements ToModel, WithHeadingRow
                     'status_karyawan'     => $row['status_karyawan'] ?? null,
                     'tipe_karyawan'        => $row['tipe_karyawan'] ?? null,
                     'manager'        => $row['manager'] ?? null,
-                    'no_kk'  => $row['no_kk'] ?? null,
+                    'no_kk'  => (Int) $row['no_kk'] ?? null,
                     'status_kerja'  => $row['status_kerja'] ?? null,
-                    'cuti_tahunan'           => $row['divisi'] ?? null,
+                    'cuti_tahunan'           => (Int) $row['divisi'] ?? null,
                     'divisi'           => $row['divisi'] ?? null,
-                    'no_rek' => $row['nomor_rekening'] ?? null,
-                    'no_bpjs_kes'      => (float) $row['nomor_bpjs_kesehatan'],
-                    'no_npwp'            => (float) $row['nomor_npwp'],
-                    'no_bpjs_ket'            => (float) $row['nomor_bpjs_ketenagakerjaan'],
+                    'no_rek' => (Int) $row['nomor_rekening'] ?? null,
+                    'no_bpjs_kes'      => (Int)  $row['nomor_bpjs_kesehatan'],
+                    'no_npwp'            => (Int)  $row['nomor_npwp'],
+                    'no_bpjs_ket'            => (Int)  $row['nomor_bpjs_ketenagakerjaan'],
                     'kontrak'     => $row['kontrak'] ?? null,
                     'jabatan'      => $row['jabatan'] ?? null,
-                    'gaji'      => (float) $row['gaji'],
+                    'gaji'      => $row['gaji'],
                     'tglmasuk'       => Carbon::parse($row['tanggal_masuk'])->format("Y-m-d"),
                     'tglkeluar'       => Carbon::parse($row['tanggal_keluar'])->format("Y-m-d"),
                 ];
@@ -102,10 +102,10 @@ class karyawanImport implements ToModel, WithHeadingRow
 
 
                 Karyawan::create($karyawan);
-                Keluarga::create($keluarga);
-                Kdarurat::create($kdarurat);
-                Rpendidikan::create($rpendidikan);
-                Rpekerjaan::create($rpekerjaan);
+                // Keluarga::create($keluarga);
+                // Kdarurat::create($kdarurat);
+                // Rpendidikan::create($rpendidikan);
+                // Rpekerjaan::create($rpekerjaan);
             } else {
                 Log::info('id karyawan dan tanggal absensi sudah ada');
             }

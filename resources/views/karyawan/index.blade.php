@@ -51,7 +51,6 @@
                                     <th>Alamat</th>
                                     <th>Email</th>
                                     <th>Agama</th>
-                                    <th>Departemen</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -67,7 +66,6 @@
                                         <td>{{$k->alamat}}</td>
                                         <td>{{$k->email}}</td>
                                         <td>{{$k->agama}}</td>
-                                        <td>{{$k->departemens->nama_departemen}}</td>
                                         <td>
                                             <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                 <a href="karyawanshow{{$k->id}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>

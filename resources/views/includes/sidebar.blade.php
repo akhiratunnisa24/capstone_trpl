@@ -72,7 +72,7 @@
                     <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li>
                 </li>
             </ul>
-        </div>
+       
 
     <?php } elseif ($role == 2) { ?>
 
@@ -83,6 +83,7 @@
             </div>
         </div>
 
+        </div>
 
         <!--- Role Karyawan -->
         <div id="sidebar-menu">
@@ -243,3 +244,4 @@
 <!-- Left Sidebar End -->
 <!-- Start right Content here -->
 <div class="content-page">
+    
