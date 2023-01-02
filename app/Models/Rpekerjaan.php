@@ -10,6 +10,20 @@ class Rpekerjaan extends Model
     use HasFactory;
 
     protected $table = 'rpekerjaan';
+    
+    protected $fillable = [
+        'id',
+        'id_pegawai',
+        'nama_perusahaan',
+        'alamat',
+        'jenis_usaha',
+        'jabatan',
+        'nama_atasan',
+        'nama_direktur',
+        'lama_kerja',
+        'alasan_berhenti',
+        'gaji',
+    ];
 
     protected $hidden = [
          

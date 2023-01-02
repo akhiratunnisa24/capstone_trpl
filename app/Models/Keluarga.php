@@ -11,6 +11,18 @@ class Keluarga extends Model
     
     protected $table = 'keluarga';
 
+    protected $fillable = [
+        'id',
+        'id_pegawai',
+        'hubungan',
+        'status_pernikahan',
+        'nama',
+        'tgllahir',
+        'alamat',
+        'pendidikan_terakhir',
+        'pekerjaan',
+    ];
+
     protected $hidden = [
          
     ];

@@ -11,6 +11,15 @@ class Kdarurat extends Model
     
     protected $table = 'kdarurat';
 
+    protected $fillable = [
+        'id',
+        'id_pegawai',
+        'nama',
+        'alamat',
+        'no_hp',
+        'hubungan',
+    ];
+
     protected $hidden = [
          
     ];

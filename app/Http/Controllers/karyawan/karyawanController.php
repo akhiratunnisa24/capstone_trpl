@@ -687,6 +687,10 @@ class karyawanController extends Controller
                    
                 }
 
+                public function exportExcel(){
+                    return Excel::download(new AbsensiExport, 'data_absensi.xlsx');
+                }
+
                 // public function import_excel(Request $request)
                 // {
                 //     Excel::import(new SiswasImport, $request->file('file'));

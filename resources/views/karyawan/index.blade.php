@@ -34,6 +34,7 @@
                         <a href="karyawancreate" type="button" class="btn btn-sm btn-dark " >Tambah Data Karyawan</a>
                         <a type="button" class="btn btn-sm btn-dark " data-toggle="modal" data-target="#myModal" >Buat Akun Karyawan</a>
                         <a href="" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#Modal2">Import Excel</a>
+                        <a href="#" class="btn btn-sm btn-dark">Export Excel</a>
                         {{-- <a type="button" class="btn btn-sm btn-dark " href="{{ route('register') }}" >Buat Akun Karyawan</a> --}}
                         <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_menu">Add Staff</button> -->
                         <!-- <a href="{ route('register') }}" type="button" class="btn btn-sm btn-dark " >Buat Akun Karyawan</a> -->
@@ -51,7 +52,6 @@
                                     <th>Alamat</th>
                                     <th>Email</th>
                                     <th>Agama</th>
-                                    <th>Departemen</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -67,7 +67,6 @@
                                         <td>{{$k->alamat}}</td>
                                         <td>{{$k->email}}</td>
                                         <td>{{$k->agama}}</td>
-                                        <td>{{$k->departemens->nama_departemen}}</td>
                                         <td>
                                             <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                 <a href="karyawanshow{{$k->id}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
@@ -115,6 +114,7 @@
         </div>
     </div>
 
+    
 
 <script>
 function hapus_karyawan(id){
@@ -162,3 +162,5 @@ function hapus_karyawan(id){
 
 
 @endsection
+
+
