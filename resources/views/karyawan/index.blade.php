@@ -162,3 +162,5 @@ function hapus_karyawan(id){
 
 
 @endsection
+
+

@@ -1,6 +1,7 @@
 <!-- ========== Left Sidebar Start ========== -->
 <div class="left side-menu">
     <div class="sidebar-inner slimscrollleft">
+
         <div class="user-details">
             <div class="text-center">
             </div>
@@ -260,7 +261,3 @@
 <!-- Left Sidebar End -->
 <!-- Start right Content here -->
 <div class="content-page">
-    <!-- Start content -->
-    <div class="content">
-        <div class="container">
-        </div> <!-- content -->
