@@ -117,6 +117,7 @@ class Karyawan extends Model
         return $this->hasOne(User::class, 'id_user', 'id');
     }
 
+    //dipakai untuk mengambil data nama_departemen
     public function departemens()
     {
         return $this->belongsTo(

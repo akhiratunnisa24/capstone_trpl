@@ -6,16 +6,19 @@ use App\Models\Absensi;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class RekapabsensiExport implements FromCollection, WithHeadings
+class AbsensiFilterExport implements FromCollection,WithHeadings
 {
+    //UNTUK SEMUA DATA ABSENSI BERDASARKAN FILTER DATA
+
     protected $idkaryawan;
     protected $data;
+    // protected $middep;
 
-    function __construct($data, $idkaryawan) {
+    function __construct($data, $idkaryawan, $middep) {
         $this->data = $data;
         $this->idkaryawan = $idkaryawan;
-
-        // dd($data,$idkaryawan);
+        $this->middep = $middep->id_departement;
+        // dd($data);
     }
 
     public function headings(): array {
@@ -27,11 +30,12 @@ class RekapabsensiExport implements FromCollection, WithHeadings
             "Lembur Akhir Pekan","Lembur Hari Libur"
         ];
     }
+
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return  $this->data;
+        return $this->data;
     }
 }

@@ -6,18 +6,16 @@ use App\Models\Absensi;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class RekapabsensiExport implements FromCollection, WithHeadings
+class AbsensiDepartemenExport implements FromCollection,WithHeadings
 {
-    protected $idkaryawan;
     protected $data;
+    function __construct($data) {
+        $this->data   = $data;
 
-    function __construct($data, $idkaryawan) {
-        $this->data = $data;
-        $this->idkaryawan = $idkaryawan;
-
-        // dd($data,$idkaryawan);
+        // dd($data,$middep);
     }
 
+    //UNTUK SEMUA DATA ABSENSI YANG DEPARTEMEN SAMA DENGAN MANAGER
     public function headings(): array {
         return [
             "No. ID","ID Karyawan","NIK","Tanggal","Jam Kerja","Jam Masuk","Jam Pulang",
@@ -32,6 +30,6 @@ class RekapabsensiExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return  $this->data;
+        return $this->data;
     }
 }
