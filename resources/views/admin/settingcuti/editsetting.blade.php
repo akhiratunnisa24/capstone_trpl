@@ -47,7 +47,7 @@
                                 <div class="form-group col-sm" id="mode_Alokasi_departement">
                                     <label for="departemen" class="col-form-label">Departemen</label>
                                     <select name="departemen" id="departemen" class="form-control">
-                                        <option value="{{$data->departemen}}" selected>{{$data->departemen}}</option>
+                                        <option value="{{$data->departemen}}" selected>{{$data->departemens->nama_departemen}}</option>
                                         <option value="KONVENSIONAL">KONVENSIONAL</option>
                                         <option value="IT DEPARTEMEN">IT DEPARTEMEN</option>
                                         <option value="KEUANGAN">KEUANGAN</option>
@@ -56,7 +56,7 @@
                             @else
                                 <div class="form-group col-sm" id="mode_employe">
                                     <label for="mode_karyawan" class="col-form-label">Karyawan</label>
-                                    <select id="mode_karyawant" name="mode_karyawan[]" multiple="multiple" class="form-control">
+                                    <select id="mode_karyawant" name="mode_karyawan[]" multiple="multiple" class="form-control" style="width:300px">
                                         <option value="{{$data->mode_karyawan}}" selected>{{$data->mode_karyawan}}</option>
                                         <option value="L">Laki-laki</option>
                                         <option value="P">Perempuan</option>

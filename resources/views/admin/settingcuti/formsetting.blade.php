@@ -66,12 +66,12 @@
                                 </div> 
                                 <div class="form-group col-sm" id="mode_employee">
                                     <label for="mode_karyawan" class="col-form-label">Karyawan</label>
-                                    <select id="mode_karyawan" name="mode_karyawan[]" multiple style="width:300px">
+                                    <select id="mode_employee" name="mode_karyawan[]" multiple style="width:300px">
                                         <option value="L">Laki-laki</option>
                                         <option value="P">Perempuan</option>
                                         <option value="Sudah">Sudah Menikah</option>
                                         <option value="Belum">Belum Menikah</option>
-                                        <option value=">= 1 Tahun">>= 1 Tahun</option>
+                                        <option value=">= 1 Tahun">= 1 Tahun</option>
                                     </select>
                                 </div>
                             </div>

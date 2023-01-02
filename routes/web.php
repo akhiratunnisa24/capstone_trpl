@@ -11,12 +11,13 @@ use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\IzinAdminController;
 use App\Http\Controllers\admin\JeniscutiController;
 use App\Http\Controllers\admin\JenisizinController;
+use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\AlokasicutiController;
-use App\Http\Controllers\admin\SettingalokasicutiController;
 
 use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
+use App\Http\Controllers\admin\SettingalokasicutiController;
 use App\Http\Controllers\karyawan\AbsensiKaryawanController;
 
 /*
@@ -140,9 +141,16 @@ Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->
 Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
  
 //================================================================================
-//Route Manager
+//ROLE MANAGER
 Route::post('/permintaan-cuti/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
 
+//Data Manager
+
+//data staff
+Route::get('/data-staff', [ManagerController::class, 'dataStaff'])->name('data.Staff');
+Route::get('/absensi-staff', [ManagerController::class, 'absensiStaff'])->name('absensi.Staff');
+Route::get('/export-pdf',[ManagerController::class,'exportallpdf'])->name('exportallpdf');
+Route::get('/export-to-pdf',[ManagerController::class,'exportpdf'])->name('exportpdf');
 
 
     

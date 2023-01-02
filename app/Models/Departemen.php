@@ -24,7 +24,7 @@ class Departemen extends Model
     public function settingalokasi()
     {
         return $this->hasMany(Settingalokasi::class, 
-            'id_departement','id'
+            'departemen','id'
         );
     }
 
