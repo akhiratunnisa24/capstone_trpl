@@ -4,6 +4,10 @@ namespace App\Imports;
 
 use Carbon\Carbon;
 use App\Models\Karyawan;
+use App\Models\Kdarurat;
+use App\Models\Keluarga;
+use App\Models\Rpekerjaan;
+use App\Models\Rpendidikan;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -25,8 +29,10 @@ class karyawanImport implements ToModel, WithHeadingRow
 
     public function model(array $row)
     {
-        if (isset($row[2]) && isset($row[3])) {
-            if (!Karyawan::where('nama', $row[2])->where('tgllahir', Carbon::parse($row[3])->format("Y-m-d"))->exists()) {
+        $maxId = Karyawan::max('id');
+
+        if (isset($row['nama']) && isset($row['tanggal_lahir'])) {
+            if (!Karyawan::where('nama', $row['nama'])->where('tgllahir', Carbon::parse($row['tanggal_lahir'])->format("Y-m-d"))->exists()) {
                 $karyawan = [
                     'nip'           => (Int) $row['nip'] ?? null,
                     'nik'       =>  $row['nik'] ?? null,
@@ -56,56 +62,55 @@ class karyawanImport implements ToModel, WithHeadingRow
                     'tglkeluar'       => Carbon::parse($row['tanggal_keluar'])->format("Y-m-d"),
                 ];
 
-                // $keluarga = [
-                //     'id_pegawai'   => $row[0],
-                //     'hubungan'           => $row[1] ?? null,
-                //     'status_pernikahan'       => $row[2] ?? null,
-                //     'nama'         => $row[3] ?? null,
-                //     'tgllahir'  => Carbon::parse($row[4])->format("Y-m-d"),
-                //     'alamat' => $row[5] ?? null,
-                //     'pendidikan_terakhir'     => $row[6] ?? null,
-                //     'pekerjaan'    => $row[7] ?? null,
-                // ];
+                $keluarga = [
+                    'id_pegawai' => $maxId + 1 ,
+                    'status_pernikahan'       => $row['status_pernikahan'] ?? null,
+                    'nama'         => $row['nama_keluarga'] ?? null,
+                    'tgllahir'  => Carbon::parse($row['tanggal_lahir_keluarga'])->format("Y-m-d"),
+                    'alamat' => $row['alamat_keluarga'] ?? null,
+                    'pendidikan_terakhir'     => $row['pendidikan_terakhir'] ?? null,
+                    'pekerjaan'    => $row['pekerjaan_keluarga'] ?? null,
+                ];
 
-                // $kdarurat = [
-                //     'id_pegawai'   => $row[0],
-                //     'nama'           => $row[1] ?? null,
-                //     'alamat'       => $row[2] ?? null,
-                //     'no_hp'         => $row[3] ?? null,
-                //     'hubungan'  => $row[4] ?? null,
-                // ];
+                $kdarurat = [
+                    'id_pegawai' => $maxId + 1 ,
+                    'nama'           => $row['nama_kdarurat'] ?? null,
+                    'alamat'       => $row['alamat_kdarurat'] ?? null,
+                    'no_hp'         => $row['no_hp_kdarurat'] ?? null,
+                    'hubungan'  => $row['hubungan'] ?? null,
+                ];
 
-                // $rpendidikan = [
-                //     'id_pegawai'   => $row[0],
-                //     'tingkat'           => $row[1] ?? null,
-                //     'nama_sekolah'       => $row[2] ?? null,
-                //     'kota_pformal'         => $row[3] ?? null,
-                //     'kota_pnonformal'         => $row[4] ?? null,
-                //     'jurusan'  => $row[5] ?? null,
-                //     'tahun_lulus_formal'  => Carbon::parse($row[6])->format("Y-m-d"),
-                //     'tahun_lulus_nonformal'  => Carbon::parse($row[7])->format("Y-m-d"),
-                //     'jenis_pendidikan'  => $row[8] ?? null,
-                // ];
+                $rpendidikan = [
+                    'id_pegawai' => $maxId + 1 ,
+                    'tingkat'           => $row['tingkat_pendidikan_formal'] ?? null,
+                    'nama_sekolah'       => $row['nama_sekolah_formal'] ?? null,
+                    'kota_pformal'         => $row['kota_pendidikan_formal'] ?? null,
+                    'kota_pnonformal'         => $row['kota_pendidikan_nonformal'] ?? null,
+                    'jurusan'  => $row['jurusan_pendidikan_formal'] ?? null,
+                    'tahun_lulus_formal'  => Carbon::parse($row['lulus_tahun_pformal'])->format("Y-m-d"),
+                    'tahun_lulus_nonformal'  => Carbon::parse($row['lulus_tahun_pnonformal'])->format("Y-m-d"),
+                    'jenis_pendidikan'  => $row['bidang_pnonformal'] ?? null,
+                ];
 
-                // $rpekerjaan = [
-                //     'id_pegawai'   => $row[0],
-                //     'nama_perusahaan'           => $row[1] ?? null,
-                //     'alamat'       => $row[2] ?? null,
-                //     'jenis_usaha'         => $row[3] ?? null,
-                //     'jabatan'         => $row[4] ?? null,
-                //     'nama_atasan'  => $row[5] ?? null,
-                //     'nama_direktur'  => $row[6] ?? null,
-                //     'lama_kerja'  => $row[7] ?? null,
-                //     'alasan_berhenti'  => $row[8] ?? null,
-                //     'gaji'  => $row[9] ?? null,
-                // ];
+                $rpekerjaan = [
+                    'id_pegawai' => $maxId + 1 ,
+                    'nama_perusahaan'           => $row['nama_perusahaan'] ?? null,
+                    'alamat'       => $row['alamat_perusahaan'] ?? null,
+                    'jenis_usaha'         => $row['jenis_usaha'] ?? null,
+                    'jabatan'         => $row['jabatan_rpekerjaan'] ?? null,
+                    'nama_atasan'  => $row['nama_atasan_rpekerjaan'] ?? null,
+                    'nama_direktur'  => $row['nama_direktur_rpekerjaan'] ?? null,
+                    'lama_kerja'  => $row['lama_kerja'] ?? null,
+                    'alasan_berhenti'  => $row['alasan_berhenti'] ?? null,
+                    'gaji'  => $row['gaji_rpekerjaan'] ?? null,
+                ];
 
 
                 Karyawan::create($karyawan);
-                // Keluarga::create($keluarga);
-                // Kdarurat::create($kdarurat);
-                // Rpendidikan::create($rpendidikan);
-                // Rpekerjaan::create($rpekerjaan);
+                Keluarga::create($keluarga);
+                Kdarurat::create($kdarurat);
+                Rpendidikan::create($rpendidikan);
+                Rpekerjaan::create($rpekerjaan);
             } else {
                 Log::info('id karyawan dan tanggal absensi sudah ada');
             }

@@ -11,6 +11,19 @@ class Rpendidikan extends Model
 
     protected $table = 'rpendidikan';
 
+    protected $fillable = [
+        'id',
+        'id_pegawai',
+        'tingkat',
+        'nama_sekolah',
+        'kota_pformal',
+        'kota_pnonformal',
+        'jurusan',
+        'tahun_lulus_formal',
+        'tahun_lulus_nonformal',
+        'jenis_pendidikan',
+    ];
+
     protected $hidden = [
          
     ];
