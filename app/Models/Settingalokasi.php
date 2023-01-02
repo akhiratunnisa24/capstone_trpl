@@ -9,14 +9,14 @@ class Settingalokasi extends Model
 {
     use HasFactory;
     protected $table = 'settingalokasi';
-    protected $fillable = ['id','id_jeniscuti','id_departement','durasi','mode_alokasi','lama_kerja'];
+    protected $fillable = ['id','id_jeniscuti','durasi','mode_alokasi','lama_kerja'];
 
     public function jeniscutis()
     {
         return $this->belongsTo(Jeniscuti::class,'id_jeniscuti','id');
     }
 
-    public function departement()
+    public function departemens()
     {
         return $this->belongsTo(Departemen::class,'departemen','id');
     }

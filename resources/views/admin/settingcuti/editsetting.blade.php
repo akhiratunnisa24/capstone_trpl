@@ -47,7 +47,7 @@
                                 <div class="form-group col-sm" id="mode_Alokasi_departement">
                                     <label for="departemen" class="col-form-label">Departemen</label>
                                     <select name="departemen" id="departemen" class="form-control">
-                                        <option value="{{$data->departemen}}" selected>{{$data->departemen}}</option>
+                                        <option value="{{$data->departemen}}" selected>{{$data->departemens->nama_departemen}}</option>
                                         <option value="KONVENSIONAL">KONVENSIONAL</option>
                                         <option value="IT DEPARTEMEN">IT DEPARTEMEN</option>
                                         <option value="KEUANGAN">KEUANGAN</option>

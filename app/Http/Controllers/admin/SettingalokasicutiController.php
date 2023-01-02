@@ -14,8 +14,7 @@ class SettingalokasicutiController extends Controller
     public function index()
     {
         $id = Settingalokasi::find('id');
-        $settingalokasi = Settingalokasi::all();
-
+        $settingalokasi = Settingalokasi::orderBy('id','asc')->get();
         //untuk edit
         $setal = Settingalokasi::find($id);
         $jeniscuti= Jeniscuti::all();

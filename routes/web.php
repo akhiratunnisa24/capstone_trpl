@@ -148,7 +148,9 @@ Route::post('/permintaan-cuti/{id}', [ManagerController::class, 'cutiapproved'])
 
 //data staff
 Route::get('/data-staff', [ManagerController::class, 'dataStaff'])->name('data.Staff');
-
+Route::get('/absensi-staff', [ManagerController::class, 'absensiStaff'])->name('absensi.Staff');
+Route::get('/export-pdf',[ManagerController::class,'exportallpdf'])->name('exportallpdf');
+Route::get('/export-to-pdf',[ManagerController::class,'exportpdf'])->name('exportpdf');
 
 
     
