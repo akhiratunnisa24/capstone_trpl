@@ -62,6 +62,7 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('karyawandashboard', [karyawanController::class, 'karyawanDashboard'])->name('karyawanDashboard');
     Route::get('showkaryawan{id}', [karyawanController::class, 'showkaryawan'])->name('showkaryawan');
     Route::post('/import_excel',[karyawanController::class,'importexcel'])->name('importexcelKaryawan');
+    Route::get('/exportexcelkaryawan',[karyawanController::class,'exportExcel'])->name('exportexcelkaryawan');
 
     Route::post('/getemail', [karyawanController::class, 'getEmail'])->name('getEmail');
 

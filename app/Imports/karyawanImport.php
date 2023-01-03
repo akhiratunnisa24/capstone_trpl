@@ -49,7 +49,7 @@ class karyawanImport implements ToModel, WithHeadingRow
                     'manager'        => $row['manager'] ?? null,
                     'no_kk'  => (Int) $row['no_kk'] ?? null,
                     'status_kerja'  => $row['status_kerja'] ?? null,
-                    'cuti_tahunan'           => (Int) $row['divisi'] ?? null,
+                    'cuti_tahunan'           => (Int) $row['cuti_tahunan'] ?? null,
                     'divisi'           => $row['divisi'] ?? null,
                     'no_rek' => (Int) $row['nomor_rekening'] ?? null,
                     'no_bpjs_kes'      => (Int)  $row['nomor_bpjs_kesehatan'],

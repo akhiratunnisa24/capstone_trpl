@@ -34,7 +34,7 @@
                         <a href="karyawancreate" type="button" class="btn btn-sm btn-dark " >Tambah Data Karyawan</a>
                         <a type="button" class="btn btn-sm btn-dark " data-toggle="modal" data-target="#myModal" >Buat Akun Karyawan</a>
                         <a href="" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#Modal2">Import Excel</a>
-                        <a href="#" class="btn btn-sm btn-dark">Export Excel</a>
+                        <a href="/exportexcelkaryawan" class="btn btn-sm btn-dark">Export Excel</a>
                         {{-- <a type="button" class="btn btn-sm btn-dark " href="{{ route('register') }}" >Buat Akun Karyawan</a> --}}
                         <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_menu">Add Staff</button> -->
                         <!-- <a href="{ route('register') }}" type="button" class="btn btn-sm btn-dark " >Buat Akun Karyawan</a> -->
