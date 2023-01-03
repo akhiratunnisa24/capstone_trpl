@@ -505,6 +505,7 @@ class karyawanController extends Controller
             'jabatan' => $request->post('jabatanKaryawan'),
             'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
+            'foto' => $filename,
         );
 
         $data_keluarga = array(
