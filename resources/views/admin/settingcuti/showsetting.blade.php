@@ -38,7 +38,7 @@
                     <div class="form-group row">
                         <label for="departemen" class="col-sm-3 col-form-label">Departemen</label>
                         <div class="col-sm-9">
-                            <label>: {{$data->departemen}}</label>
+                            <label>: {{$data->departemens->nama_departemen}}</label>
                         </div>
                     </div>
                 @else

@@ -20,13 +20,15 @@ class ManagerController extends Controller
     public function dataStaff(Request $request)
     {
         //mengambil id_departemen manager
-        $manager_iddep = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
+        $manager_iddep = DB::table('karyawan')
+        ->where('id','=',Auth::user()->id_pegawai)
         ->select('divisi')->first();
 
         // dd( $manager_iddep);
         //ambil data dengan id_departemen sama dengan manager
         //$staff= Karyawan::where('divisi',$manager_iddep->divisi)->get();
-        $staff= Karyawan::with('departemens')->where('divisi',$manager_iddep->divisi)->get();
+        $staff= Karyawan::with('departemens')
+        ->where('divisi',$manager_iddep->divisi)->get();
 
         return view('manager.staff.dataStaff', compact('staff'));
     }
@@ -43,7 +45,7 @@ class ManagerController extends Controller
         //$absensi= Absensi::where('id_departement',$middep->id_departement)->get();
 
         //=================================
-        //untuk filter data karyawan
+        //untuk filter nama karyawan
         $manager_iddep = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
                         ->select('divisi')->first();
         $karyawan= Karyawan::where('divisi',$manager_iddep->divisi)->get();
@@ -58,7 +60,7 @@ class ManagerController extends Controller
         $request->session()->put('bulan', $bulan);
         $request->session()->put('tahun', $tahun);
 
-        //
+        //mengambil data sesuai dengan filter yang dipilih
         if(isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
             $absensi = Absensi::where('id_karyawan', $idkaryawan)
@@ -72,6 +74,50 @@ class ManagerController extends Controller
             $absensi= Absensi::where('id_departement',$middep->id_departement)->get();
         }
         return view('manager.staff.absensiStaff', compact('absensi','karyawan'));
+    }
+
+    public function cutiStaff(Request $request)
+    {
+        $manag_depart = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
+        ->select('divisi')->first();
+
+        $cutistaff = DB::table('cuti')
+        ->join('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
+        ->join('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
+        ->join('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+        ->join('karyawan','cuti.id_karyawan','karyawan.id')
+        ->where('settingalokasi.departemen',$manag_depart->divisi)
+        ->get();
+        //->where('alokasicuti.mode_alokasi','=','Berdasarkan Departemen')
+
+        // dd( $cutistaff);
+
+        // $cutistaff = DB::table('cuti')
+        // ->join('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
+        // ->join('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
+        // ->join('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+        // ->where('alokasicuti.mode_alokasi','=','Berdasarkan Departemen')
+        // ->where('settingalokasi.departemen',$manag_depart->divisi)
+        // ->get();
+
+        return view('manager.staff.cutiStaff', compact('cutistaff'));
+    }
+
+    public function showCuti($id)
+    {
+        $cutiStaff = Cuti::findOrFail($id);
+
+        return view('manager.staff.cutiStaff',compact('cutiStaff'));
+    }
+
+    public function cutiapproved(Request $request, $id)
+    {
+        $cuti = Cuti::where('id',$id)->first();
+        $status = 'Disetujui Manager';
+        Cuti::where('id',$id)->update([
+            'status' => $status,
+        ]);
+        return redirect()->back()->withInput();
     }
 
     public function exportallExcel()
@@ -168,13 +214,4 @@ class ManagerController extends Controller
         return $pdf->stream("Report Absensi_{$idkaryawan}.pdf");
     }
 
-    public function cutiapproved(Request $request, $id)
-    {
-        $cuti = Cuti::where('id',$id)->first();
-        $status = 'Disetujui Manager';
-        Cuti::where('id',$id)->update([
-            'status' => $status,
-        ]);
-        return redirect()->back()->withInput();
-    }
 }
