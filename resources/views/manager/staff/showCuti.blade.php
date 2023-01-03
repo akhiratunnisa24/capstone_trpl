@@ -1,14 +1,17 @@
 {{-- MODALS SHOW DATA CUTI --}}
-<div class="modal fade" id="Showcuti{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="Showcuti" aria-hidden="true">
+<div class="modal fade" id="shoCutiStaff{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="Showcuti" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="Showcuti">Detail Cuti Staff</h4>
+                <h4 class="modal-title" id="Showcuti">Detail Permintaan Cuti</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <label for="id" class="col-sm-3 col-form-label">Id Cuti</label>
+                    <label for="id_karyawan" align="center" class="col-sm-12 col-form-label">DEPARTEMEN {{$data->departemen}}</label>
+                </div>
+                <div class="form-group row">
+                    <label for="id" class="col-sm-3 col-form-label">ID Cuti</label>
                     <div class="col-sm-9">
                         <label>: {{$data->id}}</label>
                     </div>
@@ -16,13 +19,13 @@
                 <div class="form-group row">
                     <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label>
                     <div class="col-sm-9">
-                        <label>: {{$data->karyawans->nama}}</label>
+                        <label>: {{$data->id_karyawan}}</label>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="id_jeniscuti" class="col-sm-3 col-form-label">Kategori Cuti</label>
                     <div class="col-sm-9">
-                        <label>: {{$data->jeniscutis->jenis_cuti}}</label>
+                        <label>: {{$data->jenis_cuti}}</label>
                     </div>
                 </div>
                 <div class="form-group row">
