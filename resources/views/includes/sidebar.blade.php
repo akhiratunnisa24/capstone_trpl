@@ -117,7 +117,7 @@
                             Staff</span></a></li>
                 <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi
                             Staff</span></a></li>
-                <li><a href="#" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
+                <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
                             Staff</span></a></li>
                 </li>
             </ul>
@@ -155,7 +155,7 @@
                             Staff</span></a></li>
                 <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi
                             Staff</span></a></li>
-                <li><a href="#" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
+                <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
                             Staff</span></a></li>
                 </li>
             </ul>
@@ -193,7 +193,7 @@
                             class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a></li>
                 <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi
                             Staff</span></a></li>
-                <li><a href="#" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
+                <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
                             Staff</span></a></li>
                 </li>
             </ul>
@@ -231,7 +231,7 @@
                             class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a></li>
                 <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi
                             Staff</span></a></li>
-                <li><a href="#" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
+                <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
                             Staff</span></a></li>
                 </li>
                 <?php }

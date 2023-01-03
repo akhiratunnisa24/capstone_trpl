@@ -17,7 +17,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Session;
 
 class AbsensiController extends Controller
 {
@@ -135,7 +134,6 @@ class AbsensiController extends Controller
         $jp = $ak;//jadwal pulang sama nilainya dengan $ak
         $plcpt= $jdplg->diff($jp)->format("%H:%I:%S");//value untuk pulang cepat
 
-
         //update data abbsensi
         Absensi::where('id',$id)->update([
             'jadwal_pulang' => $jdp,
@@ -145,7 +143,6 @@ class AbsensiController extends Controller
         ]);
 
         return redirect()->back()->withInput();
-                // ->with('success','Comment Approved');
     }
 
     public function exportpdf()
@@ -172,7 +169,8 @@ class AbsensiController extends Controller
         // dd($data->toArray());
     }
 
-    public function exportExcel(){
+    public function exportExcel()
+    {
         return Excel::download(new AbsensiExport, 'data_absensi.xlsx');
     }
 
@@ -181,42 +179,14 @@ class AbsensiController extends Controller
         // notifikasi dengan session
 		// Session::flash('sukses','Data Siswa Berhasil Diimport!');
         Excel::import(new AbsensiImport, request()->file('file'));
+
         return redirect()->back();
-       
     }
 
     public function importcsv(Request $request)
     {
         Excel::import(new AttendanceImport, request()->file('file'));
         return redirect()->back()->with('success','Data Imported Successfully');
-    }
-
-    //tidak dipakai
-    public function rekapabsensi(Request $request)
-    {
-        $karyawan = Karyawan::all();
-        $idkaryawan = $request->id_karyawan;
-        // dd($idkaryawan);
-
-        $bulan = $request->query('bulan',Carbon::now()->format('m'));
-        $tahun = $request->query('tahun',Carbon::now()->format('Y'));
-
-        // simpan session
-        $request->session()->put('idkaryawan', $request->id_karyawan);
-        $request->session()->put('bulan', $bulan);
-        $request->session()->put('tahun', $tahun);
-    
-        if(isset($idkaryawan) && isset($bulan) && isset($tahun))
-        {
-            $absensi = Absensi::where('id_karyawan', $idkaryawan)
-            ->whereMonth('tanggal', $bulan)
-            ->whereYear('tanggal',$tahun)
-            ->get();
-        }else
-        {
-            $absensi = Absensi::all();
-        }
-        return view('admin.absensi.rekapabsensi', compact('absensi','karyawan'));
     }
 
     public function rekapabsensipdf(Request $request)
@@ -271,12 +241,5 @@ class AbsensiController extends Controller
             $data = Absensi::all();
         }
         return Excel::download(new RekapabsensiExport($data,$idkaryawan),'rekap_absensi_bulanan.xlsx');
-        // return Excel::download(new RekapabsensiExport(['data'=>$data, 'idkaryawan'=>$idkaryawan]),'rekap_absensi_bulanan.xlsx');
-        // return Excel::download(new RekapabsensiExport($request->$idkaryawan),'rekap_absensi_bulanan.xlsx');
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

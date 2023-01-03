@@ -72,8 +72,38 @@ class SettingalokasicutiController extends Controller
     public function update(Request $request, $id)
     {
         $settingalokasi = Settingalokasi::find($id);
-        $settingalokasi->update($request->all());
+        if($request->mode_alokasi == 'Berdasarkan Departemen')
+        {
+            // dd($settingalokasi->departemen);
+            $validate = $request->validate([
+                'id_jeniscuti' => 'required',
+                'durasi'       => 'required',
+                'mode_alokasi' => 'required',
+                'departemen'   => 'required',
+            ]);
 
+            $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
+            $settingalokasi->durasi       = $request->durasi;
+            $settingalokasi->mode_alokasi = $request->mode_alokasi;
+            $settingalokasi->departemen   = $request->departemen; 
+            
+            $settingalokasi->update();
+            // dd($settingalokasi);
+
+        }else{
+            $validate = $request->validate([
+                'id_jeniscuti' => 'required',
+                'durasi'       => 'required',
+                'mode_alokasi' => 'required',
+                'mode_karyawan'=> 'required',
+            ]);
+            $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
+            $settingalokasi->durasi       = $request->durasi;
+            $settingalokasi->mode_alokasi = $request->mode_alokasi; 
+            $mode = implode(',', $request->mode_karyawan);
+            $settingalokasi['mode_karyawan']= $mode;
+            $settingalokasi->update();
+        }
         return redirect('/settingalokasi');
     }
 

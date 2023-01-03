@@ -36,21 +36,24 @@
                             <div class="form-group">
                                 <div class="form-group col-sm" id="modealokasii">
                                     <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
-                                    <select name="mode_lokasi" id="mode_lokasi" class="form-control">
+                                    <select name="mode_alokasi" id="mode_lokasi" class="form-control">
                                         <option value="{{$data->mode_alokasi}}" selected>{{$data->mode_alokasi}}</option>
                                         <option value="Berdasarkan Departemen">Berdasarkan Departemen</option>
                                         <option value="Berdasarkan Karyawan">Berdasarkan Karyawan</option>
                                     </select>
                                 </div> 
                             </div>
-                            @if($data->departemen != null)
+                            @if($data->mode_alokasi == 'Berdasarkan Departemen')
                                 <div class="form-group col-sm" id="mode_Alokasi_departement">
                                     <label for="departemen" class="col-form-label">Departemen</label>
                                     <select name="departemen" id="departemen" class="form-control">
-                                        <option value="{{$data->departemen}}" selected>{{$data->departemens->nama_departemen}}</option>
-                                        <option value="KONVENSIONAL">KONVENSIONAL</option>
-                                        <option value="IT DEPARTEMEN">IT DEPARTEMEN</option>
-                                        <option value="KEUANGAN">KEUANGAN</option>
+                                        @foreach ($departemen as $item)
+                                            <option value="{{$item->id}}"
+                                            @if($item->id == $data->departemen)
+                                                selected
+                                            @endif
+                                            >{{$item->nama_departemen}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             @else
