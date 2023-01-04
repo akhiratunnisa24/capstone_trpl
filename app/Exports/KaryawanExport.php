@@ -3,27 +3,107 @@
 namespace App\Exports;
 
 use App\Models\Karyawan;
+use App\Models\Kdarurat;
+use App\Models\Keluarga;
+use App\Models\Rpekerjaan;
+use App\Models\Rpendidikan;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\DB;
 
-class KaryawanExport implements FromCollection, WithHeadings
+
+class KaryawanExport implements FromView, ShouldAutoSize
 {
-
-    public function headings(): array {
-        return [
-            "No. ID","ID Karyawan","NIK","Tanggal","Jam Kerja","Jam Masuk","Jam Pulang",
-            "Scan Masuk","Scan Pulang","Normal","Riil","Terlambat","Plg Cepat","Absent",
-            "Lembur","Jml Jam Kerja","pengecualian","Harus C/I","Harus C/O","Departemen",
-            "Hari Normal","Akhir Pekan","Hari Libur","Jml Kehadiran","Lembur Hari Normal",
-            "Lembur Akhir Pekan","Lembur Hari Libur"
-        ];
-    }
-    
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         return Karyawan::all();
     }
+
+    public function view(): View    
+    {
+        $karyawan = Karyawan::all();
+        $keluarga = Keluarga::all();
+        $kdarurat = Kdarurat::all();
+        $rpendidikan = Rpendidikan::all();
+        $rpekerjaan = Rpekerjaan::all();
+
+        // $data = DB::table('karyawan')
+        // ->join('keluarga', 'karyawan.id', 'keluarga.id_pegawai')->get();
+
+        return view('karyawan/karyawanExport', [
+            'karyawan' => $karyawan,
+            'keluarga' => $keluarga,
+            'kdarurat' => $kdarurat,
+            'rpendidikan' => $rpendidikan,
+            'rpekerjaan' => $rpekerjaan,
+        ]);
+    }
+
+    
+    
+    
+
+    
 }
+
+
+// class KaryawanExport implements FromCollection, WithHeadings
+// {
+
+//     public function headings(): array
+//     {
+//         return [
+//             'Id ',
+//             'nip',
+//             'nik',
+//             'nama',
+//             'tgllahir',
+//             'email',
+//             'agama',
+//             'gol_darah',
+//             'jenis_kelamin',
+//             'alamat',
+//             'no_hp',
+//             'status_karyawan',
+//             'tipe_karyawan',
+//             'manager',
+//             'no_kk',
+//             'status_kerja',
+//             'cuti_tahunan',
+//             'divisi',
+//             'no_rek',
+//             'no_bpjs_kes',
+//             'no_npwp',
+//             'no_bpjs_ket',
+//             'kontrak',
+//             'jabatan',
+//             'gaji',
+//             'tglmasuk',
+//             'tglkeluar',
+//             'created_at',
+//             'update_at',
+//             'foto',
+//             'foto',
+//             'foto',
+//             'foto',
+//         ];
+//     }
+
+//     /**
+//      * @return \Illuminate\Support\Collection
+//      */
+//     public function collection()
+//     {
+//         return Karyawan::all();
+//     }
+    
+    
+
+    
+// }
