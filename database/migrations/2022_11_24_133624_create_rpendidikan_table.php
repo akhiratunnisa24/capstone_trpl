@@ -21,11 +21,11 @@ return new class extends Migration
 
             $table->string('nama_sekolah');            
             $table->string('kota_pformal');
-            $table->string('kota_pnonformal');
+            $table->string('kota_pnonformal')->nullable();
             $table->string('jurusan');
             $table->date('tahun_lulus_formal');
-            $table->date('tahun_lulus_nonformal');
-            $table->text('jenis_pendidikan');
+            $table->date('tahun_lulus_nonformal')->nullable();
+            $table->text('jenis_pendidikan')->nullable();
 
 
             $table->timestamps();

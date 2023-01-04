@@ -33,17 +33,17 @@
         @method('put')
 
         <div class="modal-body">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped" style="width:100%">
                 <tbody class="col-sm-20">
 
                     <label class="  ">A. IDENTITAS </label>
 
 
                     <tr>
-                        <td><label>Nama Lengkap : {{$karyawan->nama}}</label></td>
+                        <td style="width: 50%"><label>Nama Lengkap : {{$karyawan->nama}}</label></td>
 
 
-                        <td rowspan="5" colspan="2" class="text-center">
+                        <td rowspan="6" colspan="2" class="text-center">
                             <img src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="" style="width:280px;">
                         </td>
                     </tr>
@@ -72,31 +72,29 @@
                     <tr>
                         <td><label>Nomor Handphone : {{$karyawan->no_hp}}</label></td>
 
-                        <td><label>Email : {{$karyawan->email}}</label></td>
+
 
                     </tr>
                     <tr>
                         <td><label>Golongan Darah : {{$karyawan->gol_darah}} </label></td>
-
-                        <td><label>Agama : {{$karyawan->agama}}</label></td>
+                        <td><label>Email : {{$karyawan->email}}</label></td>
 
                     </tr>
 
                     <tr>
-
                         <td><label> Jabatan : {{$karyawan->jabatan}} </label></td>
-                        <td><span class="text-bold"> </span></td>
+                        <td><label>Agama : {{$karyawan->agama}}</label></td>
+
                     </tr>
                 </tbody>
             </table>
 
-            <table class="table table-bordered table-striped">
-                <tbody class="col-sm-20">
-
+            <table class="table table-bordered table-striped" style="width:100%">
+                <tbody class="col-sm-16">
                     <label class="  ">B. KELUARGA </label>
 
                     <tr>
-                        <td><label class="text-white badge bg-dark">Data Istri / Suami *)</label></td>
+                        <td style="width:50%"><label class="text-white badge bg-dark">Data Istri / Suami *)</label></td>
                     </tr>
 
                     <tr>
@@ -115,20 +113,16 @@
                     <tr>
                         <td><label for="bpjskes_number">Pendidikan Terakhir : {{$keluarga->pendidikan_terakhir}}</label>
                         </td>
-
                         <td><label for="bpjskes_number">Pekerjaan : {{$keluarga->pekerjaan}}</label></td>
-
-
-
                     </tr>
                 </tbody>
             </table>
 
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped" style="width: 100%">
                 <tbody class="col-sm-20">
                     <label class="  ">C. RIWAYAT PENDIDIKAN</label>
                     <tr>
-                        <td><label class="text-white badge bg-dark"> Pendidikan Formal </label></td>
+                        <td style="width: 50%"><label class="text-white badge bg-dark"> Pendidikan Formal </label></td>
 
                         <td><label class=" text-white badge bg-dark">Pendidikan Non Formal</label></td>
                     </tr>
@@ -173,72 +167,72 @@
                 </tbody>
             </table>
 
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped" style="width: 100%">
                 <tbody class="col-sm-20">
                     <label class="  ">D. RIWAYAT PEKERJAAN</label>
 
 
                     <tr>
-                        <td><label for="bpjskes_number">Nama Perusahaan : {{$rpekerjaan->nama_perusahaan}} </label></td>
-                       
+                        <td style="width:50%"><label for="bpjskes_number">Nama Perusahaan : {{$rpekerjaan->nama_perusahaan}} </label></td>
+
                         <td><label for="bpjskes_number">Nama Direktur : {{$rpekerjaan->nama_direktur}} </label></td>
-                        
+
 
                     </tr>
                     <tr>
                         <td><label for="bpjskes_number">Alamat Perusahaan : {{$rpekerjaan->alamat}} </label></td>
-                        
+
                         <td><label for="bpjskes_number">Nama Atasan Langsung : {{$rpekerjaan->nama_atasan}} </label>
                         </td>
-                        
+
 
                     </tr>
                     <tr>
                         <td><label for="bpjskes_number">Jenis Usaha : {{$rpekerjaan->jenis_usaha}} </label></td>
-                        
-                        <td><label for="bpjskes_number">Jabatan : {{$rpekerjaan->jabatan}} </label></td>
-                        
 
-                        
+                        <td><label for="bpjskes_number">Jabatan : {{$rpekerjaan->jabatan}} </label></td>
+
+
+
                     </tr>
 
                     <tr>
                         <td><label for="bpjskes_number">Lama Kerja : {{$rpekerjaan->lama_kerja}} </label></td>
-                        
+
                         <td><label for="bpjskes_number">Gaji : {{$rpekerjaan->gaji}} </label></td>
-                        
-                        
-                
+
+
+
                     </tr>
                     <tr>
                         <td><label for="bpjskes_number">Alasan Berhenti : {{$rpekerjaan->alasan_berhenti}} </label></td>
                         <td><span id="bpjskes_number"></span></td>
 
-                        
+
                     </tr>
                 </tbody>
 
-            </table>     
-            
-            <table class="table table-bordered table-striped">
+            </table>
+
+            <table class="table table-bordered table-striped" style="width: 100%">
                 <tbody class="col-sm-20">
 
                     <label class="  ">E. KONTAK DARURAT</label>
 
                     <tr>
-                        <td><label for="bpjsket_number">Nama Lengkap : {{$kdarurat->nama}} </label></td>
-                        <td><span id="bpjsket_number"></span></td>
+                        <td style="width: 50%"><label for="bpjsket_number">Nama Lengkap : {{$kdarurat->nama}} </label></td>
+                        
                         <td><label for="bpjsket_number">Alamat : {{$kdarurat->alamat}} </label></td>
-                        <td><span id="bpjsket_number"></span></td>
+                        
                     </tr>
                     <tr>
-                        
+
                         <td><label for="bpjsket_number">Nomor Handphone :{{$kdarurat->no_hp}} </label></td>
-                        <td><span id="bpjsket_number"></span></td>
+                        
                         <td><label for="bpjsket_number">Hubungan : {{$kdarurat->hubungan}}</label></td>
-                        <td><span id="bpjsket_number"></span></td>
+                        
                     </tr>
-                   
+
 
                 </tbody>
             </table>

@@ -33,13 +33,13 @@
 <!-- Datatable init js -->
 <script src="assets/pages/datatables.init.js"></script>
 <script src="assets/js/app.js"></script>
-        
+
 <!-- Sweet-Alert  -->
 <script src="assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
 <script src="assets/pages/sweet-alert.init.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-{{-- plugin js  --}}
+{{-- plugin js --}}
 <script src="assets/plugins/timepicker/bootstrap-timepicker.js"></script>
 <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 
@@ -87,9 +87,4 @@
         $(function() {
            $('#datepicker').datepicker();
         });
-</script>  --}}
-
-
-
-
-
+</script> --}}

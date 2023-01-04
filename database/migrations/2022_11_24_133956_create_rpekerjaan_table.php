@@ -18,14 +18,14 @@ return new class extends Migration
 
             $table->integer('id_pegawai');
             $table->string('nama_perusahaan')->nullable();
-            $table->string('alamat');            
-            $table->string('jenis_usaha');
-            $table->string('jabatan');
-            $table->text('nama_atasan');
-            $table->text('nama_direktur');
-            $table->text('lama_kerja');
-            $table->text('alasan_berhenti');
-            $table->text('gaji');
+            $table->string('alamat')->nullable();            
+            $table->string('jenis_usaha')->nullable();
+            $table->string('jabatan')->nullable();
+            $table->text('nama_atasan')->nullable();
+            $table->text('nama_direktur')->nullable();
+            $table->text('lama_kerja')->nullable();
+            $table->text('alasan_berhenti')->nullable();
+            $table->text('gaji')->nullable();
 
 
             $table->timestamps();

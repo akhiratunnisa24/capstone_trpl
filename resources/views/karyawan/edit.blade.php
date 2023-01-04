@@ -36,13 +36,13 @@
         @method('put')
 
         <div class="modal-body">
-            <table class="table table-bordered table-striped">
-                <tbody class="col-sm-16">
+            <table class="table table-bordered table-striped" style="width:100%">
+                <tbody class="col-sm-20">
 
                     <label class="  ">A. IDENTITAS </label>
 
                     <tr>
-                        <td><strong> Nama Lengkap : </strong><input name="namaKaryawan" type="text"
+                        <td style="width:50%"><strong> Nama Lengkap : </strong><input name="namaKaryawan" type="text"
                                 class="form-control col-xs-5" value="{{$karyawan->nama}}"></input></td>
 
 
@@ -52,7 +52,7 @@
                             <br>
                             <img class="img-preview img-fluid mb-6 col-sm-5"
                                 src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="Tidak ada foto profil."
-                                style="width:195px;">
+                                style="width:195px;" >
                             <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()">
                         </td>
                     </tr>
