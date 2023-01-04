@@ -27,29 +27,30 @@ class KaryawanExport implements FromView, ShouldAutoSize
 
     public function view(): View    
     {
-        $karyawan = Karyawan::all();
-        $keluarga = Keluarga::all();
-        $kdarurat = Kdarurat::all();
-        $rpendidikan = Rpendidikan::all();
-        $rpekerjaan = Rpekerjaan::all();
+
+        $karyawan = Karyawan::with(
+            'kdarurat',
+            'keluarga',
+            'rpendidikan',
+            'rpekerjaan'
+            )
+        ->get();
+        
+        // $karyawan = Karyawan::all();
+        // $keluarga = Keluarga::all();
+        // $kdarurat = Kdarurat::all();
+        // $rpendidikan = Rpendidikan::all();
+        // $rpekerjaan = Rpekerjaan::all();
 
         // $data = DB::table('karyawan')
         // ->join('keluarga', 'karyawan.id', 'keluarga.id_pegawai')->get();
 
         return view('karyawan/karyawanExport', [
+        
             'karyawan' => $karyawan,
-            'keluarga' => $keluarga,
-            'kdarurat' => $kdarurat,
-            'rpendidikan' => $rpendidikan,
-            'rpekerjaan' => $rpekerjaan,
         ]);
     }
-
-    
-    
-    
-
-    
+   
 }
 
 

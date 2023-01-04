@@ -28,16 +28,9 @@ class Rpendidikan extends Model
          
     ];
 
-    public function karyawan()
+   public function karyawan()
     {
-        return $this->belongsTo(Karyawan::class, 
-        'id_pegawai', 
-        'tingkat', 
-        'nama_sekolah', 
-        'kota', 
-        'jurusan', 
-        'tahun_lulus', 
-        'jenis_pendidikan' );
+        return $this->hasMany(Karyawan::class, 'id');
     }
 }
 
