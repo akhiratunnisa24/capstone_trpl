@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 
 class AttendanceImport implements ToModel
 {
+    //UNTUK CSV
     public function startRow(): int
     {
         return 2;

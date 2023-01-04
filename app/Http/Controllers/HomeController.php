@@ -37,7 +37,7 @@ class HomeController extends Controller
             'role' => $data['role'],
             'id_pegawai' => $data['id_pegawai'],
             'name' => $karyawan['nama'],
-            'email' => $data['email'],
+            'email' => $data['emailKaryawan'],
             'password' => Hash::make($data['password']),
         );
         
