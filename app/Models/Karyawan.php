@@ -43,64 +43,6 @@ class Karyawan extends Model
     ];
     protected $guarded = [];
 
-    public function kdarurat()
-    {
-        return $this->hasMany(
-            Kdarurat::class,
-            'id_pegawai',
-            'nama',
-            'alamat',
-            'no_hp',
-            'hubungan'
-        );
-    }
-
-    public function keluarga()
-    {
-        return $this->hasMany(
-            Keluarga::class,
-            'id_pegawai',
-            'status_pernikahan',
-            'hubungan',
-            'nama',
-            'tgllahir',
-            'alamat',
-            'pendidikan_terakhir',
-            'pekerjaan'
-        );
-    }
-
-    public function rpekerjaan()
-    {
-        return $this->hasMany(
-            Rpekerjaan::class,
-            'id_pegawai',
-            'nama_perusahaan',
-            'alamat',
-            'jenis_usaha',
-            'jabatan',
-            'nama_atasan',
-            'nama_direktur',
-            'lama_kerja',
-            'alasan_berhenti',
-            'gaji'
-        );
-    }
-
-    public function rpendidikan()
-    {
-        return $this->hasMany(
-            Rpendidikan::class,
-            'id_pegawai',
-            'tingkat',
-            'nama_sekolah',
-            'kota',
-            'jurusan',
-            'tahun_lulus',
-            'jenis_pendidikan'
-        );
-    }
-
     public function user()
     {
         return $this->hasMany(
@@ -117,7 +59,7 @@ class Karyawan extends Model
         return $this->hasOne(User::class, 'id_user', 'id');
     }
 
-    //dipakai untuk mengambil data nama_departemen
+    //dipakai untuk mengambil data nama_departemen <---
     public function departemens()
     {
         return $this->belongsTo(
@@ -131,9 +73,27 @@ class Karyawan extends Model
     public function departemen()
     {
         return $this->hasMany(
-            Departemen::class,
+            Departemen::class, 
             'id',
             'nama_departemen',
         );
     }
+    
+    public function keluarga()
+    {
+        return $this->belongsTo(Keluarga::class, 'id', 'id_pegawai');
+    }
+    public function kdarurat()
+    {
+        return $this->belongsTo(Kdarurat::class, 'id', 'id_pegawai');
+    }
+    public function rpekerjaan()
+    {
+        return $this->belongsTo(Rpekerjaan::class, 'id', 'id_pegawai');
+    }
+    public function rpendidikan()
+    {
+        return $this->belongsTo(Rpendidikan::class, 'id', 'id_pegawai');
+    }
+    
 }

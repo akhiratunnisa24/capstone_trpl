@@ -94,20 +94,20 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Manager</label>
-                                    <select class="form-control" name="manager" required>
-                                        <option value="">Pilih Manager</option>
-                                        <option value="Manager1">manager1</option>
-                                        <option value="manager2">manager2</option>
+                                    <label for="exampleInputEmail1" class="form-label">Jabatan</label>
+                                    <select class="form-control" name="jabatanKaryawan" >
+                                        <option value="">Pilih Jabatan</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Staff">Staff IT</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Jabatan</label>
-                                    <select class="form-control" name="jabatanKaryawan" required>
-                                        <option value="">Pilih Jabatan</option>
-                                        <option value="Manager">Manager</option>
-                                        <option value="Staff">Staff IT</option>
+                                    <label for="exampleInputEmail1" class="form-label">Nama Manager</label>
+                                    <select class="form-control" name="manager" required>
+                                        <option value="">Pilih Manager</option>
+                                        <option value="Manager1">manager1</option>
+                                        <option value="manager2">manager2</option>
                                     </select>
                                 </div>
 
