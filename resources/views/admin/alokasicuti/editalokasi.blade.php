@@ -31,15 +31,15 @@
                             {{-- <div class="form-group col-sm" id="idkaryawan">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
                                 <select name="id_karyawan" id="id_karyawan" class="form-control" readonly>
-                                    {{-- <option value="{{$data->id_karyawan}}" selected>{{$data->id_karyawan}}{{$data->karyawans->nama}}</option> --}}
-                                    {{-- @foreach ($karyawan as $item)
+                                    <option value="{{$data->id_karyawan}}" selected>{{$data->id_karyawan}}{{$data->karyawans->nama}}</option>
+                                    @foreach ($karyawan as $item)
                                         <option value="{{$item->id}}"
                                             @if($item->id == $data->id_karyawan)
                                                 selected
                                             @endif
                                             >{{$item->nama}}</option>
-                                    @endforeach --}} 
-                                {{-- </select>
+                                    @endforeach 
+                                </select>
                             </div>  --}}
                             <div class="form-group">
                                 <label for="durasi" class="col-form-label">Durasi (Hari)</label>
@@ -51,7 +51,9 @@
                             </div>
                         </div>
 
+                       
                         <div class="col-md-6">
+                        @if($data->tgl_masuk != null && $data->tgl_sekarang != null)
                             <div class=""  id="tglmulai">
                                 <div class="form-group">
                                     <label for="tgl_masuk" class="form-label">Tanggal Masuk</label>
@@ -70,6 +72,7 @@
                                     </div>
                                 </div>
                             </div>
+                        @endif
                             <div class=""  id="tanggalmulai">
                                 <div class="form-group">
                                     <label for="tgl_mulai" class="form-label">Aktif Dari</label>
@@ -131,8 +134,8 @@
                 $("#id_karyawan").val(response.data.id_karyawan);
                 $("#duration").val(response.data.durasi);
                 $("#modealokasi").val(response.data.mode_alokasi);
-                // $("#tglmasuk").val(response.data.tgl_masuk);
-                // $("#tglsekarang").val(response.data.tgl_sekarang);
+                $("#tglmasuk").val(response.data.tgl_masuk);
+                $("#tglsekarang").val(response.data.tgl_sekarang);
                 $("#datepicker-autoclosea3").val(response.data.aktif_dari);
                 $("#datepicker-autoclosea4").val(response.data.sampai);
             }
@@ -190,10 +193,10 @@
 <script type="text/javascript">
     $(function()
     {
-        $('#tglmulai').prop("hidden", true);
-        $('#tglnow').prop("hidden", true);
-
-        $('#jenicuti').on('change', function(a)
+        $('#tglmulai').prop("hidden", false);
+        $('#tglnow').prop("hidden", false);
+       
+        $('#idjeniscuti').on('change', function(a)
         {
             if(a.target.value == 1)
             {

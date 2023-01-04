@@ -45,14 +45,14 @@ class karyawanController extends Controller
     public function getEmail(Request $request)
     {
         try {
-            $getTEmail = Karyawan::select('email')
+            $getEmail = Karyawan::select('email')
                 ->where('id', '=', $request->id_pegawai)->first();
 
             // dd($request->id_karyawan,$getTglmasuk);
-            if (!$getTEmail) {
+            if (!$getEmail) {
                 throw new \Exception('Data not found');
             }
-            return response()->json($getTEmail, 200);
+            return response()->json($getEmail, 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
@@ -79,7 +79,7 @@ class karyawanController extends Controller
         ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
         ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
         ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
-        ->selectraw('alokasicuti.durasi-cuti.jml_cuti as sisa')
+        ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa')
         ->get(); 
 
         // dd($sisacuti);
@@ -403,7 +403,7 @@ class karyawanController extends Controller
                 'nama_sekolah' => $request->post('nama_sekolah'),
                 'kota_pformal' => $request->post('kotaPendidikanFormal'),
                 'jurusan' => $request->post('jurusan'),
-                'tahun_lulus_formal' => $request->post('tahun_lulus_formal'),
+                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
 
                 'jenis_pendidikan' => $request->post('jenis_pendidikan'),
                 'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),

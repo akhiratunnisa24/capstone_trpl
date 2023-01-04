@@ -11,7 +11,7 @@
                     <label for="id_karyawan" align="center" class="col-sm-12 col-form-label">DEPARTEMEN {{$data->departemen}}</label>
                 </div>
                 <div class="form-group row">
-                    <label for="id" class="col-sm-3 col-form-label">ID Cuti</label>
+                    <label for="id" name="id" class="col-sm-3 col-form-label">ID Cuti</label>
                     <div class="col-sm-9">
                         <label>: {{$data->id}}</label>
                     </div>
@@ -29,11 +29,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="id_karyawan" class="col-sm-3 col-form-label">Keperluan</label>
+                    <label for="keperluan" class="col-sm-3 col-form-label">Keperluan</label>
                     <div class="col-sm-9">
                         <label>: {{$data->keperluan}}</label>
                     </div>
                 </div>
+                @if($data->)
                 <div class="form-group row">
                     <label for="tgl_mulai" class="col-sm-3 col-form-label">Tanggal Mulai</label>
                     <div class="col-sm-9">

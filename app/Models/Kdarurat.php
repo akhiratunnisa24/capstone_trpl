@@ -23,15 +23,9 @@ class Kdarurat extends Model
     protected $hidden = [
          
     ];
-
+    
     public function karyawan()
     {
-        return $this->belongsTo(Karyawan::class, 
-        'id_pegawai', 
-        'nama', 
-        'alamat', 
-        'no_hp', 
-        'hubungan');
+        return $this->hasMany(Karyawan::class, 'id');
     }
-    
 }

@@ -31,17 +31,7 @@ class Rpekerjaan extends Model
 
     public function karyawan()
     {
-        return $this->belongsTo(Karyawan::class, 
-        'id_pegawai', 
-        'nama_perusahaan', 
-        'alamat', 
-        'jenis_usaha', 
-        'jabatan', 
-        'nama_atasan', 
-        'nama_direktur', 
-        'lama_kerja',
-        'alasan_berhenti',
-        'gaji');
+        return $this->hasMany(Karyawan::class, 'id');
     }
 
     ///icha

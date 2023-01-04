@@ -187,8 +187,8 @@
             data: {'id_pegawai':id_pegawai},
             success:function(data){
                 // console.log(data);
-                $('#tgl_masuk').val(data.   );
-                console.log(data?.email)
+                $('#emailKaryawan').val(data.email);
+                console.log(data?.email);
             }
         });
     });
