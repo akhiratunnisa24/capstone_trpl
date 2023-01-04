@@ -19,7 +19,7 @@
     </div>
     <div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
         <a href="" class="btn btn-dark" data-toggle="modal" data-target="#ModalImport">Import Excel</a>
-        <a href="" class="btn btn-dark" data-toggle="modal" data-target="#smallModal">Import CSV</a>
+        {{-- <a href="" class="btn btn-dark" data-toggle="modal" data-target="#smallModal">Import CSV</a> --}}
          {{-- form import --}}
         @include('admin.alokasicuti.importexcel')
     </div>
@@ -38,15 +38,17 @@
                         <div class="panel-body m-b-5">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <table  id="datatable-responsive7" class="table dt-responsive table-striped nowrap table-bordered" width="100%">
+                                    <table  id="datatable-responsive7" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                         <thead>
                                             <tr>
+                                                {{-- <th>id</th> --}}
                                                 <th>#</th>
                                                 <th>Karyawan</th>
                                                 <th>Kategori Cuti</th>
                                                 <th>Durasi (Hari)</th>
                                                 {{-- <th>Mode Alokasi</th> --}}
-                                                {{-- <th>Tanggal Masuk</th> --}}
+                                                {{-- <th>Tanggal Masuk</th>
+                                                <th>Tanggal Sekarang</th> --}}
                                                 <th>Aktif Dari</th>
                                                 <th>Sampai</th>
                                                 <th>Action</th>
@@ -56,14 +58,18 @@
                                         <tbody>
                                             @foreach($alokasicuti as $data)
                                                 <tr id="aid{{$data->id}}"></tr>
+                                                    {{-- <td>{{$data->id}}</td> --}}
                                                     <td>{{$data->id_karyawan}}</td>
                                                     <td>{{$data->karyawans->nama}}</td>
                                                     <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                                     <td>{{$data->durasi}}</td>
                                                     {{-- <td>{{$data->mode_alokasi}}</td> --}}
-                                                    {{-- @if($data->tgl_masuk != NULL)
+                                                   {{-- jam mulai & jam selesai --}}
+                                                    {{-- @if($data->tgl_masuk != null && $data->tgl_sekarang !=null)
                                                         <td>{{\Carbon\Carbon::parse($data->tgl_masuk)->format('d/m/Y')}}</td>
+                                                        <td>{{\Carbon\Carbon::parse($data->tgl_sekarang)->format('d/m/Y')}}</td>
                                                     @else
+                                                        <td></td>
                                                         <td></td>
                                                     @endif --}}
                                                     <td>{{\Carbon\Carbon::parse($data->aktif_dari)->format('d/m/Y')}}</td>

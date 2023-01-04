@@ -166,7 +166,7 @@
 
                                                                     {{-- tanggal mulai & tanggal selesai --}}
                                                                     @if($data->tgl_mulai != $data->tgl_selesai)
-                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s/d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d M Y")}}</td>
+                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s/d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                                     @else
                                                                         <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/M/Y")}}</td>
                                                                     @endif

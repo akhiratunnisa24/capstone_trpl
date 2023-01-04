@@ -188,7 +188,7 @@
             success:function(data){
                 // console.log(data);
                 $('#emailKaryawan').val(data.email);
-                console.log(data?.email)
+                console.log(data?.email);
             }
         });
     });
