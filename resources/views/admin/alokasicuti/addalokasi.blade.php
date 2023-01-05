@@ -1,11 +1,12 @@
 {{-- FORM SETTING ALOKASI--}}
-<div class="modal fade" id="newalokasi" tabindex="-1" role="dialog" aria-labelledby="newalokasi" aria-hidden="true">
+<div class="modal fade" id="newalokasi" tabindex="-1" role="dialog" aria-labelledby="newalokasi" aria-hidden="true"
+    data-backdrop="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="newalokasi">Tambah Alokasi Cuti</h4>
-            </div>  
+            </div>
             <div class="modal-body">
                 <form class="input" action="{{route('alokasi.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -14,41 +15,46 @@
                         <div class="col-md-6">
                             <div class="form-group col-sm" id="jeniscuti">
                                 <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
-                                <select name="id_jeniscuti" id="id_jeniscuti" class="form-control" required> 
+                                <select name="id_jeniscuti" id="id_jeniscuti" class="form-control" required>
                                     <option value="">Pilih Kategori Cuti</option>
-                                        @foreach ($jeniscuti as $jenis)
-                                            <option value="{{ $jenis->id }}">{{ $jenis->jenis_cuti }}</option>
-                                        @endforeach
+                                    @foreach ($jeniscuti as $jenis)
+                                    <option value="{{ $jenis->id }}">{{ $jenis->jenis_cuti }}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                            <input type="hidden" class="form-control" name="id_settingalokasi" placeholder="id_settingalokasi" id="id_settingalokasi" readonly>
-                            
+                            <input type="hidden" class="form-control" name="id_settingalokasi"
+                                placeholder="id_settingalokasi" id="id_settingalokasi" readonly>
+
                             <div class="form-group col-sm" id="id_karyawan">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
                                 <select name="id_karyawan" id="id_karyawan" class="form-control" required>
                                     <option value="">Pilih Karyawan</option>
                                     @foreach ($karyawan as $data)
-                                        <option value="{{ $data->id }}">{{ $data->nama }}</option>
+                                    <option value="{{ $data->id }}">{{ $data->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="durasi" class="col-form-label">Durasi (Hari)</label>
-                                    <input type="text" class="form-control" name="durasi" placeholder="durasi" id="durasi" readonly>
+                                <input type="text" class="form-control" name="durasi" placeholder="durasi" id="durasi"
+                                    readonly>
                             </div>
                             <div class="form-group">
                                 <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
-                                    <input type="text" class="form-control" name="mode_alokasi" placeholder="mode alokasi" id="mode_alokasi" readonly>
+                                <input type="text" class="form-control" name="mode_alokasi" placeholder="mode alokasi"
+                                    id="mode_alokasi" readonly>
                             </div>
                         </div>
 
                         <div class="col-md-6" id="validitas">
-                            <div class=""  id="tanggalmulai">
+                            <div class="" id="tanggalmulai">
                                 <div class="form-group">
                                     <label for="tgl_masuk" class="form-label">Tanggal Masuk</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="tgl_masuk" name="tgl_masuk" autocomplete="off" readonly>
-                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="tgl_masuk"
+                                            name="tgl_masuk" autocomplete="off" readonly>
+                                        <span class="input-group-addon bg-custom b-0"><i
+                                                class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -56,17 +62,21 @@
                                 <div class="form-group">
                                     <label for="tgl_sekarang" class="form-label">Tanggal Sekarang</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="tgl_sekarang" name="tgl_sekarang" autocomplete="off" readonly>
-                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                            id="tgl_sekarang" name="tgl_sekarang" autocomplete="off" readonly>
+                                        <span class="input-group-addon bg-custom b-0"><i
+                                                class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class=""  id="start">
+                            <div class="" id="start">
                                 <div class="form-group">
                                     <label for="aktif_dari" class="form-label">Aktif Dari</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea1" name="aktif_dari" autocomplete="off" required>
-                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                            id="datepicker-autoclosea1" name="aktif_dari" autocomplete="off" required>
+                                        <span class="input-group-addon bg-custom b-0"><i
+                                                class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -74,8 +84,10 @@
                                 <div class="form-group">
                                     <label for="sampai" class="form-label">Sampai</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea2" name="sampai" autocomplete="off" required>
-                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                            id="datepicker-autoclosea2" name="sampai" autocomplete="off" required>
+                                        <span class="input-group-addon bg-custom b-0"><i
+                                                class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -169,11 +181,15 @@
         });
     });
 
-    console.log(tg);  
+        let start_month = new Date(start);
+        let end_month   = new Date(end);
+           
+        //menghitung selisih tahun dan bulan
+        let selisihTahun = end_month.getFullYear()-start_month.getFullYear();
+        let selisihBulan = end_month.getMonth()-start_month.getMonth();
+            
+        let durasi = selisihBulan+(selisihTahun*12);
+
+        console.info(durasi);
+    }
 </script>
-
-
-
-
-
-         
