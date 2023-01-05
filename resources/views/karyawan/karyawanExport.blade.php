@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 <table>
     <thead>
         <tr>
+            {{-- IDENTITAS --}}
             <th>No</th>
             <th>Nama Lengkap</th>
             <th>Tanggal Lahir</th>
@@ -28,16 +29,7 @@ use Illuminate\Support\Facades\DB;
             <th>Tanggal Masuk</th>
             <th>NIK</th>
             <th>Golongan Darah</th>
-            <th>Status Pernikahan</th>
-            <th>Nama Lengkap Suami / Istri</th>
-            <th>Tanggal Lahir</th>
-            <th>Alamat</th>
-            <th>Pendidikan Terakhir</th>
-            <th>Pekerjaan</th>
-            <th>Nama Lengkap Kontak Darurat</th>
-            <th>Alamat  Kontak Darurat</th>
-            <th>No. Handphone Kontak Darurat</th>
-            <th>Hubungan dengan  Kontak Darurat</th>
+            {{-- RIWAYAT PENDIDIKAN  --}}
             <th>Pendidikan Terakhir</th>
             <th>Nama Sekolah</th>
             <th>Kota</th>
@@ -46,6 +38,7 @@ use Illuminate\Support\Facades\DB;
             <th>Pendidikan Non Formal</th>
             <th>Kota</th>
             <th>Lulus Tahun</th>
+            {{-- RIWAYAT PEKERJAAN  --}}
             <th>Nama Perusahaan</th>
             <th>Alamat Perusahaan</th>
             <th>Jenis Usaha</th>
@@ -55,6 +48,19 @@ use Illuminate\Support\Facades\DB;
             <th>Lama Kerja</th>
             <th>Alasan Berhenti</th>
             <th>Gaji</th>
+            {{-- KELUARGA  --}}
+            <th>Status Pernikahan</th>
+            <th>Nama Lengkap Suami / Istri</th>
+            <th>Tanggal Lahir</th>
+            <th>Alamat</th>
+            <th>Pendidikan Terakhir</th>
+            <th>Pekerjaan</th>
+            {{-- KONTAK DARURAT  --}}
+            <th>Nama Lengkap Kontak Darurat</th>
+            <th>Alamat  Kontak Darurat</th>
+            <th>No. Handphone Kontak Darurat</th>
+            <th>Hubungan dengan  Kontak Darurat</th>
+            
 
         </tr>
     </thead>
@@ -75,16 +81,7 @@ use Illuminate\Support\Facades\DB;
             <td>{{ $k->tglmasuk }}</td>
             <td>{{ $k->nik }}</td>
             <td>{{ $k->gol_darah }}</td>
-            <td>{{ $k->keluarga->status_pernikahan }}</td>
-            <td>{{ $k->keluarga->nama }}</td>
-            <td>{{ $k->keluarga->tgllahir }}</td>
-            <td>{{ $k->keluarga->alamat }}</td>
-            <td>{{ $k->keluarga->pendidikan_terakhir }}</td>
-            <td>{{ $k->keluarga->pekerjaan }}</td>
-            <td>{{ $k->kdarurat->nama }}</td>
-            <td>{{ $k->kdarurat->alamat }}</td>
-            <td>{{ $k->kdarurat->no_hp }}</td>
-            <td>{{ $k->kdarurat->hubungan }}</td>
+            {{-- RIWAYAT PENDIDIKAN  --}}
             <td>{{ $k->rpendidikan->tingkat }}</td>
             <td>{{ $k->rpendidikan->nama_sekolah }}</td>
             <td>{{ $k->rpendidikan->kota_pformal }}</td>
@@ -93,6 +90,7 @@ use Illuminate\Support\Facades\DB;
             <td>{{ $k->rpendidikan->jenis_pendidikan }}</td>
             <td>{{ $k->rpendidikan->kota_pnonformal }}</td>
             <td>{{ $k->rpendidikan->tahun_lulus_nonformal }}</td>
+            {{-- RIWAYAT PEKERJAAN  --}}
             <td>{{ $k->rpekerjaan->nama_perusahaan  }}</td>
             <td>{{ $k->rpekerjaan->alamat  }}</td>
             <td>{{ $k->rpekerjaan->jenis_usaha  }}</td>
@@ -102,6 +100,19 @@ use Illuminate\Support\Facades\DB;
             <td>{{ $k->rpekerjaan->lama_kerja  }}</td>
             <td>{{ $k->rpekerjaan->alasan_berhenti  }}</td>
             <td>{{ $k->rpekerjaan->gaji  }}</td>
+            {{-- KELUARGA  --}}
+            <td>{{ $k->keluarga->status_pernikahan }}</td>
+            <td>{{ $k->keluarga->nama }}</td>
+            <td>{{ $k->keluarga->tgllahir }}</td>
+            <td>{{ $k->keluarga->alamat }}</td>
+            <td>{{ $k->keluarga->pendidikan_terakhir }}</td>
+            <td>{{ $k->keluarga->pekerjaan }}</td>
+            {{-- KONTAK DARURAT  --}}
+            <td>{{ $k->kdarurat->nama }}</td>
+            <td>{{ $k->kdarurat->alamat }}</td>
+            <td>{{ $k->kdarurat->no_hp }}</td>
+            <td>{{ $k->kdarurat->hubungan }}</td>
+            
         </tr>
         @endforeach
 {{-- 

@@ -35,9 +35,6 @@
                         <a type="button" class="btn btn-sm btn-dark fa fa-at " data-toggle="modal" data-target="#myModal" >  Buat Akun Karyawan</a>
                         <a href="" class="btn btn-sm btn-dark fa fa-cloud-download" data-toggle="modal" data-target="#Modal2">  Import Excel</a>
                         <a href="/exportexcelkaryawan" class="btn btn-sm btn-dark fa fa-cloud-upload ">  Export Excel  </a>
-                        {{-- <a type="button" class="btn btn-sm btn-dark " href="{{ route('register') }}" >Buat Akun Karyawan</a> --}}
-                        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_menu">Add Staff</button> -->
-                        <!-- <a href="{ route('register') }}" type="button" class="btn btn-sm btn-dark " >Buat Akun Karyawan</a> -->
                     </div>
                     @include('karyawan.addAkunModal')
                     <div class="panel-body">
@@ -140,15 +137,6 @@ function hapus_karyawan(id){
             })
         }
 </script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
-        </script>
-        <!-- jangan lupa menambahkan script js sweet alert di bawah ini  -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
 
 
 <?php if(@$_SESSION['sukses']){ ?>
