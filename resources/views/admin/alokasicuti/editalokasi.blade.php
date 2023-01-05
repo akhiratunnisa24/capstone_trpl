@@ -1,105 +1,120 @@
 {{-- FORM SETTING ALOKASI--}}
-<div class="modal fade"  data-alokasi="{{$data->id}}" id="editalokasi" tabindex="-1" role="dialog" aria-labelledby="editalokasi" aria-hidden="true">
+<div class="modal fade" data-alokasi="{{$data->id}}" id="editalokasi" tabindex="-1" role="dialog"
+    aria-labelledby="editalokasi" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="editalokas">Edit Alokasi Cuti</h4>
-            </div>  
+            </div>
             <div class="modal-body">
-                {{-- <form class="input" action="/updatealokasi/{{$data->id}}" method="POST" enctype="multipart/form-data"> --}}
-                <form class="input" action="" id="input">
-                    @csrf
-                    {{-- @method('PUT') --}}
-                    <div class="panel-body">
-                        <div class="col-md-6">
-                            <input type="hidden" id="id_alokasi" name="id">
-                            <input type="hidden" id="idsettingalokasi" name="id_settingalokasi">
-                    
-                            <div class="form-group col-sm">
-                                <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
-                                <select name="id_jeniscuti" id="idjeniscuti" class="form-control">
-                                    @foreach ($jeniscuti as $jenis)
+                {{-- <form class="input" action="/updatealokasi/{{$data->id}}" method="POST"
+                    enctype="multipart/form-data"> --}}
+                    <form class="input" action="" id="input">
+                        @csrf
+                        {{-- @method('PUT') --}}
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <input type="hidden" id="id_alokasi" name="id">
+                                <input type="hidden" id="idsettingalokasi" name="id_settingalokasi">
+
+                                <div class="form-group col-sm">
+                                    <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
+                                    <select name="id_jeniscuti" id="idjeniscuti" class="form-control">
+                                        @foreach ($jeniscuti as $jenis)
                                         <option value="{{$jenis->id }}">{{ $jenis->jenis_cuti }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="id_karyawan" class="col-form-label">Karyawan</label>
-                                <input type="text" class="form-control" name="id_karyawan" id="id_karyawan" value="{{$data->id_karyawan}} - {{$data->karyawans->nama}}" readonly>
-                            </div>
-                            {{-- <div class="form-group col-sm" id="idkaryawan">
-                                <label for="id_karyawan" class="col-form-label">Karyawan</label>
-                                <select name="id_karyawan" id="id_karyawan" class="form-control" readonly>
-                                    <option value="{{$data->id_karyawan}}" selected>{{$data->id_karyawan}}{{$data->karyawans->nama}}</option>
-                                    @foreach ($karyawan as $item)
-                                        <option value="{{$item->id}}"
-                                            @if($item->id == $data->id_karyawan)
-                                                selected
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_karyawan" class="col-form-label">Karyawan</label>
+                                    <input type="text" class="form-control" name="id_karyawan" id="id_karyawan"
+                                        value="{{$data->id_karyawan}} - {{$data->karyawans->nama}}" readonly>
+                                </div>
+                                {{-- <div class="form-group col-sm" id="idkaryawan">
+                                    <label for="id_karyawan" class="col-form-label">Karyawan</label>
+                                    <select name="id_karyawan" id="id_karyawan" class="form-control" readonly>
+                                        <option value="{{$data->id_karyawan}}" selected>
+                                            {{$data->id_karyawan}}{{$data->karyawans->nama}}</option>
+                                        @foreach ($karyawan as $item)
+                                        <option value="{{$item->id}}" @if($item->id == $data->id_karyawan)
+                                            selected
                                             @endif
                                             >{{$item->nama}}</option>
-                                    @endforeach 
-                                </select>
-                            </div>  --}}
-                            <div class="form-group">
-                                <label for="durasi" class="col-form-label">Durasi (Hari)</label>
-                                <input type="text" class="form-control" name="durasi" placeholder="durasi" id="duration" readonly>
+                                        @endforeach
+                                    </select>
+                                </div> --}}
+                                <div class="form-group">
+                                    <label for="durasi" class="col-form-label">Durasi (Hari)</label>
+                                    <input type="text" class="form-control" name="durasi" placeholder="durasi"
+                                        id="duration" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
+                                    <input type="text" class="form-control" name="mode_alokasi"
+                                        placeholder="mode alokasi" id="modealokasi" readonly>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
-                                <input type="text" class="form-control" name="mode_alokasi" placeholder="mode alokasi" id="modealokasi" readonly>
+
+
+                            <div class="col-md-6">
+                                @if($data->tgl_masuk != null && $data->tgl_sekarang != null)
+                                <div class="" id="tglmulai">
+                                    <div class="form-group">
+                                        <label for="tgl_masuk" class="form-label">Tanggal Masuk</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                                id="tglmasuk" name="tgl_masuk" autocomplete="off" readonly>
+                                            <span class="input-group-addon bg-custom b-0"><i
+                                                    class="mdi mdi-calendar text-white"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" id="tglnow">
+                                    <div class="form-group">
+                                        <label for="tgl_sekarang" class="form-label">Tanggal Sekarang</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="tglsekarang" name="tgl_sekarang"
+                                                autocomplete="off" readonly>
+                                            <span class="input-group-addon bg-custom b-0"><i
+                                                    class="mdi mdi-calendar text-white"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                                <div class="" id="tanggalmulai">
+                                    <div class="form-group">
+                                        <label for="tgl_mulai" class="form-label">Aktif Dari</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                                id="datepicker-autoclosea3" name="aktif_dari" autocomplete="off">
+                                            <span class="input-group-addon bg-custom b-0"><i
+                                                    class="mdi mdi-calendar text-white"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" id="tanggalselesai">
+                                    <div class="form-group">
+                                        <label for="sampai" class="form-label">Sampai</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                                id="datepicker-autoclosea4" name="sampai" autocomplete="off">
+                                            <span class="input-group-addon bg-custom b-0"><i
+                                                    class="mdi mdi-calendar text-white"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                       
-                        <div class="col-md-6">
-                        @if($data->tgl_masuk != null && $data->tgl_sekarang != null)
-                            <div class=""  id="tglmulai">
-                                <div class="form-group">
-                                    <label for="tgl_masuk" class="form-label">Tanggal Masuk</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="tglmasuk" name="tgl_masuk" autocomplete="off" readonly>
-                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="" id="tglnow">
-                                <div class="form-group">
-                                    <label for="tgl_sekarang" class="form-label">Tanggal Sekarang</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="tglsekarang" name="tgl_sekarang" autocomplete="off" readonly>
-                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                            <div class=""  id="tanggalmulai">
-                                <div class="form-group">
-                                    <label for="tgl_mulai" class="form-label">Aktif Dari</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea3" name="aktif_dari" autocomplete="off">
-                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="" id="tanggalselesai">
-                                <div class="form-group">
-                                    <label for="sampai" class="form-label">Sampai</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea4" name="sampai" autocomplete="off">
-                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                            {{-- <button type="submit" class="btn btn-info" name="submit" value="submit"
+                                id="update_data">Update</button> --}}
+                            <button onclick="window.location.reload();" type="button" class="btn btn-info" name="submit"
+                                id="update_data" data-dismiss="modal">Update</button>
                         </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                        {{-- <button type="submit" class="btn btn-info" name="submit" value="submit" id="update_data">Update</button> --}}
-                        <button type="button" class="btn btn-info" name="submit" id="update_data">Update</button>
-                    </div>
-                </form>
+                    </form>
             </div>
         </div>
     </div>
@@ -187,7 +202,7 @@
             }
         });
     });
-</script> 
+</script>
 
 <!-- script untuk memunculkan form tglmasuk dan tglsekarang ketika kategori cuti == Cuti Tahunan -->
 <script type="text/javascript">
@@ -254,7 +269,8 @@
                     modal.hide();
                     // $('#editalokasi').modal('hide');
                     // $("#editalokasi").modal(toggle);
-                    $(".input")[0].reset();
+                    $("#input")[0].reset();
+                    
                    
                     // $('#aid'+ response.id +' td:nth-child(1)').text(response.id_settingalokasi);
                     // $('#aid'+ response.id +' td:nth-child(6)').text(response.tgl_masuk);
@@ -263,8 +279,3 @@
         });
     });
 </script>
-
-
-
-
-         

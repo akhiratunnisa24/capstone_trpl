@@ -12,12 +12,14 @@
                     @method('POST')
                     <div class="form-group col-sm">
                         <label for="jenis_cuti" class="col-form-label">Kategori Baru</label>
-                        <input type="text" class="form-control" name="jenis_cuti" id="jenis_cuti" placeholder="Masukkan Kategori" required>
+                        <input type="text" class="form-control" name="jenis_cuti" id="jenis_cuti"
+                            placeholder="Masukkan Kategori" required>
                     </div>
-            
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary waves-effect waves-light" name="submit" value="save">Save changes</button>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light" name="submit"
+                            value="save">Save changes</button>
                     </div>
                 </form>
             </div>

@@ -18,7 +18,7 @@
                     <span class="hidden-xs">Kategori Izin</span>
                 </a>
             </li>
-          
+
         </ul>
         <div class="tab-content">
             {{-- LIST CUTI --}}
@@ -225,6 +225,7 @@
 <script>
     swal.fire("Good job!", "<?php echo $_SESSION['sukses']; ?>", "success");
 </script>
+
 <!-- jangan lupa untuk menambahkan unset agar sweet alert tidak muncul lagi saat di refresh -->
 
 <?php unset($_SESSION['sukses']); } ?>
