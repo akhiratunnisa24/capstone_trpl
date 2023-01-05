@@ -82,23 +82,14 @@ class ManagerController extends Controller
         ->select('divisi')->first();
 
         $cutistaff = DB::table('cuti')
-        ->join('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
-        ->join('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
-        ->join('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
-        ->join('karyawan','cuti.id_karyawan','karyawan.id')
+        ->leftjoin('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
+        ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
+        ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+        ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
         ->where('settingalokasi.departemen',$manag_depart->divisi)
+        ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','settingalokasi.mode_alokasi')
+        ->distinct()
         ->get();
-        //->where('alokasicuti.mode_alokasi','=','Berdasarkan Departemen')
-
-        // dd( $cutistaff);
-
-        // $cutistaff = DB::table('cuti')
-        // ->join('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
-        // ->join('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
-        // ->join('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
-        // ->where('alokasicuti.mode_alokasi','=','Berdasarkan Departemen')
-        // ->where('settingalokasi.departemen',$manag_depart->divisi)
-        // ->get();
 
         return view('manager.staff.cutiStaff', compact('cutistaff'));
     }

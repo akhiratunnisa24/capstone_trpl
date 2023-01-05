@@ -79,9 +79,10 @@ class karyawanController extends Controller
         ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
         ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
         ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
-        ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa')
-        ->get(); 
-
+        ->where('cuti.status','=','Disetujui')
+        ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.jml_cuti')
+        ->get();
+        
         // dd($sisacuti);
 
         $output = [

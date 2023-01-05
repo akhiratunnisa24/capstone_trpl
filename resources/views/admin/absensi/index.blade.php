@@ -113,7 +113,7 @@
                                     <div class="form-group">
                                         <label></label>
                                         <div>
-                                            <button type="submit" class="btn btn-block btn-success waves-effect waves-light m-l-10">Search</button>
+                                            <button type="submit" class="btn btn-block btn-lg btn-success fa fa-search fa-3x"> Search</button>
                                         </div>
                                     </div>
                                 </div>
@@ -127,14 +127,14 @@
     <!-- Close Header -->
     <!-- Start content -->
     <div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
-        <a href="/exportexcel" class="btn btn-dark">Export All to Excel</a>
-        <a href="/exportpdf" class="btn btn-dark">Export All to PDF</a>
-        <a href="" class="btn btn-info" data-toggle="modal" data-target="#Modal">Import Excel</a>
-        <a href="" class="btn btn-info" data-toggle="modal" data-target="#smallModal">Import CSV</a>
+        <a href="/exportexcel" class="btn btn-dark btn-lg fa fa-file-excel-o"> Export All to Excel</a>
+        <a href="/exportpdf" class="btn btn-dark btn-lg fa fa-file-pdf-o"> Export All to PDF</a>
+        <a href="" class="btn btn-info btn-lg fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Import Excel</a>
+        <a href="" class="btn btn-info btn-lg fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Import CSV</a>
     </div>
     <div class="btn-group pull-right" style="margin-right:15px;margin-bottom:10px">
-        <a href="/rekapabsensiExcel" class="btn btn-success">Export Excel</a>
-        <a href="{{ route('rekapabsensipdf')}}" class="btn btn-success">Download PDF</a>
+        <a href="/rekapabsensiExcel" class="btn btn-success btn-lg fa fa-file-excel-o">  Export Excel</a>
+        <a href="{{ route('rekapabsensipdf')}}" class="btn btn-success btn-lg fa fa fa-file-pdf-o"> Download PDF</a>
     </div>
 
     <div class="content">
