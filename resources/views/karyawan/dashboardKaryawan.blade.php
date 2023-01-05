@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Dashboard Karyawan</h4>
+                <h4 class="pull-left page-title">Dashboard {{ $row->nama }}</h4>
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Dashboard Karyawan</li>
+                    <li class="active">Dashboard {{ $row->nama }}</li>
                 </ol>
                 <div class="clearfix"></div>
             </div>
