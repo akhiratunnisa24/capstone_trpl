@@ -79,9 +79,10 @@ class karyawanController extends Controller
         ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
         ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
         ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
-        ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa')
-        ->get(); 
-
+        ->where('cuti.status','=','Disetujui')
+        ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.jml_cuti')
+        ->get();
+        
         // dd($sisacuti);
 
         $output = [
@@ -111,115 +112,9 @@ class karyawanController extends Controller
 
 
 
-    // public function stores(Request $request)
-    // {
-    //     $fileFoto = $request->file('foto');
-    //     $namaFile = ''.time().$fileFoto->getClientOriginalName();
-    //     $tujuan_upload = 'Foto_Profile';
-    //     $fileFoto->move($tujuan_upload, $namaFile);
-
-    //     $data = $request->all();
-
-
-    //     Karyawan::create($request->except(['_token', 'submit']));      
-    //     return redirect('karyawan');
-    // }
-    // if($request->hasFile('foto')){
-    // 	// ada file yang diupload
-    // }else{
-    // 	// tidak ada file yang diupload
-    // }
-
-    public function store(Request $request)
-    {
-        if ($request->hasfile('foto')) {
-            $fileFoto = $request->file('foto');
-            $namaFile = '' . time() . $fileFoto->getClientOriginalName();
-            $tujuan_upload = 'Foto_Profile';
-            $fileFoto->move($tujuan_upload, $namaFile);
-
-
-            //    $fileFoto = $request->file('foto');
-            //    $namaFile = ''.time().$fileFoto->getClientOriginalName();
-            //    $tujuan_upload = 'Foto_Profile';
-            //    $fileFoto->move($tujuan_upload, $namaFile);
-
-            $data = array(
-                'nip' => $request->post('nip'),
-                'nik' => $request->post('nik'),
-                'nama' => $request->post('nama'),
-                'tgllahir' => $request->post('tgllahir'),
-                'email' => $request->post('email'),
-                'jenis_kelamin' => $request->post('jenis_kelamin'),
-                'alamat' => $request->post('alamat'),
-                'no_hp' => $request->post('no_hp'),
-                'status_karyawan' => $request->post('status_karyawan'),
-                'tipe_karyawan' => $request->post('tipe_karyawan'),
-                'no_kk' => $request->post('no_kk'),
-                'status_kerja' => $request->post('status_kerja'),
-                'cuti_tahunan' => $request->post('cuti_tahunan'),
-                'divisi' => $request->post('divisi'),
-                'no_rek' => $request->post('no_rek'),
-                'no_bpjs_kes' => $request->post('no_bpjs_kes'),
-                'no_npwp' => $request->post('no_npwp'),
-                'no_bpjs_ket' => $request->post('no_bpjs_ket'),
-                'kontrak' => $request->post('kontrak'),
-                'jabatan' => $request->post('jabatan'),
-                'gaji' => $request->post('gaji'),
-                'tglmasuk' => $request->post('tglmasuk'),
-                'tglkeluar' => $request->post('tglkeluar'),
-                'foto' => $namaFile,
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-
-                // $data['created_at'] =new \DateTime();
-            );
-
-            Karyawan::insert($data);
-            //    DB::table('karyawan')->insert($data);
-            return redirect('karyawan');
-        } else {
-
-            $data = array(
-                'nip' => $request->post('nip'),
-                'nik' => $request->post('nik'),
-                'nama' => $request->post('nama'),
-                'tgllahir' => $request->post('tgllahir'),
-                'email' => $request->post('email'),
-                'jenis_kelamin' => $request->post('jenis_kelamin'),
-                'alamat' => $request->post('alamat'),
-                'no_hp' => $request->post('no_hp'),
-                'status_karyawan' => $request->post('status_karyawan'),
-                'tipe_karyawan' => $request->post('tipe_karyawan'),
-                'no_kk' => $request->post('no_kk'),
-                'status_kerja' => $request->post('status_kerja'),
-                'cuti_tahunan' => $request->post('cuti_tahunan'),
-                'divisi' => $request->post('divisi'),
-                'no_rek' => $request->post('no_rek'),
-                'no_bpjs_kes' => $request->post('no_bpjs_kes'),
-                'no_npwp' => $request->post('no_npwp'),
-                'no_bpjs_ket' => $request->post('no_bpjs_ket'),
-                'kontrak' => $request->post('kontrak'),
-                'jabatan' => $request->post('jabatan'),
-                'gaji' => $request->post('gaji'),
-                'tglmasuk' => $request->post('tglmasuk'),
-                'tglkeluar' => $request->post('tglkeluar'),
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-
-                // $data['created_at'] =new \DateTime();
-            );
-
-            Karyawan::insert($data);
-            //    DB::table('karyawan')->insert($data);
-            return redirect('karyawan');
-        }
-    }
-
-
     public function store_page(Request $request)
     {
-        if ($request->hasfile('foto')) {
+        if ($request->hasfile('foto') ) {
 
             $fileFoto = $request->file('foto');
             $namaFile = '' . time() . $fileFoto->getClientOriginalName();

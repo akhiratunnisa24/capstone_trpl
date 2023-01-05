@@ -30,14 +30,15 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>id</th>
                                                 <th>Karyawan</th>
                                                 <th>Kategori</th>
-                                                <th>ID Kategori</th>
+                                                {{-- <th>ID Kategori</th> --}}
                                                 <th>Tgl. Mulai</th>
                                                 <th>Tgl.Selesai</th>
                                                 <th>Jml. Cuti</th>
                                                 <th>Mode</th>
-                                                <th>Departemen</th>
+                                                {{-- <th>Departemen</th> --}}
                                                 <th>Status</th>
                                                 <th>Action</th>        
                                             </tr>
@@ -45,16 +46,16 @@
                                         <tbody>
                                              @foreach($cutistaff as $data)
                                                 <tr>
-                                                    {{-- <td>{{$loop->iteration}}</td> --}}
+                                                    <td>{{$loop->iteration}}</td>
                                                     <td>{{$data->id}}</td>
-                                                    <td>{{$data->id_karyawan}}</td>
+                                                    <td>{{$data->nama}}</td>
                                                     <td>{{$data->jenis_cuti}}</td>
-                                                    <td>{{$data->id_jeniscuti}}</td>
+                                                    {{-- <td>{{$data->id_jeniscuti}}</td> --}}
                                                     <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
                                                     <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                     <td>{{$data->jml_cuti}} Hari</td>
                                                     <td>{{$data->mode_alokasi}}</td>
-                                                    <td>{{$data->departemen}}</td>
+                                                    {{-- <td>{{$data->departemen}}</td> --}}
                                                     @if($data->status == 'Pending')
                                                         <td>
                                                             <span class="badge badge-warning">Pending</span>

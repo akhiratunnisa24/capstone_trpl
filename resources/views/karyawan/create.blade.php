@@ -57,79 +57,6 @@
                         <div class="row">
                             <div class="col-md-12">
 
-                              <!-- judul 1 -->
-                        <div class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
-                            <label class="  ">A. IDENTITAS </label>
-                        </div>
-                            <table class="table table-bordered table-striped">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-
-
-                                <div class="form-group">
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-                                        <input type="text" name="namaKaryawan" class="form-control" placeholder="Masukkan Nama" required>
-                                        <div id="emailHelp" class="form-text"></div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
-                                        <div class="input-group">
-                                            <input id="datepicker-autoclose15" type="text" class="form-control" placeholder="yyyy/mm/dd" id="4" name="tgllahirKaryawan" rows="10" required></input><br>
-                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                        </div><!-- input-group -->
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
-                                    <select class="form-control" name="jenis_kelaminKaryawan" required>
-                                        <option value="">Pilih Jenis Kelamin</option>
-                                        <option value="L">Laki-Laki</option>
-                                        <option value="P">Perempuan</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Departemen</label>
-                                    <select class="form-control" name="divisi" required>
-                                        <option value="">Pilih Departemen</option>
-                                        @foreach ($departemen as $d)
-                                        <option value="{{ $d->id }}">{{ $d->nama_departemen }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Jabatan</label>
-                                    <select class="form-control" name="jabatanKaryawan" >
-                                        <option value="">Pilih Jabatan</option>
-                                        <option value="Manager">Manager</option>
-                                        <option value="Staff">Staff IT</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Nama Manager</label>
-                                    <select class="form-control" name="manager" required>
-                                        <option value="">Pilih Manager</option>
-                                        <option value="Manager1">manager1</option>
-                                        <option value="manager2">manager2</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                        <textarea class="form-control" name="alamatKaryawan" rows="5"></textarea><br>
-                                    </div>
-                                </div>
-
-
                             <!-- judul 1 -->
                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
                                 <label class="  ">A. IDENTITAS </label>
@@ -184,8 +111,8 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1" class="form-label">Manager</label>
-                                                <select class="form-control" name="manager" required>
+                                                <label for="exampleInputEmail1" class="form-label">Nama Manager</label>
+                                                <select class="form-control" name="manager" >
                                                     <option value="">Pilih Manager</option>
                                                     <option value="Manager1">manager1</option>
                                                     <option value="manager2">manager2</option>
@@ -197,9 +124,10 @@
                                                 <select class="form-control" name="jabatanKaryawan" required>
                                                     <option value="">Pilih Jabatan</option>
                                                     <option value="Manager">Manager</option>
-                                                    <option value="Staff">Staff IT</option>
+                                                    <option value="Staff">Staff</option>
                                                 </select>
                                             </div>
+                                            
 
                                             <div class="form-group">
                                                 <div class="mb-3">

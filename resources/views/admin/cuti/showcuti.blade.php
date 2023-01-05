@@ -54,6 +54,8 @@
                     <div class="col-sm-9">
                         @if($data->status == 'Pending')
                             <span class="badge badge-warning">Pending</span>
+                        @elseif($data->status == 'Disetujui Manager')
+                            <span class="badge badge-info">Disetujui Manager</span>
                         @elseif($data->status == 'Disetujui')
                             <span class="badge badge-success">Disetujui</span>
                         @else

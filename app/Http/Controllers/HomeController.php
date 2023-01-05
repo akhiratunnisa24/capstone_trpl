@@ -129,8 +129,20 @@ class HomeController extends Controller
             ];
             return view('dashboard', $output );
 
-        }else{
+        }elseif ($role == 2){
             
+            $output = [
+                'row' => $row,
+                'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
+                'absenKaryawan' => $absenKaryawan,
+                'absenTidakmasuk' => $absenTidakmasuk,
+                'alokasicuti' => $alokasicuti,
+                'sisacuti' => $sisacuti,
+            ];
+            return view('karyawan.dashboardKaryawan', $output);
+            
+        }else{
+                
             $output = [
                 'row' => $row,
                 'absenTerlambatkaryawan' => $absenTerlambatkaryawan,

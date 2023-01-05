@@ -8,9 +8,6 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <label for="id_karyawan" align="center" class="col-sm-12 col-form-label">DEPARTEMEN {{$data->departemen}}</label>
-                </div>
-                <div class="form-group row">
                     <label for="id" name="id" class="col-sm-3 col-form-label">ID Cuti</label>
                     <div class="col-sm-9">
                         <label>: {{$data->id}}</label>
@@ -34,7 +31,7 @@
                         <label>: {{$data->keperluan}}</label>
                     </div>
                 </div>
-                @if($data->)
+                {{-- @if($data->) --}}
                 <div class="form-group row">
                     <label for="tgl_mulai" class="col-sm-3 col-form-label">Tanggal Mulai</label>
                     <div class="col-sm-9">
@@ -58,6 +55,8 @@
                     <div class="col-sm-9">
                         @if($data->status == 'Pending')
                             <span class="badge badge-warning">Pending</span>
+                        @elseif($data->status == 'Disetujui Manager')
+                            <span class="badge badge-info">Disetujui Manager</span>
                         @elseif($data->status == 'Disetujui')
                             <span class="badge badge-success">Disetujui</span>
                         @else

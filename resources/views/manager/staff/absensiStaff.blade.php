@@ -86,7 +86,7 @@
                                     <div class="form-group">
                                         <label></label>
                                         <div>
-                                            <button type="submit" class="btn btn-block btn-success waves-effect waves-light m-l-10">Search</button>
+                                            <button type="submit" class="btn btn-lg btn-block btn-success fa fa-search"> Search</button>
                                         </div>
                                     </div>
                                 </div>
@@ -100,12 +100,12 @@
     </div>
 
     <div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
-        <a href="/export-all-excel" class="btn btn-dark">Export All to Excel</a>
-        <a href="/export-pdf" class="btn btn-dark">Export All to PDF</a>
+        <a href="/export-all-excel" class="btn btn-dark btn-lg fa fa-file-excel-o"> Export All to Excel</a>
+        <a href="/export-pdf" class="btn btn-dark btn-lg fa fa-file-pdf-o"> Export All to PDF</a>
     </div>
     <div class="btn-group pull-right" style="margin-right:15px;margin-bottom:10px" role="group" aria-label="Basic examp">
-        <a href="/export-to-excel" class="btn btn-success">Export Excel</a>
-        <a href="/export-to-pdf" class="btn btn-success">Export PDF</a>
+        <a href="/export-to-excel" class="btn btn-success  btn-lg fa fa-file-excel-o"> Export Excel</a>
+        <a href="/export-to-pdf" class="btn btn-success btn-lg fa fa fa-file-pdf-o"> Export PDF</a>
     </div>
     <div class="content">
         <div class="container">
