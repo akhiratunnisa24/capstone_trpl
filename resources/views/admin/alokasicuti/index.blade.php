@@ -18,7 +18,7 @@
         </div>    
     </div>
     <div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
-        <a href="" class="btn btn-dark" data-toggle="modal" data-target="#ModalImport">Import Excel</a>
+        <a href="" class="btn btn-dark fa fa-cloud-download" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
         {{-- <a href="" class="btn btn-dark" data-toggle="modal" data-target="#smallModal">Import CSV</a> --}}
          {{-- form import --}}
         @include('admin.alokasicuti.importexcel')
@@ -30,7 +30,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <a href="" class="btn btn-dark" data-toggle="modal" data-target="#newalokasi">Tambah Alokasi</a>
+                            <a href="" class="btn btn-dark fa fa-plus" data-toggle="modal" data-target="#newalokasi"> Tambah Alokasi</a>
                         </div>
                          {{-- form setting --}}
                          @include('admin.alokasicuti.addalokasi')

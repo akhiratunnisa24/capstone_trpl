@@ -9,7 +9,7 @@
                     <h4 class="modal-title" id="newsetting">Setting Alokasi Cuti</h4>
                 </div>  
 
-                @if ($errors->any()) 
+                {{-- @if ($errors->any()) 
                     <div class="alert alert-danger show" role="alert">
                         <strong>Whoops!</strong> There were some problems with your input.<br><br> 
                         <ul> 
@@ -18,7 +18,7 @@
                             @endforeach 
                         </ul> 
                     </div> 
-                @endif 
+                @endif  --}}
                 <div class="modal-body">
                     <form class="input" action="{{ route('setting_alokasi.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -66,7 +66,7 @@
                                 </div> 
                                 <div class="form-group col-sm" id="mode_employee">
                                     <label for="mode_karyawan" class="col-form-label">Karyawan</label>
-                                    <select id="mode_employee" name="mode_karyawan[]" multiple style="width:300px">
+                                    <select class="form-control" id="mode_employee" name="mode_karyawan[]" multiple style="width:395px">
                                         <option value="L">Laki-laki</option>
                                         <option value="P">Perempuan</option>
                                         <option value="Sudah">Sudah Menikah</option>
@@ -120,5 +120,4 @@
             $("#mode_karyawan").select2();
         // );
     </script>
-    
              

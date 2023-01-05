@@ -28,19 +28,6 @@
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
                                 <input type="text" class="form-control" name="id_karyawan" id="id_karyawan" value="{{$data->id_karyawan}} - {{$data->karyawans->nama}}" readonly>
                             </div>
-                            {{-- <div class="form-group col-sm" id="idkaryawan">
-                                <label for="id_karyawan" class="col-form-label">Karyawan</label>
-                                <select name="id_karyawan" id="id_karyawan" class="form-control" readonly>
-                                    <option value="{{$data->id_karyawan}}" selected>{{$data->id_karyawan}}{{$data->karyawans->nama}}</option>
-                                    @foreach ($karyawan as $item)
-                                        <option value="{{$item->id}}"
-                                            @if($item->id == $data->id_karyawan)
-                                                selected
-                                            @endif
-                                            >{{$item->nama}}</option>
-                                    @endforeach 
-                                </select>
-                            </div>  --}}
                             <div class="form-group">
                                 <label for="durasi" class="col-form-label">Durasi (Hari)</label>
                                 <input type="text" class="form-control" name="durasi" placeholder="durasi" id="duration" readonly>

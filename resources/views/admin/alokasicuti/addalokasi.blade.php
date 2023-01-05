@@ -168,25 +168,9 @@
             }
         });
     });
+
+    console.log(tg);  
 </script>
-<script>
-    function durasicuti(){
-        let start= $('#tgl_masuk').val();
-        let end  = $('#tgl_sekarang').val();
-
-        let start_month = new Date(start);
-        let end_month   = new Date(end);
-           
-        //menghitung selisih tahun dan bulan
-        let selisihTahun = end_month.getFullYear()-start_month.getFullYear();
-        let selisihBulan = end_month.getMonth()-start_month.getMonth();
-            
-        let durasi = selisihBulan+(selisihTahun*12);
-
-        console.info(durasi);
-    }
-</script>
-
 
 
 

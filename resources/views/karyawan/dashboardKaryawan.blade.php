@@ -100,31 +100,33 @@
                                         <th>Nama Karyawan</th>
                                         <th>Cuti Yang Didapat</th>
                                         <th>Durasi Cuti</th>
+                                        <th>Cuti Dipakai</th>
                                         <th>Sisa Cuti</th>
                                         <th>Aktif Dari</th>
                                         <th>Berakhir</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($alokasicuti as $key => $alokasi)
-                                        {{-- @if ($alokasi->id_karyawan == Auth::user()->id_pegawai) --}}
+                                    @foreach($alokasicuti as $alokasi)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $alokasi->karyawans->nama }}</td>
                                             <td>{{ $alokasi->jeniscutis->jenis_cuti }}</td>
                                             <td>{{ $alokasi->durasi }} hari</td>
-                            
-                                                <td>{{ $sisacuti }}</td>
-                                           
+                                            <td>
+                                                @foreach($sisacuti as $sisa)
+                                                    {{ $sisa->jml_cuti }}
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($sisacuti as $sisa)
+                                                    {{ $sisa->sisa }}
+                                                @endforeach
+                                            </td>
                                             <td>{{ \Carbon\Carbon::parse($alokasi->aktif_dari)->format('d/m/Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($alokasi->sampai)->format('d/m/Y') }}</td>
                                         </tr>
-                                        {{-- @endif --}}
-                                    @empty
-                                        <tr>
-                                            <td colspan="12" class="text-center">Belum Ada Data</td>
-                                        </tr>
-                                    @endforelse
+                                    @endforeach
 
                                     <!-- mencari jumlah cuti -->
                                     @php

@@ -28,8 +28,8 @@
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
                                         <strong>List Permohonan Cuti</strong>
-                                        <a href="" class="btn btn-sm btn-dark" data-toggle="modal"
-                                            data-target="#Modal">Ajukan Cuti</a>
+                                        <a href="" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
+                                            data-target="#Modal"> Ajukan Cuti</a>
                                     </div>
                                     <!-- modals tambah data cuti -->
                                     @include('karyawan.cuti.addcuti')
@@ -69,17 +69,21 @@
 
                                                             <!-- data for status -->
                                                             @if($data->status == 'Pending')
-                                                            <td>
-                                                                <span class="badge badge-warning">Pending</span>
-                                                            </td>
+                                                                <td>
+                                                                    <span class="badge badge-warning">Pending</span>
+                                                                </td>
+                                                            @elseif($data->status == 'Disetujui Manager')
+                                                                <td>
+                                                                    <span class="badge badge-info">Disetujui Manager</span>
+                                                                </td>
                                                             @elseif($data->status == 'Disetujui')
-                                                            <td>
-                                                                <span class="badge badge-success">Disetujui</span>
-                                                            </td>
+                                                                <td>
+                                                                    <span class="badge badge-success">Disetujui</span>
+                                                                </td>
                                                             @else
-                                                            <td>
-                                                                <span class="badge badge-danger">Ditolak</span>
-                                                            </td>
+                                                                <td>
+                                                                    <span class="badge badge-danger">Ditolak</span>
+                                                                </td>
                                                             @endif
 
                                                             <td class="text-center">
@@ -119,8 +123,8 @@
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
                                         <strong>List Permohonan Izin</strong>
-                                        <a href="" class="btn btn-sm btn-dark" data-toggle="modal"
-                                            data-target="#smallModal">Ajukan Izin</a>
+                                        <a href="" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
+                                            data-target="#smallModal"> Ajukan Izin</a>
                                     </div>
                                     {{-- modals tambah data izin --}}
                                     @include('karyawan.cuti.addizin')
@@ -156,53 +160,55 @@
 
                                                             <!-- tanggal mulai & tanggal selesai -->
                                                             @if($data->tgl_mulai != $data->tgl_selesai)
-                                                            <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}
-                                                                s/d
-                                                                {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}
-                                                            </td>
+                                                                <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}
+                                                                    s/d
+                                                                    {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}
+                                                                </td>
                                                             @else
-                                                            <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}
-                                                            </td>
+                                                                <td>
+                                                                    {{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}
+                                                                </td>
                                                             @endif
 
                                                             <!-- Jumlah hari izin -->
                                                             @if($data->jml_hari != null)
-                                                            <td>{{$data->jml_hari}} Hari</td>
+                                                                <td>{{$data->jml_hari}} Hari</td>
                                                             @else
-                                                            <td></td>
+                                                                <td></td>
                                                             @endif
 
                                                             <!-- jam mulai & jam selesai -->
                                                             @if($data->jam_mulai != null && $data->jam_mulai !=null)
-                                                            <td>{{\Carbon\Carbon::parse($data->jam_mulai)->format("H:i")}}
-                                                                s/d
-                                                                {{\Carbon\Carbon::parse($data->jam_selesai)->format("H:i")}}
-                                                            </td>
+                                                                <td>{{\Carbon\Carbon::parse($data->jam_mulai)->format("H:i")}}
+                                                                    s/d
+                                                                    {{\Carbon\Carbon::parse($data->jam_selesai)->format("H:i")}}
+                                                                </td>
                                                             @else
-                                                            <td></td>
+                                                                <td></td>
                                                             @endif
 
                                                             <!-- Jumlah jam -->
                                                             @if($data->jml_jam != null)
-                                                            <td>{{\Carbon\Carbon::parse($data->jml_jam)->format("H:i")}}
-                                                            </td>
+                                                                <td>
+                                                                    {{\Carbon\Carbon::parse($data->jml_jam)->format("H:i")}}
+                                                                </td>
                                                             @else
-                                                            <td></td>
+                                                                <td></td>
                                                             @endif
 
                                                             <!-- Jumlah jam -->
                                                             @if($data->status == 'Pending')
-                                                            <td>
-                                                                <span class="badge badge-warning">Pending</span>
-                                                            </td>
+                                                                <td>
+                                                                    <span class="badge badge-warning">Pending</span>
+                                                                </td>
                                                             @elseif($data->status == 'Disetujui')
-                                                            <td>
-                                                                <span class="badge badge-success">Disetujui</span>
-                                                            </td>
+                                                                <td>
+                                                                    <span class="badge badge-success">Disetujui</span>
+                                                                </td>
                                                             @else
-                                                            <td>
-                                                                <span class="badge badge-danger">Ditolak</span>
-                                                            </td>
+                                                                <td>
+                                                                    <span class="badge badge-danger">Ditolak</span>
+                                                                </td>
                                                             @endif
 
                                                             <td class="text-center">

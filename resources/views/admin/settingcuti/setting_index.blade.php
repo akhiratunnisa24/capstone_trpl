@@ -24,7 +24,7 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <a href="" class="btn btn-dark" data-toggle="modal" data-target="#newsetting">Form Setting</a>
+                        <a href="" class="btn btn-dark fa fa-plus" data-toggle="modal" data-target="#newsetting"> Tambah Setting</a>
                     </div>
                     <div class="panel-body m-b-5">
                         <div class="row">
