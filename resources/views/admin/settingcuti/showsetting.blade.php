@@ -1,5 +1,6 @@
 {{-- MODALS SHOW SETTING ALOKASI CUTI --}}
-<div class="modal fade" id="Modalshowsetting{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="Modalshowsetting" aria-hidden="true">
+<div class="modal fade" id="Modalshowsetting{{$data->id}}" tabindex="-1" role="dialog"
+    aria-labelledby="Modalshowsetting" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -35,19 +36,19 @@
                     </div>
                 </div>
                 @if($data->mode_alokasi == 'Berdasarkan Departemen')
-                    <div class="form-group row">
-                        <label for="departemen" class="col-sm-3 col-form-label">Departemen</label>
-                        <div class="col-sm-9">
-                            <label>: {{$data->departemens->nama_departemen}}</label>
-                        </div>
+                <div class="form-group row">
+                    <label for="departemen" class="col-sm-3 col-form-label">Departemen</label>
+                    <div class="col-sm-9">
+                        <label>: {{$data->departemens->nama_departemen}}</label>
                     </div>
+                </div>
                 @else
-                    <div class="form-group row">
-                        <label for="mode_karyawan" class="col-sm-3 col-form-label">Mode Karyawan</label>
-                        <div class="col-sm-9">
-                            <label>: {{$data->mode_karyawan}}</label>
-                        </div>
-                    </div> 
+                <div class="form-group row">
+                    <label for="mode_karyawan" class="col-sm-3 col-form-label">Mode Karyawan</label>
+                    <div class="col-sm-9">
+                        <label>: {{$data->mode_karyawan}}</label>
+                    </div>
+                </div>
                 @endif
 
                 <div class="modal-footer">

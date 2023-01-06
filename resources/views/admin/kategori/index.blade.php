@@ -31,7 +31,7 @@
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
                                         <strong>Kategori Cuti</strong>
-                                        <a href="" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
+                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                             data-target="#Modal"> Tambah Kategori Cuti</a>
                                     </div>
                                     {{-- MODALS TAMBAH KATEGORI CUTI --}}
@@ -103,7 +103,7 @@
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
                                         <strong>Kategori Izin</strong>
-                                        <a href="" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
+                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                             data-target="#smallModal">Tambah Kategori Izin</a>
                                         {{--
                                     </div> --}}
