@@ -49,7 +49,6 @@
                             <div class="col-md-20">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
-                                        <strong>Kategori Cuti</strong>
                                         <a href="" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
                                             data-target="#Modal"> Tambah Kategori Cuti</a>
                                     </div>
@@ -121,9 +120,8 @@
                             <div class="col-md-20">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
-                                        <strong>Kategori Izin</strong>
                                         <a href="" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
-                                            data-target="#smallModal">Tambah Kategori Izin</a>
+                                            data-target="#smallModal"> Tambah Kategori Izin</a>
                                         {{--
                                     </div> --}}
                                 </div>

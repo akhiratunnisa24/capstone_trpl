@@ -17,12 +17,9 @@
             </div>
         </div>    
     </div>
-    <div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
-        <a href="" class="btn btn-dark fa fa-cloud-download" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
-        {{-- <a href="" class="btn btn-dark" data-toggle="modal" data-target="#smallModal">Import CSV</a> --}}
-         {{-- form import --}}
-        @include('admin.alokasicuti.importexcel')
-    </div>
+    
+    @include('admin.alokasicuti.importexcel')
+
     <!-- Start content -->
     <div class="content">
         <div class="container">
@@ -31,6 +28,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <a href="" class="btn btn-dark fa fa-plus" data-toggle="modal" data-target="#newalokasi"> Tambah Alokasi</a>
+                            <a href="" class="btn btn-dark fa fa-cloud-download" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
                         </div>
                          {{-- form setting --}}
                          @include('admin.alokasicuti.addalokasi')
@@ -106,9 +104,8 @@
     
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
-    {{-- <script src="assets/pages/datatables.init.js"></script> --}}
-
     <script src="assets/js/app.js"></script>
+    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     

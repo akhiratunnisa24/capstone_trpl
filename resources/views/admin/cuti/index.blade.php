@@ -162,7 +162,7 @@
                                 <div class="col-md-15">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            <strong>List Permintaan Izin</strong>
+                                            <strong>Data Permintaan Izin</strong>
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">

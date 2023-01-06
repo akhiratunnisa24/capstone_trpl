@@ -86,26 +86,22 @@
                                     <div class="form-group">
                                         <label></label>
                                         <div>
-                                            <button type="submit" class="btn btn-lg btn-block btn-success fa fa-search"> Search</button>
+                                            <button type="submit" id="search" class="btn btn-block btn-md btn-success fa fa-search"> Search</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
+                    <div class="col-md-12">
+                        <div class="col-md-1"></div>
+                        <a href="/export-to-excel" id="exportToExcel" class="btn btn-success btn-sm fa fa-file-excel-o">  Export Excel</a>
+                        <a href="/export-to-pdf"  id="exportToPdf" class="btn btn-success btn-sm fa fa fa-file-pdf-o"> Download PDF</a>
+                    </div>
                 </div>
                     <!-- end row -->
             </div>
         </div>
-    </div>
-
-    <div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
-        <a href="/export-all-excel" class="btn btn-dark btn-lg fa fa-file-excel-o"> Export All to Excel</a>
-        <a href="/export-pdf" class="btn btn-dark btn-lg fa fa-file-pdf-o"> Export All to PDF</a>
-    </div>
-    <div class="btn-group pull-right" style="margin-right:15px;margin-bottom:10px" role="group" aria-label="Basic examp">
-        <a href="/export-to-excel" class="btn btn-success  btn-lg fa fa-file-excel-o"> Export Excel</a>
-        <a href="/export-to-pdf" class="btn btn-success btn-lg fa fa fa-file-pdf-o"> Export PDF</a>
     </div>
     <div class="content">
         <div class="container">
@@ -113,7 +109,8 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Data Absensi Staff</h3>
+                            <a href="/export-all-excel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export All to Excel</a>
+                            <a href="/export-pdf" class="btn btn-dark btn-sm fa fa-file-pdf-o"> Export All to PDF</a>
                         </div>
                         <div class="panel-body m-b-5">
                             <div class="row">

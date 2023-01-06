@@ -13,26 +13,24 @@ class Departemen extends Model
 
     protected $table='departemen';
     protected $fillable=['nama_departemen']; 
+
+    public function absensi()
+    {
+        return $this->hasMany(Absensi::class, 'id_departement','id');
+    }
     
     public function karyawans()
     {
-        return $this->hasMany(Karyawan::class, 
-            'id_departement','id'
-        );
+        return $this->hasMany(Karyawan::class, 'id_departement','id');
     }
 
     public function settingalokasi()
     {
-        return $this->hasMany(Settingalokasi::class, 
-            'departemen','id'
-        );
+        return $this->hasMany(Settingalokasi::class, 'departemen','id');
     }
 
     public function karyawan()
     {
-        return $this->belongsTo(Karyawan::class, 
-        'id', 
-        'departemen', 
-        );
+        return $this->belongsTo(Karyawan::class,'id','departemen');
     }
 }

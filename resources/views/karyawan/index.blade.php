@@ -30,7 +30,6 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading  col-sm-15 m-b-10">
-
                         <a href="karyawancreate" type="button" class="btn btn-sm btn-dark fa fa-user-plus " >  Tambah Data Karyawan</a>
                         <a type="button" class="btn btn-sm btn-dark fa fa-at " data-toggle="modal" data-target="#myModal" >  Buat Akun Karyawan</a>
                         <a href="" class="btn btn-sm btn-dark fa fa-cloud-download" data-toggle="modal" data-target="#Modal2">  Import Excel</a>

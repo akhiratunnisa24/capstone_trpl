@@ -60,13 +60,13 @@
                             @else
                                 <div class="form-group col-sm" id="mode_employe">
                                     <label for="mode_karyawan" class="col-form-label">Karyawan</label>
-                                    <select id="mode_karyawant" name="mode_karyawan[]" multiple="multiple" class="form-control" style="width:300px">
+                                    <select id="mode_karyawant" name="mode_karyawan[]" multiple="multiple" class="form-control" style="width:390px">
                                         <option value="{{$data->mode_karyawan}}" selected>{{$data->mode_karyawan}}</option>
-                                        {{-- <option value="L">Laki-laki</option>
+                                        <option value="L">Laki-laki</option>
                                         <option value="P">Perempuan</option>
                                         <option value="Sudah">Sudah Menikah</option>
                                         <option value="Belum">Belum Menikah</option>
-                                        <option value=">= 1 Tahun">>= 1 Tahun</option> --}}
+                                        <option value=">= 1 Tahun">>= 1 Tahun</option>
                                     </select>
                                 </div>
                             @endif
@@ -85,38 +85,44 @@
 
   <!-- jQuery  -->
   <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
+    {{-- // Plugins Init js --}}
+    <script src="assets/pages/form-advanced.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-{{-- // Datatable init js  --}}
-<script src="assets/js/app.js"></script>
-{{-- // Plugins Init js --}}
-<script src="assets/pages/form-advanced.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        jQuery('option').mousedown(function(e) {
+        e.preventDefault();
+        jQuery(this).toggleClass('selected');
+      
+        jQuery(this).prop('selected', !jQuery(this).prop('selected'));
+        return false;
+    });
+    </script>
 
-<script type="text/javascript">
-    // $(function()
-    // {
-    //     $('#mode_departement').prop("hidden", true);
-    //     $('#mode_employe').prop("hidden", false);
+    <script type="text/javascript">
+        // $(function()
+        // {
+        //     $('#mode_departement').prop("hidden", true);
+        //     $('#mode_employe').prop("hidden", false);
 
-    //     $('#modealokasii').on('change', function(e)
-    //     {
-    //         if(e.target.value== 'Berdasarkan Departemen')
-    //         {
-    //             $('#mode_departement').prop("hidden", false);
-    //             $('#mode_employe').prop("hidden", true);
-    //         }
-    //         if(e.target.value== 'Berdasarkan Karyawan')
-    //         {
-    //             $('#mode_departement').prop("hidden", true);
-    //             $('#mode_employe').prop("hidden", false);
-    //         }
-    //     });
-    // });
-    // $(document).ready(function () 
-    $("#mode_karyawant").select2();
-    // );
-</script>
+        //     $('#modealokasii').on('change', function(e)
+        //     {
+        //         if(e.target.value== 'Berdasarkan Departemen')
+        //         {
+        //             $('#mode_departement').prop("hidden", false);
+        //             $('#mode_employe').prop("hidden", true);
+        //         }
+        //         if(e.target.value== 'Berdasarkan Karyawan')
+        //         {
+        //             $('#mode_departement').prop("hidden", true);
+        //             $('#mode_employe').prop("hidden", false);
+        //         }
+        //     });
+        // });
+        // $(document).ready(function () 
+        $("#mode_karyawant").select2();
+        // );
+    </script>
 
 
 
