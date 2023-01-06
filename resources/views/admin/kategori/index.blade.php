@@ -4,6 +4,25 @@
 <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
 <!-- Header -->
 <div class="row">
+    <div class="col-sm-12">
+
+        <div class="page-header-title">
+            <h4 class="pull-left page-title">Kategori Cuti dan Izin</h4>
+
+            <ol class="breadcrumb pull-right">
+                <li>Human Resources Management System</li>
+                <li class="active">Kategori Cuti dan Izin</li>
+            </ol>
+
+            <div class="clearfix">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start right Content here -->
+<!-- Start content -->
+<div class="row">
     <div class="col-lg-20">
         <ul class="nav nav-tabs navtab-bg">
             <li class="active">

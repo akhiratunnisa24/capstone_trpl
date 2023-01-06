@@ -27,7 +27,7 @@
                             <div class="col-md-12">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">
-                                        <strong>List Permohonan Cuti</strong>
+                                        <strong>List Permohonan Cuti  </strong>
                                         <a href="" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
                                             data-target="#Modal"> Ajukan Cuti</a>
                                     </div>
