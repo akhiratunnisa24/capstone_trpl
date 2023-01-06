@@ -2,6 +2,41 @@
 @section('content')
 <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
 <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+<<<<<<< HEAD
+=======
+    <!-- Header -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-header-title">
+                <div class="col-sm-8">
+                    <h4 class="pull-left page-title">Alokasi Cuti</h4>
+                </div>
+                <div align="right" class="col-sm-4">
+                    <a href="/permintaan_cuti" class="btn btn-success btn-md">Kembali ke Cuti</a>
+                    <a href="/settingalokasi" class="btn btn-success btn-md">Kembali ke Setting</a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>    
+    </div>
+    <div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
+        <a href="" class="btn btn-dark fa fa-cloud-download" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
+        {{-- <a href="" class="btn btn-dark" data-toggle="modal" data-target="#smallModal">Import CSV</a> --}}
+         {{-- form import --}}
+        @include('admin.alokasicuti.importexcel')
+    </div>
+    <!-- Start content -->
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <a href="" class="btn btn-dark fa fa-plus" data-toggle="modal" data-target="#newalokasi"> Tambah Alokasi</a>
+                        </div>
+                         {{-- form setting --}}
+                         @include('admin.alokasicuti.addalokasi')
+>>>>>>> 4dfdbb092168720ff198700464b9eb0237a12b1b
 
 
 <!-- Header -->

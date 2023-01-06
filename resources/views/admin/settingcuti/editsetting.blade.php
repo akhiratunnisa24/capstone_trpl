@@ -39,10 +39,17 @@
                                 <div class="form-group col-sm" id="modealokasii">
                                     <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
                                     <select name="mode_alokasi" id="mode_lokasi" class="form-control">
+<<<<<<< HEAD
                                         <option value="{{$data->mode_alokasi}}" selected>{{$data->mode_alokasi}}
                                         </option>
                                         <option value="Berdasarkan Departemen">Berdasarkan Departemen</option>
                                         <option value="Berdasarkan Karyawan">Berdasarkan Karyawan</option>
+=======
+                                        {{-- @if() --}}
+                                        <option value="{{$data->mode_alokasi}}" selected>{{$data->mode_alokasi}}</option>
+                                        {{-- <option value="Berdasarkan Departemen">Berdasarkan Departemen</option>
+                                        <option value="Berdasarkan Karyawan">Berdasarkan Karyawan</option> --}}
+>>>>>>> 4dfdbb092168720ff198700464b9eb0237a12b1b
                                     </select>
                                 </div>
                             </div>
@@ -59,6 +66,7 @@
                                 </select>
                             </div>
                             @else
+<<<<<<< HEAD
                             <div class="form-group col-sm" id="mode_employe">
                                 <label for="mode_karyawan" class="col-form-label">Karyawan</label>
                                 <select id="mode_karyawant" name="mode_karyawan[]" multiple="multiple"
@@ -71,8 +79,22 @@
                                     <option value=">= 1 Tahun">>= 1 Tahun</option>
                                 </select>
                             </div>
+=======
+                                <div class="form-group col-sm" id="mode_employe">
+                                    <label for="mode_karyawan" class="col-form-label">Karyawan</label>
+                                    <select id="mode_karyawant" name="mode_karyawan[]" multiple="multiple" class="form-control" style="width:300px">
+                                        <option value="{{$data->mode_karyawan}}" selected>{{$data->mode_karyawan}}</option>
+                                        {{-- <option value="L">Laki-laki</option>
+                                        <option value="P">Perempuan</option>
+                                        <option value="Sudah">Sudah Menikah</option>
+                                        <option value="Belum">Belum Menikah</option>
+                                        <option value=">= 1 Tahun">>= 1 Tahun</option> --}}
+                                    </select>
+                                </div>
+>>>>>>> 4dfdbb092168720ff198700464b9eb0237a12b1b
                             @endif
                         </div>
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
@@ -95,25 +117,25 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script type="text/javascript">
-    $(function()
-    {
-        $('#mode_departement').prop("hidden", true);
-        $('#mode_employe').prop("hidden", true);
+    // $(function()
+    // {
+    //     $('#mode_departement').prop("hidden", true);
+    //     $('#mode_employe').prop("hidden", false);
 
-        $('#modealokasii').on('change', function(e)
-        {
-            if(e.target.value== 'Berdasarkan Departemen')
-            {
-                $('#mode_departement').prop("hidden", false);
-                $('#mode_employe').prop("hidden", true);
-            }
-            if(e.target.value== 'Berdasarkan Karyawan')
-            {
-                $('#mode_departement').prop("hidden", true);
-                $('#mode_employe').prop("hidden", false);
-            }
-        });
-    });
+    //     $('#modealokasii').on('change', function(e)
+    //     {
+    //         if(e.target.value== 'Berdasarkan Departemen')
+    //         {
+    //             $('#mode_departement').prop("hidden", false);
+    //             $('#mode_employe').prop("hidden", true);
+    //         }
+    //         if(e.target.value== 'Berdasarkan Karyawan')
+    //         {
+    //             $('#mode_departement').prop("hidden", true);
+    //             $('#mode_employe').prop("hidden", false);
+    //         }
+    //     });
+    // });
     // $(document).ready(function () 
     $("#mode_karyawant").select2();
     // );

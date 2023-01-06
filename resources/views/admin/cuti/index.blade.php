@@ -63,6 +63,10 @@
                                                                     <td>
                                                                         <span class="badge badge-warning">Pending</span>
                                                                     </td>
+                                                                @elseif($data->status == 'Disetujui Manager')
+                                                                    <td>
+                                                                        <span class="badge badge-info">Disetujui Manager</span>
+                                                                    </td>
                                                                 @elseif($data->status == 'Disetujui')
                                                                     <td>
                                                                         <span class="badge badge-success">Disetujui</span>
@@ -75,7 +79,7 @@
 
                                                                 <td id="b" class="text-center" > 
                                                                     <div class="row">
-                                                                        @if($data->status == 'Pending')
+                                                                        @if($data->status == 'Pending' ||$data->status == 'Disetujui Manager')
                                                                             <div class="col-sm-3">
                                                                                 <form action="{{ url('')}}/permintaan_cuti/<?php echo $data->id ?>" method="POST"> 
                                                                                     @csrf
@@ -197,6 +201,10 @@
                                                                         <td>
                                                                             <span class="badge badge-warning">Pending</span>
                                                                         </td>
+                                                                    @elseif($data->status == 'Disetujui Manager')
+                                                                        <td>
+                                                                            <span class="badge badge-info">Disetujui Manager</span>
+                                                                        </td>
                                                                     @elseif($data->status == 'Disetujui')
                                                                         <td>
                                                                             <span class="badge badge-success">Disetujui</span>
@@ -209,7 +217,7 @@
 
                                                                     <td> 
                                                                         <div class="row">
-                                                                            @if($data->status == 'Pending')
+                                                                            @if($data->status == 'Pending' && $data->status == 'Disetujui Manager')
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izinapproved',$data->id)}}" method="POST"> 
                                                                                         @csrf
