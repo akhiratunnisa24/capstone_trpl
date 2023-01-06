@@ -26,6 +26,21 @@ use App\Imports\karyawanImport;
 class karyawanController extends Controller
 {
 
+    /**
+    * Create a new controller instance.
+    *
+    * @return void
+    */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
+    * Show the application dashboard.
+    *
+    * @return \Illuminate\Contracts\Support\Renderable
+    */
 
     public function index()
     {
@@ -80,7 +95,7 @@ class karyawanController extends Controller
         ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
         ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
         ->where('cuti.status','=','Disetujui')
-        ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.jml_cuti')
+        ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
         ->get();
         
         // dd($sisacuti);
@@ -466,7 +481,6 @@ class karyawanController extends Controller
             'no_hp' => $request->post('no_hpKdarurat'),
             'hubungan' => $request->post('hubunganKdarurat'),
 
-
         );
         $idKaryawan = $request->post('id_karyawan');
         $idPendidikan = $request->post('id_pendidikan');
@@ -557,12 +571,10 @@ class karyawanController extends Controller
             'new_password' => 'required|confirmed', 'min:8',
         ]);
 
-
         #Match The Old Password
         if (!Hash::check($request->old_password, auth()->user()->password)) {
             return back()->with("error", "Old Password Doesn't match!");
         }
-
 
         #Update the new Password
         User::whereId(auth()->user()->id)->update([

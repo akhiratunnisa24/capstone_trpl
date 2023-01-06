@@ -73,8 +73,7 @@
                             </div>
                             <div class="form-group col-sm" id="mode_employee">
                                 <label for="mode_karyawan" class="col-form-label">Karyawan</label>
-                                <select class="form-control" id="mode_employee" name="mode_karyawan[]" multiple
-                                    style="width:300px">
+                                <select class="form-control" id="mode_employee" name="mode_karyawan[]" multiple style="width:395px">
                                     <option value="L">Laki-laki</option>
                                     <option value="P">Perempuan</option>
                                     <option value="Sudah">Sudah Menikah</option>
@@ -96,10 +95,7 @@
 
 <!-- jQuery  -->
 <script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/app.js"></script>
-
-
 
 {{-- // Plugins Init js --}}
 <script src="assets/pages/form-advanced.js"></script>

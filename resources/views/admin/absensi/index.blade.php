@@ -113,37 +113,34 @@
                                     <div class="form-group">
                                         <label></label>
                                         <div>
-                                            <button type="submit" class="btn btn-block btn-lg btn-success fa fa-search fa-3x"> Search</button>
+                                            <button type="submit" id="search" class="btn btn-block btn-md btn-success fa fa-search"> Search</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
+                    <div class="col-md-12" id="export">
+                        <div class="col-md-1"></div>
+                        <a href="/rekapabsensiExcel" id="exportToExcel" class="btn btn-success btn-sm fa fa-file-excel-o">  Export Excel</a>
+                        <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-success btn-sm fa fa fa-file-pdf-o"> Download PDF</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Close Header -->
     <!-- Start content -->
-    <div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
-        <a href="/exportexcel" class="btn btn-dark btn-lg fa fa-file-excel-o"> Export All to Excel</a>
-        <a href="/exportpdf" class="btn btn-dark btn-lg fa fa-file-pdf-o"> Export All to PDF</a>
-        <a href="" class="btn btn-info btn-lg fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Import Excel</a>
-        <a href="" class="btn btn-info btn-lg fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Import CSV</a>
-    </div>
-    <div class="btn-group pull-right" style="margin-right:15px;margin-bottom:10px">
-        <a href="/rekapabsensiExcel" class="btn btn-success btn-lg fa fa-file-excel-o">  Export Excel</a>
-        <a href="{{ route('rekapabsensipdf')}}" class="btn btn-success btn-lg fa fa fa-file-pdf-o"> Download PDF</a>
-    </div>
-
     <div class="content">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Data Absensi Karyawan</h3>
+                        <div class="panel-heading  col-sm-15 m-b-10">
+                            <a href="/exportexcel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export All to Excel</a>
+                            <a href="/exportpdf" class="btn btn-dark btn-sm fa fa-file-pdf-o"> Export All to PDF</a>
+                            <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Import Excel</a>
+                            <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Import CSV</a>
                         </div>
                         <div class="panel-body m-b-5">
                             <div class="row">
@@ -243,7 +240,17 @@
             </div>
         </div>
     </div>
-                  
-    
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#exportToExcel').prop("hidden", true);
+            $('#exportToPdf').prop("hidden", true);
+    
+            $('#search').on('click', function(a) {
+                $('#exportToExcel').prop("hidden", false);
+                $('#exportToPdf').prop("hidden", false);
+            });
+        });
+    </script>    
 @endsection

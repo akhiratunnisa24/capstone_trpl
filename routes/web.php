@@ -93,8 +93,6 @@ Route::get('/exportexcel',[AbsensiController::class,'exportExcel'])->name('expor
 Route::get('/exportpdf',[AbsensiController::class,'exportpdf'])->name('exportpdf');
 Route::post('/importexcel',[AbsensiController::class,'importexcel'])->name('importexcel');
 Route::post('/importcsv',[AbsensiController::class,'importcsv'])->name('importcsv');
-//rekap absensi
-// Route::get('/rekapabsensi',[AbsensiController::class,'rekapabsensi'])->name('rekapabsensi');
 Route::get('/rekapabsensipdf',[AbsensiController::class,'rekapabsensipdf'])->name('rekapabsensipdf');
 Route::get('/rekapabsensiExcel',[AbsensiController::class,'rekapabsensiExcel'])->name('rekapabsensiExcel');
 //cuti
@@ -143,16 +141,15 @@ Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingaloka
  
 //================================================================================
 //ROLE MANAGER
+//data manager
 Route::post('/permintaan-cuti/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
-
-//Data Manager
 
 //data staff
 Route::get('/data-staff', [ManagerController::class, 'dataStaff'])->name('data.Staff');
 Route::get('/absensi-staff', [ManagerController::class, 'absensiStaff'])->name('absensi.Staff');
+Route::get('/export-to-pdf',[ManagerController::class,'exportpdf'])->name('exportpdf');
 Route::get('/export-pdf',[ManagerController::class,'exportallpdf'])->name('exportallpdf');
 Route::get('/export-all-excel', [ManagerController::class, 'exportallExcel'])->name('export.allExcel');
-Route::get('/export-to-pdf',[ManagerController::class,'exportpdf'])->name('exportpdf');
 Route::get('/export-to-excel',[ManagerController::class,'exportToExcel'])->name('export.ToExcel');
 Route::get('/cuti-staff', [ManagerController::class, 'cutiStaff'])->name('cuti.Staff');
 Route::post('/cuti-staff/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');

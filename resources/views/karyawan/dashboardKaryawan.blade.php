@@ -84,11 +84,10 @@
             </div>
         </div>
     </div>
-    </div>
 
     <!-- baris kedua -->
     <div class="row">
-        <div id="a" class="col-md-9">
+        <div id="a" class="col-md-12">
             <div id="a" class="panel panel-secondary">
                 <div class="panel-body">
                     <div class="row">
@@ -115,12 +114,16 @@
                                             <td>{{ $alokasi->durasi }} hari</td>
                                             <td>
                                                 @foreach($sisacuti as $sisa)
-                                                    {{ $sisa->jml_cuti }}
+                                                    @if($alokasi->id_jeniscuti == $sisa->id_jeniscuti)
+                                                        {{ $sisa->jml_cuti }} Hari
+                                                    @endif
                                                 @endforeach
                                             </td>
                                             <td>
                                                 @foreach($sisacuti as $sisa)
-                                                    {{ $sisa->sisa }}
+                                                    @if($alokasi->id_jeniscuti == $sisa->id_jeniscuti)
+                                                        {{ $sisa->sisa }} hari
+                                                    @endif
                                                 @endforeach
                                             </td>
                                             <td>{{ \Carbon\Carbon::parse($alokasi->aktif_dari)->format('d/m/Y') }}</td>
@@ -131,17 +134,30 @@
                                     <!-- mencari jumlah cuti -->
                                     @php
                                         $jml = 0;
+                                        $terpakai = 0;
+                                        $sis = 0;
                                     @endphp
                                     @foreach ($alokasicuti as $key => $alokasi)
                                         @php
                                             $jml += $alokasi->durasi;
                                         @endphp
                                     @endforeach
+
+                                    @foreach ($sisacuti as $key => $sisa)
+                                        @php
+                                            $terpakai += $sisa->jml_cuti;
+                                        @endphp
+                                    @endforeach
+                                    @php
+                                       $sis = $jml-$terpakai;
+                                    @endphp
                                     <tr>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line text-right"><strong>Jumlah Cuti</strong></td>
-                                        <td class="thick-line text-left">{{ $jml }} hari</td>
+                                        <td class="thick-line text-left">{{ $jml }}</td>
+                                        <td class="thick-line text-left">{{ $terpakai }} hari</td>
+                                        <td class="thick-line text-left">{{ $sis }} hari</td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
@@ -153,7 +169,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div id="a" class="panel panel-light text-center">
                 <div class="panel-heading">
                     <h4 class="panel-title">Cuti Bulan Ini</h4>

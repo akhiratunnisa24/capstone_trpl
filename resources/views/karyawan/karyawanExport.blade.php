@@ -99,7 +99,7 @@ use Illuminate\Support\Facades\DB;
             <td>{{ $k->rpekerjaan->nama_direktur  }}</td>
             <td>{{ $k->rpekerjaan->lama_kerja  }}</td>
             <td>{{ $k->rpekerjaan->alasan_berhenti  }}</td>
-            <td>{{ $k->rpekerjaan->gaji  }}</td>
+            <td>Rp {{ $k->rpekerjaan->gaji  }},- </td>
             {{-- KELUARGA  --}}
             <td>{{ $k->keluarga->status_pernikahan }}</td>
             <td>{{ $k->keluarga->nama }}</td>

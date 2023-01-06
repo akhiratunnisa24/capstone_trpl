@@ -27,9 +27,6 @@ class AbsensiController extends Controller
      */
     public function index(Request $request)
     {
-        //semua data absensi
-        // $absensi = Absensi::latest()->orderBy('tanggal')->get();
-
         //filter data
         $karyawan = Karyawan::all();
         $idkaryawan = $request->id_karyawan;
@@ -45,13 +42,15 @@ class AbsensiController extends Controller
     
         if(isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
-            $absensi = Absensi::where('id_karyawan', $idkaryawan)
+            $absensi = Absensi::with('karyawans','departemens')->where('id_karyawan', $idkaryawan)
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal',$tahun)
             ->get();
         }else
         {
-            $absensi = Absensi::all();
+            $absensi = Absensi::with('karyawans','departemens')
+            ->orderBy('tanggal','desc')
+            ->get();
         }
         return view('admin.absensi.index',compact('absensi','karyawan'));
     }
@@ -232,7 +231,8 @@ class AbsensiController extends Controller
     
         if(isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
-            $data = Absensi::where('id_karyawan', $idkaryawan)
+            $data = Absensi::with('karyawans','departemens')
+            ->where('id_karyawan', $idkaryawan)
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal',$tahun)
             ->get();
