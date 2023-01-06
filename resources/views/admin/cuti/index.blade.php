@@ -1,6 +1,27 @@
 @extends('layouts.default')
 @section('content')
 <!-- Header -->
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="page-header-title">
+            <h4 class="pull-left page-title">Data Cuti dan Izin</h4>
+
+            <ol class="breadcrumb pull-right">
+                <li>Human Resources Management System</li>
+                <li class="active">Data Cuti dan Izin</li>
+            </ol>
+
+            <div class="clearfix">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Close Header -->
+
+<!-- Start right Content here -->
+<!-- Start content -->
     <div class="row">
         <div class="col-lg-12">
             <ul class="nav nav-tabs navtab-bg">
@@ -134,17 +155,18 @@
 
                 <!-- LIST IZIN -->
                 <div class="tab-pane" id="izin">
+                    <!-- Start content -->
                     <div class="content">
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-15">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            <h3 class="panel-title">List Permintaan Izin</h3>
+                                            <strong>List Permintaan Izin</strong>
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-20 col-sm-20 col-xs-20">
                                                     <table  id="datatable-responsive4" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>

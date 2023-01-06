@@ -3,16 +3,9 @@
 namespace App\Exports;
 
 use App\Models\Karyawan;
-use App\Models\Kdarurat;
-use App\Models\Keluarga;
-use App\Models\Rpekerjaan;
-use App\Models\Rpendidikan;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\DB;
 
 
 class KaryawanExport implements FromView, ShouldAutoSize

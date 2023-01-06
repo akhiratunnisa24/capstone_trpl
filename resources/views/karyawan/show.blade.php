@@ -199,7 +199,7 @@
                     <tr>
                         <td><label for="bpjskes_number">Lama Kerja : {{$rpekerjaan->lama_kerja}} </label></td>
 
-                        <td><label for="bpjskes_number">Gaji : {{$rpekerjaan->gaji}} </label></td>
+                        <td><label for="bpjskes_number">Gaji : Rp {{$rpekerjaan->gaji}},-  </label></td>
 
 
 
