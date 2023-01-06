@@ -72,7 +72,7 @@
         <tr>
             <th>No.</th>
             <th>Nama</th>
-            {{-- <th>Departemen</th> --}}
+            <th>Departemen</th>
             <th>Tanggal</th>
             <th>Jam Masuk</th>
             <th>Jam Keluar</th>

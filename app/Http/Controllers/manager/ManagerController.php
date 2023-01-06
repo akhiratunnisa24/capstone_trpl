@@ -118,7 +118,9 @@ class ManagerController extends Controller
         ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
         ->select('id_departement')->first();
 
-        $data = Absensi::where('id_departement',$middep->id_departement)->get();
+        $data = Absensi::with('karyawans','departemens')
+        ->where('id_departement',$middep->id_departement)
+        ->get();
 
         return Excel::download(new AbsensiDepartemenExport($data), 'data_absensi_departemen.xlsx');
     }
@@ -142,14 +144,15 @@ class ManagerController extends Controller
 
         if(isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
-            $data = Absensi::where('id_karyawan', $idkaryawan)
+            $data = Absensi::with('karyawans','departemens')
+            ->where('id_karyawan', $idkaryawan)
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal',$tahun)
             ->where('id_departement',$middep->id_departement)
             ->get();
             // dd($data);
         }else{
-            $data = Absensi::where('id_departement',$middep->id_departement)->get();
+            $data = Absensi::with('karyawans','departemens')->where('id_departement',$middep->id_departement)->get();
         };
 
         return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), "data_absensi_departemen{$idkaryawan}.xlsx");
@@ -199,7 +202,7 @@ class ManagerController extends Controller
         }else{
             $data = Absensi::where('id_departement',$middep->id_departement)->get();
         }
-        $pdf  = PDF::loadview('manager.staff.absensistaffid_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan])
+        $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan])
         ->setPaper('A4','landscape');
 
         return $pdf->stream("Report Absensi_{$idkaryawan}.pdf");

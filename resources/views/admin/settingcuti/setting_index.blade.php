@@ -15,7 +15,6 @@
             </div>
         </div>
     </div>
-</div>
 <!-- Start content -->
 <div class="content">
     <div class="container">
@@ -28,9 +27,7 @@
                     <div class="panel-body m-b-5">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <table id="datatable-responsive3"
-                                    class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
-                                    width="100%">
+                                <table id="datatable-responsive3" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
                                             {{-- <th>ID</th> --}}
@@ -94,9 +91,8 @@
 
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
-    {{-- <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script> --}}
-
-
+    <script src="assets/js/app.js"></script>
+    
     <!-- sweet alert -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>

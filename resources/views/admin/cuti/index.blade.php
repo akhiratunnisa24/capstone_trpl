@@ -140,7 +140,7 @@
                                 <div class="col-md-12">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            <h3 class="panel-title">List Permintaan Izin</h3>
+                                            <strong>Data Permintaan Izin</strong>
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">

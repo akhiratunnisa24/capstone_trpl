@@ -27,13 +27,13 @@ class Absensi extends Model
         return $this->belongsTo(User::class,'id_user','id');
     }
     
-    // 'id_departemen',
-    public function departemens(){
+    public function departemens()
+    {
         return $this->belongsTo(Departemen::class,'id_departement','id');
     }
 
     public function karyawans()
     {
-        return $this->belongsTo(Karyawan::class, 'id_karyawan','id');
+        return $this->belongsTo(Karyawan::class,'id_karyawan','id');
     }
 }

@@ -48,7 +48,7 @@
                 <h4 class="panel-title">Terlambat Hari Ini</h4>
             </div>
             <div class="panel-body">
-                <h3 class=""><b>{{ $absenTerlambat }}</b></h3>
+                <h3 class=""><b>{{ $absenTerlambatHariIni }}</b></h3>
                 <p class="text-muted"><b>Lorem Ipsum </b> </p>
             </div>
         </div>
@@ -60,7 +60,8 @@
                 <h4 class="panel-title"> Belum / Tidak Masuk Hari Ini</h4>
             </div>
             <div class="panel-body">
-                <h3 class=""><b>0</b></h3>
+                <h3 class=""><b></b></h3>
+                {{-- {{ $tidakAbsenHariIni }} --}}
                 <p class="text-muted"><b>Total Absen Tidak Masuk </b> </p>
             </div>
         </div>
@@ -162,7 +163,8 @@
                 <h4 class="panel-title">Tidak Masuk Bulan Lalu </h4>
             </div>
             <div class="panel-body">
-                <h3 class=""><b>10</b></h3>
+                <h3 class=""><b>0</b></h3>
+                {{-- {{$absenTidakMasukBulanLalu}} --}}
                 <p class="text-muted"><b>Total Absen Tidak Masuk</b> </p>
             </div>
         </div>
