@@ -232,7 +232,7 @@
             {{-- END IZIN --}}
         </div>
     </div>
-</div>
+</div> 
 
 
 

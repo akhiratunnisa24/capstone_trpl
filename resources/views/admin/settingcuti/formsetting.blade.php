@@ -1,6 +1,12 @@
 {{-- FORM SETTING ALOKASI--}}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.2/select2.css" />
 
+<style>
+    .modal-backdrop:nth-child(2n-1) {
+        opacity: 0;
+    }
+</style>
+
 <div class="modal fade" id="newsetting" tabindex="-1" role="dialog" aria-labelledby="newsetting" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

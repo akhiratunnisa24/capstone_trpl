@@ -205,7 +205,3 @@ strong {
 .navbar-header {
     float: none;
 }
-
-.modal-backdrop {
-    opacity: 0.5 !important;
-}
