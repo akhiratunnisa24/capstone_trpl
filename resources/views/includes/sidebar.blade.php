@@ -99,8 +99,6 @@
                 </li>
 
             </ul>
-    
-        <?php } elseif ($role == 3) { ?>
 
             <?php } elseif ($role == 3) { ?>
 
@@ -112,7 +110,7 @@
             </div>
         </div>
 
-        <!--- Role Manager Konvensional -->
+        <!--- Role Manager  -->
         <div id="sidebar-menu">
             <ul>
                 <li>
