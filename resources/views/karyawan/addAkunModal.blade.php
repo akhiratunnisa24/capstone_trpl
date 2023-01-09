@@ -130,6 +130,8 @@
 
 <!-- END MODAL -->
 
+
+
 <!-- script untuk mengambil data Email Karyawan  -->
 <script>
     $('#id_pegawai').on('change', function(e) {

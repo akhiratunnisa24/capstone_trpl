@@ -29,38 +29,40 @@
                     <a href="/" class="waves-effect"><i class="ti-home"></i><span> Dashboard</span></a>
                 </li>
                 <li>
-                    <a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a>
+                    <a href="/absensi-karyawan" class="waves-effect"><i
+                            class="mdi mdi-account-check"></i><span>Absensi</span></a>
                 </li>
                 <li>
-                    <a href="{{ route('karyawan.index') }}" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span> Data Karyawan</span></a>
+                    <a href="{{ route('karyawan.index') }}" class="waves-effect"><i
+                            class="mdi mdi-account-multiple-plus"></i><span> Data Karyawan</span></a>
                 </li>
 
-                <li>
-                    <li>
-                        <a><span class="text-info panel-title">ABSENSI</span></a>
-                    </li>
-                    <li>
-                        <a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a>
-                    </li>
-                </li>
 
                 <li>
-                    <li>
-                        <a><span class="text-info panel-title">CUTI & IZIN</span></a>
-                    </li>
-                    <li>
-                        <a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a>
-                    </li>
-                    <li>
-                        <a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a>
-                    </li>
-                    <li>
-                        <a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a>
-                    </li>
-                    <li>
-                        <a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a>
-                    </li>
+                    <a><span class="text-info panel-title">ABSENSI</span></a>
                 </li>
+                <li>
+                    <a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a>
+                </li>
+
+
+
+                <li>
+                    <a><span class="text-info panel-title">CUTI & IZIN</span></a>
+                </li>
+                <li>
+                    <a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a>
+                </li>
+                <li>
+                    <a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a>
+                </li>
+                <li>
+                    <a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a>
+                </li>
+                <li>
+                    <a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a>
+                </li>
+
             </ul>
 
             <?php } elseif ($role == 2) { ?>
@@ -82,28 +84,33 @@
                         <i class="ti-home"></i><span> Dashboard Karyawan</span>
                     </a>
                 </li>
+
                 <li>
-                    <li>
-                        <a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a>
-                    </li>
-                    <li>
-                        <a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a>
-                    </li>
-                    <li>
-                        <a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a>
-                    </li>
+                    <a href="/absensi-karyawan" class="waves-effect"><i
+                            class="mdi mdi-account-check"></i><span>Absensi</span></a>
                 </li>
+                <li>
+                    <a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History
+                            Absensi</span></a>
+                </li>
+                <li>
+                    <a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti &
+                            Izin</span></a>
+                </li>
+
             </ul>
     
         <?php } elseif ($role == 3) { ?>
 
-        <div class="user-info">
-            <div class="dropdown">
-                <br>
-                <a class="text-info panel-title">{{ $user }}</a>
+            <?php } elseif ($role == 3) { ?>
+
+            <div class="user-info">
+                <div class="dropdown">
+                    <br>
+                    <a class="text-info panel-title">{{ $user }}</a>
+                </div>
             </div>
         </div>
-    </div>
 
         <!--- Role Manager Konvensional -->
         <div id="sidebar-menu">
@@ -113,46 +120,52 @@
                         <i class="ti-home"></i><span> Dashboard Manager </span>
                     </a>
                 </li>
+
                 <li>
-                    <li>
-                        <a><span class="text-info panel-title">DATA MANAGER</span></a>
-                    </li>
-                    <li>
-                        <a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a>
-                    </li>
-                    <li>
-                        <a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a>
-                    </li>
-                    <li>
-                        <a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a>
-                    </li>
+                    <a><span class="text-info panel-title">DATA MANAGER</span></a>
                 </li>
                 <li>
-                    <li>
-                        <a><span class="text-info panel-title">DATA STAFF</span></a>
-                    </li>
-                    <li>
-                        <a href="/data-staff" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
-                    </li>
-                    <li>
-                        <a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi Staff</span></a>
-                    </li>
-                    <li>
-                        <a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a>
+                    <a href="/absensi-karyawan" class="waves-effect"><i
+                            class="mdi mdi-account-check"></i><span>Absensi</span></a>
                 </li>
+                <li>
+                    <a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History
+                            Absensi</span></a>
                 </li>
+                <li>
+                    <a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti &
+                            Izin</span></a>
+                </li>
+
+
+                <li>
+                    <a><span class="text-info panel-title">DATA STAFF</span></a>
+                </li>
+                <li>
+                    <a href="/data-staff" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data
+                            Staff</span></a>
+                </li>
+                <li>
+                    <a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi
+                            Staff</span></a>
+                </li>
+                <li>
+                    <a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
+                            Staff</span></a>
+                </li>
+
             </ul>
-        </div>
 
-        <?php } else { ?>
 
-        <div class="user-info">
-            <div class="dropdown">
-                <br>
-                <a class="text-info panel-title">{{ $user }}</a>
+            <?php } else { ?>
+
+            <div class="user-info">
+                <div class="dropdown">
+                    <br>
+                    <a class="text-info panel-title">{{ $user }}</a>
+                </div>
             </div>
         </div>
-
         <!--- Role Manager Human Resources -->
         <div id="sidebar-menu">
             <ul>
@@ -162,32 +175,38 @@
                     </a>
                 </li>
                 <li>
-                    <li>
-                        <a><span class="text-info panel-title">DATA MANAGER</span></a>
-                    </li>
-                    <li>
-                        <a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a>
-                    </li>
-                    <li>
-                        <a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a>
-                    </li>
-                    <li>
-                        <a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a>
-                    </li>
+                <li>
+                    <a><span class="text-info panel-title">DATA MANAGER</span></a>
                 </li>
                 <li>
-                    <li>
-                        <a><span class="text-info panel-title">DATA STAFF</span></a>
-                    </li>
-                    <li>
-                        <a href="/data-staff" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
-                    </li>
-                    <li>
-                        <a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi Staff</span></a>
-                    </li>
-                    <li>
-                        <a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a>
-                    </li>
+                    <a href="/absensi-karyawan" class="waves-effect"><i
+                            class="mdi mdi-account-check"></i><span>Absensi</span></a>
+                </li>
+                <li>
+                    <a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History
+                            Absensi</span></a>
+                </li>
+                <li>
+                    <a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti &
+                            Izin</span></a>
+                </li>
+                </li>
+                <li>
+                <li>
+                    <a><span class="text-info panel-title">DATA STAFF</span></a>
+                </li>
+                <li>
+                    <a href="/data-staff" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data
+                            Staff</span></a>
+                </li>
+                <li>
+                    <a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi
+                            Staff</span></a>
+                </li>
+                <li>
+                    <a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
+                            Staff</span></a>
+                </li>
                 </li>
                 <?php }
             ?>

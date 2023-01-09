@@ -14,7 +14,78 @@
             </div>
         </div>
     </div>
-    <!-- baris pertama -->
+
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-teal text-center">
+                <div class="panel-heading btn-info">
+                    <h4 class="panel-title">Sisa Cuti Anda</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>Cuti tahunan if nul</b></h3>
+                    <p class="text-muted"><b>Total Sisa Cuti Anda</b> </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-primary text-center">
+                <div class="panel-heading btn-info">
+                    <h4 class="panel-title">Absen Hari Ini</h4>
+                </div>
+                <?php
+                    use Illuminate\Support\Facades\Auth;
+                    use App\Models\Absensi;
+                    if ($absenKaryawan == 1 ) { 
+                ?>
+                <div class="panel-body">
+                    <h3 class=""><b class="text text-success">Sukses</b></h3>
+                    <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
+                </div>
+                <?php
+                    } else { 
+                ?>
+                <div class="panel-body">
+                    <h3 class=""><b class="text text-success">Belum Absen</b></h3>
+                    <p class="text-muted"><b>Anda Belum Absen</b></p>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-primary text-center">
+                <div class="panel-heading btn-warning">
+                    <h4 class="panel-title">Jumlah Terlambat Anda</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>{{ $absenTerlambatkaryawan }}</b></h3>
+                    <p class="text-muted"><b>Total Jumlah Terlambat Anda</b> </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-primary text-center">
+                <div class="panel-heading btn-danger">
+                    <h4 class="panel-title">Tidak Hadir Anda Bulan Ini</h4>
+                </div>
+                <div class="panel-body">
+                    <?php
+                    if($absenTidakmasuk == 2 ) { 
+                  ?>
+                    <h3 class=""><b class="text text-success">Masuk</b></h3>
+                    <?php
+                    } else { 
+                  ?>
+                    <h4 class=""><b class="text text-success">Total cuti + Total izin</b></h4>
+                    {{-- + tidak ada keterangan --}}
+                    <?php } ?>
+                    <p class="text-muted"><b>Total Jumlah Tidak Hadir Anda</b> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- baris kedua -->
     <div class="row">
         <div id="a" class="col-md-12">
             <div id="a" class="panel panel-secondary">

@@ -7,6 +7,7 @@ use App\Models\Cuti;
 use App\Models\Izin;
 use App\Models\Jeniscuti;
 use App\Models\Jenisizin;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
