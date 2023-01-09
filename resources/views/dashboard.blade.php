@@ -24,7 +24,7 @@
                 <h4 class="panel-title ">Cuti dan Izin Hari Ini</h4>
             </div>
             <div class="panel-body">
-                <h3 class=""><b>{{ $cutiHariini }}</b></h3>
+                <h3 class=""><b>{{ $cutidanizin }}</b></h3>
                 <p class="text-muted"><b>Total Pengajuan Cuti dan Izin </b> </p>
             </div>
         </div>
@@ -76,7 +76,7 @@
                 <h4 class="panel-title ">Cuti dan Izin Bulan Ini</h4>
             </div>
             <div class="panel-body">
-                <h3 class=""><b>{{ $cutiPerbulan }}</b></h3>
+                <h3 class=""><b>{{ $cutidanizinPerbulan }}</b></h3>
                 <p class="text-muted"><b>Total Pengajuan Cuti dan Izin </b> </p>
             </div>
         </div>
@@ -127,7 +127,7 @@
                 <h4 class="panel-title">Cuti dan Izin Bulan Lalu</h4>
             </div>
             <div class="panel-body">
-                <h3 class=""><b>{{ $cutiBulanlalu }} </b></h3>
+                <h3 class=""><b>{{ $cutidanizibulanlalu }}</b></h3>
                 <p class="text-muted"><b>Total Cuti dan Izin</b> </p>
             </div>
         </div>
@@ -216,45 +216,12 @@
 
 <!--Chart JS-->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- 
-<script>
-    (async function() {
-  const data = [
-    { month: 'Jan', count: 10 },
-    { month: 'Feb', count: 20 },
-    { month: 'Mar', count: 15 },
-    { month: 'Apr', count: 25 },
-    { month: 'Mei', count: 22 },
-    { month: 'Jun', count: 3 },
-    { month: 'Jul', count: 2 },
-    { month: 'Agu', count: 8 },
-    { month: 'Sept', count: 4 },
-    { month: 'Okt', count: 6 },
-    { month: 'Nov', count: 20},
-    { month: 'Des', count: 15 },
-  ];
 
-  new Chart(
-    document.getElementById('myChart'),
-    {
-      type: 'bar',
-      data: {
-        labels: data.map(row => row.month),
-        datasets: [
-          {
-            label: 'Cuti',
-            data: data.map(row => row.count)
-          }
-        ]
-      }
-    }
-  );
-})();
-</script> -->
 
 <script>
       var users2 =  {{ Js::from($data) }};   
       var labelBulan = {{ Js::from($labelBulan) }}
+      var labelTahun = {{ Js::from($labelTahun) }}
   
       const data = {
         labels: labelBulan,

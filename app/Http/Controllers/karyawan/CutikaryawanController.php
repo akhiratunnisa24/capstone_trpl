@@ -7,6 +7,7 @@ use App\Models\Cuti;
 use App\Models\Izin;
 use App\Models\Jeniscuti;
 use App\Models\Jenisizin;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,8 @@ class CutikaryawanController extends Controller
 
     public function index(Request $request)
     {
+
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         //form cuti
         $jeniscuti = DB::table('alokasicuti')
         ->join('jeniscuti','alokasicuti.id_jeniscuti','=','jeniscuti.id')
@@ -33,7 +36,7 @@ class CutikaryawanController extends Controller
 
         $karyawan = Auth::user()->id_pegawai;
         $tipe = $request->query('tipe', 1);
-        return view('karyawan.cuti.index', compact('izin','jenisizin','cuti','jeniscuti','karyawan','tipe'));
+        return view('karyawan.cuti.index', compact('izin','jenisizin','cuti','jeniscuti','karyawan','tipe','row'));
     }
 
     public function store(Request $request)

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\User;
 use App\Models\Absensi;
+use App\Models\Izin;
 use App\Models\Karyawan;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
@@ -17,23 +18,24 @@ use Illuminate\Database\Eloquent\Builder;
 class HomeController extends Controller
 {
     /**
-    * Create a new controller instance.
-    *
-    * @return void
-    */
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
-    /**
-    * Show the application dashboard.
-    *
-    * @return \Illuminate\Contracts\Support\Renderable
-    */
 
-    public function registrasi(Request $data){
-        $karyawan = Karyawan::where('id',$data['id_pegawai'])->first();
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+
+    public function registrasi(Request $data)
+    {
+        $karyawan = Karyawan::where('id', $data['id_pegawai'])->first();
         $data = array(
             'role' => $data['role'],
             'id_pegawai' => $data['id_pegawai'],
@@ -41,7 +43,7 @@ class HomeController extends Controller
             'email' => $data['emailKaryawan'],
             'password' => Hash::make($data['password']),
         );
-        
+
         User::insert($data);
         return redirect('/karyawan')->with("sukses", "Berhasil di tambah");
     }
@@ -52,111 +54,127 @@ class HomeController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
         // Absen Terlambat Karyawan
-        $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai, )->count('terlambat');
+        $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai,)->count('terlambat');
         // Absen Karyawan Hari Ini
-        $absenKaryawan = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk');
+        $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
         // Absen Tidak Masuk
-        $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereMonth('created_at', '=', Carbon::now()->month)->count('jam_masuk');
+        $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)->whereMonth('created_at', '=', Carbon::now()->month)->count('jam_masuk');
 
-        // $cutiPerbulan = Cuti::where('id_jeniscuti',1)->whereMonth('tgl_mulai','12')->sum('jml_cuti');
-        $cutiHariini     = Cuti::whereDay('created_at','=', Carbon::now())->sum('jml_cuti');
-        $cutiPerbulan    = Cuti::whereMonth('created_at','=', Carbon::now()->month)->sum('jml_cuti');
-        $cutiBulanlalu   = Cuti::whereMonth('created_at','=', Carbon::now()->subMonth()->month)->sum('jml_cuti');
+        // Data Cuti dan Izin Hari ini 
+        $dataIzinHariini = Izin::whereYear('created_at', '=', Carbon::now()->year)
+            ->whereMonth('created_at', '=', Carbon::now()->month)
+            ->whereDay('created_at', '=', Carbon::now())->count('jml_hari');
+        $cutiHariini     = Cuti::whereYear('created_at', '=', Carbon::now()->year)
+            ->whereMonth('created_at', '=', Carbon::now()->month)
+            ->whereDay('created_at', '=', Carbon::now())->count('jml_cuti');
+        $cutidanizin     = $dataIzinHariini + $cutiHariini;
+        // Data Cuti dan Izin Bulan ini 
+        $dataIzinPerbulan   = Izin::whereYear('created_at', '=', Carbon::now()->year)
+            ->whereMonth('created_at', '=', Carbon::now()->month)
+            ->count('jml_hari');
+        $cutiPerbulan       = Cuti::whereYear('created_at', '=', Carbon::now()->year)
+            ->whereMonth('created_at', '=', Carbon::now()->month)
+            ->count('jml_cuti');
+        $cutidanizinPerbulan    = $dataIzinPerbulan + $cutiPerbulan;
 
-        $absenHariini = Absensi::whereDay('created_at', '=', Carbon::now())->count('jam_masuk');
+        // Data Cuti dan Izin Bulan Lalu
+        $dataIzinbulanlalu   = Izin::whereYear('created_at', '=', Carbon::now()->year)
+            ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
+            ->count('jml_hari');
+        $cutibulanlalu       = Cuti::whereYear('created_at', '=', Carbon::now()->year)
+            ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
+            ->count('jml_cuti');
 
-        $absenTerlambatHariIni = Absensi::whereDay('tanggal', '=', Carbon::now())
-                        ->whereTime('jam_masuk', '>', '08:00:00')
-                        ->count();
-        $absenBulanini  = Absensi::whereYear('tanggal','=', Carbon::now()->year)
-                        ->whereMonth('tanggal','=', Carbon::now()->month)
-                        ->count('jam_masuk');
+        $cutidanizibulanlalu    = $dataIzinbulanlalu + $cutibulanlalu;
+
+        $absenHariini = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->whereDay('created_at', '=', Carbon::now())->count('jam_masuk');
+
+        $absenTerlambatHariIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->whereDay('tanggal', '=', Carbon::now())
+            ->whereTime('jam_masuk', '>', '08:00:00')
+            ->count();
+        $absenBulanini  = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->count('jam_masuk');
         $absenTerlambat = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
-                        ->whereMonth('tanggal', '=', Carbon::now()->month)
-                        ->whereTime('jam_masuk', '>', '08:00:00')
-                        ->count();
-        $absenBulanlalu  = Absensi::whereYear('tanggal','=', Carbon::now()->subMonth()->year)
-                        ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
-                        ->count('jam_masuk');
-        $absenTerlambatbulanlalu = Absensi::whereYear('tanggal','=', Carbon::now()->subMonth()->year)
-                        ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
-                        ->count('terlambat');
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->whereTime('jam_masuk', '>', '08:00:00')
+            ->count();
+        $absenBulanlalu  = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+            ->count('jam_masuk');
+        $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+            ->count('terlambat');
         $sudahAbsen = DB::table('users')
-                        ->join('absensi', 'users.id_pegawai', '=', 'absensi.id_karyawan')
-                        ->whereDay('absensi.created_at', '=', Carbon::now())
-                        ->count();
-        // $tidakAbsenHariIni = DB::table('users')
-        //                 ->join('absensi', 'users.id_pegawai', '=', 'absensi.id_karyawan')
-        //                 ->whereDay('absensi.tanggal', '!=', Carbon::now())
-        //                 ->orWhereNull('absensi.tanggal')
-        //                 ->count();
+            ->join('absensi', 'users.id_pegawai', '=', 'absensi.id_karyawan')
+            ->whereDay('absensi.created_at', '=', Carbon::now())
+            ->count();
 
-        //code lama
-        // $time = Carbon::createFromFormat('H:i:s', '08:00:00')->format('g:iA');
-        // $absenTidakmasuk = karyawan::whereDay('created_at', '=', Carbon::now())->whereNull('id_karyawan')->count('jam_masuk');
+        $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"))
+            ->whereYear('created_at', '=', Carbon::now()->year)
+            ->groupBy(DB::raw('MONTHNAME(tgl_mulai)'))
+            ->pluck('jumlah', 'month_name');
 
-        // $label = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-        // for($bulan=1;$bulan < 13;$bulan++){
-        //     $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        //     $chartuser     = collect(Cuti::SELECT("SELECT count('jml_cuti') AS jumlah from cuti where month(created_at)='$bulan'"))->first();
-        //     $jumlah_user[] = $chartuser->jumlah;
-        //     }
+           
 
-        
-            // $users = Karyawan::select(DB::raw("COUNT(*) as count"), DB::raw("MONTHNAME(created_at) as month_name"))
-            // $users = user::select(DB::raw("COUNT(*) as jumlah"), DB::raw("MONTHNAME(created_at) as month_name"))
-                    // Karyawan::whereMonth('created_at', '=', Carbon::now()->month)->sum('cuti_tahunan');
-
-                        // ->whereYear('created_at', date('Y'))
-                        // ->groupBy(DB::raw('MONTHNAME(created_at)'))
-                        // ->pluck('jumlah', 'month_name');
-
-            // $labels = $users->keys();
-            // $data2 = $users->values();
-            // dd($data);
-
-            $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"))
-                ->groupBy(DB::raw('MONTHNAME(tgl_mulai)'))
-                ->pluck('jumlah', 'month_name');
-
-            $labelBulan = $getLabel->keys();
-            $data = $getLabel->values();
-
-        $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
-        
-        $sisacuti = DB::table('alokasicuti')
-        ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
-        ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
-        ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
-        ->where('cuti.status','=','Disetujui')
-        ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
-        ->get();
-
-    
-
-        if ($role == 1){
+            $getYear = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("YEAR(tgl_mulai) as month_name"))
+            ->whereYear('created_at', '=', Carbon::now()->year)
+            ->groupBy(DB::raw('YEAR(tgl_mulai)'))
+            ->pluck('jumlah', 'month_name');
+            $payment = cuti::select(DB::raw("MONTHNAME(tgl_mulai) as month_name"));
+  
+        // Use small y for 2 digit year
             
+            
+
+
+        $labelBulan = $getLabel->keys();    
+        $labelTahun = $getYear->keys();    
+        $data = $getLabel->values();
+
+        $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)->get();
+
+        $sisacuti = DB::table('alokasicuti')
+            ->join('cuti', 'alokasicuti.id_jeniscuti', 'cuti.id_jeniscuti')
+            ->where('alokasicuti.id_karyawan', Auth::user()->id_pegawai)
+            ->where('cuti.id_karyawan', Auth::user()->id_pegawai)
+            ->where('cuti.status', '=', 'Disetujui')
+            ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
+            ->get();
+
+
+
+        if ($role == 1) {
+
             $output = [
                 'row' => $row,
-                'cutiPerbulan'=>$cutiPerbulan,
-                'cutiHariini'=>$cutiHariini,
-                'cutiBulanlalu' => $cutiBulanlalu,
+                'cutiPerbulan' => $cutiPerbulan,
+                'cutiHariini' => $cutiHariini,
                 'absenHariini' => $absenHariini,
                 'absenBulanini' => $absenBulanini,
                 'absenBulanlalu' => $absenBulanlalu,
                 'absenTerlambat' => $absenTerlambat,
                 'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
                 'data' => $data,
-                'labelBulan' =>$labelBulan,
+                'labelBulan' => $labelBulan,
                 'absenTerlambatHariIni' => $absenTerlambatHariIni,
-                // 'tidakAbsenHariIni'=>  $tidakAbsenHariIni,
-                //'absenTidakMasukBulanLalu' =>$absenTidakMasukBulanLalu,
+                'dataIzinHariini' => $dataIzinHariini,
+                'cutidanizin' => $cutidanizin,
+                'dataIzinPerbulan' => $dataIzinPerbulan,
+                'cutidanizinPerbulan' => $cutidanizinPerbulan,
+                'dataIzinbulanlalu' => $dataIzinbulanlalu,
+                'cutibulanlalu' => $cutibulanlalu,
+                'cutidanizibulanlalu' => $cutidanizibulanlalu,
+                'labelTahun' => $labelTahun,
             ];
-            return view('dashboard', $output );
+            return view('dashboard', $output);
+        } elseif ($role == 2) {
 
-        }elseif ($role == 2){
-            
             $output = [
                 'row' => $row,
                 'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
@@ -166,9 +184,8 @@ class HomeController extends Controller
                 'sisacuti' => $sisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
-            
-        }else{
-                
+        } else {
+
             $output = [
                 'row' => $row,
                 'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
@@ -180,11 +197,9 @@ class HomeController extends Controller
             return view('karyawan.dashboardKaryawan', $output);
         }
     }
-    
+
     public function cuti()
     {
         return view('cuti');
-        
-        
     }
 }

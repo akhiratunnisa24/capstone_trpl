@@ -47,7 +47,7 @@
                 ?>
                 <div class="panel-body">
                     <h3 class=""><b class="text text-success">Belum Absen</b></h3>
-                    <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
+                    <p class="text-muted"><b>Anda Belum Absen</b></p>
                 </div>
                 <?php } ?>
             </div>
