@@ -1,6 +1,10 @@
+<style>
+    .modal-backdrop:nth-child(2n-1) {
+        opacity: 90;
+    }
+</style>
 {{-- FORM SETTING ALOKASI--}}
-<div class="modal fade" id="newalokasi" tabindex="-1" role="dialog" aria-labelledby="newalokasi" aria-hidden="true"
-    data-backdrop="false">
+<div class="modal fade" id="newalokasi" tabindex="-1" role="dialog" aria-labelledby="newalokasi" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -190,6 +194,11 @@
             }
         });
     });
+</script>
+<script>
+    function durasicuti(){
+        let start= $('#tgl_masuk').val();
+        let end  = $('#tgl_sekarang').val();
 
         let start_month = new Date(start);
         let end_month   = new Date(end);

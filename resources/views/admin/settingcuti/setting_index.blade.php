@@ -1,18 +1,21 @@
 @extends('layouts.default')
 @section('content')
-    <!-- Header -->
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="page-header-title">
-                <div class="col-sm-8">
-                    <h4 class="pull-left page-title">Setting Alokasi</h4>
-                </div>
-                <div class="col-sm-4" align="right">
-                    <a href="/permintaan_cuti" class="btn btn-success btn-md">Kembali ke Cuti</a>
-                    <a href="/alokasicuti" class="btn btn-success btn-md">Kembali ke Alokasi</a>
-                </div>
-                <div class="clearfix"></div>
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+
+
+<!-- Header -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-header-title">
+            <div class="col-sm-8">
+                <h4 class="pull-left page-title">Setting Alokasi</h4>
             </div>
+            <div class="col-sm-4" align="right">
+                <a href="/permintaan_cuti" class="btn btn-success btn-md">Kembali ke Cuti</a>
+                <a href="/alokasicuti" class="btn btn-success btn-md">Kembali ke Alokasi</a>
+            </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 <!-- Start content -->
@@ -22,7 +25,8 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <a href="" class="btn btn-dark fa fa-plus" data-toggle="modal" data-target="#newsetting"> Tambah Setting</a>
+                        <a href="" class="btn btn-dark fa fa-plus" data-toggle="modal" data-target="#newsetting"> Tambah
+                            Setting</a>
                     </div>
                     <div class="panel-body m-b-5">
                         <div class="row">
@@ -132,4 +136,4 @@
     <!-- jangan lupa untuk menambahkan unset agar sweet alert tidak muncul lagi saat di refresh -->
 
     <?php unset($_SESSION['sukses']); } ?>
-@endsection
+    @endsection
