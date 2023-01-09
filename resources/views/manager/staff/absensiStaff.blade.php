@@ -81,23 +81,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-xs-12">
+                            <div class="col-sm-3 col-xs-12">
                                 <div class="" style="margin-top:26px">
                                     <div class="form-group">
                                         <label></label>
                                         <div>
-                                            <button type="submit" id="search" class="btn btn-block btn-md btn-success fa fa-search"> Search</button>
+                                            <button type="submit" id="search" class="btn btn-md btn-success fa fa-search"> Search</button>
+                                            <a href="{{ route('absensi.Staff') }}" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
-                    <div class="col-md-12">
-                        <div class="col-md-1"></div>
-                        <a href="/export-to-excel" id="exportToExcel" class="btn btn-success btn-sm fa fa-file-excel-o">  Export Excel</a>
-                        <a href="/export-to-pdf"  id="exportToPdf" class="btn btn-success btn-sm fa fa fa-file-pdf-o"> Download PDF</a>
-                    </div>
                 </div>
                     <!-- end row -->
             </div>
@@ -109,8 +105,10 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <a href="/export-all-excel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export All to Excel</a>
-                            <a href="/export-pdf" class="btn btn-dark btn-sm fa fa-file-pdf-o"> Export All to PDF</a>
+                            {{-- <a href="/export-all-excel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export All to Excel</a>
+                            <a href="/export-pdf" class="btn btn-dark btn-sm fa fa-file-pdf-o"> Export All to PDF</a> --}}
+                            <a href="/export-to-excel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
+                            <a href="/export-to-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Download PDF</a>
                         </div>
                         <div class="panel-body m-b-5">
                             <div class="row">

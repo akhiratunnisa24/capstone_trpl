@@ -47,7 +47,7 @@
                 ?>
                 <div class="panel-body">
                     <h3 class=""><b class="text text-success">Belum Absen</b></h3>
-                    <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
+                    <p class="text-muted"><b>Anda Belum Absen</b></p>
                 </div>
                 <?php } ?>
             </div>
@@ -130,7 +130,7 @@
                                             <td>{{ \Carbon\Carbon::parse($alokasi->sampai)->format('d/m/Y') }}</td>
                                         </tr>
                                     @endforeach
-
+    
                                     <!-- mencari jumlah cuti -->
                                     @php
                                         $jml = 0;
@@ -142,14 +142,14 @@
                                             $jml += $alokasi->durasi;
                                         @endphp
                                     @endforeach
-
+    
                                     @foreach ($sisacuti as $key => $sisa)
                                         @php
                                             $terpakai += $sisa->jml_cuti;
                                         @endphp
                                     @endforeach
-                                    @php
-                                       $sis = $jml-$terpakai;
+                                     @php
+                                        $sis = $jml-$terpakai;
                                     @endphp
                                     <tr>
                                         <td class="thick-line"></td>
@@ -169,18 +169,90 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <div id="a" class="panel panel-light text-center">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Cuti Bulan Ini</h4>
+    </div> <!-- End Row -->
+
+    <!-- baris pertama -->
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-teal text-center">
+                <div class="panel-heading btn-info">
+                    <h4 class="panel-title">Data Absen Bulan Lalu</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class="text text-success">3</h3>
-                    <p class="text-muted"><b>Cuti Terpakai</b> </p>
+                    <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
+                    <p class="text-muted"><b>Kali absensi</b></p>
                 </div>
             </div>
         </div>
-    </div> <!-- End Row -->
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-teal text-center">
+                <div class="panel-heading btn-info">
+                    <h4 class="panel-title">Terlambat Bulan Lalu</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
+                    <p class="text-muted"><b>Kali absensi</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-primary text-center">
+                <div class="panel-heading btn-info">
+                    <h4 class="panel-title">Absen Hari Ini</h4>
+                </div>
+                <?php
+                    use Illuminate\Support\Facades\Auth;
+                    use App\Models\Absensi;
+                    if ($absenKaryawan == 1 ) { 
+                ?>
+                <div class="panel-body">
+                    <h3 class=""><b class="text text-success">Sukses</b></h3>
+                    <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
+                </div>
+                <?php
+                    } else { 
+                ?>
+                <div class="panel-body">
+                    <h3 class=""><b class="text text-success">Belum Absen</b></h3>
+                    <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+       
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-primary text-center">
+                <div class="panel-heading btn-info">
+                    <h4 class="panel-title">Terlambat Bulan Ini</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>{{ $absenTerlambatkaryawan }}</b></h3>
+                    <p class="text-muted"><b>Kali absensi</b> </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-primary text-center">
+                <div class="panel-heading btn-danger">
+                    <h4 class="panel-title">Tidak Hadir Anda Bulan Ini</h4>
+                </div>
+                <div class="panel-body">
+                    <?php
+                    if($absenTidakmasuk == 2 ) { 
+                  ?>
+                    <h3 class=""><b class="text text-success">Masuk</b></h3>
+                    <?php
+                    } else { 
+                  ?>
+                    <h4 class=""><b class="text text-success">Total cuti + Total izin</b></h4>
+                    {{-- + tidak ada keterangan --}}
+                    <?php } ?>
+                    <p class="text-muted"><b>Total Jumlah Tidak Hadir Anda</b> </p>
+                </div>
+            </div>
+        </div>
+    </div>
     <style>
         #a {
             border-radius: 10px;

@@ -26,6 +26,12 @@ class AbsensiImport implements ToModel,WithHeadingRow
         {
             if(!Absensi::where('id_karyawan',$row['id'])->where('tanggal',Carbon::parse($row['tanggal'])->format("Y-m-d"))->exists())
             {
+                $departement_map = [
+                    'KONVENSIONAL' => 1,
+                    'KEUANGAN' => 2,
+                    'TEKNOLOGI INFORMASI' => 3,
+                    'HUMAN RESOURCE' => 4,
+                ];
                 $data = [
                     'id_karyawan'   => $row['id'],
                     'nik'           => $row['nik'] ?? null,
@@ -45,7 +51,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
                     'pengecualian'  => $row['pengecualian'] ?? null,
                     'hci'           => $row['harus_cin'],
                     'hco'           => (String) $row['harus_cout'],
-                    'id_departement'=> $row['departemen'] ?? null,
+                    'id_departement'=> $departement_map[$row['departemen']] ?? null,
                     'h_normal'      => (Double) $row['hari_normal']?? null,
                     'ap'            => (Double) $row['akhir_pekan']?? null,
                     'hl'            => (Double) $row['hari_libur']?? null,
