@@ -51,13 +51,17 @@ class HomeController extends Controller
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-        // Absen Terlambat Karyawan
-        $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai, )->count('terlambat');
-        // Absen Karyawan Hari Ini
-        $absenKaryawan = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereDay('created_at', '=', Carbon::now(), )->count('jam_masuk');
+        
 
-        // Absen Tidak Masuk
-        $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)->whereMonth('created_at', '=', Carbon::now()->month)->count('jam_masuk');
+
+
+
+
+
+
+
+
+
 
         // $cutiPerbulan = Cuti::where('id_jeniscuti',1)->whereMonth('tgl_mulai','12')->sum('jml_cuti');
         $cutiHariini     = Cuti::whereDay('created_at','=', Carbon::now())->sum('jml_cuti');
@@ -116,25 +120,55 @@ class HomeController extends Controller
             // $data2 = $users->values();
             // dd($data);
 
-            $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"))
+        $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"))
                 ->groupBy(DB::raw('MONTHNAME(tgl_mulai)'))
                 ->pluck('jumlah', 'month_name');
 
-            $labelBulan = $getLabel->keys();
-            $data = $getLabel->values();
+        $labelBulan = $getLabel->keys();
+        $data = $getLabel->values();
 
+        // DASHBOARD KARYAWAN
+        //=====================
+        //absen masuk bulan lalu    
+        $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+            ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
+            ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
+            ->count('jam_masuk');
+
+        //absen terlambat bulan lalu
+        $absenTerlambatbulanlalu = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+            ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
+            ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
+            ->count('terlambat');
+
+        //Data alokasi cuti masing2 karyawan
         $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
-        
+
+        //untuk mencari sisa cuti karyawan
         $sisacuti = DB::table('alokasicuti')
-        ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
-        ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
-        ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
-        ->where('cuti.status','=','Disetujui')
-        ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
-        ->get();
+            ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
+            ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
+            ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
+            ->where('cuti.status','=','Disetujui')
+            ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
+            ->get();
 
+        // Absen Terlambat Karyawan
+        $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->whereYear('tanggal', '=', Carbon::now()->year)
+            ->count('terlambat');
+        //  dd($absenTerlambatkaryawan);
+        // Absen Karyawan Hari Ini
+        $absenKaryawan = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
+            ->whereDay('created_at', '=', Carbon::now(), )
+            ->count('jam_masuk');
+
+        // Absen Tidak Masuk
+        $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
+            ->whereMonth('created_at', '=', Carbon::now()->month)
+            ->count('jam_masuk');
     
-
         if ($role == 1){
             
             $output = [
@@ -164,6 +198,8 @@ class HomeController extends Controller
                 'absenTidakmasuk' => $absenTidakmasuk,
                 'alokasicuti' => $alokasicuti,
                 'sisacuti' => $sisacuti,
+                'absenBulanlalu'=> $absenBulanlalu,
+                'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
             ];
             return view('karyawan.dashboardKaryawan', $output);
             
@@ -176,6 +212,8 @@ class HomeController extends Controller
                 'absenTidakmasuk' => $absenTidakmasuk,
                 'alokasicuti' => $alokasicuti,
                 'sisacuti' => $sisacuti,
+                'absenBulanlalu'=> $absenBulanlalu,
+                'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }

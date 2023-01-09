@@ -62,7 +62,12 @@
             <td>{{ $data->pengecualian }}</td>
             <td>{{ $data->hci }}</td>
             <td>{{ $data->hco }}</td>
-            <td>{{ $data->departemens->nama_departemen }}</td>
+            <td>
+                @if ($data->departemens)
+                    {{ $data->departemens->nama_departemen }}
+                 @endif
+            </td>
+            {{-- <td>{{ $data->departemens->nama_departemen }}</td> --}}
             <td>{{ $data->h_normal }}</td>
             <td>{{ $data->ap }}</td>
             <td>{{ $data->hl }}</td>

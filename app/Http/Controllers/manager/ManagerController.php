@@ -74,6 +74,10 @@ class ManagerController extends Controller
             $absensi= Absensi::where('id_departement',$middep->id_departement)->get();
         }
         return view('manager.staff.absensiStaff', compact('absensi','karyawan'));
+        //menghapus filter data
+        $request->session()->forget('id_karyawan');
+        $request->session()->forget('bulan');
+        $request->session()->forget('tahun');
     }
 
     public function cutiStaff(Request $request)

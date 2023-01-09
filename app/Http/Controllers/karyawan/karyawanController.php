@@ -82,8 +82,25 @@ class karyawanController extends Controller
         $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
             ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
-        $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai,)->count('terlambat');
-        // Absen Tidak Masuk
+        // Absen Terlambat untuk hari ini
+        $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+            ->whereYear('tanggal','=', Carbon::now()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->whereTime('jam_masuk', '>', '08:00:00')
+            ->count();
+        
+        //absen masuk bulan lalu    
+        $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+            ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
+            ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
+            ->count('jam_masuk');
+
+        //absen terlambat bulan lalu
+        $absenTerlambatbulanlalu = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+            ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
+            ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
+            ->count('terlambat');
+
         $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
             ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
@@ -107,6 +124,9 @@ class karyawanController extends Controller
             'absenTidakmasuk' => $absenTidakmasuk,
             'alokasicuti' => $alokasicuti,
             'sisacuti' => $sisacuti,
+            'absenBulanlalu'=> $absenBulanlalu,
+            'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
+
         ];
         return view('karyawan.dashboardKaryawan', $output);
     }

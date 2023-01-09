@@ -86,7 +86,7 @@ Route::get('/izin_karyawan/{id}', [IzinkaryawanController::class, 'show'])->name
 // Route::get('/karyawan', [KaryawanController::class,'index'])->name('karyawan.index');
 
 //absensi
-Route::get('/absensi', [AbsensiController::class,'index']);
+Route::get('/absensi', [AbsensiController::class,'index'])->name('absensi.index');
 Route::post('/absensi_karyawan',[AbsensiController::class,'store'])->name('absensi.action');
 Route::post('/absensi_karyawan/{id}',[AbsensiController::class,'update'])->name('absen_pulang');
 Route::get('/exportexcel',[AbsensiController::class,'exportExcel'])->name('exportexcel');
@@ -134,6 +134,7 @@ Route::get('/deletealokasi{id}', [AlokasicutiController::class, 'destroy']) ->na
 //create alokasi cuti
 Route::post('/gettglmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tglmasuk');
 Route::post('/getsettingalokasi', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Settingalokasi');
+//Route::post('/getDepartemen', [AlokasicutiController::class, 'getDepartemen'])->name('get.Departemen');
 
 //update alokasi cuti
 Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');

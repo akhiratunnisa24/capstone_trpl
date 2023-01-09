@@ -22,15 +22,23 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <input type="hidden" class="form-control" name="id_settingalokasi"
-                                placeholder="id_settingalokasi" id="id_settingalokasi" readonly>
+
+                            <input type="hidden" class="form-control" name="id_settingalokasi" placeholder="id_settingalokasi" id="id_settingalokasi" readonly>
+                            {{-- @if($jeniscuti->departemen != null) --}}
+                                <div class="form-group">
+                                    <label class="col-form-label">Departemen</label>
+                                    <input type="text" class="form-control" name="departemen" placeholder="tidak memiliki data departemen" id="departemen" readonly>
+                                </div>
+                            {{-- @endif --}}
 
                             <div class="form-group col-sm" id="id_karyawan">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
                                 <select name="id_karyawan" id="id_karyawan" class="form-control" required>
                                     <option value="">Pilih Karyawan</option>
                                     @foreach ($karyawan as $data)
-                                    <option value="{{ $data->id }}">{{ $data->nama }}</option>
+                                        {{-- @if($data->divisi == $departemen->id) --}}
+                                            <option value="{{ $data->id }}">departemen: {{ $data->divisi }} -- {{ $data->nama }}</option>
+                                        {{-- @endif --}}
                                     @endforeach
                                 </select>
                             </div>
@@ -128,11 +136,11 @@
                 $('#id_settingalokasi').val(data.id);
                 $('#durasi').val(data.durasi);
                 $('#mode_alokasi').val(data.mode_alokasi);
+                $('#departemen').val(data.departemen);
             }
         });
     });
 </script>
-
 <!-- script untuk mengambil data tanggalmasuk  -->
 <script>
     $('#id_karyawan').on('change',function(e){
@@ -177,6 +185,8 @@
                 {
                     $('#tanggalmulai').prop("hidden", true);
                     $('#tanggalselesai').prop("hidden", true);
+                    //let departemen = document.getElementById('departemen').value;
+
             }
         });
     });
@@ -191,5 +201,4 @@
         let durasi = selisihBulan+(selisihTahun*12);
 
         console.info(durasi);
-    }
 </script>

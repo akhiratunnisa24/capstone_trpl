@@ -95,7 +95,7 @@
                 </li>
             </ul>
     
-        <?php } elseif ($role == 5) { ?>
+        <?php } elseif ($role == 3) { ?>
 
         <div class="user-info">
             <div class="dropdown">
