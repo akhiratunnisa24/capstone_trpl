@@ -22,10 +22,6 @@ class RekapabsensiExport implements FromView, ShouldAutoSize
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
-    {
-        return  $this->data;
-    }
 
     public function view(): View    
     {

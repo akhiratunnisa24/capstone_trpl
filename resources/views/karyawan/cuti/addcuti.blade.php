@@ -8,16 +8,11 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="Modal">Form Permohonan Cuti</h4>
                 </div>
-                @if ($errors->any()) 
-                    <div class="alert alert-danger show" role="alert">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br> 
-                            <ul> 
-                                @foreach ($errors->all() as $error) 
-                                    <li>{{ $error }}</li> 
-                                @endforeach 
-                            </ul> 
-                    </div> 
-                @endif 
+                @if (session()->has('error'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('error') }}
+                    </div>
+                @endif
                 <div class="modal-body">
                     <form action="{{ route('cuti.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -32,14 +27,25 @@
                             <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
                             <select name="id_jeniscuti" id="id_jeniscuti" class="form-control" required>
                                 <option>-- Pilih Kategori --</option>
+                                {{-- @foreach ($jeniscuti as $data)
+                                    @if(isset($sisa_cuti[$data->id]) && $sisa_cuti[$data->id] >= 0)
+                                            <option value="{{ $data->id}}">
+                                            (sisa cuti: {{ isset($sisa_cuti[$data->id]) ? $sisa_cuti[$data->id] : 0 }} hari) {{ $data->jenis_cuti }} 
+                                        </option>
+                                    @endif
+                                @endforeach --}}
                                 @foreach ($jeniscuti as $data)
-                                    <option value="{{ $data->id}}"
-                                        @if ($data->id ==request()->id_jeniscuti)
-                                        selected
-                                        @endif
-                                        >{{ $data->jenis_cuti }}
-                                    </option>
+                                    @if(isset($sisa_cuti[$data->id]) && $sisa_cuti[$data->id] >= 0) 
+                                         <option value="{{ $data->id}}">
+                                            (sisa cuti: {{ isset($sisa_cuti[$data->id]) ? $sisa_cuti[$data->id] : 0 }} hari) {{ $data->jenis_cuti }} 
+                                        </option>
+                                    @else
+                                        <option value="{{ $data->id}}">
+                                            (cuti is available) {{ $data->jenis_cuti }} 
+                                        </option>
+                                    @endif
                                 @endforeach
+
                             </select> 
                         </div>
                         <div class="form-group col-sm">
@@ -54,7 +60,7 @@
                                         <div class="form-group">
                                             <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosea" name="tgl_mulai"  autocomplete="off" onchange=(jumlahcuti()) rows="10" required>
+                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="mm/dd/yyyy" id="datepicker-autoclosea" name="tgl_mulai"  autocomplete="off" rows="10" required>
                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                             </div>
                                         </div>
@@ -68,7 +74,7 @@
                                         <div class="form-group">
                                             <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autocloseb" name="tgl_selesai"  autocomplete="off" onchange=(jumlahcuti()) rows="10" required>
+                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="mm/dd/yyyy" id="datepicker-autocloseb" name="tgl_selesai"  autocomplete="off" rows="10" required>
                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                             </div>
                                         </div>
@@ -95,19 +101,10 @@
             </div>
         </div>
     </div>
-  
      <!-- jQuery  -->
      <script src="assets/js/jquery.min.js"></script>
      <script src="assets/js/bootstrap.min.js"></script>
-     <script src="assets/js/modernizr.min.js"></script>
-     <script src="assets/js/detect.js"></script>
-     <script src="assets/js/fastclick.js"></script>
-     <script src="assets/js/jquery.slimscroll.js"></script>
-     <script src="assets/js/jquery.blockUI.js"></script>
-     <script src="assets/js/waves.js"></script>
-     <script src="assets/js/wow.min.js"></script>
-     <script src="assets/js/jquery.nicescroll.js"></script>
-     <script src="assets/js/jquery.scrollTo.min.js"></script>
+
  
      {{-- plugin js --}}
      <script src="assets/plugins/timepicker/bootstrap-timepicker.js"></script>
@@ -121,13 +118,16 @@
      <script src="assets/pages/form-advanced.js"></script>
 
      <script type="text/javascript">
-        $('#datepicker-autoclosea').datepicker({
-            autoclose: true,
-        });
-        $('#datepicker-autocloseb').datepicker({
-            autoclose: true,
-        });
-
+        // $('#datepicker-autoclosea').datepicker({
+        //     format: "yyyy/mm/dd",
+        //     autoclose: true,
+        //     todayHighlight: true
+        // });
+        // $('#datepicker-autocloseb').datepicker({
+        //     format: "yyyy/mm/dd",
+        //     autoclose: true,
+        //     todayHighlight: true
+        // });
         function jumlahcuti(){
             var start= $('#datepicker-autoclosea').val();
             var end  = $('#datepicker-autocloseb').val();
@@ -162,6 +162,13 @@
             // alert('test');
 
             $('#jumlah').val(daysOfYear.length ?? 0);
+
+            //validasi jika jumlah cuti melebihi sisa cuti
+            if (isset($sisa_cuti[request()->id_jeniscuti]) && request()->jumlah_cuti '>' $sisa_cuti[request()->id_jeniscuti]) 
+            {
+                session()->flash('error', 'Jumlah cuti yang diajukan melebihi sisa cuti yang tersisa. Silakan pilih jumlah cuti yang lebih kecil.');
+                return redirect()->back();
+            }
         };
     </script>
 

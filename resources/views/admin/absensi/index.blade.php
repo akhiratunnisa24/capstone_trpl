@@ -19,7 +19,7 @@
                                     <div class="form-group">
                                         <label>Karyawan</label>
 
-                                        <select name="id_karyawan" id="id_karyawan" class="form-control">
+                                        <select name="id_karyawan" id="id_karyawan" class="form-control" required>
                                             <option>-- Pilih Karyawan --</option>
                                             @foreach ($karyawan as $data)
                                                 <option value="{{ $data->id}}"
@@ -59,7 +59,7 @@
                                 <div class="m-t-20">
                                     <div class="form-group">
                                         <label>Bulan</label>
-                                        <select name="bulan" id="bulan" class="col-md-3 form-control">
+                                        <select name="bulan" id="bulan" class="col-md-3 form-control" required>
                                             <option value="">-- Pilih Bulan --</option>
                                             <option value="01" {{ ('01' === request()->bulan) ? 'selected' : '' }}>Januari</option>
                                             <option value="02" {{ ('02' === request()->bulan) ? 'selected' : '' }}>Februari</option>
@@ -81,7 +81,7 @@
                                 <div class="m-t-20">
                                     <div class="form-group">
                                         <label>Tahun</label>
-                                        <select name="tahun" id="tahun" class="col-md-3 form-control">
+                                        <select name="tahun" id="tahun" class="col-md-3 form-control" required>
                                             <option value="">-- Pilih Tahun --</option>
                                             {{-- {{ ('01' === request()->bulan) ? 'selected' : '' }} --}}
                                             <option value="2011" {{ ('2011' === request()->tahun) ? 'selected' : '' }}>2011</option>
@@ -108,23 +108,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-xs-12">
+                            <div class="col-sm-3 col-xs-12">
                                 <div class="" style="margin-top:26px">
                                     <div class="form-group">
                                         <label></label>
                                         <div>
-                                            <button type="submit" id="search" class="btn btn-block btn-md btn-success fa fa-search"> Search</button>
+                                            <button type="submit" id="search" class="btn btn-md btn-success fa fa-search"> Search</button>
+                                            <a href="{{ route('absensi.index') }}" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
-                    <div class="col-md-12" id="export">
-                        <div class="col-md-1"></div>
-                        <a href="/rekapabsensiExcel" id="exportToExcel" class="btn btn-success btn-sm fa fa-file-excel-o">  Export Excel</a>
-                        <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-success btn-sm fa fa fa-file-pdf-o"> Download PDF</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -137,8 +133,10 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 m-b-10">
-                            <a href="/exportexcel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export All to Excel</a>
-                            <a href="/exportpdf" class="btn btn-dark btn-sm fa fa-file-pdf-o"> Export All to PDF</a>
+                            {{-- <a href="/exportexcel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export All to Excel</a>
+                            <a href="/exportpdf" class="btn btn-dark btn-sm fa fa-file-pdf-o"> Export All to PDF</a> --}}
+                            <a href="/rekapabsensiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
+                            <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Download PDF</a>
                             <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Import Excel</a>
                             <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Import CSV</a>
                         </div>

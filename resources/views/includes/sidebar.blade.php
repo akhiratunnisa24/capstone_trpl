@@ -99,6 +99,8 @@
                 </li>
 
             </ul>
+    
+        <?php } elseif ($role == 3) { ?>
 
             <?php } elseif ($role == 3) { ?>
 

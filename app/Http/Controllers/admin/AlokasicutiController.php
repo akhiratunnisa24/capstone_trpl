@@ -16,7 +16,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AlokasicutiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         //index
         $alokasicuti = Alokasicuti::all();
@@ -27,7 +27,20 @@ class AlokasicutiController extends Controller
         $jeniscuti= DB::table('settingalokasi')
         ->join('jeniscuti', 'settingalokasi.id_jeniscuti','=','jeniscuti.id')
         ->get();
-        return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','alokasicuti','settingalokasi'));
+
+        $departemen = DB::table('settingalokasi')
+        ->join('departemen', 'settingalokasi.departemen','=','departemen.id')
+        ->get();
+        // ->join('departemen','settingalokasi.departemen','=','departemen.id')
+      
+        // $getDepartemen = DB::table('settingalokasi')
+        // ->join('departemen', 'settingalokasi.departemen','=','departemen.id')
+        // ->join('karyawan', 'karyawan.divisi','=','departemen.id')
+        // ->where('settingalokasi.id_jeniscuti','=',$request->id_jeniscuti)
+        // ->where('settingalokasi.departemen','=','karyawan.divisi')
+        // ->select('departemen.*','settingalokasi.departemen')
+        // ->first();
+        return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','alokasicuti','settingalokasi','departemen'));
     }
 
     public function getTglmasuk(Request $request)
@@ -52,7 +65,7 @@ class AlokasicutiController extends Controller
     public function getSettingalokasi(Request $request)
     {
         try {
-            $getSettingalokasi = Settingalokasi::select('id','id_jeniscuti','durasi','mode_alokasi')
+            $getSettingalokasi = Settingalokasi::select('id','id_jeniscuti','durasi','mode_alokasi','departemen')
             ->where('id_jeniscuti','=',$request->id_jeniscuti)->first();
 
             if(!$getSettingalokasi) {
@@ -66,6 +79,26 @@ class AlokasicutiController extends Controller
             ], 500);
         }
     }
+
+    // public function getDepartemen(Request $request)
+    // {
+    //     try {
+    //         $getDepartemen = DB::table('settingalokasi')
+    //         ->join('departemen', 'settingalokasi.departemen','=','departemen.id')
+    //         ->select('departemen.*','settingalokasi.departemen')
+    //         ->where('id_jeniscuti','=',$request->id_jeniscuti)->first();
+
+    //         if(!$getDepartemen) {
+    //             throw new \Exception('Data not found');
+    //         }
+    //         return response()->json($getDepartemen,200);
+
+    //     } catch (\Exception $e){
+    //         return response()->json([
+    //             'message' =>$e->getMessage()
+    //         ], 500);
+    //     }
+    // }
 
     public function store(Request $request)
     {

@@ -6,7 +6,6 @@ use PDF;
 use Carbon\Carbon;
 use App\Models\Absensi;
 use App\Models\Karyawan;
-use App\Models\Departemen;
 use Illuminate\Http\Request;
 use App\Exports\AbsensiExport;
 use App\Imports\AbsensiImport;
@@ -14,9 +13,10 @@ use App\Imports\AttendanceImport;
 use Illuminate\Support\Facades\DB;
 use App\Exports\RekapabsensiExport;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AbsensiController extends Controller
 {
@@ -53,6 +53,11 @@ class AbsensiController extends Controller
             ->get();
         }
         return view('admin.absensi.index',compact('absensi','karyawan'));
+        
+        //menghapus filter data
+        $request->session()->forget('id_karyawan');
+        $request->session()->forget('bulan');
+        $request->session()->forget('tahun');
     }
 
     public function create()
@@ -223,9 +228,12 @@ class AbsensiController extends Controller
         $tahun      = $request->query('tahun',Carbon::now()->format('Y'));
 
         // simpan session
-        $idkaryawan = $request->session()->get('idkaryawan');
-        $bulan      = $request->session()->get('bulan');
-        $tahun      = $request->session()->get('tahun',);
+        // $idkaryawan = $request->session()->get('idkaryawan');
+        // $bulan      = $request->session()->get('bulan');
+        // $tahun      = $request->session()->get('tahun',);
+        $request->session()->put('id_karyawan', $idkaryawan);
+        $request->session()->put('bulan', $bulan);
+        $request->session()->put('tahun', $tahun);
 
         // dd($idkaryawan,$bulan,$tahun );
     
@@ -238,7 +246,8 @@ class AbsensiController extends Controller
             ->get();
             // dd($data);
         }else{
-            $data = Absensi::all();
+            $data = Absensi::with('karyawans','departemens')
+            ->get();
         }
         return Excel::download(new RekapabsensiExport($data,$idkaryawan),'rekap_absensi_bulanan.xlsx');
     }
