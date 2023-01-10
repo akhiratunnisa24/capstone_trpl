@@ -1,8 +1,4 @@
-<style>
-    .modal-backdrop:nth-child(2n-1) {
-        opacity: 90;
-    }
-</style>
+
 {{-- FORM SETTING ALOKASI--}}
 <div class="modal fade" id="newalokasi" tabindex="-1" role="dialog" aria-labelledby="newalokasi" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -117,10 +113,10 @@
 </div>
 
 <!-- jQuery  -->
-<script src="assets/js/jquery.min.js"></script>
+{{-- <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/app.js"></script>
-<script src="assets/pages/form-advanced.js"></script>
+<script src="assets/pages/form-advanced.js"></script> --}}
 
 <!-- Script untuk mengambil nilai settingalokasi  -->
 <script>

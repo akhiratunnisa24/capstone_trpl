@@ -23,9 +23,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <a href="" class="btn btn-dark fa fa-plus" data-toggle="modal" data-target="#newalokasi"> Tambah Alokasi</a>
-                        <a href="" class="btn btn-dark fa fa-cloud-download" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
+                    <div class="panel-heading clearfix">
+                        <a href="" class="btn btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#newalokasi"> Tambah
+                            Alokasi</a>
                     </div>
                     {{-- modals --}}
                     @include('admin.alokasicuti.addalokasi')

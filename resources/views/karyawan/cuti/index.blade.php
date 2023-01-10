@@ -11,9 +11,7 @@
                     <li>Human Resources Management System</li>
                     <li class="active">Ajukan Cuti & Izin</li>
                 </ol>
-
-                <div class="clearfix">
-                </div>
+                <div class="clearfix"></div>               
             </div>
         </div>
     </div>
@@ -43,9 +41,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <strong>List Permohonan Cuti </strong>
-                                            <a href="" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
+                                        <div class="panel-heading clearfix">
+                                            <strong>List Permohonan Cuti</strong>
+                                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                                 data-target="#Modal"> Ajukan Cuti</a>
                                         </div>
                                         <!-- modals tambah data cuti -->
@@ -143,9 +141,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="panel panel-primary">
-                                        <div class="panel-heading">
+                                        <div class="panel-heading clearfix">
                                             <strong>List Permohonan Izin</strong>
-                                            <a href="" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
+                                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                                 data-target="#smallModal"> Ajukan Izin</a>
                                         </div>
                                         {{-- modals tambah data izin --}}
@@ -265,7 +263,7 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
 
 
 

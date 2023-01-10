@@ -63,6 +63,17 @@
                     <a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a>
                 </li>
 
+                {{-- <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><span class="text-info panel-title">CUTI & IZIN</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a></li>
+                                    <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
+                                    <li> <a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a></li>
+                                    <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li>
+                                </ul>
+                            </li>
+                             --}}
+
             </ul>
 
             <?php } elseif ($role == 2) { ?>

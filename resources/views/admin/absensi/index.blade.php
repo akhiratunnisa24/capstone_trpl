@@ -113,8 +113,8 @@
                                     <div class="form-group">
                                         <label></label>
                                         <div>
-                                            <button type="submit" id="search" class="col-md-6 btn btn-md btn-success fa fa-filter pull-left"> Filter Data</button>
-                                            <a href="{{ route('absensi.index') }}" class="col-md-5 btn btn-md btn-success fa fa-refresh pull-left">  Reset</a>
+                                            <button type="submit" id="search" class="btn btn-md btn-success fa fa-filter"> Filter</button>
+                                            <a href="{{ route('absensi.index') }}" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@
                             {{-- <a href="/exportexcel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export All to Excel</a>
                             <a href="/exportpdf" class="btn btn-dark btn-sm fa fa-file-pdf-o"> Export All to PDF</a> --}}
                             <a href="/rekapabsensiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                            <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Export PDF</a>
+                            <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
                             <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Import Excel</a>
                             <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Import CSV</a>
                         </div>
