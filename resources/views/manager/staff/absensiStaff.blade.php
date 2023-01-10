@@ -13,7 +13,7 @@
                 <div class="panel-body">
                     <form class="" action="">
                         <div class="row">
-                            <div class="col-sm-1"></div>
+                            {{-- <div class="col-sm-1"></div> --}}
                             <div class="col-sm-3 col-xs-12">
                                 <div class="m-t-20">
                                     <div class="form-group">
@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-xs-12">
+                            <div class="col-sm-3 col-xs-12">
                                 <div class="m-t-20">
                                     <div class="form-group">
                                         <label>Bulan</label>
@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-xs-12">
+                            <div class="col-sm-3 col-xs-12">
                                 <div class="m-t-20">
                                     <div class="form-group">
                                         <label>Tahun</label>
@@ -86,8 +86,8 @@
                                     <div class="form-group">
                                         <label></label>
                                         <div>
-                                            <button type="submit" id="search" class="btn btn-md btn-success fa fa-search"> Search</button>
-                                            <a href="{{ route('absensi.Staff') }}" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
+                                            <button type="submit" id="search" class="col-md-6 btn btn-md btn-success fa fa-filter pull-left"> Filter Data</button>
+                                            <a href="{{ route('absensi.Staff') }}" class="col-md-5 btn btn-md btn-success fa fa-refresh pull-left"> Reset</a>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@
                             {{-- <a href="/export-all-excel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export All to Excel</a>
                             <a href="/export-pdf" class="btn btn-dark btn-sm fa fa-file-pdf-o"> Export All to PDF</a> --}}
                             <a href="/export-to-excel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                            <a href="/export-to-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Download PDF</a>
+                            <a href="/export-to-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Export PDF</a>
                         </div>
                         <div class="panel-body m-b-5">
                             <div class="row">
