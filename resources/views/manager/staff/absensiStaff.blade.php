@@ -86,7 +86,7 @@
                                     <div class="form-group">
                                         <label></label>
                                         <div>
-                                            <button type="submit" id="search" class="btn btn-md btn-success fa fa-search"> Search</button>
+                                            <button type="submit" id="search" class="btn btn-md btn-success fa fa-filter"> Filter</button>
                                             <a href="{{ route('absensi.Staff') }}" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
                                         </div>
                                     </div>
