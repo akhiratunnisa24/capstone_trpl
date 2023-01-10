@@ -27,6 +27,9 @@ class AbsensiController extends Controller
      */
     public function index(Request $request)
     {
+        $role = Auth::user()->role;
+        
+        if ($role == 1) {
         //filter data
         $karyawan = Karyawan::all();
         $idkaryawan = $request->id_karyawan;
@@ -58,6 +61,11 @@ class AbsensiController extends Controller
         $request->session()->forget('id_karyawan');
         $request->session()->forget('bulan');
         $request->session()->forget('tahun');
+
+        } else {
+        
+            return redirect()->back(); 
+        }
     }
 
     public function create()
