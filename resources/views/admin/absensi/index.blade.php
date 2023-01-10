@@ -13,7 +13,7 @@
                 <div class="panel-body">
                     <form class="" action="">
                         <div class="row">
-                            <div class="col-sm-1"></div>
+                            {{-- <div class="col-sm-1"></div> --}}
                             <div class="col-sm-3 col-xs-12">
                                 <div class="m-t-20">
                                     <div class="form-group">
@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                             </div>   --}}
-                            <div class="col-sm-2 col-xs-12">
+                            <div class="col-sm-3 col-xs-12">
                                 <div class="m-t-20">
                                     <div class="form-group">
                                         <label>Bulan</label>
@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-xs-12">
+                            <div class="col-sm-3 col-xs-12">
                                 <div class="m-t-20">
                                     <div class="form-group">
                                         <label>Tahun</label>

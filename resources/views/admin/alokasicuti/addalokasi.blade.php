@@ -192,7 +192,8 @@
     });
 </script>
 <script>
-    function durasicuti(){
+    function durasicuti()
+    {
         let start= $('#tgl_masuk').val();
         let end  = $('#tgl_sekarang').val();
 
@@ -206,4 +207,5 @@
         let durasi = selisihBulan+(selisihTahun*12);
 
         console.info(durasi);
+    }
 </script>

@@ -44,6 +44,10 @@ class karyawanController extends Controller
 
     public function index()
     {
+        $role = Auth::user()->role;
+        
+        if ($role == 1) {
+
         $karyawan = karyawan::all()->sortByDesc('created_at');
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -55,28 +59,56 @@ class karyawanController extends Controller
             'row' => $row
         ];
         return view('karyawan.index', compact('karyawan', 'row', 'akun'));
+
+        } else {
+
+            return redirect()->back(); 
+        }
     }
+
+    // public function getEmail(Request $request)
+    // {
+    //     try {
+    //         $getEmail = Karyawan::select('email')
+    //             ->where('id', '=', $request->id_pegawai)->first();
+
+    //         // dd($request->id_karyawan,$getTglmasuk);
+    //         if (!$getEmail) {
+    //             throw new \Exception('Data not found');
+    //         }
+    //         return response()->json($getEmail, 200);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'message' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
 
     public function getEmail(Request $request)
     {
         try {
-            $getEmail = Karyawan::select('email')
-                ->where('id', '=', $request->id_pegawai)->first();
+            $getTglmasuk = Karyawan::select('tglmasuk')
+            ->where('id','=',$request->id_karyawan)->first();
 
             // dd($request->id_karyawan,$getTglmasuk);
-            if (!$getEmail) {
+            if(!$getTglmasuk) {
                 throw new \Exception('Data not found');
             }
-            return response()->json($getEmail, 200);
-        } catch (\Exception $e) {
+            return response()->json($getTglmasuk,200);
+            
+        } catch (\Exception $e){
             return response()->json([
-                'message' => $e->getMessage()
+                'message' =>$e->getMessage()
             ], 500);
         }
     }
 
     public function karyawanDashboard()
     {
+        $role = Auth::user()->role;
+        
+        if ($role == 2 ) {
+
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
         $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
@@ -129,11 +161,19 @@ class karyawanController extends Controller
 
         ];
         return view('karyawan.dashboardKaryawan', $output);
+
+        } else {
+
+            return redirect()->back(); 
+        }
     }
 
 
     public function create()
     {
+        $role = Auth::user()->role;
+        
+        if ($role == 1) {
 
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $departemen = Departemen::all();
@@ -143,6 +183,11 @@ class karyawanController extends Controller
             'departemen' => $departemen,
         ];
         return view('karyawan.create', $output);
+
+        } else {
+
+            return redirect()->back(); 
+        }
     }
 
 
@@ -382,6 +427,10 @@ class karyawanController extends Controller
 
     public function edit($id)
     {
+        $role = Auth::user()->role;
+        
+        if ($role == 1) {
+
         $karyawan = Karyawan::findOrFail($id);
         $keluarga = Keluarga::where('id_pegawai', $id)->first();
         $kdarurat = Kdarurat::where('id_pegawai', $id)->first();
@@ -400,6 +449,10 @@ class karyawanController extends Controller
             'rpendidikan' => $rpendidikan,
             'rpekerjaan' => $rpekerjaan,
         ]);
+        } else {
+ 
+            return redirect()->back(); 
+        }
     }
 
 
@@ -519,6 +572,10 @@ class karyawanController extends Controller
 
     public function show($id)
     {
+        $role = Auth::user()->role;
+        
+        if ($role == 1) {
+
         $karyawan = karyawan::findOrFail($id);
         $keluarga = Keluarga::where('id_pegawai', $id)->first();
 
@@ -539,6 +596,10 @@ class karyawanController extends Controller
             'rpendidikan' => $rpendidikan,
             'rpekerjaan' => $rpekerjaan,
         ]);
+        } else {
+    
+            return redirect()->back(); 
+        }
     }
 
     public function showkaryawan($id)
@@ -614,40 +675,4 @@ class karyawanController extends Controller
     {
         return Excel::download(new KaryawanExport, 'data_karyawan.xlsx');
     }
-
-    // public function import_excel(Request $request)
-    // {
-    //     Excel::import(new SiswasImport, $request->file('file'));
-    //     return redirect()->back();
-    // }
-
-
-    // public function showRegistrationForm()
-    // {
-
-    //     // $namaKaryawan = Karyawan::pluck('nama', 'id');
-    //     // $namaKaryawan = Karyawan::all();
-    //     $karyawan = Karyawan::all();
-
-    //     $output = [
-    //         'karyawan' => $karyawan,
-    //     ];
-
-    //     return view('karyawan.karyawanRegister', $output);
-    // }
-
-    // function createRegister(array $data)
-    // {
-    //     // $namaKaryawan = Karyawan::pluck('nama', 'id');
-    //     // $namaKaryawan = Karyawan::all();
-    //     $karyawan = Karyawan::where('id',$data['id_pegawai'])->first();
-
-    //     return User::create([
-    //         'role' => $data['role'],
-    //         'id_pegawai' => $data['id_pegawai'],
-    //         'name' => $karyawan['nama'],
-    //         'email' => $data['email'],
-    //         'password' => Hash::make($data['password']),
-    //     ]);
-    // }
 }

@@ -8,11 +8,15 @@ use App\Models\Departemen;
 use Illuminate\Http\Request;
 use App\Models\Settingalokasi;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class SettingalokasicutiController extends Controller
 {
     public function index()
     {
+        $role = Auth::user()->role;        
+        if ($role == 1) {
+
         $id = Settingalokasi::find('id');
         $settingalokasi = Settingalokasi::orderBy('id','asc')->get();
         //untuk edit
@@ -20,6 +24,11 @@ class SettingalokasicutiController extends Controller
         $jeniscuti= Jeniscuti::all();
         $departemen = Departemen::all();
         return view('admin.settingcuti.setting_index', compact('settingalokasi','jeniscuti','setal','departemen'));
+
+        } else {
+            
+            return redirect()->back(); 
+        }
     } 
 
 

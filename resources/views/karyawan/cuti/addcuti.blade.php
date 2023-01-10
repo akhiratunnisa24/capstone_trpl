@@ -8,13 +8,13 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="Modal">Form Permohonan Cuti</h4>
                 </div>
-                @if (session()->has('error'))
+                @if(session()->has('error'))
                     <div class="alert alert-danger">
                         {{ session()->get('error') }}
                     </div>
                 @endif
                 <div class="modal-body">
-                    <form action="{{ route('cuti.store')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('cuti.store')}}" onsubmit="return validate()" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="form-group col-sm">
@@ -27,13 +27,7 @@
                             <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
                             <select name="id_jeniscuti" id="id_jeniscuti" class="form-control" required>
                                 <option>-- Pilih Kategori --</option>
-                                {{-- @foreach ($jeniscuti as $data)
-                                    @if(isset($sisa_cuti[$data->id]) && $sisa_cuti[$data->id] >= 0)
-                                            <option value="{{ $data->id}}">
-                                            (sisa cuti: {{ isset($sisa_cuti[$data->id]) ? $sisa_cuti[$data->id] : 0 }} hari) {{ $data->jenis_cuti }} 
-                                        </option>
-                                    @endif
-                                @endforeach --}}
+                                
                                 @foreach ($jeniscuti as $data)
                                     @if(isset($sisa_cuti[$data->id]) && $sisa_cuti[$data->id] >= 0) 
                                          <option value="{{ $data->id}}">
@@ -45,14 +39,12 @@
                                         </option>
                                     @endif
                                 @endforeach
-
                             </select> 
                         </div>
                         <div class="form-group col-sm">
                             <label for="keperluan" class="col-form-label">Keperluan</label>
                             <input type="text" class="form-control" name="keperluan" id="keperluan" placeholder="Masukkan keperluan" required>
                         </div>
-
                         <div class="row">
                             <div class="col-sm-6 col-xs-12">
                                 <div class="m-t-20">
@@ -82,14 +74,23 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="form-group col-sm">
-                            <label for="jml_cuti" class="col-form-label">Jumlah Cuti</label>
-                            <input type="text" class="form-control" name="jml_cuti" id="jumlah" readonly>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <div class="form-group col-sm">
+                                    <label for="" class="col-form-label">Durasi Tersedia</label>
+                                    <input type="text" class="form-control" name="durasi" id="durasi" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <div class="form-group col-sm">
+                                    <label for="jml_cuti" class="col-form-label">Jumlah Cuti</label>
+                                    <input type="text" class="form-control" name="jml_cuti" id="jumlah" readonly>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group col-sm">
-                            <input type="hidden" class="form-control" name="status" id="status" value="Pending" readonly>
+                            <input type="hidden" class="form-control" name="status" id="status" value="Pending">
                         </div>
                             
                         <div class="modal-footer">
@@ -117,18 +118,29 @@
      <!-- Plugins Init js -->
      <script src="assets/pages/form-advanced.js"></script>
 
+     <!-- script untuk mengambil data durasi dari tabel alokasi cuti  -->
+    <script>
+        $('#id_jeniscuti').on('change',function(e){
+            var id_jeniscuti = e.target.value;
+            $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                            .attr('content')
+                        }
+            });
+            $.ajax({
+                type:"POST",
+                url: '{{route('get.Durasi')}}',
+                data: {'id_jeniscuti':id_jeniscuti},
+                success:function(data){
+                    $('#durasi').val(data.durasi);
+                    console.log(data?.durasi)
+                }
+            });
+        });
+    </script>
      <script type="text/javascript">
-        // $('#datepicker-autoclosea').datepicker({
-        //     format: "yyyy/mm/dd",
-        //     autoclose: true,
-        //     todayHighlight: true
-        // });
-        // $('#datepicker-autocloseb').datepicker({
-        //     format: "yyyy/mm/dd",
-        //     autoclose: true,
-        //     todayHighlight: true
-        // });
-        function jumlahcuti(){
+        function jumlahcuti()
+        {
             var start= $('#datepicker-autoclosea').val();
             var end  = $('#datepicker-autocloseb').val();
 
@@ -137,8 +149,8 @@
             var daysOfYear = [];
 
             //untuk mendapatkan jumlah hari cuti
-            for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1)) {
-                
+            for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1)) 
+            {
                 //cek workdays
                 let tanggal = new Date(d);
                 if(tanggal.getDay() !=0 && tanggal.getDay() !=6){
@@ -163,14 +175,28 @@
 
             $('#jumlah').val(daysOfYear.length ?? 0);
 
-            //validasi jika jumlah cuti melebihi sisa cuti
-            if (isset($sisa_cuti[request()->id_jeniscuti]) && request()->jumlah_cuti '>' $sisa_cuti[request()->id_jeniscuti]) 
-            {
-                session()->flash('error', 'Jumlah cuti yang diajukan melebihi sisa cuti yang tersisa. Silakan pilih jumlah cuti yang lebih kecil.');
-                return redirect()->back();
-            }
+            // if (isset($sisa_cuti[request()->id_jeniscuti]) && request()->jumlah_cuti > $sisa_cuti[request()->id_jeniscuti]) 
+            // {
+            //     session()->flash('error', 'Jumlah cuti yang diajukan melebihi sisa cuti yang tersisa. Silakan pilih jumlah cuti yang lebih kecil.');
+            //     return redirect()->back();
+            // }
         };
     </script>
+    {{-- <script>
+        function validate() {
+            var sisaCuti = {!! json_encode($sisa_cuti) !!};// getting value of sisa_cuti from controller 
+            // console.log(sisaCuti);
+            var jumlah_cuti = document.getElementById("jumlah_cuti").value; // getting input value of jumlah cuti
+            var id_jeniscuti = document.getElementById("id_jeniscuti").value; // getting input value of id_jeniscuti
+           
+            if (sisa_cuti[id_jeniscuti] < jumlah_cuti) {
+                alert("Jumlah cuti yang diajukan melebihi sisa cuti yang tersisa. Silakan pilih jumlah cuti yang lebih kecil.");
+                console.info(sisa_cuti[id_jeniscuti] < jumlah_cuti);
+                return false;
+            }
+            return true;
 
+        }
+    </script> --}}
     
    

@@ -13,11 +13,15 @@ use App\Imports\AlokasicutiImport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 class AlokasicutiController extends Controller
 {
     public function index(Request $request)
     {
+        $role = Auth::user()->role;        
+        if ($role == 1) {
+        
         //index
         $alokasicuti = Alokasicuti::all();
 
@@ -41,6 +45,11 @@ class AlokasicutiController extends Controller
         // ->select('departemen.*','settingalokasi.departemen')
         // ->first();
         return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','alokasicuti','settingalokasi','departemen'));
+        
+        } else {
+            
+            return redirect()->back(); 
+        }
     }
 
     public function getTglmasuk(Request $request)

@@ -72,6 +72,7 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 Route::get('/absensi-karyawan',[AbsensiController::class,'create'])->name('absensi_karyawan');
 Route::get('/history-absensi', [AbsensiKaryawanController::class,'index']);
 Route::get('/cuti-karyawan',[CutikaryawanController::class,'index'])->name('cuti_karyawan');
+Route::post('/getdurasialokasi', [CutikaryawanController::class, 'getDurasi'])->name('get.Durasi');
 Route::post('/cuti_karyawan', [CutikaryawanController::class, 'store'])->name('cuti.store');
 Route::get('/cuti_karyawan/{id}', [JeniscutiController::class, 'show'])->name('cutis_show');
 //izin

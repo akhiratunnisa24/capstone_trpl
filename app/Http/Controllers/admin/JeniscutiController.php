@@ -6,16 +6,25 @@ use App\Models\Jeniscuti;
 use App\Models\Jenisizin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class JeniscutiController extends Controller
 {
     public function index(Request $request)
     {
+        $role = Auth::user()->role;        
+        if ($role == 1) {
+
         $type = $request->query('type', 1);
         
         $jeniscuti = Jeniscuti::latest()->paginate(10);
         $jenisizin = Jenisizin::latest()->paginate(10);
         return view('admin.kategori.index', compact('jeniscuti','jenisizin','type'));
+
+        } else {
+            
+            return redirect()->back(); 
+        }
     }
 
     public function store(Request $request)
