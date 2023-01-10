@@ -17,13 +17,6 @@
         </div>
     </div>
 </div>
-<div class="btn-group" style="margin-left:15px;margin-bottom:10px" role="group" aria-label="Basic example">
-    <a href="" class="btn btn-dark fa fa-cloud-download" data-toggle="modal" data-target="#ModalImport"> Import
-        Excel</a>
-    {{-- <a href="" class="btn btn-dark" data-toggle="modal" data-target="#smallModal">Import CSV</a> --}}
-    {{-- form import --}}
-    @include('admin.alokasicuti.importexcel')
-</div>
 <!-- Start content -->
 <div class="content">
     <div class="container">
@@ -31,18 +24,17 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <a href="" class="btn btn-dark fa fa-plus" data-toggle="modal" data-target="#newalokasi"> Tambah
-                            Alokasi</a>
+                        <a href="" class="btn btn-dark fa fa-plus" data-toggle="modal" data-target="#newalokasi"> Tambah Alokasi</a>
+                        <a href="" class="btn btn-dark fa fa-cloud-download" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
                     </div>
-                    {{-- form setting --}}
+                    {{-- modals --}}
                     @include('admin.alokasicuti.addalokasi')
+                    @include('admin.alokasicuti.importexcel')
 
                     <div class="panel-body m-b-5">
                         <div class="row">
                             <div class="col-md-12">
-                                <table id="datatable-responsive7"
-                                    class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
-                                    width="100%">
+                                <table id="datatable-responsive7" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
                                             {{-- <th>id</th> --}}

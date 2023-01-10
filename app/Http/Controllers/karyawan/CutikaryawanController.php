@@ -5,9 +5,8 @@ namespace App\Http\Controllers\karyawan;
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
-use App\Models\Jeniscuti;
 use App\Models\Jenisizin;
-use App\Models\Karyawan;
+use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -41,13 +40,30 @@ class CutikaryawanController extends Controller
         $sisa_cuti = array();
         foreach ($sisacuti as $data) {
             $sisa_cuti[$data->id_jeniscuti] = $data->sisa;
-            // dd($sisa_cuti);
         }
         
         //form izin
         $jenisizin = Jenisizin::all();
         $tipe = $request->query('tipe', 1);
         return view('karyawan.cuti.index', compact('izin','jenisizin','cuti','jeniscuti','karyawan','tipe','sisa_cuti'));
+    }
+
+    public function getDurasi(Request $request)
+    {
+        try {
+            $getDurasi = Alokasicuti::select('durasi')
+            ->where('id_jeniscuti','=',$request->id_jeniscuti)->first();
+
+            if(!$getDurasi) {
+                throw new \Exception('Data not found');
+            }
+            return response()->json($getDurasi,200);
+            
+        } catch (\Exception $e){
+            return response()->json([
+                'message' =>$e->getMessage()
+            ], 500);
+        } 
     }
 
     public function store(Request $request)
@@ -62,10 +78,8 @@ class CutikaryawanController extends Controller
         $cuti->tgl_selesai = Carbon::parse($request->tgl_selesai)->format("Y-m-d");
         $cuti->jml_cuti    = $request->jml_cuti;
         $cuti->status      = 'Pending';
-        // dd($cuti);
-        $cuti->save();
 
-        // dd($cuti);
+        $cuti->save();
         return redirect()->back();
     }
 
