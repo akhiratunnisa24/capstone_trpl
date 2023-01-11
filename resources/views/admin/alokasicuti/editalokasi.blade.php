@@ -121,8 +121,8 @@
 </div>
 
 <!-- jQuery  -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/app.js"></script>
+{{-- <script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/app.js"></script> --}}
 <script src="assets/pages/form-advanced.js"></script>
 
 <!-- script untuk mengambil data alokasi cuti  -->

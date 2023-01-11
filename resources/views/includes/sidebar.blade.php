@@ -47,7 +47,7 @@
 
 
 
-                <li>
+                {{-- <li>
                     <a><span class="text-info panel-title">CUTI & IZIN</span></a>
                 </li>
                 <li>
@@ -61,20 +61,17 @@
                 </li>
                 <li>
                     <a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a>
-                </li>
+                </li> --}}
 
-                {{-- <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><span class="text-info panel-title">CUTI & IZIN</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
-                                <ul class="list-unstyled">
-                                    <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a></li>
-                                    <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
-                                    <li> <a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a></li>
-                                    <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li>
-                                </ul>
-                            </li>
-                             --}}
-
-            </ul>
+                <li class="has_sub">
+    <a href="javascript:void(0);" class="waves-effect"><span class="text-info panel-title">CUTI & IZIN</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+    <ul class="list-unstyled">
+        <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a></li>
+        <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
+        <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a></li>
+        <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li>
+    </ul>
+</li>
 
             <?php } elseif ($role == 2) { ?>
 
@@ -147,7 +144,7 @@
                 </li>
 
 
-                <li>
+                {{-- <li>
                     <a><span class="text-info panel-title">DATA STAFF</span></a>
                 </li>
                 <li>
@@ -161,7 +158,19 @@
                 <li>
                     <a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
                             Staff</span></a>
-                </li>
+                </li> --}}
+
+                <li class="has_sub">
+    <a href="javascript:void(0);" class="waves-effect"><span class="text-info panel-title">DATA STAFF</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+    <ul class="list-unstyled">
+        <li> <a href="/data-staff" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data
+                            Staff</span></a></li>
+        <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi
+                            Staff</span></a></li>
+        <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
+                            Staff</span></a></li>
+    </ul>
+</li>
 
             </ul>
 

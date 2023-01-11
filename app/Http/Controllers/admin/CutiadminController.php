@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Models\Cuti;
 use App\Models\Izin;
 use App\Models\Alokasicuti;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -15,13 +16,14 @@ class CutiadminController extends Controller
    
     public function index(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
         if ($role == 1) {
             
         $type = $request->query('type', 1);
         $cuti = Cuti::latest()->paginate(10);
         $izin = Izin::latest()->paginate(10);
-        return view('admin.cuti.index', compact('cuti','izin','type'));
+        return view('admin.cuti.index', compact('cuti','izin','type','row'));
         
         } else {
         

@@ -3233,7 +3233,7 @@ body.fixed-left .side-menu.left {
     margin: 3px 0 0 0;
 }
 #sidebar-menu > ul > li > a.active {
-    background: #03a9f4 !important;
+    background: #03a8f400 !important;
     color: #ffffff;
 }
 #sidebar-menu > ul > li > a.active .badge {

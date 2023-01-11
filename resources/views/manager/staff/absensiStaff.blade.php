@@ -156,5 +156,5 @@
     <script src="assets/js/jquery.min.js"></script>
     <!-- Datatable init js -->
     <script src="assets/pages/datatables.init.js"></script>
-    <script src="assets/js/app.js"></script>
+    {{-- <script src="assets/js/app.js"></script> --}}
 @endsection

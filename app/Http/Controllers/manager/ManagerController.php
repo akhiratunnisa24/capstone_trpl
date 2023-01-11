@@ -19,6 +19,7 @@ class ManagerController extends Controller
 {
     public function dataStaff(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         //mengambil id_departemen manager
         $manager_iddep = DB::table('karyawan')
         ->where('id','=',Auth::user()->id_pegawai)
@@ -30,11 +31,12 @@ class ManagerController extends Controller
         $staff= Karyawan::with('departemens')
         ->where('divisi',$manager_iddep->divisi)->get();
 
-        return view('manager.staff.dataStaff', compact('staff'));
+        return view('manager.staff.dataStaff', compact('staff','row'));
     }
 
     public function absensiStaff(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         //mengambil id_departemen manager
         $middep = DB::table('absensi')
         ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
@@ -73,7 +75,7 @@ class ManagerController extends Controller
            //saring data dengan id_departemen sama dengan manager secara keseluruhan
             $absensi= Absensi::where('id_departement',$middep->id_departement)->get();
         }
-        return view('manager.staff.absensiStaff', compact('absensi','karyawan'));
+        return view('manager.staff.absensiStaff', compact('absensi','karyawan','row'));
         //menghapus filter data
         $request->session()->forget('id_karyawan');
         $request->session()->forget('bulan');
@@ -82,6 +84,8 @@ class ManagerController extends Controller
 
     public function cutiStaff(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
         $manag_depart = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
         ->select('divisi')->first();
 
@@ -95,7 +99,7 @@ class ManagerController extends Controller
         ->distinct()
         ->get();
 
-        return view('manager.staff.cutiStaff', compact('cutistaff'));
+        return view('manager.staff.cutiStaff', compact('cutistaff','row'));
     }
 
     public function showCuti($id)

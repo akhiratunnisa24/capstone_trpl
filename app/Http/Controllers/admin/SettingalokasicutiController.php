@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use Carbon\Carbon;
 use App\Models\Jeniscuti;
 use App\Models\Departemen;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use App\Models\Settingalokasi;
 use App\Http\Controllers\Controller;
@@ -14,6 +15,7 @@ class SettingalokasicutiController extends Controller
 {
     public function index()
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
         if ($role == 1) {
 
@@ -23,7 +25,7 @@ class SettingalokasicutiController extends Controller
         $setal = Settingalokasi::find($id);
         $jeniscuti= Jeniscuti::all();
         $departemen = Departemen::all();
-        return view('admin.settingcuti.setting_index', compact('settingalokasi','jeniscuti','setal','departemen'));
+        return view('admin.settingcuti.setting_index', compact('settingalokasi','jeniscuti','setal','departemen','row'));
 
         } else {
             

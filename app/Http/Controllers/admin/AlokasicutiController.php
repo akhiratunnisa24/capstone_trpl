@@ -19,6 +19,7 @@ class AlokasicutiController extends Controller
 {
     public function index(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
         if ($role == 1) {
         
@@ -44,7 +45,7 @@ class AlokasicutiController extends Controller
         // ->where('settingalokasi.departemen','=','karyawan.divisi')
         // ->select('departemen.*','settingalokasi.departemen')
         // ->first();
-        return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','alokasicuti','settingalokasi','departemen'));
+        return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','alokasicuti','settingalokasi','departemen','row'));
         
         } else {
             

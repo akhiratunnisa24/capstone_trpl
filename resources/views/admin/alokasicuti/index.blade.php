@@ -104,8 +104,8 @@
 </div> <!-- content -->
 
 <!-- jQuery  -->
-<script src="assets/js/jquery.min.js"></script>
-{{-- <script src="assets/pages/datatables.init.js"></script> --}}
+{{-- <script src="assets/js/jquery.min.js"></script> --}}
+<script src="assets/pages/datatables.init.js"></script>
 
 <script src="assets/js/app.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

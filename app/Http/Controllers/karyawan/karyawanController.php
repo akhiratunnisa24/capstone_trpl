@@ -488,7 +488,7 @@ class karyawanController extends Controller
             'nik' => $request->post('nikKaryawan'),
             'gol_darah' => $request->post('gol_darahKaryawan'),
             'jabatan' => $request->post('jabatanKaryawan'),
-            'created_at' => new \DateTime(),
+            // 'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
             'foto' => $filename,
         );
@@ -505,7 +505,7 @@ class karyawanController extends Controller
             'pekerjaan' => $request->post('pekerjaanPasangan'),
 
 
-            'created_at' => new \DateTime(),
+            // 'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
 
         );
@@ -523,7 +523,7 @@ class karyawanController extends Controller
             'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
             'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
 
-            'created_at' => new \DateTime(),
+            // 'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
 
         );
@@ -541,7 +541,7 @@ class karyawanController extends Controller
             'alasan_berhenti' => $request->post('alasanBerhenti'),
             'gaji' => $request->post('gajiRpekerjaan'),
 
-            'created_at' => new \DateTime(),
+            // 'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
 
         );

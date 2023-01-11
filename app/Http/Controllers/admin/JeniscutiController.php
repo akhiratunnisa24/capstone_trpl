@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Jeniscuti;
 use App\Models\Jenisizin;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ class JeniscutiController extends Controller
 {
     public function index(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
         if ($role == 1) {
 
@@ -19,7 +21,7 @@ class JeniscutiController extends Controller
         
         $jeniscuti = Jeniscuti::latest()->paginate(10);
         $jenisizin = Jenisizin::latest()->paginate(10);
-        return view('admin.kategori.index', compact('jeniscuti','jenisizin','type'));
+        return view('admin.kategori.index', compact('jeniscuti','jenisizin','type','row'));
 
         } else {
             
