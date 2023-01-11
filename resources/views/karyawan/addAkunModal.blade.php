@@ -36,35 +36,23 @@
                     </div>
 
                     <div class="form-group" id="id_pegawai">
-
                         <div class="col-xs-12" id="id_pegawai">
                             <label for="id_pegawai" class="form-label">Karyawan</label>
-                            <select id="id_pegawai" class="form-control" name="id_pegawai" required>
+                            <select id="id_karyawan" class="form-control" name="id_pegawai" required>
                                 <option value="">Pilih Karyawan</option>
                                 @foreach ($akun as $k)
                                     <option value="{{ $k->id }}">{{ $k->nama }}</option>
                                 @endforeach
                             </select>
-
-                            @error('id_pegawai')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <div class="col-xs-12" id="emailKaryawan" >
-                            <label for="exampleInputEmail1" class="form-label">Email</label>
+                        <div class="col-xs-12">
+                            <label for="emailKaryawan" class="form-label">Email</label>
                             <input id="emailKaryawan" type="text" class="form-control" name="emailKaryawan"
-                                autocomplete="off" placeholder="Email Address">
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                autocomplete="off" placeholder="Email Address" readonly>
+
                         </div>
                     </div>
 
@@ -117,42 +105,6 @@
 
                 </form>
 
-                
-                <div class="form-group col-sm" id="id_karyawan">
-                    <label for="id_karyawan" class="col-form-label">Karyawan</label>
-                    <select name="id_karyawan" id="id_karyawan" class="form-control" required>
-                        <option value="">Pilih Karyawan</option>
-                        @foreach ($karyawan as $data)
-                            {{-- @if($data->divisi == $departemen->id) --}}
-                                <option value="{{ $data->id }}">departemen: {{ $data->divisi }} -- {{ $data->nama }}</option>
-                            {{-- @endif --}}
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="durasi" class="col-form-label">Durasi (Hari)</label>
-                    <input type="text" class="form-control" name="durasi" placeholder="durasi" id="durasi"
-                        readonly>
-                </div>
-                <div class="form-group">
-                    <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
-                    <input type="text" class="form-control" name="mode_alokasi" placeholder="mode alokasi"
-                        id="mode_alokasi" readonly>
-                </div>
-            </div>
-
-            <div class="col-md-6" id="validitas">
-                <div class="" id="tanggalmulai">
-                    <div class="form-group">
-                        <label for="tgl_masuk" class="form-label">Tanggal Masuk</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="tgl_masuk"
-                                name="tgl_masuk" autocomplete="off" readonly>
-                            <span class="input-group-addon bg-custom b-0"><i
-                                    class="mdi mdi-calendar text-white"></i></span>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
@@ -168,32 +120,7 @@
 <!-- END MODAL -->
 <!-- jQuery  -->
 <script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/app.js"></script>
-<script src="assets/pages/form-advanced.js"></script>
 
-
-<!-- script untuk mengambil data tanggalmasuk  -->
-<script>
-    $('#id_karyawan').on('change',function(e){
-        var id_karyawan = e.target.value;
-        $.ajaxSetup({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                        .attr('content')
-                    }
-        });
-        $.ajax({
-            type:"POST",
-            url: '{{route('get.Tglmasuk')}}',
-            data: {'id_karyawan':id_karyawan},
-            success:function(data){
-                // console.log(data);
-                $('#tgl_masuk').val(data.tglmasuk);
-                console.log(data?.tglmasuk)
-            }
-        });
-    });
-</script>
 
 <!-- script untuk mengambil data Email Karyawan  -->
 <script>
@@ -214,10 +141,7 @@
             success: function(data) {
                 // console.log(data);
                 $('#emailKaryawan').val(data.email);
-                console.log(data?.email);
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                console.log(textStatus);
+                console.log(data?.email)
             }
         });
     });

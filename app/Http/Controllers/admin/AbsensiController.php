@@ -27,6 +27,8 @@ class AbsensiController extends Controller
      */
     public function index(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
         $role = Auth::user()->role;
         
         if ($role == 1) {
@@ -55,7 +57,7 @@ class AbsensiController extends Controller
             ->orderBy('tanggal','desc')
             ->get();
         }
-        return view('admin.absensi.index',compact('absensi','karyawan'));
+        return view('admin.absensi.index',compact('absensi','karyawan','row'));
         
         //menghapus filter data
         $request->session()->forget('id_karyawan');

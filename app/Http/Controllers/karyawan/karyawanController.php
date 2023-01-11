@@ -70,16 +70,17 @@ class karyawanController extends Controller
     // {
     //     try {
     //         $getEmail = Karyawan::select('email')
-    //             ->where('id', '=', $request->id_pegawai)->first();
+    //         ->where('id','=',$request->id_karyawan)->first();
 
     //         // dd($request->id_karyawan,$getTglmasuk);
-    //         if (!$getEmail) {
+    //         if(!$getEmail) {
     //             throw new \Exception('Data not found');
     //         }
-    //         return response()->json($getEmail, 200);
-    //     } catch (\Exception $e) {
+    //         return response()->json($getEmail,200);
+            
+    //     } catch (\Exception $e){
     //         return response()->json([
-    //             'message' => $e->getMessage()
+    //             'message' =>$e->getMessage()
     //         ], 500);
     //     }
     // }
@@ -87,14 +88,13 @@ class karyawanController extends Controller
     public function getEmail(Request $request)
     {
         try {
-            $getTglmasuk = Karyawan::select('tglmasuk')
-            ->where('id','=',$request->id_karyawan)->first();
+            $getEmail = Karyawan::select('email')
+            ->where('id','=',$request->id_pegawai)->first();
 
-            // dd($request->id_karyawan,$getTglmasuk);
-            if(!$getTglmasuk) {
+            if(!$getEmail) {
                 throw new \Exception('Data not found');
             }
-            return response()->json($getTglmasuk,200);
+            return response()->json($getEmail,200);
             
         } catch (\Exception $e){
             return response()->json([
@@ -103,11 +103,13 @@ class karyawanController extends Controller
         }
     }
 
+    
+
     public function karyawanDashboard()
     {
         $role = Auth::user()->role;
         
-        if ($role == 2 ) {
+        if ($role == 2 or 3 ) {
 
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
