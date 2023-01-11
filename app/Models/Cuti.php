@@ -9,7 +9,7 @@ class Cuti extends Model
 {
     use HasFactory;
     protected $table ='cuti';
-    protected $fillable = ['id_karyawan','id_jeniscuti','keperluan',
+    protected $fillable = ['id_karyawan','id_jeniscuti','id_alokasi','keperluan',
                             'tgl_mulai','tgl_selesai','jml_cuti','status'
                         ];
     
@@ -19,5 +19,9 @@ class Cuti extends Model
 
     public function karyawans(){
         return $this->belongsTo(Karyawan::class,'id_karyawan','id');
+    }
+
+    public function alokasi(){
+        return $this->belongsTo(Alokasicuti::class,'id_alokasi','id');
     }
 }

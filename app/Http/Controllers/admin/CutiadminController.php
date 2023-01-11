@@ -39,24 +39,28 @@ class CutiadminController extends Controller
 
     public function update(Request $request, $id)
     {
-        $cuti = Cuti::where('id',$id)->first();
+        $cuti = Cuti::where('id', $id)->first();
+        // Inisialisasi variable jml_cuti dengan nilai jumlah hari cuti yang diambil
+        $jml_cuti = $cuti->jml_cuti;
 
-        $status = 'Disetujui';
-        $sisacuti = DB::table('alokasicuti')
-            ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
-            ->where('alokasicuti.id_karyawan','=','cuti.id_karyawan')
-            ->where('cuti.id',$id)
-            ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.id_karyawan')
+        //Update status cuti menjadi 'Disetujui'
+        Cuti::where('id', $id)->update(
+            ['status' => 'Disetujui']
+        );
+
+        //Ambil data alokasi cuti yang sesuai dengan id karyawan dan id jenis cuti
+        $alokasicuti = AlokasiCuti::where('id', $cuti->id_alokasi)
+            ->where('id_karyawan', $cuti->id_karyawan)
+            ->where('id_jeniscuti', $cuti->id_jeniscuti)
             ->first();
-        dd($sisacuti);
 
-        Cuti::where('id',$id)->update([
-            'status' => $status,
-        ]);
-        Alokasicuti::where('id_jeniscuti',$sisacuti->id_jeniscuti)
-        ->where('id_karyawan',$sisacuti->id_karyawan)->update([
-            'durasi' => $sisacuti->sisa,
-        ]);
+        // Hitung durasi baru setelah pengurangan
+        $durasi_baru = $alokasicuti->durasi - $jml_cuti;
+        // dd($durasi_baru);
+        AlokasiCuti::where('id', $alokasicuti->id)
+            ->update(
+                ['durasi' => $durasi_baru]
+            );
         return redirect()->back()->withInput();
     }
 

@@ -18,6 +18,11 @@ class Alokasicuti extends Model
         'mode_alokasi','tgl_masuk','tgl_sekarang','aktif_dari','sampai'
     ];
 
+    public function cuti()
+    {
+        return $this->hasMany(Cuti::class, 'id_alokasi','id');
+    }
+
     public function jeniscutis()
     {
         return $this->belongsTo(Jeniscuti::class,'id_jeniscuti','id');

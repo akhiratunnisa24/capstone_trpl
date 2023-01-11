@@ -15,10 +15,9 @@
         </div>
     </div>
 
-
     <!-- baris kedua -->
     <div class="row">
-        <div id="a" class="col-md-12">
+        <div id="a" class="col-md-9">
             <div id="a" class="panel panel-secondary">
                 <div class="panel-body">
                     <div class="row">
@@ -30,8 +29,6 @@
                                         <th>Nama Karyawan</th>
                                         <th>Cuti Yang Didapat</th>
                                         <th>Durasi Cuti</th>
-                                        <th>Cuti Dipakai</th>
-                                        <th>Sisa Cuti</th>
                                         <th>Aktif Dari</th>
                                         <th>Berakhir</th>
                                     </tr>
@@ -43,20 +40,6 @@
                                             <td>{{ $alokasi->karyawans->nama }}</td>
                                             <td>{{ $alokasi->jeniscutis->jenis_cuti }}</td>
                                             <td>{{ $alokasi->durasi }} hari</td>
-                                            <td>
-                                                @foreach($sisacuti as $sisa)
-                                                    @if($alokasi->id_jeniscuti == $sisa->id_jeniscuti)
-                                                        {{ $sisa->jml_cuti }} Hari
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td>
-                                                @foreach($sisacuti as $sisa)
-                                                    @if($alokasi->id_jeniscuti == $sisa->id_jeniscuti)
-                                                        {{ $sisa->sisa }} hari
-                                                    @endif
-                                                @endforeach
-                                            </td>
                                             <td>{{ \Carbon\Carbon::parse($alokasi->aktif_dari)->format('d/m/Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($alokasi->sampai)->format('d/m/Y') }}</td>
                                         </tr>
@@ -65,30 +48,17 @@
                                     <!-- mencari jumlah cuti -->
                                     @php
                                         $jml = 0;
-                                        $terpakai = 0;
-                                        $sis = 0;
                                     @endphp
                                     @foreach ($alokasicuti as $key => $alokasi)
                                         @php
                                             $jml += $alokasi->durasi;
                                         @endphp
                                     @endforeach
-    
-                                    @foreach ($sisacuti as $key => $sisa)
-                                        @php
-                                            $terpakai += $sisa->jml_cuti;
-                                        @endphp
-                                    @endforeach
-                                     @php
-                                        $sis = $jml-$terpakai;
-                                    @endphp
                                     <tr>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line text-right"><strong>Jumlah Cuti</strong></td>
-                                        <td class="thick-line text-left">{{ $jml }}</td>
-                                        <td class="thick-line text-left">{{ $terpakai }} hari</td>
-                                        <td class="thick-line text-left">{{ $sis }} hari</td>
+                                        <td class="thick-line text-left">{{ $jml }} hari</td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
@@ -100,9 +70,20 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-3 col-lg-3">
+            <div id="a" class="panel panel-teal text-center">
+                <div class="panel-heading btn-info">
+                    <h4 class="panel-title">Data Absen Bulan Lalu</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
+                    <p class="text-muted"><b>Kali absensi</b></p>
+                </div>
+            </div>
+        </div>
     </div> <!-- End Row -->
 
-    <!-- baris pertama -->
+    <!-- baris kedua -->
     <div class="row">
         <div class="col-sm-6 col-lg-3">
             <div id="a" class="panel panel-teal text-center">

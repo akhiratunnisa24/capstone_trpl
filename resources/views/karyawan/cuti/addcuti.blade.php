@@ -42,6 +42,9 @@
                             </select> 
                         </div>
                         <div class="form-group col-sm">
+                            <input type="hidden" class="form-control" name="id_alokasi" id="id_alokasi">
+                        </div>
+                        <div class="form-group col-sm">
                             <label for="keperluan" class="col-form-label">Keperluan</label>
                             <input type="text" class="form-control" name="keperluan" id="keperluan" placeholder="Masukkan keperluan" required>
                         </div>
@@ -132,8 +135,10 @@
                 url: '{{route('get.Durasi')}}',
                 data: {'id_jeniscuti':id_jeniscuti},
                 success:function(data){
+                    $('#id_alokasi').val(data.id);
                     $('#durasi').val(data.durasi);
-                    console.log(data?.durasi)
+                    // console.log(data?.durasi)
+                    console.log(data?.id)
                 }
             });
         });
@@ -182,7 +187,7 @@
             // }
         };
     </script>
-    {{-- <script>
+    <script>
         function validate() {
             var sisaCuti = {!! json_encode($sisa_cuti) !!};// getting value of sisa_cuti from controller 
             // console.log(sisaCuti);
@@ -195,8 +200,7 @@
                 return false;
             }
             return true;
-
         }
-    </script> --}}
+    </script>
     
    
