@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
 use App\Models\Jenisizin;
+use App\Models\Karyawan;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,7 @@ class CutikaryawanController extends Controller
 
     public function index(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
          //index cuti
          $cuti = Cuti::latest()->paginate(10);
          //index izin
@@ -45,7 +47,7 @@ class CutikaryawanController extends Controller
         //form izin
         $jenisizin = Jenisizin::all();
         $tipe = $request->query('tipe', 1);
-        return view('karyawan.cuti.index', compact('izin','jenisizin','cuti','jeniscuti','karyawan','tipe','sisa_cuti'));
+        return view('karyawan.cuti.index', compact('row','izin','jenisizin','cuti','jeniscuti','karyawan','tipe','sisa_cuti'));
     }
 
     public function getDurasi(Request $request)
