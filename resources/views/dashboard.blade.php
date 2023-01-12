@@ -60,9 +60,8 @@
                 <h4 class="panel-title"> Belum / Tidak Masuk Hari Ini</h4>
             </div>
             <div class="panel-body">
-                <h3 class=""><b></b></h3>
-                {{-- {{ $tidakAbsenHariIni }} --}}
-                <p class="text-muted"><b>Total Absen Tidak Masuk </b> </p>
+                <h3 class=""><b>{{ $totalTidakAbsenHariIni }}</b></h3>
+                <p class="text-muted"><b>Lorem Ipsum</b></p>
             </div>
         </div>
     </div>

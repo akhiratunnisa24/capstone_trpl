@@ -118,6 +118,26 @@ class HomeController extends Controller
             ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
             ->count('terlambat');
 
+            // DATA KARYAWAN TIDAK MASUK
+        //ambil jumlah Karyawan       
+        $totalKaryawan = karyawan::count('id');
+        // ambil jumlah karyawan yang sudah absen
+        $totalabsen = DB::table('absensi')
+                    ->whereYear('tanggal', '=', Carbon::now()->year)
+                    ->whereMonth('tanggal', '=', Carbon::now()->month)
+                    ->whereDay('tanggal', '=', Carbon::now())
+                    ->count('id_karyawan');
+        // jumlah karyawan yang belum absen / tidak masuk
+        $totalTidakAbsenHariIni = $totalKaryawan - $totalabsen ;
+        // dd($totalAbsenHariIni);
+
+            // Belum / Tidak Masuk Hari Ini
+        $tidakMasukHariIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+        ->whereMonth('tanggal', '=', Carbon::now()->month)
+        ->whereDay('tanggal', '=', Carbon::now())
+        ->whereTime('jam_masuk', '>', '08:00:00')
+        ->count();
+
         $sudahAbsen = DB::table('users')
             ->join('absensi', 'users.id_pegawai', '=', 'absensi.id_karyawan')
             ->whereDay('absensi.created_at', '=', Carbon::now())
@@ -204,6 +224,8 @@ class HomeController extends Controller
                 'cutibulanlalu' => $cutibulanlalu,
                 'cutidanizibulanlalu' => $cutidanizibulanlalu,
                 'labelTahun' => $labelTahun,
+                'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,
+
             ];
             return view('dashboard', $output);
         } elseif ($role == 2) {
