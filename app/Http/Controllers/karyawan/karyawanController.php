@@ -141,13 +141,13 @@ class karyawanController extends Controller
         $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)->get();
 
         //sisa cuti
-        $sisacuti = DB::table('alokasicuti')
-        ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
-        ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
-        ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
-        ->where('cuti.status','=','Disetujui')
-        ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
-        ->get();
+        // $sisacuti = DB::table('alokasicuti')
+        // ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
+        // ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
+        // ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
+        // ->where('cuti.status','=','Disetujui')
+        // ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
+        // ->get();
         
         // dd($sisacuti);
 
@@ -157,7 +157,7 @@ class karyawanController extends Controller
             'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
             'absenTidakmasuk' => $absenTidakmasuk,
             'alokasicuti' => $alokasicuti,
-            'sisacuti' => $sisacuti,
+            // 'sisacuti' => $sisacuti,
             'absenBulanlalu'=> $absenBulanlalu,
             'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
 

@@ -301,7 +301,7 @@
     </style>
 
     <!-- jQuery  -->
-    {{-- <script src="assets/js/jquery.min.js"></script> --}}
+    <script src="assets/js/jquery.min.js"></script>
     {{-- <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/modernizr.min.js"></script>
     <script src="assets/js/detect.js"></script>
@@ -314,7 +314,7 @@
     <script src="assets/js/jquery.scrollTo.min.js"></script> --}}
     
     <!-- Datatable init js -->
-    {{-- <script src="assets/pages/datatables.init.js"></script>
+    <script src="assets/pages/datatables.init.js"></script>
     <script src="assets/js/app.js"></script>
 
     <script type="text/javascript">
@@ -326,5 +326,5 @@
         }else{
             $('#tab2').click();
         }
-    </script>     --}}
+    </script>    
 @endsection
