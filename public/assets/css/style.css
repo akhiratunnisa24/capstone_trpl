@@ -2915,7 +2915,7 @@ File: Pages
     bottom: -15px;
     border-left: 16px solid transparent;
     border-right: 16px solid transparent;
-    border-top: 16px solid #03a9f4;
+border-top: 16px solid #03a9f4;
 }
 .gmaps-overlay_arrow.below {
     top: -15px;
@@ -3221,7 +3221,7 @@ body.fixed-left .side-menu.left {
 #sidebar-menu > ul > li > a > i {
     display: inline-block;
     font-size: 17px;
-    line-height: 17px;
+    line-height: normal ;
     margin-left: 3px;
     margin-right: 10px;
     text-align: center;
@@ -3233,7 +3233,7 @@ body.fixed-left .side-menu.left {
     margin: 3px 0 0 0;
 }
 #sidebar-menu > ul > li > a.active {
-    background: #03a8f400 !important;
+    background: #20262d !important;
     color: #ffffff;
 }
 #sidebar-menu > ul > li > a.active .badge {
