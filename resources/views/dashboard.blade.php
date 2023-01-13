@@ -231,11 +231,18 @@
           data: users2,
         }]
       };
-  
+
+        
       const config = {
         type: 'line',
         data: data,
-        options: {}
+        options: {
+            ticks: {
+            precision:0
+            },
+            
+    
+}   
       };
   
       const myChart = new Chart(

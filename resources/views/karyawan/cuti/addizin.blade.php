@@ -122,7 +122,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
     {{-- // Datatable init js  --}}
     <script src="assets/pages/datatables.init.js"></script>
-    <script src="assets/js/app.js"></script>
+    {{-- <script src="assets/js/app.js"></script> --}}
     {{-- // Plugins Init js --}}
     <script src="assets/pages/form-advanced.js"></script>
 
