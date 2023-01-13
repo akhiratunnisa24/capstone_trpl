@@ -119,29 +119,40 @@ class HomeController extends Controller
             ->count('terlambat');
 
             // DATA KARYAWAN TIDAK MASUK
+
         //ambil jumlah Karyawan       
         $totalKaryawan = karyawan::count('id');
+
         // ambil jumlah karyawan yang sudah absen
         $totalabsen = DB::table('absensi')
                     ->whereYear('tanggal', '=', Carbon::now()->year)
                     ->whereMonth('tanggal', '=', Carbon::now()->month)
                     ->whereDay('tanggal', '=', Carbon::now())
                     ->count('id_karyawan');
+
         // jumlah karyawan yang belum absen / tidak masuk
         $totalTidakAbsenHariIni = $totalKaryawan - $totalabsen ;
-        // dd($totalAbsenHariIni);
+        // dd($totalTidakAbsenHariIni);
 
-            // Belum / Tidak Masuk Hari Ini
-        $tidakMasukHariIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
-        ->whereMonth('tanggal', '=', Carbon::now()->month)
-        ->whereDay('tanggal', '=', Carbon::now())
-        ->whereTime('jam_masuk', '>', '08:00:00')
-        ->count();
 
-        $sudahAbsen = DB::table('users')
-            ->join('absensi', 'users.id_pegawai', '=', 'absensi.id_karyawan')
-            ->whereDay('absensi.created_at', '=', Carbon::now())
-            ->count();
+
+
+
+
+
+
+
+        //     // Belum / Tidak Masuk Hari Ini
+        // $tidakMasukHariIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+        // ->whereMonth('tanggal', '=', Carbon::now()->month)
+        // ->whereDay('tanggal', '=', Carbon::now())
+        // ->whereTime('jam_masuk', '>', '08:00:00')
+        // ->count();
+
+        // $sudahAbsen = DB::table('users')
+        //     ->join('absensi', 'users.id_pegawai', '=', 'absensi.id_karyawan')
+        //     ->whereDay('absensi.created_at', '=', Carbon::now())
+        //     ->count();
 
         $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"))
             ->whereYear('created_at', '=', Carbon::now()->year)
