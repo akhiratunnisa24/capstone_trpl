@@ -32,8 +32,9 @@
                                             @method('POST')
                                             <button type="submit" class="btn btn-info btn-lg">
                                             <i class="fa fa-sign-in fa-3x"></i>
-                                            </button> 
+                                            </button>    
                                         </form>
+                                        <div> <h3 align="center">Masuk</h3> </div>
                                     @elseif(!isset($absensi->jam_keluar))
                                         <form action="{{route('absen_pulang',$absensi->id)}}" method="POST" align="center">
                                             @csrf
@@ -41,6 +42,7 @@
                                                 <i class="fa fa-sign-out fa-3x"></i>
                                             </button>
                                         </form>
+                                        <div> <h3 align="center">Pulang</h3> </div>
                                     @else
                                        <div>
                                             <h3 align="center">Terimakasih :)</h3>
