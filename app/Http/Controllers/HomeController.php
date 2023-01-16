@@ -136,20 +136,46 @@ class HomeController extends Controller
 
 
         //ambil jumlah Karyawan absen tidak masuk perbulan     
-        // $totalKaryawanabsenperbulan = karyawan::pluck('id');
+        $totalKaryawanabsenperbulan = karyawan::pluck('id');
 
         // ambil jumlah karyawan yang sudah absen
-        // $totalabsenperbulan = DB::table('absensi')
-        //             ->whereYear('tanggal', '=', Carbon::now()->year)
-        //             ->whereMonth('tanggal', '=', Carbon::now()->month)    
-        //             // ->whereDay('created_at', '=', Carbon::now())    
-        //             ->whereNotIn("id_karyawan", $totalKaryawanabsenperbulan)
-        //             ->get();
+        $totalabsenperbulan = DB::table('absensi')
+                    ->whereYear('tanggal', '=', Carbon::now()->year)
+                    ->whereMonth('tanggal', '=', Carbon::now()->month)    
+                    // ->whereDay('created_at', '=', Carbon::now())    
+                    ->whereNotIn("id_karyawan", $totalKaryawanabsenperbulan)
+                    ->get();
 
         // DB::table(..)->select(..)->whereNotIn('book_price', [100,200])->get();
 
+   
 
-        $totalKaryawanabsenperbulan = Absensi::whereYear('tanggal', '=', Carbon::now()->year)->whereMonth('tanggal', '=', Carbon::now()->month)->whereDay('created_at', '=', Carbon::now()->day)->pluck('id_karyawan')->implode(',');
+
+
+        $today =Carbon::now(); //Current Date and Time
+        $firstDayofMonth = Carbon::parse($today)->firstOfMonth();
+        $lastDayofMonth = Carbon::parse($today)->endOfMonth();
+
+        $to = Carbon::parse($today);
+        $weekDay = $firstDayofMonth->diffInWeekdays($to);
+        //ambil jumlah Karyawan       
+        $totalKaryawanPerbulan = $totalKaryawan * $weekDay ;
+        // dd($totalKaryawanPerbulan);
+
+        // ambil jumlah karyawan yang sudah absen
+        $totalabsenPerbulan = DB::table('absensi')
+                    ->whereYear('tanggal', '=', Carbon::now()->year)
+                    ->whereMonth('tanggal', '=', Carbon::now()->month)
+                    ->count('id_karyawan');
+
+        // jumlah karyawan yang belum absen / tidak masuk
+        $totalTidakAbsenPerbulan = $totalKaryawanPerbulan - $totalabsenPerbulan ;
+        
+
+        // $totalKaryawanabsenperbulan = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+        // ->whereMonth('tanggal', '=', Carbon::now()->month)
+        // ->whereDay('tanggal', '=', Carbon::now()->day)
+        // ->pluck('id_karyawan')->implode(',');
         
         // $user_info = DB::table('usermetas')
         //          ->select('browser', DB::raw('count(*) as total'))
@@ -158,9 +184,15 @@ class HomeController extends Controller
 
         //15,20,6,15,6,20,6
 
-        $totalabsenperbulan = DB::table('karyawan')->select('id')->whereNotIn('id',[$totalKaryawanabsenperbulan])->get();
+        // $totalabsenperbulan = DB::table('karyawan')
+        // ->whereYear('created_at', '=', Carbon::now()->year)
+        // ->whereMonth('created_at', '=', Carbon::now()->month)
+        // // ->whereDay('created_at', '=', Carbon::now()->day)
+        // ->select('id')
+        // ->whereNotIn('id',[$totalKaryawanabsenperbulan])
+        // ->count();
 
-        // dd($totalabsenperbulan);
+        // dd($totalabsenperbulan); 
 
 
 
@@ -261,6 +293,7 @@ class HomeController extends Controller
                 'cutidanizibulanlalu' => $cutidanizibulanlalu,
                 'labelTahun' => $labelTahun,
                 'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,
+                'totalTidakAbsenPerbulan' => $totalTidakAbsenPerbulan,
 
             ];
             return view('dashboard', $output);
