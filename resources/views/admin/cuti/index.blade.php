@@ -48,7 +48,7 @@
                                 <div class="col-md-15">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            <strong>Data Permintaan Cuti</strong>
+                                            <strong><h4>Data Permintaan Cuti</h4></strong>
                                             {{-- <a href="/settingalokasi" class="btn btn-dark">Setting Alokasi</a>
                                             <a href="/alokasicuti" class="btn btn-dark">Alokasi Cuti</a> --}}
                                         </div>
@@ -162,7 +162,7 @@
                                 <div class="col-md-15">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            <strong>Data Permintaan Izin</strong>
+                                            <strong><h4>Data Permintaan Izin</h4></strong>
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">

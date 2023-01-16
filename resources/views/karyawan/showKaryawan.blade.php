@@ -37,7 +37,7 @@
                 <tbody class="col-sm-16">
 
                     <tr>
-                        <td><span class="text-bold badge bg-dark ">A. IDENTITAS </span></td>
+                        <td><span class="text-bold badge bg-dark "> A. IDENTITAS </span></td>
                         <td><span class="text-bold"></span></td>
                         <td></td>
                         <td><label for="name" class="text-bold"></label></td>

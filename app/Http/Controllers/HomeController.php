@@ -182,6 +182,7 @@ class HomeController extends Controller
 
         $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"))
             ->whereYear('created_at', '=', Carbon::now()->year)
+            ->where('status','=','Disetujui')
             ->groupBy(DB::raw('MONTHNAME(tgl_mulai)'))
             ->orderBy('tgl_mulai','ASC')
             ->pluck('jumlah', 'month_name');

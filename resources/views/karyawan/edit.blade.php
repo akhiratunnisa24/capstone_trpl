@@ -39,7 +39,7 @@
             <table class="table table-bordered table-striped" style="width:100%">
                 <tbody class="col-sm-20">
 
-                    <label class="  ">A. IDENTITAS </label>
+                    <label class="  "><h4>A. IDENTITAS </h4></label>
 
                     <tr>
                         <td style="width:50%"><strong> Nama Lengkap : </strong><input name="namaKaryawan" type="text"
@@ -129,7 +129,7 @@
             <table class="table table-bordered table-striped">
                 <tbody class="col-sm-20">
 
-                    <label class="  ">B. KELUARGA </label>
+                    <label class="  "><h4>B. KELUARGA </h4></label>
                     <tr>
                         <td><label class="text-white badge bg-dark">Data Istri / Suami *)</label></td>
 
@@ -169,7 +169,7 @@
             <table class="table table-bordered table-striped">
                 <tbody class="col-sm-20">
 
-                    <label class="  ">C. RIWAYAT PENDIDIKAN</label>
+                    <label class="  "><h4>C. RIWAYAT PENDIDIKAN</h4></label>
 
                     <tr>
                         <td><label class="text-white badge bg-dark"> Pendidikan Formal </label></td>
@@ -223,7 +223,7 @@
             <table class="table table-bordered table-striped">
                 <tbody class="col-sm-20">
 
-                    <label class="  ">D. RIWAYAT PEKERJAAN</label>
+                    <label class="  "><h4>D. RIWAYAT PEKERJAAN</h4></label>
 
                     <tr>
                         <td><strong>Nama Perusahaan : </strong><input type="text" name="namaPerusahaan"
@@ -274,7 +274,7 @@
             <table class="table table-bordered table-striped">
                 <tbody class="col-sm-20">
 
-                    <label class="  ">E. KONTAK DARURAT</label>
+                    <label class="  "><h4>E. KONTAK DARURAT</h4></label>
 
                     <tr>
 
