@@ -21,7 +21,19 @@ class CutiadminController extends Controller
         if ($role == 1) {
             
         $type = $request->query('type', 1);
-        $cuti = Cuti::latest()->paginate(10);
+        //$cuti = Cuti::latest()->paginate(10);
+        $cuti = DB::table('cuti')
+            ->leftjoin('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
+            ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
+            ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+            ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+            ->where('alokasicuti.mode_alokasi','Berdasarkan Karyawan')
+            ->orWhere('cuti.status','Disetujui Manager')
+            ->orWhere('cuti.status','Disetujui')
+            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','settingalokasi.mode_alokasi')
+            ->distinct()
+            ->get();
+
         $izin = Izin::latest()->paginate(10);
         return view('admin.cuti.index', compact('cuti','izin','type','row'));
         

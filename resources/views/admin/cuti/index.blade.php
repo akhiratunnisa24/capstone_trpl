@@ -73,8 +73,8 @@
                                                             @foreach($cuti as $data)
                                                             <tr>
                                                                 <td>{{$loop->iteration}}</td>
-                                                                <td>{{$data->karyawans->nama}}</td>
-                                                                <td>{{$data->jeniscutis->jenis_cuti}}</td>
+                                                                <td>{{$data->nama}}</td>
+                                                                <td>{{$data->jenis_cuti}}</td>
                                                                 <td>{{$data->keperluan}}</td>
                                                                 <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
                                                                 <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
