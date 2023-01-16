@@ -240,7 +240,7 @@ class AbsensiController extends Controller
         // simpan session
         $idkaryawan = $request->session()->get('idkaryawan');
         $bulan      = $request->session()->get('bulan');
-        $tahun      = $request->session()->get('tahun');
+        $tahun      = $request->session()->get('tahun',);
         // $request->session()->put('id_karyawan', $idkaryawan);
         // $request->session()->put('bulan', $bulan);
         // $request->session()->put('tahun', $tahun);
