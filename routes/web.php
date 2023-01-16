@@ -90,8 +90,8 @@ Route::get('/izin_karyawan/{id}', [IzinkaryawanController::class, 'show'])->name
 Route::get('/absensi', [AbsensiController::class,'index'])->name('absensi.index');
 Route::post('/absensi_karyawan',[AbsensiController::class,'store'])->name('absensi.action');
 Route::post('/absensi_karyawan/{id}',[AbsensiController::class,'update'])->name('absen_pulang');
-Route::get('/exportexcel',[AbsensiController::class,'exportExcel'])->name('exportexcel');
-Route::get('/exportpdf',[AbsensiController::class,'exportpdf'])->name('exportpdf');
+// Route::get('/exportexcel',[AbsensiController::class,'exportExcel'])->name('exportexcel');
+// Route::get('/exportpdf',[AbsensiController::class,'exportpdf'])->name('exportpdf');
 Route::post('/importexcel',[AbsensiController::class,'importexcel'])->name('importexcel');
 Route::post('/importcsv',[AbsensiController::class,'importcsv'])->name('importcsv');
 Route::get('/rekapabsensipdf',[AbsensiController::class,'rekapabsensipdf'])->name('rekapabsensipdf');

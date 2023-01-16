@@ -6,13 +6,13 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-header-title">
-            <div class="col-sm-8">
-                <h4 class="pull-left page-title">Alokasi Cuti</h4>
-            </div>
-            <div align="right" class="col-sm-4">
-                <a href="/permintaan_cuti" class="btn btn-success btn-md">Kembali ke Cuti</a>
-                <a href="/settingalokasi" class="btn btn-success btn-md">Kembali ke Setting</a>
-            </div>
+            <h4 class="pull-left page-title">Alokasi Cuti Karyawan</h4>
+            
+            <ol class="breadcrumb pull-right">
+                <li>Human Resources Management System</li>
+                <li class="active">Alokasi Cuti</li>
+            </ol>
+           
             <div class="clearfix"></div>
         </div>
     </div>
@@ -54,11 +54,11 @@
                                     <tbody>
                                         @foreach($alokasicuti as $data)
                                         <tr id="aid{{$data->id}}"></tr>
-                                        {{-- <td>{{$data->id}}</td> --}}
-                                        <td>{{$data->id_karyawan}}</td>
+                                        <td>{{$loop->iteration}}</td>
+                                        {{-- <td>{{$data->id_karyawan}}</td> --}}
                                         <td>{{$data->karyawans->nama}}</td>
                                         <td>{{$data->jeniscutis->jenis_cuti}}</td>
-                                        <td>{{$data->durasi}}</td>
+                                        <td>{{$data->durasi}} hari</td>
                                         {{-- <td>{{$data->mode_alokasi}}</td> --}}
                                         {{-- jam mulai & jam selesai --}}
                                         {{-- @if($data->tgl_masuk != null && $data->tgl_sekarang !=null)

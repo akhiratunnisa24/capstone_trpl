@@ -79,8 +79,8 @@ class AbsensiController extends Controller
         ->first();//untuk memunculkan data absen pagi dengan pengecekan tanggal
 
         // dd($absensi);
-        $jk =  Carbon::now()->format("H:i:s");
-        return view('karyawan.absensi.absensi_karyawan',compact('absensi','jk','row'));
+        // $jk =  Carbon::now()->format("H:i:s");
+        return view('karyawan.absensi.absensi_karyawan',compact('absensi','row'));
     }
 
     public function store(Request $request)
@@ -159,13 +159,13 @@ class AbsensiController extends Controller
         return redirect()->back()->withInput();
     }
 
-    public function exportpdf()
-    {
-         //export data to pdf
-         $data = Absensi::get();
-         $pdf = PDF::loadview('admin.absensi.absensipdf',['data',$data],compact('data'))
-         ->setPaper('A4','landscape');
-         return $pdf->stream('absensi_report.pdf');
+    // public function exportpdf()
+    // {
+    //      //export data to pdf
+    //      $data = Absensi::get();
+    //      $pdf = PDF::loadview('admin.absensi.absensipdf',['data',$data],compact('data'))
+    //      ->setPaper('A4','landscape');
+    //      return $pdf->stream('absensi_report.pdf');
 
         //mencari jumlah jam kerja harian yang ditampilkan ke dalam pdf secara manual
         //    foreach($data as $key => $value){
@@ -181,12 +181,12 @@ class AbsensiController extends Controller
 
     //     }
         // dd($data->toArray());
-    }
+    // }
 
-    public function exportExcel()
-    {
-        return Excel::download(new AbsensiExport, 'data_absensi.xlsx');
-    }
+    // public function exportExcel()
+    // {
+    //     return Excel::download(new AbsensiExport, 'data_absensi.xlsx');
+    // }
 
     public function importexcel(Request $request)
     {
@@ -238,12 +238,12 @@ class AbsensiController extends Controller
         $tahun      = $request->query('tahun',Carbon::now()->format('Y'));
 
         // simpan session
-        // $idkaryawan = $request->session()->get('idkaryawan');
-        // $bulan      = $request->session()->get('bulan');
-        // $tahun      = $request->session()->get('tahun',);
-        $request->session()->put('id_karyawan', $idkaryawan);
-        $request->session()->put('bulan', $bulan);
-        $request->session()->put('tahun', $tahun);
+        $idkaryawan = $request->session()->get('idkaryawan');
+        $bulan      = $request->session()->get('bulan');
+        $tahun      = $request->session()->get('tahun',);
+        // $request->session()->put('id_karyawan', $idkaryawan);
+        // $request->session()->put('bulan', $bulan);
+        // $request->session()->put('tahun', $tahun);
 
         // dd($idkaryawan,$bulan,$tahun );
     

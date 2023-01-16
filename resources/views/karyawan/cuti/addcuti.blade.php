@@ -8,11 +8,12 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="Modal">Form Permohonan Cuti</h4>
                 </div>
-                @if(session()->has('error'))
-                    <div class="alert alert-danger">
-                        {{ session()->get('error') }}
-                    </div>
-                @endif
+                {{-- alert danger --}}
+                <div class="alert alert-danger" id="error-message" style="display: none;">
+                    <button type="button" class="close" onclick="$('#error-message').hide()">&times;</button>
+                </div>
+
+                {{-- form --}}
                 <div class="modal-body">
                     <form action="{{ route('cuti.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -27,7 +28,7 @@
                             <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
                             <select name="id_jeniscuti" id="id_jeniscuti" class="form-control" required>
                                 <option>-- Pilih Kategori --</option>
-                                
+        
                                 @foreach ($jeniscuti as $data)
                                     {{-- @if(isset($sisa_cuti[$data->id]) && $sisa_cuti[$data->id] >= 0) 
                                          <option value="{{ $data->id}}">
@@ -122,7 +123,8 @@
      <script src="assets/pages/form-advanced.js"></script>
 
      <!-- script untuk mengambil data durasi dari tabel alokasi cuti  -->
-    <script>
+    <script  type="text/javascript">
+        var durasi;
         $('#id_jeniscuti').on('change',function(e){
             var id_jeniscuti = e.target.value;
             $.ajaxSetup({
@@ -138,12 +140,12 @@
                     $('#id_alokasi').val(data.id);
                     $('#durasi').val(data.durasi);
                     // console.log(data?.durasi)
-                    var durasi = data.durasi;//untuk mengambil value durasi
-                    console.log(data?.id)
+                    durasi = data.durasi;//untuk mengambil value durasi
                 }
             });
         });
     </script>
+
     <script type="text/javascript">
         function jumlahcuti()
         {
@@ -176,38 +178,25 @@
                 jumlahcuti();
             });
 
-            console.info(daysOfYear);
-            // alert('test');
-
+            // console.info(daysOfYear);
             $('#jumlah').val(daysOfYear.length ?? 0);
 
-            //menga,bil value jml_cuti
+            //mengambil value jml_cuti
             var jml_cuti = $("#jumlah").val();
-            //validasi jumlahcuti > durasi
-            if(jml_cuti > durasi)
-            {
-                $("#error-message").append("<p class='text-danger'>Jumlah cuti yang diinput melebihi durasi cuti yang tersedia, silahkan pilih jumlah cuti yang <= durasi tersedia</p>")
-                $("#submit-button").prop("disabled",true);
-            } else
-            {
-                $("#submit-button").prop("disabled",false);
+            var durasi   = $("#durasi").val(); ////ambil value dari input field durasi yang didapat dari ajax request
+            
+            if(jml_cuti > durasi){
+                $('#error-message').html(' "WARNING !!"<br>Jumlah cuti yang diinput melebihi durasi cuti yang tersedia.<br>Silahkan pilih jumlah cuti yang lebih kecil atau sama dengan durasi');
+                $('#error-message').show();
+                $('#submit-button').attr('disabled', true); //nonaktifkan tombol submit
+
+                setTimeout(function() 
+                {
+                    $('#error-message').hide();
+                }, 3000);
+            }else{
+                $('#error-message').hide();
+                $('#submit-button').attr('disabled', false); //aktifkan tombol submit
             }
         };
     </script>
-    {{-- <script>
-        function validate() {
-            var sisaCuti = {!! json_encode($sisa_cuti) !!};// getting value of sisa_cuti from controller 
-            // console.log(sisaCuti);
-            var jumlah_cuti = document.getElementById("jumlah_cuti").value; // getting input value of jumlah cuti
-            var id_jeniscuti = document.getElementById("id_jeniscuti").value; // getting input value of id_jeniscuti
-           
-            if (sisa_cuti[id_jeniscuti] < jumlah_cuti) {
-                alert("Jumlah cuti yang diajukan melebihi sisa cuti yang tersisa. Silakan pilih jumlah cuti yang lebih kecil.");
-                console.info(sisa_cuti[id_jeniscuti] < jumlah_cuti);
-                return false;
-            }
-            return true;
-        }
-    </script>
-    
-    --}}
