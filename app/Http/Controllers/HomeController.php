@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\HigherOrderBuilderProxy;
 
 class HomeController extends Controller
 {
@@ -213,7 +214,9 @@ class HomeController extends Controller
 
         $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"))
             ->whereYear('created_at', '=', Carbon::now()->year)
+            ->where('status','=','Disetujui')
             ->groupBy(DB::raw('MONTHNAME(tgl_mulai)'))
+            ->orderBy('tgl_mulai','ASC')
             ->pluck('jumlah', 'month_name');
 
         $getYear = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("YEAR(tgl_mulai) as month_name"))

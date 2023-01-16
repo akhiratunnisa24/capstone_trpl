@@ -59,7 +59,7 @@
 
                             <!-- judul 1 -->
                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
-                                <label class="  ">A. IDENTITAS </label>
+                                <label class="  "><h4>A. IDENTITAS </h4></label>
                             </div>
                             <table class="table table-bordered table-striped">
                                 <div class="card-body">
@@ -224,7 +224,7 @@
 
                                     <!-- judul 2  -->
                                     <div class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
-                                        <label class="  ">B. KELUARGA </label>
+                                        <label class="  "><h4>B. KELUARGA </h4></label>
                                     </div>
                                     <table class="table table-bordered table-striped">
                                         <div class="card-body">
@@ -404,7 +404,7 @@
                                                 <div class="col-md-12">
                                                     <!-- Judul 1 -->
                                                     <div class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
-                                                        <label class="  ">C. Riwayat Pendidikan </label>
+                                                        <label class="  "><h4> C. Riwayat Pendidikan </h4></label>
                                                     </div>
 
                                                     <table class="table table-bordered table-striped">
@@ -560,7 +560,7 @@
                                                                     <!-- Judul 1 -->
                                                                     <div
                                                                         class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
-                                                                        <label class="  ">D. Riwayat Pekerjaan </label>
+                                                                        <label class="  "><h4>D. Riwayat Pekerjaan </h4></label>
                                                                     </div>
 
                                                                     <table class="table table-bordered table-striped">
