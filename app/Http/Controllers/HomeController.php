@@ -136,7 +136,32 @@ class HomeController extends Controller
         // dd($totalTidakAbsenHariIni);
 
 
+        //ambil jumlah Karyawan absen tidak masuk perbulan     
+        // $totalKaryawanabsenperbulan = karyawan::pluck('id');
 
+        // ambil jumlah karyawan yang sudah absen
+        // $totalabsenperbulan = DB::table('absensi')
+        //             ->whereYear('tanggal', '=', Carbon::now()->year)
+        //             ->whereMonth('tanggal', '=', Carbon::now()->month)    
+        //             // ->whereDay('created_at', '=', Carbon::now())    
+        //             ->whereNotIn("id_karyawan", $totalKaryawanabsenperbulan)
+        //             ->get();
+
+        // DB::table(..)->select(..)->whereNotIn('book_price', [100,200])->get();
+
+
+        $totalKaryawanabsenperbulan = Absensi::whereYear('tanggal', '=', Carbon::now()->year)->whereMonth('tanggal', '=', Carbon::now()->month)->whereDay('created_at', '=', Carbon::now()->day)->pluck('id_karyawan')->implode(',');
+        
+        // $user_info = DB::table('usermetas')
+        //          ->select('browser', DB::raw('count(*) as total'))
+        //          ->groupBy('browser')
+        //          ->get();
+
+        //15,20,6,15,6,20,6
+
+        $totalabsenperbulan = DB::table('karyawan')->select('id')->whereNotIn('id',[$totalKaryawanabsenperbulan])->get();
+
+        // dd($totalabsenperbulan);
 
 
 
