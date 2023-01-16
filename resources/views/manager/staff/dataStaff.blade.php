@@ -32,6 +32,7 @@
                                 <table id="datatable-responsive9" class="table table-striped dt-responsive table-bordered" width="100%">
                                     <thead>
                                         <tr>
+                                            <th>#</th>
                                             <th>Nama Staff</th>
                                             <th>NIK</th>
                                             <th>Departemen</th>
@@ -44,6 +45,7 @@
                                         @foreach($staff as $data)
                                         {{-- @if($data->) --}}
                                             <tr>
+                                                <td>{{$loop->iteration}}</td>
                                                 <td>{{$data->nama}}</td>
                                                 <td>{{$data->nik}}</td>
                                                 <td>{{$data->departemens->nama_departemen}}</td>

@@ -1,5 +1,6 @@
 @extends('layouts.default')
 @section('content')
+
 <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
 <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
 
@@ -8,13 +9,13 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-header-title">
-            <div class="col-sm-8">
-                <h4 class="pull-left page-title">Setting Alokasi</h4>
-            </div>
-            <div class="col-sm-4" align="right">
-                <a href="/permintaan_cuti" class="btn btn-success btn-md">Kembali ke Cuti</a>
-                <a href="/alokasicuti" class="btn btn-success btn-md">Kembali ke Alokasi</a>
-            </div>
+            <h4 class="pull-left page-title">Setting Alokasi Cuti Karyawan</h4>
+
+            <ol class="breadcrumb pull-right">
+                <li>Human Resources Management System</li>
+                <li class="active">Setting Alokasi</li>
+            </ol>
+           
             <div class="clearfix"></div>
         </div>
     </div>

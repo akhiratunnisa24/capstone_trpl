@@ -18,7 +18,7 @@
     <!-- Start content -->
     <div class="content center">
         <div class="container">
-                <div class="alert alert-success  col-md-6" id="col">
+                <div class="col-md-6" id="col">
                     <div class="panel panel-light">
                         <div class="panel-body">
                             {{-- TAMPILAN ABSENSI karyawan --}}
