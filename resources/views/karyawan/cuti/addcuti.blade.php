@@ -14,7 +14,7 @@
                     </div>
                 @endif
                 <div class="modal-body">
-                    <form action="{{ route('cuti.store')}}" onsubmit="return validate()" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('cuti.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="form-group col-sm">
@@ -29,15 +29,15 @@
                                 <option>-- Pilih Kategori --</option>
                                 
                                 @foreach ($jeniscuti as $data)
-                                    @if(isset($sisa_cuti[$data->id]) && $sisa_cuti[$data->id] >= 0) 
+                                    {{-- @if(isset($sisa_cuti[$data->id]) && $sisa_cuti[$data->id] >= 0) 
                                          <option value="{{ $data->id}}">
                                             (sisa cuti: {{ isset($sisa_cuti[$data->id]) ? $sisa_cuti[$data->id] : 0 }} hari) {{ $data->jenis_cuti }} 
                                         </option>
-                                    @else
+                                    @else --}}
                                         <option value="{{ $data->id}}">
-                                            (cuti is available) {{ $data->jenis_cuti }} 
+                                           {{ $data->jenis_cuti }} 
                                         </option>
-                                    @endif
+                                    {{-- @endif --}}
                                 @endforeach
                             </select> 
                         </div>
@@ -98,7 +98,7 @@
                             
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success" value="save">Send</button>
+                            <button type="submit" id="submit-button" class="btn btn-success" value="save">Send</button>
                         </div>
                     </form>
                 </div>
@@ -106,7 +106,7 @@
         </div>
     </div>
      <!-- jQuery  -->
-     {{-- <script src="assets/js/jquery.min.js"></script> --}}
+     <script src="assets/js/jquery.min.js"></script>
      <script src="assets/js/bootstrap.min.js"></script>
 
  
@@ -138,12 +138,13 @@
                     $('#id_alokasi').val(data.id);
                     $('#durasi').val(data.durasi);
                     // console.log(data?.durasi)
+                    var durasi = data.durasi;//untuk mengambil value durasi
                     console.log(data?.id)
                 }
             });
         });
     </script>
-     <script type="text/javascript">
+    <script type="text/javascript">
         function jumlahcuti()
         {
             var start= $('#datepicker-autoclosea').val();
@@ -180,14 +181,20 @@
 
             $('#jumlah').val(daysOfYear.length ?? 0);
 
-            // if (isset($sisa_cuti[request()->id_jeniscuti]) && request()->jumlah_cuti > $sisa_cuti[request()->id_jeniscuti]) 
-            // {
-            //     session()->flash('error', 'Jumlah cuti yang diajukan melebihi sisa cuti yang tersisa. Silakan pilih jumlah cuti yang lebih kecil.');
-            //     return redirect()->back();
-            // }
+            //menga,bil value jml_cuti
+            var jml_cuti = $("#jumlah").val();
+            //validasi jumlahcuti > durasi
+            if(jml_cuti > durasi)
+            {
+                $("#error-message").append("<p class='text-danger'>Jumlah cuti yang diinput melebihi durasi cuti yang tersedia, silahkan pilih jumlah cuti yang <= durasi tersedia</p>")
+                $("#submit-button").prop("disabled",true);
+            } else
+            {
+                $("#submit-button").prop("disabled",false);
+            }
         };
     </script>
-    <script>
+    {{-- <script>
         function validate() {
             var sisaCuti = {!! json_encode($sisa_cuti) !!};// getting value of sisa_cuti from controller 
             // console.log(sisaCuti);
@@ -203,4 +210,4 @@
         }
     </script>
     
-   
+    --}}

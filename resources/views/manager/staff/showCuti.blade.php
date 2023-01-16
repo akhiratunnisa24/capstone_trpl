@@ -16,7 +16,7 @@
                 <div class="form-group row">
                     <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label>
                     <div class="col-sm-9">
-                        <label>: {{$data->id_karyawan}}</label>
+                        <label>: {{$data->nama}}</label>
                     </div>
                 </div>
                 <div class="form-group row">

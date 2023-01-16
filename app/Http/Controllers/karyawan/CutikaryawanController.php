@@ -29,32 +29,35 @@ class CutikaryawanController extends Controller
         $jeniscuti = DB::table('alokasicuti')
             ->join('jeniscuti','alokasicuti.id_jeniscuti','=','jeniscuti.id')
             ->where('alokasicuti.id_karyawan','=', Auth::user()->id_pegawai)
+            ->where('alokasicuti.durasi','>',0)
             ->get();
 
-        $sisacuti = DB::table('alokasicuti')
-            ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
-            ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
-            ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
-            ->where('cuti.status','=','Disetujui')
-            ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
-            ->get();
-            // ->where('cuti.status','=','Pending')
-        $sisa_cuti = array();
-        foreach ($sisacuti as $data) {
-            $sisa_cuti[$data->id_jeniscuti] = $data->sisa;
-        }
+        // $sisacuti = DB::table('alokasicuti')
+        //     ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
+        //     ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
+        //     ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
+        //     ->where('cuti.status','=','Disetujui')
+        //     ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
+        //     ->get();
+        //     // ->where('cuti.status','=','Pending')
+        // $sisa_cuti = array();
+        // foreach ($sisacuti as $data) {
+        //     $sisa_cuti[$data->id_jeniscuti] = $data->sisa;
+        // }
         
         //form izin
         $jenisizin = Jenisizin::all();
         $tipe = $request->query('tipe', 1);
-        return view('karyawan.cuti.index', compact('row','izin','jenisizin','cuti','jeniscuti','karyawan','tipe','sisa_cuti'));
+        return view('karyawan.cuti.index', compact('row','izin','jenisizin','cuti','jeniscuti','karyawan','tipe'));
     }
 
     public function getDurasi(Request $request)
     {
         try {
             $getDurasi = Alokasicuti::select('id','durasi')
-            ->where('id_jeniscuti','=',$request->id_jeniscuti)->first();
+            ->where('id_jeniscuti','=',$request->id_jeniscuti)
+            ->where('id_karyawan','=',Auth::user()->id_pegawai)
+            ->first();
 
             if(!$getDurasi) {
                 throw new \Exception('Data not found');
