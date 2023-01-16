@@ -59,7 +59,7 @@
                     </tr>
 
                     <tr>
-                        <td><label for="ktp_number">Tanggal Lahir : {{$karyawan->tgllahir}}</label></td>
+                        <td><label for="ktp_number">Tanggal Lahir : {{\Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y')}}</label></td>
                         <td><span id="ktp_number"></span></td>
                     </tr>
 
@@ -127,7 +127,7 @@
                     <tr>
                         <td><label for="bpjskes_number">Pendidikan Terakhir : {{$keluarga->pendidikan_terakhir}}</label></td>
                         <td><span id="bpjskes_number"></span></td>
-                        <td><label for="bpjsket_number">Lulus Tahun : {{$rpendidikan->tahun_lulus_formal}}</label></td>
+                        <td><label for="bpjsket_number">Lulus Tahun : {{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y')}}</label></td>
                         <td><span id="bpjsket_number"></span></td>
                     </tr>
                     <tr>
@@ -151,7 +151,7 @@
                     <tr>
                         <td><label for="bpjskes_number">Jenis Usaha : {{$rpekerjaan->jenis_usaha}} </label></td>
                         <td><span id="bpjskes_number"></span></td>
-                        <td><label for="bpjsket_number">Lulus Tahun : {{$rpendidikan->tahun_lulus_nonformal}}</label></td>
+                        <td><label for="bpjsket_number">Lulus Tahun : {{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_nonformal)->format('d/m/Y')}}</label></td>
                         <td><span id="bpjsket_number"></span></td>
                     </tr>
 

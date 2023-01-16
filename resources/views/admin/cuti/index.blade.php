@@ -28,13 +28,13 @@
                 <li class="active">
                     <a id="tab1" href="#cuti" data-toggle="tab" aria-expanded="false">
                         <span class="visible-xs"><i class="fa fa-home"></i></span>
-                        <span class="hidden-xs">Cuti</span>
+                        <span class="hidden-xs">Permintaan Cuti</span>
                     </a>
                 </li>
                 <li class="">
                     <a id="tab2" href="#izin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
-                        <span class="hidden-xs">Izin</span>
+                        <span class="hidden-xs">Permintaan Izin</span>
                     </a>
                 </li>
             </ul>
@@ -47,10 +47,8 @@
                             <div class="row">
                                 <div class="col-md-15">
                                     <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <strong>Data Permintaan Cuti</strong>
-                                            {{-- <a href="/settingalokasi" class="btn btn-dark">Setting Alokasi</a>
-                                            <a href="/alokasicuti" class="btn btn-dark">Alokasi Cuti</a> --}}
+                                        <div class="panel-heading"  style="height:35px">
+                                            {{-- <strong>Data Permintaan Cuti</strong> --}}
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">
@@ -100,7 +98,7 @@
 
                                                                 <td id="b" class="text-center" > 
                                                                     <div class="row">
-                                                                        @if($data->status == 'Pending' ||$data->status == 'Disetujui Manager')
+                                                                        @if($data->status == 'Pending' || $data->status == 'Disetujui Manager')
                                                                             <div class="col-sm-3">
                                                                                 <form action="{{ url('')}}/permintaan_cuti/<?php echo $data->id ?>" method="POST"> 
                                                                                     @csrf
@@ -116,15 +114,6 @@
                                                                                     <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                 </form>
                                                                             </div>
-                                                                        
-                                                                            {{-- <div class="col-sm-3" style="margin-left:8px">
-                                                                                <form action="{{ url('')}}/permintaan/<php echo $data->id ?>" method="POST"> 
-                                                                                    @csrf
-                                                                                    @method('POST')
-                                                                                    <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
-                                                                                    <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
-                                                                                </form>
-                                                                            </div> --}}
                                                                         @endif
 
                                                                         <div class="col-sm-3" style="margin-left:6px">
@@ -161,8 +150,8 @@
                             <div class="row">
                                 <div class="col-md-15">
                                     <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <strong>Data Permintaan Izin</strong>
+                                        <div class="panel-heading" style="height:35px">
+                                            {{-- <strong>Data Permintaan Izin</strong> --}}
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">
@@ -172,11 +161,11 @@
                                                             <tr>
                                                                 <th>#</th>
                                                                 <th>Karyawan</th>
-                                                                <th>K. Izin</th>
+                                                                <th>Kategori Izin</th>
                                                                 <th>Keperluan</th>
                                                                 <th>Tanggal</th>
                                                                 <th>Jml</th>
-                                                                <th>Jam M-S</th>
+                                                                <th>Mulai s/d Selesai</th>
                                                                 <th>Jml. Jam</th>
                                                                 <th>Status</th>
                                                                 <th>Action</th>

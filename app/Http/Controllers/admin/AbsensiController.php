@@ -79,8 +79,8 @@ class AbsensiController extends Controller
         ->first();//untuk memunculkan data absen pagi dengan pengecekan tanggal
 
         // dd($absensi);
-        $jk =  Carbon::now()->format("H:i:s");
-        return view('karyawan.absensi.absensi_karyawan',compact('absensi','jk','row'));
+        // $jk =  Carbon::now()->format("H:i:s");
+        return view('karyawan.absensi.absensi_karyawan',compact('absensi','row'));
     }
 
     public function store(Request $request)

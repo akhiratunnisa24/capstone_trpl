@@ -30,7 +30,7 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>id</th>
+                                                {{-- <th>id</th> --}}
                                                 <th>Karyawan</th>
                                                 <th>Kategori</th>
                                                 {{-- <th>ID Kategori</th> --}}
@@ -47,7 +47,7 @@
                                              @foreach($cutistaff as $data)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
-                                                    <td>{{$data->id}}</td>
+                                                    {{-- <td>{{$data->id}}</td> --}}
                                                     <td>{{$data->nama}}</td>
                                                     <td>{{$data->jenis_cuti}}</td>
                                                     {{-- <td>{{$data->id_jeniscuti}}</td> --}}

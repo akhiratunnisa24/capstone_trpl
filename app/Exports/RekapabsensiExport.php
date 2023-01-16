@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 // class RekapabsensiExport implements FromCollection, WithHeadings
 class RekapabsensiExport implements FromView, ShouldAutoSize
 {
+    //UNTUK DATA ABSENSI BERDASARKAN FILTER
     protected $idkaryawan;
     protected $data;
 
@@ -26,7 +27,8 @@ class RekapabsensiExport implements FromView, ShouldAutoSize
     public function view(): View    
     {
         $absensi = $this->data;
+        $idkaryawan = $this->idkaryawan ;
         
-        return view('admin/absensi/rekapabsensiExcel', ['absensi' => $absensi]);
+        return view('admin/absensi/rekapabsensiExcel', ['absensi' => $absensi], ['idkaryawan' => $idkaryawan]);
     }
 }
