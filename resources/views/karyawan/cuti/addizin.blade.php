@@ -8,7 +8,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Form Permohonan Izin</h4>
+                    <h4 class="modal-title text-center" id="myModalLabel">Form Permohonan Izin</h4>
                 </div> 
         
                 <div class="modal-body">
@@ -189,11 +189,15 @@
 
         //datepicker for tgl_mulai & tgl_selesai
         $('#datepicker-autoclosec').datepicker({
+            format:"dd/mm/yyyy",
             autoclose: true,
+            todayHighlight: true,
         });
 
         $('#datepicker-autoclosed').datepicker({
+            format:"dd/mm/yyyy",
             autoclose: true,
+            todayHighlight: true,
         });
 
         function jumlahhari(){

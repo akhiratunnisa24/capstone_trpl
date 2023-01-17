@@ -13,7 +13,7 @@
                         {{-- <span class=""><img src="assets/images/logo_dark2.png" alt="logo" height="130" width="130"></span> --}}
                         <span class="btn btn-lg"><i class="fa fa-key fa-4x fa-rotate-270"></i></span>
                     </h3>
-                    <h4 class="text-muted text-center m-t-0"><b>Ganti Password</b></h4>
+                    <h4 class="text-muted text-center m-t-0 m-b-30"><b>Ganti Password</b></h4>
 
                     <form action="updatePassword{id}" method="POST">
                         @csrf
@@ -29,36 +29,41 @@
                                     {{ session('error') }}
                                 </div>
                             @endif
-
-                            <div class="mb-3">
-                                <div class="form-group">
-                                    <label for="oldPasswordInput" class="form-label">Password Lama</label>
-                                    <input name="old_password" type="password" class="form-control @error('old_password') is-invalid @enderror" id="oldPasswordInput"
-                                        placeholder="Masukkan Password Lama">
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <input name="old_password" type="password" class="form-control @error('old_password') is-invalid @enderror" id="oldPasswordInput" placeholder="Masukkan Password Lama">
                                         @error('old_password')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
+                                        <a class="input-group-addon" id="toggle-password"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-group">
-                                    <label for="newPasswordInput" class="form-label">Password Baru</label>
-                                    <input name="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" id="newPasswordInput"
+
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <input name="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" id="newPasswordInput"
                                         placeholder="Masukkan Password Baru">
-                                    @error('new_password')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                        @error('new_password')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <a class="input-group-addon" id="toggle-password1"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-group">
-                                    <label for="confirmNewPasswordInput" class="form-label">Konfirmasi Password Baru</label>
-                                    <input name="new_password_confirmation" type="password" class="form-control" id="confirmNewPasswordInput"
+
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <input name="new_password_confirmation" type="password" class="form-control" id="confirmNewPasswordInput"
                                         placeholder="Konfirmasi Password Baru">
+                                        <a class="input-group-addon" id="toggle-password2"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    </div>
                                 </div>
                             </div>
-
-
+                        </div>
                         <div class="form-group text-center m-t-20">
                             <div class="col-xs-12">
                                 <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Change</button>
@@ -78,5 +83,57 @@
 
             </div>
         </div>
+        <style>
+            #toggle-password i {
+                cursor: pointer;
+            }
+            #toggle-password1 i {
+                cursor: pointer;
+            }
+            #toggle-password2 i {
+                cursor: pointer;
+            }
+        </style>
+        <script type="text/javascript">
+            document.getElementById("toggle-password").addEventListener("click", function() {
+                var x = document.getElementById("oldPasswordInput");
+                var toggle = document.getElementById("toggle-password").firstChild;
+                if (x.type === "password") {
+                    x.type = "text";
+                    toggle.classList.remove("fa-eye");
+                    toggle.classList.add("fa-eye-slash");
+                } else {
+                    x.type = "password";
+                    toggle.classList.remove("fa-eye-slash");
+                    toggle.classList.add("fa-eye");
+                }
+            });
+            document.getElementById("toggle-password1").addEventListener("click", function() {
+                var y = document.getElementById("newPasswordInput");
+                var toggle = document.getElementById("toggle-password1").firstChild;
+                if (y.type === "password") {
+                    y.type = "text";
+                    toggle.classList.remove("fa-eye");
+                    toggle.classList.add("fa-eye-slash");
+                } else {
+                    y.type = "password";
+                    toggle.classList.remove("fa-eye-slash");
+                    toggle.classList.add("fa-eye");
+                }
+            });
+            document.getElementById("toggle-password2").addEventListener("click", function() {
+                var z = document.getElementById("confirmNewPasswordInput");
+                var toggle = document.getElementById("toggle-password2").firstChild;
+                if (z.type === "password") {
+                    z.type = "text";
+                    toggle.classList.remove("fa-eye");
+                    toggle.classList.add("fa-eye-slash");
+                } else {
+                    z.type = "password";
+                    toggle.classList.remove("fa-eye-slash");
+                    toggle.classList.add("fa-eye");
+                }
+            });
+        </script>
 
 @endsection

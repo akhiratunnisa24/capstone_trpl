@@ -48,14 +48,16 @@
 
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control" type="password" required="" id="password" name="password" placeholder="Password">
-                                
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-
+                                <div class="input-group">
+                                    <input class="form-control" type="password" required="" id="password" name="password" placeholder="Password">
+                                   
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror   
+                                    <a class="input-group-addon" id="toggle-password3"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                </div>
                             </div>
                         </div>
 
@@ -90,8 +92,6 @@
             </div>
         </div>
 
-
-
         <!-- jQuery  -->
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
@@ -106,6 +106,26 @@
         <script src="assets/js/jquery.scrollTo.min.js"></script>
 
         <script src="assets/js/app.js"></script>
+        <style>
+            #toggle-password3 i {
+                cursor: pointer;
+            }
+        </style>
+        <script type="text/javascript">
+            document.getElementById("toggle-password3").addEventListener("click", function() {
+                var x = document.getElementById("password");
+                var toggle = document.getElementById("toggle-password3").firstChild;
+                if (x.type === "password") {
+                    x.type = "text";
+                    toggle.classList.remove("fa-eye");
+                    toggle.classList.add("fa-eye-slash");
+                } else {
+                    x.type = "password";
+                    toggle.classList.remove("fa-eye-slash");
+                    toggle.classList.add("fa-eye");
+                }
+            });
+        </script>
 
     </body>
 </html>

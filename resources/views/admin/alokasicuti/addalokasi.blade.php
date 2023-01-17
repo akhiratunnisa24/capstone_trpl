@@ -5,13 +5,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="newalokasi">Tambah Alokasi Cuti</h4>
+                <h4 class="modal-title text-center" id="newalokasi">Tambah Alokasi Cuti</h4>
             </div>
             <div class="modal-body">
                 <form class="input" action="{{route('alokasi.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="panel-body">
+                        <div class="col-md-12">
+                            <div class="form-group col-sm" id="search-container">
+                                <input  class="form-control col-sm-10" type="text" id="search-input" placeholder="Cari karyawan...">
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group col-sm" id="jeniscuti">
                                 <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
