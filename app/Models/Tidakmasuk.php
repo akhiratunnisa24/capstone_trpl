@@ -16,6 +16,12 @@ class Tidakmasuk extends Model
         'id_pegawai',
         'nama',
         'divisi ',
+        'status ',
         'tanggal',
     ];
+
+    public function karyawan()
+    {
+        return $this->hasMany(Karyawan::class, 'id');
+    }
 }

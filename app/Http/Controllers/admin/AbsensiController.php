@@ -6,6 +6,7 @@ use PDF;
 use Carbon\Carbon;
 use App\Models\Absensi;
 use App\Models\Karyawan;
+use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
 use App\Exports\AbsensiExport;
 use App\Imports\AbsensiImport;
@@ -78,9 +79,14 @@ class AbsensiController extends Controller
         ->whereDate('tanggal', Carbon::now()->format("Y-m-d"))
         ->first();//untuk memunculkan data absen pagi dengan pengecekan tanggal
 
-        // dd($absensi);
+        $tidakmasuk=Tidakmasuk::where('id_pegawai',Auth::user()->id_pegawai)
+        ->whereDate('tanggal', Carbon::now()->format("Y-m-d"))
+        ->first();//untuk memunculkan data absen pagi dengan pengecekan tanggal
+        $status = Tidakmasuk::where('id_pegawai', Auth::user()->id_pegawai)->first();
+
+        // dd($status);
         // $jk =  Carbon::now()->format("H:i:s");
-        return view('karyawan.absensi.absensi_karyawan',compact('absensi','row'));
+        return view('karyawan.absensi.absensi_karyawan',compact('absensi','row','status'));
     }
 
     public function store(Request $request)
@@ -261,4 +267,47 @@ class AbsensiController extends Controller
         }
         return Excel::download(new RekapabsensiExport($data,$idkaryawan),'rekap_absensi_bulanan.xlsx');
     }
+
+    public function storeTidakmasuk(Request $data)
+    {
+        $karyawan = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $status = Tidakmasuk::where('id', Auth::user()->id_pegawai)->first();
+        // dd($keluarga);
+        $depart = DB::table('karyawan')->join('departemen', 'karyawan.divisi','=','departemen.id')
+                  ->where('karyawan.id','=',Auth::user()->id_pegawai)->first();
+    
+        $tidakmasuk = array(
+            'id_pegawai' => $karyawan->id,
+            'nama' => $karyawan->nama,
+            'divisi' => $karyawan->divisi,
+            'status' => $data->post('status'),
+            'tanggal' => Carbon::now()->format("Y-m-d"),
+        );
+
+        $absensi = array(
+            'id_karyawan' => $karyawan->id,
+            'tanggal' => Carbon::now()->format("Y-m-d"),
+            'shift' => 'NORMAL' ,
+            'jadwal_masuk' => '08:00:00' ,
+            'jadwal_pulang' => '17:00:00' ,
+            'normal' => '1' ,
+            'riil' => '0' ,
+            'absent' => 'True' ,
+            'hci' => 'True' ,
+            'hco' => 'True' ,
+            'h_normal' => 0,
+            'ap' => 0,
+            'hl' => 0,
+            'lemhanor' => 0,
+            'lemakpek' => 0,
+            'lemhali' => 0,
+        );
+        // dd($absensi); 
+
+        Tidakmasuk::insert($tidakmasuk);
+        Absensi::insert($absensi);
+
+        return redirect()->back();
+    }
+
 }
