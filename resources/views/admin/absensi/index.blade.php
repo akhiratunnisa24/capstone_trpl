@@ -19,7 +19,7 @@
                                     <div class="form-group">
                                         <label>Karyawan</label>
 
-                                        <select name="id_karyawan" id="id_karyawan" class="form-control" required>
+                                        <select name="id_karyawan" id="id_karyawan" class="form-control selectpicker" data-live-search="true" required>
                                             <option>-- Pilih Karyawan --</option>
                                             @foreach ($karyawan as $data)
                                                 <option value="{{ $data->id}}"
@@ -59,7 +59,7 @@
                                 <div class="m-t-20">
                                     <div class="form-group">
                                         <label>Bulan</label>
-                                        <select name="bulan" id="bulan" class="col-md-3 form-control" required>
+                                        <select name="bulan" id="bulan" class="col-md-3 form-control selectpicker" required>
                                             <option value="">-- Pilih Bulan --</option>
                                             <option value="01" {{ ('01' === request()->bulan) ? 'selected' : '' }}>Januari</option>
                                             <option value="02" {{ ('02' === request()->bulan) ? 'selected' : '' }}>Februari</option>
@@ -81,7 +81,7 @@
                                 <div class="m-t-20">
                                     <div class="form-group">
                                         <label>Tahun</label>
-                                        <select name="tahun" id="tahun" class="col-md-3 form-control" required>
+                                        <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" required>
                                             <option value="">-- Pilih Tahun --</option>
                                             {{-- {{ ('01' === request()->bulan) ? 'selected' : '' }} --}}
                                             <option value="2011" {{ ('2011' === request()->tahun) ? 'selected' : '' }}>2011</option>
@@ -238,6 +238,14 @@
             </div>
         </div>
     </div>
+
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"> --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
+{{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
