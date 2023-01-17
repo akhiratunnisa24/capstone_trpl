@@ -32,6 +32,7 @@ class CutiadminController extends Controller
             ->orWhere('cuti.status','Disetujui')
             ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','settingalokasi.mode_alokasi')
             ->distinct()
+            ->orderBy('created_at','DESC')
             ->get();
 
         $izin = Izin::latest()->paginate(10);
