@@ -100,5 +100,10 @@ class Karyawan extends Model
     {
         return $this->hasMany(Absensi::class,'id_karyawan','id');
     }
+
+    public function tidakmasuk()
+    {
+        return $this->belongsTo(Rpendidikan::class, 'id', 'id_pegawai');
+    }
     
 }
