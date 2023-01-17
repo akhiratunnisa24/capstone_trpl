@@ -14,10 +14,8 @@
                 <form method="POST" action="{{ url('/registrasi') }}">
                     @csrf
                     @method('POST')
-                    <div class="form-group">
-
-                        <div class="col-xs-12">
-                            <label class="form-label">Role</label>
+                    <div class="form-group col-xs-12">
+                        <label class="form-label">Role</label>
                             <select type="text" class="form-control  @error('role') is-invalid @enderror"
                                 name="role" required autocomplete="role" autofocus placeholder="Role">
                                 <option value="">Pilih Role</option>
@@ -31,56 +29,51 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-
-                        </div>
                     </div>
 
-                    <div class="form-group" id="id_pegawai">
-                        <div class="col-xs-12" id="id_pegawai">
-                            <label for="id_pegawai" class="form-label">Karyawan</label>
-                            <select id="id_karyawan" class="form-control" name="id_pegawai" required>
-                                <option value="">Pilih Karyawan</option>
-                                @foreach ($akun as $k)
-                                    <option value="{{ $k->id }}">{{ $k->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div class="form-group col-xs-12" id="id_pegawai">
+                        <label for="id_pegawai" class="form-label">Karyawan</label>
+                        <select id="id_karyawan" class="form-control" name="id_pegawai" required>
+                            <option value="">Pilih Karyawan</option>
+                            @foreach ($akun as $k)
+                                <option value="{{ $k->id }}">{{ $k->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="emailKaryawan" class="form-label">Email</label>
+                        <input id="emailKaryawan" type="text" class="form-control" name="emailKaryawan"
+                            autocomplete="off" placeholder="Email Address" readonly>
+
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <label for="emailKaryawan" class="form-label">Email</label>
-                            <input id="emailKaryawan" type="text" class="form-control" name="emailKaryawan"
-                                autocomplete="off" placeholder="Email Address" readonly>
-
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <div class="col-xs-12">
+                    <div class="form-group col-xs-12">
+                        {{-- <div class=""> --}}
                             <label for="exampleInputEmail1" class="form-label">Password</label>
-                            <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" required
-                                autocomplete="new-password" autofocus placeholder="Password">
+                            <div class="input-group">
+                                <input id="password" type="password"
+                                    class="form-control @error('password') is-invalid @enderror" name="password" required
+                                    autocomplete="new-password" autofocus placeholder="Password">
 
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-
-                        </div>
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                <a class="input-group-addon" id="toggle-password4"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                            </div>
+                        {{-- </div> --}}
                     </div>
 
                     <div class="form-group">
-
                         <div class="col-xs-12">
                             <label for="exampleInputEmail1" class="form-label">Confirm Password</label>
-                            <input id="password-confirm" type="password" class="form-control"
-                                name="password_confirmation" required autocomplete="new-password" autofocus
-                                placeholder="Confirm Password">
+                            <div class="input-group">
+                                <input id="password-confirm" type="password" class="form-control"
+                                    name="password_confirmation" required autocomplete="new-password" autofocus
+                                    placeholder="Confirm Password">
+                                <a class="input-group-addon" id="toggle-password5"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                            </div>
                         </div>
                     </div>
 
@@ -144,5 +137,42 @@
                 console.log(data?.email)
             }
         });
+    });
+</script>
+
+<style>
+    #toggle-password4 i {
+        cursor: pointer;
+    }
+    #toggle-password5 i {
+        cursor: pointer;
+    }
+</style>
+<script type="text/javascript">
+    document.getElementById("toggle-password4").addEventListener("click", function() {
+        var x = document.getElementById("password");
+        var toggle = document.getElementById("toggle-password4").firstChild;
+        if (x.type === "password") {
+            x.type = "text";
+            toggle.classList.remove("fa-eye");
+            toggle.classList.add("fa-eye-slash");
+        } else {
+            x.type = "password";
+            toggle.classList.remove("fa-eye-slash");
+            toggle.classList.add("fa-eye");
+        }
+    });
+    document.getElementById("toggle-password5").addEventListener("click", function() {
+        var x = document.getElementById("password-confirm");
+        var toggle = document.getElementById("toggle-password5").firstChild;
+        if (x.type === "password") {
+            x.type = "text";
+            toggle.classList.remove("fa-eye");
+            toggle.classList.add("fa-eye-slash");
+        } else {
+            x.type = "password";
+            toggle.classList.remove("fa-eye-slash");
+            toggle.classList.add("fa-eye");
+        }
     });
 </script>

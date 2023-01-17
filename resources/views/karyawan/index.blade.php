@@ -90,7 +90,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Import Excel</h4>
+                    <h4 class="modal-title text-center" id="myModalLabel">Import Excel</h4>
                 </div>
                 <form action="/import_excel" method="POST" enctype="multipart/form-data">
                     @csrf

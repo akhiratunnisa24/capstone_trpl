@@ -54,7 +54,7 @@ class CutikaryawanController extends Controller
     public function getDurasi(Request $request)
     {
         try {
-            $getDurasi = Alokasicuti::select('id','durasi')
+            $getDurasi = Alokasicuti::select('id','durasi','aktif_dari','sampai')
             ->where('id_jeniscuti','=',$request->id_jeniscuti)
             ->where('id_karyawan','=',Auth::user()->id_pegawai)
             ->first();

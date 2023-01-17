@@ -12,7 +12,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="newsetting">Setting Alokasi Cuti</h4>
+                <h4 class="modal-title text-center" id="newsetting">Setting Alokasi Cuti</h4>
             </div>
 
             @if ($errors->any())

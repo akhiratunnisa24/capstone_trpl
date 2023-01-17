@@ -6,7 +6,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="Modal">Form Permohonan Cuti</h4>
+                    <h4 class="modal-title text-center" id="Modal">Form Permohonan Cuti</h4>
                 </div>
                 {{-- alert danger --}}
                 <div class="alert alert-danger" id="error-message" style="display: none;">
@@ -92,6 +92,22 @@
                                 </div>
                             </div>
                         </div>
+                    
+                        {{-- <div class="row">
+                            <div class="col-sm-6 col-xs-12">
+                                <div class="form-group col-sm"> --}}
+                                    {{-- <label class="col-form-label">Aktif Dari</label> --}}
+                                    <input type="hidden" class="form-control" name="aktif_dari" id="aktif_dari">
+                                {{-- </div>
+                            </div>
+                            <div class="col-sm-6 col-xs-12">
+                                <div class="form-group col-sm"> --}}
+                                    {{-- <label class="col-form-label">Sampai</label> --}}
+                                    <input type="hidden" class="form-control" name="sampai" id="sampai">
+                                {{-- </div>
+                            </div>
+                        </div> --}}
+
 
                         <div class="form-group col-sm">
                             <input type="hidden" class="form-control" name="status" id="status" value="Pending">
@@ -136,11 +152,45 @@
                 type:"POST",
                 url: '{{route('get.Durasi')}}',
                 data: {'id_jeniscuti':id_jeniscuti},
-                success:function(data){
+                success:function(data)
+                {
                     $('#id_alokasi').val(data.id);
                     $('#durasi').val(data.durasi);
+                    $('#aktif_dari').val(data.aktif_dari);
+                    $('#sampai').val(data.sampai);
                     // console.log(data?.durasi)
-                    durasi = data.durasi;//untuk mengambil value durasi
+                    durasi     = data.durasi;
+
+                    var aktif_dari = $("#aktif_dari").val();
+                    var sampai = $("#sampai").val();
+                    var startDate = new Date(aktif_dari);
+                    var endDate = new Date(sampai);
+
+                    $('#datepicker-autoclosea').datepicker({
+                        format: "yyyy-mm-dd",
+                        autoclose: true,
+                        minDate: startDate,
+                        maxDate: endDate,
+                        todayHighlight: true,
+                        beforeShowDay: function(date){
+                            if (date < startDate || date > endDate)
+                                return {enabled : false};
+                            return;
+                        }
+                    });
+                    $('#datepicker-autocloseb').datepicker({
+                        format: "yyyy-mm-dd",
+                        autoclose: true,
+                        minDate: startDate,
+                        maxDate: endDate,
+                        todayHighlight: true,
+                        beforeShowDay: function(date){
+                            if (date < startDate || date > endDate)
+                                return {enabled : false};
+                            return;
+                        }
+                    });
+                
                 }
             });
         });
