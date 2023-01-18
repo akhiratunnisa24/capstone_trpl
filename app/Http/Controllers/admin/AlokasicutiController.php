@@ -69,17 +69,7 @@ class AlokasicutiController extends Controller
             //         ->orWhere('keluarga.status_pernikahan', 'like', '%'.$cari.'%');
             //         })
             //     ->get();
-<<<<<<< HEAD
     // }
-=======
-            return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','alokasicuti','settingalokasi','row'));
-            
-        } else {
-            
-            return redirect()->back(); 
-        }
-    }
->>>>>>> b7714b088fb8b1a25cea38d9295d1d97e9db7f81
 
     public function getTglmasuk(Request $request)
     {

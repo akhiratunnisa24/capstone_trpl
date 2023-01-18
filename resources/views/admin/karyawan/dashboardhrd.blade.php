@@ -220,7 +220,6 @@
 <script>
       var users2 =  {{ Js::from($data) }};   
       var labelBulan = {{ Js::from($labelBulan) }}
-      var labelTahun = {{ Js::from($labelTahun) }}
      
       const data = {
         labels: labelBulan,
