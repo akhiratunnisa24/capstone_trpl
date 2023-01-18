@@ -20,9 +20,9 @@ class AlokasicutiController extends Controller
     public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $role = Auth::user()->role;        
+        $role = Auth::user()->role;
         if ($role == 1) {
-        
+
             //index
             $alokasicuti = Alokasicuti::all();
 
@@ -36,10 +36,10 @@ class AlokasicutiController extends Controller
                 ->join('jeniscuti', 'settingalokasi.id_jeniscuti','=','jeniscuti.id')
                 ->get();
             return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','keluarga','alokasicuti','row'));
-            
+
         } else {
-            
-            return redirect()->back(); 
+
+            return redirect()->back();
         }
     }
     // public function search(){
@@ -82,7 +82,7 @@ class AlokasicutiController extends Controller
                 throw new \Exception('Data not found');
             }
             return response()->json($getTglmasuk,200);
-            
+
         } catch (\Exception $e){
             return response()->json([
                 'message' =>$e->getMessage()
@@ -111,7 +111,7 @@ class AlokasicutiController extends Controller
     public function store(Request $request)
     {
         // dd($request->id_jeniscuti);
-       
+
         if($request->id_jeniscuti == 1)
         {
             $validate = $request->validate([
@@ -131,8 +131,8 @@ class AlokasicutiController extends Controller
             $alokasicuti->durasi       = $request->durasi;
             $alokasicuti->mode_alokasi = $request->mode_alokasi;
             $alokasicuti->tgl_masuk    = Carbon::parse($request->tgl_masuk)->format('Y-m-d');
-            $alokasicuti->tgl_sekarang = Carbon::parse($request->tgl_sekarang)->format('Y-m-d'); 
-            $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d'); 
+            $alokasicuti->tgl_sekarang = Carbon::parse($request->tgl_sekarang)->format('Y-m-d');
+            $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d');
             $alokasicuti->sampai       = Carbon::parse($request->sampai)->format('Y-m-d');
 
             // dd($alokasicuti);
@@ -154,9 +154,9 @@ class AlokasicutiController extends Controller
             $alokasicuti->id_jeniscuti = $request->id_jeniscuti;
             $alokasicuti->durasi       = $request->durasi;
             $alokasicuti->mode_alokasi = $request->mode_alokasi;
-            $alokasicuti->tgl_masuk    = NULL; 
-            $alokasicuti->tgl_sekarang = NULL; 
-            $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d'); 
+            $alokasicuti->tgl_masuk    = NULL;
+            $alokasicuti->tgl_sekarang = NULL;
+            $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d');
             $alokasicuti->sampai       = Carbon::parse($request->sampai)->format('Y-m-d');
 
             // dd($alokasicuti);
@@ -179,11 +179,11 @@ class AlokasicutiController extends Controller
             'success' => true,
             'message' => 'Data Alokasi Didapatkan',
             'data'    => $alokasicuti
-        ]); 
+        ]);
         dd($alokasicuti);
         // dd($alokasicuti);
     }
-   
+
     public function update(Request $request, $id)
     {
         $alokasicuti = Alokasicuti::find($id);
@@ -214,7 +214,7 @@ class AlokasicutiController extends Controller
                 'success' => true,
                 'message' => 'Data Berhasil Diudapte!',
                 'statusCode'=>200,
-                'data'    => $alokasicuti 
+                'data'    => $alokasicuti
             ]);
         }else
         {
@@ -243,7 +243,7 @@ class AlokasicutiController extends Controller
                 'success' => true,
                 'message' => 'Data Berhasil Diudapte!',
                 'statusCode'=>200,
-                'data'    => $alokasicuti 
+                'data'    => $alokasicuti
             ]);
         }
     }
@@ -262,5 +262,3 @@ class AlokasicutiController extends Controller
         return back();
     }
 }
-
-           
