@@ -44,22 +44,22 @@ class AlokasicutiController extends Controller
             //     ->orWhere('keluarga.status_pernikahan', $mode_karyawan)
             //     ->orWhere('karyawan.jenis_kelamin', 'like', '%'.$cari.'%')
             //     ->orWhere('keluarga.status_pernikahan', 'like', '%'.$cari.'%')
-            $data = DB::table('karyawan')
-                ->join('keluarga', 'karyawan.id', '=', 'keluarga.id_pegawai')
-                ->join('settingalokasi', function($join) use ($request){
-                $join->on('settingalokasi.id_jeniscuti', '=', $request->id_jeniscuti);})
-                ->select('karyawan.nama')
-                ->where(function($query) use ($mode_karyawan){
-                    $query->where('karyawan.jenis_kelamin', $mode_karyawan)
-                    ->orWhere('keluarga.status_pernikahan', $mode_karyawan);
-                })
-                ->where(function($query) use ($cari)
-                    {
-                    $query->where('karyawan.nama', 'like', '%'.$cari.'%')
-                    ->orWhere('keluarga.status_pernikahan', 'like', '%'.$cari.'%');
-                    })
-                ->get();
-            return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','alokasicuti','settingalokasi','data','row'));
+            // $data = DB::table('karyawan')
+            //     ->join('keluarga', 'karyawan.id', '=', 'keluarga.id_pegawai')
+            //     ->join('settingalokasi', function($join) use ($request){
+            //     $join->on('settingalokasi.id_jeniscuti', '=', $request->id_jeniscuti);})
+            //     ->select('karyawan.nama')
+            //     ->where(function($query) use ($mode_karyawan){
+            //         $query->where('karyawan.jenis_kelamin', $mode_karyawan)
+            //         ->orWhere('keluarga.status_pernikahan', $mode_karyawan);
+            //     })
+            //     ->where(function($query) use ($cari)
+            //         {
+            //         $query->where('karyawan.nama', 'like', '%'.$cari.'%')
+            //         ->orWhere('keluarga.status_pernikahan', 'like', '%'.$cari.'%');
+            //         })
+            //     ->get();
+            return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','alokasicuti','settingalokasi','row'));
             
         } else {
             

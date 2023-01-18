@@ -476,7 +476,7 @@ class karyawanController extends Controller
             $filename = '' . time() . $file->getClientOriginalName();
             $file->move(public_path() . '\Foto_Profile', $filename);
             $karyawan->foto = $filename;
-        }
+        
 
         $data = array(
 
@@ -570,6 +570,102 @@ class karyawanController extends Controller
         Kdarurat::where('id', $id_kdarurat)->update($data_kdarurat);
 
         return redirect('karyawan')->with("sukses", "berhasil diubah");
+
+        } else {
+
+            $data = array(
+    
+                'nama' => $request->post('namaKaryawan'),
+                'tgllahir' => $request->post('tgllahirKaryawan'),
+                'jenis_kelamin' => $request->post('jenis_kelaminKaryawan'),
+                'alamat' => $request->post('alamatKaryawan'),
+                'no_hp' => $request->post('no_hpKaryawan'),
+                'email' => $request->post('emailKaryawan'),
+                'agama' => $request->post('agamaKaryawan'),
+                'nik' => $request->post('nikKaryawan'),
+                'gol_darah' => $request->post('gol_darahKaryawan'),
+                'jabatan' => $request->post('jabatanKaryawan'),
+                // 'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+            );
+    
+            $data_keluarga = array(
+                // 'id_pegawai' => $maxId + 1 , 
+    
+                'status_pernikahan' => $request->post('status_pernikahan'),
+    
+                'nama' => $request->post('namaPasangan'),
+                'tgllahir' => $request->post('tgllahirPasangan'),
+                'alamat' => $request->post('alamatPasangan'),
+                'pendidikan_terakhir' => $request->post('pendidikan_terakhirPasangan'),
+                'pekerjaan' => $request->post('pekerjaanPasangan'),
+    
+    
+                // 'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+    
+            );
+    
+            $r_pendidikan = array(
+                // 'id_pegawai' => $maxId + 1 ,
+    
+                'tingkat' => $request->post('tingkat_pendidikan'),
+                'nama_sekolah' => $request->post('nama_sekolah'),
+                'kota_pformal' => $request->post('kotaPendidikanFormal'),
+                'jurusan' => $request->post('jurusan'),
+                'tahun_lulus_formal' => $request->post('tahun_lulus_formal'),
+    
+                'jenis_pendidikan' => $request->post('jenis_pendidikan'),
+                'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
+                'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
+    
+                // 'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+    
+            );
+    
+            $r_pekerjaan = array(
+                // 'id_pegawai' => $maxId + 1 ,
+    
+                'nama_perusahaan' => $request->post('namaPerusahaan'),
+                'alamat' => $request->post('alamatPerusahaan'),
+                'jenis_usaha' => $request->post('jenisUsaha'),
+                'jabatan' => $request->post('jabatan'),
+                'nama_atasan' => $request->post('namaAtasan'),
+                'nama_direktur' => $request->post('namaDirektur'),
+                'lama_kerja' => $request->post('lamaKerja'),
+                'alasan_berhenti' => $request->post('alasanBerhenti'),
+                'gaji' => $request->post('gajiRpekerjaan'),
+    
+                // 'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+    
+            );
+    
+            $data_kdarurat = array(
+                // 'id_pegawai' => $maxId + 1 ,
+    
+                'nama' => $request->post('namaKdarurat'),
+                'alamat' => $request->post('alamatKdarurat'),
+                'no_hp' => $request->post('no_hpKdarurat'),
+                'hubungan' => $request->post('hubunganKdarurat'),
+    
+            );
+            $idKaryawan = $request->post('id_karyawan');
+            $idPendidikan = $request->post('id_pendidikan');
+            $idKeluarga = $request->post('id_keluarga');
+            $idPekerjaan = $request->post('id_pekerjaan');
+            $id_kdarurat = $request->post('id_kdarurat');
+    
+            Karyawan::where('id', $idKaryawan)->update($data);
+            Keluarga::where('id', $idKeluarga)->update($data_keluarga);
+            Rpendidikan::where('id', $idPendidikan)->update($r_pendidikan);
+            Rpekerjaan::where('id', $idPekerjaan)->update($r_pekerjaan);
+            Kdarurat::where('id', $id_kdarurat)->update($data_kdarurat);
+    
+            return redirect('karyawan')->with("sukses", "berhasil diubah");
+        }
+
     }
 
     public function show($id)

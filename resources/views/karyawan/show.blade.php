@@ -105,7 +105,7 @@
 
                     <tr>
                         <td><label for="cc_number">Tanggal Lahir :
-                                {{\Carbon\Carbon::parse($keluarga->tgllahir)->format('d/m/Y')}} </label></td>
+                                {{($keluarga->tgllahir)}} </label></td>
 
                         <td><label for="bpjskes_number">Alamat : {{$keluarga->alamat}}</label></td>
                     </tr>
@@ -138,19 +138,20 @@
 
 
                         <td><label> Nama Sekolah : {{$rpendidikan->nama_sekolah}} </label></td>
-
-                        <td><label for="bpjskes_number"> Kota : {{$rpendidikan->kota_pformal}} </label></td>
+                        <td><label for="bpjsket_number">Kota : {{$rpendidikan->kota_pnonformal}}</label></td>
+                        
 
 
 
                     </tr>
 
                     <tr>
-                        <td><label for="bpjsket_number">Kota : {{$rpendidikan->kota_pnonformal}}</label></td>
-
+                        
+                        <td><label for="bpjskes_number"> Kota : {{$rpendidikan->kota_pformal}} </label></td>
                         <td><label for="bpjsket_number">Lulus Tahun :
-                                {{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y')}}</label>
+                                {{($rpendidikan->tahun_lulus_nonformal)}}</label>
                         </td>
+                        
 
                     </tr>
                     <tr>
@@ -160,7 +161,7 @@
                     </tr>
                     <tr>
                         <td><label for="bpjsket_number">Lulus Tahun :
-                                {{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_nonformal)->format('d/m/Y')}}</label>
+                                {{($rpendidikan->tahun_lulus_formal)}}</label>
                         </td>
                         <td><span id="bpjsket_number"></span></td>
                     </tr>
