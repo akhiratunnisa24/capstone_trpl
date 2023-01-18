@@ -19,7 +19,7 @@
                     <div class="modal-footer">
                         <input type="hidden" name="id" id="id">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Save changes</button>
+                        <button type="submit" class="btn btn-success">Update</button>
                     </div>
                 </form>
             </div>

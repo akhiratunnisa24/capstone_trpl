@@ -12,11 +12,11 @@
                     @csrf
                     @method('POST')
                     <div class="panel-body">
-                        <div class="col-md-12">
+                        {{-- <div class="col-md-12" style="margin-bottom:20px">
                             <div class="form-group col-sm" id="search-container">
                                 <input  class="form-control col-sm-10" type="text" id="search-input" placeholder="Cari karyawan...">
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-md-6">
                             <div class="form-group col-sm" id="jeniscuti">
                                 <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
@@ -29,24 +29,35 @@
                             </div>
 
                             <input type="hidden" class="form-control" name="id_settingalokasi" placeholder="id_settingalokasi" id="id_settingalokasi" readonly>
-                            {{-- @if($jeniscuti->departemen != null) --}}
-                                <div class="form-group">
-                                    <label class="col-form-label">Departemen</label>
-                                    <input type="text" class="form-control" name="departemen" placeholder="tidak memiliki data departemen" id="departemen" readonly>
-                                </div>
-                            {{-- @endif --}}
-
+                            
                             <div class="form-group col-sm" id="id_karyawan">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
                                 <select name="id_karyawan" id="id_karyawan" class="form-control" required>
                                     <option value="">Pilih Karyawan</option>
                                     @foreach ($karyawan as $data)
-                                        {{-- @if($data->divisi == $departemen->id) --}}
-                                            <option value="{{ $data->id }}">departemen: {{ $data->divisi }} -- {{ $data->nama }}</option>
-                                        {{-- @endif --}}
+                                        @foreach ($keluarga as $data_keluarga)
+                                            @if($data->id == $data_keluarga->id_pegawai)
+                                                <option value="{{ $data->id }}">[Status: {{$data_keluarga->status_pernikahan}}, JK: {{ $data->jenis_kelamin}}, Depart: {{ $data->divisi }}] {{ $data->nama }}</option>
+                                                @break
+                                            @endif
+                                        @endforeach
                                     @endforeach
                                 </select>
                             </div>
+                            
+                            {{-- <div class="form-group col-sm" id="id_karyawan">
+                                <label for="id_karyawan" class="col-form-label">Karyawan</label>
+                                <select name="id_karyawan" id="id_karyawan" class="form-control" required>
+                                    <option value="">Pilih Karyawan</option>
+                                    @foreach ($karyawan as $data)
+                                        @if($data->id == $keluarga->id_pegawai)
+                                            <option value="{{ $data->id }}"> [Status: {{$keluarga->status_pernikahan}}, JK: {{ $data->jenis_kelamin}}, Depart: {{ $data->divisi }}] {{ $data->nama }}</option>
+                                        @else
+                                            <option value="{{ $data->id }}"> [JK: {{ $data->jenis_kelamin}}, Depart: {{ $data->divisi }}] {{ $data->nama }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div> --}}
                             <div class="form-group">
                                 <label for="durasi" class="col-form-label">Durasi (Hari)</label>
                                 <input type="text" class="form-control" name="durasi" placeholder="durasi" id="durasi"
@@ -57,6 +68,11 @@
                                 <input type="text" class="form-control" name="mode_alokasi" placeholder="mode alokasi"
                                     id="mode_alokasi" readonly>
                             </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Status/JK/Departemen</label>
+                                <input type="text" class="form-control" name="departemen" placeholder="Status/JK/Departemen" id="departemen" readonly>
+                            </div>
+
                         </div>
 
                         <div class="col-md-6" id="validitas">
@@ -64,7 +80,7 @@
                                 <div class="form-group">
                                     <label for="tgl_masuk" class="form-label">Tanggal Masuk</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="tgl_masuk"
+                                        <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="tgl_masuk"
                                             name="tgl_masuk" autocomplete="off" readonly>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>
@@ -75,7 +91,7 @@
                                 <div class="form-group">
                                     <label for="tgl_sekarang" class="form-label">Tanggal Sekarang</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                        <input type="text" class="form-control" placeholder="yyyy/mm/dd"
                                             id="tgl_sekarang" name="tgl_sekarang" autocomplete="off" readonly>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>
@@ -86,7 +102,7 @@
                                 <div class="form-group">
                                     <label for="aktif_dari" class="form-label">Aktif Dari</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                        <input type="text" class="form-control" placeholder="yyyy/mm/dd"
                                             id="datepicker-autoclosea1" name="aktif_dari" autocomplete="off" required>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>
@@ -97,7 +113,7 @@
                                 <div class="form-group">
                                     <label for="sampai" class="form-label">Sampai</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                        <input type="text" class="form-control" placeholder="yyyy/mm/dd"
                                             id="datepicker-autoclosea2" name="sampai" autocomplete="off" required>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>
@@ -108,8 +124,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-info" name="submit" value="save">Save Changes</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" name="submit" value="save">Save</button>
                     </div>
                 </form>
             </div>
@@ -119,9 +135,7 @@
 
 <!-- jQuery  -->
 <script src="assets/js/jquery.min.js"></script>
-{{-- <script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/app.js"></script>
-<script src="assets/pages/form-advanced.js"></script> --}}
+<script src="assets/pages/form-advanced.js"></script>
 
 <!-- Script untuk mengambil nilai settingalokasi  -->
 <script>
@@ -141,13 +155,21 @@
                 $('#id_settingalokasi').val(data.id);
                 $('#durasi').val(data.durasi);
                 $('#mode_alokasi').val(data.mode_alokasi);
-                $('#departemen').val(data.departemen);
+                var mode_alokasi = data.mode_alokasi;
+                if(mode_alokasi == 'Berdasarkan Departemen'){
+                    $('#departemen').val(data.departemen);
+                }else{
+                    $('#departemen').val(data.mode_karyawan);
+                }
+                
             }
         });
     });
 </script>
+
 <!-- script untuk mengambil data tanggalmasuk  -->
 <script>
+    var tglmasuk;
     $('#id_karyawan').on('change',function(e){
         var id_karyawan = e.target.value;
         $.ajaxSetup({
@@ -160,9 +182,11 @@
             url: '{{route('get.Tglmasuk')}}',
             data: {'id_karyawan':id_karyawan},
             success:function(data){
-                // console.log(data);
                 $('#tgl_masuk').val(data.tglmasuk);
-                console.log(data?.tglmasuk)
+                // console.log(data?.tglmasuk)
+
+                tglmasuk = data.tglmasuk;
+                console.log(tglmasuk);
             }
         });
     });
@@ -183,15 +207,13 @@
                 $('#tanggalselesai').prop("hidden", false);
 
                 var date = new Date(Date.now());
-                var tgl  = (((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear());
+                var tgl  = (date.getFullYear() + '/' + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())));
                 $('#tgl_sekarang').val(tgl);
 
             } else
                 {
                     $('#tanggalmulai').prop("hidden", true);
                     $('#tanggalselesai').prop("hidden", true);
-                    //let departemen = document.getElementById('departemen').value;
-
             }
         });
     });
