@@ -32,7 +32,7 @@
         @csrf
         @method('put')
 
-         <div class="modal-body">
+        <div class="modal-body">
             <table class="table table-bordered table-striped" style="width:100%">
                 <tbody class="col-sm-20">
 
@@ -105,7 +105,7 @@
 
                     <tr>
                         <td><label for="cc_number">Tanggal Lahir :
-                                {{($keluarga->tgllahir)}} </label></td>
+                                {{\Carbon\Carbon::parse($keluarga->tgllahir)->format('d/m/Y')}} </label></td>
 
                         <td><label for="bpjskes_number">Alamat : {{$keluarga->alamat}}</label></td>
                     </tr>
@@ -138,20 +138,19 @@
 
 
                         <td><label> Nama Sekolah : {{$rpendidikan->nama_sekolah}} </label></td>
-                        <td><label for="bpjsket_number">Kota : {{$rpendidikan->kota_pnonformal}}</label></td>
-                        
+
+                        <td><label for="bpjskes_number"> Kota : {{$rpendidikan->kota_pformal}} </label></td>
 
 
 
                     </tr>
 
                     <tr>
-                        <td><label for="bpjskes_number"> Kota : {{$rpendidikan->kota_pformal}} </label></td>
-                        <td><label for="bpjsket_number">Lulus Tahun :
-                                {{($rpendidikan->tahun_lulus_nonformal)}}</label>
-                        </td>
+                        <td><label for="bpjsket_number">Kota : {{$rpendidikan->kota_pnonformal}}</label></td>
 
-                        
+                        <td><label for="bpjsket_number">Lulus Tahun :
+                                {{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y')}}</label>
+                        </td>
 
                     </tr>
                     <tr>
@@ -159,10 +158,10 @@
                         <td><span></span></td>
 
                     </tr>
-                    <tr><td><label for="bpjsket_number">Lulus Tahun :
-                                {{($rpendidikan->tahun_lulus_formal)}}</label>
+                    <tr>
+                        <td><label for="bpjsket_number">Lulus Tahun :
+                                {{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_nonformal)->format('d/m/Y')}}</label>
                         </td>
-                        
                         <td><span id="bpjsket_number"></span></td>
                     </tr>
                 </tbody>
@@ -242,9 +241,14 @@
 
 
     <div class="modal-footer">
-        <a href="karyawandashboard" class="btn btn-sm btn-danger">Kembali</a>
+
+        <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a>
+
+
+        <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
     </div>
 </div>
+
 
 
 @endsection

@@ -201,7 +201,7 @@
                                 value="{{$rpendidikan->kota_pformal}}"></td>
 
                         <td><strong>Lulus Tahun : </strong><input type="text" name="tahunLulusNonFormal"
-                                class="form-control" placeholder="yyyy"
+                                class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose19"
                                 value="{{$rpendidikan->tahun_lulus_nonformal}}"></td>
                     </tr>
 
@@ -213,7 +213,7 @@
 
                     <tr>
                         <td><strong>Lulus Tahun : </strong><input type="text" name="tahun_lulus_formal"
-                                class="form-control" placeholder="yyyy"
+                                class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose18"
                                 value="{{$rpendidikan->tahun_lulus_formal}}"></td>
                         <td><span></span></td>
                     </tr>

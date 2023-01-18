@@ -476,14 +476,16 @@
                                                                         <div class="mb-3">
                                                                             <label for="exampleInputEmail1"
                                                                                 class="form-label">Lulus Tahun</label>
-                                                                           <input type="text"
-                                                                                        class="form-control"
-                                                                                        placeholder="yyyy"
-                                                                                        aria-describedby="emailHelp"
-                                                                                        name="tahunLulusNonFormal"
-                                                                                        rows="10" >
-                                                                                   <div id="emailHelp" class="form-text">
-                                                                                </div>
+                                                                            <div class="input-group">
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="yyyy/mm/dd"
+                                                                                    id="datepicker-autoclose12"
+                                                                                    name="tahun_lulusFormal" rows="10"
+                                                                                    required></input><br>
+                                                                                <span
+                                                                                    class="input-group-addon bg-custom b-0"><i
+                                                                                        class="mdi mdi-calendar text-white"></i></span>
+                                                                            </div><!-- input-group -->
                                                                         </div>
                                                                     </div>
 
@@ -536,15 +538,17 @@
                                                                                 <label for="exampleInputEmail1"
                                                                                     class="form-label">Lulus
                                                                                     Tahun</label>
-                                                                               
+                                                                                <div class="input-group">
                                                                                     <input type="text"
                                                                                         class="form-control"
-                                                                                        placeholder="yyyy"
-                                                                                        aria-describedby="emailHelp"
+                                                                                        placeholder="yyyy/mm/dd"
+                                                                                        id="datepicker-autoclose14"
                                                                                         name="tahunLulusNonFormal"
-                                                                                        rows="10" >
-                                                                                   <div id="emailHelp" class="form-text">
-                                                                                </div>
+                                                                                        rows="10" ></input><br>
+                                                                                    <span
+                                                                                        class="input-group-addon bg-custom b-0"><i
+                                                                                            class="mdi mdi-calendar text-white"></i></span>
+                                                                                </div><!-- input-group -->
                                                                             </div>
                                                                         </div>
 

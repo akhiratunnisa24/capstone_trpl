@@ -77,17 +77,12 @@
                         </div>
                     </div>
 
-                    {{-- <div class="form-group">
+                    {{-- {{-- <div class="form-group"> --}}
                         <div class="col-xs-12">
                             <div class="checkbox checkbox-primary">
-                                <input id="checkbox-signup" type="checkbox" checked="checked">
-                                <label for="checkbox-signup">
-                                    I accept <a href="#">Terms and Conditions</a>
-                                </label>
-                            </div>
 
                         </div>
-                    </div> --}}
+                    </div> 
 
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
@@ -100,7 +95,7 @@
 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    {{-- <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> --}}
                     <!-- <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Register</button> -->
                 </div>
 

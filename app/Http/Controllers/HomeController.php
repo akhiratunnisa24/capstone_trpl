@@ -298,7 +298,7 @@ class HomeController extends Controller
                 'totalTidakAbsenPerbulan' => $totalTidakAbsenPerbulan,
 
             ];
-            return view('dashboard', $output);
+            return view('admin.karyawan.dashboardhrd', $output);
         } elseif ($role == 2) {
 
             $output = [
