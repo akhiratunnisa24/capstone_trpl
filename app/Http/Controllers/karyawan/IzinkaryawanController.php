@@ -37,10 +37,10 @@ class IzinkaryawanController extends Controller
             $izin->id_jenisizin= $request->id_jenisizin;
             $izin->keperluan   = $request->keperluan;
             $izin->tgl_mulai   = Carbon::parse($request->tgl_mulai)->format("Y-m-d");
-            $izin->tgl_selesai = Carbon::parse($request->tgl_selesai)->format("Y-m-d") ?? NULL;
+            $izin->tgl_selesai = NULL;
             $izin->jam_mulai   = $request->jam_mulai;
             $izin->jam_selesai = $request->jam_selesai;
-            $izin->jml_hari    =  $request->jml_hari ?? NULL;
+            $izin->jml_hari    = 0;
 
             $jammulai  = Carbon::parse($request->jam_mulai);
             $jamselesai= Carbon::parse($request->jam_selesai);
@@ -71,7 +71,7 @@ class IzinkaryawanController extends Controller
             $izin->tgl_mulai   = Carbon::parse($request->tgl_mulai)->format("Y-m-d");
             $izin->tgl_selesai = Carbon::parse($request->tgl_selesai)->format("Y-m-d");
             $izin->jam_mulai   = $request->jam_mulai ?? NULL;
-            $izin->jam_selesai = $request->jam_selesai ?? NULL;
+            $izin->jam_selesai = NULL;
             $izin->jml_hari    = $request->jml_hari;
             $izin->jml_jam     = $request->jml_jam ?? NULL;
             $izin->status      = 'Pending';

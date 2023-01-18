@@ -35,14 +35,16 @@
                     
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control" type="text" required="" id="email" name="email" placeholder="Username">
-                                
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-
+                                <div class="input-group">
+                                    <input class="form-control" type="text" required="" id="email" name="email" placeholder="Username">
+                                    
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                    <a class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></a>
+                                </div>
                             </div>
                         </div>
 

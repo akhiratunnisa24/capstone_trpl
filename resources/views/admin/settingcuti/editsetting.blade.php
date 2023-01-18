@@ -63,13 +63,13 @@
                             <div class="form-group col-sm" id="mode_employe">
                                 <label for="mode_karyawan" class="col-form-label">Karyawan</label>
                                 <select id="mode_karyawan" name="mode_karyawan[]" multiple="multiple"
-                                    class="form-control" style="width:300px">
+                                    class="form-control" style="width:385px">
                                     <option value="{{$data->mode_karyawan}}" selected>{{$data->mode_karyawan}}</option>
-                                    {{-- <option value="L">Laki-laki</option>
+                                    <option value="L">Laki-laki</option>
                                     <option value="P">Perempuan</option>
                                     <option value="Sudah">Sudah Menikah</option>
                                     <option value="Belum">Belum Menikah</option>
-                                    <option value=">= 1 Tahun">>= 1 Tahun</option> --}}
+                                    <option value="Masa kerja lebih satu tahun">Masa kerja lebih satu tahun</option>
                                 </select>
                             </div>
                             @endif
@@ -77,8 +77,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-info" name="submit" value="save">Save Changes</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" name="submit" value="save">Update</button>
                     </div>
                 </form>
             </div>

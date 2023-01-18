@@ -44,7 +44,7 @@
                                         <div class="form-group">
                                             <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosec" name="tgl_mulai" onchange=(jumlahhari()) autocomplete="off">
+                                                <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclosec" name="tgl_mulai" onchange=(jumlahhari()) autocomplete="off">
                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                             </div>
                                         </div>
@@ -57,7 +57,7 @@
                                         <div class="form-group">
                                             <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepicker-autoclosed" name="tgl_selesai"  onchange=(jumlahhari()) autocomplete="off">
+                                                <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclosed" name="tgl_selesai"  onchange=(jumlahhari()) autocomplete="off">
                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                             </div>
                                         </div>
@@ -106,7 +106,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success" name="submit" value="save">Send</button>
+                            <button type="submit" class="btn btn-success" name="submit" value="save">Sending</button>
                         </div>
                     </form>
                 </div>
@@ -187,29 +187,16 @@
             });
         });
 
-        //datepicker for tgl_mulai & tgl_selesai
-        $('#datepicker-autoclosec').datepicker({
-            format:"dd/mm/yyyy",
-            autoclose: true,
-            todayHighlight: true,
-        });
-
-        $('#datepicker-autoclosed').datepicker({
-            format:"dd/mm/yyyy",
-            autoclose: true,
-            todayHighlight: true,
-        });
-
         function jumlahhari(){
             var start= $('#datepicker-autoclosec').val();
             var end  = $('#datepicker-autoclosed').val();
 
-            var start_date= new Date(start);
-            var end_date  = new Date(end) ;
+            var startdate= new Date(start);
+            var enddate  = new Date(end);
             var daysOfYear= [];
 
             //mendapatkan jumlah hari izin jika sakit
-            for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1)){
+            for (var d = startdate; d <= enddate; d.setDate(d.getDate() + 1)){
                 //cek workdays
                 let tgl = new Date(d);
                 if(tgl.getDay() !=0 && tgl.getDay() !=6){
@@ -221,16 +208,16 @@
             };
 
             //mengambil value tanggal mulai
-            $('#start_date').on('change', function(){
+            $('#startdate').on('change', function(){
                 jumlahhari();
             });
             //mengambil value tanggal selesai
-            $('#end_date').on('change', function(){
+            $('#enddate').on('change', function(){
                 jumlahhari();
             });
 
-            console.info(daysOfYear);
             $('#jml').val(daysOfYear.length ?? 0);
+            console.info(daysOfYear.length);
         };
 
     </script>

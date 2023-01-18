@@ -63,7 +63,7 @@
                                     <div class="form-group">
                                         <label for="tgl_masuk" class="form-label">Tanggal Masuk</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd"
                                                 id="tglmasuk" name="tgl_masuk" autocomplete="off" readonly>
                                             <span class="input-group-addon bg-custom b-0"><i
                                                     class="mdi mdi-calendar text-white"></i></span>
@@ -86,7 +86,7 @@
                                     <div class="form-group">
                                         <label for="tgl_mulai" class="form-label">Aktif Dari</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd"
                                                 id="datepicker-autoclosea3" name="aktif_dari" autocomplete="off">
                                             <span class="input-group-addon bg-custom b-0"><i
                                                     class="mdi mdi-calendar text-white"></i></span>
@@ -97,7 +97,7 @@
                                     <div class="form-group">
                                         <label for="sampai" class="form-label">Sampai</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="mm/dd/yyyy"
+                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd"
                                                 id="datepicker-autoclosea4" name="sampai" autocomplete="off">
                                             <span class="input-group-addon bg-custom b-0"><i
                                                     class="mdi mdi-calendar text-white"></i></span>
@@ -108,10 +108,10 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                             {{-- <button type="submit" class="btn btn-info" name="submit" value="submit"
                                 id="update_data">Update</button> --}}
-                            <button onclick="window.location.reload();" type="button" class="btn btn-info" name="submit"
+                            <button onclick="window.location.reload();" type="button" class="btn btn-success" name="submit"
                                 id="update_data" data-dismiss="modal">Update</button>
                         </div>
                     </form>
@@ -153,6 +153,41 @@
                 $("#tglsekarang").val(response.data.tgl_sekarang);
                 $("#datepicker-autoclosea3").val(response.data.aktif_dari);
                 $("#datepicker-autoclosea4").val(response.data.sampai);
+
+                var Year = new Date().getFullYear();
+                var minDate = new Date(Year,0,1);
+                var maxDate = new Date(Year,11,31);
+                var aktifDari = response.data.aktif_dari;
+                var defaultDate = aktifDari.split("-").reverse().join("/");
+
+                $('#datepicker-autoclosea3').datepicker({
+                    format: "yyyy/mm/dd",
+                    autoclose: true,
+                    minDate:minDate,
+                    maxDate:maxDate,
+                    defaultDate: defaultDate,
+                    beforeShowDay: function(date){
+                        if (date < minDate || date > maxDate) {
+                            return {enabled : false};
+                        } else {
+                            return {};
+                        }
+                    }
+                });
+                $('#datepicker-autoclosea4').datepicker({
+                    format: "yyyy/mm/dd",
+                    autoclose: true,
+                    minDate:minDate,
+                    maxDate:maxDate,
+                    beforeShowDay: function(date){
+                        if (date < minDate || date > maxDate) {
+                            return {enabled : false};
+                        } else {
+                            return {};
+                        }
+                    }
+                });
+
             }
         });
     
