@@ -21,6 +21,8 @@
 <!--Morris Chart CSS -->
 <link rel="stylesheet" href="assets/plugins/morris/morris.css">
 
+{{-- selectpicker --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
 
 
        
