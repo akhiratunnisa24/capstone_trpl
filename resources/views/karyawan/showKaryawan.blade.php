@@ -36,84 +36,113 @@
             <table class="table table-bordered table-striped" style="width:100%">
                 <tbody class="col-sm-20">
 
-                    <label class="  "><h4> A. IDENTITAS </h4></label>
-
-
+                    <label class=""><h4> A. IDENTITAS </h4></label>
                     <tr>
-                        <td style="width: 50%"><label>Nama Lengkap : {{$karyawan->nama}}</label></td>
-
-
+                        <td style="width: 40%"><label>Nama Lengkap</label></td>
+                        <td style="width: 60%"><label>{{$karyawan->nama}}</label></td>
                         <td rowspan="6" colspan="2" class="text-center">
                             <img src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="" style="width:280px;">
                         </td>
                     </tr>
-
                     <tr>
-                        <td><label>NIK : {{$karyawan->nik}} </label></td>
+                        <td><label>Nomor KTP / NIK</label></td>
+                        <td><label>{{$karyawan->nik}} </label></td>
 
                     </tr>
 
                     <tr>
-                        <td><label>Tanggal Lahir :
-                                {{\Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y')}}</label></td>
+                        <td><label>Tanggal Lahir</label></td>
+                        <td><label>{{\Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y')}}</label></td>
 
                     </tr>
 
                     <tr>
-                        <td><label>Jenis Kelamin : {{$karyawan->jenis_kelamin}}</label></td>
-
+                        <td><label>Jenis Kelamin</label></td>
+                        @if($karyawan->jenis_kelamin == 'P')
+                            <td><label>Perempuan</label></td>
+                        @else
+                            <td><label>Laki-Laki</label></td>
+                        @endif
                     </tr>
 
                     <tr>
-                        <td><label>Alamat : {{$karyawan->alamat}}</label></td>
-
+                        <td><label>Alamat</label></td>
+                        <td><label>{{$karyawan->alamat}}</label></td>
                     </tr>
 
                     <tr>
-                        <td><label>Nomor Handphone : {{$karyawan->no_hp}}</label></td>
-
-
-
+                        <td><label>Nomor Handphone</label></td>
+                        <td><label>{{$karyawan->no_hp}}</label></td>
                     </tr>
                     <tr>
-                        <td><label>Golongan Darah : {{$karyawan->gol_darah}} </label></td>
-                        <td><label>Email : {{$karyawan->email}}</label></td>
-
+                        <td><label>Golongan Darah</label></td>
+                        <td><label>{{$karyawan->gol_darah}} </label></td><tr></tr>
                     </tr>
-
                     <tr>
-                        <td><label> Jabatan : {{$karyawan->jabatan}} </label></td>
-                        <td><label>Agama : {{$karyawan->agama}}</label></td>
-
+                        <td><label>Email</label></td>
+                        <td><label>{{$karyawan->email}}</label></td>
+                    </tr>
+                    <tr>
+                        <td><label>Jabatan</label></td>
+                        <td><label>{{$karyawan->jabatan}} </label></td>
+                    </tr>
+                    <tr>
+                        <td><label>Agama</label></td>
+                        <td><label>{{$karyawan->agama}}</label></td>
                     </tr>
                 </tbody>
             </table>
 
             <table class="table table-bordered table-striped" style="width:100%">
                 <tbody class="col-sm-16">
-                    <label class="  "><h4>B. KELUARGA </h4></label>
-
+                    
+                   <div class="row col-md-12">
+                        <div class="col-md-6 pull-left">
+                            <label class="" width="50%"><h4>B. KELUARGA </h4></label>
+                        </div>
+                        <div class="col-md-6 pull-right">
+                            <label class="" width="50%"><h4>E. KONTAK DARURAT </h4></label>
+                        </div>
+                   </div>
                     <tr>
-                        <td style="width:50%"><label class="text-white badge bg-dark">Data Istri / Suami *)</label></td>
+                        <td style="width:25%"><label class="text-white badge bg-dark">Data Istri / Suami *)</label></td>
+                        <td></td>
+                        <td><label class="text-white badge bg-dark">Kontak yang Dapat Dihubungi:</label></td>
                     </tr>
 
                     <tr>
-                        <td><label>Status Pernikahan : {{$keluarga->status_pernikahan}} </label></td>
-                        <td><label for="division_name">Nama Pasangan : {{$keluarga->nama}}</label></td>
+                        <td style="width:25%"><label>Status Pernikahan</label></td>
+                        <td style="width:25%"><label>{{$keluarga->status_pernikahan}} </label></td>
 
+                        <td style="width:25%"><label for="bpjsket_number">Nama Lengkap</label></td>
+                        <td style="width:25%"><label for="bpjsket_number">{{$kdarurat->nama}} </label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="division_name">Nama Pasangan</label></td>
+                        <td><label for="division_name">{{$keluarga->nama}}</label></td>
+                        <td><label for="bpjsket_number">Alamat</label></td>
+                        <td><label for="bpjsket_number">{{$kdarurat->alamat}} </label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="division_name">Tanggal Lahir</label></td>
+                        <td></label>{{($keluarga->tgllahir)}}</label></td>
+                        <td><label for="bpjsket_number">Nomor Handphone</label></td>
+                        <td><label for="bpjsket_number">{{$kdarurat->no_hp}} </label></td>
                     </tr>
 
                     <tr>
-                        <td><label for="cc_number">Tanggal Lahir :
-                                {{($keluarga->tgllahir)}} </label></td>
-
-                        <td><label for="bpjskes_number">Alamat : {{$keluarga->alamat}}</label></td>
+                        <td><label for="bpjskes_number">Alamat</label></td>
+                        <td><label for="bpjskes_number">{{$keluarga->alamat}}</label></td>
+                        <td><label for="bpjsket_number">Hubungan</label></td>
+                        <td><label for="bpjsket_number">{{$kdarurat->hubungan}}</label></td>
                     </tr>
-
                     <tr>
-                        <td><label for="bpjskes_number">Pendidikan Terakhir : {{$keluarga->pendidikan_terakhir}}</label>
-                        </td>
-                        <td><label for="bpjskes_number">Pekerjaan : {{$keluarga->pekerjaan}}</label></td>
+                        <td><label for="bpjskes_number">Pendidikan Terakhir</label></td>
+                        <td><label for="bpjskes_number">{{$keluarga->pendidikan_terakhir}}</label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bpjskes_number">Pekerjaan</label></td>
+                        <td><label for="bpjskes_number">{{$keluarga->pekerjaan}}</label></td>
                     </tr>
                 </tbody>
             </table>
@@ -122,48 +151,38 @@
                 <tbody class="col-sm-20">
                     <label class="  "><h4>C. RIWAYAT PENDIDIKAN</h4></label>
                     <tr>
-                        <td style="width: 50%"><label class="text-white badge bg-dark"> Pendidikan Formal </label></td>
-
-                        <td><label class=" text-white badge bg-dark">Pendidikan Non Formal</label></td>
+                        <td style="width: 25%"><label class="text-white badge bg-dark"> Pendidikan Formal </label></td>
+                        <td></td>
+                        <td style="width: 25%"><label class=" text-white badge bg-dark">Pendidikan Non Formal</label></td>
+                        {{-- <td></td> --}}
                     </tr>
                     <tr>
-                        <td><label>Tingkat : {{$rpendidikan->tingkat}}</label></td>
-
-                        <td><label for="bpjsket_number">Bidang / Jenis : {{$rpendidikan->jenis_pendidikan}}</label></td>
-
-
-
+                        <td><label>Tingkat</label></td>
+                        <td><label>{{$rpendidikan->tingkat}}</label></td>
+                        <td><label>Bidang / Jenis</label></td>
+                        <td><label>{{$rpendidikan->jenis_pendidikan}}</label></td>
                     </tr>
                     <tr>
-
-
-                        <td><label> Nama Sekolah : {{$rpendidikan->nama_sekolah}} </label></td>
-                        <td><label for="bpjsket_number">Kota : {{$rpendidikan->kota_pnonformal}}</label></td>
-                        
-
-
-
+                        <td><label>Nama Sekolah</label></td>
+                        <td><label>{{$rpendidikan->nama_sekolah}} </label></td>
+                        <td><label>Kota</label></td>
+                        <td><label>{{$rpendidikan->kota_pnonformal}}</label></td>
                     </tr>
 
                     <tr>
-                        <td><label for="bpjskes_number"> Kota : {{$rpendidikan->kota_pformal}} </label></td>
-                        <td><label for="bpjsket_number">Lulus Tahun :
-                                {{($rpendidikan->tahun_lulus_nonformal)}}</label>
-                        </td>
-
-                        
+                        <td><label>Kota</label></td>
+                        <td><label>{{$rpendidikan->kota_pformal}} </label></td>
+                        <td><label>Lulus Tahun</label></td>
+                        <td><label>{{($rpendidikan->tahun_lulus_nonformal)}}</label></td>
+                    </tr>
+                    <tr>
+                        <td><label>Jurusan</label></td>
+                        <td><label>{{$rpendidikan->jurusan}}</label></td>
 
                     </tr>
                     <tr>
-                        <td><label for="bpjsket_number">Jurusan : {{$rpendidikan->jurusan}}</label></td>
-                        <td><span></span></td>
-
-                    </tr>
-                    <tr><td><label for="bpjsket_number">Lulus Tahun :
-                                {{($rpendidikan->tahun_lulus_formal)}}</label>
-                        </td>
-                        
-                        <td><span id="bpjsket_number"></span></td>
+                        <td><label for="bpjsket_number">Lulus Tahun</label></td>
+                        <td><label for="bpjsket_number">{{($rpendidikan->tahun_lulus_formal)}}</label></td>
                     </tr>
                 </tbody>
             </table>
@@ -171,13 +190,12 @@
             <table class="table table-bordered table-striped" style="width: 100%">
                 <tbody class="col-sm-20">
                     <label class="  "><h4>D. RIWAYAT PEKERJAAN</h4></label>
-
-
                     <tr>
                         <td style="width:50%"><label for="bpjskes_number">Nama Perusahaan : {{$rpekerjaan->nama_perusahaan}} </label></td>
-
                         <td><label for="bpjskes_number">Nama Direktur : {{$rpekerjaan->nama_direktur}} </label></td>
 
+                    </tr>
+                    <tr>
 
                     </tr>
                     <tr>
@@ -215,7 +233,7 @@
 
             </table>
 
-            <table class="table table-bordered table-striped" style="width: 100%">
+            {{-- <table class="table table-bordered table-striped" style="width: 100%">
                 <tbody class="col-sm-20">
 
                     <label class="  "><h4>E. KONTAK DARURAT</h4></label>
@@ -236,7 +254,7 @@
 
 
                 </tbody>
-            </table>
+            </table> --}}
         </div>
     </form>
 

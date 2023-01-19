@@ -144,8 +144,6 @@ Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingaloka
  
 //================================================================================
 //ROLE MANAGER
-//data manager
-Route::post('/permintaan-cuti/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
 
 //data staff
 Route::get('/data-staff', [ManagerController::class, 'dataStaff'])->name('data.Staff');
