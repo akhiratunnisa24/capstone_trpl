@@ -158,6 +158,34 @@
                 }
             }
         });
+        jQuery('#datepicker-autoclosea3').datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true,
+            minDate:minDate,
+            maxDate:maxDate,
+            todayHighlight: true,
+            beforeShowDay: function(date){
+                if (date < minDate || date > maxDate) {
+                    return {enabled : false};
+                } else {
+                    return {};
+                }
+            }
+        });
+        jQuery('#datepicker-autoclosea4').datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true,
+            minDate:minDate,
+            maxDate:maxDate,
+            todayHighlight: true,
+            beforeShowDay: function(date){
+                if (date < minDate || date > maxDate) {
+                    return {enabled : false};
+                } else {
+                    return {};
+                }
+            }
+        });
         jQuery('#datepicker-autoclosec').datepicker({
             format:"yyyy/mm/dd",
             autoclose: true,
@@ -184,6 +212,39 @@
             }  
         });
 
+        //pengajuan cuti oleh karyawan
+        // var aktif_dari = $("#aktif_dari").val();
+        // var sampai = $("#sampai").val();
+        // var startDate = new Date(aktif_dari);
+        // var endDate = new Date(sampai);
+        // console.log(startDate);
+
+        jQuery('#datepicker-autoclosef').datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function(date){
+                if (date < minDate || date >  maxDate)
+                    return {enabled : false};
+                return;
+            }
+         });
+        jQuery('#datepicker-autocloseg').datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            minDate: minDate,
+            maxDate:  maxDate,
+            todayHighlight: true,
+            beforeShowDay: function(date){
+                if (date < minDate || date >  maxDate)
+                    return {enabled : false};
+                return;
+            }
+        });
+        // });
+       
         jQuery('#datepicker-inline').datepicker();
         jQuery('#datepicker-multiple-date').datepicker({
             format: "yyyy/mm/dd",

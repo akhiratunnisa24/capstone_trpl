@@ -56,7 +56,7 @@
                                         <div class="form-group">
                                             <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autoclosea" name="tgl_mulai"  autocomplete="off" rows="10" required>
+                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autoclosef" name="tgl_mulai"  autocomplete="off" rows="10" required>
                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                             </div>
                                         </div>
@@ -70,7 +70,7 @@
                                         <div class="form-group">
                                             <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autocloseb" name="tgl_selesai"  autocomplete="off" rows="10" required>
+                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autocloseg" name="tgl_selesai"  autocomplete="off" rows="10" required>
                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                             </div>
                                         </div>
@@ -160,37 +160,6 @@
                     $('#sampai').val(data.sampai);
                     // console.log(data?.durasi)
                     durasi     = data.durasi;
-
-                    var aktif_dari = $("#aktif_dari").val();
-                    var sampai = $("#sampai").val();
-                    var startDate = new Date(aktif_dari);
-                    var endDate = new Date(sampai);
-
-                    $('#datepicker-autoclosea').datepicker({
-                        format: "yyyy-mm-dd",
-                        autoclose: true,
-                        minDate: startDate,
-                        maxDate: endDate,
-                        todayHighlight: true,
-                        beforeShowDay: function(date){
-                            if (date < startDate || date > endDate)
-                                return {enabled : false};
-                            return;
-                        }
-                    });
-                    $('#datepicker-autocloseb').datepicker({
-                        format: "yyyy-mm-dd",
-                        autoclose: true,
-                        minDate: startDate,
-                        maxDate: endDate,
-                        todayHighlight: true,
-                        beforeShowDay: function(date){
-                            if (date < startDate || date > endDate)
-                                return {enabled : false};
-                            return;
-                        }
-                    });
-                
                 }
             });
         });
@@ -199,8 +168,8 @@
     <script type="text/javascript">
         function jumlahcuti()
         {
-            var start= $('#datepicker-autoclosea').val();
-            var end  = $('#datepicker-autocloseb').val();
+            var start= $('#datepicker-autoclosef').val();
+            var end  = $('#datepicker-autocloseg').val();
 
             var start_date = new Date(start);
             var end_date   = new Date(end);
@@ -250,3 +219,38 @@
             }
         };
     </script>
+
+{{-- var aktif_dari = $("#aktif_dari").val();
+var sampai = $("#sampai").val();
+var startDate = new Date(aktif_dari);
+var endDate = new Date(sampai);
+
+console.log(startDate);
+
+// $(document).ready(function(){
+    $('#datepicker-autoclosef').datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        // minDate: startDate,
+        // maxDate: endDate,
+        todayHighlight: true,
+        beforeShowDay: function(date){
+            if (date < startDate || date > endDate)
+                return {enabled : false};
+            return;
+        }
+    });
+    $('#datepicker-autocloseg').datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        // minDate: startDate,
+        // maxDate: endDate,
+        todayHighlight: true,
+        beforeShowDay: function(date){
+            if (date < startDate || date > endDate)
+                return {enabled : false};
+            return;
+        }
+    });
+// }); --}}
+
