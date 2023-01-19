@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\karyawan;
 
+
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\User;
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
+use App\Events\AbsenKaryawanEvent;
+
 
 class karyawanController extends Controller
 {
@@ -44,6 +47,7 @@ class karyawanController extends Controller
 
     public function index()
     {
+        event(new AbsenKaryawanEvent());
         $role = Auth::user()->role;
         
         if ($role == 1) {

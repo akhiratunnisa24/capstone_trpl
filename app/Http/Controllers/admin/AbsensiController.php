@@ -272,9 +272,11 @@ class AbsensiController extends Controller
     {
         $karyawan = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $status = Tidakmasuk::where('id', Auth::user()->id_pegawai)->first();
-        // dd($keluarga);
         $depart = DB::table('karyawan')->join('departemen', 'karyawan.divisi','=','departemen.id')
                   ->where('karyawan.id','=',Auth::user()->id_pegawai)->first();
+ 
+        
+                  
     
         $tidakmasuk = array(
             'id_pegawai' => $karyawan->id,
