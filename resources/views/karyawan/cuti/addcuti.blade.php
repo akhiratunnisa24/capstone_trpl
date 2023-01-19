@@ -56,7 +56,7 @@
                                         <div class="form-group">
                                             <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autoclosea" name="tgl_mulai"  autocomplete="off" rows="10" required>
+                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autoclosea1" name="tgl_mulai"  autocomplete="off" rows="10" required>
                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                             </div>
                                         </div>
@@ -70,7 +70,7 @@
                                         <div class="form-group">
                                             <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autocloseb" name="tgl_selesai"  autocomplete="off" rows="10" required>
+                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autoclosea2" name="tgl_selesai"  autocomplete="off" rows="10" required>
                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                             </div>
                                         </div>
