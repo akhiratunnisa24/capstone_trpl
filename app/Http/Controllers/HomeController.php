@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Absensi;
 use App\Models\Izin;
 use App\Models\Karyawan;
+use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -212,10 +213,10 @@ class HomeController extends Controller
         //     ->count();
 
         $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"))
-            ->whereYear('created_at', '=', Carbon::now()->year)
+            ->whereYear('tgl_mulai', '=', Carbon::now()->year)
             ->where('status','=','Disetujui')
             ->groupBy(DB::raw('MONTHNAME(tgl_mulai)'))
-            ->orderBy('tgl_mulai')
+            ->orderBy(DB::raw('MONTHNAME(tgl_mulai)'))
             ->pluck('jumlah', 'month_name');
 
         // $getYear = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("YEAR(tgl_mulai) as month_name"))
@@ -228,6 +229,25 @@ class HomeController extends Controller
         $labelBulan = $getLabel->keys();    
         // $labelTahun = $getYear->keys();    
         $data = $getLabel->values();
+
+
+        $karyawan = Karyawan::whereDoesntHave('absensi', function ($query) {
+            $query->whereDate(DB::raw('DATE(tanggal)'), Carbon::today());
+        })->get();
+
+        if ($karyawan->count() > 0) {
+            foreach ($karyawan as $karyawan) {
+                $absen = new Tidakmasuk();
+                $absen->id_pegawai = $karyawan->id;
+                $absen->nama = $karyawan->nama;
+                $absen->divisi = $karyawan->divisi;
+                $absen->status = 'tanpa keterangan';
+                $absen->tanggal = Carbon::today();
+                // $absen->save();
+            }
+        }  
+
+        dd($karyawan);
 
         // DASHBOARD KARYAWAN
         //=====================

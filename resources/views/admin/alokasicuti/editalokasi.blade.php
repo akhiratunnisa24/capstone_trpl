@@ -1,4 +1,6 @@
 {{-- FORM SETTING ALOKASI--}}
+<link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
 <div class="modal fade" data-alokasi="{{$data->id}}" id="editalokasi" tabindex="-1" role="dialog"
     aria-labelledby="editalokasi" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -121,9 +123,9 @@
 </div>
 
 <!-- jQuery  -->
-{{-- <script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/app.js"></script> --}}
+<script src="assets/js/jquery.min.js"></script>
 <script src="assets/pages/form-advanced.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 
 <!-- script untuk mengambil data alokasi cuti  -->
 <script type="text/javascript">
@@ -153,40 +155,6 @@
                 $("#tglsekarang").val(response.data.tgl_sekarang);
                 $("#datepicker-autoclosea3").val(response.data.aktif_dari);
                 $("#datepicker-autoclosea4").val(response.data.sampai);
-
-                var Year = new Date().getFullYear();
-                var minDate = new Date(Year,0,1);
-                var maxDate = new Date(Year,11,31);
-                var aktifDari = response.data.aktif_dari;
-                var defaultDate = aktifDari.split("-").reverse().join("/");
-
-                $('#datepicker-autoclosea3').datepicker({
-                    format: "yyyy/mm/dd",
-                    autoclose: true,
-                    minDate:minDate,
-                    maxDate:maxDate,
-                    defaultDate: defaultDate,
-                    beforeShowDay: function(date){
-                        if (date < minDate || date > maxDate) {
-                            return {enabled : false};
-                        } else {
-                            return {};
-                        }
-                    }
-                });
-                $('#datepicker-autoclosea4').datepicker({
-                    format: "yyyy/mm/dd",
-                    autoclose: true,
-                    minDate:minDate,
-                    maxDate:maxDate,
-                    beforeShowDay: function(date){
-                        if (date < minDate || date > maxDate) {
-                            return {enabled : false};
-                        } else {
-                            return {};
-                        }
-                    }
-                });
 
             }
         });

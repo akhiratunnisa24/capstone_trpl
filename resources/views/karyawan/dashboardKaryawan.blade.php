@@ -85,31 +85,10 @@
 
     <!-- baris kedua -->
     <div class="row">
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-info">
-                    <h4 class="panel-title">Data Absen Bulan Lalu</h4>
-                </div>
-                <div class="panel-body">
-                    <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
-                    <p class="text-muted"><b>Kali absensi</b></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-info">
-                    <h4 class="panel-title">Terlambat Bulan Lalu</h4>
-                </div>
-                <div class="panel-body">
-                    <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
-                    <p class="text-muted"><b>Kali absensi</b></p>
-                </div>
-            </div>
-        </div>
+
         <div class="col-sm-6 col-lg-3">
             <div id="a" class="panel panel-primary text-center">
-                <div class="panel-heading btn-info">
+                <div class="panel-heading btn-success">
                     <h4 class="panel-title">Absen Hari Ini</h4>
                 </div>
                 <?php
@@ -125,16 +104,29 @@
                     } else { 
                 ?>
                 <div class="panel-body">
-                    <h3 class=""><b class="text text-success">Belum Absen</b></h3>
-                    <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
+                    <h3 class=""><b class="text text-danger">Belum Absen</b></h3>
+                    <p class="text-muted"><b>Anda Belum Absen</b></p>
                 </div>
                 <?php } ?>
             </div>
         </div>
-       
+
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-teal text-center">
+                <div class="panel-heading btn-success">
+                    <h4 class="panel-title">Data Absen Bulan Lalu</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
+                    <p class="text-muted"><b>Kali absensi</b></p>
+                </div>
+            </div>
+        </div>
+
+        
         <div class="col-sm-6 col-lg-3">
             <div id="a" class="panel panel-primary text-center">
-                <div class="panel-heading btn-info">
+                <div class="panel-heading btn-warning">
                     <h4 class="panel-title">Terlambat Bulan Ini</h4>
                 </div>
                 <div class="panel-body">
@@ -143,8 +135,23 @@
                 </div>
             </div>
         </div>
+        
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-teal text-center">
+                <div class="panel-heading btn-warning">
+                    <h4 class="panel-title">Terlambat Bulan Lalu</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
+                    <p class="text-muted"><b>Kali absensi</b></p>
+                </div>
+            </div>
+        </div>
+        
+       
 
     </div>
+
     <style>
         #a {
             border-radius: 10px;
