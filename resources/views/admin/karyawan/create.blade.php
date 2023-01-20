@@ -886,4 +886,6 @@
 
     <!-- Plugins Init js -->
     <script src="assets/pages/form-advanced.js"></script>
+
+    
 @endsection
