@@ -13,7 +13,7 @@
                     @method('PUT')
                     <div class="form-group col-sm">
                         <label for="jenis_cuti" class="col-form-label">Kategori Cuti</label>
-                        <input type="text" class="form-control" name="jenis_cuti" id="jenis_cuti" value="{{$data->jenis_cuti}}" required>
+                        <input type="text" class="form-control" name="jenis_cuti" id="jenis_cuti" value="{{$data->jenis_cuti}}" autocomplete="off" required>
                     </div>
             
                     <div class="modal-footer">
