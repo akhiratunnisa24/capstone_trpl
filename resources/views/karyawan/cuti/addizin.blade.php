@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group">
                             <label for="keperluan" class="col-form-label">Keperluan</label>
-                            <input type="text" class="form-control" name="keperluan" placeholder="Masukkan keperluan" id="keperluan" required>
+                            <input type="text" class="form-control" name="keperluan" placeholder="Masukkan keperluan" id="keperluan" autocomplete="off" required>
                         </div>
 
                         <div class="row">

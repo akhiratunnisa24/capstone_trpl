@@ -4,9 +4,28 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Console\Scheduling\Event;
+use App\Events\AbsenKaryawanEvent;
+use App\Models\Karyawan;
+use App\Models\Absensi;
+use App\Models\Tidakmasuk;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
+     /**
+     * The Artisan commands provided by your application.
+     *
+     * @var array
+     */
+    protected $commands = [
+    
+    ];
+    
     /**
      * Define the application's command schedule.
      *
@@ -15,10 +34,27 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('AbsenKaryawanEvent')->dailyAt('17:29');
+        // $schedule->command('AbsenKaryawanEvent')->dailyAt('23:59');
+        $schedule->call(function (){
+            $karyawan = Karyawan::whereDoesntHave('absensi', function ($query) {
+                $query->whereDate(DB::raw('DATE(tanggal)'), Carbon::today());
+            })->get();
+    
+            if ($karyawan->count() > 0) {
+                foreach ($karyawan as $karyawan) {
+                    $absen = new Tidakmasuk();
+                    $absen->id_pegawai = $karyawan->id;
+                    $absen->nama = $karyawan->nama;
+                    $absen->divisi = $karyawan->divisi;
+                    $absen->status = 'tanpa keterangan';
+                    $absen->tanggal = Carbon::today();
+                    $absen->save();
+                }
+            }    
+        })->dailyAt('23:59');
     }
 
-    /**
+    /** 
      * Register the commands for the application.
      *
      * @return void

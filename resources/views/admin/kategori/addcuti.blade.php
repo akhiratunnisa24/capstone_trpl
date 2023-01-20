@@ -12,7 +12,7 @@
                     @method('POST')
                     <div class="form-group col-sm">
                         <label for="jenis_cuti" class="col-form-label">Kategori Baru</label>
-                        <input type="text" class="form-control" name="jenis_cuti" id="jenis_cuti"
+                        <input type="text" class="form-control" name="jenis_cuti" id="jenis_cuti" autocomplete="off"
                             placeholder="Masukkan Kategori" required>
                     </div>
 
