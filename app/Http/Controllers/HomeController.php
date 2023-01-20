@@ -231,23 +231,23 @@ class HomeController extends Controller
         $data = $getLabel->values();
 
 
-        $karyawan = Karyawan::whereDoesntHave('absensi', function ($query) {
-            $query->whereDate(DB::raw('DATE(tanggal)'), Carbon::today());
-        })->get();
+        // $karyawan = Karyawan::whereDoesntHave('absensi', function ($query) {
+        //     $query->whereDate(DB::raw('DATE(tanggal)'), Carbon::today());
+        // })->get();
 
-        if ($karyawan->count() > 0) {
-            foreach ($karyawan as $karyawan) {
-                $absen = new Tidakmasuk();
-                $absen->id_pegawai = $karyawan->id;
-                $absen->nama = $karyawan->nama;
-                $absen->divisi = $karyawan->divisi;
-                $absen->status = 'tanpa keterangan';
-                $absen->tanggal = Carbon::today();
-                // $absen->save();
-            }
-        }  
+        // if ($karyawan->count() > 0) {
+        //     foreach ($karyawan as $karyawan) {
+        //         $absen = new Tidakmasuk();
+        //         $absen->id_pegawai = $karyawan->id;
+        //         $absen->nama = $karyawan->nama;
+        //         $absen->divisi = $karyawan->divisi;
+        //         $absen->status = 'tanpa keterangan';
+        //         $absen->tanggal = Carbon::today();
+        //         // $absen->save();
+        //     }
+        // }  
 
-        dd($karyawan);
+        // dd($karyawan);
 
         // DASHBOARD KARYAWAN
         //=====================

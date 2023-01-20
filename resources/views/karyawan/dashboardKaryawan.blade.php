@@ -104,7 +104,7 @@
                     } else { 
                 ?>
                 <div class="panel-body">
-                    <h3 class=""><b class="text text-danger">Belum Absen</b></h3>
+                    <h3 class=""><a href="{{url("absensi-karyawan")}}"><b class="text text-danger">Belum Absen</b></a></h3>
                     <p class="text-muted"><b>Anda Belum Absen</b></p>
                 </div>
                 <?php } ?>

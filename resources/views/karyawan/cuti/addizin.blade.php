@@ -81,8 +81,8 @@
                             <div class="col-lg-6" id="jselesai">
                                 <div class="">
                                     <label for="jam_selesai">Sampai Jam</label>
-                                    <div class="input-group clockpicker pull-center" data-placement="top" data-align="top" autocomplete="off" data-autoclose="true">
-                                        <input type="text" class="form-control" name="jam_selesai" id="selesai">
+                                    <div class="input-group clockpicker pull-center" data-placement="top" data-align="top"  data-autoclose="true">
+                                        <input type="text" class="form-control" name="jam_selesai" id="selesai" autocomplete="off">
                                         <span class="input-group-addon">
                                             <span class="fa fa-clock-o"></span>
                                         </span>
@@ -140,6 +140,7 @@
                 autoclose: true,
                 'default': 'now'
             });
+            
         });
     </script>
         

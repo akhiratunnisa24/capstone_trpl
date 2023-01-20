@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('kota_pformal');
             $table->string('kota_pnonformal')->nullable();
             $table->string('jurusan');
-            $table->string('tahun_lulus_formal');
-            $table->string('tahun_lulus_nonformal')->nullable();
+            $table->year('tahun_lulus_formal');
+            $table->year('tahun_lulus_nonformal')->nullable();
             $table->text('jenis_pendidikan')->nullable();
 
 

@@ -200,7 +200,7 @@
                         <td><strong> Kota : </strong><input type="text" name="kotaPendidikanFormal" class="form-control"
                                 value="{{$rpendidikan->kota_pformal}}"></td>
 
-                        <td><strong>Lulus Tahun : </strong><input type="text" name="tahunLulusNonFormal"
+                        <td><strong>Lulus Tahun : </strong><input type="number" name="tahunLulusNonFormal"
                                 class="form-control" placeholder="yyyy"
                                 value="{{$rpendidikan->tahun_lulus_nonformal}}"></td>
                     </tr>
@@ -212,7 +212,7 @@
                     </tr>
 
                     <tr>
-                        <td><strong>Lulus Tahun : </strong><input type="text" name="tahun_lulus_formal"
+                        <td><strong>Lulus Tahun : </strong><input type="number" name="tahun_lulus_formal"
                                 class="form-control" placeholder="yyyy"
                                 value="{{$rpendidikan->tahun_lulus_formal}}"></td>
                         <td><span></span></td>

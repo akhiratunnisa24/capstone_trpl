@@ -493,7 +493,7 @@
                                                                             <div class="mb-3">
                                                                                 <label for="exampleInputEmail1"
                                                                                     class="form-label">Lulus Tahun</label>
-                                                                                <input type="text" class="form-control"
+                                                                                <input type="number" class="form-control"
                                                                                     placeholder="yyyy"
                                                                                     aria-describedby="emailHelp"
                                                                                     name="tahunLulusNonFormal"
@@ -551,7 +551,7 @@
                                                                                         class="form-label">Lulus
                                                                                         Tahun</label>
 
-                                                                                    <input type="text"
+                                                                                    <input type="number"
                                                                                         class="form-control"
                                                                                         placeholder="yyyy"
                                                                                         aria-describedby="emailHelp"
@@ -884,4 +884,6 @@
 
     <!-- Plugins Init js -->
     <script src="assets/pages/form-advanced.js"></script>
+
+    
 @endsection
