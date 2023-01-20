@@ -47,7 +47,8 @@ class karyawanController extends Controller
 
     public function index()
     {
-        event(new AbsenKaryawanEvent());
+        // event(new AbsenKaryawanEvent());
+        
         $role = Auth::user()->role;
         
         if ($role == 1) {

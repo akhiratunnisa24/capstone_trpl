@@ -29,7 +29,7 @@ class CekAbsenKaryawan
      * @param  \App\Events\AbsenKaryawanEvent  $event
      * @return void
      */
-    public function handle(AbsenKaryawanEvent $event)
+    public function handle()
     {
             $karyawan = Karyawan::whereDoesntHave('absensi', function ($query) {
             $query->whereDate(DB::raw('DATE(tanggal)'), Carbon::today());
