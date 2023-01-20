@@ -36,264 +36,329 @@
         @method('put')
 
         <div class="modal-body">
-            <table class="table table-bordered table-striped" style="width:100%">
-                <tbody class="col-sm-20">
+            <div class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
+                <label class=""><h4>A. IDENTITAS </h4></label>
+            </div>
+            <br>
+            <div  class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Nama Lengkap</label>
+                            <input name="namaKaryawan" type="text" class="form-control" value="{{$karyawan->nama}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>NIK</label> 
+                           <input name="nikKaryawan" type="text" class="form-control" autocomplete="off" value="{{$karyawan->nik}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>Tanggal Lahir</label> 
+                            <input name="tgllahirKaryawan" type="text" autocomplete="off"
+                                class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose17" autocomplete="off"
+                                value="{{$karyawan->tgllahir}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>Jenis Kelamin</label> 
+                           <select class="form-control" name="jenis_kelaminKaryawan" required>
+                            <option value="">Pilih Jenis Kelamin</option>
+                            <option value="L" @if($karyawan->jenis_kelamin == "L") selected @endif >Laki-Laki</option>
+                            <option value="P" @if($karyawan->jenis_kelamin == "P") selected @endif >Perempuan</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>Alamat</label> 
+                           <input name="alamatKaryawan" type="text" class="form-control" autocomplete="off" value="{{$karyawan->alamat}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>Nomor Handphone</label> 
+                           <input name="no_hpKaryawan" type="text" autocomplete="off" class="form-control" value="{{$karyawan->no_hp}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>Jabatan</label> 
+                           <select type="text" class="form-control" name="jabatanKaryawan" required>
+                            <option value="">Pilih Jabatan</option>
+                            <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager
+                            </option>
+                            <option value="Staff" @if($karyawan->jabatan == "Staff") selected @endif >Staff</option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
 
-                    <label class="  "><h4>A. IDENTITAS </h4></label>
-
-                    <tr>
-                        <td style="width:50%"><strong> Nama Lengkap : </strong><input name="namaKaryawan" type="text"
-                                class="form-control col-xs-5" value="{{$karyawan->nama}}"></input></td>
-
-
-
-                        <td rowspan="3" colspan="2" class="text-left">
-                            <strong>Pilih Foto Karyawan:</strong>
-                            <br>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Pilih Foto Karyawan</label><br>
                             <img class="img-preview img-fluid mb-6 col-sm-5"
-                                src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="Tidak ada foto profil."
-                                style="width:195px;" >
-                            <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td><strong>NIK : </strong><input name="nikKaryawan" type="text" class="form-control"
-                                value="{{$karyawan->nik}}"></input></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><strong>Tanggal Lahir : </strong><input name="tgllahirKaryawan" type="text"
-                                class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose17"
-                                value="{{$karyawan->tgllahir}}"></input></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><strong>Jenis Kelamin : </strong>
-                            <select class="form-control" name="jenis_kelaminKaryawan" required>
-                                <option value="">Pilih Jenis Kelamin</option>
-                                <option value="L" @if($karyawan->jenis_kelamin == "L") selected @endif >Laki-Laki
-                                </option>
-                                <option value="P" @if($karyawan->jenis_kelamin == "P") selected @endif >Perempuan
-                                </option>
-                            </select>
-                        </td>
-
-                        <td><strong>Email: </strong><input type="text" name="emailKaryawan" class="form-control"
-                                value="{{$karyawan->email}}"></input></td>
-
-
-                    </tr>
-
-                    <tr>
-                        <td><strong>Alamat : </strong><input name="alamatKaryawan" type="text" class="form-control"
-                                value="{{$karyawan->alamat}}"></input></td>
-
-                        <td><strong>Agama : <strong><input type="text" name="agamaKaryawan" class="form-control"
-                                        value="{{$karyawan->agama}}"></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><strong>Nomor Handphone : <strong><input name="no_hpKaryawan" type="text"
-                                        class="form-control" value="{{$karyawan->no_hp}}"></input></td>
-
-
-                        <td><label>Golongan Darah : </label>
-                            <select class="form-control" name="gol_darahKaryawan" required>
-                                <option value="">Pilih Golongan Darah</option>
-                                <option value="A" @if($karyawan->gol_darah == "A") selected @endif >A</option>
-                                <option value="B" @if($karyawan->gol_darah == "B") selected @endif >B</option>
-                                <option value="AB" @if($karyawan->gol_darah == "AB") selected @endif >AB</option>
-                                <option value="O" @if($karyawan->gol_darah == "O") selected @endif >O</option>
-                            </select>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td><label>Jabatan : </label>
-                            <select type="text" class="form-control" name="jabatanKaryawan" required>
-                                <option value="">Pilih Jabatan</option>
-                                <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager
-                                </option>
-                                <option value="Staff" @if($karyawan->jabatan == "Staff") selected @endif >Staff</option>
-                            </select>
-                        <td><span></span></td>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table class="table table-bordered table-striped">
-                <tbody class="col-sm-20">
-
-                    <label class="  "><h4>B. KELUARGA </h4></label>
-                    <tr>
-                        <td><label class="text-white badge bg-dark">Data Istri / Suami *)</label></td>
-
-
-                    </tr>
-
-                    <tr>
-                        <td><strong>Status Pernikahan : </strong><input type="text" name="status_pernikahan"
-                                class="form-control" value="{{$keluarga->status_pernikahan}}"></td>
-
-                        <td><strong>Nama Pasangan : <strong><input type="text" name="namaPasangan" class="form-control"
-                                        value="{{$keluarga->nama}}"></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><strong>Tanggal Lahir : <strong><input type="text" name="tgllahirPasangan"
-                                        class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose16"
-                                        value="{{$keluarga->tgllahir}}"></td>
-
-                        <td><strong>Alamat : </strong><input type="text" name="alamatPasangan" class="form-control"
-                                value="{{$keluarga->alamat}}"></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><strong>Pendidikan Terakhir : </strong><input type="text" name="pendidikan_terakhirPasangan"
-                                class="form-control" value="{{$keluarga->pendidikan_terakhir}}"></td>
-
-                        <td><strong>Pekerjaan : </strong><input type="text" name="pekerjaanPasangan"
-                                class="form-control" value="{{$keluarga->pekerjaan}}"></td>
-
-                    </tr>
-                </tbody>
-            </table>
-
-            <table class="table table-bordered table-striped">
-                <tbody class="col-sm-20">
-
-                    <label class="  "><h4>C. RIWAYAT PENDIDIKAN</h4></label>
-
-                    <tr>
-                        <td><label class="text-white badge bg-dark"> Pendidikan Formal </label></td>
-
-                        <td><label class=" text-white badge bg-dark">Pendidikan Non Formal</label></td>
-
-
-                    </tr>
-
-                    <tr>
-                        <td><strong> Tingkat : </strong><input type="text" name="tingkat_pendidikan"
-                                class="form-control" value="{{$rpendidikan->tingkat}}"></td>
-
-                        <td><strong>Bidang / Jenis : </strong><input type="text" name="jenis_pendidikan"
-                                class="form-control" value="{{$rpendidikan->jenis_pendidikan}}"></td>
-                    </tr>
-
-                    <tr>
-                        <td><strong> Nama Sekolah : </strong><input type="text" name="nama_sekolah" class="form-control"
-                                value="{{$rpendidikan->nama_sekolah}}"></td>
-
-                        <td><strong>Kota : </strong><input type="text" name="kotaPendidikanNonFormal"
-                                class="form-control" value="{{$rpendidikan->kota_pnonformal}}"></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><strong> Kota : </strong><input type="text" name="kotaPendidikanFormal" class="form-control"
-                                value="{{$rpendidikan->kota_pformal}}"></td>
-
-                        <td><strong>Lulus Tahun : </strong><input type="text" name="tahunLulusNonFormal"
+                            src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="Tidak ada foto profil." style="width:205px;" >
+                        <br><input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>Email</label> 
+                           <input type="text" name="emailKaryawan" class="form-control" autocomplete="off" value="{{$karyawan->email}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>Agama</label> 
+                           <input type="text" name="agamaKaryawan" class="form-control" autocomplete="off" value="{{$karyawan->agama}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>Golongan Darah</label> 
+                           <select class="form-control" name="gol_darahKaryawan" required>
+                            <option value="">Pilih Golongan Darah</option>
+                            <option value="A" @if($karyawan->gol_darah == "A") selected @endif >A</option>
+                            <option value="B" @if($karyawan->gol_darah == "B") selected @endif >B</option>
+                            <option value="AB" @if($karyawan->gol_darah == "AB") selected @endif >AB</option>
+                            <option value="O" @if($karyawan->gol_darah == "O") selected @endif >O</option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 modal-header bg-info panel-heading">
+                    <label><h4>B. KELUARGA </h4></label><br>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="m-b-5 modal-header bg-info">
+                        <label class="text-white">Data Istri / Suami *)</label>
+                    </div><br>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Status Pernikahan</label>
+                            <input type="text" name="status_pernikahan" autocomplete="off" class="form-control" value="{{$keluarga->status_pernikahan}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Nama Pasangan</label>
+                            <input type="text" name="namaPasangan" class="form-control" autocomplete="off" value="{{$keluarga->nama}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Tanggal Lahir </label>
+                            <input type="text" name="tgllahirPasangan" autocomplete="off" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose16" value="{{$keluarga->tgllahir}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Pendidikan Terakhir</label>
+                            <input type="text" name="pendidikan_terakhirPasangan" autocomplete="off" class="form-control" value="{{$keluarga->pendidikan_terakhir}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Alamat</label>
+                            <input type="text" name="alamatPasangan" class="form-control" autocomplete="off" value="{{$keluarga->alamat}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Pekerjaan</label>
+                            <input type="text" name="pekerjaanPasangan" autocomplete="off" class="form-control" value="{{$keluarga->pekerjaan}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="modal-header bg-info">
+                        <label class="text-white">Kontak Darurat</label>
+                    </div><br>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Nama Lengkap</label>
+                            <input type="text" name="namaKdarurat" class="form-control" autocomplete="off" value="{{$kdarurat->nama}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Alamat </label>
+                            <input type="text" name="alamatKdarurat" class="form-control" autocomplete="off" value="{{$kdarurat->alamat}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Nomor Handphone</label>
+                            <input type="text" name="no_hpKdarurat" autocomplete="off" class="form-control" value="{{$kdarurat->no_hp}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Hubungan</label>
+                            <input type="text" name="hubunganKdarurat" class="form-control" autocomplete="off" value="{{$kdarurat->hubungan}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 modal-header bg-info panel-heading">
+                    <label><h4>C. RIWAYAT PENDIDIKAN </h4></label><br>
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="m-b-5 modal-header bg-info">
+                        <label class="text-white">Pendidikan Formal</label>
+                    </div><br>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Tingkat Pendidikan</label>
+                            <input type="text" name="tingkat_pendidikan" autocomplete="off"
+                                class="form-control" value="{{$rpendidikan->tingkat}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Nama Sekolah</label>
+                            <input type="text" name="nama_sekolah" class="form-control" autocomplete="off"
+                            value="{{$rpendidikan->nama_sekolah}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Kota</label>
+                            <input type="text" name="kotaPendidikanFormal" class="form-control" autocomplete="off"
+                            value="{{$rpendidikan->kota_pformal}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Jurusan</label>
+                            <input type="text" name="jurusan" class="form-control" autocomplete="off"
+                                value="{{$rpendidikan->jurusan}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Tahun Lulus</label>
+                            <input type="text" name="tahun_lulus_formal" autocomplete="off"
+                            class="form-control" placeholder="yyyy"
+                            value="{{$rpendidikan->tahun_lulus_formal}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="m-b-5 modal-header bg-info">
+                        <label class="text-white">Pendidikan Non Formal</label>
+                    </div><br>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Bidang/ Jenis Pendidikan</label>
+                            <input type="text" name="jenis_pendidikan" autocomplete="off"
+                            class="form-control" value="{{$rpendidikan->jenis_pendidikan}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Kota</label>
+                            <input type="text" name="kotaPendidikanNonFormal" autocomplete="off"
+                            class="form-control" value="{{$rpendidikan->kota_pnonformal}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Tahun Lulus</label>
+                            <input type="text" name="tahunLulusNonFormal" autocomplete="off"
                                 class="form-control" placeholder="yyyy"
-                                value="{{$rpendidikan->tahun_lulus_nonformal}}"></td>
-                    </tr>
-
-                    <tr>
-                        <td><strong> Jurusan : </strong><input type="text" name="jurusan" class="form-control"
-                                value="{{$rpendidikan->jurusan}}"></td>
-                        <td><span></span></td>
-                    </tr>
-
-                    <tr>
-                        <td><strong>Lulus Tahun : </strong><input type="text" name="tahun_lulus_formal"
-                                class="form-control" placeholder="yyyy"
-                                value="{{$rpendidikan->tahun_lulus_formal}}"></td>
-                        <td><span></span></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table class="table table-bordered table-striped">
-                <tbody class="col-sm-20">
-
-                    <label class="  "><h4>D. RIWAYAT PEKERJAAN</h4></label>
-
-                    <tr>
-                        <td><strong>Nama Perusahaan : </strong><input type="text" name="namaPerusahaan"
-                                class="form-control" value="{{$rpekerjaan->nama_perusahaan}}"></td>
-
-                        <td><strong>Nama Direktur : </strong><input type="text" name="namaDirektur" class="form-control"
-                                value="{{$rpekerjaan->nama_direktur}}"></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><strong>Alamat Perusahaan : </strong><input type="text" name="alamatPerusahaan"
-                                class="form-control" value="{{$rpekerjaan->alamat}}"></td>
-
-                        <td><strong>Nama Atasan Langsung : </strong><input type="text" name="namaAtasan"
-                                class="form-control" value="{{$rpekerjaan->nama_atasan}}"></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><strong>Jenis Usaha : </strong><input type="text" name="jenisUsaha" class="form-control"
-                                value="{{$rpekerjaan->jenis_usaha}}"></td>
-
-                        <td><strong>Jabatan : </strong><input type="text" name="jabatan" class="form-control"
-                                value="{{$rpekerjaan->jabatan}}"></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><strong>Lama Kerja : </strong><input type="text" name="lamaKerja" class="form-control"
-                                value="{{$rpekerjaan->lama_kerja}}"></td>
-
-                        <td><strong>Gaji : </strong><input type="text" name="gajiRpekerjaan" id="gaji"
-                                class="form-control" value="{{$rpekerjaan->gaji}}"></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><strong>Alasan Berhenti : </strong><input type="text" name="alasanBerhenti"
-                                class="form-control" value="{{$rpekerjaan->alasan_berhenti}}"></td>
-                        <td><span></span></td>
-
-                    </tr>
-
-                </tbody>
-            </table>
-
-            <table class="table table-bordered table-striped">
-                <tbody class="col-sm-20">
-
-                    <label class="  "><h4>E. KONTAK DARURAT</h4></label>
-
-                    <tr>
-
-                        <td><strong>Nama Lengkap : </strong><input type="text" name="namaKdarurat" class="form-control"
-                                value="{{$kdarurat->nama}}"></td>
-
-                        <td><strong>Alamat : </strong><input type="text" name="alamatKdarurat" class="form-control"
-                                value="{{$kdarurat->alamat}}"></td>
-                    </tr>
-
-                    <tr>
-                        <td><strong>Nomor Handphone : </strong><input type="text" name="no_hpKdarurat"
-                                class="form-control" value="{{$kdarurat->no_hp}}"></td>
-
-                        <td><strong>Hubungan : </strong><input type="text" name="hubunganKdarurat" class="form-control"
-                                value="{{$kdarurat->hubungan}}"></td>
-                    </tr>
-                </tbody>
-            </table>
+                                value="{{$rpendidikan->tahun_lulus_nonformal}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 modal-header bg-info panel-heading">
+                    <label><h4>D. RIWAYAT PEKERJAAN</h4></label><br> 
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Nama Perusahaan</label>
+                            <input type="text" name="namaPerusahaan" autocomplete="off"
+                            class="form-control" value="{{$rpekerjaan->nama_perusahaan}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Alamat Perusahaan</label>
+                            <input type="text" name="alamatPerusahaan" autocomplete="off"
+                            class="form-control" value="{{$rpekerjaan->alamat}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Jenis Usaha</label>
+                            <input type="text" name="jenisUsaha" class="form-control" autocomplete="off"
+                            value="{{$rpekerjaan->jenis_usaha}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Nama Direktur</label>
+                            <input type="text" name="namaDirektur" class="form-control" autocomplete="off"
+                            value="{{$rpekerjaan->nama_direktur}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Nama Atasan Langsung</label>
+                            <input type="text" name="namaAtasan" autocomplete="off"
+                            class="form-control" value="{{$rpekerjaan->nama_atasan}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Jabatan</label>
+                            <input type="text" name="jabatan" class="form-control" autocomplete="off"
+                            value="{{$rpekerjaan->jabatan}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Lama Kerja</label>
+                            <input type="text" name="lamaKerja" class="form-control" autocomplete="off"
+                            value="{{$rpekerjaan->lama_kerja}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Alasan Berhenti</label>
+                            <input type="text" name="alasanBerhenti" autocomplete="off"
+                            class="form-control" value="{{$rpekerjaan->alasan_berhenti}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Gaji</label>
+                            <input type="text" name="gajiRpekerjaan" id="gaji" autocomplete="off"
+                            class="form-control" value="{{$rpekerjaan->gaji}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="modal-footer">

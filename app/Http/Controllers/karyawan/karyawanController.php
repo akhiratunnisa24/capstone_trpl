@@ -52,7 +52,7 @@ class karyawanController extends Controller
         
         if ($role == 1) {
 
-        $karyawan = karyawan::all()->sortByDesc('created_at');
+        $karyawan = karyawan::all();
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
         //ambil id_karyawan yang belum punya akun
@@ -272,16 +272,18 @@ class karyawanController extends Controller
                 'kota_pformal' => $request->post('kotaPendidikanFormal'),
                 'kota_pformal' => $request->post('kotaPendidikanFormal'),
                 'jurusan' => $request->post('jurusan'),
-                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
+                'tahun_lulus_formal' => Carbon::parse($request->post('tahun_lulusFormal'))->format('Y'),
 
                 'jenis_pendidikan' => $request->post('jenis_pendidikan'),
                 'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-                'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
+                'tahun_lulus_nonformal' => Carbon::parse($request->post('tahunLulusNonFormal'))->format('Y'),
 
                 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
 
             );
+
+            // dd( $r_pendidikan);
 
             $r_pekerjaan = array(
                 'id_pegawai' => $maxId + 1,

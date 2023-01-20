@@ -212,11 +212,11 @@ class HomeController extends Controller
         //     ->whereDay('absensi.created_at', '=', Carbon::now())
         //     ->count();
 
-        $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"))
+        $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"), DB::raw("MONTH(tgl_mulai) as month_number"))
             ->whereYear('tgl_mulai', '=', Carbon::now()->year)
             ->where('status','=','Disetujui')
-            ->groupBy(DB::raw('MONTHNAME(tgl_mulai)'))
-            ->orderBy(DB::raw('MONTHNAME(tgl_mulai)'))
+            ->groupBy(DB::raw('MONTHNAME(tgl_mulai)'),DB::raw("MONTH(tgl_mulai)"))
+            ->orderBy(DB::raw("MONTH(tgl_mulai)"))
             ->pluck('jumlah', 'month_name');
 
         // $getYear = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("YEAR(tgl_mulai) as month_name"))
@@ -247,7 +247,7 @@ class HomeController extends Controller
             }
         }  
 
-        dd($karyawan);
+        // dd($karyawan);
 
         // DASHBOARD KARYAWAN
         //=====================
