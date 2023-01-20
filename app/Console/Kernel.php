@@ -4,9 +4,13 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Console\Scheduling\Event;
 
 class Kernel extends ConsoleKernel
 {
+    protected $commands = [
+        //
+    ];
     /**
      * Define the application's command schedule.
      *
@@ -15,10 +19,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('AbsenKaryawanEvent')->dailyAt('17:29');
+        $schedule->command('AbsenKaryawanEvent')->dailyAt('23:59');
     }
 
-    /**
+    /** 
      * Register the commands for the application.
      *
      * @return void
