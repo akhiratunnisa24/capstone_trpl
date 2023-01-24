@@ -20,4 +20,12 @@ class Settingalokasi extends Model
     {
         return $this->belongsTo(Departemen::class,'departemen','id');
     }
+
+    public function getModeKaryawanArrayAttribute() {
+        if(!empty($this->mode_karyawan)) {
+        return explode(",", $this->mode_karyawan);
+        }
+        
+        return [];
+    }
 }

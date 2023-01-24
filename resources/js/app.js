@@ -6,6 +6,9 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
+import moment from 'moment';
+window.moment = moment;
+
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin

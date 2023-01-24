@@ -180,7 +180,7 @@
                                                                 <option value="Katholik">Katholik</option>
                                                                 <option value="Hindu">Hindu</option>
                                                                 <option value="Budha">Budha</option>
-                                                                <option value="Konghucu">Konghucu</option>
+                                                                <option value="Khong Hu Chu">Khong Hu Chu</option>
                                                             </select>
                                                         </div>
                                                     </div>

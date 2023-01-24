@@ -62,15 +62,27 @@
                             @else
                             <div class="form-group col-sm" id="mode_employe">
                                 <label for="mode_karyawan" class="col-form-label">Karyawan</label>
-                                <select id="mode_karyawan" name="mode_karyawan[]" multiple="multiple"
-                                    class="form-control" style="width:385px">
-                                    <option value="{{$data->mode_karyawan}}" selected>{{$data->mode_karyawan}}</option>
-                                    <option value="L">Laki-laki</option>
-                                    <option value="P">Perempuan</option>
-                                    <option value="Sudah">Sudah Menikah</option>
-                                    <option value="Belum">Belum Menikah</option>
-                                    <option value="Masa kerja lebih satu tahun">Masa kerja lebih satu tahun</option>
+                                <select id="mode_karyawan" name="mode_karyawan[]" multiple="multiple" class="form-control" style="width:385px">
+                                    <option value="L" @if(in_array("L", $data->mode_karyawan_array)) selected @endif>
+                                        @if(in_array("L", $data->mode_karyawan_array)) Laki-laki @else Laki-laki @endif
+                                    </option>
+                                    <option value="P" @if(in_array("P", $data->mode_karyawan_array)) selected @endif>
+                                        @if(in_array("P", $data->mode_karyawan_array)) Perempuan @else Perempuan @endif
+                                    </option>
+                                    <option value="Sudah" @if(in_array("Sudah", $data->mode_karyawan_array)) selected @endif>
+                                        @if(in_array("Sudah", $data->mode_karyawan_array)) Sudah Menikah @else Sudah Menikah @endif
+                                    </option>
+                                    <option value="Belum" @if(in_array("Belum", $data->mode_karyawan_array)) selected @endif>
+                                        @if(in_array("Belum", $data->mode_karyawan_array)) Belum Menikah @else Belum Menikah @endif
+                                    </option>
+                                    <option value="Masa kerja lebih satu tahun" @if(in_array("Masa kerja lebih satu tahun",$data->mode_karyawan_array)) selected @endif>
+                                        @if(in_array("Masa kerja lebih satu tahun", $data->mode_karyawan_array)) Masa kerja lebih satu tahun @else Masa kerja lebih satu tahun @endif
+                                    </option>
                                 </select>
+                                 {{-- hanya menampilkan data sesuai database saja gunakan code berikut --}}
+                                    {{-- @foreach($data->mode_karyawan_array as $item)
+                                            <option value="{{$item}}" @if(in_array($item, $data->mode_karyawan_array)) selected @endif>{{$item}}</option>
+                                    @endforeach --}}
                             </div>
                             @endif
                         </div>

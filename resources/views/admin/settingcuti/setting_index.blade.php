@@ -81,6 +81,7 @@
                                         {{-- modals show setting --}}
                                         @include('admin.settingcuti.showsetting')
                                         @include('admin.settingcuti.editsetting')
+                                        {{-- @include('admin.settingcuti.editsetting',explode(",", $data->kode_karyawan)) --}}
                                         @endforeach
                                     </tbody>
                                 </table>
