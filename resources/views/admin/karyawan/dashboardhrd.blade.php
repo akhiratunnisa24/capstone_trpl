@@ -111,7 +111,7 @@
                 <h4 class="panel-title"> Tidak Masuk Bulan Ini</h4>
             </div>
             <div class="panel-body">
-                <h3 class=""><b>{{ $totalTidakAbsenPerbulan }}</b></h3>
+                <h3 class=""><b>###</b></h3>
                 <p class="text-muted"><b>Total Absen Tidak Masuk </b> </p>
             </div>
         </div>

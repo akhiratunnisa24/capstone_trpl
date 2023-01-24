@@ -13,32 +13,41 @@ use Illuminate\Support\Facades\Auth;
 
 class SettingalokasicutiController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $role = Auth::user()->role;        
+        $role = Auth::user()->role;
         if ($role == 1) {
 
-        $id = Settingalokasi::find('id');
-        $settingalokasi = Settingalokasi::orderBy('id','asc')->get();
-        //untuk edit
-        $setal = Settingalokasi::find($id);
-        $jeniscuti= Jeniscuti::all();
-        $departemen = Departemen::all();
-        return view('admin.settingcuti.setting_index', compact('settingalokasi','jeniscuti','setal','departemen','row'));
-
+            $id = Settingalokasi::find('id');
+            $settingalokasi = Settingalokasi::orderBy('id', 'asc')->get();
+            //untuk edit
+            $setal = Settingalokasi::find($id);
+            $jeniscuti = Jeniscuti::all();
+            $departemen = Departemen::all();
+            return view('admin.settingcuti.setting_index', compact('settingalokasi', 'jeniscuti', 'setal', 'departemen', 'row'));
         } else {
-            
-            return redirect()->back(); 
+
+            return redirect()->back();
         }
-    } 
+    }
 
 
     public function store(Request $request)
     {
         // dd($request->all());
-        if($request->mode_alokasi == 'Berdasarkan Departemen')
-        {
+        if ($request->mode_alokasi == 'Berdasarkan Departemen') {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
                 'durasi'       => 'required',
@@ -46,30 +55,30 @@ class SettingalokasicutiController extends Controller
                 'departemen'   => 'required',
             ]);
 
-            $settingalokasi = New Settingalokasi;
+            $settingalokasi = new Settingalokasi;
             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
             $settingalokasi->durasi       = $request->durasi;
             $settingalokasi->mode_alokasi = $request->mode_alokasi;
-            $settingalokasi->departemen   = $request->departemen; 
+            $settingalokasi->departemen   = $request->departemen;
             $settingalokasi->save();
-        
+
             return redirect()->back()->withInput();
-        }else{
+        } else {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
                 'durasi'       => 'required',
                 'mode_alokasi' => 'required',
-                'mode_karyawan'=> 'required',
+                'mode_karyawan' => 'required',
             ]);
 
-            $settingalokasi = New Settingalokasi;
+            $settingalokasi = new Settingalokasi;
             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
             $settingalokasi->durasi       = $request->durasi;
             $settingalokasi->mode_alokasi = $request->mode_alokasi;
             $mode = implode(',', $request->mode_karyawan);
-            $settingalokasi['mode_karyawan']= $mode;
+            $settingalokasi['mode_karyawan'] = $mode;
             $settingalokasi->save();
-        
+
             return redirect()->back()->withInput();
         }
     }
@@ -77,14 +86,13 @@ class SettingalokasicutiController extends Controller
     public function show($id)
     {
         $settingalokasi = Settingalokasi::find($id);
-        return view('admin.settingcuti.showsetting',compact('settingalokasi'));
+        return view('admin.settingcuti.showsetting', compact('settingalokasi'));
     }
 
     public function update(Request $request, $id)
     {
         $settingalokasi = Settingalokasi::find($id);
-        if($request->mode_alokasi == 'Berdasarkan Departemen')
-        {
+        if ($request->mode_alokasi == 'Berdasarkan Departemen') {
             // dd($settingalokasi->departemen);
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
@@ -96,23 +104,23 @@ class SettingalokasicutiController extends Controller
             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
             $settingalokasi->durasi       = $request->durasi;
             $settingalokasi->mode_alokasi = $request->mode_alokasi;
-            $settingalokasi->departemen   = $request->departemen; 
-            
+            $settingalokasi->departemen   = $request->departemen;
+
             $settingalokasi->update();
             // dd($settingalokasi);
 
-        }else{
+        } else {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
                 'durasi'       => 'required',
                 'mode_alokasi' => 'required',
-                'mode_karyawan'=> 'required',
+                'mode_karyawan' => 'required',
             ]);
             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
             $settingalokasi->durasi       = $request->durasi;
-            $settingalokasi->mode_alokasi = $request->mode_alokasi; 
+            $settingalokasi->mode_alokasi = $request->mode_alokasi;
             $mode = implode(',', $request->mode_karyawan);
-            $settingalokasi['mode_karyawan']= $mode;
+            $settingalokasi['mode_karyawan'] = $mode;
             $settingalokasi->update();
         }
         return redirect('/settingalokasi');

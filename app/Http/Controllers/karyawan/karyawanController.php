@@ -24,6 +24,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
 use App\Events\AbsenKaryawanEvent;
+use Illuminate\Support\Facades\Storage;
 
 
 class karyawanController extends Controller
@@ -53,7 +54,7 @@ class karyawanController extends Controller
         
         if ($role == 1) {
 
-        $karyawan = karyawan::all();
+        $karyawan = karyawan::all()->sortByDesc('created_at');
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
         //ambil id_karyawan yang belum punya akun
@@ -470,13 +471,17 @@ class karyawanController extends Controller
         $karyawan = karyawan::find($id);
         $maxId = Karyawan::max('id');
         $maxId + 1;
+        $request->validate(['foto' => 'image|mimes:jpeg,png,jpg|max:2048']);
+      
+        // $user = Auth::user()->id_pegawai;
+        $fotoLama = $karyawan->foto;
+        // dd($fotoLama);  
 
-        $request->validate([
-            'foto' => 'image|mimes:jpeg,png,jpg|max:2048'
-        ]);
 
 
         if ($file = $request->file('foto')) {
+            
+            // Storage::delete('public/Foto_Profile/'.$fotoLama);
 
             $extension = $file->getClientOriginalExtension();
             // $filename = md5(time()).'.'.$extension;
