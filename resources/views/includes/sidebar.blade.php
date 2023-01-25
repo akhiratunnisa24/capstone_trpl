@@ -55,6 +55,15 @@
                         </ul>
                 </li>
 
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span class="text-info panel-title">DATA HRD</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="/absensi-karyawan"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
+                            <li><a href="/history-absensi"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a></li> 
+                            <li><a href="/cuti-karyawan"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a> </li>                          
+                        </ul>
+                </li>
+
             <?php } elseif ($role == 2) { ?>
 
             <div class="user-info">

@@ -263,6 +263,7 @@
                 }
             } else
                 {
+                    $('#save-button').attr('disabled',false);
                     $('#tanggalmulai').prop("hidden", true);
                     $('#tanggalselesai').prop("hidden", true);
             }
