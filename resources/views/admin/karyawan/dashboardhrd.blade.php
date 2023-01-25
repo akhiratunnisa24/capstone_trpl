@@ -21,7 +21,9 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-info">
+                <a href="{{ url('showkaryawancuti') }}" class="panel-title ">
                 <h4 class="panel-title ">Cuti dan Izin Hari Ini</h4>
+                </a>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $cutidanizin }}</b></h3>
@@ -33,7 +35,9 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-success">
+                <a href="{{ url('showkaryawanabsen') }}" class="panel-title ">
                 <h4 class="panel-title">Absen Masuk Hari Ini</h4>
+                </a>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $absenHariini }}</b></h3>
@@ -45,7 +49,9 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-warning">
+                <a href="{{ url('showkaryawanterlambat') }}" class="panel-title ">
                 <h4 class="panel-title">Terlambat Hari Ini</h4>
+                </a>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $absenTerlambatHariIni }}</b></h3>
@@ -57,7 +63,9 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-danger">
+                <a href="{{ url('showkaryawantidakmasuk') }}" class="panel-title ">
                 <h4 class="panel-title"> Belum / Tidak Masuk Hari Ini</h4>
+                </a>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $totalTidakAbsenHariIni }}</b></h3>
@@ -72,7 +80,9 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-info">
+                <a href="{{ url('showkaryawancuti') }}" class="panel-title ">
                 <h4 class="panel-title ">Cuti dan Izin Bulan Ini</h4>
+                </a>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $cutidanizinPerbulan }}</b></h3>
@@ -84,7 +94,9 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-success">
+                <a href="{{ url('showkaryawanabsen') }}" class="panel-title ">
                 <h4 class="panel-title">Absen Masuk Bulan Ini</h4>
+                </a>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $absenBulanini }}</b></h3>
@@ -96,7 +108,9 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-warning">
+                <a href="{{ url('showkaryawanterlambat') }}" class="panel-title ">
                 <h4 class="panel-title">Terlambat Bulan Ini</h4>
+                </a>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $absenTerlambat }}</b></h3>
@@ -108,10 +122,12 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-danger">
+                <a href="{{ url('showkaryawantidakmasuk') }}" class="panel-title ">
                 <h4 class="panel-title"> Tidak Masuk Bulan Ini</h4>
+                </a>
             </div>
             <div class="panel-body">
-                <h3 class=""><b>###</b></h3>
+                <h3 class=""><b>{{ $tidakMasukBulanIni }}</b></h3>
                 <p class="text-muted"><b>Total Absen Tidak Masuk </b> </p>
             </div>
         </div>
@@ -123,7 +139,9 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-info">
+                <a href="{{ url('showkaryawancuti') }}" class="panel-title ">
                 <h4 class="panel-title">Cuti dan Izin Bulan Lalu</h4>
+                </a>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $cutidanizibulanlalu }}</b></h3>
@@ -135,7 +153,9 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-success">
+                <a href="{{ url('showkaryawanabsen') }}" class="panel-title ">
                 <h4 class="panel-title">Absen Masuk Bulan Lalu</h4>
+                </a>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
@@ -147,7 +167,9 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-warning">
+                <a href="{{ url('showkaryawanterlambat') }}" class="panel-title ">
                 <h4 class="panel-title">Terlambat Bulan Lalu</h4>
+                </a>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
@@ -159,7 +181,9 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-danger">
+                <a href="{{ url('showkaryawantidakmasuk') }}" class="panel-title ">
                 <h4 class="panel-title">Tidak Masuk Bulan Lalu </h4>
+                </a>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>0</b></h3>

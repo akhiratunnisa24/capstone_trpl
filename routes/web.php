@@ -57,6 +57,12 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('editPassword{id}', [karyawanController::class, 'editPassword'])->name('editPassword');
     Route::put('updatePassword{id}', [karyawanController::class, 'updatePassword'])->name('updatePassword');
 
+    Route::get('showkaryawancuti', [karyawanController::class, 'showKaryawanCuti'])->name('showKaryawanCuti');
+    Route::get('showkaryawanabsen', [karyawanController::class, 'showkaryawanabsen'])->name('showkaryawanabsen');
+    Route::get('showkaryawanterlambat', [karyawanController::class, 'showkaryawanterlambat'])->name('showkaryawanterlambat');
+    Route::get('showkaryawantidakmasuk', [karyawanController::class, 'showkaryawantidakmasuk'])->name('showkaryawantidakmasuk');
+
+
 // Role Karyawan
 
     Route::get('karyawandashboard', [karyawanController::class, 'karyawanDashboard'])->name('karyawanDashboard');

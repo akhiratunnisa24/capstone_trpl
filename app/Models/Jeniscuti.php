@@ -12,4 +12,9 @@ class Jeniscuti extends Model
     protected $fillable = [
                             'jenis_cuti',
                         ];
+
+    public function cuti()
+    {
+        return $this->hasMany(Cuti::class, 'id');
+    }
 }

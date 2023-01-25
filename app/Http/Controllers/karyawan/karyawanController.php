@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Users;
 use App\Models\Absensi;
 use App\Models\Karyawan;
+use App\Models\Izin;
 use App\Models\Kdarurat;
 use App\Models\Keluarga;
 use App\Models\Rpekerjaan;
@@ -24,6 +25,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
 use App\Events\AbsenKaryawanEvent;
+use App\Models\Tidakmasuk;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -31,44 +33,61 @@ class karyawanController extends Controller
 {
 
     /**
-    * Create a new controller instance.
-    *
-    * @return void
-    */
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
-    * Show the application dashboard.
-    *
-    * @return \Illuminate\Contracts\Support\Renderable
-    */
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
 
     public function index()
     {
         // event(new AbsenKaryawanEvent());
-        
+
+
+            // $karyawanSudahAbsen = DB::table('absensi')->whereDay('created_at', '=', Carbon::now())->pluck('id_karyawan');
+            // $karyawan = DB::table('karyawan')->whereNotIn('id', $karyawanSudahAbsen)->get();
+
+            // if ($karyawan->count() > 0) {
+            //     foreach ($karyawan as $karyawan) {
+            //         $absen = new Tidakmasuk();
+            //         $absen->id_pegawai = $karyawan->id;
+            //         $absen->nama = $karyawan->nama;
+            //         $absen->divisi = $karyawan->divisi;
+            //         $absen->status = 'tanpa keterangan';
+            //         $absen->tanggal = Carbon::today();
+            //         $absen->save();
+            //     }
+            // }    
+            // dd($karyawan);
+
+
         $role = Auth::user()->role;
-        
+
         if ($role == 1) {
 
-        $karyawan = karyawan::all()->sortByDesc('created_at');
-        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $karyawan = karyawan::all()->sortByDesc('created_at');
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-        //ambil id_karyawan yang belum punya akun
-        $user = DB::table('users')->pluck('id_pegawai');
-        $akun = DB::table('karyawan')->whereNotIn("id", $user)->get();
+            //ambil id_karyawan yang belum punya akun
+            $user = DB::table('users')->pluck('id_pegawai');
+            $akun = DB::table('karyawan')->whereNotIn("id", $user)->get();
 
-        $output = [
-            'row' => $row
-        ];
-        return view('admin.karyawan.index', compact('karyawan', 'row', 'akun'));
-
+            $output = [
+                'row' => $row
+            ];
+            return view('admin.karyawan.index', compact('karyawan', 'row', 'akun'));
         } else {
 
-            return redirect()->back(); 
+            return redirect()->back();
         }
     }
 
@@ -83,7 +102,7 @@ class karyawanController extends Controller
     //             throw new \Exception('Data not found');
     //         }
     //         return response()->json($getEmail,200);
-            
+
     //     } catch (\Exception $e){
     //         return response()->json([
     //             'message' =>$e->getMessage()
@@ -95,84 +114,82 @@ class karyawanController extends Controller
     {
         try {
             $getEmail = Karyawan::select('email')
-            ->where('id','=',$request->id_pegawai)->first();
+                ->where('id', '=', $request->id_pegawai)->first();
 
-            if(!$getEmail) {
+            if (!$getEmail) {
                 throw new \Exception('Data not found');
             }
-            return response()->json($getEmail,200);
-            
-        } catch (\Exception $e){
+            return response()->json($getEmail, 200);
+        } catch (\Exception $e) {
             return response()->json([
-                'message' =>$e->getMessage()
+                'message' => $e->getMessage()
             ], 500);
         }
     }
 
-    
+
 
     public function karyawanDashboard()
     {
         $role = Auth::user()->role;
-        
-        if ($role == 2 or 3 ) {
 
-        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        if ($role == 2 or 3) {
 
-        $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-            ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-        // Absen Terlambat untuk hari ini
-        $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-            ->whereYear('tanggal','=', Carbon::now()->year)
-            ->whereMonth('tanggal', '=', Carbon::now()->month)
-            ->whereTime('jam_masuk', '>', '08:00:00')
-            ->count();
-        
-        //absen masuk bulan lalu    
-        $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-            ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
-            ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
-            ->count('jam_masuk');
+            $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+                ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
-        //absen terlambat bulan lalu
-        $absenTerlambatbulanlalu = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-            ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
-            ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
-            ->count('terlambat');
+            // Absen Terlambat untuk hari ini
+            $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+                ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->whereTime('jam_masuk', '>', '08:00:00')
+                ->count();
 
-        $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-            ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
+            //absen masuk bulan lalu    
+            $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+                ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->count('jam_masuk');
 
-        $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)->get();
+            //absen terlambat bulan lalu
+            $absenTerlambatbulanlalu = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+                ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->count('terlambat');
 
-        //sisa cuti
-        // $sisacuti = DB::table('alokasicuti')
-        // ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
-        // ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
-        // ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
-        // ->where('cuti.status','=','Disetujui')
-        // ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
-        // ->get();
-        
-        // dd($sisacuti);
+            $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+                ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
-        $output = [
-            'row' => $row,
-            'absenKaryawan' => $absenKaryawan,
-            'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
-            'absenTidakmasuk' => $absenTidakmasuk,
-            'alokasicuti' => $alokasicuti,
-            // 'sisacuti' => $sisacuti,
-            'absenBulanlalu'=> $absenBulanlalu,
-            'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
+            $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)->get();
 
-        ];
-        return view('karyawan.dashboardKaryawan', $output);
+            //sisa cuti
+            // $sisacuti = DB::table('alokasicuti')
+            // ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
+            // ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
+            // ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
+            // ->where('cuti.status','=','Disetujui')
+            // ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
+            // ->get();
 
+            // dd($sisacuti);
+
+            $output = [
+                'row' => $row,
+                'absenKaryawan' => $absenKaryawan,
+                'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
+                'absenTidakmasuk' => $absenTidakmasuk,
+                'alokasicuti' => $alokasicuti,
+                // 'sisacuti' => $sisacuti,
+                'absenBulanlalu' => $absenBulanlalu,
+                'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
+
+            ];
+            return view('karyawan.dashboardKaryawan', $output);
         } else {
 
-            return redirect()->back(); 
+            return redirect()->back();
         }
     }
 
@@ -180,21 +197,20 @@ class karyawanController extends Controller
     public function create()
     {
         $role = Auth::user()->role;
-        
+
         if ($role == 1) {
 
-        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $departemen = Departemen::all();
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $departemen = Departemen::all();
 
-        $output = [
-            'row' => $row,
-            'departemen' => $departemen,
-        ];
-        return view('admin.karyawan.create', $output);
-
+            $output = [
+                'row' => $row,
+                'departemen' => $departemen,
+            ];
+            return view('admin.karyawan.create', $output);
         } else {
 
-            return redirect()->back(); 
+            return redirect()->back();
         }
     }
 
@@ -202,7 +218,7 @@ class karyawanController extends Controller
 
     public function store_page(Request $request)
     {
-        if ($request->hasfile('foto') ) {
+        if ($request->hasfile('foto')) {
 
             $fileFoto = $request->file('foto');
             $namaFile = '' . time() . $fileFoto->getClientOriginalName();
@@ -438,30 +454,30 @@ class karyawanController extends Controller
     public function edit($id)
     {
         $role = Auth::user()->role;
-        
+
         if ($role == 1) {
 
-        $karyawan = Karyawan::findOrFail($id);
-        $keluarga = Keluarga::where('id_pegawai', $id)->first();
-        $kdarurat = Kdarurat::where('id_pegawai', $id)->first();
-        $rpendidikan = Rpendidikan::where('id_pegawai', $id)->first();
-        $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->first();
-        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $karyawan = Karyawan::findOrFail($id);
+            $keluarga = Keluarga::where('id_pegawai', $id)->first();
+            $kdarurat = Kdarurat::where('id_pegawai', $id)->first();
+            $rpendidikan = Rpendidikan::where('id_pegawai', $id)->first();
+            $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->first();
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-        $output = [
-            'row' => $row
-        ];
+            $output = [
+                'row' => $row
+            ];
 
-        return view('admin.karyawan.edit', $output)->with([
-            'karyawan' => $karyawan,
-            'keluarga' => $keluarga,
-            'kdarurat' => $kdarurat,
-            'rpendidikan' => $rpendidikan,
-            'rpekerjaan' => $rpekerjaan,
-        ]);
+            return view('admin.karyawan.edit', $output)->with([
+                'karyawan' => $karyawan,
+                'keluarga' => $keluarga,
+                'kdarurat' => $kdarurat,
+                'rpendidikan' => $rpendidikan,
+                'rpekerjaan' => $rpekerjaan,
+            ]);
         } else {
- 
-            return redirect()->back(); 
+
+            return redirect()->back();
         }
     }
 
@@ -472,7 +488,7 @@ class karyawanController extends Controller
         $maxId = Karyawan::max('id');
         $maxId + 1;
         $request->validate(['foto' => 'image|mimes:jpeg,png,jpg|max:2048']);
-      
+
         // $user = Auth::user()->id_pegawai;
         $fotoLama = $karyawan->foto;
         // dd($fotoLama);  
@@ -480,7 +496,7 @@ class karyawanController extends Controller
 
 
         if ($file = $request->file('foto')) {
-            
+
             // Storage::delete('public/Foto_Profile/'.$fotoLama);
 
             $extension = $file->getClientOriginalExtension();
@@ -488,105 +504,104 @@ class karyawanController extends Controller
             $filename = '' . time() . $file->getClientOriginalName();
             $file->move(public_path() . '\Foto_Profile', $filename);
             $karyawan->foto = $filename;
-        
-
-        $data = array(
-
-            'nama' => $request->post('namaKaryawan'),
-            'tgllahir' => $request->post('tgllahirKaryawan'),
-            'jenis_kelamin' => $request->post('jenis_kelaminKaryawan'),
-            'alamat' => $request->post('alamatKaryawan'),
-            'no_hp' => $request->post('no_hpKaryawan'),
-            'email' => $request->post('emailKaryawan'),
-            'agama' => $request->post('agamaKaryawan'),
-            'nik' => $request->post('nikKaryawan'),
-            'gol_darah' => $request->post('gol_darahKaryawan'),
-            'jabatan' => $request->post('jabatanKaryawan'),
-            // 'created_at' => new \DateTime(),
-            'updated_at' => new \DateTime(),
-            'foto' => $filename,
-        );
-
-        $data_keluarga = array(
-            // 'id_pegawai' => $maxId + 1 , 
-
-            'status_pernikahan' => $request->post('status_pernikahan'),
-
-            'nama' => $request->post('namaPasangan'),
-            'tgllahir' => $request->post('tgllahirPasangan'),
-            'alamat' => $request->post('alamatPasangan'),
-            'pendidikan_terakhir' => $request->post('pendidikan_terakhirPasangan'),
-            'pekerjaan' => $request->post('pekerjaanPasangan'),
 
 
-            // 'created_at' => new \DateTime(),
-            'updated_at' => new \DateTime(),
+            $data = array(
 
-        );
+                'nama' => $request->post('namaKaryawan'),
+                'tgllahir' => $request->post('tgllahirKaryawan'),
+                'jenis_kelamin' => $request->post('jenis_kelaminKaryawan'),
+                'alamat' => $request->post('alamatKaryawan'),
+                'no_hp' => $request->post('no_hpKaryawan'),
+                'email' => $request->post('emailKaryawan'),
+                'agama' => $request->post('agamaKaryawan'),
+                'nik' => $request->post('nikKaryawan'),
+                'gol_darah' => $request->post('gol_darahKaryawan'),
+                'jabatan' => $request->post('jabatanKaryawan'),
+                // 'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+                'foto' => $filename,
+            );
 
-        $r_pendidikan = array(
-            // 'id_pegawai' => $maxId + 1 ,
+            $data_keluarga = array(
+                // 'id_pegawai' => $maxId + 1 , 
 
-            'tingkat' => $request->post('tingkat_pendidikan'),
-            'nama_sekolah' => $request->post('nama_sekolah'),
-            'kota_pformal' => $request->post('kotaPendidikanFormal'),
-            'jurusan' => $request->post('jurusan'),
-            'tahun_lulus_formal' => $request->post('tahun_lulus_formal'),
+                'status_pernikahan' => $request->post('status_pernikahan'),
 
-            'jenis_pendidikan' => $request->post('jenis_pendidikan'),
-            'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-            'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
+                'nama' => $request->post('namaPasangan'),
+                'tgllahir' => $request->post('tgllahirPasangan'),
+                'alamat' => $request->post('alamatPasangan'),
+                'pendidikan_terakhir' => $request->post('pendidikan_terakhirPasangan'),
+                'pekerjaan' => $request->post('pekerjaanPasangan'),
 
-            // 'created_at' => new \DateTime(),
-            'updated_at' => new \DateTime(),
 
-        );
+                // 'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
 
-        $r_pekerjaan = array(
-            // 'id_pegawai' => $maxId + 1 ,
+            );
 
-            'nama_perusahaan' => $request->post('namaPerusahaan'),
-            'alamat' => $request->post('alamatPerusahaan'),
-            'jenis_usaha' => $request->post('jenisUsaha'),
-            'jabatan' => $request->post('jabatan'),
-            'nama_atasan' => $request->post('namaAtasan'),
-            'nama_direktur' => $request->post('namaDirektur'),
-            'lama_kerja' => $request->post('lamaKerja'),
-            'alasan_berhenti' => $request->post('alasanBerhenti'),
-            'gaji' => $request->post('gajiRpekerjaan'),
+            $r_pendidikan = array(
+                // 'id_pegawai' => $maxId + 1 ,
 
-            // 'created_at' => new \DateTime(),
-            'updated_at' => new \DateTime(),
+                'tingkat' => $request->post('tingkat_pendidikan'),
+                'nama_sekolah' => $request->post('nama_sekolah'),
+                'kota_pformal' => $request->post('kotaPendidikanFormal'),
+                'jurusan' => $request->post('jurusan'),
+                'tahun_lulus_formal' => $request->post('tahun_lulus_formal'),
 
-        );
+                'jenis_pendidikan' => $request->post('jenis_pendidikan'),
+                'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
+                'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
 
-        $data_kdarurat = array(
-            // 'id_pegawai' => $maxId + 1 ,
+                // 'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
 
-            'nama' => $request->post('namaKdarurat'),
-            'alamat' => $request->post('alamatKdarurat'),
-            'no_hp' => $request->post('no_hpKdarurat'),
-            'hubungan' => $request->post('hubunganKdarurat'),
+            );
 
-        );
-        $idKaryawan = $request->post('id_karyawan');
-        $idPendidikan = $request->post('id_pendidikan');
-        $idKeluarga = $request->post('id_keluarga');
-        $idPekerjaan = $request->post('id_pekerjaan');
-        $id_kdarurat = $request->post('id_kdarurat');
+            $r_pekerjaan = array(
+                // 'id_pegawai' => $maxId + 1 ,
 
-        Karyawan::where('id', $idKaryawan)->update($data);
-        Keluarga::where('id', $idKeluarga)->update($data_keluarga);
-        Rpendidikan::where('id', $idPendidikan)->update($r_pendidikan);
-        Rpekerjaan::where('id', $idPekerjaan)->update($r_pekerjaan);
-        Kdarurat::where('id', $id_kdarurat)->update($data_kdarurat);
+                'nama_perusahaan' => $request->post('namaPerusahaan'),
+                'alamat' => $request->post('alamatPerusahaan'),
+                'jenis_usaha' => $request->post('jenisUsaha'),
+                'jabatan' => $request->post('jabatan'),
+                'nama_atasan' => $request->post('namaAtasan'),
+                'nama_direktur' => $request->post('namaDirektur'),
+                'lama_kerja' => $request->post('lamaKerja'),
+                'alasan_berhenti' => $request->post('alasanBerhenti'),
+                'gaji' => $request->post('gajiRpekerjaan'),
 
-        return redirect('karyawan')->with("sukses", "berhasil diubah");
+                // 'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
 
+            );
+
+            $data_kdarurat = array(
+                // 'id_pegawai' => $maxId + 1 ,
+
+                'nama' => $request->post('namaKdarurat'),
+                'alamat' => $request->post('alamatKdarurat'),
+                'no_hp' => $request->post('no_hpKdarurat'),
+                'hubungan' => $request->post('hubunganKdarurat'),
+
+            );
+            $idKaryawan = $request->post('id_karyawan');
+            $idPendidikan = $request->post('id_pendidikan');
+            $idKeluarga = $request->post('id_keluarga');
+            $idPekerjaan = $request->post('id_pekerjaan');
+            $id_kdarurat = $request->post('id_kdarurat');
+
+            Karyawan::where('id', $idKaryawan)->update($data);
+            Keluarga::where('id', $idKeluarga)->update($data_keluarga);
+            Rpendidikan::where('id', $idPendidikan)->update($r_pendidikan);
+            Rpekerjaan::where('id', $idPekerjaan)->update($r_pekerjaan);
+            Kdarurat::where('id', $id_kdarurat)->update($data_kdarurat);
+
+            return redirect('karyawan')->with("sukses", "berhasil diubah");
         } else {
 
             $data = array(
-    
+
                 'nama' => $request->post('namaKaryawan'),
                 'tgllahir' => $request->post('tgllahirKaryawan'),
                 'jenis_kelamin' => $request->post('jenis_kelaminKaryawan'),
@@ -600,45 +615,45 @@ class karyawanController extends Controller
                 // 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
             );
-    
+
             $data_keluarga = array(
                 // 'id_pegawai' => $maxId + 1 , 
-    
+
                 'status_pernikahan' => $request->post('status_pernikahan'),
-    
+
                 'nama' => $request->post('namaPasangan'),
                 'tgllahir' => $request->post('tgllahirPasangan'),
                 'alamat' => $request->post('alamatPasangan'),
                 'pendidikan_terakhir' => $request->post('pendidikan_terakhirPasangan'),
                 'pekerjaan' => $request->post('pekerjaanPasangan'),
-    
-    
+
+
                 // 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
-    
+
             );
-    
+
             $r_pendidikan = array(
                 // 'id_pegawai' => $maxId + 1 ,
-    
+
                 'tingkat' => $request->post('tingkat_pendidikan'),
                 'nama_sekolah' => $request->post('nama_sekolah'),
                 'kota_pformal' => $request->post('kotaPendidikanFormal'),
                 'jurusan' => $request->post('jurusan'),
                 'tahun_lulus_formal' => $request->post('tahun_lulus_formal'),
-    
+
                 'jenis_pendidikan' => $request->post('jenis_pendidikan'),
                 'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
                 'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
-    
+
                 // 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
-    
+
             );
-    
+
             $r_pekerjaan = array(
                 // 'id_pegawai' => $maxId + 1 ,
-    
+
                 'nama_perusahaan' => $request->post('namaPerusahaan'),
                 'alamat' => $request->post('alamatPerusahaan'),
                 'jenis_usaha' => $request->post('jenisUsaha'),
@@ -648,67 +663,66 @@ class karyawanController extends Controller
                 'lama_kerja' => $request->post('lamaKerja'),
                 'alasan_berhenti' => $request->post('alasanBerhenti'),
                 'gaji' => $request->post('gajiRpekerjaan'),
-    
+
                 // 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
-    
+
             );
-    
+
             $data_kdarurat = array(
                 // 'id_pegawai' => $maxId + 1 ,
-    
+
                 'nama' => $request->post('namaKdarurat'),
                 'alamat' => $request->post('alamatKdarurat'),
                 'no_hp' => $request->post('no_hpKdarurat'),
                 'hubungan' => $request->post('hubunganKdarurat'),
-    
+
             );
             $idKaryawan = $request->post('id_karyawan');
             $idPendidikan = $request->post('id_pendidikan');
             $idKeluarga = $request->post('id_keluarga');
             $idPekerjaan = $request->post('id_pekerjaan');
             $id_kdarurat = $request->post('id_kdarurat');
-    
+
             Karyawan::where('id', $idKaryawan)->update($data);
             Keluarga::where('id', $idKeluarga)->update($data_keluarga);
             Rpendidikan::where('id', $idPendidikan)->update($r_pendidikan);
             Rpekerjaan::where('id', $idPekerjaan)->update($r_pekerjaan);
             Kdarurat::where('id', $id_kdarurat)->update($data_kdarurat);
-    
+
             return redirect('karyawan')->with("sukses", "berhasil diubah");
         }
-
     }
 
     public function show($id)
     {
         $role = Auth::user()->role;
-        
+
         if ($role == 1) {
 
-        $karyawan = karyawan::findOrFail($id);
-        $keluarga = Keluarga::where('id_pegawai', $id)->first();
+            $karyawan = karyawan::findOrFail($id);
+            $keluarga = Keluarga::where('id_pegawai', $id)->first();
 
 
-        $kdarurat = Kdarurat::where('id_pegawai', $id)->first();
-        $rpendidikan = Rpendidikan::where('id_pegawai', $id)->first();
-        $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->first();
-        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $kdarurat = Kdarurat::where('id_pegawai', $id)->first();
+            $rpendidikan = Rpendidikan::where('id_pegawai', $id)->first();
+            $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->first();
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-        $output = [
-            'row' => $row
-        ];
+            $output = [
+                'row' => $row
+            ];
 
-        return view('admin.karyawan.show', $output)->with([
-            'karyawan' => $karyawan,
-            'keluarga' => $keluarga,
-            'kdarurat' => $kdarurat,
-            'rpendidikan' => $rpendidikan,
-            'rpekerjaan' => $rpekerjaan,
-        ]);
+            return view('admin.karyawan.show', $output)->with([
+                'karyawan' => $karyawan,
+                'keluarga' => $keluarga,
+                'kdarurat' => $kdarurat,
+                'rpendidikan' => $rpendidikan,
+                'rpekerjaan' => $rpekerjaan,
+            ]);
         } else {
-    
-            return redirect()->back(); 
+
+            return redirect()->back();
         }
     }
 
@@ -784,5 +798,173 @@ class karyawanController extends Controller
     public function exportExcel()
     {
         return Excel::download(new KaryawanExport, 'data_karyawan.xlsx');
+    }
+
+    public function showKaryawanCuti()
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $izin = Izin::with('karyawan',)
+                ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+                ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+                ->whereDay('tgl_mulai', '=', Carbon::now())
+                ->get();
+
+            $cuti = Cuti::with('karyawan', 'jeniscuti')
+                ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+                ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+                ->whereDay('tgl_mulai', '=', Carbon::now())
+                ->get();
+
+            $izinBulanIni = Izin::with('karyawan',)
+                ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+                ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+                ->get();
+
+            $cutiBulanIni = Cuti::with('karyawan', 'jeniscuti')
+                ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+                ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+                ->get();
+
+            $izinBulanLalu = Izin::with('karyawan',)
+                ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+                ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
+                ->get();
+
+            $cutiBulanLalu = Cuti::with('karyawan', 'jeniscuti')
+            ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
+            ->get();
+
+            $output = [
+                'row' => $row,
+            ];
+            return view('admin.karyawan.showKaryawanCuti', compact('izin', 'row', 'cuti', 'izinBulanIni', 'cutiBulanIni', 'izinBulanLalu', 'cutiBulanLalu'));
+        } else {
+
+            return redirect()->back();
+        }
+    }
+
+    public function showkaryawanabsen()
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+
+            $absen = Absensi::with('karyawan',)
+            ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->whereDay('tanggal', '=', Carbon::now())
+                ->get();
+
+            $absenBulanIni = Absensi::with('karyawan')
+            ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->get();
+
+            $absenBulanLalu = Absensi::with('karyawan',)
+            ->whereYear('tanggal', '=', Carbon::now()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+            ->get();
+
+            $output = [
+                'row' => $row,
+            ];
+            return view('admin.karyawan.showKaryawanAbsen', compact('absen', 'row', 'absenBulanIni', 'absenBulanLalu'));
+        } else {
+
+            return redirect()->back();
+        }
+    }
+
+    public function showkaryawanterlambat()
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $terlambat = Absensi::with('karyawan',)
+            ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->whereDay('tanggal', '=', Carbon::now())
+                ->whereTime('jam_masuk', '>', '08:00:00')
+                ->get();
+
+            $terlambatBulanIni = Absensi::with('karyawan')
+            ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->whereTime('jam_masuk', '>', '08:00:00')
+                ->get();
+
+            $terlambatBulanLalu = Absensi::with('karyawan',)
+            ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->whereTime('jam_masuk', '>', '08:00:00')
+                ->get();
+
+            $output = [
+                'row' => $row,
+            ];
+            return view('admin.karyawan.showKaryawanTerlambat', compact('terlambat', 'row', 'terlambatBulanIni', 'terlambatBulanLalu'));
+        } else {
+
+            return redirect()->back();
+        }
+    }
+
+    public function showkaryawantidakmasuk()
+    {
+        $role = Auth::user()->role;
+
+        //ambil id_karyawan yang udah absen
+        
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            // $karyawanSudahAbsen = DB::table('absensi')->pluck('id_karyawan');
+            // $karyawanBelumAbsen = Karyawan::with('departemen')
+            // ->whereYear('tanggal', '=', Carbon::now()->year)
+            // ->whereMonth('tanggal', '=', Carbon::now()->month)
+            // ->whereDay('tanggal', '=', Carbon::now())
+            // ->whereNotIn('id', $karyawanSudahAbsen)
+            // ->get();
+
+            $tidakMasuk = Tidakmasuk::with('departemen','karyawan2')
+                ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->whereDay('tanggal', '=', Carbon::now())
+                ->get();
+            // dd($tidakMasuk);
+
+            $tidakMasukBulanIni = Tidakmasuk::with('departemen', 'karyawan2')
+                ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->get();
+
+            $tidakMasukBulanLalu = Tidakmasuk::with('departemen', 'karyawan2')
+                ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->get();
+
+            $output = [
+                'row' => $row,
+            ];
+            return view('admin.karyawan.showKaryawanTidakMasuk', compact('tidakMasuk', 'row', 'tidakMasukBulanIni', 'tidakMasukBulanLalu'));
+        } else {
+
+            return redirect()->back();
+        }
     }
 }

@@ -34,11 +34,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+
+            // $karyawanSudahAbsen = DB::table('absensi')->whereDay('created_at', '=', Carbon::now())->pluck('id_karyawan');
+            // $karyawan = DB::table('karyawan')->whereNotIn('id', $karyawanSudahAbsen)
+            // ->get();
+            // dd($karyawan);
+
         // $schedule->command('AbsenKaryawanEvent')->dailyAt('23:59');
-        $schedule->call(function (){
-            $karyawan = Karyawan::whereDoesntHave('absensi', function ($query) {
-                $query->whereDate(DB::raw('DATE(tanggal)'), Carbon::today());
-            })->get();
+                $schedule->call(function (){
+                $karyawanSudahAbsen = DB::table('absensi')->whereDay('created_at', '=', Carbon::now())->pluck('id_karyawan');
+                $karyawan = DB::table('karyawan')->whereNotIn('id', $karyawanSudahAbsen)->get();
     
             if ($karyawan->count() > 0) {
                 foreach ($karyawan as $karyawan) {
