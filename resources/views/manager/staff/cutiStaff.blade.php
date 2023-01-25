@@ -37,7 +37,6 @@
                                                 <th>Tgl. Mulai</th>
                                                 <th>Tgl.Selesai</th>
                                                 <th>Jml. Cuti</th>
-                                                <th>Mode</th>
                                                 {{-- <th>Departemen</th> --}}
                                                 <th>Status</th>
                                                 <th>Action</th>        
@@ -54,7 +53,6 @@
                                                     <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
                                                     <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                     <td>{{$data->jml_cuti}} Hari</td>
-                                                    <td>{{$data->mode_alokasi}}</td>
                                                     {{-- <td>{{$data->departemen}}</td> --}}
                                                     @if($data->status == 'Pending')
                                                         <td>

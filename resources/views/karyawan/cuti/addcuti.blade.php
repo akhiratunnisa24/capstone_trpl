@@ -13,6 +13,11 @@
                     <button type="button" class="close" onclick="$('#error-message').hide()">&times;</button>
                 </div>
 
+                {{-- alert success --}}
+                <div class="alert alert-success" id="success-message" style="display: none;">
+                    <button type="button" class="close" onclick="$('#success-message').hide()">&times;</button>
+                </div>
+
                 {{-- form --}}
                 <div class="modal-body">
                     <form action="{{ route('cuti.store')}}" method="POST" enctype="multipart/form-data">
@@ -200,11 +205,14 @@
             // console.info(daysOfYear);
             $('#jumlah').val(daysOfYear.length ?? 0);
 
+           
             //mengambil value jml_cuti
             var jml_cuti = $("#jumlah").val();
             var durasi   = $("#durasi").val(); ////ambil value dari input field durasi yang didapat dari ajax request
             
+        
             if(jml_cuti > durasi){
+                $('#success-message').hide();
                 $('#error-message').html(' "WARNING !!"<br>Jumlah cuti yang diinput melebihi durasi cuti yang tersedia.<br>Silahkan pilih jumlah cuti yang lebih kecil atau sama dengan durasi');
                 $('#error-message').show();
                 $('#submit-button').attr('disabled', true); //nonaktifkan tombol submit
@@ -213,6 +221,11 @@
                 {
                     $('#error-message').hide();
                 }, 3000);
+            }else if(jml_cuti < durasi && jml_cuti !=0){
+                 $('#error-message').hide();
+                 $('#success-message').html('Cuti Tersedia');
+                 $('#success-message').show();
+                 $('#submit-button').attr('disabled', false); //aktifkan tombol submit
             }else{
                 $('#error-message').hide();
                 $('#submit-button').attr('disabled', false); //aktifkan tombol submit

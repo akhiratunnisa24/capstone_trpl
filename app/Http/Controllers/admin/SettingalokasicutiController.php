@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\admin;
 
 use Carbon\Carbon;
+use App\Models\Karyawan;
 use App\Models\Jeniscuti;
 use App\Models\Departemen;
-use App\Models\Karyawan;
+use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use App\Models\Settingalokasi;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +49,8 @@ class SettingalokasicutiController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        $year = date('Y');
+
         if ($request->mode_alokasi == 'Berdasarkan Departemen') {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
@@ -62,6 +66,21 @@ class SettingalokasicutiController extends Controller
             $settingalokasi->departemen   = $request->departemen;
             $settingalokasi->save();
 
+            $karyawan = Karyawan::where('divisi',$request->departemen)->get();
+            foreach($karyawan as $karyawan)
+            {
+                $alokasicuti = new Alokasicuti;
+                $alokasicuti->id_karyawan      = $karyawan->id;
+                $alokasicuti->id_settingalokasi= $settingalokasi->id;
+                $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
+                $alokasicuti->durasi           = $request->durasi;
+                $alokasicuti->mode_alokasi     = $request->mode_alokasi;
+                $alokasicuti->tgl_masuk        = null;
+                $alokasicuti->tgl_sekarang     = null;
+                $alokasicuti->aktif_dari       = $year.'-01-01';
+                $alokasicuti->sampai           = $year.'-12-31';
+                $alokasicuti->save();
+            }
             return redirect()->back()->withInput();
         } else {
             $validate = $request->validate([
@@ -78,6 +97,35 @@ class SettingalokasicutiController extends Controller
             $mode = implode(',', $request->mode_karyawan);
             $settingalokasi['mode_karyawan'] = $mode;
             $settingalokasi->save();
+
+
+            //whereIn('price', [150, 200]);
+
+            $karyawan = DB::table('karyawan')
+            ->join('keluarga','karyawan.id','=','keluarga.id_pegawai')
+            ->whereIn('karyawan.jenis_kelamin','=',$request->mode_karyawan)
+            ->orWhere('keluarga.status_pernikahan','=',$request->mode_karyawan)
+            ->select('karyawan.*','keluarga.id_karyawan','karyawan.status_pernikahan')
+            ->distinct()
+            ->get();
+
+            if($request->id_jeniscuti != 1)
+            {
+                foreach($karyawan as $karyawan)
+                {
+                    $alokasicuti = new Alokasicuti;
+                    $alokasicuti->id_karyawan      = $karyawan->id;
+                    $alokasicuti->id_settingalokasi= $settingalokasi->id;
+                    $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
+                    $alokasicuti->durasi           = $request->durasi;
+                    $alokasicuti->mode_alokasi     = $request->mode_alokasi;
+                    $alokasicuti->tgl_masuk        = null;
+                    $alokasicuti->tgl_sekarang     = null;
+                    $alokasicuti->aktif_dari       = $year.'-01-01';
+                    $alokasicuti->sampai           = $year.'-12-31';
+                    $alokasicuti->save();
+                }
+            }
 
             return redirect()->back()->withInput();
         }

@@ -42,10 +42,28 @@
                 {{-- LIST CUTI --}}
                 <div class="tab-pane active" id="cuti">
                     <!-- Start content -->
+                    {{-- <div class="row">
+                        <div class="col-sm-6 col-xs-12 text-right" style="margin-top:7px">Filter Data:</div>
+                        <div class="col-sm-3 col-xs-12">
+                            <div class="input-group">
+                                <input id="datepicker-autoclose22" type="text"
+                                    class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose22"
+                                    name="filter-data" autocomplete="off" rows="10" required><br>
+                                <span class="input-group-addon bg-custom b-0"><i
+                                        class="mdi mdi-calendar text-white"></i></span>
+                            </div><!-- input-group -->
+                        </div>
+                        <div class="col-sm-3 col-xs-12">
+                            <button type="submit" id="cari" class="btn btn-md btn-success fa fa-filter" style="margin-left: 15px;height: 37px" > Filter</button>
+                            <a href="" class="btn btn-md btn-success fa fa-refresh " style="height: 37px;"> Reset</a>
+                            {{-- {{ route('cuti.index') }} --}}
+                     {{--   </div>
+                    </div> --}}
+                    <br>
                     <div class="content">
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-15">
+                                <div class="col-md-12">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading"  style="height:35px">
                                             {{-- <strong>Data Permintaan Cuti</strong> --}}
@@ -291,20 +309,9 @@
 
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
-    {{-- <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/modernizr.min.js"></script>
-    <script src="assets/js/detect.js"></script>
-    <script src="assets/js/fastclick.js"></script>
-    <script src="assets/js/jquery.slimscroll.js"></script>
-    <script src="assets/js/jquery.blockUI.js"></script>
-    <script src="assets/js/waves.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/jquery.nicescroll.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script> --}}
-    
-    <!-- Datatable init js -->
     <script src="assets/pages/datatables.init.js"></script>
-    {{-- <script src="assets/js/app.js"></script> --}}
+    <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/pages/form-advanced.js"></script>
 
     <script type="text/javascript">
         let tp = `{{$type}}`;
