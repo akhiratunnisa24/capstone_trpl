@@ -17,6 +17,7 @@ use App\Models\Rpendidikan;
 use App\Models\Departemen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -53,7 +54,7 @@ class karyawanController extends Controller
         
         if ($role == 1) {
 
-        $karyawan = karyawan::all();
+        $karyawan = karyawan::all()->sortByDesc('created_at');
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
         //ambil id_karyawan yang belum punya akun
@@ -470,20 +471,35 @@ class karyawanController extends Controller
         $karyawan = karyawan::find($id);
         $maxId = Karyawan::max('id');
         $maxId + 1;
+        $request->validate(['foto' => 'image|mimes:jpeg,png,jpg|max:2048']);
+      
+        // $user = Auth::user()->id_pegawai;
+        $fotoLama = $karyawan->foto;
+        // dd($fotoLama);  
 
-        $request->validate([
-            'foto' => 'image|mimes:jpeg,png,jpg|max:2048'
-        ]);
 
 
-        if ($file = $request->file('foto')) {
+        if ($request->hasfile('foto')) {
+            {
+                $destination = '\Foto_Profile' . $karyawan->foto;
+                if(File::exists($destination))
+                {
+                   File::delete($destination);
 
-            $extension = public_path("Foto_Profile/{$karyawan->foto}");      
-            // $filename = md5(time()).'.'.$extension;
-            $filename = '' . time() . $file->getClientOriginalName();
-            $file->move(public_path() . '\Foto_Profile', $filename);
-            $karyawan->foto = $filename;
-        
+                }
+                
+            // Storage::delete('public/Foto_Profile/'.$fotoLama);
+            // $file = $request->file('foto');
+            // $extension = $file->getClientOriginalExtension();
+            // // $filename = md5(time()).'.'.$extension;
+            // $filename = '' . time() . $file->getClientOriginalName();
+            // $file->move(public_path() . '\Foto_Profile', $filename);
+            // $karyawan->foto = $filename;
+            $fileFoto = $request->file('foto');
+            $namaFile = '' . time() . $fileFoto->getClientOriginalName();
+            $tujuan_upload = 'Foto_Profile';
+            $fileFoto->move($tujuan_upload, $namaFile);
+            }
 
         $data = array(
 
@@ -499,7 +515,7 @@ class karyawanController extends Controller
             'jabatan' => $request->post('jabatanKaryawan'),
             // 'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
-            'foto' => $filename,
+            'foto' => $namaFile ,
         );
 
         $data_keluarga = array(

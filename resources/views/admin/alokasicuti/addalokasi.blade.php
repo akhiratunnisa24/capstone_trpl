@@ -1,5 +1,6 @@
 
 {{-- FORM SETTING ALOKASI--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <div class="modal fade" id="newalokasi" tabindex="-1" role="dialog" aria-labelledby="newalokasi" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -7,6 +8,20 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title text-center" id="newalokasi">Tambah Alokasi Cuti</h4>
             </div>
+            {{-- alert success --}}
+            <div class="alert alert-success" id="success-messages" style="display: none;">
+                <button type="button" class="close" onclick="$('#success-messages').hide()">&times;</button>
+            </div>
+            {{-- alert danger --}}
+            <div class="alert alert-danger" id="error-messages" style="display: none;">
+                <button type="button" class="close" onclick="$('#error-messages').hide()">&times;</button>
+            </div>
+            @if (session('danger'))
+                <div class="alert alert-danger">
+                    {{ session('danger') }}
+                </div>
+            @endif
+
             <div class="modal-body">
                 <form class="input" action="{{route('alokasi.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -18,18 +33,6 @@
                             </div>
                         </div> --}}
                         <div class="col-md-6">
-                            <div class="form-group col-sm" id="jeniscuti">
-                                <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
-                                <select name="id_jeniscuti" id="id_jeniscuti" class="form-control" required>
-                                    <option value="">Pilih Kategori Cuti</option>
-                                    @foreach ($jeniscuti as $jenis)
-                                    <option value="{{ $jenis->id }}">{{ $jenis->jenis_cuti }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <input type="hidden" class="form-control" name="id_settingalokasi" placeholder="id_settingalokasi" id="id_settingalokasi" readonly>
-                            
                             <div class="form-group col-sm" id="id_karyawan">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
                                 <select name="id_karyawan" id="id_karyawan" class="form-control" required>
@@ -44,6 +47,18 @@
                                     @endforeach
                                 </select>
                             </div>
+
+                            <div class="form-group col-sm" id="jeniscuti">
+                                <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
+                                <select name="id_jeniscuti" id="id_jeniscuti" class="form-control" required>
+                                    <option value="">Pilih Kategori Cuti</option>
+                                    @foreach ($jeniscuti as $jenis)
+                                    <option value="{{ $jenis->id }}">{{ $jenis->jenis_cuti }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <input type="hidden" class="form-control" name="id_settingalokasi" placeholder="id_settingalokasi" id="id_settingalokasi" readonly>
                             
                             {{-- <div class="form-group col-sm" id="id_karyawan">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
@@ -125,7 +140,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" name="submit" value="save">Save</button>
+                        <button type="submit" onclick="checkData()" class="btn btn-success" name="submit" value="save" id="save-button">Save</button>
                     </div>
                 </form>
             </div>
@@ -136,6 +151,8 @@
 <!-- jQuery  -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/pages/form-advanced.js"></script>
+{{-- <script src="{{ asset('js/moment.js') }}"></script> --}}
+
 
 <!-- Script untuk mengambil nilai settingalokasi  -->
 <script>
@@ -182,11 +199,12 @@
             url: '{{route('get.Tglmasuk')}}',
             data: {'id_karyawan':id_karyawan},
             success:function(data){
-                $('#tgl_masuk').val(data.tglmasuk);
+                // $('#tgl_masuk').val(data.tglmasuk);
                 // console.log(data?.tglmasuk)
-
-                tglmasuk = data.tglmasuk;
-                console.log(tglmasuk);
+                tglmasuk = moment(data.tglmasuk, 'YYYY-MM-DD').format('YYYY/MM/DD');
+                $('#tgl_masuk').val(tglmasuk);
+                // tglmasuk = data.tglmasuk;
+                // console.log(tglmasuk);
             }
         });
     });
@@ -210,6 +228,39 @@
                 var tgl  = (date.getFullYear() + '/' + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())));
                 $('#tgl_sekarang').val(tgl);
 
+                //untuk cuti tahunan
+                var tglmasuk = moment($('#tgl_masuk').val(), 'YYYY-MM-DD');
+                var tglsekarang = moment($('#tgl_sekarang').val(), 'YYYY-MM-DD');
+
+                var diffInMonths = tglsekarang.diff(tglmasuk, 'months');
+
+                if(diffInMonths >= 12) {
+                    // Selisih bulan lebih dari atau sama dengan 12
+                    $('#error-messages').hide();
+                    $('#success-messages').html('Karyawan ini memiliki Jatah Cuti Tahunan 12 Hari');
+                    $('#success-messages').show();
+                    $('#save-button').attr('disabled', false);
+
+                    setTimeout(function() 
+                    {
+                        $('#success-messages').hide();
+                    }, 3000);
+                    console.log(diffInMonths);
+                } else {
+                    $('#success-messages').hide();
+                    // Selisih bulan kurang dari 12
+                    $('#save-button').attr('disabled', true);
+                    $('#error-messages').html(' "WARNING !!"<br>Karyawan ini tidak memiliki Jatah Cuti Tahunan<br>Karena masa kerjanya yang kurang dari 1 Tahun');
+                    $('#error-messages').show();
+
+                    setTimeout(function() 
+                    {
+                        $('#error-messages').hide();
+                    }, 3000);
+
+                   $('#durasi').val(diffInMonths);
+                    console.log(diffInMonths);
+                }
             } else
                 {
                     $('#tanggalmulai').prop("hidden", true);
@@ -218,7 +269,40 @@
         });
     });
 </script>
-<script>
+
+<!-- script untuk mengambil data tanggalmasuk  -->
+{{-- <script>
+    document.getElementById("save-button").addEventListener("click", function() {
+        checkData();
+    });
+
+    //pengecekan data exists atau tidak
+    function checkData(){
+        var id_karyawan = $('#id_karyawan').val();
+        var id_jeniscuti= $('#id_jeniscuti').val();
+
+         $.ajax({
+            type:"POST",
+            url: "/getAlokasicuti",
+            data: {
+                'id_karyawan':id_karyawan,
+                'id_jeniscuti':id_jeniscuti,
+            },
+            success:function(response){
+                if (response.message === "Data not found") {
+                    // data tidak ditemukan, Anda dapat menyimpan data baru
+                } else {
+                    alert("Data sudah ada!");
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    } 
+</script>--}}
+
+{{-- <script>
     function durasicuti()
     {
         let start= $('#tgl_masuk').val();
@@ -235,4 +319,4 @@
 
         console.info(durasi);
     }
-</script>
+</script> --}}

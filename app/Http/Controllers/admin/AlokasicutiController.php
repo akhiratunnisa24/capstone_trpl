@@ -17,6 +17,17 @@ use Illuminate\Support\Facades\Auth;
 
 class AlokasicutiController extends Controller
 {
+    
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
@@ -42,34 +53,6 @@ class AlokasicutiController extends Controller
             return redirect()->back();
         }
     }
-    // public function search(){
-            //search
-            // $cari = $request->kata;
-            // $mode_karyawan = Settingalokasi::get('mode_karyawan');
-            // $data = DB::table('karyawan')
-            //     ->join('settingalokasi','karyawan.jenis_kelamin','settingalokasi.mode_karyawan')
-            //     ->join('keluarga', 'karyawan.id', 'keluarga.id_pegawai')
-            //     ->select('karyawan.*','keluarga.*')
-            //     ->where('karyawan.jenis_kelamin', $mode_karyawan)
-            //     ->orWhere('keluarga.status_pernikahan', $mode_karyawan)
-            //     ->orWhere('karyawan.jenis_kelamin', 'like', '%'.$cari.'%')
-            //     ->orWhere('keluarga.status_pernikahan', 'like', '%'.$cari.'%')
-            // $data = DB::table('karyawan')
-            //     ->join('keluarga', 'karyawan.id', '=', 'keluarga.id_pegawai')
-            //     ->join('settingalokasi', function($join) use ($request){
-            //     $join->on('settingalokasi.id_jeniscuti', '=', $request->id_jeniscuti);})
-            //     ->select('karyawan.nama')
-            //     ->where(function($query) use ($mode_karyawan){
-            //         $query->where('karyawan.jenis_kelamin', $mode_karyawan)
-            //         ->orWhere('keluarga.status_pernikahan', $mode_karyawan);
-            //     })
-            //     ->where(function($query) use ($cari)
-            //         {
-            //         $query->where('karyawan.nama', 'like', '%'.$cari.'%')
-            //         ->orWhere('keluarga.status_pernikahan', 'like', '%'.$cari.'%');
-            //         })
-            //     ->get();
-    // }
 
     public function getTglmasuk(Request $request)
     {
@@ -108,9 +91,37 @@ class AlokasicutiController extends Controller
         }
     }
 
+    public function getAlokasicuti(Request $request)
+{
+    try {
+        $getAlokasicuti = Alokasicuti::select('*')
+        ->where('id_jeniscuti','=',$request->id_jeniscuti)
+        ->where('id_karyawan','=',$request->id_karyawan)
+        ->first();
+
+        if(!$getAlokasicuti) {
+            throw new \Exception('Data not found');
+        }
+        return response()->json($getAlokasicuti,200);
+
+    } catch (\Exception $e){
+        return response()->json([
+            'message' =>$e->getMessage()
+        ], 500);
+    } 
+}
     public function store(Request $request)
     {
         // dd($request->id_jeniscuti);
+        //pengecekan data sudah ada atau belum di database
+        // $check = Alokasicuti::where('id_jeniscuti', $request->id_jeniscuti)
+        // ->where('id_karyawan', $request->id_karyawan)
+        // ->first();
+
+        // if($check)
+        // {
+        //     return redirect()->back()->with('danger', 'Data sudah ada');
+        // }
 
         if($request->id_jeniscuti == 1)
         {
@@ -262,3 +273,34 @@ class AlokasicutiController extends Controller
         return back();
     }
 }
+
+
+
+ // public function search(){
+            //search
+            // $cari = $request->kata;
+            // $mode_karyawan = Settingalokasi::get('mode_karyawan');
+            // $data = DB::table('karyawan')
+            //     ->join('settingalokasi','karyawan.jenis_kelamin','settingalokasi.mode_karyawan')
+            //     ->join('keluarga', 'karyawan.id', 'keluarga.id_pegawai')
+            //     ->select('karyawan.*','keluarga.*')
+            //     ->where('karyawan.jenis_kelamin', $mode_karyawan)
+            //     ->orWhere('keluarga.status_pernikahan', $mode_karyawan)
+            //     ->orWhere('karyawan.jenis_kelamin', 'like', '%'.$cari.'%')
+            //     ->orWhere('keluarga.status_pernikahan', 'like', '%'.$cari.'%')
+            // $data = DB::table('karyawan')
+            //     ->join('keluarga', 'karyawan.id', '=', 'keluarga.id_pegawai')
+            //     ->join('settingalokasi', function($join) use ($request){
+            //     $join->on('settingalokasi.id_jeniscuti', '=', $request->id_jeniscuti);})
+            //     ->select('karyawan.nama')
+            //     ->where(function($query) use ($mode_karyawan){
+            //         $query->where('karyawan.jenis_kelamin', $mode_karyawan)
+            //         ->orWhere('keluarga.status_pernikahan', $mode_karyawan);
+            //     })
+            //     ->where(function($query) use ($cari)
+            //         {
+            //         $query->where('karyawan.nama', 'like', '%'.$cari.'%')
+            //         ->orWhere('keluarga.status_pernikahan', 'like', '%'.$cari.'%');
+            //         })
+            //     ->get();
+    // }

@@ -136,6 +136,7 @@ Route::get('/deletealokasi{id}', [AlokasicutiController::class, 'destroy']) ->na
 //create alokasi cuti
 Route::post('/gettglmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tglmasuk');
 Route::post('/getsettingalokasi', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Settingalokasi');
+// Route::post('/getAlokasicuti', [AlokasicutiController::class, 'getAlokasicuti'])->name('get.Alokasicuti');
 //Route::post('/getDepartemen', [AlokasicutiController::class, 'getDepartemen'])->name('get.Departemen');
 
 //update alokasi cuti

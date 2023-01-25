@@ -44,14 +44,16 @@
             todayHighlight: true
         });
         jQuery('#datepicker-autoclose3').datepicker({
-            format: "yyyy/mm/dd",
+            format: "yyyy",
             autoclose: true,
-            todayHighlight: true
+            viewMode: "years", 
+            minViewMode: "years",
         });
         jQuery('#datepicker-autoclose4').datepicker({
-            format: "yyyy/mm/dd",
+            format: "yyyy",
             autoclose: true,
-            todayHighlight: true
+            viewMode: "years", 
+            minViewMode: "years",
         });
         jQuery('#datepicker-autoclose5').datepicker({
             format: "yyyy/mm/dd",

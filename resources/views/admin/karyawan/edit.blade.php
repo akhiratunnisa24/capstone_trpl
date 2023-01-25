@@ -59,7 +59,7 @@
                            <label>Tanggal Lahir</label> 
                             <input name="tgllahirKaryawan" type="text" autocomplete="off"
                                 class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose17" autocomplete="off"
-                                value="{{$karyawan->tgllahir}}">
+                                value="{{\Carbon\Carbon::parse($karyawan->tgllahir)->format('Y/m/d')}}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -115,7 +115,15 @@
                     <div class="form-group">
                         <div class="mb-3">
                            <label>Agama</label> 
-                           <input type="text" name="agamaKaryawan" class="form-control" autocomplete="off" value="{{$karyawan->agama}}">
+                           <select class="form-control" name="agamaKaryawan">
+                                <option value="">Pilih Agama</option>
+                                <option value="Islam" @if($karyawan->agama == "Islam") selected @endif>Islam</option>
+                                <option value="Kristen" @if($karyawan->agama == "Kristen") selected @endif>Kristen</option>
+                                <option value="Katholik" @if($karyawan->agama == "Katholik") selected @endif>Katholik</option>
+                                <option value="Hindu" @if($karyawan->agama == "Hindu") selected @endif>Hindu</option>
+                                <option value="Budha" @if($karyawan->agama == "Budha") selected @endif>Budha</option>
+                                <option value="Khong Hu Chu" @if($karyawan->agama == "Khong Hu Chu") selected @endif>Khong Hu Chu</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -158,7 +166,7 @@
                     <div class="form-group">
                         <div class="mb-3">
                             <label>Tanggal Lahir </label>
-                            <input type="text" name="tgllahirPasangan" autocomplete="off" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose16" value="{{$keluarga->tgllahir}}">
+                            <input type="text" name="tgllahirPasangan" autocomplete="off" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose16" value="{{\Carbon\Carbon::parse($keluarga->tgllahir)->format('Y/m/d')}}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -250,10 +258,17 @@
                     </div>
                     <div class="form-group">
                         <div class="mb-3">
-                            <label>Tahun Lulus</label>
-                            <input type="text" name="tahun_lulus_formal" autocomplete="off"
+                            <label>Lulus Tahun</label>
+                            <div class="input-group">
+                                <input id="datepicker-autoclose3" type="text"
+                                        class="form-control" value="{{$rpendidikan->tahun_lulus_formal}}" placeholder="yyyy" id="4"
+                                        name="tahun_lulusFormal" rows="10" autocomplete="off"><br>
+                                <span class="input-group-addon bg-custom b-0"><i
+                                            class="mdi mdi-calendar text-white"></i></span>
+                            </div>
+                            {{-- <input type="text" name="tahun_lulus_formal" autocomplete="off"
                             class="form-control" placeholder="yyyy"
-                            value="{{$rpendidikan->tahun_lulus_formal}}">
+                            value="{{$rpendidikan->tahun_lulus_formal}}"> --}}
                         </div>
                     </div>
                 </div>
@@ -278,9 +293,16 @@
                     <div class="form-group">
                         <div class="mb-3">
                             <label>Tahun Lulus</label>
-                            <input type="text" name="tahunLulusNonFormal" autocomplete="off"
+                            <div class="input-group">
+                                <input id="datepicker-autoclose4" type="text"
+                                        class="form-control" placeholder="yyyy" id="4"  value="{{$rpendidikan->tahun_lulus_nonformal}}"
+                                        name="tahunLulusNonFormal" autocomplete="off" rows="10"><br>
+                                <span class="input-group-addon bg-custom b-0"><i
+                                            class="mdi mdi-calendar text-white"></i></span>
+                            </div>
+                            {{-- <input type="text" name="tahunLulusNonFormal" autocomplete="off"
                                 class="form-control" placeholder="yyyy"
-                                value="{{$rpendidikan->tahun_lulus_nonformal}}">
+                                value="{{$rpendidikan->tahun_lulus_nonformal}}"> --}}
                         </div>
                     </div>
                 </div>

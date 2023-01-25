@@ -31,22 +31,22 @@
                         <label>: {{$data->mode_alokasi}}</label>
                     </div>
                 </div>
-                {{-- @if($data->tgl_masuk != NULL) --}}
+                @if($data->tgl_masuk != null)
                     <div class="form-group row">
                         <label for="tgl_masuk" class="col-sm-3 col-form-label">Tanggal Masuk</label>
                         <div class="col-sm-9">
                             <label>: {{\Carbon\Carbon::parse($data->tgl_masuk)->format("d/m/Y")}}</label>
                         </div>
                     </div>
+                @endif
+                @if($data->tgl_sekarang != null)
                     <div class="form-group row">
                         <label for="tgl_sekarang" class="col-sm-3 col-form-label">Tanggal Sekarang</label>
                         <div class="col-sm-9">
                             <label>: {{\Carbon\Carbon::parse($data->tgl_sekarang)->format("d/m/Y")}}</label>
                         </div>
                     </div>
-                {{-- @else --}}
-                    {{-- <td></td> --}}
-                {{-- @endif --}}
+                @endif
                 <div class="form-group row">
                     <label for="aktif_dari" class="col-sm-3 col-form-label">Aktif dari</label>
                     <div class="col-sm-9">
