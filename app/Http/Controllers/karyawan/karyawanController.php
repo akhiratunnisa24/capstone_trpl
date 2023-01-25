@@ -18,6 +18,7 @@ use App\Models\Rpendidikan;
 use App\Models\Departemen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,6 @@ use App\Imports\karyawanImport;
 use App\Events\AbsenKaryawanEvent;
 use App\Models\Tidakmasuk;
 use Illuminate\Support\Facades\Storage;
-
 
 class karyawanController extends Controller
 {

@@ -26,19 +26,19 @@
         <div id="sidebar-menu">
             <ul>
                 <li>
-                    <a href="/" class="waves-effect"><i class="ti-home"></i><span> Dashboard</span></a>
+                    <a href="/" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title"> Dashboard</span></a>
                 </li>
                 <li>
                     <a href="/absensi-karyawan" class="waves-effect"><i
-                            class="mdi mdi-account-check"></i><span>Absensi</span></a>
+                            class="mdi mdi-account-check"></i><span class="text-info panel-title">Absensi</span></a>
                 </li>
                 <li>
                     <a href="{{ route('karyawan.index') }}" class="waves-effect"><i
-                            class="mdi mdi-account-multiple-plus"></i><span> Data Karyawan</span></a>
+                            class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title"> Data Karyawan</span></a>
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span class="text-info panel-title">ABSENSI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span class="text-info panel-title">Absensi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
         
@@ -46,7 +46,7 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-walk"></i><span class="text-info panel-title">CUTI & IZIN</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-walk"></i><span class="text-info panel-title">Cuti & Izin</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a></li>
                             <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
