@@ -24,7 +24,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
 use App\Events\AbsenKaryawanEvent;
-
+use Illuminate\Support\Facades\Storage;
 
 class karyawanController extends Controller
 {
@@ -478,7 +478,7 @@ class karyawanController extends Controller
 
         if ($file = $request->file('foto')) {
 
-            $extension = $file->getClientOriginalExtension();
+            $extension = public_path("Foto_Profile/{$karyawan->foto}");      
             // $filename = md5(time()).'.'.$extension;
             $filename = '' . time() . $file->getClientOriginalName();
             $file->move(public_path() . '\Foto_Profile', $filename);
