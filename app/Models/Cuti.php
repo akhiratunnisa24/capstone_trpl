@@ -17,11 +17,19 @@ class Cuti extends Model
         return $this->belongsTo(Jeniscuti::class,'id_jeniscuti','id');
     }
 
-    public function karyawans(){
-        return $this->belongsTo(Karyawan::class,'id_karyawan','id');
-    }
+        public function karyawans(){
+            return $this->belongsTo(Karyawan::class,'id_karyawan','id');
+        }
 
     public function alokasi(){
         return $this->belongsTo(Alokasicuti::class,'id_alokasi','id');
+    }
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'id_karyawan', 'id');
+    }
+    public function jeniscuti()
+    {
+        return $this->belongsTo(Jeniscuti::class, 'id_jeniscuti', 'id');
     }
 }

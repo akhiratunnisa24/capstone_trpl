@@ -73,10 +73,10 @@ class HomeController extends Controller
         $cutidanizin     = $dataIzinHariini + $cutiHariini;
         // Data Cuti dan Izin Bulan ini 
         $dataIzinPerbulan   = Izin::whereYear('created_at', '=', Carbon::now()->year)
-            ->whereMonth('created_at', '=', Carbon::now()->month)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
             ->count('jml_hari');
         $cutiPerbulan       = Cuti::whereYear('created_at', '=', Carbon::now()->year)
-            ->whereMonth('created_at', '=', Carbon::now()->month)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
             ->count('jml_cuti');
              // Total
         $cutidanizinPerbulan    = $dataIzinPerbulan + $cutiPerbulan;
@@ -93,7 +93,7 @@ class HomeController extends Controller
         // Absen Hari Ini
         $absenHariini = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
-            ->whereDay('created_at', '=', Carbon::now())->count('jam_masuk');
+            ->whereDay('tanggal', '=', Carbon::now())->count('jam_masuk');
         // Absen Bulan Ini
         $absenBulanini  = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
@@ -119,7 +119,9 @@ class HomeController extends Controller
             ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
             ->count('terlambat');
 
-            // DATA KARYAWAN TIDAK MASUK
+        // DATA KARYAWAN TIDAK MASUK
+
+        
 
         //ambil jumlah Karyawan       
         $totalKaryawan = karyawan::count('id');
@@ -137,18 +139,23 @@ class HomeController extends Controller
 
 
         //ambil jumlah Karyawan absen tidak masuk perbulan     
-        $totalKaryawanabsenperbulan = karyawan::pluck('id');
-
+        // $totalKaryawanabsenperbulan = karyawan::pluck('id');
         // ambil jumlah karyawan yang sudah absen
-        $totalabsenperbulan = DB::table('absensi')
-                    ->whereYear('tanggal', '=', Carbon::now()->year)
-                    ->whereMonth('tanggal', '=', Carbon::now()->month)    
-                    // ->whereDay('created_at', '=', Carbon::now())    
-                    ->whereNotIn("id_karyawan", $totalKaryawanabsenperbulan)
-                    ->get();
+        // $totalabsenperbulan = DB::table('absensi')
+        //             ->whereYear('tanggal', '=', Carbon::now()->year)
+        //             ->whereMonth('tanggal', '=', Carbon::now()->month)    
+        //             // ->whereDay('created_at', '=', Carbon::now())    
+        //             ->whereNotIn("id_karyawan", $totalKaryawanabsenperbulan)
+        //             ->get();
 
         // DB::table(..)->select(..)->whereNotIn('book_price', [100,200])->get();
-
+        $tidakMasukHariIni = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
+        ->whereMonth('tanggal', '=', Carbon::now()->month)
+        ->whereDay('tanggal', '=', Carbon::now())
+        ->count('nama');
+        $tidakMasukBulanIni = Tidakmasuk::whereYear('tanggal', '=',Carbon::now()->year)
+        ->whereMonth('tanggal', '=', Carbon::now()->month)
+        ->count('nama');
    
 
 
@@ -316,6 +323,8 @@ class HomeController extends Controller
                 // 'labelTahun' => $labelTahun,
                 'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,
                 'totalTidakAbsenPerbulan' => $totalTidakAbsenPerbulan,
+                'tidakMasukBulanIni' => $tidakMasukBulanIni,
+                'tidakMasukHariIni' => $tidakMasukHariIni,
 
             ];
             return view('admin.karyawan.dashboardhrd', $output);

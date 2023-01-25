@@ -24,4 +24,12 @@ class Tidakmasuk extends Model
     {
         return $this->hasMany(Karyawan::class, 'id');
     }
+    public function departemen()
+    {
+        return $this->belongsTo(Departemen::class, 'divisi', 'id');
+    }
+    public function karyawan2()
+    {
+        return $this->belongsTo(Karyawan::class, 'id_pegawai', 'id');
+    }
 }

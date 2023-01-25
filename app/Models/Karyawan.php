@@ -70,14 +70,14 @@ class Karyawan extends Model
         );
     }
 
-    public function departemen()
-    {
-        return $this->hasMany(
-            Departemen::class, 
-            'id',
-            'nama_departemen',
-        );
-    }
+    // public function departemen()
+    // {
+    //     return $this->hasMany(
+    //         Departemen::class, 
+    //         'id',
+    //         'nama_departemen',
+    //     );
+    // }
     
     public function keluarga()
     {
@@ -96,14 +96,35 @@ class Karyawan extends Model
         return $this->belongsTo(Rpendidikan::class, 'id', 'id_pegawai');
     }
 
-    public function absensi()
-    {
-        return $this->hasMany(Absensi::class,'id_karyawan','id');
-    }
+    // public function absensi()
+    // {
+    //     return $this->hasMany(Absensi::class,'id_karyawan','id');
+    // }
 
     public function tidakmasuk()
     {
         return $this->belongsTo(Rpendidikan::class, 'id', 'id_pegawai');
+    }
+
+    public function cuti()
+    {
+        return $this->hasMany(Cuti::class, 'id');
+    }
+    public function izin()
+    {
+        return $this->hasMany(Izin::class, 'id');
+    }
+    public function absensi()
+    {
+        return $this->hasMany(Absensi::class, 'id');
+    }
+    public function departemen()
+    {
+        return $this->belongsTo(Departemen::class, 'divisi', 'id');
+    }
+    public function tidakmasuk2()
+    {
+        return $this->hasMany(Absensi::class, 'id');
     }
     
 }
