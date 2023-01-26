@@ -16,6 +16,7 @@ use App\Http\Controllers\admin\AlokasicutiController;
 
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
+use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
@@ -86,6 +87,10 @@ Route::get('/cuti_karyawan/{id}', [JeniscutiController::class, 'show'])->name('c
 //izin
 Route::post('/izin_karyawan', [IzinkaryawanController::class, 'store'])->name('izinstore');
 Route::get('/izin_karyawan/{id}', [IzinkaryawanController::class, 'show'])->name('izin.show');
+//resign
+Route::get('/resign-karyawan',[ResignController::class,'index'])->name('resign_karyawan');
+Route::post('/resign_karyawan', [ResignController::class, 'store'])->name('resignstore');
+Route::get('/resign_karyawan/{id}', [ResignController::class, 'show'])->name('resign.show');
 
 //==================================================================================
 

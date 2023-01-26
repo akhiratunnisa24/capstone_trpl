@@ -91,6 +91,9 @@
                     <a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti &
                             Izin</span></a>
                 </li>
+                <li>
+                    <a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
+                </li>
 
             </ul>
 
