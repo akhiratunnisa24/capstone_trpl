@@ -63,12 +63,12 @@ class HomeController extends Controller
         $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)->whereMonth('created_at', '=', Carbon::now()->month)->count('jam_masuk');
 
         // Data Cuti dan Izin Hari ini 
-        $dataIzinHariini = Izin::whereYear('created_at', '=', Carbon::now()->year)
-            ->whereMonth('created_at', '=', Carbon::now()->month)
-            ->whereDay('created_at', '=', Carbon::now())->count('jml_hari');
-        $cutiHariini     = Cuti::whereYear('created_at', '=', Carbon::now()->year)
-            ->whereMonth('created_at', '=', Carbon::now()->month)
-            ->whereDay('created_at', '=', Carbon::now())->count('jml_cuti');
+        $dataIzinHariini = Izin::whereYear('tgl_mulai', '=', Carbon::now()->year)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+            ->whereDay('tgl_mulai', '=', Carbon::now())->count('jml_hari');
+        $cutiHariini     = Cuti::whereYear('tgl_mulai', '=', Carbon::now()->year)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+            ->whereDay('tgl_mulai', '=', Carbon::now())->count('jml_cuti');
              // Total
         $cutidanizin     = $dataIzinHariini + $cutiHariini;
         // Data Cuti dan Izin Bulan ini 

@@ -178,7 +178,7 @@
                             </tr>
                             <tr>
                                 <td><label for="bpjsket_number">Lulus Tahun</label></td>
-                                <td><label for="bpjsket_number">{{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y')}}</label></td>
+                                <td><label for="bpjsket_number">{{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('Y')}}</label></td>
                             </tr>
                         </tbody>
                     </table>
@@ -197,7 +197,7 @@
                             </tr>
                             <tr>
                                 <td><label>Lulus Tahun</label></td>
-                                <td><label>{{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_nonformal)->format('d/m/Y')}}</label></td>
+                                <td><label>{{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_nonformal)->format('Y')}}</label></td>
                             </tr>
 
                         </tbody>
