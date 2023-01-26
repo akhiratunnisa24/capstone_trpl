@@ -292,7 +292,7 @@
                     </div>
                     <div class="form-group">
                         <div class="mb-3">
-                            <label>Tahun Lulus</label>
+                            <label>Lulus Tahun</label>
                             <div class="input-group">
                                 <input id="datepicker-autoclose4" type="text"
                                         class="form-control" placeholder="yyyy" id="4"  value="{{$rpendidikan->tahun_lulus_nonformal}}"

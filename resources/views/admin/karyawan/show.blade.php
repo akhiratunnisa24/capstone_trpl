@@ -180,14 +180,10 @@
                                 <td><label for="bpjsket_number">Lulus Tahun</label></td>
                                 <td><label for="bpjsket_number">{{\Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('Y')}}</label></td>
                             </tr>
-
                         </tbody>
                     </table>
-                </div>
-                <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tbody>
-                            <label style="-webkit-text-fill-color: white;"><h4>#</h4></label>
                             <tr>
                                 <td><label class="text-white badge bg-info">Pendidikan Non Formal</label></td>
                             </tr>
@@ -207,9 +203,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            
-            <div class="row">
                 <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tbody>
@@ -253,7 +246,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-6"></div>
+                
             </div>
         </div>
     </form>

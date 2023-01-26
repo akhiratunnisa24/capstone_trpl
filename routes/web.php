@@ -14,6 +14,7 @@ use App\Http\Controllers\admin\JenisizinController;
 use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\AlokasicutiController;
 
+use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
@@ -162,5 +163,8 @@ Route::get('/export-to-excel',[ManagerController::class,'exportToExcel'])->name(
 Route::get('/cuti-staff', [ManagerController::class, 'cutiStaff'])->name('cuti.Staff');
 Route::post('/cuti-staff/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
 
+//================================================================================
+//ROLE DIREKTUR
 
-    
+Route::get('/data-cuti-staff', [DirekturController::class, 'index'])->name('cuti.index');
+Route::post('/data-cuti-staff/{id}', [DirekturController::class, 'leaveapproved'])->name('leave.approved');

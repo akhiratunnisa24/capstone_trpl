@@ -26,7 +26,7 @@
                         <div class="form-group col-sm">
                             <label for="id_karyawan" class="col-form-label">Nama</label>
                             <input type="text" class="form-control" id="id_karyawan" value="{{Auth::user()->name}}" readonly>
-                            <input type="hidden" class="form-control" id="id_karyawan" value="{{$karyawan}}" hidden>
+                            <input type="text" class="form-control" id="id_karyawan" value="{{$karyawan}}" hidden>
                         </div>
                     
                         <div class="form-group col-sm">
@@ -48,7 +48,8 @@
                             </select> 
                         </div>
                         <div class="form-group col-sm">
-                            <input type="hidden" class="form-control" name="id_alokasi" id="id_alokasi">
+                            <input type="text" class="form-control" name="id_alokasi" id="id_alokasi">
+                            <input type="text" class="form-control" name="id_settingalokasi" id="id_settingalokasi">
                         </div>
                         <div class="form-group col-sm">
                             <label for="keperluan" class="col-form-label">Keperluan</label>
@@ -160,6 +161,7 @@
                 success:function(data)
                 {
                     $('#id_alokasi').val(data.id);
+                    $('#id_settingalokasi').val(data.id_settingalokasi);
                     $('#durasi').val(data.durasi);
                     $('#aktif_dari').val(data.aktif_dari);
                     $('#sampai').val(data.sampai);

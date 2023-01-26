@@ -621,7 +621,7 @@ class karyawanController extends Controller
                 'nama_sekolah' => $request->post('nama_sekolah'),
                 'kota_pformal' => $request->post('kotaPendidikanFormal'),
                 'jurusan' => $request->post('jurusan'),
-                'tahun_lulus_formal' => $request->post('tahun_lulus_formal'),
+                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
 
                 'jenis_pendidikan' => $request->post('jenis_pendidikan'),
                 'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),

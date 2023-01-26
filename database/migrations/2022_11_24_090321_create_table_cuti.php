@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_karyawan');
             $table->unsignedBigInteger('id_jeniscuti');
             $table->unsignedBigInteger('id_alokasi');
+            $table->unsignedBigInteger('id_settingalokasi');
             $table->text('keperluan');
             $table->date('tgl_mulai');
             $table->date('tgl_selesai');

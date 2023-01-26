@@ -9,7 +9,7 @@ class Cuti extends Model
 {
     use HasFactory;
     protected $table ='cuti';
-    protected $fillable = ['id_karyawan','id_jeniscuti','id_alokasi','keperluan',
+    protected $fillable = ['id_karyawan','id_jeniscuti','id_alokasi','id_settingalokasi','keperluan',
                             'tgl_mulai','tgl_selesai','jml_cuti','status'
                         ];
     
@@ -17,13 +17,18 @@ class Cuti extends Model
         return $this->belongsTo(Jeniscuti::class,'id_jeniscuti','id');
     }
 
-        public function karyawans(){
-            return $this->belongsTo(Karyawan::class,'id_karyawan','id');
-        }
+    public function karyawans(){
+        return $this->belongsTo(Karyawan::class,'id_karyawan','id');
+    }
 
     public function alokasi(){
         return $this->belongsTo(Alokasicuti::class,'id_alokasi','id');
     }
+
+    public function settingalokasi(){
+        return $this->belongsTo(Settingalokasi::class,'id_settingalokasi','id');
+    }
+
     public function karyawan()
     {
         return $this->belongsTo(Karyawan::class, 'id_karyawan', 'id');

@@ -33,7 +33,7 @@ class SettingalokasicutiController extends Controller
         if ($role == 1) {
 
             $id = Settingalokasi::find('id');
-            $settingalokasi = Settingalokasi::orderBy('id', 'asc')->get();
+            $settingalokasi = Settingalokasi::orderBy('id', 'desc')->get();
             //untuk edit
             $setal = Settingalokasi::find($id);
             $jeniscuti = Jeniscuti::all();
@@ -44,7 +44,6 @@ class SettingalokasicutiController extends Controller
             return redirect()->back();
         }
     }
-
 
     public function store(Request $request)
     {
@@ -64,6 +63,7 @@ class SettingalokasicutiController extends Controller
             $settingalokasi->durasi       = $request->durasi;
             $settingalokasi->mode_alokasi = $request->mode_alokasi;
             $settingalokasi->departemen   = $request->departemen;
+            $settingalokasi->tipe_approval= $request->tipe_approval;
             $settingalokasi->save();
 
             $karyawan = Karyawan::where('divisi',$request->departemen)->get();
@@ -96,21 +96,39 @@ class SettingalokasicutiController extends Controller
             $settingalokasi->mode_alokasi = $request->mode_alokasi;
             $mode = implode(',', $request->mode_karyawan);
             $settingalokasi['mode_karyawan'] = $mode;
+            $settingalokasi->tipe_approval= $request->tipe_approval;
             $settingalokasi->save();
 
-
-            //whereIn('price', [150, 200]);
-
-            $karyawan = DB::table('karyawan')
-            ->join('keluarga','karyawan.id','=','keluarga.id_pegawai')
-            ->whereIn('karyawan.jenis_kelamin','=',$request->mode_karyawan)
-            ->orWhere('keluarga.status_pernikahan','=',$request->mode_karyawan)
-            ->select('karyawan.*','keluarga.id_karyawan','karyawan.status_pernikahan')
-            ->distinct()
-            ->get();
-
-            if($request->id_jeniscuti != 1)
+            if($settingalokasi->id_jeniscuti != 1)
             {
+                // $model = Settingalokasi::all();
+                // foreach ($settingalokasi as $settingalokasi) {
+                    $mode_karyawan_array = $settingalokasi->getModeKaryawanArrayAttribute();
+                    // $mode_karyawan_array = $model->getModeKaryawanArrayAttribute();
+                    // dd($mode_karyawan_array);
+                // }
+
+                $karyawan = DB::table('karyawan')
+                ->join('keluarga','karyawan.id','keluarga.id_pegawai')
+                ->where(function ($query) use ($request,$mode_karyawan_array){
+                    if(in_array("L",$mode_karyawan_array)){
+                        $query->orWhere('karyawan.jenis_kelamin','L');
+                    }
+                    if(in_array("P", $mode_karyawan_array)){
+                        $query->orWhere('karyawan.jenis_kelamin','P');
+                    }
+                    if(in_array("Belum",$mode_karyawan_array)){
+                        $query->orWhere('keluarga.status_pernikahan','Belum');
+                    }
+                    if(in_array("Sudah",$mode_karyawan_array)){
+                        $query->orWhere('keluarga.status_pernikahan','Sudah');
+                    }
+                })
+                ->select('karyawan.id','karyawan.jenis_kelamin','keluarga.status_pernikahan')
+                ->get();
+
+                // dd($karyawan);
+
                 foreach($karyawan as $karyawan)
                 {
                     $alokasicuti = new Alokasicuti;
@@ -125,9 +143,40 @@ class SettingalokasicutiController extends Controller
                     $alokasicuti->sampai           = $year.'-12-31';
                     $alokasicuti->save();
                 }
+                return redirect()->back()->withInput();
+            }else{
+                //untuk id_jeniscuti ==1
+                $datakaryawan = DB::table('karyawan')
+                             ->whereRaw("MONTH(NOW()) - MONTH(tglmasuk) >= 12")
+                             ->orWhereRaw("MONTH(NOW()) - MONTH(tglmasuk) < 12")
+                             ->get();
+
+                foreach($datakaryawan as $karyawan)
+                {
+                    $alokasicuti = new Alokasicuti;
+                    $alokasicuti->id_karyawan      = $karyawan->id;
+                    $alokasicuti->id_settingalokasi= $settingalokasi->id;
+                    $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
+
+                    $now = Carbon::now();
+                    $diffInMonths = $now->diffInMonths($karyawan->tglmasuk);
+
+                    if($diffInMonths >= 12){
+                        $alokasicuti->durasi = 12;
+                    }else{
+                        $alokasicuti->durasi = $diffInMonths;
+                    }
+                
+                    $alokasicuti->mode_alokasi     = $request->mode_alokasi;
+                    $alokasicuti->tgl_masuk        = $karyawan->tglmasuk;
+                    $alokasicuti->tgl_sekarang     = $now;
+                    $alokasicuti->aktif_dari       = $year.'-01-01';
+                    $alokasicuti->sampai           = $year.'-12-31';
+                    $alokasicuti->save();
+                }
+                return redirect()->back()->withInput();
             }
 
-            return redirect()->back()->withInput();
         }
     }
 
@@ -153,6 +202,7 @@ class SettingalokasicutiController extends Controller
             $settingalokasi->durasi       = $request->durasi;
             $settingalokasi->mode_alokasi = $request->mode_alokasi;
             $settingalokasi->departemen   = $request->departemen;
+            $settingalokasi->tipe_approval= $request->tipe_approval;
 
             $settingalokasi->update();
             // dd($settingalokasi);
@@ -169,6 +219,7 @@ class SettingalokasicutiController extends Controller
             $settingalokasi->mode_alokasi = $request->mode_alokasi;
             $mode = implode(',', $request->mode_karyawan);
             $settingalokasi['mode_karyawan'] = $mode;
+            $settingalokasi->tipe_approval= $request->tipe_approval;
             $settingalokasi->update();
         }
         return redirect('/settingalokasi');

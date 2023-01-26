@@ -9,7 +9,7 @@ class Settingalokasi extends Model
 {
     use HasFactory;
     protected $table = 'settingalokasi';
-    protected $fillable = ['id','id_jeniscuti','durasi','mode_alokasi','departemen','mode_karyawan'];
+    protected $fillable = ['id','id_jeniscuti','durasi','mode_alokasi','departemen','mode_karyawan','tipe_approval'];
 
     public function jeniscutis()
     {
@@ -27,5 +27,10 @@ class Settingalokasi extends Model
         }
         
         return [];
+    }
+
+    public function cuti()
+    {
+        return $this->hasMany(Cuti::class, 'id');
     }
 }
