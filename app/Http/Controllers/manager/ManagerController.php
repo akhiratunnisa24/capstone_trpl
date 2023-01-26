@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Absensi;
 use App\Models\Karyawan;
+use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exports\AbsensiFilterExport;
@@ -112,11 +113,46 @@ class ManagerController extends Controller
     public function cutiapproved(Request $request, $id)
     {
         $cuti = Cuti::where('id',$id)->first();
-        $status = 'Disetujui Manager';
-        Cuti::where('id',$id)->update([
-            'status' => $status,
-        ]);
-        return redirect()->back()->withInput();
+
+        $data = DB::table('cuti')
+        ->join('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
+        ->join('settingalokasi', 'cuti.id_settingalokasi', '=', 'settingalokasi.id')
+        ->where('settingalokasi.tipe_approval', 'Tidak Bertingkat')
+        ->orWhere('settingalokasi.tipe_approval', 'Bertingkat')
+        ->select('cuti.*','alokasicuti.*','settingalokasi.tipe_approval')
+        ->first();
+
+        // dd($data);
+
+        if($data->tipe_approval == 'Tidak Bertingkat')
+        {
+            $jml_cuti = $cuti->jml_cuti;
+            Cuti::where('id', $id)->update(
+                ['status' => 'Disetujui']
+            );
+    
+            $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                ->where('id_karyawan', $cuti->id_karyawan)
+                ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                ->first();
+
+            $durasi_baru = $alokasicuti->durasi - $jml_cuti;
+
+            Alokasicuti::where('id', $alokasicuti->id)
+            ->update(
+                ['durasi' => $durasi_baru]
+            );
+            return redirect()->back()->withInput();
+
+        }else{
+            $status = 'Disetujui Manager';
+            Cuti::where('id',$id)->update([
+                'status' => $status,
+            ]);
+            return redirect()->back()->withInput();
+        }
+        
     }
 
     public function exportallExcel()
@@ -217,3 +253,12 @@ class ManagerController extends Controller
     }
 
 }
+ // $data = DB::table('cuti')
+        // ->join('alokasicuti','cuti.id_alokasi','alokasicuti.id')
+        // ->join('settingalokasi','cuti.id_settingalokasi','settingalokasi.id')
+        // ->where('cuti.id_settingalokasi','alokasicuti.id_settingalokasi')
+        // ->where('cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
+        // ->where('settingalokasi.tipe_approval','Tidak Bertingkat')
+        // ->select('cuti.*','alokasicuti.*','settingalokasi.tipe_approval')
+        // ->first();
+

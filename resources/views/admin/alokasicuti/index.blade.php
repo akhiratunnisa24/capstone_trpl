@@ -24,8 +24,9 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
-                        <a href="" class="btn btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#newalokasi"> Tambah
-                            Alokasi</a>
+                        <a><label></label></a>
+                        {{-- <a href="" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="#newalokasi"> Tambah
+                            Alokasi</a> --}}
                     </div>
                     {{-- modals --}}
                     @include('admin.alokasicuti.addalokasi')
@@ -34,7 +35,7 @@
                     <div class="panel-body m-b-5">
                         <div class="row">
                             <div class="col-md-12">
-                                <table id="datatable-responsive7" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                                <table id="datatable-responsive3" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
                                             {{-- <th>id</th> --}}
@@ -104,7 +105,7 @@
 </div> <!-- content -->
 
 <!-- jQuery  -->
-{{-- <script src="assets/js/jquery.min.js"></script> --}}
+<script src="assets/js/jquery.min.js"></script>
 <script src="assets/pages/datatables.init.js"></script>
 
 {{-- <script src="assets/js/app.js"></script> --}}

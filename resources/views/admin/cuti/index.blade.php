@@ -116,9 +116,9 @@
 
                                                                 <td id="b" class="text-center" > 
                                                                     <div class="row">
-                                                                        @if($data->status == 'Pending' || $data->status == 'Disetujui Manager')
+                                                                        {{-- @if($data->status == 'Pending' || $data->status == 'Disetujui Manager')
                                                                             <div class="col-sm-3">
-                                                                                <form action="{{ url('')}}/permintaan_cuti/<?php echo $data->id ?>" method="POST"> 
+                                                                                <form action="{{ url('')}}/permintaan_cuti/<php echo $data->id ?>" method="POST"> 
                                                                                     @csrf
                                                                                     <input type="hidden" name="status" value="Disetujui" class="form-control" hidden> 
                                                                                     <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
@@ -132,7 +132,7 @@
                                                                                     <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                 </form>
                                                                             </div>
-                                                                        @endif
+                                                                        @endif --}}
 
                                                                         <div class="col-sm-3" style="margin-left:6px">
                                                                             <form action="" method="POST"> 
@@ -262,15 +262,6 @@
                                                                                         <button type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
                                                                                 </div>
-                                                                               {{-- @elseif($data->status == 'Disetujui')
-                                                                                <div class="col-sm-3" style="margin-left:7px">
-                                                                                    <form action="{{ url('')}}/permintaanizinreject/<php echo $data->id ?>" method="POST"> 
-                                                                                        @csrf
-                                                                                        @method('POST')
-                                                                                        <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
-                                                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"></button> 
-                                                                                    </form>
-                                                                                </div> --}}
                                                                             @endif
                 
                                                                             <div class="col-sm-3" style="margin-left:5px">

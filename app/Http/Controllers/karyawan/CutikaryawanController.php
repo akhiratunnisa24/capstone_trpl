@@ -69,7 +69,7 @@ class CutikaryawanController extends Controller
     public function getDurasi(Request $request)
     {
         try {
-            $getDurasi = Alokasicuti::select('id','durasi','aktif_dari','sampai')
+            $getDurasi = Alokasicuti::select('id','id_settingalokasi','durasi','aktif_dari','sampai')
             ->where('id_jeniscuti','=',$request->id_jeniscuti)
             ->where('id_karyawan','=',Auth::user()->id_pegawai)
             ->first();
@@ -94,6 +94,7 @@ class CutikaryawanController extends Controller
         $cuti->id_karyawan = $karyawan;
         $cuti->id_jeniscuti= $request->id_jeniscuti;
         $cuti->id_alokasi  = $request->id_alokasi;
+        $cuti->id_settingalokasi= $request->id_settingalokasi;
         $cuti->keperluan   = $request->keperluan;
         $cuti->tgl_mulai   = Carbon::parse($request->tgl_mulai)->format("Y-m-d");
         $cuti->tgl_selesai = Carbon::parse($request->tgl_selesai)->format("Y-m-d");

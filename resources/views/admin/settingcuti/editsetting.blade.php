@@ -32,6 +32,16 @@
                                 <input type="number" class="form-control" value="{{$data->durasi}}" name="durasi"
                                     id="durasi" required>
                             </div>
+                            <div class="form-group">
+                                <div class="form-group col-sm" id="tipeapproval">
+                                    <label for="tipe_approval" class="col-form-label">Tipe Approval</label>
+                                    <select name="tipe_approval" id="tipe_approval" class="form-control" required>
+                                        <option value="">Pilih Mode Alokasi</option>
+                                        <option value="Tidak Bertingkat" @if($data->tipe_approval == "Tidak Bertingkat") selected @endif>Tidak Bertingkat</option>
+                                        <option value="Bertingkat" @if($data->tipe_approval == "Bertingkat") selected @endif>Bertingkat</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-md-6" id="modealokasii">
@@ -75,8 +85,8 @@
                                     <option value="Belum" @if(in_array("Belum", $data->mode_karyawan_array)) selected @endif>
                                         @if(in_array("Belum", $data->mode_karyawan_array)) Belum Menikah @else Belum Menikah @endif
                                     </option>
-                                    <option value="Masa kerja lebih satu tahun" @if(in_array("Masa kerja lebih satu tahun",$data->mode_karyawan_array)) selected @endif>
-                                        @if(in_array("Masa kerja lebih satu tahun", $data->mode_karyawan_array)) Masa kerja lebih satu tahun @else Masa kerja lebih satu tahun @endif
+                                    <option value="Lama Kerja" @if(in_array("Lama Kerja",$data->mode_karyawan_array)) selected @endif>
+                                        @if(in_array("Lama Kerja", $data->mode_karyawan_array)) Lama Kerja @else Lama Kerja @endif
                                     </option>
                                 </select>
                                  {{-- hanya menampilkan data sesuai database saja gunakan code berikut --}}

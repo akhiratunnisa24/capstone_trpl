@@ -47,8 +47,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="durasi" class="col-form-label">Durasi (Hari)</label>
-                                <input type="number" class="form-control" name="durasi" placeholder="durasi" id="durasi"
+                                <input type="number" class="form-control" autocomplete="off" name="durasi" placeholder="durasi" id="durasi"
                                     required>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group col-sm" id="tipeapproval">
+                                    <label for="tipe_approval" class="col-form-label">Tipe Approval</label>
+                                    <select name="tipe_approval" id="tipe_approval" class="form-control" required>
+                                        <option value="">Pilih Mode Alokasi</option>
+                                        <option value="Tidak Bertingkat">Tidak Bertingkat</option>
+                                        <option value="Bertingkat">Bertingkat</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -78,7 +88,7 @@
                                     <option value="P">Perempuan</option>
                                     <option value="Sudah">Sudah Menikah</option>
                                     <option value="Belum">Belum Menikah</option>
-                                    <option value="Masa kerja lebih satu tahun">Masa kerja lebih satu tahun</option>
+                                    <option value="Lama Kerja">Lama Kerja</option>
                                 </select>
                             </div>
                         </div>

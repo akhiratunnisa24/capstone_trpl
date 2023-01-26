@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('mode_alokasi',50)->nullable();
             $table->unsignedBigInteger('departemen')->nullable();
             $table->string('mode_karyawan',100)->nullable();
+            $table->string('tipe_approval',50)->nullable();
             $table->timestamps();
 
             $table->foreign('id_jeniscuti')->references('id')->on('jeniscuti')->onDelete('cascade');

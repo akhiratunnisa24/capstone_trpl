@@ -32,7 +32,7 @@
                     <div class="panel-body m-b-5">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <table id="datatable-responsive3" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                                <table id="datatable-responsive11" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
                                             {{-- <th>ID</th> --}}

@@ -106,6 +106,7 @@
                                                     <label for="exampleInputEmail1" class="form-label">Departemen</label>
                                                     <select class="form-control" name="divisi" required>
                                                         <option value="">Pilih Departemen</option>
+                                                        <option value="-">Tidak Ada</option>
                                                         @foreach ($departemen as $d)
                                                             <option value="{{ $d->id }}">{{ $d->nama_departemen }}
                                                             </option>
@@ -117,6 +118,7 @@
                                                     <label for="exampleInputEmail1" class="form-label">Nama Manager</label>
                                                     <select class="form-control" name="manager">
                                                         <option value="">Pilih Manager</option>
+                                                        <option value="-">Tidak Ada</option>
                                                         <option value="Manager1">manager1</option>
                                                         <option value="manager2">manager2</option>
                                                     </select>
@@ -126,6 +128,7 @@
                                                     <label for="exampleInputEmail1" class="form-label">Jabatan</label>
                                                     <select class="form-control" name="jabatanKaryawan" required>
                                                         <option value="">Pilih Jabatan</option>
+                                                        <option value="Direktur">Direktur</option>
                                                         <option value="Manager">Manager</option>
                                                         <option value="Staff">Staff</option>
                                                     </select>
