@@ -227,6 +227,43 @@ class karyawanController extends Controller
 
             $maxId = Karyawan::max('id');
 
+            $user = new Karyawan;
+            $user->nama = $request->namaKaryawan;
+            $user->tgllahir = $request->tgllahirKaryawan;
+            $user->jenis_kelamin = $request->jenis_kelaminKaryawan;
+            $user->alamat = $request->alamatKaryawan;
+            $user->no_hp = $request->no_hpKaryawan;
+            $user->email = $request->emailKaryawan;
+            $user->agama = $request->agamaKaryawan;
+            $user->nik = $request->nikKaryawan;
+            $user->gol_darah = $request->gol_darahKaryawan;
+            $user->foto = $namaFile;
+            $user->jabatan = $request->jabatanKaryawan;
+            $user->tglmasuk = $request->tglmasukKaryawan;
+            $user->manager = $request->manager;
+            $user->status_karyawan = $request->status_karyawan;
+            $user->tipe_karyawan = $request->tipe_karyawan;
+            $user->no_kk = $request->no_kk;
+            $user->status_kerja = $request->status_kerja;
+            $user->cuti_tahunan = $request->cuti_tahunan;
+            $user->divisi = $request->divisi;
+            $user->no_rek = $request->no_rek;
+            $user->no_bpjs_kes = $request->no_bpjs_ket;
+            $user->no_npwp = $request->no_npwp;
+            $user->no_bpjs_ket = $request->no_bpjs_ket;
+            $user->kontrak = $request->kontrak;
+            $user->gaji = $request->gaji;
+            $user->tglkeluar = $request->tglkeluar;
+            $user->save();
+
+            // $profile = new Kdarurat();
+            // $profile->id_pegawai = $user->id;
+            // $profile->nama = $request->namaKdarurat;
+            // $profile->alamat = $request->alamatKdarurat;
+            // $profile->no_hp = $request->no_hpKdarurat;
+            // $profile->hubungan = $request->hubunganKdarurat;
+            // $profile->save();
+
 
             $data = array(
                 'nama' => $request->post('namaKaryawan'),
@@ -263,10 +300,9 @@ class karyawanController extends Controller
             );
 
 
-
-
             $data_keluarga = array(
-                'id_pegawai' => $maxId + 1,
+                'id_pegawai' => $user->id,
+                // 'id_pegawai' => $maxId + 1,
                 'status_pernikahan' => $request->post('status_pernikahan'),
 
                 'nama' => $request->post('namaPasangan'),
@@ -283,7 +319,8 @@ class karyawanController extends Controller
             );
 
             $r_pendidikan = array(
-                'id_pegawai' => $maxId + 1,
+                'id_pegawai' => $user->id,
+                // 'id_pegawai' => $maxId + 1,
 
                 'tingkat' => $request->post('tingkat_pendidikan'),
                 'nama_sekolah' => $request->post('nama_sekolah'),
@@ -304,7 +341,8 @@ class karyawanController extends Controller
             // dd( $r_pendidikan);
 
             $r_pekerjaan = array(
-                'id_pegawai' => $maxId + 1,
+                'id_pegawai' => $user->id,
+                // 'id_pegawai' => $maxId + 1,
 
                 'nama_perusahaan' => $request->post('namaPerusahaan'),
                 'alamat' => $request->post('alamatPerusahaan'),
@@ -322,19 +360,19 @@ class karyawanController extends Controller
             );
 
             $data_kdarurat = array(
-
-                'id_pegawai' => $maxId + 1,
-
+                'id_pegawai' => $user->id,
+                // 'id_pegawai' => $maxId + 1,
 
                 'nama' => $request->post('namaKdarurat'),
                 'alamat' => $request->post('alamatKdarurat'),
                 'no_hp' => $request->post('no_hpKdarurat'),
                 'hubungan' => $request->post('hubunganKdarurat'),
-
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
 
             );
 
-            Karyawan::insert($data);
+            // Karyawan::insert($data);
             Keluarga::insert($data_keluarga);
             Kdarurat::insert($data_kdarurat);
             Rpendidikan::insert($r_pendidikan);
@@ -346,6 +384,34 @@ class karyawanController extends Controller
 
             $maxId = Karyawan::max('id');
             $maxId + 1;
+
+            $user = new Karyawan;
+            $user->nama = $request->namaKaryawan;
+            $user->tgllahir = $request->tgllahirKaryawan;
+            $user->jenis_kelamin = $request->jenis_kelaminKaryawan; 
+            $user->alamat = $request->alamatKaryawan;
+            $user->no_hp = $request->no_hpKaryawan;
+            $user->email = $request->emailKaryawan;
+            $user->agama = $request->agamaKaryawan;
+            $user->nik = $request->nikKaryawan;
+            $user->gol_darah = $request->gol_darahKaryawan;
+            $user->jabatan = $request->jabatanKaryawan;
+            $user->tglmasuk = $request->tglmasukKaryawan;
+            $user->manager = $request->manager;
+            $user->status_karyawan = $request->status_karyawan;
+            $user->tipe_karyawan = $request->tipe_karyawan;
+            $user->no_kk = $request->no_kk;
+            $user->status_kerja = $request->status_kerja;
+            $user->cuti_tahunan = $request->cuti_tahunan;
+            $user->divisi = $request->divisi;
+            $user->no_rek = $request->no_rek;
+            $user->no_bpjs_kes = $request->no_bpjs_ket;
+            $user->no_npwp = $request->no_npwp;
+            $user->no_bpjs_ket = $request->no_bpjs_ket;
+            $user->kontrak = $request->kontrak;
+            $user->gaji = $request->gaji;
+            $user->tglkeluar = $request->tglkeluar;
+            $user->save();
 
             $data = array(
                 'nama' => $request->post('namaKaryawan'),
@@ -398,7 +464,8 @@ class karyawanController extends Controller
             );
 
             $r_pendidikan = array(
-                'id_pegawai' => $maxId + 1,
+                // 'id_pegawai' => $maxId + 1,
+                'id_pegawai' => $user->id,
 
                 'tingkat' => $request->post('tingkat_pendidikan'),
                 'nama_sekolah' => $request->post('nama_sekolah'),
@@ -415,7 +482,9 @@ class karyawanController extends Controller
             );
 
             $r_pekerjaan = array(
-                'id_pegawai' => $maxId + 1,
+                // 'id_pegawai' => $maxId + 1,
+                'id_pegawai' => $user->id,
+
 
                 'nama_perusahaan' => $request->post('namaPerusahaan'),
                 'alamat' => $request->post('alamatPerusahaan'),
@@ -433,15 +502,20 @@ class karyawanController extends Controller
             );
 
             $data_kdarurat = array(
-                'id_pegawai' => $maxId + 1,
+                // 'id_pegawai' => $maxId + 1,
+                'id_pegawai' => $user->id,
+
 
                 'nama' => $request->post('namaKdarurat'),
                 'alamat' => $request->post('alamatKdarurat'),
                 'no_hp' => $request->post('no_hpKdarurat'),
                 'hubungan' => $request->post('hubunganKdarurat'),
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
             );
 
-            Karyawan::insert($data);
+            
+            // Karyawan::insert($data);
             Keluarga::insert($data_keluarga);
             Kdarurat::insert($data_kdarurat);
             Rpendidikan::insert($r_pendidikan);

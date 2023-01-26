@@ -19,11 +19,11 @@ return new class extends Migration
             $table->integer('id_pegawai');
             $table->enum('tingkat',['SD','SMP','SMA/K','Universitas'])->nullable();
 
-            $table->string('nama_sekolah');            
-            $table->string('kota_pformal');
+            $table->string('nama_sekolah')->nullable();          
+            $table->string('kota_pformal')->nullable();
             $table->string('kota_pnonformal')->nullable();
-            $table->string('jurusan');
-            $table->year('tahun_lulus_formal');
+            $table->string('jurusan')->nullable();
+            $table->year('tahun_lulus_formal')->nullable();
             $table->year('tahun_lulus_nonformal')->nullable();
             $table->text('jenis_pendidikan')->nullable();
 
