@@ -35,24 +35,19 @@
                                 <table id="datatable-responsive11" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
-                                            {{-- <th>ID</th> --}}
-                                            {{-- <th>id j.cuti</th> --}}
-                                            {{--<th>kategori</th> --}}
                                             <th>#</th>
                                             <th>Kategori Cuti</th>
                                             <th>Durasi (Hari)</th>
                                             <th>Mode Alokasi</th>
                                             <th>Departemen</th>
-                                            <th>JK/Stat. Karyawan</th>
+                                            <th>JK/Status</th>
+                                            <th>T. Aprproval</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($settingalokasi as $data)
                                         <tr>
-                                            {{-- <td>{{$data->id}}</td> --}}
-                                            {{-- <td>{{$data->id_jeniscuti}}</td> --}}
-                                            {{-- {<td>{{$data->jeniscutis->jenis_cuti}}</td> --}}
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                             <td>{{$data->durasi}}</td>
@@ -63,6 +58,7 @@
                                             <td>{{$data->departemen}}</td>
                                             @endif
                                             <td>{{$data->mode_karyawan}}</td>
+                                            <td>{{$data->tipe_approval}}</td>
                                             <td class="text-center">
                                                 <a id="bs" class="btn btn-info btn-sm Modalshowsetting"
                                                     data-toggle="modal" data-target="#Modalshowsetting{{$data->id}}">

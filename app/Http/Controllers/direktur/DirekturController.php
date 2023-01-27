@@ -17,11 +17,18 @@ class DirekturController extends Controller
         ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
         ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
         ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
-        ->where('settingalokasi.tipe_approval','=','Bertingkat')
+        ->where(function($query) {
+            $query->where('settingalokasi.tipe_approval','=','Bertingkat')
+            ->orWhere(function($query) {
+                $query->whereIn('karyawan.jabatan', ['Manager', 'HRD'])
+                ->where('settingalokasi.tipe_approval','<>','Bertingkat');
+                });
+        })
         ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','settingalokasi.tipe_approval')
         ->distinct()
         ->get();
-
+        // ->where('settingalokasi.tipe_approval','=','Bertingkat')
+        // ->orWhere('karyawan.jabatan','=','Manager')
         // ->where('cuti.status','=','Disetujui Manager')
         // ->orWhere('cuti.status','=','Disetujui')
 

@@ -96,6 +96,7 @@ class ManagerController extends Controller
             ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
             ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
             ->where('karyawan.divisi',$manag_depart->divisi)
+            ->where('karyawan.jabatan','!=','Manager')
             ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama')
             ->distinct()
             ->get();

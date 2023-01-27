@@ -30,6 +30,13 @@
                 </div>
 
                 <div class="form-group row">
+                    <label for="tipe_approval" class="col-sm-3 col-form-label">Tipe Approval</label>
+                    <div class="col-sm-9">
+                        <label>: {{$data->tipe_approval}}</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
                     <label for="mode_alokasi" class="col-sm-3 col-form-label">Mode Alokasi</label>
                     <div class="col-sm-9">
                         <label>: {{$data->mode_alokasi}}</label>

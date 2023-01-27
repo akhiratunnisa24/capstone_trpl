@@ -25,12 +25,24 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
                         <a><label></label></a>
+                        <a href="" class="btn btn-dark btn-sm fa fa-cloud-download pull-left" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
                         {{-- <a href="" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="#newalokasi"> Tambah
                             Alokasi</a> --}}
                     </div>
                     {{-- modals --}}
-                    @include('admin.alokasicuti.addalokasi')
+                    {{-- @include('admin.alokasicuti.addalokasi') --}}
                     @include('admin.alokasicuti.importexcel')
+                    @if(session()->has('success'))
+                        <div class="alert alert-success">
+                            {{ session()->get('success') }}
+                        </div>
+                    @endif
+
+                    @if(session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('error') }}
+                        </div>
+                    @endif
 
                     <div class="panel-body m-b-5">
                         <div class="row">
@@ -44,8 +56,8 @@
                                             <th>Kategori Cuti</th>
                                             <th>Durasi (Hari)</th>
                                             {{-- <th>Mode Alokasi</th> --}}
-                                            {{-- <th>Tanggal Masuk</th>
-                                            <th>Tanggal Sekarang</th> --}}
+                                            <th>id</th>
+                                            <th>id setting</th>
                                             <th>Aktif Dari</th>
                                             <th>Sampai</th>
                                             <th>Action</th>
@@ -60,6 +72,8 @@
                                         <td>{{$data->karyawans->nama}}</td>
                                         <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                         <td>{{$data->durasi}} hari</td>
+                                        <td>{{$data->id}}</td>
+                                        <td>{{$data->id_settingalokasi}}</td>
                                         {{-- <td>{{$data->mode_alokasi}}</td> --}}
                                         {{-- jam mulai & jam selesai --}}
                                         {{-- @if($data->tgl_masuk != null && $data->tgl_sekarang !=null)

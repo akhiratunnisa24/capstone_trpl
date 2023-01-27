@@ -26,31 +26,29 @@
                         <div class="form-group col-sm">
                             <label for="id_karyawan" class="col-form-label">Nama</label>
                             <input type="text" class="form-control" id="id_karyawan" value="{{Auth::user()->name}}" readonly>
-                            <input type="text" class="form-control" id="id_karyawan" value="{{$karyawan}}" hidden>
+                            <input type="hidden" class="form-control" id="id_karyawan" value="{{$karyawan}}" hidden>
                         </div>
                     
                         <div class="form-group col-sm">
                             <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
                             <select name="id_jeniscuti" id="id_jeniscuti" class="form-control" required>
                                 <option>-- Pilih Kategori --</option>
-        
                                 @foreach ($jeniscuti as $data)
-                                    {{-- @if(isset($sisa_cuti[$data->id]) && $sisa_cuti[$data->id] >= 0) 
-                                         <option value="{{ $data->id}}">
-                                            (sisa cuti: {{ isset($sisa_cuti[$data->id]) ? $sisa_cuti[$data->id] : 0 }} hari) {{ $data->jenis_cuti }} 
-                                        </option>
-                                    @else --}}
-                                        <option value="{{ $data->id}}">
+                                        <option value="{{ $data->id_jeniscuti}}">
                                            {{ $data->jenis_cuti }} 
                                         </option>
-                                    {{-- @endif --}}
                                 @endforeach
                             </select> 
                         </div>
-                        {{-- <div class="form-group col-sm">
-                            <input type="text" class="form-control" name="id_alokasi" id="id_alokasi">
-                            <input type="text" class="form-control" name="id_settingalokasi" id="id_settingalokasi">
-                        </div> --}}
+                         {{-- @if(isset($sisa_cuti[$data->id]) && $sisa_cuti[$data->id] >= 0) 
+                                         <option value="{{ $data->id}}">
+                                            (sisa cuti: {{ isset($sisa_cuti[$data->id]) ? $sisa_cuti[$data->id] : 0 }} hari) {{ $data->jenis_cuti }} 
+                                        </option>
+                        {{-- @endif --}}
+                        <div class="form-group col-sm">
+                            <input type="hidden" class="form-control" name="id_alokasi" id="id_alokasi">
+                            <input type="hidden" class="form-control" name="id_settingalokasi" id="id_settingalokasi">
+                        </div>
                         <div class="form-group col-sm">
                             <label for="keperluan" class="col-form-label">Keperluan</label>
                             <input type="text" class="form-control" name="keperluan" id="keperluan" placeholder="Masukkan keperluan" autocomplete="off" required>
