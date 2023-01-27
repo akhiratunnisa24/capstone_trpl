@@ -5,6 +5,8 @@ namespace App\Http\Controllers\karyawan;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\Resign;
+use App\Models\Karyawan;
+use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,8 +29,14 @@ class ResignController extends Controller
      */
     public function index()
     {
-        
-        return view('karyawan.resign.index');
+       
+        $karyawan = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        // dd($karyawan);
+
+        $tes = Auth::user()->karyawan->divisi;
+        // $namdiv = $tes->departemen->nama_departemen;
+
+        return view('karyawan.resign.index', compact('karyawan','tes',));
     }
 
     /**
@@ -47,27 +55,34 @@ class ResignController extends Controller
     public function store(Request $request)
     {
         $karyawan = Auth::user()->id_pegawai;
-         $validate = $request->validate([
-                'id_karyawan'  => 'required',
-                'tgl_resign'    => 'required',
-                'alasan'    => 'required',
-            ]);
-            // dd($validate);
+        //  $validate = $request->validate([
+        //         'id_karyawan'  => 'required',
+        //         'departemen'  => 'required',
+        //         'tgl_masuk'  => 'required',
+        //         'tgl_resign'    => 'required',
+        //         'tipe_resign'  => 'required',
+        //         'alasan'    => 'required',
+        //     ]);
+        //     dd($validate);
             $resign = New Resign;
             $resign->id_karyawan = $karyawan;
+            $resign->departemen = $request->departemen;
+            $resign->tgl_masuk = Carbon::parse($request->tgl_masuk)->format("Y-m-d");
             $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
+            $resign->tipe_resign = $request->tipe_resign;
             $resign->alasan      = $request->alasan;          
             $resign->status      = 'Pending';
-            $resign->save();
 
-            return redirect()->back()->withInput();
+            $resign->save();
+            return redirect()->back();
 
     }
 
     public function show($id)
     {
+        
         $resign = Resign::findOrFail($id);
-        $karyawan = Auth::user()->id_pegawai;
+        // $karyawan = Auth::user()->id_pegawai;
 
         return view('karyawan.kategori.index',compact('resign','karyawan'));
     }

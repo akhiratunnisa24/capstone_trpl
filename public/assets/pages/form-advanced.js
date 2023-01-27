@@ -149,6 +149,11 @@
             autoclose: true,
             todayHighlight: true
         });
+        jQuery('#datepicker-autoclose23').datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true,
+            todayHighlight: true
+        });
         
         jQuery('#datepicker-autoclosea1').datepicker({
             format: "yyyy/mm/dd",

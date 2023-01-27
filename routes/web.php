@@ -96,7 +96,7 @@ Route::post('/izin_karyawan', [IzinkaryawanController::class, 'store'])->name('i
 Route::get('/izin_karyawan/{id}', [IzinkaryawanController::class, 'show'])->name('izin.show');
 //resign
 Route::get('/resign-karyawan',[ResignController::class,'index'])->name('resign_karyawan');
-Route::post('/resign_karyawan', [ResignController::class, 'store'])->name('resignstore');
+Route::post('/resign_karyawan', [ResignController::class, 'store'])->name('resign.store');
 Route::get('/resign_karyawan/{id}', [ResignController::class, 'show'])->name('resign.show');
 
 //==================================================================================
