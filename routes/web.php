@@ -13,6 +13,7 @@ use App\Http\Controllers\admin\JeniscutiController;
 use App\Http\Controllers\admin\JenisizinController;
 use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\AlokasicutiController;
+use App\Http\Controllers\admin\RekruitmenController;
 
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
@@ -39,7 +40,7 @@ Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 Route::post('/registrasi', [App\Http\Controllers\HomeController::class, 'registrasi'])->name('registrasi');
 
 
-// Data Karyawan
+// Role HRD
 
 Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 
@@ -63,6 +64,12 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('showkaryawanabsen', [karyawanController::class, 'showkaryawanabsen'])->name('showkaryawanabsen');
     Route::get('showkaryawanterlambat', [karyawanController::class, 'showkaryawanterlambat'])->name('showkaryawanterlambat');
     Route::get('showkaryawantidakmasuk', [karyawanController::class, 'showkaryawantidakmasuk'])->name('showkaryawantidakmasuk');
+
+    Route::get('data_rekrutmen', [RekruitmenController::class, 'index'])->name('data_rekrutmen');
+    Route::post('store_rekrutmen', [RekruitmenController::class, 'store'])->name('store_rekrutmen');
+    Route::get('show_rekrutmen{id}', [RekruitmenController::class, 'show'])->name('show_rekrutmen');
+
+
 
 
 // Role Karyawan

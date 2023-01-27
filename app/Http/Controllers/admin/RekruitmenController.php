@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Karyawan;
+use App\Models\Lowongan;
+use Illuminate\Support\Facades\Auth;
 
-class Rekruitmen extends Controller
+class RekruitmenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +17,11 @@ class Rekruitmen extends Controller
      */
     public function index()
     {
-        //
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $posisi = Lowongan::all()->sortByDesc('created_at');
+        
+
+        return view('admin.rekruitmen.index', compact('row', 'posisi'));
     }
 
     /**
@@ -34,7 +42,14 @@ class Rekruitmen extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new Lowongan();
+        $user->posisi = $request->posisi;
+        $user->jumlah_dibutuhkan = $request->jumlah_dibutuhkan;
+        $user->status = 'Aktif';
+        $user->persyaratan = $request->persyaratan;
+        $user->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -45,7 +60,21 @@ class Rekruitmen extends Controller
      */
     public function show($id)
     {
-        //
+        $role = Auth::user()->role;
+        if ($role == 1) {
+
+            $lowongan = lowongan::findOrFail($id);
+            // dd($karyawan);
+
+
+
+
+            return view('admin.rekruitmen.show', compact('lowongan'));
+
+        } else {
+
+            return redirect()->back();
+        }
     }
 
     /**
