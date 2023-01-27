@@ -10,7 +10,7 @@ class Resign extends Model
     use HasFactory;
     protected $table ='resign';
     protected $fillable = [
-                            'id_karyawan','tgl_resign','alasan','status'
+                            'id_karyawan','departemen','tgl_masuk','tgl_resign','tipe_resign','alasan','status'
                             
                         ];
     

@@ -47,10 +47,10 @@
                                 @endforeach
                             </select> 
                         </div>
-                        <div class="form-group col-sm">
+                        {{-- <div class="form-group col-sm">
                             <input type="text" class="form-control" name="id_alokasi" id="id_alokasi">
                             <input type="text" class="form-control" name="id_settingalokasi" id="id_settingalokasi">
-                        </div>
+                        </div> --}}
                         <div class="form-group col-sm">
                             <label for="keperluan" class="col-form-label">Keperluan</label>
                             <input type="text" class="form-control" name="keperluan" id="keperluan" placeholder="Masukkan keperluan" autocomplete="off" required>

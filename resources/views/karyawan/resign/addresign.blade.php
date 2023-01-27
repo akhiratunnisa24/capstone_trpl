@@ -11,67 +11,55 @@
 
             <div class="modal-body">
 
-                <form method="POST" action="{{ url('/registrasi') }}">
+                <form method="POST" action="{{ route('resign.store')}}">
                     @csrf
                     @method('POST')
-                    <div class="form-group col-xs-12">
-                        <label class="form-label">Role</label>
-                            <select type="text" class="form-control  @error('role') is-invalid @enderror"
-                                name="role" required autocomplete="role" autofocus placeholder="Role">
-                                <option value="">Pilih Role</option>
-                                <option value="3">Manager</option>
-                                <option value="1">HRD</option>
-                                <option value="2">Karyawan</option>
-                            </select>
+                    <div class="form-group col-xs-12" id="namaKaryawan">
+                        <label for="id_karyawan" class="form-label">Nama</label>
+                        <input id="id_karyawan" type="text" class="form-control" value="{{Auth::user()->name}}" name="nama"
+                            autocomplete="off" placeholder="Nama Karyawan" readonly>
 
-                            @error('role')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                     </div>
 
-                    <div class="form-group col-xs-12" id="id_pegawai">
-                        <label for="id_pegawai" class="form-label">Karyawan</label>
-                        <select id="id_karyawan" class="form-control" name="id_pegawai" required>
-                          
+
+                    <div class="form-group col-xs-12" id="departemen">
+                        <label for="departemen" class="form-label">Departemen</label>
+                        <input id="departemen" class="form-control" value="{{$tes}} " name="departemen" autocomplete="off" placeholder="Nama Karyawan" readonly>
+                        
+                    
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="tgl_masuk" class="form-label">Tanggal Bergabung</label>
+                        <input value="{{$karyawan->tglmasuk}}" id="tgl_masuk" type="text" class="form-control" name="tgl_masuk"
+                            autocomplete="off" placeholder="" readonly>
+
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="tgl_resign" class="form-label">Tanggal Resign</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose23" name="tgl_resign" onchange=(tgl_resign()) autocomplete="off">
+                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12">
+                        <label for="tipe_resign" class="form-label" >Tipe Resign</label>
+                        <select class="form-control"
+                        name="tipe_resign" required>
+                            <option value="">Pilih Tipe Resign</option>
+                            
+                                <option value="normal_resign">Normal Resign</option>
+                                <option value="fired_resign">Fired from a company</option>
                         </select>
                     </div>
+                    
                     <div class="form-group col-xs-12">
-                        <label for="emailKaryawan" class="form-label">Email</label>
-                        <input id="emailKaryawan" type="text" class="form-control" name="emailKaryawan"
-                            autocomplete="off" placeholder="Email Address" readonly>
+                        <label for="alasan" class="form-label">Alasan Resign</label>
+                        <textarea id="alasan" type="text" class="form-control" name="alasan"
+                            autocomplete="off" placeholder="Alasan Resign"></textarea>
 
-                    </div>
-
-                    <div class="form-group col-xs-12">
-                        {{-- <div class=""> --}}
-                            <label for="exampleInputEmail1" class="form-label">Password</label>
-                            <div class="input-group">
-                                <input id="password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror" name="password" required
-                                    autocomplete="new-password" autofocus placeholder="Password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                                <a class="input-group-addon" id="toggle-password4"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
-                            </div>
-                        {{-- </div> --}}
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <label for="exampleInputEmail1" class="form-label">Confirm Password</label>
-                            <div class="input-group">
-                                <input id="password-confirm" type="password" class="form-control"
-                                    name="password_confirmation" required autocomplete="new-password" autofocus
-                                    placeholder="Confirm Password">
-                                <a class="input-group-addon" id="toggle-password5"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
                     </div>
 
                     {{-- {{-- <div class="form-group"> --}}
@@ -109,8 +97,8 @@
 
 <!-- script untuk mengambil data Email Karyawan  -->
 <script>
-    $('#id_pegawai').on('change', function(e) {
-        var id_pegawai = e.target.value;
+    $('#namaKaryawan').on('change', function(e) {
+        var namaKaryawan = e.target.value;
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
