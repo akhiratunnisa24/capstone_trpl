@@ -8,6 +8,18 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
+                    <label for="id_alokasi" class="col-sm-3 col-form-label">Id Alokasi</label>
+                    <div class="col-sm-9">
+                        <label>: {{$data->id}}</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="id_settingalokasi" class="col-sm-3 col-form-label">Id Settingalokasi</label>
+                    <div class="col-sm-9">
+                        <label>: {{$data->id_settingalokasi}}</label>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="id_jenisuti" class="col-sm-3 col-form-label">Karyawan</label>
                     <div class="col-sm-9">
                         <label>: {{$data->karyawans->nama}}</label>

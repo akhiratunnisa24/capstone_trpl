@@ -10,6 +10,7 @@ use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use App\Models\Settingalokasi;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,38 +51,53 @@ class SettingalokasicutiController extends Controller
         // dd($request->all());
         $year = date('Y');
 
-        if ($request->mode_alokasi == 'Berdasarkan Departemen') {
+        if ($request->mode_alokasi == 'Berdasarkan Departemen') 
+        {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
                 'durasi'       => 'required',
                 'mode_alokasi' => 'required',
                 'departemen'   => 'required',
             ]);
-
-            $settingalokasi = new Settingalokasi;
-            $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
-            $settingalokasi->durasi       = $request->durasi;
-            $settingalokasi->mode_alokasi = $request->mode_alokasi;
-            $settingalokasi->departemen   = $request->departemen;
-            $settingalokasi->tipe_approval= $request->tipe_approval;
-            $settingalokasi->save();
-
-            $karyawan = Karyawan::where('divisi',$request->departemen)->get();
-            foreach($karyawan as $karyawan)
+            $cek = !Settingalokasi::where('id_jeniscuti', $request->id_jeniscuti)->where('departemen', $request->departemen)->exists();
+            if(!$cek)
             {
-                $alokasicuti = new Alokasicuti;
-                $alokasicuti->id_karyawan      = $karyawan->id;
-                $alokasicuti->id_settingalokasi= $settingalokasi->id;
-                $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
-                $alokasicuti->durasi           = $request->durasi;
-                $alokasicuti->mode_alokasi     = $request->mode_alokasi;
-                $alokasicuti->tgl_masuk        = null;
-                $alokasicuti->tgl_sekarang     = null;
-                $alokasicuti->aktif_dari       = $year.'-01-01';
-                $alokasicuti->sampai           = $year.'-12-31';
-                $alokasicuti->save();
+                $settingalokasi = new Settingalokasi;
+                $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
+                $settingalokasi->durasi       = $request->durasi;
+                $settingalokasi->mode_alokasi = $request->mode_alokasi;
+                $settingalokasi->departemen   = $request->departemen;
+                $settingalokasi->tipe_approval= $request->tipe_approval;
+                $settingalokasi->save();
+
+                $karyawan = Karyawan::where('divisi',$request->departemen)->get();
+                foreach($karyawan as $karyawan)
+                {
+                    $check = Alokasicuti::where('id_jeniscuti',$settingalokasi->id_jeniscuti)->where('id_karyawan',$karyawan->id)->exists();
+                    if(!$check)
+                    {
+                        $alokasicuti = new Alokasicuti;
+                        $alokasicuti->id_karyawan      = $karyawan->id;
+                        $alokasicuti->id_settingalokasi= $settingalokasi->id;
+                        $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
+                        $alokasicuti->durasi           = $request->durasi;
+                        $alokasicuti->mode_alokasi     = $request->mode_alokasi;
+                        $alokasicuti->tgl_masuk        = null;
+                        $alokasicuti->tgl_sekarang     = null;
+                        $alokasicuti->aktif_dari       = $year.'-01-01';
+                        $alokasicuti->sampai           = $year.'-12-31';
+                        $alokasicuti->save();
+
+                        Log::info('Data Alokasi Cuti Karyawan Berhasil Disimpan');
+                    }else{
+                        Log::info('DATA ALOKASI SUDAH ADA');
+                    } 
+                }
+                return redirect()->route('setting_alokasi.index')->with('success', 'Data setting alokasi berhasil disimpan.');
+            }else{
+                // Log::info('DATA SETTING ALOKASI SUDAH ADA');
+                return redirect()->route('setting_alokasi.index')->with('error', 'Data setting alokasi sudah ada.');
             }
-            return redirect()->back()->withInput();
         } else {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
@@ -131,17 +147,24 @@ class SettingalokasicutiController extends Controller
 
                 foreach($karyawan as $karyawan)
                 {
-                    $alokasicuti = new Alokasicuti;
-                    $alokasicuti->id_karyawan      = $karyawan->id;
-                    $alokasicuti->id_settingalokasi= $settingalokasi->id;
-                    $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
-                    $alokasicuti->durasi           = $request->durasi;
-                    $alokasicuti->mode_alokasi     = $request->mode_alokasi;
-                    $alokasicuti->tgl_masuk        = null;
-                    $alokasicuti->tgl_sekarang     = null;
-                    $alokasicuti->aktif_dari       = $year.'-01-01';
-                    $alokasicuti->sampai           = $year.'-12-31';
-                    $alokasicuti->save();
+                    $check = Alokasicuti::where('id_jeniscuti',$settingalokasi->id_jeniscuti)->where('id_karyawan',$karyawan->id)->exists();
+                    if(!$check)
+                    {
+                        $alokasicuti = new Alokasicuti;
+                        $alokasicuti->id_karyawan      = $karyawan->id;
+                        $alokasicuti->id_settingalokasi= $settingalokasi->id;
+                        $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
+                        $alokasicuti->durasi           = $request->durasi;
+                        $alokasicuti->mode_alokasi     = $request->mode_alokasi;
+                        $alokasicuti->tgl_masuk        = null;
+                        $alokasicuti->tgl_sekarang     = null;
+                        $alokasicuti->aktif_dari       = $year.'-01-01';
+                        $alokasicuti->sampai           = $year.'-12-31';
+                        $alokasicuti->save();
+                    }else
+                    {
+                        Log::info('data alokasi cuti sudah ada');
+                    }
                 }
                 return redirect()->back()->withInput();
             }else{
@@ -153,26 +176,33 @@ class SettingalokasicutiController extends Controller
 
                 foreach($datakaryawan as $karyawan)
                 {
-                    $alokasicuti = new Alokasicuti;
-                    $alokasicuti->id_karyawan      = $karyawan->id;
-                    $alokasicuti->id_settingalokasi= $settingalokasi->id;
-                    $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
+                    $check = Alokasicuti::where('id_jeniscuti',$settingalokasi->id_jeniscuti)->where('id_karyawan',$karyawan->id)->exists();
+                    if(!$check)
+                    {
+                        $alokasicuti = new Alokasicuti;
+                        $alokasicuti->id_karyawan      = $karyawan->id;
+                        $alokasicuti->id_settingalokasi= $settingalokasi->id;
+                        $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
 
-                    $now = Carbon::now();
-                    $diffInMonths = $now->diffInMonths($karyawan->tglmasuk);
+                        $now = Carbon::now();
+                        $diffInMonths = $now->diffInMonths($karyawan->tglmasuk);
 
-                    if($diffInMonths >= 12){
-                        $alokasicuti->durasi = 12;
-                    }else{
-                        $alokasicuti->durasi = $diffInMonths;
+                        if($diffInMonths >= 12){
+                            $alokasicuti->durasi = 12;
+                        }else{
+                            $alokasicuti->durasi = $diffInMonths;
+                        }
+                    
+                        $alokasicuti->mode_alokasi     = $request->mode_alokasi;
+                        $alokasicuti->tgl_masuk        = $karyawan->tglmasuk;
+                        $alokasicuti->tgl_sekarang     = $now;
+                        $alokasicuti->aktif_dari       = $year.'-01-01';
+                        $alokasicuti->sampai           = $year.'-12-31';
+                        $alokasicuti->save();
+                    }else
+                    {
+                        Log::info('KARYAWAN DENGAN ID DAN ID_JENISCUTI SUDAH MEMILIKI JATAH CUTI TAHUNAN');
                     }
-                
-                    $alokasicuti->mode_alokasi     = $request->mode_alokasi;
-                    $alokasicuti->tgl_masuk        = $karyawan->tglmasuk;
-                    $alokasicuti->tgl_sekarang     = $now;
-                    $alokasicuti->aktif_dari       = $year.'-01-01';
-                    $alokasicuti->sampai           = $year.'-12-31';
-                    $alokasicuti->save();
                 }
                 return redirect()->back()->withInput();
             }

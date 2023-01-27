@@ -272,6 +272,12 @@ class AlokasicutiController extends Controller
         Excel::import(new AlokasicutiImport, request()->file('file'));
         return back();
     }
+
+    public function alokasicuti(Request $request)
+    {
+        $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)->get();
+        return view('admin.alokasicuti', compact('alokasicuti'));
+    }
 }
 
 

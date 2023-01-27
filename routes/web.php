@@ -151,6 +151,7 @@ Route::get('/edit-alokasi/{id}',[AlokasicutiController::class,'edit']);
 Route::put('/updatealokasi/{id}', [AlokasicutiController::class,'update']);
 Route::post('/alokasi-import-excel',[AlokasicutiController::class,'importexcel'])->name('alokasi.importexcel');
 Route::get('/deletealokasi{id}', [AlokasicutiController::class, 'destroy']) ->name('deletealokasi');
+Route::get('/alokasi-cuti', [AlokasicutiController::class, 'alokasicuti'])->name('alokasi');
 
 //create alokasi cuti
 Route::post('/gettglmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tglmasuk');
@@ -180,3 +181,12 @@ Route::post('/cuti-staff/{id}', [ManagerController::class, 'cutiapproved'])->nam
 
 Route::get('/data-cuti-staff', [DirekturController::class, 'index'])->name('cuti.index');
 Route::post('/data-cuti-staff/{id}', [DirekturController::class, 'leaveapproved'])->name('leave.approved');
+
+//testing notifikasi email mailtrap
+// Route::get('kirimemail', function(){
+//     Mail::raw('Ini adalah email testing', function ($message){
+//         $message->to('andiny700@gmail.com','Manager Teknologi Informasi');
+//         $message->subject('Notifikasi Pengajuan Cuti Baru Oleh Karyawan');
+//     });
+
+// });

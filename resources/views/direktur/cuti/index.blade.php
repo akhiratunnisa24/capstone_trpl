@@ -67,7 +67,7 @@
                                                     @endif
                                                     <td id="b" class="text-center" > 
                                                         <div class="row">
-                                                            @if($data->status == 'Disetujui Manager')
+                                                            @if($data->status == 'Disetujui Manager' || $data->status == 'Pending')
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('leave.approved',$data->id)}}" method="POST"> 
                                                                         @csrf

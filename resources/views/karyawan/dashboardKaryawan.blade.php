@@ -26,6 +26,7 @@
                                 <thead>
                                     <tr class="info">
                                         <th>#</th>
+                                        {{-- <th>settingalokasi</th> --}}
                                         <th>Nama Karyawan</th>
                                         <th>Cuti Yang Didapat</th>
                                         <th>Durasi Cuti</th>
@@ -37,6 +38,8 @@
                                     @foreach($alokasicuti as $alokasi)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+                                            {{-- <td>{{ $alokasi->id}}</td>
+                                            <td>{{ $alokasi->id_settingalokasi}}</td> --}}
                                             <td>{{ $alokasi->karyawans->nama }}</td>
                                             <td>{{ $alokasi->jeniscutis->jenis_cuti }}</td>
                                             <td>{{ $alokasi->durasi }} hari</td>
