@@ -68,6 +68,15 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('data_rekrutmen', [RekruitmenController::class, 'index'])->name('data_rekrutmen');
     Route::post('store_rekrutmen', [RekruitmenController::class, 'store'])->name('store_rekrutmen');
     Route::get('show_rekrutmen{id}', [RekruitmenController::class, 'show'])->name('show_rekrutmen');
+    Route::get('create_pelamar', [RekruitmenController::class, 'create_pelamar'])->name('create_pelamar');
+    Route::post('store_pelamar', [RekruitmenController::class, 'store_pelamar'])->name('store_pelamar');
+    Route::get('show_formSelesai', [RekruitmenController::class, 'formSelesai'])->name('formSelesai');
+    Route::get('show_kanidat{id}', [RekruitmenController::class, 'show_kanidat'])->name('show_kanidat');
+
+
+    Route::get('show_pdf{id}', [RekruitmenController::class, 'show_pdf'])->name('show.pdf');
+
+
 
 
 

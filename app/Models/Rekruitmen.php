@@ -28,4 +28,9 @@ class Rekruitmen extends Model
         'gaji',
     ];
     protected $guarded = [];
+
+    public function lowongan()
+    {
+        return $this->belongsTo(Lowongan::class, 'id_lowongan', 'id');
+    }
 }

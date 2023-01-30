@@ -6,10 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Karyawan;
 use App\Models\Lowongan;
+use App\Models\Rekruitmen;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class RekruitmenController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,6 +55,7 @@ class RekruitmenController extends Controller
      */
     public function store(Request $request)
     {
+        
         $user = new Lowongan();
         $user->posisi = $request->posisi;
         $user->jumlah_dibutuhkan = $request->jumlah_dibutuhkan;
@@ -58,18 +72,38 @@ class RekruitmenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $role = Auth::user()->role;
+        $code = $request->query('code', 1);
+
         if ($role == 1) {
 
             $lowongan = lowongan::findOrFail($id);
-            // dd($karyawan);
+
+            $staff = Rekruitmen::where('id_lowongan', $id)->get();
+            $totalTahap1 = Rekruitmen::all()
+            ->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'tahap 1')
+            ->count('posisi');
+
+            $totalTahap2 = Rekruitmen::all()
+            ->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'tahap 2')
+            ->count('posisi');
+
+            $totalTahap3 = Rekruitmen::all()
+            ->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'tahap 3')
+            ->count('posisi');
+
+
+            // dd($staff);
 
 
 
 
-            return view('admin.rekruitmen.show', compact('lowongan'));
+            return view('admin.rekruitmen.show', compact('lowongan', 'totalTahap1', 'totalTahap2', 'totalTahap3', 'staff', 'code'));
 
         } else {
 
@@ -110,4 +144,84 @@ class RekruitmenController extends Controller
     {
         //
     }
+
+    public function create_pelamar(Request $request)
+    {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $posisi = Lowongan::all()
+                ->where('status','=','Aktif');
+
+
+        
+        
+
+        return view('admin.rekruitmen.formPelamar', compact('row',  'posisi'));
+
+    }
+
+    public function store_pelamar(Request $request)
+    {
+        $request->validate([
+            'pdfPelamar' => 'required|mimes:pdf'
+        ]);
+        $posisi = Rekruitmen::with('lowongan')
+        ->get();
+        // dd($posisi);
+        
+
+        // Simpan file ke folder public/pdf
+        $filePdf = $request->file('pdfPelamar');
+        $namaFile = '' . time() . $filePdf->getClientOriginalName();
+        $tujuan_upload = 'pdf';
+        $filePdf->move($tujuan_upload, $namaFile);
+
+        $user = new Rekruitmen();
+        $user->id_lowongan = $request->posisiPelamar;
+        $user->nik = $request->nikPelamar;
+        $user->nama = $request->namaPelamar;
+        $user->tgllahir = $request->tgllahirPelamar;
+        $user->email = $request->emailPelamar;
+        $user->agama = $request->agamaPelamar;
+        $user->jenis_kelamin = $request->jenis_kelaminPelamar;
+        $user->alamat = $request->alamatPelamar;
+        $user->no_hp = $request->no_hpPelamar;
+        $user->no_kk = $request->no_kkPelamar;
+        $user->gaji = $request->gajiPelamar;
+        $user->status_lamaran = 'tahap 1';
+        $user->cv = $namaFile ;
+
+      
+
+        $user->save();
+
+        return redirect('show_formSelesai');
+    }
+
+    public function showPdf($id)
+    {
+        $pelamar = Rekruitmen::findOrFail($id);
+        $path = storage_path('pdf/' . $id);
+        return response()->file($id);
+    }
+
+    public function formSelesai()
+    {
+        return view('admin.rekruitmen.formSelesaiPelamar');
+    }
+
+    public function show_kanidat($id)
+    {
+        $role = Auth::user()->role;
+        if ($role == 1) {
+
+            $lowongan = Rekruitmen::findOrFail($id);
+            // dd($karyawan);
+
+            return view('admin.rekruitmen.showKanidat', compact('lowongan'));
+        } else {
+
+            return redirect()->back();
+        }
+    }
+
 }

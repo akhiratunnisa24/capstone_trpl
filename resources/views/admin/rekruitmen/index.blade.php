@@ -28,6 +28,7 @@
                         <div class="panel-heading  col-sm-15 m-b-10">
                             <a type="button" class="btn btn-sm btn-dark fa fa-user-plus " data-toggle="modal"
                                 data-target="#myModal"> Tambah Rekrutmen </a>
+                                <a href="create_pelamar" type="button" class="btn btn-sm btn-dark fa fa-user-plus " > Tambah pelamar Sementara </a>
                         </div>
                         @include('admin.rekruitmen.tambahLowonganModal')
                         <div class="panel-body">
