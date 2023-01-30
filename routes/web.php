@@ -14,6 +14,8 @@ use App\Http\Controllers\admin\JenisizinController;
 use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\AlokasicutiController;
 use App\Http\Controllers\admin\RekruitmenController;
+use App\Http\Controllers\admin\ResignAdminController;
+
 
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
@@ -162,6 +164,11 @@ Route::post('/getsettingalokasi', [AlokasicutiController::class, 'getSettingalok
 //update alokasi cuti
 Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');
 Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
+
+//resign
+Route::get('/resign_karyawan',[ResignAdminController::class,'index'])->name('resignkaryawan');
+Route::post('/resignkaryawan', [ResignAdminController::class, 'store'])->name('resign.store');
+Route::get('/resignkaryawan/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
  
 //================================================================================
 //ROLE MANAGER
