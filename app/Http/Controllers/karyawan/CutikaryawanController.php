@@ -5,13 +5,15 @@ namespace App\Http\Controllers\karyawan;
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
-use App\Models\Jenisizin;
 use App\Models\Karyawan;
+use App\Models\Jenisizin;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
+use App\Mail\CutiNotification;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CutikaryawanController extends Controller
 {
@@ -108,9 +110,22 @@ class CutikaryawanController extends Controller
         $cuti->save();
 
         //sending email cuti
-        $email = Auth::user()->email;
-
-        return redirect()->back();
+        // $email = Auth::user()->email;
+        $tujuan = 'andiny700@gmail.com';
+        $data = [
+            'subject'     =>'Pemberitahuan Permintaan Cuti',
+            'body'        =>'Anda Memiliki 1 Permintaan Cuti yang harus di Approved',
+            'id'          =>$cuti->id,
+            'id_jeniscuti'=>$cuti->id_jeniscuti,
+            'keperluan'   =>$cuti->keperluan,
+            'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+            'tgl_selesai' =>Carbon::parse($cuti->tgl_sekarang)->format("Y-m-d"),
+            'jml_cuti'    =>$cuti->jml_cuti,
+            'status'      =>$cuti->status,
+        ];
+        Mail::to($tujuan)->send(new CutiNotification($data));
+        return redirect()->back()
+            ->with('success','Email Notifikasi Berhasil Dikirim');
     }
 
     public function show($id)

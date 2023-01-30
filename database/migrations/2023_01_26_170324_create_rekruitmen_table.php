@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('rekruitmen', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('id_pegawai');
-            $table->string('posisi')->nullable();
+            $table->integer('id_lowongan');
             $table->string('nik')->nullable();
             $table->string('nama')->nullable();
             $table->date('tgllahir')->nullable();
@@ -28,6 +27,8 @@ return new class extends Migration
             $table->text('no_hp')->nullable();
             $table->integer('no_kk')->nullable();
             $table->string('gaji')->nullable();
+            $table->string('cv')->nullable();
+            $table->string('status_lamaran')->nullable();
 
             $table->timestamps();
         });

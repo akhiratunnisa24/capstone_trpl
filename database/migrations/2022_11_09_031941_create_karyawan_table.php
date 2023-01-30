@@ -46,6 +46,7 @@ return new class extends Migration
 
             $table->date('tglmasuk')->nullable();
             $table->date('tglkeluar')->nullable();
+            $table->string('foto')->nullable();
 
             $table->timestamps();
         });

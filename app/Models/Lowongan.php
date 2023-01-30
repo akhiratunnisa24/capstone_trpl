@@ -19,4 +19,9 @@ class Lowongan extends Model
         'persyaratan',
     ];
     protected $guarded = [];
+
+    public function rekruitmen()
+    {
+        return $this->hasMany(Rekruitmen::class, 'id_lowongan', 'id');
+    }
 }
