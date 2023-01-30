@@ -9,18 +9,26 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CutiMail extends Mailable
+class CutiNotification extends Mailable
 {
     use Queueable, SerializesModels;
+    public $data=[];
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
+    }
+
+    public function build()
+    {
+        return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+        ->subject($this->data['subject'])
+        ->view('emails.cutiindex')->with('data',$this->data);
     }
 
     /**
@@ -28,24 +36,24 @@ class CutiMail extends Mailable
      *
      * @return \Illuminate\Mail\Mailables\Envelope
      */
-    public function envelope()
-    {
-        return new Envelope(
-            //subject: 'Cuti Mail',
-        );
-    }
+    // public function envelope()
+    // {
+    //     return new Envelope(
+    //         subject: 'Cuti Notification',
+    //     );
+    // }
 
     /**
      * Get the message content definition.
      *
      * @return \Illuminate\Mail\Mailables\Content
      */
-    public function content()
-    {
-        return new Content(
-            //view: 'view.name',
-        );
-    }
+    // public function content()
+    // {
+    //     return new Content(
+    //         view: 'view.name',
+    //     );
+    // }
 
     /**
      * Get the attachments for the message.
