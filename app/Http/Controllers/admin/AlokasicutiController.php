@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use Exception;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Karyawan;
@@ -12,8 +13,8 @@ use App\Models\Settingalokasi;
 use App\Imports\AlokasicutiImport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AlokasicutiController extends Controller
 {
@@ -62,7 +63,7 @@ class AlokasicutiController extends Controller
 
             // dd($request->id_karyawan,$getTglmasuk);
             if(!$getTglmasuk) {
-                throw new \Exception('Data not found');
+                throw new Exception('Data not found');
             }
             return response()->json($getTglmasuk,200);
 
