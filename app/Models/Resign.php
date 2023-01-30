@@ -27,4 +27,8 @@ class Resign extends Model
     {
         return $this->belongsTo(Karyawan::class, 'id_karyawan', 'id');
     }
+    public function departemens()
+    {
+        return $this->belongsTo(Departemen::class, 'nama_departemen', 'id');
+    }
 }

@@ -52,7 +52,7 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($resign as $r)
-                                                            @if ($r->id_karyawan == Auth::user()->id_pegawai)
+                                                            {{-- @if ($r->id_karyawan == Auth::user()->id_pegawai) --}}
                                                                 <tr>
                                                                     {{-- <td>1</td> --}}
                                                                     <td>{{ $r->karyawans->nama }}</td>
@@ -87,7 +87,27 @@
                                                                                 class="badge badge-danger">Ditolak</span>
                                                                         </td>
                                                                     @endif
-
+                                                                    <td id="b" class="text-center" > 
+                                                                        <div class="row">
+                                                                            @if($r->status == 'Pending')
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('resign.approved',$r->id)}}" method="POST"> 
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui Manager" class="form-control" hidden> 
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:8px">
+                                                                                    <form action="{{ route('resign.tolak',$r->id)}}" method="POST"> 
+                                                                                        @csrf
+                                                                                        @method('POST')
+                                                                                        <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
+                                                                                        <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
+                                                                                    </form>
+                                                                                </div>
+                                                                            @endif
+                
+                                                                            
                                                                     <td class="text-center">
                                                                         <form action="" method="POST">
                                                                             <a class="btn btn-info btn-sm"
@@ -100,7 +120,7 @@
                                                                 </tr>
                                                                 {{-- modal show cuti --}}
                                                                 @include('karyawan.resign.showresign')
-                                                            @endif
+                                                            {{-- @endif --}}
                                                         @endforeach  
                                                         </tbody>
                                                     </table>

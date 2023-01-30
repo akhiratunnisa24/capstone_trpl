@@ -70,6 +70,16 @@
                         </ul>
                 </li>
 
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-briefcase-check"></i><span class="text-info panel-title">Data Resign</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="/resign-karyawan"><i class="fa fa-server"></i><span>Resign Karyawan</span></a></li>
+                            {{-- <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Proses Rekrutmen</span></a></li>
+                            <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a></li>
+                            <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li> --}}
+                        </ul>
+                </li>
+
             <?php } elseif ($role == 2) { ?>
 
             <div class="user-info">

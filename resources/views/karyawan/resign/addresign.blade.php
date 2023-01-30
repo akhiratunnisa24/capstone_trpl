@@ -46,13 +46,14 @@
 
                     <div class="form-group col-xs-12">
                         <label for="tipe_resign" class="form-label" >Tipe Resign</label>
-                        <select class="form-control"
+                        <input id="tipe_resign" class="form-control" value="Normal Resign" name="tipe_resign" autocomplete="off" readonly>
+                        {{-- <select class="form-control"
                         name="tipe_resign" required>
                             <option value="">Pilih Tipe Resign</option>
                             
-                                <option value="normal_resign">Normal Resign</option>
-                                <option value="fired_resign">Fired from a company</option>
-                        </select>
+                                <option value="Normal Resign">Normal Resign</option>
+                                <option value="Fired from a company">Fired from a company</option>
+                        </select> --}}
                     </div>
                     
                     <div class="form-group col-xs-12">
