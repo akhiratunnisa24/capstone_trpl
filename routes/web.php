@@ -15,12 +15,9 @@ use App\Http\Controllers\admin\JenisizinController;
 use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\AlokasicutiController;
+use App\Http\Controllers\admin\NotifMailRekruitmenController;
 use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\ResignAdminController;
-
-
-use App\Http\Controllers\admin\RekruitmenController;
-use App\Http\Controllers\admin\AlokasicutiController;
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
@@ -77,6 +74,9 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::post('store_pelamar', [RekruitmenController::class, 'store_pelamar'])->name('store_pelamar');
     Route::get('show_formSelesai', [RekruitmenController::class, 'formSelesai'])->name('formSelesai');
     Route::get('show_kanidat{id}', [RekruitmenController::class, 'show_kanidat'])->name('show_kanidat');
+    Route::post('update_pelamar{id}', [RekruitmenController::class, 'update'])->name('update_pelamar');
+    Route::get('notif_rekrutmen', [NotifMailRekruitmenController::class, 'index']);
+
 
 
     Route::get('show_pdf{id}', [RekruitmenController::class, 'show_pdf'])->name('show.pdf');
