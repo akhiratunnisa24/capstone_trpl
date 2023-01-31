@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\karyawan;
+namespace App\Http\Controllers\admin;
 
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class ResignController extends Controller
+class ResignAdminController extends Controller
 {   
     /**
      * Create a new controller instance.
@@ -30,10 +30,12 @@ class ResignController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
        
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $karyawan1 = Karyawan::all();
+        $idkaryawan = $request->id_karyawan;
         // dd($karyawan);
         $resign = Resign::all();
      
@@ -42,7 +44,7 @@ class ResignController extends Controller
         
         // $namdiv = $tes->departemen->nama_departemen;
 
-        return view('karyawan.resign.index', compact('karyawan','tes','resign'));
+        return view('admin.resign.index', compact('karyawan','karyawan1','tes','resign'));
     }
 
     /**
@@ -71,7 +73,7 @@ class ResignController extends Controller
         //     ]);
         //     dd($validate);
             $resign = New Resign;
-            $resign->id_karyawan = $karyawan;
+            $resign->id_karyawan = $request->namaKaryawan;
             $resign->departemen = $request->departemen;
             $resign->tgl_masuk = Carbon::parse($request->tgl_masuk)->format("Y-m-d");
             $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
@@ -90,7 +92,49 @@ class ResignController extends Controller
         $resign = Resign::findOrFail($id);
         // $karyawan = Auth::user()->id_pegawai;
 
-        return view('karyawan.resign.index',compact('resign','karyawan'));
+        return view('admin.resign.index',compact('resign','karyawan'));
     }
 
+    public function approved(Request $request, $id)
+    {
+        $resign = Resign::where('id',$id)->first();
+        $status = 'Disetujui';
+        Resign::where('id',$id)->update([
+            'status' => $status,
+        ]);
+        return redirect()->route('resignkaryawan',['type'=>2]);
+    }
+
+    public function reject(Request $request, $id)
+    {
+        $resign = Resign::where('id',$id)->first();
+        $status = 'Ditolak';
+        Resign::where('id',$id)->update([
+            'status' => $status,
+        ]);
+        return redirect()->route('resignkaryawan',['type'=>2])->withInput();
+    }
+
+    public function getUserData($id)
+{
+  $user = Karyawan::with('Departemen')->find($id);
+
+  return response()->json($user);
+}
+
+// {
+//     try {
+//         $getUserData = Karyawan::all()
+//             ->where('id', '=', $request->id_pegawai)->first();
+
+//         if (!getUserData) {
+//             throw new \Exception('Data not found');
+//         }
+//         return response()->json($getUserData, 200);
+//     } catch (\Exception $e) {
+//         return response()->json([
+//             'message' => $e->getMessage()
+//         ], 500);
+//     }
+// }
 }

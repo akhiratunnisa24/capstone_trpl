@@ -25,12 +25,12 @@
                                 <div class="col-md-12">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
-                                            {{-- <strong>List Permohonan Cuti</strong> --}}
-                                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                                data-target="#Modal"> Form Ajukan Resign</a>
+                                            <strong>List Resign Staff</strong>
+                                            {{-- <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
+                                                data-target="#Modal"> Form Ajukan Resign</a> --}}
                                         </div>
                                         <!-- modals tambah data cuti -->
-                                        @include('admin.resign.addresign')
+                                        {{-- @include('admin.resign.addresign') --}}
 
                                         <div class="panel-body m-b-5">
                                             <div class="row">
@@ -51,11 +51,11 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($resign as $r)
+                                                            @foreach ($staff as $r)
                                                             {{-- @if ($r->id_karyawan == Auth::user()->id_pegawai) --}}
                                                                 <tr>
                                                                     <td>{{$loop->iteration}}</td>
-                                                                    <td>{{ $r->karyawan->nama }}</td>
+                                                                    <td>{{ $r->karyawans->nama }}</td>
                                                                     <td>{{ $r->departemen }}</td>
                                                                     <td>{{ \Carbon\Carbon::parse($r->tgl_mulai)->format('d/m/Y') }}
                                                                     </td>

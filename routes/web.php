@@ -19,8 +19,7 @@ use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\ResignAdminController;
 
 
-use App\Http\Controllers\admin\RekruitmenController;
-use App\Http\Controllers\admin\AlokasicutiController;
+
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
@@ -110,7 +109,7 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('/izin_karyawan/{id}', [IzinkaryawanController::class, 'show'])->name('izin.show');
 //resign
     Route::get('/resign-karyawan',[ResignController::class,'index'])->name('resign_karyawan');
-    Route::post('/resign_karyawan', [ResignController::class, 'store'])->name('resign.store');
+    Route::post('/resign_karyawan', [ResignController::class, 'store'])->name('resignkaryawan.store');
     Route::get('/resign_karyawan/{id}', [ResignController::class, 'show'])->name('resign.show');
 
 //==================================================================================
@@ -178,9 +177,14 @@ Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->
 Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
 
 //resign
-Route::get('/resign_karyawan',[ResignAdminController::class,'index'])->name('resignkaryawan');
-Route::post('/resignkaryawan', [ResignAdminController::class, 'store'])->name('resign.store');
-Route::get('/resignkaryawan/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
+Route::get('/resign_admin',[ResignAdminController::class,'index'])->name('resignkaryawan');
+Route::post('/resignadmin', [ResignAdminController::class, 'store'])->name('resign.store');
+Route::get('/resignadmin/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
+Route::post('/permintaanresign/{id}', [ResignAdminController::class, 'approved'])->name('resignapproved');
+Route::post('/permintaanresignreject/{id}', [ResignAdminController::class, 'reject'])->name('resignreject');
+Route::get('/getUserData/{id}', [ResignAdminController::class, 'getUserData'])->name('getUserData');
+
+
  
 //================================================================================
 //ROLE MANAGER
@@ -194,6 +198,11 @@ Route::get('/resignkaryawan/{id}', [ResignAdminController::class, 'show'])->name
     Route::get('/export-to-excel',[ManagerController::class,'exportToExcel'])->name('export.ToExcel');
     Route::get('/cuti-staff', [ManagerController::class, 'cutiStaff'])->name('cuti.Staff');
     Route::post('/cuti-staff/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
+
+    Route::get('/resign_manager',[ManagerController::class,'resignStaff'])->name('resignstaff');
+    Route::get('/resignmanager/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
+    Route::post('/permintaan_resign/{id}', [ResignAdminController::class, 'approved'])->name('resign_approved');
+    Route::post('/permintaanresign_reject/{id}', [ResignAdminController::class, 'reject'])->name('resign_reject');
 
 //================================================================================
 //ROLE DIREKTUR

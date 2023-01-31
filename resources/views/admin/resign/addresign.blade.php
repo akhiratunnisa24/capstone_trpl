@@ -11,26 +11,34 @@
 
             <div class="modal-body">
 
-                <form method="POST" action="{{ route('resignkaryawan.store')}}">
+                <form method="POST" action="{{ route('resign.store')}}">
                     @csrf
                     @method('POST')
-                    <div class="form-group col-xs-12" id="namaKaryawan">
-                        <label for="id_karyawan" class="form-label">Nama</label>
-                        <input id="id_karyawan" type="text" class="form-control" value="{{Auth::user()->name}}" name="nama"
-                            autocomplete="off" placeholder="Nama Karyawan" readonly>
-
+                    <div class="form-group col-xs-12">
+                        <label for="namaKaryawan" class="form-label">Nama</label>
+                        <select name="namaKaryawan" id="user-select" class="form-control selectpicker" data-live-search="true" required>
+                            <option>-- Pilih Karyawan --</option>
+                            @foreach ($karyawan1 as $data)
+                                <option value="{{ $data->id}}"
+                                    @if ($data->id ==request()->nama)
+                                    selected
+                                    @endif
+                                    >{{ $data->nama }}
+                                </option>
+                            @endforeach
+                        </select> 
                     </div>
 
 
-                    <div class="form-group col-xs-12" id="departemen">
+                    <div class="form-group col-xs-12">
                         <label for="departemen" class="form-label">Departemen</label>
-                        <input id="departemen" class="form-control" value="{{$tes}} " name="departemen" autocomplete="off" placeholder="Nama Karyawan" readonly>
+                        <input id="departemen" class="form-control" name="departemen" autocomplete="off" placeholder="" readonly>
                         
                     
                     </div>
                     <div class="form-group col-xs-12">
                         <label for="tgl_masuk" class="form-label">Tanggal Bergabung</label>
-                        <input value="{{$karyawan->tglmasuk}}" id="tgl_masuk" type="text" class="form-control" name="tgl_masuk"
+                        <input  id="tgl_masuk" type="text" class="form-control" name="tgl_masuk"
                             autocomplete="off" placeholder="" readonly>
 
                     </div>
@@ -46,14 +54,14 @@
 
                     <div class="form-group col-xs-12">
                         <label for="tipe_resign" class="form-label" >Tipe Resign</label>
-                        <input id="tipe_resign" class="form-control" value="Normal Resign" name="tipe_resign" autocomplete="off" readonly>
-                        {{-- <select class="form-control"
+                        {{-- <input id="tipe_resign" class="form-control" name="tipe_resign" autocomplete="off" readonly> --}}
+                        <select class="form-control"
                         name="tipe_resign" required>
                             <option value="">Pilih Tipe Resign</option>
                             
                                 <option value="Normal Resign">Normal Resign</option>
                                 <option value="Fired from a company">Fired from a company</option>
-                        </select> --}}
+                        </select>
                     </div>
                     
                     <div class="form-group col-xs-12">
@@ -157,3 +165,25 @@
         }
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+  $('#user-select').on('change', function() {
+    var userId = $(this).val();
+    if (!userId) {
+      return;
+    }
+
+    $.ajax({
+      url: '/getUserData/' + userId,
+      type: 'GET',
+      success: function(user) {
+        $('#namaKaryawan').val(user.nama);
+        $('#departemen').val(user.departemen.nama_departemen);
+        $('#tgl_masuk').val(user.tglmasuk);
+      }
+    });
+  });
+});
+
+    </script>

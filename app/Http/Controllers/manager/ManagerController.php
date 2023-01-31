@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Absensi;
 use App\Models\Karyawan;
+use App\Models\Resign;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -251,6 +252,27 @@ class ManagerController extends Controller
         ->setPaper('A4','landscape');
 
         return $pdf->stream("Report Absensi_{$idkaryawan}.pdf");
+    }
+
+    public function resignStaff(Request $request)
+    {
+       
+        $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $karyawan1 = Karyawan::all();
+        $idkaryawan = $request->id_karyawan;
+        // dd($karyawan);
+        $resign = Resign::all();
+     
+        $tes = Auth::user()->karyawan->departemen->nama_departemen;
+        
+        $manager_iddep = DB::table('karyawan')
+        ->where('id','=',Auth::user()->id_pegawai)
+        ->select('divisi')->first();
+
+        $staff= Resign::where('divisi',$manager_iddep->divisi)->get();
+        // $namdiv = $tes->departemen->nama_departemen;
+
+        return view('manager\staff.resignStaff', compact('karyawan','staff','karyawan1','tes','resign'));
     }
 
 }
