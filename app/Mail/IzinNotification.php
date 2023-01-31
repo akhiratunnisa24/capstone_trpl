@@ -9,11 +9,10 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CutiNotification extends Mailable
+class IzinNotification extends Mailable
 {
     use Queueable, SerializesModels;
     public $data=[];
-
     /**
      * Create a new message instance.
      *
@@ -28,7 +27,7 @@ class CutiNotification extends Mailable
     {
         return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
         ->subject($this->data['subject'])
-        ->view('emails.cutiindex')->with('data',$this->data);
+        ->view('emails.izinindex')->with('data',$this->data);
     }
 
     /**

@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CutiNotification extends Mailable
+class IzinApproveNotification extends Mailable
 {
     use Queueable, SerializesModels;
     public $data=[];
@@ -24,11 +24,16 @@ class CutiNotification extends Mailable
         $this->data = $data;
     }
 
+    /**
+     * Get the message envelope.
+     *
+     * @return \Illuminate\Mail\Mailables\Envelope
+     */
     public function build()
     {
         return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
         ->subject($this->data['subject'])
-        ->view('emails.cutiindex')->with('data',$this->data);
+        ->view('emails.izinApprove')->with('data',$this->data);
     }
 
     /**

@@ -18,6 +18,7 @@ use App\Http\Controllers\admin\AlokasicutiController;
 use App\Http\Controllers\admin\NotifMailRekruitmenController;
 use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\ResignAdminController;
+
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
@@ -174,14 +175,14 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     //Route::post('/getDepartemen', [AlokasicutiController::class, 'getDepartemen'])->name('get.Departemen');
 
 //update alokasi cuti
-Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');
-Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
+    Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');
+    Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
 
 //resign
-Route::get('/resign_karyawan',[ResignAdminController::class,'index'])->name('resignkaryawan');
-Route::post('/resignkaryawan', [ResignAdminController::class, 'store'])->name('resign.store');
-Route::get('/resignkaryawan/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
- 
+    Route::get('/resign_karyawan',[ResignAdminController::class,'index'])->name('resignkaryawan');
+    Route::post('/resignkaryawan', [ResignAdminController::class, 'store'])->name('resign.store');
+    Route::get('/resignkaryawan/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
+    
 //================================================================================
 //ROLE MANAGER
 
@@ -192,8 +193,12 @@ Route::get('/resignkaryawan/{id}', [ResignAdminController::class, 'show'])->name
     Route::get('/export-pdf',[ManagerController::class,'exportallpdf'])->name('exportallpdf');
     Route::get('/export-all-excel', [ManagerController::class, 'exportallExcel'])->name('export.allExcel');
     Route::get('/export-to-excel',[ManagerController::class,'exportToExcel'])->name('export.ToExcel');
+//cuti dan izin
     Route::get('/cuti-staff', [ManagerController::class, 'cutiStaff'])->name('cuti.Staff');
     Route::post('/cuti-staff/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
+    Route::post('/cuti-reject/{id}', [ManagerController::class, 'cutireject'])->name('cuti.reject');
+    Route::post('/izin-staff/{id}', [ManagerController::class, 'izinApproved'])->name('izin.approved');
+    Route::post('/izin-reject/{id}', [ManagerController::class, 'izinReject'])->name('izin.reject');
 
 //================================================================================
 //ROLE DIREKTUR
@@ -209,4 +214,4 @@ Route::get('/resignkaryawan/{id}', [ResignAdminController::class, 'show'])->name
 //     });
 
 // });
-    Route::get('/sendmail', [MailController::class, 'index']);
+    // Route::get('/sendmail', [MailController::class, 'index']);

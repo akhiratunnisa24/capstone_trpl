@@ -42,7 +42,6 @@
                                 <div class="col-md-12">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
-                                            <strong>List Permohonan Cuti</strong>
                                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                                 data-target="#Modal"> Ajukan Cuti</a>
                                         </div>
@@ -58,7 +57,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
-                                                                <th>Karyawan</th>
+                                                                {{-- <th>Karyawan</th> --}}
                                                                 <th>Kategori Cuti</th>
                                                                 <th>Keperluan</th>
                                                                 <th>Tanggal Mulai</th>
@@ -73,7 +72,7 @@
                                                                 @if ($data->id_karyawan == Auth::user()->id_pegawai)
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
-                                                                        <td>{{ $data->karyawans->nama }}</td>
+                                                                        {{-- <td>{{ $data->karyawans->nama }}</td> --}}
                                                                         <td>{{ $data->jeniscutis->jenis_cuti }}</td>
                                                                         <td>{{ $data->keperluan }}</td>
                                                                         <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
@@ -142,7 +141,6 @@
                                 <div class="col-md-12">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
-                                            <strong>List Permohonan Izin</strong>
                                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                                 data-target="#smallModal"> Ajukan Izin</a>
                                         </div>

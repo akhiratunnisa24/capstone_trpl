@@ -40,14 +40,16 @@ class AlokasicutiController extends Controller
 
             //create
             $karyawan = Karyawan::all();
-            $keluarga = DB::table('keluarga')
-            ->join('karyawan', 'karyawan.id', '=', 'keluarga.id_pegawai')
-            ->select('keluarga.*', 'karyawan.nama', 'karyawan.jenis_kelamin', 'karyawan.divisi')
-            ->get();
-            $jeniscuti= DB::table('settingalokasi')
-                ->join('jeniscuti', 'settingalokasi.id_jeniscuti','=','jeniscuti.id')
+            // $jeniscuti = DB::table('settingalokasi')
+            // ->join('jeniscuti', 'settingalokasi.id_jeniscuti', '=', 'jeniscuti.id')
+            // ->get();
+            $jeniscuti = DB::table('settingalokasi')
+                ->join('jeniscuti', 'settingalokasi.id_jeniscuti', '=', 'jeniscuti.id')
+                ->select('jeniscuti.*')
+                ->distinct()
                 ->get();
-            return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','keluarga','alokasicuti','row'));
+
+            return view('admin.alokasicuti.index', compact('jeniscuti','karyawan','alokasicuti','row'));
 
         } else {
 
