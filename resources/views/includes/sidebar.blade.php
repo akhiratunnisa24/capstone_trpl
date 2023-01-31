@@ -73,7 +73,7 @@
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-briefcase-check"></i><span class="text-info panel-title">Data Resign</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="/resign-karyawan"><i class="fa fa-server"></i><span>Resign Karyawan</span></a></li>
+                            <li><a href="/resign_admin"><i class="fa fa-server"></i><span>Resign Karyawan</span></a></li>
                             {{-- <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Proses Rekrutmen</span></a></li>
                             <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a></li>
                             <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li> --}}
@@ -155,8 +155,11 @@
                             Staff</span></a></li>
                         <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti
                             Staff</span></a></li>
+                            <li><a href="/resign_manager" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Data Resign
+                                Staff</span></a></li>    
                     </ul>
                 </li>
+                
             </ul>
 
             <?php } elseif ($role == 4) { ?>
