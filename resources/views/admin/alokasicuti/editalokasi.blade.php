@@ -22,16 +22,17 @@
 
                                 <div class="form-group col-sm">
                                     <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
-                                    <select name="id_jeniscuti" id="idjeniscuti" class="form-control">
+                                    <input type="text" class="form-control" name="id_jeniscuti" id="id_jeniscuti"
+                                        value="{{$data->jeniscutis->jenis_cuti}}" readonly>
+                                    {{-- <select name="id_jeniscuti" id="idjeniscuti" class="form-control">
                                         @foreach ($jeniscuti as $jenis)
                                         <option value="{{$jenis->id }}">{{ $jenis->jenis_cuti }}</option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
                                 </div>
                                 <div class="form-group">
                                     <label for="id_karyawan" class="col-form-label">Karyawan</label>
-                                    <input type="text" class="form-control" name="id_karyawan" id="id_karyawan"
-                                        value="{{$data->id_karyawan}} - {{$data->karyawans->nama}}" readonly>
+                                    <input type="text" class="form-control" name="id_karyawan" id="id_karyawan" readonly>
                                 </div>
                                 {{-- <div class="form-group col-sm" id="idkaryawan">
                                     <label for="id_karyawan" class="col-form-label">Karyawan</label>

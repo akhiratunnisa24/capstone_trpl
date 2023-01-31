@@ -6,8 +6,11 @@ use Carbon\Carbon;
 use App\Models\Izin;
 use App\Models\Jenisizin;
 use Illuminate\Http\Request;
+use App\Mail\IzinNotification;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class IzinkaryawanController extends Controller
 {
@@ -36,7 +39,6 @@ class IzinkaryawanController extends Controller
     {
         $karyawan = Auth::user()->id_pegawai;
         // $karyawan = Auth::user()->karyawans->id;
-        // dd($request->all());
         if($request->id_jenisizin == 1 || $request->id_jenisizin == 2)
         {
             $validate = $request->validate([
@@ -66,7 +68,32 @@ class IzinkaryawanController extends Controller
             $izin->status      = 'Pending';
             $izin->save();
 
-            // dd($izin);
+            //email
+            $div = DB::table('karyawan')->join('departemen','karyawan.divisi','=','departemen.id')
+                ->where('karyawan.id',$izin->id_karyawan)
+                ->select('karyawan.divisi as divisi','departemen.id as dep_id','departemen.nama_departemen as namadepartemen')
+                ->first();
+            $manager = DB::table('karyawan')
+                ->join('departemen','karyawan.divisi','=','departemen.id')
+                ->where('divisi',$div->divisi)
+                ->where('jabatan','=','Manager')
+                ->select('karyawan.*','departemen.nama_departemen as manag_depart')
+                ->first();
+            $tujuan = $manager->email;
+            $data = [
+                'subject'     =>'Pemberitahuan Permintaan Izin',
+                'id'          =>$izin->id,
+                'jenisizin'   =>$izin->jenisizins->jenis_izin,
+                'keperluan'   =>$izin->keperluan,
+                'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d M Y"),
+                'tgl_selesai'   =>Carbon::parse($izin->tgl_mulai)->format("d M Y"),
+                'jml_hari'    =>0,
+                'jml_jam'     =>$izin->jml_jam,
+                'status'      =>$izin->status,
+                'manag_depart'=>$manager->manag_depart,
+                'manag_name'  =>$manager->nama,
+            ];
+            Mail::to($tujuan)->send(new IzinNotification($data));
             return redirect()->back()->withInput();
 
         }else{
@@ -93,9 +120,36 @@ class IzinkaryawanController extends Controller
             $izin->status      = 'Pending';
             // dd($izin);
             $izin->save();
-            
+
+            $div = DB::table('karyawan')->join('departemen','karyawan.divisi','=','departemen.id')
+                ->where('karyawan.id',$izin->id_karyawan)
+                ->select('karyawan.divisi as divisi','departemen.id as dep_id','departemen.nama_departemen as namadepartemen')
+                ->first();
+            $manager = DB::table('karyawan')
+                ->join('departemen','karyawan.divisi','=','departemen.id')
+                ->where('divisi',$div->divisi)
+                ->where('jabatan','=','Manager')
+                ->select('karyawan.*','departemen.nama_departemen as manag_depart')
+                ->first();
+
+            $tujuan = $manager->email;
+            $data = [
+                'subject'     =>'Pemberitahuan Permintaan Izin',
+                'id'          =>$izin->id,
+                'jenisizin'   =>$izin->jenisizins->jenis_izin,
+                'keperluan'   =>$izin->keperluan,
+                'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d M Y"),
+                'tgl_selesai' =>Carbon::parse($izin->tgl_selesai)->format("d M Y"),
+                'jml_hari'    =>$izin->jml_hari,
+                'jml_jam'     => 0,
+                'status'      =>$izin->status,
+                'manag_depart'=>$manager->manag_depart,
+                'manag_name'  =>$manager->nama,
+            ];
+            Mail::to($tujuan)->send(new IzinNotification($data));
             return redirect()->back()->withInput();
-        }     
+        }  
+
     }
 
     public function show($id)

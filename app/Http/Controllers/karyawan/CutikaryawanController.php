@@ -111,17 +111,34 @@ class CutikaryawanController extends Controller
 
         //sending email cuti
         // $email = Auth::user()->email;
-        $tujuan = 'andiny700@gmail.com';
+        //ambil divisi karyawan
+        $div = DB::table('karyawan')->join('departemen','karyawan.divisi','=','departemen.id')
+            ->where('karyawan.id',$cuti->id_karyawan)
+            ->select('karyawan.divisi as divisi','departemen.id as dep_id','departemen.nama_departemen as namadepartemen')
+            ->first();
+        //data manager
+        $manager = DB::table('karyawan')
+            ->join('departemen','karyawan.divisi','=','departemen.id')
+            ->where('divisi',$div->divisi)
+            ->where('jabatan','=','Manager')
+            ->select('karyawan.*','departemen.nama_departemen as manag_depart')
+            ->first();
+
+        
+        // $tujuan = 'andiny700@gmail.com';
+        $tujuan = $manager->email;
         $data = [
             'subject'     =>'Pemberitahuan Permintaan Cuti',
             'body'        =>'Anda Memiliki 1 Permintaan Cuti yang harus di Approved',
             'id'          =>$cuti->id,
-            'id_jeniscuti'=>$cuti->id_jeniscuti,
+            'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
             'keperluan'   =>$cuti->keperluan,
             'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
-            'tgl_selesai' =>Carbon::parse($cuti->tgl_sekarang)->format("Y-m-d"),
+            'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
             'jml_cuti'    =>$cuti->jml_cuti,
             'status'      =>$cuti->status,
+            'manag_depart'=>$manager->manag_depart,
+            'manag_name'  =>$manager->nama,
         ];
         Mail::to($tujuan)->send(new CutiNotification($data));
         return redirect()->back()

@@ -33,8 +33,14 @@ class Cuti extends Model
     {
         return $this->belongsTo(Karyawan::class, 'id_karyawan', 'id');
     }
+
     public function jeniscuti()
     {
         return $this->belongsTo(Jeniscuti::class, 'id_jeniscuti', 'id');
     }
+
+    public function datareject()
+    {
+        return $this->hasMany(Datareject::class,'id');
+    }    
 }
