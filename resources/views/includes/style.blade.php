@@ -31,3 +31,7 @@
 <link rel="stylesheet" type="text/css" href="assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css">
 
 
+<link href="
+https://cdn.jsdelivr.net/npm/pdfjs-dist@3.3.122/web/pdf_viewer.min.css
+" rel="stylesheet"></link>
+

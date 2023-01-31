@@ -15,6 +15,7 @@ use App\Http\Controllers\admin\JenisizinController;
 use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\AlokasicutiController;
+use App\Http\Controllers\admin\NotifMailRekruitmenController;
 use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\ResignAdminController;
 
@@ -76,6 +77,9 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::post('store_pelamar', [RekruitmenController::class, 'store_pelamar'])->name('store_pelamar');
     Route::get('show_formSelesai', [RekruitmenController::class, 'formSelesai'])->name('formSelesai');
     Route::get('show_kanidat{id}', [RekruitmenController::class, 'show_kanidat'])->name('show_kanidat');
+    Route::post('update_pelamar{id}', [RekruitmenController::class, 'update'])->name('update_pelamar');
+    Route::get('notif_rekrutmen', [NotifMailRekruitmenController::class, 'index']);
+
 
 
     Route::get('show_pdf{id}', [RekruitmenController::class, 'show_pdf'])->name('show.pdf');
@@ -173,8 +177,8 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     //Route::post('/getDepartemen', [AlokasicutiController::class, 'getDepartemen'])->name('get.Departemen');
 
 //update alokasi cuti
-Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');
-Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
+    Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');
+    Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
 
 //resign
 Route::get('/resign_admin',[ResignAdminController::class,'index'])->name('resignkaryawan');
@@ -196,8 +200,12 @@ Route::get('/getUserData/{id}', [ResignAdminController::class, 'getUserData'])->
     Route::get('/export-pdf',[ManagerController::class,'exportallpdf'])->name('exportallpdf');
     Route::get('/export-all-excel', [ManagerController::class, 'exportallExcel'])->name('export.allExcel');
     Route::get('/export-to-excel',[ManagerController::class,'exportToExcel'])->name('export.ToExcel');
+//cuti dan izin
     Route::get('/cuti-staff', [ManagerController::class, 'cutiStaff'])->name('cuti.Staff');
     Route::post('/cuti-staff/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
+    Route::post('/cuti-reject/{id}', [ManagerController::class, 'cutireject'])->name('cuti.reject');
+    Route::post('/izin-staff/{id}', [ManagerController::class, 'izinApproved'])->name('izin.approved');
+    Route::post('/izin-reject/{id}', [ManagerController::class, 'izinReject'])->name('izin.reject');
 
     Route::get('/resign_manager',[ManagerController::class,'resignStaff'])->name('resignstaff');
     Route::get('/resignmanager/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
@@ -218,4 +226,4 @@ Route::get('/getUserData/{id}', [ResignAdminController::class, 'getUserData'])->
 //     });
 
 // });
-    Route::get('/sendmail', [MailController::class, 'index']);
+    // Route::get('/sendmail', [MailController::class, 'index']);

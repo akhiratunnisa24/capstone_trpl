@@ -59,11 +59,11 @@
                             {{-- {{ route('cuti.index') }} --}}
                      {{--   </div>
                     </div> --}}
-                    <br>
+
                     <div class="content">
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-15">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading"  style="height:35px">
                                             {{-- <strong>Data Permintaan Cuti</strong> --}}
@@ -166,7 +166,7 @@
                     <div class="content">
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-15">
+                                <div class="col-md-20">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading" style="height:35px">
                                             {{-- <strong>Data Permintaan Izin</strong> --}}
@@ -184,7 +184,7 @@
                                                                 <th>Tanggal</th>
                                                                 <th>Jml</th>
                                                                 <th>Mulai s/d Selesai</th>
-                                                                <th>Jml. Jam</th>
+                                                                {{-- <th>Jml. Jam</th> --}}
                                                                 <th>Status</th>
                                                                 <th>Action</th>
                                                             </tr>
@@ -198,7 +198,7 @@
                                                                     <td>{{$data->keperluan}}</td>
 
                                                                     {{-- tanggal mulai & tanggal selesai --}}
-                                                                    @if($data->tgl_mulai != $data->tgl_selesai)
+                                                                    @if($data->tgl_mulai != null && $data->tgl_selesai != null)
                                                                         <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s/d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                                     @else
                                                                         <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/M/Y")}}</td>
@@ -219,11 +219,11 @@
                                                                     @endif
 
                                                                     {{-- Jumlah jam --}}
-                                                                    @if($data->jml_jam != null)
+                                                                    {{-- @if($data->jml_jam != null)
                                                                         <td>{{\Carbon\Carbon::parse($data->jml_jam)->format("H:i")}}</td>
                                                                     @else
                                                                         <td></td>
-                                                                    @endif
+                                                                    @endif --}}
 
                                                                     {{-- status --}}
                                                                     @if($data->status == 'Pending')
@@ -246,7 +246,7 @@
 
                                                                     <td> 
                                                                         <div class="row">
-                                                                            @if($data->status == 'Pending' && $data->status == 'Disetujui Manager')
+                                                                            @if($data->status == 'Pending' || $data->status == 'Disetujui Manager')
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izinapproved',$data->id)}}" method="POST"> 
                                                                                         @csrf

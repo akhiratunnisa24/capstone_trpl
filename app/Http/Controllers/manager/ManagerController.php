@@ -5,16 +5,20 @@ namespace App\Http\Controllers\manager;
 use PDF;
 use Carbon\Carbon;
 use App\Models\Cuti;
+use App\Models\Izin;
 use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Resign;
+use App\Models\Datareject;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exports\AbsensiFilterExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Mail\IzinApproveNotification;
 use App\Exports\AbsensiDepartemenExport;
 
 class ManagerController extends Controller
@@ -91,6 +95,8 @@ class ManagerController extends Controller
         $manag_depart = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
         ->select('divisi')->first();
 
+        $tp = $request->query('tp',1);
+
         $cutistaff = DB::table('cuti')
             ->leftjoin('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
             ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
@@ -102,7 +108,15 @@ class ManagerController extends Controller
             ->distinct()
             ->get();
 
-        return view('manager.staff.cutiStaff', compact('cutistaff','row'));
+        $izinstaff = DB::table('izin')
+            ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
+            ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
+            ->where('karyawan.divisi',$manag_depart->divisi)
+            ->select('izin.*','karyawan.nama','jenisizin.jenis_izin')
+            ->distinct()
+            ->get();
+
+        return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
     }
 
     public function showCuti($id)
@@ -145,6 +159,7 @@ class ManagerController extends Controller
             ->update(
                 ['durasi' => $durasi_baru]
             );
+
             return redirect()->back()->withInput();
 
         }else{
@@ -155,6 +170,95 @@ class ManagerController extends Controller
             return redirect()->back()->withInput();
         }
         
+    }
+
+    public function cutireject($id)
+    {
+        $cuti = Cuti::where('id',$id)->first();
+            $status = 'Ditolak';
+            Cuti::where('id',$id)->update([
+                'status' => $status,
+            ]);
+            return redirect()->back()->withInput();
+    }
+
+    public function showIzin($id)
+    {
+        $izin = Izin::findOrFail($id);
+        $karyawan = Auth::user()->id_pegawai;
+ 
+        return view('manager.staff.cutiStaff',compact('izin','karyawan',['tp'=>2]));
+    }
+
+    public function izinApproved(Request $request, $id)
+    {
+        // $izin = Izin::where('id',$id)->first();
+        $status = 'Disetujui';
+        Izin::where('id',$id)->update([
+            'status' => $status,
+        ]);
+
+        $izin = DB::table('izin')
+            ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+            ->where('izin.id',$id)
+            ->select('izin.*','jenisizin.jenis_izin as jenis_izin')
+            ->first();
+        $karyawan = DB::table('izin')
+            ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+            ->where('izin.id',$izin->id)
+            ->select('karyawan.email as email','karyawan.nama as nama')
+            ->first(); 
+        $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+        $data = [
+            'title'    =>$izin->id,
+            'subject'  =>'Notifikasi Izin',
+            'id'       =>$izin->id,
+            'nama'     =>$karyawan->nama,
+            'jenisizin'=>$izin->jenis_izin,
+            'tgl_mulai'=>$izin->tgl_mulai,
+            'status'   =>$izin->status,
+        ];
+        Mail::to($tujuan)->send(new IzinApproveNotification($data));
+        return redirect()->route('cuti.Staff',['tp'=>2]);
+    }
+
+    public function izinReject(Request $request, $id)
+    {
+        $status = 'Ditolak';
+        Izin::where('id',$id)->update([
+            'status' => $status,
+        ]);
+
+        $iz = Izin::where('id',$id)->first();
+
+        $datareject          = new Datareject;
+        $datareject->id_cuti = NULL;
+        $datareject->id_izin = $iz->id_izin;
+        $datareject->alasan  = $iz->alasan;
+        $datareject->save();   
+
+        $izin = DB::table('izin')
+            ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+            ->where('izin.id',$id)
+            ->select('izin.*','jenisizin.jenis_izin as jenis_izin')
+            ->first();
+        $karyawan = DB::table('izin')
+            ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+            ->where('izin.id',$izin->id)
+            ->select('karyawan.email as email','karyawan.nama as nama')
+            ->first(); 
+        $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+        $data = [
+            'title'    =>$izin->id,
+            'subject'  =>'Notifikasi Izin',
+            'id'       =>$izin->id,
+            'nama'     =>$karyawan->nama,
+            'jenisizin'=>$izin->jenis_izin,
+            'tgl_mulai'=>$izin->tgl_mulai,
+            'status'   =>$izin->status,
+        ];
+        Mail::to($tujuan)->send(new IzinApproveNotification($data));
+        return redirect()->route('cuti.Staff',['type'=>2])->withInput();
     }
 
     public function exportallExcel()
