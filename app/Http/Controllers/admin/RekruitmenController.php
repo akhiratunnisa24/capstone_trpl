@@ -10,6 +10,8 @@ use App\Models\Rekruitmen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\RekruitmenNotification;
+use Illuminate\Support\Facades\Mail;
 
 class RekruitmenController extends Controller
 {
@@ -72,16 +74,16 @@ class RekruitmenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show($id) 
     {
         $role = Auth::user()->role;
-        $code = $request->query('code', 1);
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
 
         if ($role == 1) {
 
             $lowongan = lowongan::findOrFail($id);
 
-            $staff = Rekruitmen::where('id_lowongan', $id)->get();
             $totalTahap1 = Rekruitmen::all()
             ->where('id_lowongan', $id)
             ->where('status_lamaran', '=', 'tahap 1')
@@ -97,13 +99,24 @@ class RekruitmenController extends Controller
             ->where('status_lamaran', '=', 'tahap 3')
             ->count('posisi');
 
+            $dataTahap1 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'tahap 1')
+            ->get();
 
-            // dd($staff);
+            $dataTahap2 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'tahap 2')
+            ->get();
+
+            $dataTahap3 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'tahap 3')
+            ->get();
+            
+            // dd($dataTahap2);
 
 
 
 
-            return view('admin.rekruitmen.show', compact('lowongan', 'totalTahap1', 'totalTahap2', 'totalTahap3', 'staff', 'code'));
+            return view('admin.rekruitmen.show', compact('lowongan', 'totalTahap1', 'totalTahap2', 'totalTahap3', 'dataTahap1', 'dataTahap2', 'dataTahap3', 'row'));
 
         } else {
 
@@ -131,7 +144,18 @@ class RekruitmenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // $status = 'tahap 2';
+        Rekruitmen::where('id', $id)->update(
+            ['status_lamaran' =>$request->post('status_lamaran')]
+        );
+
+        $data = Rekruitmen::findOrFail($id);
+        $tujuan = $data->email;
+        $email = new RekruitmenNotification($data);
+        Mail::to($tujuan)->send($email);
+
+        
+        return redirect()->back();
     }
 
     /**
