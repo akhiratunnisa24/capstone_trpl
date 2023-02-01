@@ -98,13 +98,20 @@
                                                                                     </form>
                                                                                 </div>
                                                                                 <div class="col-sm-3" style="margin-left:8px">
+                                                                                    <form action="" method="POST"> 
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutiTolak{{$data->id}}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                                {{-- <div class="col-sm-3" style="margin-left:8px">
                                                                                     <form action="{{ route('cuti.reject',$data->id)}}" method="POST"> 
                                                                                         @csrf
                                                                                         @method('POST')
                                                                                         <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
                                                                                         <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
-                                                                                </div>
+                                                                                </div> --}}
                                                                             @endif
                 
                                                                             <div class="col-sm-3" style="margin-left:6px">
@@ -118,6 +125,7 @@
                                                                     </td> 
                                                                 </tr>
                                                                 @include('manager.staff.showCuti')
+                                                                @include('manager.staff.cutiReject')
                                                             @endforeach
                                                         </tbody>
                                                     </table>
@@ -215,9 +223,11 @@
                                                                                     </form>
                                                                                 </div>
                                                                                 <div class="col-sm-3" style="margin-left:7px">
-                                                                                    <button class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#Reject{{$data->id}}">
-                                                                                        <i class="fa fa-times btn-sm"></i>
-                                                                                    </button>
+                                                                                    <form action="" method="POST"> 
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#Reject{{$data->id}}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
                                                                                 </div>
                                                                                 {{-- <div class="col-sm-3" style="margin-left:7px">
                                                                                     <form action="{{ route('izin.reject',$data->id)}}" method="POST"> 

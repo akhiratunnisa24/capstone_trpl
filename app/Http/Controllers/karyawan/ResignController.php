@@ -32,17 +32,22 @@ class ResignController extends Controller
      */
     public function index()
     {
-       
+        $cek = Resign::where('id_karyawan', Auth::user()->id_pegawai)->exists();
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
         // dd($karyawan);
         $resign = Resign::all();
      
-        $tes = Auth::user()->karyawan->departemen->nama_departemen;
+        // $tes = Auth::user()->karyawan->divisi;
+        $tes = DB::table('karyawan')
+            ->join('departemen','karyawan.divisi','=','departemen.id')
+            ->where('karyawan.id', Auth::user()->id_pegawai)
+            ->select('departemen.id as id_dep','departemen.nama_departemen as departemen')
+            ->first();
         
         
         // $namdiv = $tes->departemen->nama_departemen;
 
-        return view('karyawan.resign.index', compact('karyawan','tes','resign'));
+        return view('karyawan.resign.index', compact('karyawan','tes','resign','cek'));
     }
 
     /**
@@ -61,6 +66,11 @@ class ResignController extends Controller
     public function store(Request $request)
     {
         $karyawan = Auth::user()->id_pegawai;
+        $tes = DB::table('karyawan')
+            ->join('departemen','karyawan.divisi','=','departemen.id')
+            ->where('karyawan.id', Auth::user()->id_pegawai)
+            ->select('departemen.id as id_dep')
+            ->first();
         //  $validate = $request->validate([
         //         'id_karyawan'  => 'required',
         //         'departemen'  => 'required',
@@ -72,7 +82,7 @@ class ResignController extends Controller
         //     dd($validate);
             $resign = New Resign;
             $resign->id_karyawan = $karyawan;
-            $resign->departemen = $request->departemen;
+            $resign->departemen = $tes->id_dep;
             $resign->tgl_masuk = Carbon::parse($request->tgl_masuk)->format("Y-m-d");
             $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
             $resign->tipe_resign = $request->tipe_resign;

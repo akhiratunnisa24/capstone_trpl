@@ -5,6 +5,7 @@ namespace App\Http\Controllers\karyawan;
 use Carbon\Carbon;
 use App\Models\Izin;
 use App\Models\Jenisizin;
+use App\Models\Datareject;
 use Illuminate\Http\Request;
 use App\Mail\IzinNotification;
 use Illuminate\Support\Facades\DB;
@@ -30,10 +31,10 @@ class IzinkaryawanController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     
-    public function index()
-    {
-        return view('karyawan.cuti.index', compact('izin','jenisizin','cuti','jeniscuti','karyawan'));
-    }
+    // public function index()
+    // {
+    //     return view('karyawan.cuti.index', compact('izin','jenisizin','cuti','jeniscuti','karyawan'));
+    // }
 
     public function store(Request $request)
     {
@@ -152,12 +153,12 @@ class IzinkaryawanController extends Controller
 
     }
 
-    public function show($id)
-    {
-        $izin = Izin::findOrFail($id);
-        $karyawan = Auth::user()->id_pegawai;
+    // public function show($id)
+    // {
+    //     $izin = Izin::findOrFail($id);
+    //     $karyawan = Auth::user()->id_pegawai;
 
-        return view('karyawan.kategori.index',compact('cuti','karyawan'));
-    }
+    //     return view('karyawan.kategori.index',compact('cuti','karyawan'));
+    // }
 
 }

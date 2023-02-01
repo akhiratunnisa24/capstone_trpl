@@ -1,4 +1,4 @@
-{{-- MODALS EDIT DATA CUTI --}}
+{{-- MODALS SHOW IZIN --}}
 <div class="modal fade" id="Showizinm{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="Showizinm" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="col-md-12 modal-content">
@@ -88,6 +88,14 @@
                         @endif
                     </div>
                 </div>
+                @if(isset($alasan) && $data->id == $alasan->id_izin && $data->status == 'Ditolak')
+                    <div class="row">
+                        <label for="alasan" class="col-sm-3 col-form-label">Alasan</label>
+                        <div class="col-sm-9">
+                            <label>: {{$alasan->alasan}}</label>
+                        </div>
+                    </div>     
+                @endif
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

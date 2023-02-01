@@ -100,8 +100,8 @@ class HomeController extends Controller
             ->count('jam_masuk');
         // Absen Bulan Lalu
         $absenBulanlalu  = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
-        ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-        ->count('jam_masuk');
+            ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+            ->count('jam_masuk');
 
         // Absen Terlambat Hari Ini
         $absenTerlambatHariIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
@@ -150,13 +150,13 @@ class HomeController extends Controller
 
         // DB::table(..)->select(..)->whereNotIn('book_price', [100,200])->get();
         $tidakMasukHariIni = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
-        ->whereMonth('tanggal', '=', Carbon::now()->month)
-        ->whereDay('tanggal', '=', Carbon::now())
-        ->count('nama');
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->whereDay('tanggal', '=', Carbon::now())
+            ->count('nama');
         $tidakMasukBulanIni = Tidakmasuk::whereYear('tanggal', '=',Carbon::now()->year)
-        ->whereMonth('tanggal', '=', Carbon::now()->month)
-        ->count('nama');
-   
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->count('nama');
+    
 
 
 

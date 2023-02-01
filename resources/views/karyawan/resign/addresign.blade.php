@@ -24,7 +24,7 @@
 
                     <div class="form-group col-xs-12" id="departemen">
                         <label for="departemen" class="form-label">Departemen</label>
-                        <input id="departemen" class="form-control" value="{{$tes}} " name="departemen" autocomplete="off" placeholder="Nama Karyawan" readonly>
+                        <input id="departemen" class="form-control" value="{{$tes->departemen}} " name="departemen" autocomplete="off" placeholder="Nama Karyawan" readonly>
                         
                     
                     </div>

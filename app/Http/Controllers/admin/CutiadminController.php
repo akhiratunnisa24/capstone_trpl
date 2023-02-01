@@ -49,7 +49,11 @@ class CutiadminController extends Controller
 
         //DATA IZIN
         $izin = Izin::latest()->paginate(10);
-        return view('admin.cuti.index', compact('cuti','izin','type','row'));
+        $alasan = DB::table('datareject')
+            ->join('izin','datareject.id_izin','=','izin.id')
+            ->select('datareject.alasan as alasan')
+            ->first();
+        return view('admin.cuti.index', compact('cuti','izin','type','row','alasan'));
         
         } else {
         
@@ -61,7 +65,7 @@ class CutiadminController extends Controller
     {
         $cuti = Cuti::findOrFail($id);
         $karyawan = Auth::user()->id_pegawai;
- 
+
         return view('admin.cuti.index',compact('cuti','karyawan'));
     }
 

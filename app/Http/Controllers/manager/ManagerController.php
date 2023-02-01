@@ -6,9 +6,9 @@ use PDF;
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
+use App\Models\Resign;
 use App\Models\Absensi;
 use App\Models\Karyawan;
-use App\Models\Resign;
 use App\Models\Datareject;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
@@ -18,6 +18,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Mail\CutiApproveNotification;
 use App\Mail\IzinApproveNotification;
 use App\Exports\AbsensiDepartemenExport;
 
@@ -35,7 +36,9 @@ class ManagerController extends Controller
         //ambil data dengan id_departemen sama dengan manager
         //$staff= Karyawan::where('divisi',$manager_iddep->divisi)->get();
         $staff= Karyawan::with('departemens')
-        ->where('divisi',$manager_iddep->divisi)->get();
+            ->where('divisi',$manager_iddep->divisi)
+            ->where('jabatan','!=','Manager')
+            ->get();
 
         return view('manager.staff.dataStaff', compact('staff','row'));
     }
@@ -115,22 +118,23 @@ class ManagerController extends Controller
             ->select('izin.*','karyawan.nama','jenisizin.jenis_izin')
             ->distinct()
             ->get();
+        $alasan = DB::table('datareject')
+            ->join('izin','datareject.id_izin','=','izin.id')
+            ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
+            ->first();
+        $alasancuti = DB::table('datareject')
+            ->join('cuti','datareject.id_cuti','=','cuti.id')
+            ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
+            ->first();
 
-        return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
-    }
-
-    public function showCuti($id)
-    {
-        $cutiStaff = Cuti::findOrFail($id);
-
-        return view('manager.staff.cutiStaff',compact('cutiStaff'));
+        return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','alasan','alasancuti'));
     }
 
     public function cutiapproved(Request $request, $id)
     {
         $cuti = Cuti::where('id',$id)->first();
 
-        $data = DB::table('cuti')
+        $datacuti = DB::table('cuti')
         ->join('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
         ->join('settingalokasi', 'cuti.id_settingalokasi', '=', 'settingalokasi.id')
         ->where('settingalokasi.tipe_approval', 'Tidak Bertingkat')
@@ -140,7 +144,7 @@ class ManagerController extends Controller
 
         // dd($data);
 
-        if($data->tipe_approval == 'Tidak Bertingkat')
+        if($datacuti->tipe_approval == 'Tidak Bertingkat')
         {
             $jml_cuti = $cuti->jml_cuti;
             Cuti::where('id', $id)->update(
@@ -160,6 +164,21 @@ class ManagerController extends Controller
                 ['durasi' => $durasi_baru]
             );
 
+            //ambil data karyawan
+            
+            $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+            $data = [
+                'subject'     =>'Notifikasi Cuti Disetujui',
+                'id'          =>$cuti->id,
+                'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+                'keperluan'   =>$cuti->keperluan,
+                'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+                'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+                'jml_cuti'    =>$cuti->jml_cuti,
+                'status'      =>$cuti->status,
+            ];
+
+
             return redirect()->back()->withInput();
 
         }else{
@@ -172,22 +191,50 @@ class ManagerController extends Controller
         
     }
 
-    public function cutireject($id)
+    public function cutireject(Request $request, $id)
     {
+        $status = 'Ditolak';
+        Cuti::where('id',$id)->update([
+            'status' => $status,
+        ]);
         $cuti = Cuti::where('id',$id)->first();
-            $status = 'Ditolak';
-            Cuti::where('id',$id)->update([
-                'status' => $status,
-            ]);
-            return redirect()->back()->withInput();
-    }
 
-    public function showIzin($id)
-    {
-        $izin = Izin::findOrFail($id);
-        $karyawan = Auth::user()->id_pegawai;
- 
-        return view('manager.staff.cutiStaff',compact('izin','karyawan',['tp'=>2]));
+        $datareject          = new Datareject;
+        $datareject->id_cuti = $cuti->id;
+        $datareject->id_izin = NULL;
+        $datareject->alasan  = $request->alasan;
+        $datareject->save();  
+
+        //----SEND EMAIL KE KARYAWAN -------
+        //ambil nama jeniscuti
+        $ct = DB::table('cuti')
+            ->join('jeniscuti','cuti.id_jeniscuti','=','jeniscuti.id')
+            ->where('cuti.id',$id)
+            ->select('cuti.*','jeniscuti.jenis_cuti as jenis_cuti')
+            ->first();
+
+        //ambil nama dan email karyawan tujuan
+        //sementara tidak digunakan
+        $karyawan = DB::table('cuti')
+            ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+            ->where('cuti.id',$cuti->id)
+            ->select('karyawan.email as email','karyawan.nama as nama')
+            ->first(); 
+        //Stujuan = $karyawan->email;
+        $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+        $data = [
+            'subject'     =>'Notifikasi Cuti Ditolak',
+            'id'          =>$ct->id,
+            'id_jeniscuti'=>$ct->jenis_cuti,
+            'keperluan'   =>$ct->keperluan,
+            'nama'        =>$karyawan->nama,
+            'tgl_mulai'   =>Carbon::parse($ct->tgl_mulai)->format("d M Y"),
+            'tgl_selesai' =>Carbon::parse($ct->tgl_selesai)->format("d M Y"),
+            'jml_cuti'    =>$ct->jml_cuti,
+            'status'      =>$ct->status,
+        ];
+        Mail::to($tujuan)->send(new CutiApproveNotification($data));
+        return redirect()->back()->withInput();
     }
 
     public function izinApproved(Request $request, $id)
@@ -203,6 +250,8 @@ class ManagerController extends Controller
             ->where('izin.id',$id)
             ->select('izin.*','jenisizin.jenis_izin as jenis_izin')
             ->first();
+        
+        //ambil data karyawan 
         $karyawan = DB::table('izin')
             ->join('karyawan','izin.id_karyawan','=','karyawan.id')
             ->where('izin.id',$izin->id)
@@ -233,8 +282,8 @@ class ManagerController extends Controller
 
         $datareject          = new Datareject;
         $datareject->id_cuti = NULL;
-        $datareject->id_izin = $iz->id_izin;
-        $datareject->alasan  = $iz->alasan;
+        $datareject->id_izin = $iz->id;
+        $datareject->alasan  = $request->alasan;
         $datareject->save();   
 
         $izin = DB::table('izin')
@@ -388,4 +437,27 @@ class ManagerController extends Controller
         // ->where('settingalokasi.tipe_approval','Tidak Bertingkat')
         // ->select('cuti.*','alokasicuti.*','settingalokasi.tipe_approval')
         // ->first();
+
+   // public function showCuti($id)
+    // {
+    //     $cutiStaff = Cuti::findOrFail($id);
+
+    //     return view('manager.staff.cutiStaff',compact('cutiStaff'));
+    // }
+
+    
+    // public function showIzin($id)
+    // {
+    //     $izin = Izin::findOrFail($id);
+    //     $karyawan = Auth::user()->id_pegawai;
+    //     // $alasan = DB::table('datareject')
+    //     //     ->join('izin','datareject.id_izin','=','izin.id')
+    //     //     ->where('datareject.id_izin',$id)
+    //     //     ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
+    //     //     ->first();
+    //     $alasan = Datareject::where('id_izin','=',$id);
+    //     dd($alasan->id_izin);
+    
+    //     return view('manager.staff.cutiStaff',compact('izin','karyawan','alasan',['tp'=>2]));
+    // }
 

@@ -102,7 +102,14 @@ class ResignAdminController extends Controller
         Resign::where('id',$id)->update([
             'status' => $status,
         ]);
-        return redirect()->route('resignkaryawan',['type'=>2]);
+    
+        $sk = 'Non-Aktif';
+        Karyawan::where('id',$resign->id_karyawan)
+        ->update([
+            'status_kerja' =>$sk,
+        ]);
+ 
+        return redirect()->route('resignkaryawan');
     }
 
     public function reject(Request $request, $id)

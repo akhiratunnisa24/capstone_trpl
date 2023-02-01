@@ -59,7 +59,7 @@ class SettingalokasicutiController extends Controller
                 'mode_alokasi' => 'required',
                 'departemen'   => 'required',
             ]);
-            $cek = !Settingalokasi::where('id_jeniscuti', $request->id_jeniscuti)->where('departemen', $request->departemen)->exists();
+            $cek = Settingalokasi::where('id_jeniscuti', $request->id_jeniscuti)->where('departemen', $request->departemen)->exists();
             if(!$cek)
             {
                 $settingalokasi = new Settingalokasi;

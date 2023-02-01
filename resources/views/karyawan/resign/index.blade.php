@@ -26,8 +26,12 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
                                             {{-- <strong>List Permohonan Cuti</strong> --}}
-                                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                                data-target="#Modal"> Form Ajukan Resign</a>
+                                            @if(!$cek)
+                                                <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
+                                                    data-target="#Modal"> Form Ajukan Resign</a>
+                                            @else
+                                                <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" disabled>Form Ajukan Resign</a>
+                                            @endif
                                         </div>
                                         <!-- modals tambah data cuti -->
                                         @include('karyawan.resign.addresign')
@@ -56,7 +60,7 @@
                                                                 <tr>
                                                                     {{-- <td>1</td> --}}
                                                                     <td>{{ $r->karyawans->nama }}</td>
-                                                                    <td>{{ $r->departemen }}</td>
+                                                                    <td>{{ $r->departemens->nama_departemen }}</td>
                                                                     <td>{{ \Carbon\Carbon::parse($r->tgl_mulai)->format('d/m/Y') }}
                                                                     </td>
                                                                     <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}
