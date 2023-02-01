@@ -15,25 +15,26 @@ use Illuminate\Support\Facades\Mail;
 
 class RekruitmenController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // /**
+    //  * Create a new controller instance.
+    //  *
+    //  * @return void
+    //  */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // /**
+    //  * Display a listing of the resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
     public function index()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $posisi = Lowongan::all()->sortByDesc('created_at');
+        
         
 
         return view('admin.rekruitmen.index', compact('row', 'posisi'));
@@ -78,6 +79,7 @@ class RekruitmenController extends Controller
     {
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $posisi = Lowongan::all();
 
 
         if ($role == 1) {
@@ -99,6 +101,11 @@ class RekruitmenController extends Controller
             ->where('status_lamaran', '=', 'tahap 3')
             ->count('posisi');
 
+            $totalDiterima = Rekruitmen::all()
+            ->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'Diterima')
+            ->count('posisi');
+
             $dataTahap1 = Rekruitmen::where('id_lowongan', $id)
             ->where('status_lamaran', '=', 'tahap 1')
             ->get();
@@ -110,13 +117,18 @@ class RekruitmenController extends Controller
             $dataTahap3 = Rekruitmen::where('id_lowongan', $id)
             ->where('status_lamaran', '=', 'tahap 3')
             ->get();
-            
-            // dd($dataTahap2);
+
+            $dataDiterima = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'Diterima')
+            ->get();
+
+           
+            // dd($rekrutmen);
 
 
 
 
-            return view('admin.rekruitmen.show', compact('lowongan', 'totalTahap1', 'totalTahap2', 'totalTahap3', 'dataTahap1', 'dataTahap2', 'dataTahap3', 'row'));
+            return view('admin.rekruitmen.show', compact('totalDiterima','lowongan', 'totalTahap1', 'totalTahap2', 'totalTahap3', 'dataTahap1', 'dataTahap2', 'dataTahap3', 'row', 'dataDiterima', 'posisi'));
 
         } else {
 
@@ -144,7 +156,7 @@ class RekruitmenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $status = 'tahap 2';
+        
         Rekruitmen::where('id', $id)->update(
             ['status_lamaran' =>$request->post('status_lamaran')]
         );
@@ -154,9 +166,23 @@ class RekruitmenController extends Controller
         $email = new RekruitmenNotification($data);
         Mail::to($tujuan)->send($email);
 
+        $rekrutmen = Rekruitmen::find($id);
+
+        if ($rekrutmen->status = 'Diterima') {
+            $lowongan = Lowongan::find($rekrutmen->id_lowongan);
+            $lowongan->jumlah_dibutuhkan--;
+            if ($lowongan->jumlah_dibutuhkan == 0) {
+                $lowongan->status = 'Tidak Aktif';
+            }
+            $lowongan->save();
+        }
+
         
         return redirect()->back();
+        
     }
+
+    
 
     /**
      * Remove the specified resource from storage.
@@ -166,21 +192,33 @@ class RekruitmenController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Lowongan::destroy($id);
+        return redirect()->back();
+        // return redirect('karyawan'); 
     }
 
     public function create_pelamar(Request $request)
+    // {
+    //     $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+    //     // $posisi = Lowongan::all()->where('status','=','Aktif');
+    //     $posisi = Lowongan::all()->where('status','=','Aktif')->pluck('posisi');
+
+
+
+    //     return view('admin.rekruitmen.formPelamar', compact('row',  'posisi'));
+
+    // }
+
     {
-        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $posisi = Lowongan::all()
-                ->where('status','=','Aktif');
+        // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $posisi = Lowongan::all()->where('status','=','Aktif');
+        $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
 
+        if ($openRekruitmen->count() > 0) {
+            return view('admin.rekruitmen.formPelamar', compact( 'posisi'));
+        }
 
-        
-        
-
-        return view('admin.rekruitmen.formPelamar', compact('row',  'posisi'));
-
+        return view('admin.rekruitmen.viewTidakAdaLowongan');
     }
 
     public function store_pelamar(Request $request)

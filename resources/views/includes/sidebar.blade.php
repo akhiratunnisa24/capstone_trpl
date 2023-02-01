@@ -63,10 +63,8 @@
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-briefcase-check"></i><span class="text-info panel-title">Rekruitmen</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="/data_rekrutmen"><i class="fa fa-server"></i><span>Data Rekrutmen</span></a></li>
-                            <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Proses Rekrutmen</span></a></li>
-                            <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a></li>
-                            <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li>
+                            <li><a href="/data_rekrutmen"><i class="fa fa-server"></i><span>Rekruitmen</span></a></li>
+                            
                         </ul>
                 </li>
 

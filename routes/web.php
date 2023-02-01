@@ -78,7 +78,15 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('show_formSelesai', [RekruitmenController::class, 'formSelesai'])->name('formSelesai');
     Route::get('show_kanidat{id}', [RekruitmenController::class, 'show_kanidat'])->name('show_kanidat');
     Route::post('update_pelamar{id}', [RekruitmenController::class, 'update'])->name('update_pelamar');
+    Route::get('hapuslowongan{id}', [RekruitmenController::class, 'destroy'])->name('hapuslowongan');
+    
     Route::get('notif_rekrutmen', [NotifMailRekruitmenController::class, 'index']);
+
+    
+    Route::get('Form-Rekruitmen-RYNEST', [RekruitmenController::class, 'create_pelamar'] ,function () {
+        return view('admin.rekruitmen.formPelamar');
+    });
+
 
 
 
