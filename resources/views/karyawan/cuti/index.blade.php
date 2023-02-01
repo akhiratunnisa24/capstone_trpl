@@ -42,8 +42,12 @@
                                 <div class="col-md-12">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
-                                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                                data-target="#Modal"> Ajukan Cuti</a>
+                                            {{-- @if(!$cek) --}}
+                                                <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
+                                                    data-target="#Modal"> Ajukan Cuti</a>
+                                            {{-- @else
+                                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" disabled> Ajukan Cuti</a>
+                                            @endif --}}
                                         </div>
                                         <!-- modals tambah data cuti -->
                                         @include('karyawan.cuti.addcuti')
@@ -177,7 +181,7 @@
                                                                         <td>{{ $data->keperluan }}</td>
 
                                                                         <!-- tanggal mulai & tanggal selesai -->
-                                                                        @if ($data->tgl_mulai != $data->tgl_selesai)
+                                                                        @if ($data->tgl_selesai != null)
                                                                             <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
                                                                                 s/d
                                                                                 {{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }}

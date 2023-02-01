@@ -7,6 +7,7 @@ use App\Models\Cuti;
 use App\Models\Izin;
 use App\Models\Karyawan;
 use App\Models\Jenisizin;
+use App\Models\Datareject;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use App\Mail\CutiNotification;
@@ -36,10 +37,27 @@ class CutikaryawanController extends Controller
     public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
          //index cuti
-         $cuti = Cuti::latest()->paginate(10);
+        $cuti = Cuti::latest()->paginate(10);
+        // $cek  = Cuti::select(DB::raw("COUNT('id_karyawan) as jumlah"))
+        //     ->where('id_karyawan', Auth::user()->id_pegawai)
+        //     ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+        //     ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+        //     ->where('jumlah','>',2)
+        //     ->exists();
+        $alasancuti = DB::table('datareject')
+            ->join('cuti','datareject.id_cuti','=','cuti.id')
+            ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
+            ->first();
          //index izin
-         $izin = Izin::latest()->paginate(10);
+
+        $izin = Izin::latest()->paginate(10);
+        $alasan = DB::table('datareject')
+            ->join('izin','datareject.id_izin','=','izin.id')
+            ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
+            ->first();
+        // dd($alasan);
  
         //create cuti
         $karyawan = Auth::user()->id_pegawai;
@@ -51,19 +69,11 @@ class CutikaryawanController extends Controller
             ->where('alokasicuti.durasi','>',0)
             ->distinct()
             ->get();
-        // $jeniscuti = DB::table('alokasicuti')
-        //     ->join('jeniscuti','alokasicuti.id_jeniscuti','=','jeniscuti.id')
-        //     ->join('settingalokasi','alokasicuti.id_settingalokasi','=','settingalokasi.id')
-        //     ->select('alokasicuti.id','alokasicuti.id_jeniscuti','jeniscuti.jenis_cuti', 'settingalokasi.id as id_settingalokasi', 'alokasicuti.durasi','alokasicuti.aktif_dari','alokasicuti.sampai')
-        //     ->where('alokasicuti.id_karyawan','=', Auth::user()->id_pegawai)
-        //     ->where('alokasicuti.durasi','>',0)
-        //     ->get();
 
-        
         //form izin
         $jenisizin = Jenisizin::all();
         $tipe = $request->query('tipe', 1);
-        return view('karyawan.cuti.index', compact('row','izin','jenisizin','cuti','jeniscuti','karyawan','tipe'));
+        return view('karyawan.cuti.index', compact('row','izin','jenisizin','cuti','jeniscuti','karyawan','tipe','alasan','alasancuti'));
     }
 
     public function getDurasi(Request $request)
@@ -145,11 +155,11 @@ class CutikaryawanController extends Controller
             ->with('success','Email Notifikasi Berhasil Dikirim');
     }
 
-    public function show($id)
-    {
-        $cuti = Cuti::findOrFail($id);
-        $karyawan = Auth::user()->id_pegawai;
+    // public function show($id)
+    // {
+    //     $cuti = Cuti::findOrFail($id);
+    //     $karyawan = Auth::user()->id_pegawai;
 
-        return view('karyawan.kategori.index',compact('cuti','karyawan'));
-    }
+    //     return view('karyawan.kategori.index',compact('cuti','karyawan'));
+    // }
 }
