@@ -44,6 +44,13 @@ class ResignController extends Controller
             ->select('departemen.id as id_dep','departemen.nama_departemen as departemen')
             ->first();
         
+     
+        // $tes = Auth::user()->karyawan->departemen->nama_departemen;
+        $tes = DB::table('karyawan')
+            ->join('departemen','karyawan.divisi','=','departemen.id')
+            ->where('karyawan.id', Auth::user()->id_pegawai)
+            ->select('departemen.id as id_dep','departemen.nama_departemen as departemen')
+            ->first();
         
         // $namdiv = $tes->departemen->nama_departemen;
 

@@ -51,7 +51,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($staff as $r)
+                                                            @foreach ($staff1 as $r)
                                                             {{-- @if ($r->id_karyawan == Auth::user()->id_pegawai) --}}
                                                                 <tr>
                                                                     <td>{{$loop->iteration}}</td>
@@ -91,7 +91,7 @@
                                                                         <div class="row">
                                                                             @if($r->status == 'Pending')
                                                                                 <div class="col-sm-3">
-                                                                                    <form action="{{ route('resignapproved',$r->id)}}" method="POST"> 
+                                                                                    <form action="{{ route('resign_approved_manager',$r->id)}}" method="POST"> 
                                                                                         @csrf
                                                                                         <input type="hidden" name="status" value="Disetujui Manager" class="form-control" hidden> 
                                                                                         <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
@@ -105,18 +105,20 @@
                                                                                         <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
                                                                                 </div>
-                                                                            @endif
+                                                                            @endif   
+                                                                                <div>
+                                                                                   <form action="" method="POST">
+                                                                                        <a class="btn btn-info btn-sm"
+                                                                                            data-toggle="modal"
+                                                                                            data-target="#Showresign{{ $r->id }}">
+                                                                                             <i class="fa fa-eye"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                            
                 
                                                                             
-                                                                    <td class="text-center">
-                                                                        <form action="" method="POST">
-                                                                            <a class="btn btn-info btn-sm"
-                                                                                data-toggle="modal"
-                                                                                data-target="#Showresign{{ $r->id }}">
-                                                                                <i class="fa fa-eye"></i>
-                                                                            </a>
-                                                                        </form>
-                                                                    </td>
+                                                                   
                                                                 </tr>
                                                                 {{-- modal show cuti --}}
                                                                 @include('karyawan.resign.showresign')
