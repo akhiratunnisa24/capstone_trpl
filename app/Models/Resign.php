@@ -29,6 +29,7 @@ class Resign extends Model
     }
     public function departemens()
     {
-        return $this->belongsTo(Departemen::class, 'nama_departemen', 'id');
+        return $this->belongsTo(Departemen::class, 'departemen', 'id');
     }
+    
 }

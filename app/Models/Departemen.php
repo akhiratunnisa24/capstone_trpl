@@ -41,4 +41,8 @@ class Departemen extends Model
     {
         return $this->hasMany(Tidakmasuk::class, 'divisi', 'id');
     }
+    public function resign()
+    {
+        return $this->hasMany(Resign::class, 'departemen', 'id');
+    }
 }

@@ -368,15 +368,21 @@ class ManagerController extends Controller
         $resign = Resign::all();
      
         $tes = Auth::user()->karyawan->departemen->nama_departemen;
-        
+
         $manager_iddep = DB::table('karyawan')
         ->where('id','=',Auth::user()->id_pegawai)
         ->select('divisi')->first();
 
-        $staff= Resign::where('divisi',$manager_iddep->divisi)->get();
-        // $namdiv = $tes->departemen->nama_departemen;
+        // dd( $manager_iddep);
+        //ambil data dengan id_departemen sama dengan manager
+        //$staff= Karyawan::where('divisi',$manager_iddep->divisi)->get();
+        $staff1= Resign::with('departemens','karyawan')
+        ->where('departemen',$manager_iddep->divisi)->get();
+        
+        
+    // $namdiv = $tes->departemen->nama_departemen;
 
-        return view('manager\staff.resignStaff', compact('karyawan','staff','karyawan1','tes','resign'));
+        return view('manager\staff.resignStaff', compact('karyawan','karyawan1','resign','tes','staff1'));
     }
 
 }

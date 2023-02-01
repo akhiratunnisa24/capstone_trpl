@@ -59,6 +59,13 @@
                     </div>
                 </div>
 
+                <div class="form-group row">
+                    <label for="tgl_selesai" class="col-sm-3 col-form-label">Alasan Resign</label>
+                    <div class="col-sm-9">
+                        <label>: {{$r->alasan}}</label>
+                    </div>
+                </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>

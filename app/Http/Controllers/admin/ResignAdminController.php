@@ -102,7 +102,30 @@ class ResignAdminController extends Controller
         Resign::where('id',$id)->update([
             'status' => $status,
         ]);
-        return redirect()->route('resignkaryawan',['type'=>2]);
+        // $statuskerja = DB::table('resign')
+        // ->join('karyawan','resign.id_karyawan','=','karyawan.id')
+        // ->where('id_karyawan', $resign->id)
+        // ->select('karyawan.id as id_karyawan')
+        // ->first();
+    
+        $sk = 'Non-Aktif';
+        Karyawan::where('id',$resign->id_karyawan)
+        ->update([
+            'status_kerja' =>$sk,
+        ]);
+
+
+        return redirect()->route('resignkaryawan');
+    }
+
+    public function approvedmanager(Request $request, $id)
+    {
+        $resign = Resign::where('id',$id)->first();
+        $status = 'Disetujui Manager';
+        Resign::where('id',$id)->update([
+            'status' => $status,
+        ]);
+        return redirect()->back();
     }
 
     public function reject(Request $request, $id)
@@ -112,7 +135,7 @@ class ResignAdminController extends Controller
         Resign::where('id',$id)->update([
             'status' => $status,
         ]);
-        return redirect()->route('resignkaryawan',['type'=>2])->withInput();
+        return redirect()->route('resignkaryawan')->withInput();
     }
 
     public function getUserData($id)

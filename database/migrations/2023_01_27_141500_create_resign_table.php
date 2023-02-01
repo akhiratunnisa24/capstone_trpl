@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('resign', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_karyawan');
-            $table->string('departemen');
+            $table->unsignedBigInteger('departemen');
             $table->date('tgl_masuk');
             $table->date('tgl_resign');
             $table->string('tipe_resign');

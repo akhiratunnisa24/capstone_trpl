@@ -560,7 +560,7 @@
                                                                                     <div class="input-group">
                                                                                         <input id="datepicker-autoclose21" type="text"
                                                                                                 class="form-control" placeholder="yyyy" id="4"
-                                                                                                name="tahunLulusNonFormal" autocomplete="off" rows="10" required><br>
+                                                                                                name="tahunLulusNonFormal" autocomplete="off" rows="10" ><br>
                                                                                         <span class="input-group-addon bg-custom b-0"><i
                                                                                                     class="mdi mdi-calendar text-white"></i></span>
                                                                                     </div>

@@ -56,7 +56,7 @@
                                                                 <tr>
                                                                     <td>{{$loop->iteration}}</td>
                                                                     <td>{{ $r->karyawan->nama }}</td>
-                                                                    <td>{{ $r->departemen }}</td>
+                                                                    <td>{{ $r->departemens->nama_departemen }}</td>
                                                                     <td>{{ \Carbon\Carbon::parse($r->tgl_mulai)->format('d/m/Y') }}
                                                                     </td>
                                                                     <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}
@@ -89,11 +89,11 @@
                                                                     @endif
                                                                     <td id="b" class="text-center" > 
                                                                         <div class="row">
-                                                                            @if($r->status == 'Pending')
+                                                                            @if($r->status == 'Disetujui Manager')
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('resignapproved',$r->id)}}" method="POST"> 
                                                                                         @csrf
-                                                                                        <input type="hidden" name="status" value="Disetujui Manager" class="form-control" hidden> 
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden> 
                                                                                         <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
                                                                                     </form>
                                                                                 </div>
@@ -108,14 +108,13 @@
                                                                             @endif
                 
                                                                             
-                                                                    <td class="text-center">
-                                                                        <form action="" method="POST">
-                                                                            <a class="btn btn-info btn-sm"
-                                                                                data-toggle="modal"
-                                                                                data-target="#Showresign{{ $r->id }}">
-                                                                                <i class="fa fa-eye"></i>
-                                                                            </a>
-                                                                        </form>
+                                                                            <div class="col-sm-3">
+                                                                                <a class="btn btn-info btn-sm"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#Showresign{{ $r->id }}">
+                                                                                    <i class="fa fa-eye"></i>
+                                                                                </a>
+                                                                            </div>
                                                                     </td>
                                                                 </tr>
                                                                 {{-- modal show cuti --}}
