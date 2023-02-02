@@ -22,7 +22,7 @@
                 <div class="form-group row">
                     <label for="id_jeniscuti" class="col-sm-3 col-form-label">Departemen</label>
                     <div class="col-sm-9">
-                        <label>: {{$r->departemen}}</label>
+                        <label>: {{$r->departemens->nama_departemen}}</label>
                     </div>
                 </div>
                 <div class="form-group row">

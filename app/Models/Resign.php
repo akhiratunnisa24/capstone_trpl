@@ -31,5 +31,8 @@ class Resign extends Model
     {
         return $this->belongsTo(Departemen::class, 'departemen', 'id');
     }
-    
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
 }
