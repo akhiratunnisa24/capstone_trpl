@@ -70,12 +70,12 @@
             <div class="col-sm-6 col-lg-3 nav nav-tabs navtab-bg">
                 <div class="panel panel-primary text-center active">
                     <div class="panel-heading btn-success">
-                        <a href="#" class="panel-title ">
+                        <a href="#tahap1" data-toggle="tab" class="panel-title ">
                             <h4 class="panel-title">Data Pelamar</h4>
                         </a>
                     </div>
                     <div class="panel-body">
-                        <h3 class=""><b>Tahap 1</b></h3>
+                        <h3 class="" ><b>Tahap 1</b></h3>
                         <p class="text-muted"><b>Total {{ $totalTahap1 }} Pelamar</b>
                         </p>
                     </div>
@@ -85,7 +85,7 @@
             <div class="col-sm-6 col-lg-3">
                 <div class="panel panel-primary text-center">
                     <div class="panel-heading btn-success">
-                        <a href="#" class="panel-title ">
+                        <a href="#tahap2" data-toggle="tab" class="panel-title ">
                             <h4 class="panel-title">Data Pelamar</h4>
                         </a>
                     </div>
@@ -100,7 +100,7 @@
             <div class="col-sm-6 col-lg-3">
                 <div class="panel panel-primary text-center">
                     <div class="panel-heading btn-success">
-                        <a href="#" class="panel-title ">
+                        <a href="#tahap3" data-toggle="tab" class="panel-title ">
                             <h4 class="panel-title">Data Pelamar</h4>
                         </a>
                     </div>
@@ -115,7 +115,7 @@
             <div class="col-sm-6 col-lg-3">
                 <div class="panel panel-primary text-center">
                     <div class="panel-heading btn-success">
-                        <a href="#" class="panel-title ">
+                        <a href="#tahap4" data-toggle="tab" class="panel-title ">
                             <h4 class="panel-title">Data Pelamar</h4>
                         </a>
                     </div>
@@ -175,7 +175,6 @@
                                     <th>Nama</th>
                                     <th>Tanggal Lahir</th>
                                     <th>Email</th>
-                                    <th>Nomor Handphone</th>
                                     <th>L / P</th>
                                     <th>Alamat</th>
                                     <th>Status</th>
@@ -184,7 +183,7 @@
                             </thead>
 
 
-                            <tbody>
+                            <tbody> 
                                 @foreach ($dataTahap1 as $k)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
@@ -192,7 +191,6 @@
                                         <td>{{ $k->nama }}</td>
                                         <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
                                         <td>{{ $k->email }}</td>
-                                        <td>{{ $k->no_hp }}</td>
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
                                         <td>{{ $k->status_lamaran }}</td>
@@ -208,7 +206,7 @@
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmSave()">
                                                         @csrf
                                                         <input type="hidden" name="status_lamaran" value="tahap 2"
                                                             class="form-control" hidden>
@@ -217,7 +215,7 @@
                                                     </form>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmTolak()">
                                                         @csrf
                                                         @method('POST')
                                                         <input type="hidden" name="status_lamaran" value="Ditolak"
@@ -251,7 +249,6 @@
                                     <th>Nama</th>
                                     <th>Tanggal Lahir</th>
                                     <th>Email</th>
-                                    <th>Nomor Handphone</th>
                                     <th>L / P</th>
                                     <th>Alamat</th>
                                     <th>Status</th>
@@ -268,7 +265,6 @@
                                         <td>{{ $k->nama }}</td>
                                         <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
                                         <td>{{ $k->email }}</td>
-                                        <td>{{ $k->no_hp }}</td>
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
                                         <td>{{ $k->status_lamaran }}</td>
@@ -284,7 +280,7 @@
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmSave2()">
                                                         @csrf
                                                         <input type="hidden" name="status_lamaran" value="tahap 3"
                                                             class="form-control" hidden>
@@ -293,7 +289,7 @@
                                                     </form>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmTolak2()">
                                                         @csrf
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
@@ -326,7 +322,6 @@
                                     <th>Nama</th>
                                     <th>Tanggal Lahir</th>
                                     <th>Email</th>
-                                    <th>Nomor Handphone</th>
                                     <th>L / P</th>
                                     <th>Alamat</th>
                                     <th>Status</th>
@@ -343,7 +338,6 @@
                                         <td>{{ $k->nama }}</td>
                                         <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
                                         <td>{{ $k->email }}</td>
-                                        <td>{{ $k->no_hp }}</td>
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
                                         <td>{{ $k->status_lamaran }}</td>
@@ -359,7 +353,7 @@
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmSave3()">
                                                         @csrf
                                                         <input type="hidden" name="status_lamaran" value="Diterima"
                                                             class="form-control" hidden>
@@ -368,7 +362,7 @@
                                                     </form>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmTolak3()">
                                                         @csrf
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
@@ -401,7 +395,6 @@
                                     <th>Nama</th>
                                     <th>Tanggal Lahir</th>
                                     <th>Email</th>
-                                    <th>Nomor Handphone</th>
                                     <th>L / P</th>
                                     <th>Alamat</th>
                                     <th>Status</th>
@@ -418,7 +411,6 @@
                                         <td>{{ $k->nama }}</td>
                                         <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
                                         <td>{{ $k->email }}</td>
-                                        <td>{{ $k->no_hp }}</td>
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
                                         <td>{{ $k->status_lamaran }}</td>
@@ -456,4 +448,28 @@
 
                 
             </div>
+
+            <script>
+function confirmSave() {
+    return confirm("Apakah Anda yakin akan melanjutkan kanidat ini ke tahap 2?");
+}
+function confirmSave2() {
+    return confirm("Apakah Anda yakin akan melanjutkan kanidat ini ke tahap 3?");
+}
+function confirmSave3() {
+    return confirm("Apakah Anda yakin akan menerima kanidat ini?");
+}
+function confirmTolak() {
+    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
+}
+function confirmTolak2() {
+    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
+}
+function confirmTolak3() {
+    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
+}
+
+</script>
+
+
         @endsection

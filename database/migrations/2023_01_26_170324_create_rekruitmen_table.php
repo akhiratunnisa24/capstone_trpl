@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->text('alamat')->nullable();
             $table->text('no_hp')->nullable();
-            $table->integer('no_kk')->nullable();
+            $table->string('no_kk')->nullable();
             $table->string('gaji')->nullable();
             $table->string('cv')->nullable();
             $table->string('status_lamaran')->nullable();

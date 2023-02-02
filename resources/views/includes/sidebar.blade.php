@@ -75,13 +75,12 @@
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-briefcase-check"></i><span
-                            class="text-info panel-title">Rekruitmen</span><span class="pull-right"><i
-                                class="mdi mdi-plus"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="/data_rekrutmen"><i class="fa fa-server"></i><span>Rekruitmen</span></a></li>
-
-                    </ul>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-briefcase-check"></i><span class="text-info panel-title">Rekruitmen</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="/data_rekrutmen"><i class="fa fa-check-square"></i><span>Rekruitmen</span></a></li>
+                            <li><a href="/metode_rekrutmen"><i class="fa fa-sitemap"></i><span>Tahapan Rekruitmen</span></a></li>
+                            
+                        </ul>
                 </li>
 
                 <li class="has_sub">

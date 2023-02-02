@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\RekruitmenNotification;
+use App\Models\MetodeRekruitmen;
 use Illuminate\Support\Facades\Mail;
 
 class RekruitmenController extends Controller
@@ -33,7 +34,7 @@ class RekruitmenController extends Controller
     public function index()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $posisi = Lowongan::all()->sortByDesc('created_at');
+        $posisi = Lowongan::all()->sortBy('status');
         
         
 
@@ -168,13 +169,27 @@ class RekruitmenController extends Controller
 
         $rekrutmen = Rekruitmen::find($id);
 
-        if ($rekrutmen->status = 'Diterima') {
+        if ($rekrutmen->status_lamaran == 'Diterima') {
             $lowongan = Lowongan::find($rekrutmen->id_lowongan);
             $lowongan->jumlah_dibutuhkan--;
             if ($lowongan->jumlah_dibutuhkan == 0) {
                 $lowongan->status = 'Tidak Aktif';
             }
             $lowongan->save();
+
+            // setelah karyawan diterima masuk ke tabel karyawan
+
+            // $karyawan = new Karyawan();
+            // $karyawan->nik = $rekrutmen->nik;
+            // $karyawan->tgllahir = $rekrutmen->tgllahir;
+            // $karyawan->email = $rekrutmen->email;
+            // $karyawan->agama = $rekrutmen->tgllahir;
+            // $karyawan->jenis_kelamin = $rekrutmen->jenis_kelamin;
+            // $karyawan->alamat = $rekrutmen->alamat;
+            // $karyawan->no_hp = $rekrutmen->no_hp;
+            // $karyawan->no_kk = $rekrutmen->no_kk;
+            // $karyawan->jabatan = $lowongan->jabatan;
+            // $karyawan->save();
         }
 
         
@@ -198,16 +213,6 @@ class RekruitmenController extends Controller
     }
 
     public function create_pelamar(Request $request)
-    // {
-    //     $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-    //     // $posisi = Lowongan::all()->where('status','=','Aktif');
-    //     $posisi = Lowongan::all()->where('status','=','Aktif')->pluck('posisi');
-
-
-
-    //     return view('admin.rekruitmen.formPelamar', compact('row',  'posisi'));
-
-    // }
 
     {
         // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
@@ -215,7 +220,7 @@ class RekruitmenController extends Controller
         $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
 
         if ($openRekruitmen->count() > 0) {
-            return view('admin.rekruitmen.formPelamar', compact( 'posisi'));
+            return view('admin.rekruitmen.formPelamar', compact( 'posisi'))->with('success', 'Data berhasil disimpan.') ;
         }
 
         return view('admin.rekruitmen.viewTidakAdaLowongan');
@@ -284,6 +289,35 @@ class RekruitmenController extends Controller
 
             return redirect()->back();
         }
+    }
+    public function create_metode()
+    {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $metode = MetodeRekruitmen::all();
+
+
+
+        return view('admin.rekruitmen.createMetode', compact('row', 'metode'));
+    }
+
+    public function store_metode_rekrutmen(Request $request)
+    {
+
+        $user = new MetodeRekruitmen();
+        $user->nama_tahapan = $request->namaTahapan;
+        $user->save();
+
+        return redirect()->back();
+    }
+
+    public function update_metode_rekrutmen(Request $request, $id)
+    {
+
+        MetodeRekruitmen::where('id', $id)->update(
+            ['nama_tahapan' => $request->post('namaTahapan')]
+        );
+
+        return redirect()->back();
     }
 
 }
