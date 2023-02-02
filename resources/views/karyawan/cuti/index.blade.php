@@ -42,12 +42,8 @@
                                 <div class="col-md-12">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
-                                            {{-- @if(!$cek) --}}
                                                 <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                                     data-target="#Modal"> Ajukan Cuti</a>
-                                            {{-- @else
-                                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" disabled> Ajukan Cuti</a>
-                                            @endif --}}
                                         </div>
                                         <!-- modals tambah data cuti -->
                                         @include('karyawan.cuti.addcuti')

@@ -57,7 +57,7 @@
                                                                     <td>{{$loop->iteration}}</td>
                                                                     <td>{{ $r->karyawans->nama }}</td>
                                                                     <td>{{ $r->departemen }}</td>
-                                                                    <td>{{ \Carbon\Carbon::parse($r->tgl_mulai)->format('d/m/Y') }}
+                                                                    <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}
                                                                     </td>
                                                                     <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}
                                                                     </td>
