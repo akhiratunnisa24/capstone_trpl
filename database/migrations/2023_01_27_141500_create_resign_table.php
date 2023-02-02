@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('tgl_resign');
             $table->string('tipe_resign');
             $table->text('alasan');
-            $table->string('status');
+            $table->unsignedBigInteger('status');
             $table->timestamps();
         });
     }

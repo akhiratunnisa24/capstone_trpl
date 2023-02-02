@@ -14,9 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(KaryawanSeeder::class);
-        $this->call(CutiTableSeeder::class);
-        $this->call(DepartemenSeeder::class);
+        // $this->call(KaryawanSeeder::class);
+        // $this->call(CutiTableSeeder::class);
+        // $this->call(DepartemenSeeder::class);
+        $this->call(StatusSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
