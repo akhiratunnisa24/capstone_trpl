@@ -94,6 +94,14 @@
                             <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li> --}}
                     </ul>
                 </li>
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-database"></i><span class="text-info panel-title">DATA MASTER</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ route('karyawan.index') }}"><i class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title"> Data Karyawan</span></a>
+                            <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Data Departemen</a></li>              
+                            <li><a href="#"><i class="mdi mdi-clipboard-check"></i><span></span>Data Bla bla</a></li>                          
+                        </ul>
+                </li>
 
                 <?php } elseif ($role == 2) { ?>
 

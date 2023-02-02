@@ -27,7 +27,13 @@
     </style>
 </head>
 <body>
-    <strong>Yth. Manager {{$data['manag_depart']}}</strong>
+    @if($data['role'] == 2)
+        <strong>Yth. Manager {{$data['atasan_depar']}}</strong>
+    @else
+        {{-- @if($role == 1 || $role == 3) --}}
+            <strong>Yth. Direktur PT...</strong>
+        {{-- @endif --}}
+    @endif
     <br><br>
     <p>Anda memiliki notifikasi permintaan <strong>{{$data['id_jeniscuti']}}</strong> dari Saudara/i <strong>{{Auth::user()->name}}</strong></p>
     <p>Silahkan buka halaman website Anda untuk melakukan Approval pada permintaan cuti tersebut atau <a href="/cuti-staff">click here!</a> </p>

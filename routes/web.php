@@ -14,9 +14,9 @@ use App\Http\Controllers\admin\JeniscutiController;
 use App\Http\Controllers\admin\JenisizinController;
 use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
-use App\Http\Controllers\admin\AlokasicutiController;
-use App\Http\Controllers\admin\NotifMailRekruitmenController;
+use App\Http\Controllers\admin\DepartemenController;
 use App\Http\Controllers\admin\RekruitmenController;
+use App\Http\Controllers\admin\AlokasicutiController;
 use App\Http\Controllers\admin\ResignAdminController;
 
 
@@ -27,6 +27,7 @@ use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
 use App\Http\Controllers\karyawan\AbsensiKaryawanController;
+use App\Http\Controllers\admin\NotifMailRekruitmenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -181,26 +182,30 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('/deletealokasi{id}', [AlokasicutiController::class, 'destroy']) ->name('deletealokasi');
     Route::get('/alokasi-cuti', [AlokasicutiController::class, 'alokasicuti'])->name('alokasi');
 
-//create alokasi cuti
+    //create alokasi cuti
     Route::post('/gettglmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tglmasuk');
     Route::post('/getsettingalokasi', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Settingalokasi');
     // Route::post('/getAlokasicuti', [AlokasicutiController::class, 'getAlokasicuti'])->name('get.Alokasicuti');
     //Route::post('/getDepartemen', [AlokasicutiController::class, 'getDepartemen'])->name('get.Departemen');
 
-//update alokasi cuti
+    //update alokasi cuti
     Route::post('/gettanggalmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tanggalmasuk');
     Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingalokasi'])->name('get.Setting.alokasi');
 
 //resign
-Route::get('/resign_admin',[ResignAdminController::class,'index'])->name('resignkaryawan');
-Route::post('/resignadmin', [ResignAdminController::class, 'store'])->name('resign.store');
-Route::get('/resignadmin/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
-Route::post('/permintaanresign/{id}', [ResignAdminController::class, 'approved'])->name('resignapproved');
-Route::post('/permintaanresignreject/{id}', [ResignAdminController::class, 'reject'])->name('resignreject');
-Route::get('/getUserData/{id}', [ResignAdminController::class, 'getUserData'])->name('getUserData');
+    Route::get('/resign_admin',[ResignAdminController::class,'index'])->name('resignkaryawan');
+    Route::post('/resignadmin', [ResignAdminController::class, 'store'])->name('resign.store');
+    Route::get('/resignadmin/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
+    Route::post('/permintaanresign/{id}', [ResignAdminController::class, 'approved'])->name('resignapproved');
+    Route::post('/permintaanresignreject/{id}', [ResignAdminController::class, 'reject'])->name('resignreject');
+    Route::get('/getUserData/{id}', [ResignAdminController::class, 'getUserData'])->name('getUserData');
 
+//Departemen
+    Route::get('/departemen', [DepartemenController::class, 'index'])->name('departemen.index');
+    Route::post('/departemen', [DepartemenController::class, 'store'])->name('departemen.store');
+    Route::put('/departemen/update{id}', [AlokasicutiController::class,'update'])->name('departemen.update');
+    Route::get('/departemen/delete{id}', [DepartemenController::class, 'destroy']) ->name('departemen.delete');
 
- 
 //================================================================================
 //ROLE MANAGER
 
