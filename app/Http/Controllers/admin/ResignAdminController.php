@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\Departemen;
 use App\Models\Resign;
+use App\Models\Status;
 use App\Models\Karyawan;
 use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class ResignAdminController extends Controller
     {
        
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $karyawan1 = Karyawan::all();
+        $karyawan1 = Karyawan::where('status_kerja','Aktif')->get();
         $idkaryawan = $request->id_karyawan;
         // dd($karyawan);
         $resign = Resign::all();
@@ -63,6 +64,12 @@ class ResignAdminController extends Controller
     public function store(Request $request)
     {
         $karyawan = Auth::user()->id_pegawai;
+        $tes = DB::table('karyawan')
+            ->join('departemen','karyawan.divisi','=','departemen.id')
+            ->where('karyawan.id', Auth::user()->id_pegawai)
+            ->select('departemen.id as id_dep')
+            ->first();
+            $status = Status::find(1);   
         //  $validate = $request->validate([
         //         'id_karyawan'  => 'required',
         //         'departemen'  => 'required',
@@ -74,12 +81,12 @@ class ResignAdminController extends Controller
         //     dd($validate);
             $resign = New Resign;
             $resign->id_karyawan = $request->namaKaryawan;
-            $resign->departemen = $request->departemen;
+            $resign->departemen = $tes->id_dep;
             $resign->tgl_masuk = Carbon::parse($request->tgl_masuk)->format("Y-m-d");
             $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
             $resign->tipe_resign = $request->tipe_resign;
             $resign->alasan      = $request->alasan;          
-            $resign->status      = 'Pending';
+            $resign->status      = $status->id;
 
             $resign->save();
             return redirect()->back();
@@ -108,11 +115,22 @@ class ResignAdminController extends Controller
         // ->select('karyawan.id as id_karyawan')
         // ->first();
     
-        $sk = 'Non-Aktif';
-        Karyawan::where('id',$resign->id_karyawan)
-        ->update([
-            'status_kerja' =>$sk,
-        ]);
+        // $sk = 'Non-Aktif';
+        // Karyawan::where('id',$resign->id_karyawan)
+        // ->update([
+        //     'status_kerja' =>$sk,
+        //      {
+        //         $employee->status = 'non-active';
+        //     }
+        // ]);
+
+        
+    $sk = Karyawan::where('id',$resign->id_karyawan);
+    $resign1 = Resign::where('id',$id)->first();
+    if ($resign1->tgl_resign <= Carbon::now()) {
+        $sk->status_kerja = 'Non-Aktif';
+    }
+    $sk->update($request->all());
 
 
         return redirect()->route('resignkaryawan');

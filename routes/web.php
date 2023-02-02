@@ -80,8 +80,11 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('show_kanidat{id}', [RekruitmenController::class, 'show_kanidat'])->name('show_kanidat');
     Route::post('update_pelamar{id}', [RekruitmenController::class, 'update'])->name('update_pelamar');
     Route::get('hapuslowongan{id}', [RekruitmenController::class, 'destroy'])->name('hapuslowongan');
-    
     Route::get('notif_rekrutmen', [NotifMailRekruitmenController::class, 'index']);
+    Route::get('metode_rekrutmen', [RekruitmenController::class, 'create_metode'])->name('metode_rekrutmen');
+    Route::post('store_metode_rekrutmen', [RekruitmenController::class, 'store_metode_rekrutmen'])->name('store_metode_rekrutmen');
+    Route::put('update_metode_rekrutmen{id}', [RekruitmenController::class, 'update_metode_rekrutmen'])->name('update_metode_rekrutmen');
+
 
     
     Route::get('Form-Rekruitmen-RYNEST', [RekruitmenController::class, 'create_pelamar'] ,function () {
