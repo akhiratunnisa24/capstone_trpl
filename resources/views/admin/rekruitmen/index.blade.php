@@ -28,7 +28,7 @@
                         <div class="panel-heading  col-sm-15 m-b-10">
                             <a type="button" class="btn btn-sm btn-dark fa fa-user-plus " data-toggle="modal"
                                 data-target="#myModal"> Tambah Rekrutmen </a>
-                            <a href="#" id="share-button" type="button" class="btn btn-sm btn-dark fa fa-clone ">
+                            <a id="share-button" type="button" class="btn btn-sm btn-dark fa fa-clone ">
                                 Salin Link Form Rekruitmen </a>
                         </div>
                         @include('admin.rekruitmen.tambahLowonganModal')
@@ -38,10 +38,9 @@
 
 
                             <div class="row">
-
                                 @foreach ($posisi as $k)
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="panel panel-primary text-center">
+                                    <div class="col-sm-12 col-lg-3">
+                                        <div class="panel panel-primary">
 
                                             {{-- <div class="panel-heading btn-success">
                                                 <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
@@ -71,12 +70,12 @@
                                             </div>
                                             {{-- <a href="/hapuslowongan{{ $k->id }}" type="button"
                                                 class="btn btn-sm btn-danger fa fa-trash"> --}}
-                                                
-                                                <button onclick="hapus_karyawan({{ $k->id }})"
-                                                        class="btn btn-danger btn-sm">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                    
+
+                                            <button onclick="hapus_karyawan({{ $k->id }})"
+                                                class="btn btn-danger btn-sm">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+
                                         </div>
                                     </div>
                                 @endforeach

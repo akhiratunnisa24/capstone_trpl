@@ -35,10 +35,12 @@ class RekruitmenController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $posisi = Lowongan::all()->sortBy('status');
+        $metode = MetodeRekruitmen::all();
+
         
         
 
-        return view('admin.rekruitmen.index', compact('row', 'posisi'));
+        return view('admin.rekruitmen.index', compact('row', 'posisi', 'metode'));
     }
 
     /**
@@ -60,8 +62,9 @@ class RekruitmenController extends Controller
     public function store(Request $request)
     {
         
-        $user = new Lowongan();
+        $user = new Lowongan([]);
         $user->posisi = $request->posisi;
+        $user->tahapan = json_encode($request->input('tahapan', []));
         $user->jumlah_dibutuhkan = $request->jumlah_dibutuhkan;
         $user->status = 'Aktif';
         $user->persyaratan = $request->persyaratan;
@@ -319,5 +322,13 @@ class RekruitmenController extends Controller
 
         return redirect()->back();
     }
+
+    public function metode_rekrutmen_destroy($id)
+    {
+        MetodeRekruitmen::destroy($id);
+        return redirect()->back();
+        // return redirect('karyawan'); 
+    }
+
 
 }

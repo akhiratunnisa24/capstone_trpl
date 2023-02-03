@@ -84,7 +84,8 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('metode_rekrutmen', [RekruitmenController::class, 'create_metode'])->name('metode_rekrutmen');
     Route::post('store_metode_rekrutmen', [RekruitmenController::class, 'store_metode_rekrutmen'])->name('store_metode_rekrutmen');
     Route::put('update_metode_rekrutmen{id}', [RekruitmenController::class, 'update_metode_rekrutmen'])->name('update_metode_rekrutmen');
-
+    Route::get('metode_rekrutmen_destroy{id}', [RekruitmenController::class, 'metode_rekrutmen_destroy'])->name('metode_rekrutmen_destroy');
+    
 
     
     Route::get('Form-Rekruitmen-RYNEST', [RekruitmenController::class, 'create_pelamar'] ,function () {

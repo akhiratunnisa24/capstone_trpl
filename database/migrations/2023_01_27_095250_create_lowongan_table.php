@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             
             $table->string('posisi')->nullable();
+            $table->string('tahapan')->nullable();
             $table->integer('jumlah_dibutuhkan')->nullable();
             $table->string('status')->nullable();
             $table->string('persyaratan')->nullable();

@@ -107,7 +107,7 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/karyawan/destroy/' ?>' + id;
+                    location.href = '<?= 'http://localhost:8000/metode_rekrutmen_destroy' ?>' + id;
                 }
             })
         }

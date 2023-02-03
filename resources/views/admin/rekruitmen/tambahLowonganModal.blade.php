@@ -21,6 +21,19 @@
                             required>
                     </div>
 
+                    <div class="form-group col-xs-12">
+                        <label for="roles">Pilih Tahapan</label>
+                        @foreach ($metode as $m)
+                            <div class="checkbox checkbox-success">
+                                <input type="checkbox" id="checkbox3" class="form-check-input" name="tahapan[]"
+                                    value="{{ $m->id }}"
+                                    {{ in_array($m->id, old('tahapan', [])) ? 'checked' : '' }}>
+                                <label for=checkbox3>
+                                    {{ $m->nama_tahapan }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
 
                     <div class="form-group col-xs-12">
                         <label class="form-label">Jumlah Dibutuhkan</label>
@@ -30,8 +43,7 @@
 
                     <div class="form-group col-xs-12">
                         <label class="form-label">Persyaratan</label>
-                        <textarea type="text" class="form-control " rows="9" name="persyaratan"
-                            placeholder="Masukkan Persyaratan"></textarea>
+                        <textarea type="text" class="form-control " rows="9" name="persyaratan" placeholder="Masukkan Persyaratan"></textarea>
                     </div>
 
 
@@ -46,8 +58,7 @@
 
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
-                            <button class="btn btn-primary w-md waves-effect waves-light"
-                                type="submit">Simpan</button>
+                            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Simpan</button>
                         </div>
                     </div>
 
