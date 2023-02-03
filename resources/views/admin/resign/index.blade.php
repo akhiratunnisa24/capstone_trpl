@@ -66,16 +66,16 @@
 
 
                                                     <!-- data for status -->
-                                                    @if ($r->status == 'Pending')
+                                                    @if ($r->status == 1)
                                                         <td>
                                                             <span class="badge badge-warning">Pending</span>
                                                         </td>
-                                                    @elseif($r->status == 'Disetujui Manager')
+                                                    @elseif($r->status == 2)
                                                         <td>
                                                             <span class="badge badge-info">Disetujui
                                                                 Manager</span>
                                                         </td>
-                                                    @elseif($r->status == 'Disetujui')
+                                                    @elseif($r->status == 3)
                                                         <td>
                                                             <span class="badge badge-success">Disetujui</span>
                                                         </td>

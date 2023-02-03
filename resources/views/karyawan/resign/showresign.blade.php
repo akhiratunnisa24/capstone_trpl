@@ -28,7 +28,7 @@
                 <div class="form-group row">
                     <label for="id_karyawan" class="col-sm-3 col-form-label">Tanggal Bergabung</label>
                     <div class="col-sm-9">
-                        <label>: {{\Carbon\Carbon::parse($r->tgl_mulai)->format('d/m/Y')}}</label>
+                        <label>: {{\Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y')}}</label>
                     </div>
                 </div>
                 <div class="form-group row">
