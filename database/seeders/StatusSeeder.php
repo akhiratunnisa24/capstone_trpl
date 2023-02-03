@@ -27,5 +27,9 @@ class StatusSeeder extends Seeder
             'name_status' => 'Disetujui',
             
         ]);
+        Status::insert([
+            'name_status' => 'Ditolak',
+            
+        ]);
     }
 }
