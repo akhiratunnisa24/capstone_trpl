@@ -95,7 +95,7 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
-                                                    <select class="form-control" name="jenis_kelaminKaryawan" required>
+                                                    <select class="form-control selectpicker" name="jenis_kelaminKaryawan" required>
                                                         <option value="">Pilih Jenis Kelamin</option>
                                                         <option value="L">Laki-Laki</option>
                                                         <option value="P">Perempuan</option>
@@ -104,9 +104,8 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1" class="form-label">Departemen</label>
-                                                    <select class="form-control" name="divisi" required>
+                                                    <select class="form-control selectpicker" name="divisi" data-live-search="true" required>
                                                         <option value="">Pilih Departemen</option>
-                                                        <option value="-">Tidak Ada</option>
                                                         @foreach ($departemen as $d)
                                                             <option value="{{ $d->id }}">{{ $d->nama_departemen }}
                                                             </option>
@@ -115,21 +114,34 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="form-label">Nama Manager</label>
-                                                    <select class="form-control" name="manager">
-                                                        <option value="">Pilih Manager</option>
-                                                        <option value="-">Tidak Ada</option>
-                                                        <option value="Manager1">manager1</option>
-                                                        <option value="manager2">manager2</option>
+                                                    <label for="exampleInputEmail1" class="form-label">Atasan Langsung (SPV/Manager/Direktur)</label>
+                                                    <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
+                                                        <option value="">Pilih Atasan Langsung</option>
+                                                        @foreach ($atasan_pertama as $atasan)
+                                                            <option value="{{ $atasan->id }}">{{ $atasan->nama }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1" class="form-label">Atasan (Manager/Direktur)</label>
+                                                    <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
+                                                        <option value="">Pilih Atasan</option>
+                                                        @foreach ($atasan_kedua as $atasan)
+                                                            <option value="{{ $atasan->atasan }}">{{ $atasan->nama }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1" class="form-label">Jabatan</label>
-                                                    <select class="form-control" name="jabatanKaryawan" required>
+                                                    <select class="form-control selectpicker" name="jabatanKaryawan" required>
                                                         <option value="">Pilih Jabatan</option>
                                                         <option value="Direktur">Direktur</option>
                                                         <option value="Manager">Manager</option>
+                                                        <option value="Supervisor">Supervisor</option>
                                                         <option value="Staff">Staff</option>
                                                     </select>
                                                 </div>
@@ -176,7 +188,7 @@
                                                         <div class="mb-3">
                                                             <label for="exampleInputEmail1"
                                                                 class="form-label">Agama</label>
-                                                            <select class="form-control" name="agamaKaryawan" required>
+                                                            <select class="form-control selectpicker" name="agamaKaryawan" required>
                                                                 <option value="">Pilih Agama</option>
                                                                 <option value="Islam">Islam</option>
                                                                 <option value="Kristen">Kristen</option>
@@ -214,7 +226,7 @@
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1" class="form-label">Golongan
                                                             Darah</label>
-                                                        <select class="form-control" name="gol_darahKaryawan" required>
+                                                        <select class="form-control selectpicker" name="gol_darahKaryawan" required>
                                                             <option value="">Pilih Golongan Darah</option>
                                                             <option value="A">A</option>
                                                             <option value="B">B</option>
@@ -255,7 +267,7 @@
                                                         <div class="form-group">
                                                             <label for="exampleInputEmail1" class="form-label">Status
                                                                 Pernikahan</label>
-                                                            <select class="form-control" name="status_pernikahan"
+                                                            <select class="form-control selectpicker" name="status_pernikahan"
                                                                 required>
                                                                 <option value="">Pilih Status Pernikahan</option>
                                                                 <option value="Sudah">Sudah Menikah</option>
@@ -316,7 +328,7 @@
                                                         <div class="form-group">
                                                             <label for="exampleInputEmail1" class="form-label">Pendidikan
                                                                 Terakhir</label>
-                                                            <select class="form-control"
+                                                            <select class="form-control selectpicker"
                                                                 name="pendidikan_terakhirPasangan">
                                                                 <option value="">Pilih Pendidikan Terakhir</option>
                                                                 <option value="SD">SD</option>
@@ -404,16 +416,28 @@
                                                                         placeholder="Masukkan Nomor Handphone" required>
                                                                 </div>
                                                             </div>
-
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1"
-                                                                        class="form-label">Hubungan</label>
-                                                                    <input type="text" name="hubunganKdarurat"
-                                                                        class="form-control" id="no_hp"
-                                                                        placeholder="Masukkan Hubungan" autocomplete="off" required>
+                                                                    <label for="exampleInputEmail1" class="form-label">Hubungan</label>
+                                                                    <select class="form-control selectpicker" name="hubunganKdarurat" required>
+                                                                        <option value="">Pilih Hubungan</option>
+                                                                        <option value="Ayah">Ayah</option>
+                                                                        <option value="Ibu">Ibu</option>
+                                                                        <option value="Suami">Suami</option>
+                                                                        <option value="Istri">Istri</option>
+                                                                        <option value="Kakak">Kakak</option>
+                                                                        <option value="Adik">Adik</option>
+                                                                        <option value="Anak">Anak</option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
+
+                                                            {{-- <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Hubungan</label>
+                                                                    <input type="text" name="hubunganKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Hubungan" autocomplete="off" required>
+                                                                </div>
+                                                            </div> --}}
 
 
                                                         </div>
@@ -442,7 +466,7 @@
                                                                         <div class="form-group">
                                                                             <label for="exampleInputEmail1"
                                                                                 class="form-label">Tingkat</label>
-                                                                            <select class="form-control"
+                                                                            <select class="form-control selectpicker"
                                                                                 name="tingkat_pendidikan" required>
                                                                                 <option value="">Pilih Tingkat
                                                                                     Pendidikan
@@ -876,7 +900,8 @@
     </script>
 
 
-    <script src="assets/js/jquery.min.js"></script>
+    {{-- <script src="assets/js/jquery.min.js"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 

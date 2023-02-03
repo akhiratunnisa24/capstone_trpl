@@ -125,7 +125,13 @@ class CutikaryawanController extends Controller
                 ->first();
 
             //data manager
-            $atasan = DB::table('karyawan')
+            // $atasan = DB::table('karyawan')
+            //     ->join('departemen','karyawan.divisi','=','departemen.id')
+            //     ->where('divisi',$div->divisi)
+            //     ->where('jabatan','=','Manager')
+            //     ->select('karyawan.*','departemen.nama_departemen as manag_depart')
+            //     ->first();
+                $atasan = DB::table('karyawan')
                 ->join('departemen','karyawan.divisi','=','departemen.id')
                 ->where('divisi',$div->divisi)
                 ->where('jabatan','=','Manager')
