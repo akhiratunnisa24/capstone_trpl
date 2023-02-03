@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group col-sm" id="jenisizin">
                             <label for="id_jenisizin" class="col-form-label">Kategori Izin</label>
-                            <select name="id_jenisizin" id="id_jenisizin" class="form-control" required>
+                            <select name="id_jenisizin" id="id_jenisizin" class="form-control selectpicker" data-live-search="true" required>
                                 <option>-- Pilih Kategori --</option>
                                 @foreach ($jenisizin as $data)
                                     <option value="{{ $data->id}}" 
@@ -116,6 +116,7 @@
 
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     {{-- clockpicker --}}

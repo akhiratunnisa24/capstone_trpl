@@ -16,11 +16,12 @@
                     @method('POST')
                     <div class="form-group col-xs-12">
                         <label class="form-label">Role</label>
-                            <select type="text" class="form-control  @error('role') is-invalid @enderror"
+                            <select type="text" class="form-control selecpicker @error('role') is-invalid @enderror"
                                 name="role" required autocomplete="role" autofocus placeholder="Role">
                                 <option value="">Pilih Role</option>
                                 <option value="4">Direktur</option>
                                 <option value="3">Manager</option>
+                                <option value="5">Supervisor</option>
                                 <option value="1">HRD</option>
                                 <option value="2">Karyawan</option>
                             </select>
@@ -34,7 +35,7 @@
 
                     <div class="form-group col-xs-12" id="id_pegawai">
                         <label for="id_pegawai" class="form-label">Karyawan</label>
-                        <select id="id_karyawan" class="form-control" name="id_pegawai" required>
+                        <select id="id_karyawan" class="form-control selecpicker" name="id_pegawai" required>
                             <option value="">Pilih Karyawan</option>
                             @foreach ($akun as $k)
                                 <option value="{{ $k->id }}">{{ $k->nama }}</option>
@@ -108,7 +109,8 @@
 
 <!-- END MODAL -->
 <!-- jQuery  -->
-<script src="assets/js/jquery.min.js"></script>
+{{-- <script src="assets/js/jquery.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 <!-- script untuk mengambil data Email Karyawan  -->

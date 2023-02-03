@@ -25,6 +25,7 @@ use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
+use App\Http\Controllers\supervisor\SupervisorController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
 use App\Http\Controllers\karyawan\AbsensiKaryawanController;
 use App\Http\Controllers\admin\NotifMailRekruitmenController;
@@ -129,6 +130,9 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::post('/resign_karyawan', [ResignController::class, 'store'])->name('resignkaryawan.store');
     Route::get('/resign_karyawan/{id}', [ResignController::class, 'show'])->name('resign.show');
 
+    Route::get('/export-absensi', [AbsensiKaryawanController::class, 'absensiPeroranganExcel'])->name('expor.absensi');
+
+
 //==================================================================================
 
 //HALAMAN ADMIN
@@ -208,7 +212,7 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('/departemen/delete{id}', [DepartemenController::class, 'destroy']) ->name('departemen.delete');
 
 //================================================================================
-//ROLE MANAGER
+//ROLE MANAGER atau SUPERVISOR
 
 //data staff
     Route::get('/data-staff', [ManagerController::class, 'dataStaff'])->name('data.Staff');
@@ -235,6 +239,29 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 
     Route::get('/data-cuti-staff', [DirekturController::class, 'index'])->name('cuti.index');
     Route::post('/data-cuti-staff/{id}', [DirekturController::class, 'leaveapproved'])->name('leave.approved');
+
+ //================================================================================
+//ROLE SUPERVISOR
+
+//data staff
+// Route::get('/datastaff', [SupervisorController::class, 'dataStaff'])->name('dataStaff');
+// Route::get('/absensi-staff', [SupervisorController::class, 'absensiStaff'])->name('absensi.Staff');
+// Route::get('/export-to-pdf',[SupervisorController::class,'exportpdf'])->name('exportpdf');
+// Route::get('/export-pdf',[SupervisorController::class,'exportallpdf'])->name('exportallpdf');
+// Route::get('/export-all-excel', [SupervisorController::class, 'exportallExcel'])->name('export.allExcel');
+// Route::get('/export-to-excel',[SupervisorController::class,'exportToExcel'])->name('export.ToExcel');
+//cuti dan izin
+// Route::get('/cuti-staff', [ManagerController::class, 'cutiStaff'])->name('cuti.Staff');
+// Route::post('/cuti-staff/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
+// Route::post('/cuti-reject/{id}', [ManagerController::class, 'cutireject'])->name('cuti.reject');
+// Route::post('/izin-staff/{id}', [ManagerController::class, 'izinApproved'])->name('izin.approved');
+// Route::post('/izin-reject/{id}', [ManagerController::class, 'izinReject'])->name('izin.reject');
+
+// Route::get('/resign_manager',[ManagerController::class,'resignStaff'])->name('resignstaff');
+// Route::get('/resignmanager/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
+// Route::post('/permintaan_resign/{id}', [ResignAdminController::class, 'approved'])->name('resign_approved');
+// Route::post('/permintaan_resign_manager/{id}', [ResignAdminController::class, 'approvedmanager'])->name('resign_approved_manager');
+// Route::post('/permintaanresign_reject/{id}', [ResignAdminController::class, 'reject'])->name('resign_reject');
 
 //testing notifikasi email mailtrap
 // Route::get('kirimemail', function(){

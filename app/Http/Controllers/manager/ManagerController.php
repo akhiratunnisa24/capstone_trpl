@@ -27,97 +27,145 @@ class ManagerController extends Controller
     public function dataStaff(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        //mengambil id_departemen manager
-        $manager_iddep = DB::table('karyawan')
-        ->where('id','=',Auth::user()->id_pegawai)
-        ->select('divisi')->first();
+        $role = Auth::user()->role;        
+        if ($role == 3) {
+            //mengambil id_departemen manager
+            $manager_iddep = DB::table('karyawan')
+            ->where('id','=',Auth::user()->id_pegawai)
+            ->select('divisi')->first();
 
-        // dd( $manager_iddep);
-        //ambil data dengan id_departemen sama dengan manager
-        //$staff= Karyawan::where('divisi',$manager_iddep->divisi)->get();
-        $staff= Karyawan::with('departemens')
-            ->where('divisi',$manager_iddep->divisi)
-            ->where('jabatan','!=','Manager')
-            ->get();
-
-        return view('manager.staff.dataStaff', compact('staff','row'));
+            //ambil data dengan id_departemen sama dengan manager
+            $staff= Karyawan::with('departemens')
+                ->where('divisi',$manager_iddep->divisi)
+                ->where('jabatan','!=','Manager')
+                ->get();
+            return view('manager.staff.dataStaff', compact('staff','row'));
+        }elseif($role == 5)
+        {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            //mengambil id_departemen 
+            $spv = DB::table('karyawan')
+            ->where('id','=',Auth::user()->id_pegawai)
+            ->select('divisi')->first();
+    
+            //ambil data dengan id_departemen sama dengan supervisor
+            $staff= Karyawan::with('departemens')
+                ->where('divisi',$spv->divisi)
+                ->where('jabatan','=','Staff')
+                ->get();
+            return view('manager.staff.dataStaff', compact('staff','row'));
+        }else{
+            return redirect()->back();
+        };
     }
 
     public function absensiStaff(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        //mengambil id_departemen manager
+        $role = Auth::user()->role;  
+
+        //mengambil id_departemen user login
         $middep = DB::table('absensi')
-        ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
-        ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
-        ->select('id_departement')->first();
+            ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
+            ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
+            ->select('id_departement')->first();
 
         //saring data dengan id_departemen sama dengan manager secara keseluruhan
         //$absensi= Absensi::where('id_departement',$middep->id_departement)->get();
-
         //=================================
         //untuk filter nama karyawan
-        $manager_iddep = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
-                        ->select('divisi')->first();
-        $karyawan= Karyawan::where('divisi',$manager_iddep->divisi)->get();
-
-        //untuk filter data 
-        $idkaryawan = $request->id_karyawan;
-        $bulan = $request->query('bulan',Carbon::now()->format('m'));
-        $tahun = $request->query('tahun',Carbon::now()->format('Y'));
-
-        //simpan session
-        $request->session()->put('idkaryawan', $request->id_karyawan);
-        $request->session()->put('bulan', $bulan);
-        $request->session()->put('tahun', $tahun);
-
-        //mengambil data sesuai dengan filter yang dipilih
-        if(isset($idkaryawan) && isset($bulan) && isset($tahun))
+        if($role == 3) 
         {
-            $absensi = Absensi::where('id_karyawan', $idkaryawan)
-            ->where('id_departement',$middep->id_departement)
-            ->whereMonth('tanggal', $bulan)
-            ->whereYear('tanggal',$tahun)
-            ->get();
-        }else
-        {
-           //saring data dengan id_departemen sama dengan manager secara keseluruhan
-            $absensi= Absensi::where('id_departement',$middep->id_departement)->get();
+            $manager_iddep = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
+                ->select('divisi')->first();
+            $karyawan= Karyawan::where('divisi',$manager_iddep->divisi)->get();
+             //untuk filter data 
+            $idkaryawan = $request->id_karyawan;
+            $bulan = $request->query('bulan',Carbon::now()->format('m'));
+            $tahun = $request->query('tahun',Carbon::now()->format('Y'));
+
+            //simpan session
+            $request->session()->put('idkaryawan', $request->id_karyawan);
+            $request->session()->put('bulan', $bulan);
+            $request->session()->put('tahun', $tahun);
+
+            //mengambil data sesuai dengan filter yang dipilih
+            if(isset($idkaryawan) && isset($bulan) && isset($tahun))
+            {
+                $absensi = Absensi::where('id_karyawan', $idkaryawan)
+                ->where('id_departement',$middep->id_departement)
+                ->whereMonth('tanggal', $bulan)
+                ->whereYear('tanggal',$tahun)
+                ->get();
+            }else
+            {
+            //saring data dengan id_departemen sama dengan manager secara keseluruhan
+                $absensi= Absensi::where('id_departement',$middep->id_departement)->get();
+            }
+            return view('manager.staff.absensiStaff', compact('absensi','karyawan','row'));
+            //menghapus filter data
+            $request->session()->forget('id_karyawan');
+            $request->session()->forget('bulan');
+            $request->session()->forget('tahun');
         }
-        return view('manager.staff.absensiStaff', compact('absensi','karyawan','row'));
-        //menghapus filter data
-        $request->session()->forget('id_karyawan');
-        $request->session()->forget('bulan');
-        $request->session()->forget('tahun');
+        elseif($role == 5)
+        {
+            $spv = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
+                ->select('divisi')->first();
+            $karyawan= Karyawan::where('divisi',$spv->divisi)
+                ->where('jabatan','=','Staff')
+                ->get();
+
+             //untuk filter data 
+            $idkaryawan = $request->id_karyawan;
+            $bulan = $request->query('bulan',Carbon::now()->format('m'));
+            $tahun = $request->query('tahun',Carbon::now()->format('Y'));
+
+            //simpan session
+            $request->session()->put('idkaryawan', $request->id_karyawan);
+            $request->session()->put('bulan', $bulan);
+            $request->session()->put('tahun', $tahun);
+
+            //mengambil data sesuai dengan filter yang dipilih
+            if(isset($idkaryawan) && isset($bulan) && isset($tahun))
+            {
+                $absensi = Absensi::with(['karyawans' => function($query) {
+                    $query->select('nama')->where('jabatan', 'Staff');
+                }])
+                ->where('id_karyawan', $idkaryawan)
+                ->where('id_departement',$middep->id_departement)
+                ->whereMonth('tanggal', $bulan)
+                ->whereYear('tanggal',$tahun)
+                ->get();
+            }else
+            {
+            //saring data dengan id_departemen sama dengan manager secara keseluruhan
+                $absensi = Absensi::with(['karyawans' => function($query) {
+                    $query->select('nama')->where('jabatan', 'Staff');
+                }])->where('id_departement', $middep->id_departement)->get();
+                
+            }
+            return view('manager.staff.absensiStaff', compact('absensi','karyawan','row','role'));
+            //menghapus filter data
+            $request->session()->forget('id_karyawan');
+            $request->session()->forget('bulan');
+            $request->session()->forget('tahun');
+        }
+        else{
+            return redirect()->back();
+        }
     }
 
     public function cutiStaff(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $role= Auth::user()->role;
 
-        $manag_depart = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
+        $atasan = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
         ->select('divisi')->first();
 
         $tp = $request->query('tp',1);
 
-        $cutistaff = DB::table('cuti')
-            ->leftjoin('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
-            ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
-            ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
-            ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
-            ->where('karyawan.divisi',$manag_depart->divisi)
-            ->where('karyawan.jabatan','!=','Manager')
-            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama')
-            ->distinct()
-            ->get();
-
-        $izinstaff = DB::table('izin')
-            ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
-            ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
-            ->where('karyawan.divisi',$manag_depart->divisi)
-            ->select('izin.*','karyawan.nama','jenisizin.jenis_izin')
-            ->distinct()
-            ->get();
         $alasan = DB::table('datareject')
             ->join('izin','datareject.id_izin','=','izin.id')
             ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
@@ -127,7 +175,56 @@ class ManagerController extends Controller
             ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
             ->first();
 
-        return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','alasan','alasancuti'));
+        if($role == 3){
+            $cutistaff = DB::table('cuti')
+            ->leftjoin('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
+            ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
+            ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+            ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+            ->where('karyawan.divisi',$atasan->divisi)
+            ->where('karyawan.jabatan','!=','Manager')
+            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama')
+            ->distinct()
+            ->get();
+
+            $izinstaff = DB::table('izin')
+                ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
+                ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
+                ->where('karyawan.divisi',$atasan->divisi)
+                ->select('izin.*','karyawan.nama','jenisizin.jenis_izin')
+                ->distinct()
+                ->get();
+                
+            return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','alasan','alasancuti'));
+
+        }
+        elseif($role == 5)
+        {
+            $cutistaff = DB::table('cuti')
+            ->leftjoin('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
+            ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
+            ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+            ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+            ->where('karyawan.divisi',$atasan->divisi)
+            ->where('karyawan.jabatan','=','Staff')
+            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama')
+            ->distinct()
+            ->get();
+
+            $izinstaff = DB::table('izin')
+                ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
+                ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
+                ->where('karyawan.divisi',$atasan->divisi)
+                ->where('karyawan.jabatan','=','Staff')
+                ->select('izin.*','karyawan.nama','jenisizin.jenis_izin')
+                ->distinct()
+                ->get();
+
+            return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','alasan','alasancuti'));
+
+        }else{
+            return redirect()->back();
+        }
     }
 
     public function cutiapproved(Request $request, $id)
@@ -312,16 +409,41 @@ class ManagerController extends Controller
 
     public function exportallExcel()
     {
-        $middep = DB::table('absensi')
-        ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
-        ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
-        ->select('id_departement')->first();
+        $role = Auth::user()->role;
+        if($role == 3)
+        {
+            $middep = DB::table('absensi')
+            ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
+            ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
+            ->select('id_departement')->first();
+    
+            $data = Absensi::with('karyawans','departemens')
+            ->where('id_departement',$middep->id_departement)
+            ->get();
+    
+            return Excel::download(new AbsensiDepartemenExport($data), 'data_absensi_departemen.xlsx');
+        }
+        elseif($role == 5)
+        {
+            $middep = DB::table('absensi')
+            ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
+            ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
+            ->select('id_departement')->first();
+    
+            $data = Absensi::with('karyawans','departemens')
+            ->where('id_departement',$middep->id_departement)
+            ->where('jabatan','=','Staff')
+            ->get();
 
-        $data = Absensi::with('karyawans','departemens')
-        ->where('id_departement',$middep->id_departement)
-        ->get();
-
-        return Excel::download(new AbsensiDepartemenExport($data), 'data_absensi_departemen.xlsx');
+            dd($data->karyawans->jabatan);
+    
+            return Excel::download(new AbsensiDepartemenExport($data), 'data_absensi_departemen.xlsx');
+        }
+        else
+        {
+            return redirect()->back();
+        }
+        
     }
 
     public function exportToExcel(Request $request)
@@ -359,17 +481,37 @@ class ManagerController extends Controller
 
     public function exportallpdf()
     {
-        //mengambil id_departemen manager
+        $role = Auth::user()->role;
+        //mengambil id_departemen user login
         $middep = DB::table('absensi')
-        ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
-        ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
-        ->select('id_departement')->first();
+            ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
+            ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
+            ->select('id_departement')->first();
 
-        $data = Absensi::where('id_departement',$middep->id_departement)->get();
-        $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data',$data],compact('data'))
-        ->setPaper('A4','landscape');
+        if($role == 3)
+        {
+            $data = Absensi::where('id_departement',$middep->id_departement)->get();
+            $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data',$data],compact('data'))
+            ->setPaper('A4','landscape');
 
-        return $pdf->stream('Report Absensi Staff Departemen.pdf');
+            return $pdf->stream('Report Absensi Staff Departemen.pdf');
+        }
+        elseif($role == 5)
+        {
+            $data = Absensi::with(['karyawans' => function($query) {
+                $query->select('id,nama')->where('jabatan', 'Staff');
+            }])->where('id_departement',$middep->id_departement)->get();
+            
+            $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data',$data],compact('data'))
+            ->setPaper('A4','landscape');
+
+            return $pdf->stream('Report Absensi Staff Departemen.pdf');
+        }
+        else
+        {
+            return redirect()->back();
+        }
+       
     }
 
     public function exportpdf(Request $request)

@@ -201,11 +201,15 @@ class karyawanController extends Controller
         if ($role == 1) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $departemen = Departemen::all();
+            $departemen     = Departemen::all();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Direktur'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direktur'])->get();
 
             $output = [
                 'row' => $row,
                 'departemen' => $departemen,
+                'atasan_pertama' => $atasan_pertama,
+                'atasan_kedua' => $atasan_kedua,
             ];
             return view('admin.karyawan.create', $output);
         } else {
@@ -240,7 +244,8 @@ class karyawanController extends Controller
             $user->foto = $namaFile;
             $user->jabatan = $request->jabatanKaryawan;
             $user->tglmasuk = $request->tglmasukKaryawan;
-            $user->manager = $request->manager;
+            $user->atasan_pertama = $request->atasan_pertama;
+            $user->atasan_kedua = $request->atasan_kedua;
             $user->status_karyawan = $request->status_karyawan;
             $user->tipe_karyawan = $request->tipe_karyawan;
             $user->no_kk = $request->no_kk;
@@ -278,7 +283,8 @@ class karyawanController extends Controller
                 'foto' => $namaFile,
                 'jabatan' => $request->post('jabatanKaryawan'),
                 'tglmasuk' => $request->post('tglmasukKaryawan'),
-                'manager' => $request->post('manager'),
+                'atasan_pertama' => $request->post('atasan_pertama'),
+                'atasan_kedua' => $request->post('atasan_kedua'),
                 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
 
@@ -397,7 +403,8 @@ class karyawanController extends Controller
             $user->gol_darah = $request->gol_darahKaryawan;
             $user->jabatan = $request->jabatanKaryawan;
             $user->tglmasuk = $request->tglmasukKaryawan;
-            $user->manager = $request->manager;
+            $user->atasan_pertama = $request->atasan_pertama;
+            $user->atasan_kedua = $request->atasan_kedua;
             $user->status_karyawan = $request->status_karyawan;
             $user->tipe_karyawan = $request->tipe_karyawan;
             $user->no_kk = $request->no_kk;
@@ -425,7 +432,8 @@ class karyawanController extends Controller
                 'gol_darah' => $request->post('gol_darahKaryawan'),
                 'jabatan' => $request->post('jabatanKaryawan'),
                 'tglmasuk' => $request->post('tglmasukKaryawan'),
-                'manager' => $request->post('manager'),
+                'atasan_pertama' => $request->post('atasan_pertama'),
+                'atasan_kedua' => $request->post('atasan_kedua'),
                 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
 
