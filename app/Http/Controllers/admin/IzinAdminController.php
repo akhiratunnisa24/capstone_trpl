@@ -33,6 +33,7 @@ class IzinAdminController extends Controller
 
     public function approved(Request $request, $id)
     {
+        $role = Auth::user()->role;
         $status = 'Disetujui';
         Izin::where('id',$id)->update([
             'status' => $status,

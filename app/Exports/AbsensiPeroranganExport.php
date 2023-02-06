@@ -11,11 +11,11 @@ class AbsensiPeroranganExport implements FromView, ShouldAutoSize
 {
     //UNTUK DATA ABSENSI BERDASARKAN FILTER
     protected $data;
-    protected $idkaryawan;
+    protected $iduser;
 
-    function __construct($data,$idkaryawan) {
+    function __construct($data,$iduser) {
         $this->data = $data;
-        $this->idkaryawan = $idkaryawan;
+        $this->iduser = $iduser;
     }
 
     /**
@@ -25,8 +25,8 @@ class AbsensiPeroranganExport implements FromView, ShouldAutoSize
     public function view(): View    
     {
         $absensi = $this->data;
-        $idkaryawan = $this->idkaryawan;
+        $iduser = $this->iduser;
         
-        return view('karyawan/absensi/rekapabsenExcel', ['absensi' => $absensi],['idkaryawan' => $idkaryawan]);
+        return view('karyawan/absensi/rekapabsenExcel', ['absensi' => $absensi],['iduser' => $iduser]);
     }
 }

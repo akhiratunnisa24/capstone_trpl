@@ -70,8 +70,8 @@
                             <div class="col-lg-6" id="jmulai">  
                                 <div class="">
                                     <label for="jam_mulai">Dari Jam</label>
-                                    <div class="input-group clockpicker pull-center" data-placement="top" data-align="top" autocomplete="off" data-autoclose="true">
-                                        <input type="text" class="form-control" name="jam_mulai" id="mulai">
+                                    <div class="input-group clockpicker pull-center" data-placement="top" data-align="top" data-autoclose="true">
+                                        <input type="text" class="form-control" autocomplete="off" name="jam_mulai" id="mulai">
                                         <span class="input-group-addon">
                                             <span class="fa fa-clock-o"></span>
                                         </span>
@@ -106,7 +106,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success" name="submit" value="save">Sending</button>
+                            <button type="submit" class="btn btn-success" name="submit" value="save">Send</button>
                         </div>
                     </form>
                 </div>
