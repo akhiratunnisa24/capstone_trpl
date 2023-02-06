@@ -79,6 +79,10 @@
                                                         <td>
                                                             <span class="badge badge-success">Disetujui</span>
                                                         </td>
+                                                    @elseif($r->status == 4)
+                                                        <td>
+                                                            <span class="badge badge-warning">Pending HRD</span>
+                                                        </td>
                                                     @else
                                                         <td>
                                                             <span class="badge badge-danger">Ditolak</span>
@@ -86,18 +90,56 @@
                                                     @endif
                                                     <td id="b" class="text-center">
                                                         <div class="row">
-                                                            @if ($r->status == 'Disetujui Manager')
+                                                            @if ($r->status == 2)
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('resignapproved', $r->id) }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         <input type="hidden" name="status"
-                                                                            value="Disetujui" class="form-control" hidden>
+                                                                            value=1 class="form-control" hidden>
                                                                         <button type="submit"
                                                                             class="fa fa-check btn-success btn-sm"></button>
                                                                     </form>
                                                                 </div>
-                                                                <div class="col-sm-3" style="margin-left:8px">
+
+                                                                <div class="col-sm-3">
+                                                                    <form action="{{ route('resignreject', $r->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('POST')
+                                                                        <input type="hidden" name="status" value=5
+                                                                            class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                            @elseif ($r->status == 4)
+                                                            <div class="col-sm-3">
+                                                                <form action="{{ route('resignapproved', $r->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <input type="hidden" name="status"
+                                                                        value=1 class="form-control" hidden>
+                                                                    <button type="submit"
+                                                                        class="fa fa-check btn-success btn-sm"></button>
+                                                                </form>
+                                                            </div>
+                                                                
+                                                                <div class="col-sm-3">
+                                                                    <form action="{{ route('resignreject', $r->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('POST')
+                                                                        <input type="hidden" name="status" value=5
+                                                                            class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                            @elseif ($r->status ==3)
+                                                            @else ($r->status ==1)
+                                                            {{-- @else
+                                                                <div class="col-sm-3">
                                                                     <form action="{{ route('resignreject', $r->id) }}"
                                                                         method="POST">
                                                                         @csrf
@@ -107,7 +149,8 @@
                                                                         <button type="submit"
                                                                             class="fa fa-times btn-danger btn-sm"></button>
                                                                     </form>
-                                                                </div>
+                                                                </div> --}}
+                                                            
                                                             @endif
 
 
@@ -117,6 +160,7 @@
                                                                     <i class="fa fa-eye"></i>
                                                                 </a>
                                                             </div>
+                                                        </div>    
                                                     </td>
                                                 </tr>
                                                 {{-- modal show cuti --}}

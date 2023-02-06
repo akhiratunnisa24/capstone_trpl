@@ -56,7 +56,7 @@
                                                                 <tr>
                                                                     <td>{{$loop->iteration}}</td>
                                                                     <td>{{ $r->karyawans->nama }}</td>
-                                                                    <td>{{ $r->departemen }}</td>
+                                                                    <td>{{ $r->departemens->nama_departemen }}</td>
                                                                     <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}
                                                                     </td>
                                                                     <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}
@@ -66,34 +66,35 @@
                                                                     
 
                                                                     <!-- data for status -->
-                                                                    @if ($r->status == 'Pending')
+                                                                    @if ($r->status == 1)
                                                                         <td>
-                                                                            <span
-                                                                                class="badge badge-warning">Pending</span>
+                                                                            <span class="badge badge-warning">Pending</span>
                                                                         </td>
-                                                                    @elseif($r->status == 'Disetujui Manager')
+                                                                    @elseif($r->status == 2)
                                                                         <td>
                                                                             <span class="badge badge-info">Disetujui
                                                                                 Manager</span>
                                                                         </td>
-                                                                    @elseif($r->status == 'Disetujui')
+                                                                    @elseif($r->status == 3)
                                                                         <td>
-                                                                            <span
-                                                                                class="badge badge-success">Disetujui</span>
+                                                                            <span class="badge badge-success">Disetujui</span>
+                                                                        </td>
+                                                                    @elseif($r->status == 4)
+                                                                        <td>
+                                                                            <span class="badge badge-warning">Pending HRD</span>
                                                                         </td>
                                                                     @else
                                                                         <td>
-                                                                            <span
-                                                                                class="badge badge-danger">Ditolak</span>
+                                                                            <span class="badge badge-danger">Ditolak</span>
                                                                         </td>
                                                                     @endif
                                                                     <td id="b" class="text-center" > 
                                                                         <div class="row">
-                                                                            @if($r->status == 'Pending')
+                                                                            @if($r->status == '1')
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('resign_approved_manager',$r->id)}}" method="POST"> 
                                                                                         @csrf
-                                                                                        <input type="hidden" name="status" value="Disetujui Manager" class="form-control" hidden> 
+                                                                                        <input type="hidden" name="status" value=2 class="form-control" hidden> 
                                                                                         <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
                                                                                     </form>
                                                                                 </div>
@@ -101,7 +102,7 @@
                                                                                     <form action="{{ route('resignreject',$r->id)}}" method="POST"> 
                                                                                         @csrf
                                                                                         @method('POST')
-                                                                                        <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
+                                                                                        <input type="hidden" name="status" value=5 class="form-control" hidden> 
                                                                                         <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
                                                                                 </div>

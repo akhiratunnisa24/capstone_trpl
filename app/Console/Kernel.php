@@ -9,6 +9,7 @@ use App\Events\AbsenKaryawanEvent;
 use App\Models\Karyawan;
 use App\Models\Absensi;
 use App\Models\Tidakmasuk;
+use App\Models\Resign;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,7 +35,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
+        $schedule->command(UpdateStatusKerja::class)->daily();
             // $karyawanSudahAbsen = DB::table('absensi')->whereDay('created_at', '=', Carbon::now())->pluck('id_karyawan');
             // $karyawan = DB::table('karyawan')->whereNotIn('id', $karyawanSudahAbsen)
             // ->get();
@@ -55,8 +56,20 @@ class Kernel extends ConsoleKernel
                     $absen->tanggal = Carbon::today();
                     $absen->save();
                 }
-            }    
+
+                $resigns = Resign::whereDate('tgl_resign', '=', now()->subDay())
+                ->where('status', 3)
+                ->get();
+                foreach ($resigns as $resign) {
+                    $karyawan = Karyawan::find($resign->id_karyawan);
+                    if ($karyawan && $karyawan->status_kerja == 'Aktif') {
+                        $karyawan->update(['status_kerja' => 'Non-Aktif']);
+                    }
+                }
+        }    
         })->dailyAt('23:59');
+    
+    
     }
 
     /** 

@@ -86,20 +86,33 @@
                                                             <td>
                                                                 <span class="badge badge-success">Disetujui</span>
                                                             </td>
+                                                        @elseif($r->status == 4)
+                                                            <td>
+                                                                <span class="badge badge-warning">Pending HRD</span>
+                                                            </td>    
                                                         @else
                                                             <td>
                                                                 <span class="badge badge-danger">Ditolak</span>
                                                             </td>
                                                         @endif
 
+                                                        
+                                                                
+                                                            
+                                                           
+                                                        
                                                         <td class="text-center">
                                                             <form action="" method="POST">
-                                                                <a class="btn btn-info btn-sm" data-toggle="modal"
-                                                                    data-target="#Showresign{{ $r->id }}">
-                                                                    <i class="fa fa-eye"></i>
-                                                                </a>
+                                                              <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#Showresign{{ $r->id }}">
+                                                                <i class="fa fa-eye"></i>
+                                                              </a>
                                                             </form>
-                                                        </td>
+                                                            @if($r->status == 1)
+                                                              <button onclick="confirmDeletion()" class="btn btn-danger btn-sm">
+                                                                <i class="fa fa-trash"></i>
+                                                              </button>
+                                                            @endif
+                                                          </td>
                                                     </tr>
                                                     {{-- modal show cuti --}}
                                                     @include('karyawan.resign.showresign')
@@ -121,7 +134,15 @@
     </div>
 
 
-
+    <script>
+        function confirmDeletion() {
+          if (confirm("Are you sure you want to delete?")) {
+            // User clicked "OK", proceed with delete
+          } else {
+            // User clicked "Cancel"
+          }
+        }
+      </script>
     {{-- <script type="text/javascript">
     let tp = '{{$tipe}}';
     
