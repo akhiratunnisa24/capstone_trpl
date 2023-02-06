@@ -117,7 +117,7 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 //HALAMAN KARYAWAN
 //cuti
     Route::get('/absensi-karyawan',[AbsensiController::class,'create'])->name('absensi_karyawan');
-    Route::get('/history-absensi', [AbsensiKaryawanController::class,'index']);
+    Route::get('/history-absensi', [AbsensiKaryawanController::class,'index'])->name('history.absen');
     Route::get('/cuti-karyawan',[CutikaryawanController::class,'index'])->name('cuti_karyawan');
     Route::post('/getdurasialokasi', [CutikaryawanController::class, 'getDurasi'])->name('get.Durasi');
     Route::post('/cuti_karyawan', [CutikaryawanController::class, 'store'])->name('cuti.store');
@@ -131,7 +131,7 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('/resign_karyawan/{id}', [ResignController::class, 'show'])->name('resign.show');
 
     Route::get('/export-absensi', [AbsensiKaryawanController::class, 'absensiPeroranganExcel'])->name('expor.absensi');
-
+    Route::get('/export-absensi-pdf', [AbsensiKaryawanController::class, 'absensiPeroranganPdf'])->name('pdf.absensi');
 
 //==================================================================================
 

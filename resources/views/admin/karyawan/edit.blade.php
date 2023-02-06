@@ -74,42 +74,6 @@
                     </div>
                     <div class="form-group">
                         <div class="mb-3">
-                           <label>Alamat</label> 
-                           <input name="alamatKaryawan" type="text" class="form-control" autocomplete="off" value="{{$karyawan->alamat}}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="mb-3">
-                           <label>Nomor Handphone</label> 
-                           <input name="no_hpKaryawan" type="text" autocomplete="off" class="form-control" value="{{$karyawan->no_hp}}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="mb-3">
-                           <label>Jabatan</label> 
-                           <select type="text" class="form-control selectpicker" name="jabatanKaryawan" required>
-                            <option value="">Pilih Jabatan</option>
-                            <option value="Direktur" @if($karyawan->jabatan == "Direktur") selected @endif >Direktur</option>
-                            <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager</option>
-                            <option value="Supervisor" @if($karyawan->jabatan == "Supervisor") selected @endif >Supervisor</option>
-                            <option value="HRD" @if($karyawan->jabatan == "HRD") selected @endif >HRD</option>
-                            <option value="Staff" @if($karyawan->jabatan == "Staff") selected @endif >Staff</option>
-                        </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="mb-3">
-                            <label>Pilih Foto Karyawan</label><br>
-                            <img class="img-preview img-fluid mb-6 col-sm-5"
-                            src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="Tidak ada foto profil." style="width:205px;" >
-                        <br><input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="mb-3">
                            <label>Email</label> 
                            <input type="text" name="emailKaryawan" class="form-control" autocomplete="off" value="{{$karyawan->email}}">
                         </div>
@@ -137,6 +101,85 @@
                             <option value="B" @if($karyawan->gol_darah == "B") selected @endif >B</option>
                             <option value="AB" @if($karyawan->gol_darah == "AB") selected @endif >AB</option>
                             <option value="O" @if($karyawan->gol_darah == "O") selected @endif >O</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>Alamat</label> 
+                           <input name="alamatKaryawan" type="text" class="form-control" autocomplete="off" value="{{$karyawan->alamat}}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label>Pilih Foto Karyawan</label><br>
+                            <img class="img-preview img-fluid mb-6 col-sm-5"
+                            src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="Tidak ada foto profil." style="width:205px;" >
+                        <br><input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>Nomor Handphone</label> 
+                           <input name="no_hpKaryawan" type="text" autocomplete="off" class="form-control" value="{{$karyawan->no_hp}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="form-label">Departemen</label>
+                        <select class="form-control selectpicker" name="divisi" data-live-search="true" required>
+                            <option value="">Pilih Departemen</option>
+                            @foreach ($departemen as $d)
+                                <option value="{{ $d->id }}"
+                                    @if($karyawan->divisi == $d->id)
+                                        selected
+                                    @endif>{{ $d->nama_departemen }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="form-label">Atasan Langsung (SPV/Manager/Direktur)</label>
+                        <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
+                            <option value="">Pilih Atasan Langsung</option>
+                            @foreach ($atasan_pertama as $atasan)
+                                <option value="{{ $atasan->id }}"
+                                    @if($karyawan->atasan_pertama == $atasan->id)
+                                        selected
+                                    @endif>{{ $atasan->nama }}
+                                </option>
+                                   
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="form-label">Atasan (Manager/Direktur)</label>
+                        <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
+                            <option value="">Pilih Atasan</option>
+                            @foreach ($atasan_kedua as $atasan)
+                                <option value="{{ $atasan->id }}"
+                                    @if($karyawan->atasan_kedua == $atasan->id)
+                                        selected
+                                    @endif>{{ $atasan->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="mb-3">
+                           <label>Jabatan</label> 
+                           <select type="text" class="form-control selectpicker" name="jabatanKaryawan" required>
+                            <option value="">Pilih Jabatan</option>
+                            <option value="Direktur" @if($karyawan->jabatan == "Direktur") selected @endif >Direktur</option>
+                            <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager</option>
+                            <option value="Supervisor" @if($karyawan->jabatan == "Supervisor") selected @endif >Supervisor</option>
+                            <option value="HRD" @if($karyawan->jabatan == "HRD") selected @endif >HRD</option>
+                            <option value="Staff" @if($karyawan->jabatan == "Staff") selected @endif >Staff</option>
                         </select>
                         </div>
                     </div>

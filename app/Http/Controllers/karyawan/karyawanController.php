@@ -539,23 +539,29 @@ class karyawanController extends Controller
 
         if ($role == 1) {
 
-            $karyawan = Karyawan::findOrFail($id);
-            $keluarga = Keluarga::where('id_pegawai', $id)->first();
-            $kdarurat = Kdarurat::where('id_pegawai', $id)->first();
-            $rpendidikan = Rpendidikan::where('id_pegawai', $id)->first();
-            $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->first();
-            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $karyawan       = Karyawan::findOrFail($id);
+            $keluarga       = Keluarga::where('id_pegawai', $id)->first();
+            $kdarurat       = Kdarurat::where('id_pegawai', $id)->first();
+            $rpendidikan    = Rpendidikan::where('id_pegawai', $id)->first();
+            $rpekerjaan     = Rpekerjaan::where('id_pegawai', $id)->first();
+            $row            = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $departemen     = Departemen::all();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Direktur'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direktur'])->get();
 
             $output = [
                 'row' => $row
             ];
 
             return view('admin.karyawan.edit', $output)->with([
-                'karyawan' => $karyawan,
-                'keluarga' => $keluarga,
-                'kdarurat' => $kdarurat,
-                'rpendidikan' => $rpendidikan,
+                'karyawan'   => $karyawan,
+                'keluarga'   => $keluarga,
+                'kdarurat'   => $kdarurat,
+                'rpendidikan'=> $rpendidikan,
                 'rpekerjaan' => $rpekerjaan,
+                'departemen' =>$departemen,
+                'atasan_pertama'=> $atasan_pertama,
+                'atasan_kedua'  => $atasan_kedua,
             ]);
         } else {
 
@@ -600,7 +606,9 @@ class karyawanController extends Controller
                 'nik' => $request->post('nikKaryawan'),
                 'gol_darah' => $request->post('gol_darahKaryawan'),
                 'jabatan' => $request->post('jabatanKaryawan'),
-                // 'created_at' => new \DateTime(),
+                'divisi'=>$request->post('divisi'),
+                'atasan_pertama'=>$request->post('atasan_pertama'),
+                'atasan_kedua'=>$request->post('atasan_kedua'),
                 'updated_at' => new \DateTime(),
                 'foto' => $filename,
             );
@@ -694,9 +702,13 @@ class karyawanController extends Controller
                 'nik' => $request->post('nikKaryawan'),
                 'gol_darah' => $request->post('gol_darahKaryawan'),
                 'jabatan' => $request->post('jabatanKaryawan'),
+                'divisi'=>$request->post('divisi'),
+                'atasan_pertama'=>$request->post('atasan_pertama'),
+                'atasan_kedua'=>$request->post('atasan_kedua'),
                 // 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
             );
+            // dd($data);
 
             $data_keluarga = array(
                 // 'id_pegawai' => $maxId + 1 , 

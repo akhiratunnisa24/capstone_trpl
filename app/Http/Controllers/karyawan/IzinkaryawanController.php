@@ -4,8 +4,8 @@ namespace App\Http\Controllers\karyawan;
 
 use Carbon\Carbon;
 use App\Models\Izin;
-use App\Models\Jenisizin;
-use App\Models\Datareject;
+use App\Models\Karyawan;
+use App\Models\Departemen;
 use Illuminate\Http\Request;
 use App\Mail\IzinNotification;
 use Illuminate\Support\Facades\DB;
@@ -24,17 +24,6 @@ class IzinkaryawanController extends Controller
     {
         $this->middleware('auth');
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    
-    // public function index()
-    // {
-    //     return view('karyawan.cuti.index', compact('izin','jenisizin','cuti','jeniscuti','karyawan'));
-    // }
 
     public function store(Request $request)
     {
@@ -69,18 +58,16 @@ class IzinkaryawanController extends Controller
             $izin->status      = 'Pending';
             $izin->save();
 
-            //email
-            $div = DB::table('karyawan')->join('departemen','karyawan.divisi','=','departemen.id')
-                ->where('karyawan.id',$izin->id_karyawan)
-                ->select('karyawan.divisi as divisi','departemen.id as dep_id','departemen.nama_departemen as namadepartemen')
+            $idatasan = DB::table('karyawan')
+                ->join('izin','karyawan.id','=','izin.id_karyawan')
+                ->where('izin.id_karyawan','=',$izin->id_karyawan)
+                ->select('karyawan.atasan_pertama as atasan_pertama')
                 ->first();
-            $manager = DB::table('karyawan')
-                ->join('departemen','karyawan.divisi','=','departemen.id')
-                ->where('divisi',$div->divisi)
-                ->where('jabatan','=','Manager')
-                ->select('karyawan.*','departemen.nama_departemen as manag_depart')
+            $atasan = Karyawan::where('id',$idatasan->atasan_pertama)
+                ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
-            $tujuan = $manager->email;
+            // dd(strtoupper($atasan['jabatan']), $atasan['departemen'],$dep['departemen']);
+            $tujuan = $atasan['email'];
             $data = [
                 'subject'     =>'Pemberitahuan Permintaan Izin',
                 'id'          =>$izin->id,
@@ -91,8 +78,8 @@ class IzinkaryawanController extends Controller
                 'jml_hari'    =>0,
                 'jml_jam'     =>$izin->jml_jam,
                 'status'      =>$izin->status,
-                'manag_depart'=>$manager->manag_depart,
-                'manag_name'  =>$manager->nama,
+                'nama_atasan' =>$atasan->nama,
+                'jabatan'     =>strtoupper($atasan['jabatan']),
             ];
             Mail::to($tujuan)->send(new IzinNotification($data));
             return redirect()->back()->withInput();
@@ -122,18 +109,18 @@ class IzinkaryawanController extends Controller
             // dd($izin);
             $izin->save();
 
-            $div = DB::table('karyawan')->join('departemen','karyawan.divisi','=','departemen.id')
-                ->where('karyawan.id',$izin->id_karyawan)
-                ->select('karyawan.divisi as divisi','departemen.id as dep_id','departemen.nama_departemen as namadepartemen')
+            $idatasan = DB::table('karyawan')
+                ->join('izin','karyawan.id','=','izin.id_karyawan')
+                ->where('izin.id_karyawan','=',$izin->id_karyawan)
+                ->select('karyawan.atasan_pertama as atasan_pertama')
                 ->first();
-            $manager = DB::table('karyawan')
-                ->join('departemen','karyawan.divisi','=','departemen.id')
-                ->where('divisi',$div->divisi)
-                ->where('jabatan','=','Manager')
-                ->select('karyawan.*','departemen.nama_departemen as manag_depart')
+            $atasan = Karyawan::where('id',$idatasan->atasan_pertama)
+                ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
 
-            $tujuan = $manager->email;
+            $tujuan = $atasan['email'];
+            // dd($atasan->email,$atasan->nama,$atasan->jabatan);
+
             $data = [
                 'subject'     =>'Pemberitahuan Permintaan Izin',
                 'id'          =>$izin->id,
@@ -144,21 +131,13 @@ class IzinkaryawanController extends Controller
                 'jml_hari'    =>$izin->jml_hari,
                 'jml_jam'     => 0,
                 'status'      =>$izin->status,
-                'manag_depart'=>$manager->manag_depart,
-                'manag_name'  =>$manager->nama,
+                'nama_atasan' =>$atasan->nama,
+                'jabatan'     =>strtoupper($atasan->jabatan),
             ];
             Mail::to($tujuan)->send(new IzinNotification($data));
+            // dd($data);
             return redirect()->back()->withInput();
         }  
 
     }
-
-    // public function show($id)
-    // {
-    //     $izin = Izin::findOrFail($id);
-    //     $karyawan = Auth::user()->id_pegawai;
-
-    //     return view('karyawan.kategori.index',compact('cuti','karyawan'));
-    // }
-
 }

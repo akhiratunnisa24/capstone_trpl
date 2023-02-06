@@ -27,7 +27,8 @@
     </style>
 </head>
 <body>
-    <strong>Yth. Manager {{$data['manag_depart']}}</strong>
+    {{-- <strong>Yth. Bapak/Ibu {{$data['nama_atasan']}}</strong> --}}
+    <strong>Yth. {{$data['jabatan']}}</strong>
     <br><br>
     <p>Anda memiliki notifikasi permintaan <strong>Izin {{$data['jenisizin']}}</strong> dari Saudara/i <strong>{{Auth::user()->name}}</strong></p>
     <p>Silahkan buka halaman website Anda untuk melakukan Approval pada permintaan izin tersebut atau <a href="/cuti-staff">click here!</a> </p>

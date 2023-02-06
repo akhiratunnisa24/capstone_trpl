@@ -28,7 +28,7 @@
 </head>
 <body>
     @if($data['role'] == 2)
-        <strong>Yth. Manager {{$data['atasan_depar']}}</strong>
+        <strong>Yth. SUPERVISOR </strong>
     @else
         {{-- @if($role == 1 || $role == 3) --}}
             <strong>Yth. Direktur PT...</strong>

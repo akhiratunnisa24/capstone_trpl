@@ -18,7 +18,7 @@
                             <div class="m-t-20">
                                 <div class="form-group">
                                     <label>Bulan</label>
-                                    <select name="bulan" id="bulan" class="col-md-3 form-control selectpicker" data-live-search="true">
+                                    <select name="bulan" id="bulan" class="col-md-3 form-control selectpicker" data-live-search="true" required>
                                         <option value="">-- Pilih Bulan --</option>
                                         <option value="01" {{ ('01' === request()->bulan) ? 'selected' : '' }}>Januari</option>
                                         <option value="02" {{ ('02' === request()->bulan) ? 'selected' : '' }}>Februari</option>
@@ -40,7 +40,7 @@
                             <div class="m-t-20">
                                 <div class="form-group">
                                     <label>Tahun</label>
-                                    <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" data-live-search="true">
+                                    <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" data-live-search="true" required>
                                         <option value="">-- Pilih Tahun --</option>
                                         <option value="2015" {{ ('2015' === request()->tahun) ? 'selected' : '' }}>2015</option>
                                         <option value="2016" {{ ('2016' === request()->tahun) ? 'selected' : '' }}>2016</option>
@@ -68,7 +68,7 @@
                                     <label></label>
                                     <div>
                                         <button type="submit" id="search" class="btn btn-md btn-success fa fa-filter"> Filter</button>
-                                        <a href="{{ route('absensi.Staff') }}" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
+                                        <a href="{{ route('history.absen') }}" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
                                     </div>
                                 </div>
                             </div>
@@ -88,9 +88,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <a href="/export-absensi" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                        <a href="#"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Export PDF</a>
-                        {{-- /expor-to-excel --}}
-                        {{-- /expor-to-pdf --}}
+                        <a href="/export-absensi-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Export PDF</a>
                     </div>
                     <div class="panel-body m-b-5">
                         {{-- <div class="row">
@@ -111,7 +109,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($historyabsensi as $data)
+                                        @foreach($absensi as $data)
                                         {{-- @if($data->id_karyawan == Auth::user()->id_pegawai) --}}
                                         <tr>
                                             <td>{{$loop->iteration}}</td>

@@ -89,8 +89,11 @@
                                                                             </td>
                                                                         @elseif($data->status == 'Disetujui Manager')
                                                                             <td>
-                                                                                <span class="badge badge-info">Disetujui
-                                                                                    Manager</span>
+                                                                                <span class="badge badge-info">Disetujui Manager</span>
+                                                                            </td>
+                                                                        @elseif($data->status == 'Disetujui Supervisor')
+                                                                            <td>
+                                                                                <span class="badge badge-secondary">Disetujui Supervisor</span>
                                                                             </td>
                                                                         @elseif($data->status == 'Disetujui')
                                                                             <td>

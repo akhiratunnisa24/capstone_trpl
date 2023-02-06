@@ -31,28 +31,22 @@ class ManagerController extends Controller
         if ($role == 3) {
             //mengambil id_departemen manager
             $manager_iddep = DB::table('karyawan')
-            ->where('id','=',Auth::user()->id_pegawai)
-            ->select('divisi')->first();
+                ->where('id','=',Auth::user()->id_pegawai)
+                ->select('divisi')->first();
 
             //ambil data dengan id_departemen sama dengan manager
             $staff= Karyawan::with('departemens')
                 ->where('divisi',$manager_iddep->divisi)
-                ->where('jabatan','!=','Manager')
-                ->get();
+                ->where('jabatan','!=','Manager')->get();
+
             return view('manager.staff.dataStaff', compact('staff','row'));
-        }elseif($role == 5)
+        }
+        elseif($role == 5)
         {
-            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             //mengambil id_departemen 
-            $spv = DB::table('karyawan')
-            ->where('id','=',Auth::user()->id_pegawai)
-            ->select('divisi')->first();
-    
-            //ambil data dengan id_departemen sama dengan supervisor
             $staff= Karyawan::with('departemens')
-                ->where('divisi',$spv->divisi)
-                ->where('jabatan','=','Staff')
-                ->get();
+                ->where('atasan_pertama','=',Auth::user()->id_pegawai)->get();
+
             return view('manager.staff.dataStaff', compact('staff','row'));
         }else{
             return redirect()->back();
@@ -103,6 +97,7 @@ class ManagerController extends Controller
                 $absensi= Absensi::where('id_departement',$middep->id_departement)->get();
             }
             return view('manager.staff.absensiStaff', compact('absensi','karyawan','row'));
+
             //menghapus filter data
             $request->session()->forget('id_karyawan');
             $request->session()->forget('bulan');
@@ -143,7 +138,6 @@ class ManagerController extends Controller
                 $absensi = Absensi::with(['karyawans' => function($query) {
                     $query->select('nama')->where('jabatan', 'Staff');
                 }])->where('id_departement', $middep->id_departement)->get();
-                
             }
             return view('manager.staff.absensiStaff', compact('absensi','karyawan','row','role'));
             //menghapus filter data
@@ -166,63 +160,65 @@ class ManagerController extends Controller
 
         $tp = $request->query('tp',1);
 
-        $alasan = DB::table('datareject')
-            ->join('izin','datareject.id_izin','=','izin.id')
-            ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
-            ->first();
-        $alasancuti = DB::table('datareject')
-            ->join('cuti','datareject.id_cuti','=','cuti.id')
-            ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
-            ->first();
-
-        if($role == 3){
+        if($role == 3)
+        {
             $cutistaff = DB::table('cuti')
-            ->leftjoin('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
-            ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
-            ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
-            ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
-            ->where('karyawan.divisi',$atasan->divisi)
-            ->where('karyawan.jabatan','!=','Manager')
-            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama')
-            ->distinct()
-            ->get();
+                ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+                ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+                ->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                ->orWhere('karyawan.atasan_kedua',Auth::user()->id_pegawai)
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama')
+                ->distinct()
+                ->get();
 
             $izinstaff = DB::table('izin')
                 ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
                 ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
-                ->where('karyawan.divisi',$atasan->divisi)
+                ->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
                 ->select('izin.*','karyawan.nama','jenisizin.jenis_izin')
                 ->distinct()
                 ->get();
+            
+            $alasan = DB::table('datareject')
+                ->join('izin','datareject.id_izin','=','izin.id')
+                ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
+                ->first();
+            $alasancuti = DB::table('datareject')
+                ->join('cuti','datareject.id_cuti','=','cuti.id')
+                ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
+                ->first();
                 
             return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','alasan','alasancuti'));
-
         }
         elseif($role == 5)
         {
             $cutistaff = DB::table('cuti')
-            ->leftjoin('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
-            ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
-            ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
-            ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
-            ->where('karyawan.divisi',$atasan->divisi)
-            ->where('karyawan.jabatan','=','Staff')
-            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama')
-            ->distinct()
-            ->get();
+                ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+                ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+                ->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama')
+                ->distinct()
+                ->get();
 
             $izinstaff = DB::table('izin')
                 ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
                 ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
-                ->where('karyawan.divisi',$atasan->divisi)
-                ->where('karyawan.jabatan','=','Staff')
+                ->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
                 ->select('izin.*','karyawan.nama','jenisizin.jenis_izin')
                 ->distinct()
                 ->get();
+            $alasan = DB::table('datareject')
+                ->join('izin','datareject.id_izin','=','izin.id')
+                ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
+                ->first();
+            $alasancuti = DB::table('datareject')
+                ->join('cuti','datareject.id_cuti','=','cuti.id')
+                ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
+                ->first();
 
             return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','alasan','alasancuti'));
-
-        }else{
+        }
+        else{
             return redirect()->back();
         }
     }
@@ -230,62 +226,137 @@ class ManagerController extends Controller
     public function cutiapproved(Request $request, $id)
     {
         $cuti = Cuti::where('id',$id)->first();
+        $role = Auth::user()->role;
 
+        //ambil tipe approval cuti
         $datacuti = DB::table('cuti')
-        ->join('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
-        ->join('settingalokasi', 'cuti.id_settingalokasi', '=', 'settingalokasi.id')
-        ->where('settingalokasi.tipe_approval', 'Tidak Bertingkat')
-        ->orWhere('settingalokasi.tipe_approval', 'Bertingkat')
-        ->select('cuti.*','alokasicuti.*','settingalokasi.tipe_approval')
-        ->first();
+            ->join('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
+            ->join('settingalokasi', 'cuti.id_settingalokasi', '=', 'settingalokasi.id')
+            ->where('settingalokasi.tipe_approval', 'Tidak Bertingkat')
+            ->orWhere('settingalokasi.tipe_approval', 'Bertingkat')
+            ->select('cuti.*','alokasicuti.*','settingalokasi.tipe_approval')
+            ->first();
 
         // dd($data);
-
-        if($datacuti->tipe_approval == 'Tidak Bertingkat')
+        if($role == 3)
         {
-            $jml_cuti = $cuti->jml_cuti;
-            Cuti::where('id', $id)->update(
-                ['status' => 'Disetujui']
-            );
-    
-            $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
-                ->where('id_karyawan', $cuti->id_karyawan)
-                ->where('id_jeniscuti', $cuti->id_jeniscuti)
-                ->where('id_settingalokasi', $cuti->id_settingalokasi)
-                ->first();
-
-            $durasi_baru = $alokasicuti->durasi - $jml_cuti;
-
-            Alokasicuti::where('id', $alokasicuti->id)
-            ->update(
-                ['durasi' => $durasi_baru]
-            );
-
-            //ambil data karyawan
-            
-            $tujuan = 'akhiratunnisahasanah0917@gmail.com';
-            $data = [
-                'subject'     =>'Notifikasi Cuti Disetujui',
-                'id'          =>$cuti->id,
-                'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
-                'keperluan'   =>$cuti->keperluan,
-                'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
-                'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
-                'jml_cuti'    =>$cuti->jml_cuti,
-                'status'      =>$cuti->status,
-            ];
-
-
-            return redirect()->back()->withInput();
-
-        }else{
-            $status = 'Disetujui Manager';
-            Cuti::where('id',$id)->update([
-                'status' => $status,
-            ]);
-            return redirect()->back()->withInput();
-        }
+            if($datacuti->tipe_approval == 'Tidak Bertingkat')
+            {
+                $jml_cuti = $cuti->jml_cuti;
+                Cuti::where('id', $id)->update(
+                    ['status' => 'Disetujui']
+                );
         
+                $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    ->where('id_karyawan', $cuti->id_karyawan)
+                    ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    ->first();
+
+                $durasi_baru = $alokasicuti->durasi - $jml_cuti;
+
+                Alokasicuti::where('id', $alokasicuti->id)
+                ->update(
+                    ['durasi' => $durasi_baru]
+                );
+
+                //ambil data karyawan
+                $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+                $data = [
+                    'subject'     =>'Notifikasi Cuti Disetujui',
+                    'id'          =>$cuti->id,
+                    'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+                    'keperluan'   =>$cuti->keperluan,
+                    'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+                    'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+                    'jml_cuti'    =>$cuti->jml_cuti,
+                    'status'      =>$cuti->status,
+                ];
+                Mail::to($tujuan)->send(new CutiApproveNotification($data));
+                return redirect()->back()->withInput();
+
+            }else{
+                $status = 'Disetujui Manager';
+                Cuti::where('id',$id)->update([
+                    'status' => $status,
+                ]);
+                //ambil nama_atasan
+                $idatasan = DB::table('cuti')
+                    ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+                    ->select('karyawan.atasan_kedua as atasan_kedua')
+                    ->first();
+                $atasan = Karyawan::where('id',$idatasan->atasan_kedua)
+                    ->select('email as email')
+                    ->first();
+                
+                //ambil data karyawan
+                $tujuan = $atasan->email;
+                // $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+                // dd($idatasan,$atasan->email,$tujuan);
+                
+                $data = [
+                    'subject'     =>'Notifikasi Cuti Disetujui',
+                    'id'          =>$cuti->id,
+                    'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+                    'keperluan'   =>$cuti->keperluan,
+                    'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+                    'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+                    'jml_cuti'    =>$cuti->jml_cuti,
+                    'status'      =>$cuti->status,
+                ];
+                Mail::to($tujuan)->send(new CutiApproveNotification($data));
+                return redirect()->back()->withInput();
+            }
+        }
+        elseif($role == 5)
+        {
+            if($datacuti->tipe_approval == 'Tidak Bertingkat')
+            {
+                $jml_cuti = $cuti->jml_cuti;
+                Cuti::where('id', $id)->update(
+                    ['status' => 'Disetujui']
+                );
+        
+                $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    ->where('id_karyawan', $cuti->id_karyawan)
+                    ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    ->first();
+
+                $durasi_baru = $alokasicuti->durasi - $jml_cuti;
+
+                Alokasicuti::where('id', $alokasicuti->id)
+                ->update(
+                    ['durasi' => $durasi_baru]
+                );
+
+                
+                //ambil data karyawan
+                // $tujuan = Auth::user()->email;
+                $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+                $data = [
+                    'subject'     =>'Notifikasi Cuti Disetujui',
+                    'id'          =>$cuti->id,
+                    'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+                    'keperluan'   =>$cuti->keperluan,
+                    'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+                    'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+                    'jml_cuti'    =>$cuti->jml_cuti,
+                    'status'      =>$cuti->status,
+                ];
+                return redirect()->back()->withInput();
+
+            }else{
+                $status = 'Disetujui Supervisor';
+                Cuti::where('id',$id)->update([
+                    'status' => $status,
+                ]);
+                return redirect()->back()->withInput();
+            }
+        }
+        else{
+            return redirect()->back();
+        }   
     }
 
     public function cutireject(Request $request, $id)
@@ -354,7 +425,8 @@ class ManagerController extends Controller
             ->where('izin.id',$izin->id)
             ->select('karyawan.email as email','karyawan.nama as nama')
             ->first(); 
-        $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+        $tujuan = $karyawan->email;
+        //$tujuan = 'akhiratunnisahasanah0917@gmail.com';
         $data = [
             'title'    =>$izin->id,
             'subject'  =>'Notifikasi Izin',
@@ -393,7 +465,8 @@ class ManagerController extends Controller
             ->where('izin.id',$izin->id)
             ->select('karyawan.email as email','karyawan.nama as nama')
             ->first(); 
-        $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+        //$tujuan = 'akhiratunnisahasanah0917@gmail.com';
+        $tujuan = $karyawan->email;
         $data = [
             'title'    =>$izin->id,
             'subject'  =>'Notifikasi Izin',
@@ -428,14 +501,12 @@ class ManagerController extends Controller
             $middep = DB::table('absensi')
             ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
             ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
-            ->select('id_departement')->first();
+            ->select('absensi.id_departement as id_departement')
+            ->first();
     
             $data = Absensi::with('karyawans','departemens')
             ->where('id_departement',$middep->id_departement)
-            ->where('jabatan','=','Staff')
             ->get();
-
-            dd($data->karyawans->jabatan);
     
             return Excel::download(new AbsensiDepartemenExport($data), 'data_absensi_departemen.xlsx');
         }
@@ -448,7 +519,8 @@ class ManagerController extends Controller
 
     public function exportToExcel(Request $request)
     {
-        //mengambil id_departemen manager
+        $role = Auth::user()->role;
+        //mengambil id_departemen user
         $middep = DB::table('absensi')
         ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
         ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
@@ -473,7 +545,9 @@ class ManagerController extends Controller
             ->get();
             // dd($data);
         }else{
-            $data = Absensi::with('karyawans','departemens')->where('id_departement',$middep->id_departement)->get();
+            $data = Absensi::with('karyawans','departemens')
+            ->where('id_departement',$middep->id_departement)
+            ->get();
         };
 
         return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), "data_absensi_departemen{$idkaryawan}.xlsx");
@@ -499,7 +573,7 @@ class ManagerController extends Controller
         elseif($role == 5)
         {
             $data = Absensi::with(['karyawans' => function($query) {
-                $query->select('id,nama')->where('jabatan', 'Staff');
+                $query->select('id,nama')->where('jabatan','=', 'Staff');
             }])->where('id_departement',$middep->id_departement)->get();
             
             $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data',$data],compact('data'))
