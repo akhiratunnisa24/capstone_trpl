@@ -27,8 +27,16 @@
                           </select>
                       </div>
 
-
                       <div class="form-group col-xs-12">
+                        <label for="departemen1" class="form-label">Departemen</label>
+                        <input id="departemen1" class="form-control" name="departemen1" autocomplete="off"
+                            placeholder="" readonly>
+
+
+                    </div>
+
+
+                      <div class="form-group col-xs-12"hidden>
                           <label for="departemen" class="form-label">Departemen</label>
                           <input id="departemen" class="form-control" name="departemen" autocomplete="off"
                               placeholder="" readonly>
@@ -181,7 +189,8 @@
                   type: 'GET',
                   success: function(user) {
                       $('#namaKaryawan').val(user.nama);
-                      $('#departemen').val(user.departemen.nama_departemen);
+                      $('#departemen').val(user.departemen.id);
+                      $('#departemen1').val(user.departemen.nama_departemen);
                       $('#tgl_masuk').val(user.tglmasuk);
                   }
               });

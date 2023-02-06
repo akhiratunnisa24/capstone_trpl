@@ -131,7 +131,13 @@
                                             @foreach($absensi as $data)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
-                                                    <td>{{$data->karyawans->nama}}</td>
+                                                    @if(Auth::user()->role == 3 && $data->karyawans)
+                                                        <td>{{$data->karyawans->nama}}</td>
+                                                    @elseif(Auth::user()->role == 5 && $data->karyawans)
+                                                        <td>{{$data->karyawans->nama}}</td>
+                                                    @else
+                                                       <td></td>
+                                                    @endif
                                                     <td>{{$data->departemens->nama_departemen}}
                                                     <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
                                                     <td>{{$data->jam_masuk}}</td>

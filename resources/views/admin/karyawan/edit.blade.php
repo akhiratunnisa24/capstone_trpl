@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <div class="mb-3">
                            <label>Jenis Kelamin</label> 
-                           <select class="form-control" name="jenis_kelaminKaryawan" required>
+                           <select class="form-control selectpicker" name="jenis_kelaminKaryawan" required>
                             <option value="">Pilih Jenis Kelamin</option>
                             <option value="L" @if($karyawan->jenis_kelamin == "L") selected @endif >Laki-Laki</option>
                             <option value="P" @if($karyawan->jenis_kelamin == "P") selected @endif >Perempuan</option>
@@ -87,10 +87,12 @@
                     <div class="form-group">
                         <div class="mb-3">
                            <label>Jabatan</label> 
-                           <select type="text" class="form-control" name="jabatanKaryawan" required>
+                           <select type="text" class="form-control selectpicker" name="jabatanKaryawan" required>
                             <option value="">Pilih Jabatan</option>
-                            <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager
-                            </option>
+                            <option value="Direktur" @if($karyawan->jabatan == "Direktur") selected @endif >Direktur</option>
+                            <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager</option>
+                            <option value="Supervisor" @if($karyawan->jabatan == "Supervisor") selected @endif >Supervisor</option>
+                            <option value="HRD" @if($karyawan->jabatan == "HRD") selected @endif >HRD</option>
                             <option value="Staff" @if($karyawan->jabatan == "Staff") selected @endif >Staff</option>
                         </select>
                         </div>
@@ -115,7 +117,7 @@
                     <div class="form-group">
                         <div class="mb-3">
                            <label>Agama</label> 
-                           <select class="form-control" name="agamaKaryawan">
+                           <select class="form-control selectpicker" name="agamaKaryawan">
                                 <option value="">Pilih Agama</option>
                                 <option value="Islam" @if($karyawan->agama == "Islam") selected @endif>Islam</option>
                                 <option value="Kristen" @if($karyawan->agama == "Kristen") selected @endif>Kristen</option>
@@ -129,7 +131,7 @@
                     <div class="form-group">
                         <div class="mb-3">
                            <label>Golongan Darah</label> 
-                           <select class="form-control" name="gol_darahKaryawan" required>
+                           <select class="form-control selectpicker" name="gol_darahKaryawan" required>
                             <option value="">Pilih Golongan Darah</option>
                             <option value="A" @if($karyawan->gol_darah == "A") selected @endif >A</option>
                             <option value="B" @if($karyawan->gol_darah == "B") selected @endif >B</option>
@@ -154,9 +156,14 @@
                     <div class="form-group">
                         <div class="mb-3">
                             <label>Status Pernikahan</label>
-                            <input type="text" name="status_pernikahan" autocomplete="off" class="form-control" value="{{$keluarga->status_pernikahan}}">
+                            <select type="text" class="form-control selectpicker" name="status_pernikahan" required>
+                                <option value="">Pilih Status Pernikahan</option>
+                                <option value="Belum" @if($keluarga->status_pernikahan == "Belum") selected @endif >Belum Menikah</option>
+                                <option value="Sudah" @if($keluarga->status_pernikahan == "Sudah") selected @endif >Sudah Menikah</option>
+                            </select>
                         </div>
                     </div>
+            
                     <div class="form-group">
                         <div class="mb-3">
                             <label>Nama Pasangan</label>
@@ -213,9 +220,20 @@
                     <div class="form-group">
                         <div class="mb-3">
                             <label>Hubungan</label>
-                            <input type="text" name="hubunganKdarurat" class="form-control" autocomplete="off" value="{{$kdarurat->hubungan}}">
+                            <select type="text" class="form-control selectpicker" name="hubunganKdarurat" required>
+                                <option value="">Pilih Hubungan</option>
+                                <option value="Ayah" @if($kdarurat->hubungan == "Ayah") selected @endif >Ayah</option>
+                                <option value="Ibu"  @if($kdarurat->hubungan == "Ibu") selected @endif >Ibu</option>
+                                <option value="Suami" @if($kdarurat->hubungan == "Suami") selected @endif>Suami</option>
+                                <option value="Istri" @if($kdarurat->hubungan == "Istri") selected @endif>Istri</option>
+                                <option value="Kakak" @if($kdarurat->hubungan == "Kakak") selected @endif>Kakak</option>
+                                <option value="Adik" @if($kdarurat->hubungan == "Adik") selected @endif>Adik</option>
+                                <option value="Anak" @if($kdarurat->hubungan == "Anak") selected @endif>Anak</option>
+                            </select>
+                        
                         </div>
                     </div>
+                    
                 </div>
             </div>
             <div class="row">
