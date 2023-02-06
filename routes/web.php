@@ -17,6 +17,7 @@ use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\DepartemenController;
 use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\AlokasicutiController;
+use App\Http\Controllers\admin\FormPelamarController;
 use App\Http\Controllers\admin\ResignAdminController;
 
 
@@ -74,21 +75,21 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('data_rekrutmen', [RekruitmenController::class, 'index'])->name('data_rekrutmen');
     Route::post('store_rekrutmen', [RekruitmenController::class, 'store'])->name('store_rekrutmen');
     Route::get('show_rekrutmen{id}', [RekruitmenController::class, 'show'])->name('show_rekrutmen');
-    Route::get('create_pelamar', [RekruitmenController::class, 'create_pelamar'])->name('create_pelamar');
-    Route::post('store_pelamar', [RekruitmenController::class, 'store_pelamar'])->name('store_pelamar');
     Route::get('show_formSelesai', [RekruitmenController::class, 'formSelesai'])->name('formSelesai');
     Route::get('show_kanidat{id}', [RekruitmenController::class, 'show_kanidat'])->name('show_kanidat');
     Route::post('update_pelamar{id}', [RekruitmenController::class, 'update'])->name('update_pelamar');
     Route::get('hapuslowongan{id}', [RekruitmenController::class, 'destroy'])->name('hapuslowongan');
-    Route::get('notif_rekrutmen', [NotifMailRekruitmenController::class, 'index']);
     Route::get('metode_rekrutmen', [RekruitmenController::class, 'create_metode'])->name('metode_rekrutmen');
     Route::post('store_metode_rekrutmen', [RekruitmenController::class, 'store_metode_rekrutmen'])->name('store_metode_rekrutmen');
     Route::put('update_metode_rekrutmen{id}', [RekruitmenController::class, 'update_metode_rekrutmen'])->name('update_metode_rekrutmen');
     Route::get('metode_rekrutmen_destroy{id}', [RekruitmenController::class, 'metode_rekrutmen_destroy'])->name('metode_rekrutmen_destroy');
+    Route::get('create_pelamar', [FormPelamarController::class, 'create'])->name('create_pelamar');
+    Route::post('store_pelamar', [FormPelamarController::class, 'store'])->name('store_pelamar');
+    Route::get('notif_rekrutmen', [NotifMailRekruitmenController::class, 'index']);
     
 
     
-    Route::get('Form-Rekruitmen-RYNEST', [RekruitmenController::class, 'create_pelamar'] ,function () {
+    Route::get('Form-Rekruitmen-RYNEST', [FormPelamarController::class, 'create'] ,function () {
         return view('admin.rekruitmen.formPelamar');
     });
 

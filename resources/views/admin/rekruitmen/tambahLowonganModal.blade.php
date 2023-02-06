@@ -25,9 +25,9 @@
                         <label for="roles">Pilih Tahapan</label>
                         @foreach ($metode as $m)
                             <div class="checkbox checkbox-success">
+                                {{-- <input type="checkbox" name="checkbox[]" value="1"> --}}
                                 <input type="checkbox" id="checkbox3" class="form-check-input" name="tahapan[]"
-                                    value="{{ $m->id }}"
-                                    {{ in_array($m->id, old('tahapan', [])) ? 'checked' : '' }}>
+                                    value="{{ $m->id }}">
                                 <label for=checkbox3>
                                     {{ $m->nama_tahapan }}
                                 </label>

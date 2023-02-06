@@ -10,5 +10,10 @@ class MetodeRekruitmen extends Model
     use HasFactory;
 
     protected $table = 'mrekruitmen';
-    protected $fillable = ['nama_metode']; 
+    protected $fillable = ['nama_metode'];
+
+    public function lowongan()
+    {
+        return $this->hasMany(lowongan::class, 'id', 'tahapan');
+    }
 }

@@ -122,9 +122,9 @@ class Karyawan extends Model
     {
         return $this->belongsTo(Departemen::class, 'divisi', 'id');
     }
-    public function tidakmasuk2()
-    {
-        return $this->hasMany(Absensi::class, 'id');
-    }
+    // public function tidakmasuk2()
+    // {
+    //     return $this->hasMany(Absensi::class, 'id');
+    // }
     
 }

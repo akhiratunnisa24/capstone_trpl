@@ -14,6 +14,7 @@ class Lowongan extends Model
     protected $fillable = [
         'id',
         'posisi',
+        'tahapan',
         'jumlah_dibutuhkan',
         'status',
         'persyaratan',
@@ -23,5 +24,14 @@ class Lowongan extends Model
     public function rekruitmen()
     {
         return $this->hasMany(Rekruitmen::class, 'id_lowongan', 'id');
+    }
+    public function mrekruitmen()
+    {
+        return $this->belongsTo(MetodeRekruitmen::class, 'tahapan', 'id');
+    }
+
+    public function namatahap()
+    {
+        return $this->belongsTo(NamaTahap::class, 'id', 'id_lowongan');
     }
 }

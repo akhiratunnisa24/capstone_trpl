@@ -40,12 +40,13 @@
                 <tbody class="col-sm-20">
                     @if ($lowongan->status == 'Aktif')
                         <label class="">
-                        <h4> {{ $lowongan->posisi }} </h4>
-                    </label>
+                            <h4> {{ $lowongan->posisi }} </h4>
+                        </label>
                     @else
                         <label class="">
-                        <h4> {{ $lowongan->posisi }}  </h4> <h3 class="badge badge-danger">Lowongan Tidak Aktif</h3>
-                    </label>
+                            <h4> {{ $lowongan->posisi }} </h4>
+                            <h3 class="badge badge-danger">Lowongan Tidak Aktif</h3>
+                        </label>
                     @endif
 
                     {{-- <label class="">
@@ -64,7 +65,7 @@
 
                 </tbody>
             </table>
-            
+
 
 
             <div class="col-sm-6 col-lg-3 nav nav-tabs navtab-bg">
@@ -75,29 +76,33 @@
                         </a>
                     </div>
                     <div class="panel-body">
-                        <h3 class="" ><b>Tahap 1</b></h3>
+                        <h3 class=""><b>Tahap 1</b></h3>
                         <p class="text-muted"><b>Total {{ $totalTahap1 }} Pelamar</b>
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-sm-6 col-lg-3">
-                <div class="panel panel-primary text-center">
-                    <div class="panel-heading btn-success">
-                        <a href="#tahap2" data-toggle="tab" class="panel-title ">
-                            <h4 class="panel-title">Data Pelamar</h4>
-                        </a>
-                    </div>
-                    <div class="panel-body">
-                        <h3 class=""><b>Tahap 2</b></h3>
-                        <p class="text-muted"><b>Total {{ $totalTahap2 }} Pelamar</b>
-                        </p>
+
+            @foreach ($posisi as $k)
+                <div class="col-sm-6 col-lg-3">
+                    <div class="panel panel-primary text-center">
+                        <div class="panel-heading btn-success">
+                            <a href="#tahap2" data-toggle="tab" class="panel-title ">
+                                <h4 class="panel-title">Data Pelamar</h4>
+                            </a>
+                        </div>
+                        <div class="panel-body">
+                            <h3 class=""><b>{{ $k->mrekruitmen->nama_tahapan }}</b></h3>
+                            <p class="text-muted"><b>Total {{ $totalTahap2 }} Pelamar</b>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
 
-            <div class="col-sm-6 col-lg-3">
+
+            {{-- <div class="col-sm-6 col-lg-3">
                 <div class="panel panel-primary text-center">
                     <div class="panel-heading btn-success">
                         <a href="#tahap3" data-toggle="tab" class="panel-title ">
@@ -110,7 +115,7 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="col-sm-6 col-lg-3">
                 <div class="panel panel-primary text-center">
@@ -139,18 +144,23 @@
                                     <span class="hidden-xs">Tahap 1</span>
                                 </a>
                             </li>
-                            <li class="">
-                                <a href="#tahap2" data-toggle="tab" aria-expanded="true">
-                                    <span class="visible-xs"><i class="fa fa-user"></i></span>
-                                    <span class="hidden-xs">Tahap 2</span>
-                                </a>
-                            </li>
-                            <li class="">
+
+                            @foreach ($posisi as $k)
+                                <li class="">
+                                    <a href="#tahap2" data-toggle="tab" aria-expanded="true">
+                                        <span class="visible-xs"><i class="fa fa-user"></i></span>
+                                        <span class="hidden-xs">{{ $k->mrekruitmen->nama_tahapan }}</span>
+                                    </a>
+                                </li>
+                            @endforeach
+
+                            {{-- <li class="">
                                 <a href="#tahap3" data-toggle="tab" aria-expanded="true">
                                     <span class="visible-xs"><i class="fa fa-user"></i></span>
                                     <span class="hidden-xs">Tahap 3</span>
                                 </a>
-                            </li>
+                            </li> --}}
+
                             <li class="">
                                 <a href="#tahap4" data-toggle="tab" aria-expanded="true">
                                     <span class="visible-xs"><i class="fa fa-user"></i></span>
@@ -183,7 +193,7 @@
                             </thead>
 
 
-                            <tbody> 
+                            <tbody>
                                 @foreach ($dataTahap1 as $k)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
@@ -206,7 +216,8 @@
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmSave()">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmSave()">
                                                         @csrf
                                                         <input type="hidden" name="status_lamaran" value="tahap 2"
                                                             class="form-control" hidden>
@@ -215,7 +226,8 @@
                                                     </form>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmTolak()">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak()">
                                                         @csrf
                                                         @method('POST')
                                                         <input type="hidden" name="status_lamaran" value="Ditolak"
@@ -239,7 +251,6 @@
                     </div>
 
                     <div class="tab-pane" id="tahap2">
-
 
                         <table class="table table-bordered table-striped" style="width:100%">
                             <thead>
@@ -280,7 +291,8 @@
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmSave2()">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmSave2()">
                                                         @csrf
                                                         <input type="hidden" name="status_lamaran" value="tahap 3"
                                                             class="form-control" hidden>
@@ -289,7 +301,8 @@
                                                     </form>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmTolak2()">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
                                                         @csrf
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
@@ -353,7 +366,8 @@
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmSave3()">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmSave3()">
                                                         @csrf
                                                         <input type="hidden" name="status_lamaran" value="Diterima"
                                                             class="form-control" hidden>
@@ -362,7 +376,8 @@
                                                     </form>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST" onsubmit="return confirmTolak3()">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak3()">
                                                         @csrf
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
@@ -444,32 +459,34 @@
 
             <div class="modal-footer">
 
-                <a href="/data_rekrutmen" type="button" class="btn btn-sm btn-danger fa fa-mail-reply">  Kembali</a>
+                <a href="/data_rekrutmen" type="button" class="btn btn-sm btn-danger fa fa-mail-reply"> Kembali</a>
 
-                
+
             </div>
 
             <script>
-function confirmSave() {
-    return confirm("Apakah Anda yakin akan melanjutkan kanidat ini ke tahap 2?");
-}
-function confirmSave2() {
-    return confirm("Apakah Anda yakin akan melanjutkan kanidat ini ke tahap 3?");
-}
-function confirmSave3() {
-    return confirm("Apakah Anda yakin akan menerima kanidat ini?");
-}
-function confirmTolak() {
-    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
-}
-function confirmTolak2() {
-    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
-}
-function confirmTolak3() {
-    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
-}
+                function confirmSave() {
+                    return confirm("Apakah Anda yakin akan melanjutkan kanidat ini ke tahap 2?");
+                }
 
-</script>
+                function confirmSave2() {
+                    return confirm("Apakah Anda yakin akan melanjutkan kanidat ini ke tahap 3?");
+                }
 
+                function confirmSave3() {
+                    return confirm("Apakah Anda yakin akan menerima kanidat ini?");
+                }
 
+                function confirmTolak() {
+                    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
+                }
+
+                function confirmTolak2() {
+                    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
+                }
+
+                function confirmTolak3() {
+                    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
+                }
+            </script>
         @endsection

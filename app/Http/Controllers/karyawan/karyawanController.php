@@ -1020,7 +1020,6 @@ class karyawanController extends Controller
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->whereDay('tanggal', '=', Carbon::now())
                 ->get();
-            // dd($tidakMasuk);
 
             $tidakMasukBulanIni = Tidakmasuk::with('departemen', 'karyawan2')
                 ->whereYear('tanggal', '=', Carbon::now()->year)
@@ -1031,6 +1030,7 @@ class karyawanController extends Controller
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
                 ->get();
+            // dd($tidakMasukBulanLalu);
 
             $output = [
                 'row' => $row,

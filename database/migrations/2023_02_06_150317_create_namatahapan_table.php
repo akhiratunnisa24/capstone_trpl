@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lowongan', function (Blueprint $table) {
+        Schema::create('namatahapan', function (Blueprint $table) {
             $table->id();
-            
-            $table->string('posisi')->nullable();
-            $table->integer('jumlah_dibutuhkan')->nullable();
-            $table->string('status')->nullable();
-            $table->string('persyaratan')->nullable();
+
+            $table->string('id_lowongan')->nullable();
+            $table->integer('id_mrekruitmen')->nullable();
 
             $table->timestamps();
         });
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lowongan');
+        Schema::dropIfExists('namatahapan');
     }
 };

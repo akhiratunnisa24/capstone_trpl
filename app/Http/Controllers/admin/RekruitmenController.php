@@ -12,29 +12,30 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\RekruitmenNotification;
 use App\Models\MetodeRekruitmen;
+use App\Models\NamaTahap;
 use Illuminate\Support\Facades\Mail;
 
 class RekruitmenController extends Controller
 {
-    // /**
-    //  * Create a new controller instance.
-    //  *
-    //  * @return void
-    //  */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
-    // /**
-    //  * Display a listing of the resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $posisi = Lowongan::all()->sortBy('status');
+        $posisi = Lowongan::all()->sortByDesc('created_at');
         $metode = MetodeRekruitmen::all();
 
         
@@ -62,13 +63,23 @@ class RekruitmenController extends Controller
     public function store(Request $request)
     {
         
-        $user = new Lowongan([]);
+        $user = new Lowongan();
         $user->posisi = $request->posisi;
-        $user->tahapan = json_encode($request->input('tahapan', []));
         $user->jumlah_dibutuhkan = $request->jumlah_dibutuhkan;
         $user->status = 'Aktif';
         $user->persyaratan = $request->persyaratan;
         $user->save();
+
+        $checkbox = $request->tahapan;
+        $data = [];
+        foreach ($checkbox as $value) {
+            $data[] = [
+                'id_lowongan' => $user->id,
+                'id_mrekruitmen' => $value
+            ];
+        }
+        DB::table('namatahapan')->insert($data);
+
 
         return redirect()->back();
     }
@@ -83,7 +94,11 @@ class RekruitmenController extends Controller
     {
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $posisi = Lowongan::all();
+        $posisi = NamaTahap::with('mrekruitmen')
+        ->where('id_lowongan', $id)->get();
+
+       
+        // dd($posisi);  
 
 
         if ($role == 1) {
@@ -211,61 +226,62 @@ class RekruitmenController extends Controller
     public function destroy($id)
     {
         Lowongan::destroy($id);
+
         return redirect()->back();
         // return redirect('karyawan'); 
     }
 
-    public function create_pelamar(Request $request)
+    // public function create_pelamar(Request $request)
 
-    {
-        // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $posisi = Lowongan::all()->where('status','=','Aktif');
-        $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
+    // {
+    //     // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+    //     $posisi = Lowongan::all()->where('status','=','Aktif');
+    //     $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
 
-        if ($openRekruitmen->count() > 0) {
-            return view('admin.rekruitmen.formPelamar', compact( 'posisi'))->with('success', 'Data berhasil disimpan.') ;
-        }
+    //     if ($openRekruitmen->count() > 0) {
+    //         return view('admin.rekruitmen.formPelamar', compact( 'posisi'))->with('success', 'Data berhasil disimpan.') ;
+    //     }
 
-        return view('admin.rekruitmen.viewTidakAdaLowongan');
-    }
+    //     return view('admin.rekruitmen.viewTidakAdaLowongan');
+    // }
 
-    public function store_pelamar(Request $request)
-    {
-        $request->validate([
-            'pdfPelamar' => 'required|mimes:pdf'
-        ]);
-        $posisi = Rekruitmen::with('lowongan')
-        ->get();
-        // dd($posisi);
+    // public function store_pelamar(Request $request)
+    // {
+    //     $request->validate([
+    //         'pdfPelamar' => 'required|mimes:pdf'
+    //     ]);
+    //     $posisi = Rekruitmen::with('lowongan')
+    //     ->get();
+    //     // dd($posisi);
         
 
-        // Simpan file ke folder public/pdf
-        $filePdf = $request->file('pdfPelamar');
-        $namaFile = '' . time() . $filePdf->getClientOriginalName();
-        $tujuan_upload = 'pdf';
-        $filePdf->move($tujuan_upload, $namaFile);
+    //     // Simpan file ke folder public/pdf
+    //     $filePdf = $request->file('pdfPelamar');
+    //     $namaFile = '' . time() . $filePdf->getClientOriginalName();
+    //     $tujuan_upload = 'pdf';
+    //     $filePdf->move($tujuan_upload, $namaFile);
 
-        $user = new Rekruitmen();
-        $user->id_lowongan = $request->posisiPelamar;
-        $user->nik = $request->nikPelamar;
-        $user->nama = $request->namaPelamar;
-        $user->tgllahir = $request->tgllahirPelamar;
-        $user->email = $request->emailPelamar;
-        $user->agama = $request->agamaPelamar;
-        $user->jenis_kelamin = $request->jenis_kelaminPelamar;
-        $user->alamat = $request->alamatPelamar;
-        $user->no_hp = $request->no_hpPelamar;
-        $user->no_kk = $request->no_kkPelamar;
-        $user->gaji = $request->gajiPelamar;
-        $user->status_lamaran = 'tahap 1';
-        $user->cv = $namaFile ;
+    //     $user = new Rekruitmen();
+    //     $user->id_lowongan = $request->posisiPelamar;
+    //     $user->nik = $request->nikPelamar;
+    //     $user->nama = $request->namaPelamar;
+    //     $user->tgllahir = $request->tgllahirPelamar;
+    //     $user->email = $request->emailPelamar;
+    //     $user->agama = $request->agamaPelamar;
+    //     $user->jenis_kelamin = $request->jenis_kelaminPelamar;
+    //     $user->alamat = $request->alamatPelamar;
+    //     $user->no_hp = $request->no_hpPelamar;
+    //     $user->no_kk = $request->no_kkPelamar;
+    //     $user->gaji = $request->gajiPelamar;
+    //     $user->status_lamaran = 'tahap 1';
+    //     $user->cv = $namaFile ;
 
       
 
-        $user->save();
+    //     $user->save();
 
-        return redirect('show_formSelesai');
-    }
+    //     return redirect('show_formSelesai');
+    // }
 
     public function showPdf($id)
     {
@@ -326,6 +342,7 @@ class RekruitmenController extends Controller
     public function metode_rekrutmen_destroy($id)
     {
         MetodeRekruitmen::destroy($id);
+        
         return redirect()->back();
         // return redirect('karyawan'); 
     }
