@@ -59,7 +59,7 @@
                                 <div class="m-t-20">
                                     <div class="form-group">
                                         <label>Bulan</label>
-                                        <select name="bulan" id="bulan" class="col-md-3 form-control selectpicker" required>
+                                        <select name="bulan" id="bulan" class="col-md-3 form-control selectpicker" data-live-search="true" required>
                                             <option value="">-- Pilih Bulan --</option>
                                             <option value="01" {{ ('01' === request()->bulan) ? 'selected' : '' }}>Januari</option>
                                             <option value="02" {{ ('02' === request()->bulan) ? 'selected' : '' }}>Februari</option>
@@ -81,8 +81,8 @@
                                 <div class="m-t-20">
                                     <div class="form-group">
                                         <label>Tahun</label>
-                                        <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" required>
-                                            <option value="">-- Pilih Tahun --</option>
+                                        <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" data-live-search="true" required>
+                                            <option value="" required>-- Pilih Tahun --</option>
                                             {{-- {{ ('01' === request()->bulan) ? 'selected' : '' }} --}}
                                             <option value="2011" {{ ('2011' === request()->tahun) ? 'selected' : '' }}>2011</option>
                                             <option value="2012" {{ ('2012' === request()->tahun) ? 'selected' : '' }}>2012</option>
