@@ -66,7 +66,7 @@ class ResignAdminController extends Controller
     public function store(Request $request)
     {
         $karyawan = Auth::user()->id_pegawai;
-        $status = Status::find(3);  
+        $status = Status::find(4);  
         $tes = DB::table('karyawan')
             ->join('departemen','karyawan.divisi','=','departemen.id')
             ->where('karyawan.id', )
@@ -85,11 +85,11 @@ class ResignAdminController extends Controller
             $resign->save();
 
             // $resign = Resign::where('id',$id)->first();        
-    $sk = Karyawan::where('id',$resign->id_karyawan);
-    $resign1 = Resign::where('id',$id)->first();
-    if ($resign1->tgl_resign <= Carbon::now()) {
-        $sk->status_kerja = 'Non-Aktif';
-    }
+    // $sk = Karyawan::where('id',$resign->id_karyawan);
+    // $resign1 = Resign::where('id',$id)->first();
+    // if ($resign1->tgl_resign <= Carbon::now()) {
+    //     $sk->status_kerja = 'Non-Aktif';
+    // }
 
             return redirect()->back();
 
@@ -107,19 +107,19 @@ class ResignAdminController extends Controller
     public function approved(Request $request, $id)
     {
         $resign = Resign::where('id',$id)->first();
-        $status = 'Disetujui';
+        $status = 3;
         Resign::where('id',$id)->update([
             'status' => $status,
         ]);
  
 
         
-    $sk = Karyawan::where('id',$resign->id_karyawan);
-    $resign1 = Resign::where('id',$id)->first();
-dd($resign1);
-    if ($resign1->tgl_resign <= Carbon::now()) {
-        $sk->status_kerja = 'Non-Aktif';
-    }
+        $sk = Karyawan::where('id',$resign->id_karyawan);
+        $resign1 = Resign::where('id',$id)->first();
+    // dd($resign1);
+        if ($resign1->tgl_resign <= Carbon::now()) {
+            $sk->status_kerja = 'Non-Aktif';
+        }
     // $sk->update($request->all());
 
 
@@ -129,7 +129,7 @@ dd($resign1);
     public function approvedmanager(Request $request, $id)
     {
         $resign = Resign::where('id',$id)->first();
-        $status = 'Disetujui Manager';
+        $status = 2;
         Resign::where('id',$id)->update([
             'status' => $status,
         ]);
@@ -139,7 +139,7 @@ dd($resign1);
     public function reject(Request $request, $id)
     {
         $resign = Resign::where('id',$id)->first();
-        $status = 'Ditolak';
+        $status = 5;
         Resign::where('id',$id)->update([
             'status' => $status,
         ]);

@@ -231,7 +231,7 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 
     Route::get('/resign_manager',[ManagerController::class,'resignStaff'])->name('resignstaff');
     Route::get('/resignmanager/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
-    Route::post('/permintaan_resign/{id}', [ResignAdminController::class, 'approved'])->name('resign_approved');
+    // Route::post('/permintaan_resign/{id}', [ResignAdminController::class, 'approved'])->name('resign_approved');
     Route::post('/permintaan_resign_manager/{id}', [ResignAdminController::class, 'approvedmanager'])->name('resign_approved_manager');
     Route::post('/permintaanresign_reject/{id}', [ResignAdminController::class, 'reject'])->name('resign_reject');
 
