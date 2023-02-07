@@ -56,8 +56,8 @@
                                             <th>Kategori Cuti</th>
                                             <th>Durasi (Hari)</th>
                                             {{-- <th>Mode Alokasi</th> --}}
-                                            <th>id</th>
-                                            <th>id setting</th>
+                                            {{-- <th>id</th>
+                                            <th>id setting</th> --}}
                                             <th>Aktif Dari</th>
                                             <th>Sampai</th>
                                             <th>Action</th>
@@ -72,8 +72,8 @@
                                         <td>{{$data->karyawans->nama}}</td>
                                         <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                         <td>{{$data->durasi}} hari</td>
-                                        <td>{{$data->id}}</td>
-                                        <td>{{$data->id_settingalokasi}}</td>
+                                        {{-- <td>{{$data->id}}</td> --}}
+                                        {{-- <td>{{$data->id_settingalokasi}}</td> --}}
                                         {{-- <td>{{$data->mode_alokasi}}</td> --}}
                                         {{-- jam mulai & jam selesai --}}
                                         {{-- @if($data->tgl_masuk != null && $data->tgl_sekarang !=null)

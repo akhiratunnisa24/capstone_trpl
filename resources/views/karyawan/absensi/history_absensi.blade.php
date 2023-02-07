@@ -110,18 +110,18 @@
                                     </thead>
                                     <tbody>
                                         @foreach($absensi as $data)
-                                        {{-- @if($data->id_karyawan == Auth::user()->id_pegawai) --}}
-                                        <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$data->karyawans->nama}}</td>
-                                            <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
-                                            <td>{{$data->jam_masuk}}</td>
-                                            <td>{{$data->jam_keluar}}</td>
-                                            <td>{{$data->jam_kerja}}</td>
-                                            <td>{{$data->terlambat}}</td>
-                                            <td>{{$data->plg_cepat}}</td>
-                                        </tr>
-                                        {{-- @endif --}}
+                                            @if($data->id_karyawan == Auth::user()->id_pegawai)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$data->karyawans->nama}}</td>
+                                                    <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
+                                                    <td>{{$data->jam_masuk}}</td>
+                                                    <td>{{$data->jam_keluar}}</td>
+                                                    <td>{{$data->jam_kerja}}</td>
+                                                    <td>{{$data->terlambat}}</td>
+                                                    <td>{{$data->plg_cepat}}</td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -136,7 +136,7 @@
 </div> <!-- content -->
 
 <!-- jQuery  -->
-{{-- <script src="assets/js/jquery.min.js"></script> --}}
+<script src="assets/js/jquery.min.js"></script>
 <!-- Datatable init js -->
 <script src="assets/pages/datatables.init.js"></script>
 <script src="assets/js/app.js"></script>

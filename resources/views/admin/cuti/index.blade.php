@@ -65,9 +65,14 @@
                             <div class="row">
                                 <div class="col-md-15">
                                     <div class="panel panel-primary">
-                                        <div class="panel-heading"  style="height:35px">
-                                            {{-- <strong>Data Permintaan Cuti</strong> --}}
-                                        </div>
+                                        {{-- <div class="panel-heading"  style="height:35px"> --}}
+                                            <div class="panel-heading clearfix">
+                                                <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
+                                                    data-target="#Modals"> Tambah Cuti Karyawan</a>
+                                            </div>
+                                        <!-- modals tambah data cuti -->
+                                        @include('admin.cuti.addcuti')
+                                        {{-- </div> --}}
                                         <div class="panel-body m-b-5">
                                             <div class="row">
                                                 <div class="col-md-20 col-sm-20 col-xs-20">
@@ -95,7 +100,9 @@
                                                                 <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
                                                                 <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                                 <td>{{$data->jml_cuti}} Hari</td>
-
+                                                                {{-- @if($data->status)
+                                                                    <span class="badge badge-{{ $data->status->name_status == 'Pending' ? 'warning' : ($data->status->name_status == 'Disetujui Manager' ? 'info' : ($data->status->name_status == 'Disetujui' ? 'success' : 'danger')) }}">{{ $data->status->name_status }}</span>
+                                                                @endif --}}
                                                                 @if($data->status == 'Pending')
                                                                     <td>
                                                                         <span class="badge badge-warning">Pending</span>
@@ -108,12 +115,15 @@
                                                                     <td>
                                                                         <span class="badge badge-success">Disetujui</span>
                                                                     </td>
+                                                                @elseif($data->status == 3)
+                                                                    <td>
+                                                                        <span class="badge badge-success">Disetujui HRD</span>
+                                                                    </td>
                                                                 @else
                                                                     <td>
                                                                         <span class="badge badge-danger">Ditolak</span>
                                                                     </td>
                                                                 @endif
-
                                                                 <td id="b" class="text-center" > 
                                                                     <div class="row">
                                                                         {{-- @if($data->status == 'Pending' || $data->status == 'Disetujui Manager')
