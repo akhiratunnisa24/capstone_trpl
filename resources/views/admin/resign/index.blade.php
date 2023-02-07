@@ -3,10 +3,8 @@
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
-
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Ajukan Resign</h4>
-
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
                     <li class="active">Ajukan Resign</li>
@@ -89,79 +87,30 @@
                                                         </td>
                                                     @endif
                                                     <td id="b" class="text-center">
-                                                        <div class="row">
-                                                            @if ($r->status == 2)
-                                                                <div class="col-sm-3">
-                                                                    <form action="{{ route('resignapproved', $r->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        <input type="hidden" name="status"
-                                                                            value=1 class="form-control" hidden>
-                                                                        <button type="submit"
-                                                                            class="fa fa-check btn-success btn-sm"></button>
-                                                                    </form>
-                                                                </div>
-
-                                                                <div class="col-sm-3">
-                                                                    <form action="{{ route('resignreject', $r->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('POST')
-                                                                        <input type="hidden" name="status" value=5
-                                                                            class="form-control" hidden>
-                                                                        <button type="submit"
-                                                                            class="fa fa-times btn-danger btn-sm"></button>
-                                                                    </form>
-                                                                </div>
-                                                            @elseif ($r->status == 4)
-                                                            <div class="col-sm-3">
-                                                                <form action="{{ route('resignapproved', $r->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    <input type="hidden" name="status"
-                                                                        value=1 class="form-control" hidden>
-                                                                    <button type="submit"
-                                                                        class="fa fa-check btn-success btn-sm"></button>
-                                                                </form>
-                                                            </div>
-                                                                
-                                                                <div class="col-sm-3">
-                                                                    <form action="{{ route('resignreject', $r->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('POST')
-                                                                        <input type="hidden" name="status" value=5
-                                                                            class="form-control" hidden>
-                                                                        <button type="submit"
-                                                                            class="fa fa-times btn-danger btn-sm"></button>
-                                                                    </form>
-                                                                </div>
-                                                            @elseif ($r->status ==3)
-                                                            @else ($r->status ==1)
-                                                            {{-- @else
-                                                                <div class="col-sm-3">
-                                                                    <form action="{{ route('resignreject', $r->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('POST')
-                                                                        <input type="hidden" name="status" value="Ditolak"
-                                                                            class="form-control" hidden>
-                                                                        <button type="submit"
-                                                                            class="fa fa-times btn-danger btn-sm"></button>
-                                                                    </form>
-                                                                </div> --}}
-                                                            
-                                                            @endif
-
-
-                                                            <div class="col-sm-3">
-                                                                <a class="btn btn-info btn-sm" data-toggle="modal"
-                                                                    data-target="#Showresign{{ $r->id }}">
-                                                                    <i class="fa fa-eye"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>    
+                                                        <div class="btn-group" role="group">
+                                                          @if ($r->status == 2 || $r->status == 4)
+                                                            <form action="{{ route('resignapproved', $r->id) }}" method="POST">
+                                                              @csrf
+                                                              <input type="hidden" name="status" value=1 class="form-control" hidden>
+                                                              <button type="submit" class="btn btn-success btn-sm">
+                                                                <i class="fa fa-check"></i>
+                                                              </button>
+                                                            </form>
+                                                            <form action="{{ route('resignreject', $r->id) }}" method="POST">
+                                                              @csrf
+                                                              @method('POST')
+                                                              <input type="hidden" name="status" value=5 class="form-control" hidden>
+                                                              <button type="submit" class="btn btn-danger btn-sm">
+                                                                <i class="fa fa-times"></i>
+                                                              </button>
+                                                            </form>
+                                                          @endif
+                                                          <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#Showresign{{ $r->id }}">
+                                                            <i class="fa fa-eye"></i>
+                                                          </a>
+                                                        </div>
                                                     </td>
+                                                      
                                                 </tr>
                                                 {{-- modal show cuti --}}
                                                 @include('karyawan.resign.showresign')

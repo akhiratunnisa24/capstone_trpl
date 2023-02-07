@@ -640,7 +640,7 @@ class ManagerController extends Controller
 
     public function resignStaff(Request $request)
     {
-       
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
         $karyawan1 = Karyawan::all();
         $idkaryawan = $request->id_karyawan;
@@ -662,7 +662,7 @@ class ManagerController extends Controller
         
     // $namdiv = $tes->departemen->nama_departemen;
 
-        return view('manager\staff.resignStaff', compact('karyawan','karyawan1','resign','tes','staff1'));
+        return view('manager\staff.resignStaff', compact('karyawan','karyawan1','resign','tes','staff1','row'));
     }
 
 }

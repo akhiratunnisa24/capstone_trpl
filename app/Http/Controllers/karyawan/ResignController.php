@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Departemen;
 use App\Models\Resign;
 use App\Models\Karyawan;
+use App\Models\Status;
 use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,7 @@ class ResignController extends Controller
      */
     public function index()
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $cek = Resign::where('id_karyawan', Auth::user()->id_pegawai)->exists();
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
         // dd($karyawan);
@@ -45,16 +47,10 @@ class ResignController extends Controller
             ->first();
         
      
-        // $tes = Auth::user()->karyawan->departemen->nama_departemen;
-        $tes = DB::table('karyawan')
-            ->join('departemen','karyawan.divisi','=','departemen.id')
-            ->where('karyawan.id', Auth::user()->id_pegawai)
-            ->select('departemen.id as id_dep','departemen.nama_departemen as departemen')
-            ->first();
-        
+        // $tes = Auth::user()->karyawan->departemen->nama_departemen;      
         // $namdiv = $tes->departemen->nama_departemen;
 
-        return view('karyawan.resign.index', compact('karyawan','tes','resign','cek'));
+        return view('karyawan.resign.index', compact('karyawan','tes','resign','cek','row'));
     }
 
     /**
@@ -73,6 +69,7 @@ class ResignController extends Controller
     public function store(Request $request)
     {
         $karyawan = Auth::user()->id_pegawai;
+        $status = Status::find(1);
         $tes = DB::table('karyawan')
             ->join('departemen','karyawan.divisi','=','departemen.id')
             ->where('karyawan.id', Auth::user()->id_pegawai)
@@ -94,7 +91,7 @@ class ResignController extends Controller
             $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
             $resign->tipe_resign = $request->tipe_resign;
             $resign->alasan      = $request->alasan;          
-            $resign->status      = 'Pending';
+            $resign->status      = $status->id;
 
             $resign->save();
             return redirect()->back();
@@ -110,4 +107,17 @@ class ResignController extends Controller
         return view('karyawan.resign.index',compact('resign','karyawan'));
     }
 
+    public function delete($id)
+        {
+            Resign::destroy($id);
+            return redirect()->back();
+            // $resign3 = Resign::find($id);
+
+            // if ($resign3->status == 1) {
+            //     $resign3->delete();
+            //     return redirect()->back()->with('success', 'Resign has been deleted successfully!');
+            // } else {
+            //     return redirect()->back()->with('error', 'Only pending resign can be deleted!');
+            // }
+        }
 }
