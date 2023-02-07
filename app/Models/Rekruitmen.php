@@ -33,4 +33,16 @@ class Rekruitmen extends Model
     {
         return $this->belongsTo(Lowongan::class, 'id_lowongan', 'id');
     }
+    public function statusrekruitmen()
+    {
+        return $this->belongsTo(StatusRekruitmen::class, 'status_lamaran', 'id');
+    }
+    public function namatahap()
+    {
+        return $this->belongsTo(NamaTahap::class, 'id_lowongan', 'id_lowongan');
+    }
+    public function mrekruitmen()
+    {
+        return $this->belongsTo(MetodeRekruitmen::class, 'id_mrekruitmen', 'id');
+    }   
 }

@@ -76,25 +76,26 @@
                         </a>
                     </div>
                     <div class="panel-body">
-                        <h3 class=""><b>Tahap 1</b></h3>
-                        <p class="text-muted"><b>Total {{ $totalTahap1 }} Pelamar</b>
+                        <h3 class=""><b>Penyerahan CV</b></h3>
+                        {{-- <p class="text-muted"><b>Total {{ $totalTahap1 }} Pelamar</b> --}}
                         </p>
                     </div>
                 </div>
             </div>
 
 
+
             @foreach ($posisi as $k)
                 <div class="col-sm-6 col-lg-3">
                     <div class="panel panel-primary text-center">
                         <div class="panel-heading btn-success">
-                            <a href="#tahap2" data-toggle="tab" class="panel-title ">
+                            <a href="#{{ $k->mrekruitmen->id }}" data-toggle="tab" class="panel-title ">
                                 <h4 class="panel-title">Data Pelamar</h4>
                             </a>
                         </div>
                         <div class="panel-body">
                             <h3 class=""><b>{{ $k->mrekruitmen->nama_tahapan }}</b></h3>
-                            <p class="text-muted"><b>Total {{ $totalTahap2 }} Pelamar</b>
+                            {{-- <p class="text-muted"><b>Total {{ $totalTahap2 }} Pelamar</b> --}}
                             </p>
                         </div>
                     </div>
@@ -117,7 +118,7 @@
                 </div>
             </div> --}}
 
-            <div class="col-sm-6 col-lg-3">
+            {{-- <div class="col-sm-6 col-lg-3">
                 <div class="panel panel-primary text-center">
                     <div class="panel-heading btn-success">
                         <a href="#tahap4" data-toggle="tab" class="panel-title ">
@@ -130,7 +131,7 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="row">
 
@@ -141,13 +142,13 @@
                             <li class="">
                                 <a href="#tahap1" data-toggle="tab" aria-expanded="false">
                                     <span class="visible-xs"><i class="fa fa-home"></i></span>
-                                    <span class="hidden-xs">Tahap 1</span>
+                                    <span class="hidden-xs">Penyerahan CV</span>
                                 </a>
                             </li>
 
                             @foreach ($posisi as $k)
                                 <li class="">
-                                    <a href="#tahap2" data-toggle="tab" aria-expanded="true">
+                                    <a href="#{{ $k->mrekruitmen->id }}" data-toggle="tab" aria-expanded="true">
                                         <span class="visible-xs"><i class="fa fa-user"></i></span>
                                         <span class="hidden-xs">{{ $k->mrekruitmen->nama_tahapan }}</span>
                                     </a>
@@ -161,12 +162,12 @@
                                 </a>
                             </li> --}}
 
-                            <li class="">
+                            {{-- <li class="">
                                 <a href="#tahap4" data-toggle="tab" aria-expanded="true">
                                     <span class="visible-xs"><i class="fa fa-user"></i></span>
                                     <span class="hidden-xs">Diterima</span>
                                 </a>
-                            </li>
+                            </li> --}}
 
                         </ul>
                     </div>
@@ -203,40 +204,51 @@
                                         <td>{{ $k->email }}</td>
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
-                                        <td>{{ $k->status_lamaran }}</td>
+                                        <td>{{ $k->statusrekruitmen->nama_status }}</td>
                                         <td>
 
-                                            @if ($k->status_lamaran == 'tahap 1')
-                                                <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#myModal{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
-                                                    </a>
-                                                </div>
+                                            {{-- @if ($k->status_lamaran == 'tahap 1') --}}
 
-                                                <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                        onsubmit="return confirmSave()">
-                                                        @csrf
-                                                        <input type="hidden" name="status_lamaran" value="tahap 2"
-                                                            class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-check btn-success btn-sm"></button>
-                                                    </form>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                        onsubmit="return confirmTolak()">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <input type="hidden" name="status_lamaran" value="Ditolak"
-                                                            class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
-                                                    </form>
-                                                </div>
-                                            @endif
+                                            <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#myModal{{ $k->id }}">
+                                                    <i class="fa fa-eye btn-info btn-sm "></i>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="#">
+                                                    @csrf
+                                                    <select class="form-control selectpicker "
+                                                        onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
+                                                        <option value="">Pilih Tahap Selanjutnya</option>
+                                                        @foreach ($metode as $k)
+                                                            <option value="{{ $k->mrekruitmen->nama_tahapan }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
+                                                    {{-- <button type="submit" class="fa fa-check btn-success btn-sm"></button> --}}
+                                                    {{-- <input type="hidden" name="status_lamaran" value="3"
+                                                        class="form-control" hidden>
+                                                    <button type="submit" class="fa fa-check btn-success btn-sm"></button> --}}
+
+                                                </form>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="return confirmTolak()">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <input type="hidden" name="status_lamaran" value="Ditolak"
+                                                        class="form-control" hidden>
+                                                    <button type="submit" class="fa fa-times btn-danger btn-sm"></button>
+                                                </form>
+                                            </div>
+
+                                            {{-- @endif --}}
                                         </td>
 
 
@@ -250,7 +262,7 @@
 
                     </div>
 
-                    <div class="tab-pane" id="tahap2">
+                    <div class="tab-pane" id="6">
 
                         <table class="table table-bordered table-striped" style="width:100%">
                             <thead>
@@ -281,37 +293,40 @@
                                         <td>{{ $k->status_lamaran }}</td>
                                         <td>
 
-                                            @if ($k->status_lamaran == 'tahap 2')
-                                                <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#myModal{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
-                                                    </a>
-                                                </div>
+                                            {{-- @if ($k->status_lamaran == 'tahap 2') --}}
+                                            <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#myModal{{ $k->id }}">
+                                                    <i class="fa fa-eye btn-info btn-sm "></i>
+                                                </a>
+                                            </div>
 
-                                                <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                        onsubmit="return confirmSave2()">
-                                                        @csrf
-                                                        <input type="hidden" name="status_lamaran" value="tahap 3"
-                                                            class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-check btn-success btn-sm"></button>
-                                                    </form>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                        onsubmit="return confirmTolak2()">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <input type="hidden" name="status" value="Ditolak"
-                                                            class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
-                                                    </form>
-                                                </div>
-                                            @endif
+                                            <div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="return confirmSave2()">
+                                                    @csrf
+                                                    <select class="form-control selectpicker "
+                                                        onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
+                                                        <option value="">Pilih Tahap Selanjutnya</option>
+                                                        @foreach ($metode as $k)
+                                                            <option value="{{ $k->mrekruitmen->nama_tahapan }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="return confirmTolak2()">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <input type="hidden" name="status" value="Ditolak"
+                                                        class="form-control" hidden>
+                                                    <button type="submit" class="fa fa-times btn-danger btn-sm"></button>
+                                                </form>
+                                            </div>
+                                            {{-- @endif --}}
                                         </td>
 
 
@@ -324,9 +339,8 @@
 
                     </div>
 
-                    <div class="tab-pane" id="tahap3">
 
-
+                    <div class="tab-pane" id="8">
                         <table class="table table-bordered table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -356,37 +370,40 @@
                                         <td>{{ $k->status_lamaran }}</td>
                                         <td>
 
-                                            @if ($k->status_lamaran == 'tahap 3')
-                                                <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#myModal{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
-                                                    </a>
-                                                </div>
+                                            {{-- @if ($k->status_lamaran == 'tahap 2') --}}
+                                            <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#myModal{{ $k->id }}">
+                                                    <i class="fa fa-eye btn-info btn-sm "></i>
+                                                </a>
+                                            </div>
 
-                                                <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                        onsubmit="return confirmSave3()">
-                                                        @csrf
-                                                        <input type="hidden" name="status_lamaran" value="Diterima"
-                                                            class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-check btn-success btn-sm"></button>
-                                                    </form>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                        onsubmit="return confirmTolak3()">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <input type="hidden" name="status" value="Ditolak"
-                                                            class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
-                                                    </form>
-                                                </div>
-                                            @endif
+                                            <<div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="return confirmSave2()">
+                                                    @csrf
+                                                   <select class="form-control selectpicker "
+                                                        onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
+                                                        <option value="">Pilih Tahap Selanjutnya</option>
+                                                        @foreach ($metode as $k)
+                                                            <option value="{{ $k->mrekruitmen->nama_tahapan }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="return confirmTolak2()">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <input type="hidden" name="status" value="Ditolak"
+                                                        class="form-control" hidden>
+                                                    <button type="submit" class="fa fa-times btn-danger btn-sm"></button>
+                                                </form>
+                                            </div>
+                                            {{-- @endif --}}
                                         </td>
 
 
@@ -396,10 +413,161 @@
                                 @endforeach
                             </tbody>
                         </table>
-
                     </div>
 
-                    <div class="tab-pane" id="tahap4">
+                    <div class="tab-pane" id="10">
+                        <table class="table table-bordered table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>NIK</th>
+                                    <th>Nama</th>
+                                    <th>Tanggal Lahir</th>
+                                    <th>Email</th>
+                                    <th>L / P</th>
+                                    <th>Alamat</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                @foreach ($dataTahap4 as $k)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $k->nik }}</td>
+                                        <td>{{ $k->nama }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                        <td>{{ $k->email }}</td>
+                                        <td>{{ $k->jenis_kelamin }}</td>
+                                        <td>{{ $k->alamat }}</td>
+                                        <td>{{ $k->status_lamaran }}</td>
+                                        <td>
+
+                                            {{-- @if ($k->status_lamaran == 'tahap 2') --}}
+                                            <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#myModal{{ $k->id }}">
+                                                    <i class="fa fa-eye btn-info btn-sm "></i>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="return confirmSave2()">
+                                                    @csrf
+                                                   <select class="form-control selectpicker "
+                                                        onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
+                                                        <option value="">Pilih Tahap Selanjutnya</option>
+                                                        @foreach ($metode as $k)
+                                                            <option value="{{ $k->mrekruitmen->nama_tahapan }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="return confirmTolak2()">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <input type="hidden" name="status" value="Ditolak"
+                                                        class="form-control" hidden>
+                                                    <button type="submit" class="fa fa-times btn-danger btn-sm"></button>
+                                                </form>
+                                            </div>
+                                            {{-- @endif --}}
+                                        </td>
+
+
+                                        @include('admin.rekruitmen.showModal')
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane" id="11">
+                        <table class="table table-bordered table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>NIK</th>
+                                    <th>Nama</th>
+                                    <th>Tanggal Lahir</th>
+                                    <th>Email</th>
+                                    <th>L / P</th>
+                                    <th>Alamat</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                @foreach ($dataTahap5 as $k)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $k->nik }}</td>
+                                        <td>{{ $k->nama }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                        <td>{{ $k->email }}</td>
+                                        <td>{{ $k->jenis_kelamin }}</td>
+                                        <td>{{ $k->alamat }}</td>
+                                        <td>{{ $k->status_lamaran }}</td>
+                                        <td>
+
+                                            {{-- @if ($k->status_lamaran == 'tahap 2') --}}
+                                            <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#myModal{{ $k->id }}">
+                                                    <i class="fa fa-eye btn-info btn-sm "></i>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="return confirmSave2()">
+                                                    @csrf
+                                                   <select class="form-control selectpicker "
+                                                        onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
+                                                        <option value="">Pilih Tahap Selanjutnya</option>
+                                                        @foreach ($metode as $k)
+                                                            <option value="{{ $k->mrekruitmen->nama_tahapan }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="return confirmTolak2()">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <input type="hidden" name="status" value="Ditolak"
+                                                        class="form-control" hidden>
+                                                    <button type="submit" class="fa fa-times btn-danger btn-sm"></button>
+                                                </form>
+                                            </div>
+                                            {{-- @endif --}}
+                                        </td>
+
+
+                                        @include('admin.rekruitmen.showModal')
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    
+
+                    <div class="tab-pane" id="12">
 
 
                         <table class="table table-bordered table-striped" style="width:100%">
@@ -429,17 +597,18 @@
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
                                         <td>{{ $k->status_lamaran }}</td>
+
                                         <td>
 
-                                            @if ($k->status_lamaran == 'Diterima')
-                                                <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#myModal{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
-                                                    </a>
-                                                </div>
-                                            @endif
+                                            {{-- @if ($k->status_lamaran == 'Diterima') --}}
+                                            <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#myModal{{ $k->id }}">
+                                                    <i class="fa fa-eye btn-info btn-sm "></i>
+                                                </a>
+                                            </div>
+                                            {{-- @endif --}}
                                         </td>
 
 
@@ -454,39 +623,42 @@
 
                 </div>
             </div>
-            {{-- </form> --}}
+        </div>
+    </div>
+    {{-- </form> --}}
 
 
-            <div class="modal-footer">
+    <div class="modal-footer">
 
-                <a href="/data_rekrutmen" type="button" class="btn btn-sm btn-danger fa fa-mail-reply"> Kembali</a>
+        <a href="/data_rekrutmen" type="button" class="btn btn-sm btn-danger fa fa-mail-reply"> Kembali</a>
 
 
-            </div>
+    </div>
 
-            <script>
-                function confirmSave() {
-                    return confirm("Apakah Anda yakin akan melanjutkan kanidat ini ke tahap 2?");
-                }
 
-                function confirmSave2() {
-                    return confirm("Apakah Anda yakin akan melanjutkan kanidat ini ke tahap 3?");
-                }
+    <script>
+        function confirmSave() {
+            return confirm("Apakah Anda yakin akan melanjutkan kanidat ini ke tahap 2?");
+        }
 
-                function confirmSave3() {
-                    return confirm("Apakah Anda yakin akan menerima kanidat ini?");
-                }
+        function confirmSave2() {
+            return confirm("Apakah Anda yakin akan melanjutkan kanidat ini ke tahap 3?");
+        }
 
-                function confirmTolak() {
-                    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
-                }
+        function confirmSave3() {
+            return confirm("Apakah Anda yakin akan menerima kanidat ini?");
+        }
 
-                function confirmTolak2() {
-                    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
-                }
+        function confirmTolak() {
+            return confirm("Apakah Anda yakin akan menolak kanidat ini?");
+        }
 
-                function confirmTolak3() {
-                    return confirm("Apakah Anda yakin akan menolak kanidat ini?");
-                }
-            </script>
-        @endsection
+        function confirmTolak2() {
+            return confirm("Apakah Anda yakin akan menolak kanidat ini?");
+        }
+
+        function confirmTolak3() {
+            return confirm("Apakah Anda yakin akan menolak kanidat ini?");
+        }
+    </script>
+@endsection

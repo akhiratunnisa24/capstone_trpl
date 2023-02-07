@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Mail\RekruitmenNotification;
 use App\Models\MetodeRekruitmen;
 use App\Models\NamaTahap;
+use App\Models\StatusRekruitmen;
 use Illuminate\Support\Facades\Mail;
 
 class RekruitmenController extends Controller
@@ -97,8 +98,15 @@ class RekruitmenController extends Controller
         $posisi = NamaTahap::with('mrekruitmen')
         ->where('id_lowongan', $id)->get();
 
-       
-        // dd($posisi);  
+        $metode = NamaTahap::with('mrekruitmen')
+        ->where('id_lowongan', $id)->get('id_mrekruitmen');        
+        // dd($metode);  
+
+        // $namatahapan = NamaTahap::
+
+
+        // $idmrekruitmen = StatusRekruitmen::all()->sortByDesc('id');   
+        
 
 
         if ($role == 1) {
@@ -107,47 +115,51 @@ class RekruitmenController extends Controller
 
             $totalTahap1 = Rekruitmen::all()
             ->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'tahap 1')
+            ->where('status_lamaran', '=', '1')
             ->count('posisi');
 
             $totalTahap2 = Rekruitmen::all()
             ->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'tahap 2')
+            ->where('status_lamaran', '=', 'Interview ke-1')
             ->count('posisi');
 
             $totalTahap3 = Rekruitmen::all()
             ->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'tahap 3')
+            ->where('status_lamaran', '=', 'Psikotest')
             ->count('posisi');
 
             $totalDiterima = Rekruitmen::all()
             ->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'Diterima')
+            ->where('status_lamaran', '=', '2')
             ->count('posisi');
 
-            $dataTahap1 = Rekruitmen::where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'tahap 1')
+            $dataTahap1 = Rekruitmen::with('statusrekruitmen')->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '1')
             ->get();
 
-            $dataTahap2 = Rekruitmen::where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'tahap 2')
+            $dataTahap2 = Rekruitmen::with('statusrekruitmen', 'namatahap')->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'Interview ke-1')
             ->get();
 
-            $dataTahap3 = Rekruitmen::where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'tahap 3')
+            $dataTahap3 = Rekruitmen::with('statusrekruitmen')->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'Psikotest')
             ->get();
 
-            $dataDiterima = Rekruitmen::where('id_lowongan', $id)
+            $dataTahap4 = Rekruitmen::with('statusrekruitmen')->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'Medical Check-Up')
+            ->get();
+
+            $dataTahap5 = Rekruitmen::with('statusrekruitmen')->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', 'Interview ke-2')
+            ->get();
+
+            $dataDiterima = Rekruitmen::with('statusrekruitmen')->where('id_lowongan', $id)
             ->where('status_lamaran', '=', 'Diterima')
             ->get();
 
            
-            // dd($rekrutmen);
 
-
-
-
-            return view('admin.rekruitmen.show', compact('totalDiterima','lowongan', 'totalTahap1', 'totalTahap2', 'totalTahap3', 'dataTahap1', 'dataTahap2', 'dataTahap3', 'row', 'dataDiterima', 'posisi'));
+            return view('admin.rekruitmen.show', compact('totalDiterima','lowongan', 'totalTahap1', 'totalTahap2', 'totalTahap3', 'dataTahap1', 'dataTahap2', 'dataTahap3', 'dataTahap4', 'dataTahap5', 'row', 'dataDiterima', 'posisi', 'metode' ));
 
         } else {
 
@@ -225,7 +237,12 @@ class RekruitmenController extends Controller
      */
     public function destroy($id)
     {
-        Lowongan::destroy($id);
+        // Lowongan::destroy($id);
+
+        $lowongan = Lowongan::find($id);
+        $lowongan->namatahap()->delete();
+        $lowongan->rekruitmen2()->delete();
+        $lowongan->delete();
 
         return redirect()->back();
         // return redirect('karyawan'); 

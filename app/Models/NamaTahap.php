@@ -22,4 +22,5 @@ class NamaTahap extends Model
     {
         return $this->belongsTo(MetodeRekruitmen::class, 'id_mrekruitmen', 'id');
     }
+ 
 }

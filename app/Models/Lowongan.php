@@ -34,4 +34,8 @@ class Lowongan extends Model
     {
         return $this->belongsTo(NamaTahap::class, 'id', 'id_lowongan');
     }
+    public function rekruitmen2()
+    {
+        return $this->belongsTo(Rekruitmen::class, 'id', 'id_lowongan');
+    }
 }

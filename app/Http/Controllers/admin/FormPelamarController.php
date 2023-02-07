@@ -53,7 +53,7 @@ class FormPelamarController extends Controller
         $user->no_hp = $request->no_hpPelamar;
         $user->no_kk = $request->no_kkPelamar;
         $user->gaji = $request->gajiPelamar;
-        $user->status_lamaran = 'tahap 1';
+        $user->status_lamaran = '1';
         $user->cv = $namaFile;
 
 
