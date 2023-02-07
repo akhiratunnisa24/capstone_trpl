@@ -4,10 +4,10 @@
   <div id="Modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
           <div class="modal-content">
-
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              <h4 class="modal-title text-center" id="myModalLabel"> </h4>
-
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text-center" id="addresign">Form Permintaan Resign</h4>
+            </div>
 
               <div class="modal-body">
 
@@ -90,7 +90,7 @@
                       <div class="form-group text-center m-t-20">
                           <div class="col-xs-12">
                               <button class="btn btn-primary w-md waves-effect waves-light"
-                                  type="submit">Register</button>
+                                  type="submit">Ajukan</button>
                           </div>
                       </div>
 

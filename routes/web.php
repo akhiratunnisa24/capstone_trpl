@@ -130,6 +130,8 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('/resign-karyawan',[ResignController::class,'index'])->name('resign_karyawan');
     Route::post('/resign_karyawan', [ResignController::class, 'store'])->name('resignkaryawan.store');
     Route::get('/resign_karyawan/{id}', [ResignController::class, 'show'])->name('resign.show');
+    Route::get('resigndelete{id}', [ResignController::class, 'delete'])->name('resign.delete');
+
 
     Route::get('/export-absensi', [AbsensiKaryawanController::class, 'absensiPeroranganExcel'])->name('expor.absensi');
     Route::get('/export-absensi-pdf', [AbsensiKaryawanController::class, 'absensiPeroranganPdf'])->name('pdf.absensi');

@@ -35,7 +35,7 @@ class ResignAdminController extends Controller
      */
     public function index(Request $request)
     {
-       
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
         $karyawan1 = Karyawan::where('status_kerja','Aktif')->get();
         $idkaryawan = $request->id_karyawan;
@@ -47,7 +47,7 @@ class ResignAdminController extends Controller
         
         // $namdiv = $tes->departemen->nama_departemen;
 
-        return view('admin.resign.index', compact('karyawan','karyawan1','tes','resign'));
+        return view('admin.resign.index', compact('karyawan','karyawan1','tes','resign','row'));
     }
 
     /**
@@ -146,12 +146,12 @@ class ResignAdminController extends Controller
         return redirect()->route('resignkaryawan')->withInput();
     }
 
-    public function getUserData($id)
-{
-  $user = Karyawan::with('Departemen')->find($id);
+        public function getUserData($id)
+    {
+        $user = Karyawan::with('Departemen')->find($id);
 
-  return response()->json($user);
-}
+        return response()->json($user);
+    }
 
 // {
 //     try {
@@ -168,4 +168,13 @@ class ResignAdminController extends Controller
 //         ], 500);
 //     }
 // }
+    public function destroy($id)
+        {
+            $resigndelete = Resign::find($id);
+            $resigndelete->delete();
+
+            return redirect()->back();
+        }
+
+
 }

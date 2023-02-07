@@ -108,9 +108,13 @@
                                                               </a>
                                                             </form>
                                                             @if($r->status == 1)
-                                                              <button onclick="confirmDeletion()" class="btn btn-danger btn-sm">
-                                                                <i class="fa fa-trash"></i>
-                                                              </button>
+                                                            
+                                                                <a href="resigndelete{{ $r->id }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan resign ini?')"><i class="fa fa-trash"></i></a>
+                                                                {{-- <button onclick="resigndelete{{ $r->id }}"
+                                                                    class="btn btn-danger btn-sm">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>     --}}
+                                                            
                                                             @endif
                                                           </td>
                                                     </tr>
@@ -134,7 +138,7 @@
     </div>
 
 
-    <script>
+    {{-- <script>
         function confirmDeletion() {
           if (confirm("Are you sure you want to delete?")) {
             // User clicked "OK", proceed with delete
@@ -142,7 +146,7 @@
             // User clicked "Cancel"
           }
         }
-      </script>
+      </script> --}}
     {{-- <script type="text/javascript">
     let tp = '{{$tipe}}';
     
