@@ -63,6 +63,14 @@
                         @endif
                     </div>
                 </div>
+                @if(isset($alasancuti) && $data->id == $alasancuti->id_cuti && $data->status == 'Ditolak')
+                    <div class="form-group row">
+                        <label for="alasan" class="col-sm-3 col-form-label">Alasan</label>
+                        <div class="col-sm-9">
+                            <label>: {{$alasan->alasan}}</label>
+                        </div>
+                    </div>        
+                @endif
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

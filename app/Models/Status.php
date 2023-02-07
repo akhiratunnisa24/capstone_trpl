@@ -9,4 +9,9 @@ class Status extends Model
 {
     use HasFactory;
     protected $fillable = ['nama_status'];
+
+    public function cuttis()
+    {
+        return $this->hasMany(Cuti::class);
+    }
 }

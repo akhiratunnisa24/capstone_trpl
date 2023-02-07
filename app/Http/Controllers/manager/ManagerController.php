@@ -10,6 +10,7 @@ use App\Models\Resign;
 use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Datareject;
+use App\Models\Departemen;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -109,7 +110,9 @@ class ManagerController extends Controller
                 ->select('divisi')->first();
             $karyawan= Karyawan::where('divisi',$spv->divisi)
                 ->where('jabatan','=','Staff')
+                ->orWhere('jabatan','=','Supervisor')
                 ->get();
+            // $karyawan= Karyawan::where('atasan_pertama',Auth::user()->id_pegawai)->get();
 
              //untuk filter data 
             $idkaryawan = $request->id_karyawan;
@@ -135,9 +138,17 @@ class ManagerController extends Controller
             }else
             {
             //saring data dengan id_departemen sama dengan manager secara keseluruhan
-                $absensi = Absensi::with(['karyawans' => function($query) {
-                    $query->select('nama')->where('jabatan', 'Staff');
-                }])->where('id_departement', $middep->id_departement)->get();
+                $pegawai = Karyawan::where('jabatan','Staff')->orWhere('jabatan','Supervisor')
+                    ->select('id as idkaryawan')
+                    ->get();
+                // dd($karyawan);
+                $absensi = Absensi::where('id_departement', $middep->id_departement)
+                    ->whereIn('id_karyawan',$pegawai->pluck('idkaryawan'))
+                    ->get();
+
+                // $absensi = Absensi::where('id_departement', $middep->id_departement)
+                //     ->where('id_karyawan',$karyawan->idkaryawan)->get();
+                // dd($absensi);
             }
             return view('manager.staff.absensiStaff', compact('absensi','karyawan','row','role'));
             //menghapus filter data
@@ -160,6 +171,15 @@ class ManagerController extends Controller
 
         $tp = $request->query('tp',1);
 
+        $alasan = DB::table('datareject')
+            ->join('izin','datareject.id_izin','=','izin.id')
+            ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
+            ->first();
+        $alasancuti = DB::table('datareject')
+            ->join('cuti','datareject.id_cuti','=','cuti.id')
+            ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
+            ->first();
+
         if($role == 3)
         {
             $cutistaff = DB::table('cuti')
@@ -178,15 +198,6 @@ class ManagerController extends Controller
                 ->select('izin.*','karyawan.nama','jenisizin.jenis_izin')
                 ->distinct()
                 ->get();
-            
-            $alasan = DB::table('datareject')
-                ->join('izin','datareject.id_izin','=','izin.id')
-                ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
-                ->first();
-            $alasancuti = DB::table('datareject')
-                ->join('cuti','datareject.id_cuti','=','cuti.id')
-                ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
-                ->first();
                 
             return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','alasan','alasancuti'));
         }
@@ -207,14 +218,6 @@ class ManagerController extends Controller
                 ->select('izin.*','karyawan.nama','jenisizin.jenis_izin')
                 ->distinct()
                 ->get();
-            $alasan = DB::table('datareject')
-                ->join('izin','datareject.id_izin','=','izin.id')
-                ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
-                ->first();
-            $alasancuti = DB::table('datareject')
-                ->join('cuti','datareject.id_cuti','=','cuti.id')
-                ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
-                ->first();
 
             return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','alasan','alasancuti'));
         }
@@ -480,46 +483,50 @@ class ManagerController extends Controller
         return redirect()->route('cuti.Staff',['type'=>2])->withInput();
     }
 
-    public function exportallExcel()
-    {
-        $role = Auth::user()->role;
-        if($role == 3)
-        {
-            $middep = DB::table('absensi')
-            ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
-            ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
-            ->select('id_departement')->first();
+    // public function exportallExcel()
+    // {
+    //     $role = Auth::user()->role;
+    //     if($role == 3)
+    //     {
+    //         $middep = DB::table('absensi')
+    //         ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
+    //         ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
+    //         ->select('id_departement')->first();
     
-            $data = Absensi::with('karyawans','departemens')
-            ->where('id_departement',$middep->id_departement)
-            ->get();
+    //         $data = Absensi::with('karyawans','departemens')
+    //         ->where('id_departement',$middep->id_departement)
+    //         ->get();
     
-            return Excel::download(new AbsensiDepartemenExport($data), 'data_absensi_departemen.xlsx');
-        }
-        elseif($role == 5)
-        {
-            $middep = DB::table('absensi')
-            ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
-            ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
-            ->select('absensi.id_departement as id_departement')
-            ->first();
+    //         return Excel::download(new AbsensiDepartemenExport($data), 'data_absensi_departemen.xlsx');
+    //     }
+    //     elseif($role == 5)
+    //     {
+    //         $middep = DB::table('absensi')
+    //         ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
+    //         ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
+    //         ->select('absensi.id_departement as id_departement')
+    //         ->first();
     
-            $data = Absensi::with('karyawans','departemens')
-            ->where('id_departement',$middep->id_departement)
-            ->get();
+    //         $data = Absensi::with('karyawans','departemens')
+    //         ->where('id_departement',$middep->id_departement)
+    //         ->get();
     
-            return Excel::download(new AbsensiDepartemenExport($data), 'data_absensi_departemen.xlsx');
-        }
-        else
-        {
-            return redirect()->back();
-        }
+    //         return Excel::download(new AbsensiDepartemenExport($data), 'data_absensi_departemen.xlsx');
+    //     }
+    //     else
+    //     {
+    //         return redirect()->back();
+    //     }
         
-    }
+    // }
 
+    //export excel data by filter di bagian manager 
+    //DIGUNAKAN
     public function exportToExcel(Request $request)
     {
         $role = Auth::user()->role;
+        $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
+
         //mengambil id_departemen user
         $middep = DB::table('absensi')
         ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
@@ -544,50 +551,18 @@ class ManagerController extends Controller
             ->where('id_departement',$middep->id_departement)
             ->get();
             // dd($data);
+            $departemen = Departemen::where('id',$middep->id_departement)->first();
         }else{
             $data = Absensi::with('karyawans','departemens')
-            ->where('id_departement',$middep->id_departement)
-            ->get();
+                ->where('id_departement',$middep->id_departement)
+                ->get();
+            $departemen = Departemen::where('id',$middep->id_departement)->first();
         };
-
-        return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), "data_absensi_departemen{$idkaryawan}.xlsx");
+        return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), 
+            "REKAP ABSENSI BULAN ".$nbulan." ".$data->first()->karyawans->nama." DEPARTEMEN ".$departemen->nama_departemen.".xlsx");
     }
 
-    public function exportallpdf()
-    {
-        $role = Auth::user()->role;
-        //mengambil id_departemen user login
-        $middep = DB::table('absensi')
-            ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
-            ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
-            ->select('id_departement')->first();
-
-        if($role == 3)
-        {
-            $data = Absensi::where('id_departement',$middep->id_departement)->get();
-            $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data',$data],compact('data'))
-            ->setPaper('A4','landscape');
-
-            return $pdf->stream('Report Absensi Staff Departemen.pdf');
-        }
-        elseif($role == 5)
-        {
-            $data = Absensi::with(['karyawans' => function($query) {
-                $query->select('id,nama')->where('jabatan','=', 'Staff');
-            }])->where('id_departement',$middep->id_departement)->get();
-            
-            $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data',$data],compact('data'))
-            ->setPaper('A4','landscape');
-
-            return $pdf->stream('Report Absensi Staff Departemen.pdf');
-        }
-        else
-        {
-            return redirect()->back();
-        }
-       
-    }
-
+    //DIGUNAKAN
     public function exportpdf(Request $request)
     {
         //mengambil id_departemen manager
@@ -595,6 +570,7 @@ class ManagerController extends Controller
         ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
         ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
         ->select('id_departement')->first();
+         $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
 
         $idkaryawan = $request->id_karyawan;
         $bulan      = $request->query('bulan',Carbon::now()->format('m'));
@@ -610,18 +586,57 @@ class ManagerController extends Controller
         if(isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
             $data = Absensi::where('id_karyawan', $idkaryawan)
-            ->where('id_departement',$middep->id_departement)
-            ->whereMonth('tanggal', $bulan)
-            ->whereYear('tanggal',$tahun)
-            ->get();
-        }else{
+                ->where('id_departement',$middep->id_departement)
+                ->whereMonth('tanggal', $bulan)
+                ->whereYear('tanggal',$tahun)
+                ->get();
+            $departemen = Departemen::where('id',$middep->id_departement)->first();
+        }else
+        {
             $data = Absensi::where('id_departement',$middep->id_departement)->get();
+            $departemen = Departemen::where('id',$middep->id_departement)->first();
         }
         $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan])
         ->setPaper('A4','landscape');
 
-        return $pdf->stream("Report Absensi_{$idkaryawan}.pdf");
+        return $pdf->stream("REKAP ABSENSI BULAN ".$nbulan." ".$data->first()->karyawans->nama." DEPARTEMEN ".$departemen->nama_departemen.".pdf");
     }
+
+    // public function exportallpdf()
+    // {
+    //     $role = Auth::user()->role;
+    //     //mengambil id_departemen user login
+    //     $middep = DB::table('absensi')
+    //         ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
+    //         ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
+    //         ->select('id_departement')->first();
+
+    //     if($role == 3)
+    //     {
+    //         $data = Absensi::where('id_departement',$middep->id_departement)->get();
+    //         $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data',$data],compact('data'))
+    //         ->setPaper('A4','landscape');
+
+    //         return $pdf->stream('Report Absensi Staff Departemen.pdf');
+    //     }
+    //     elseif($role == 5)
+    //     {
+    //         $data = Absensi::with(['karyawans' => function($query) {
+    //             $query->select('id,nama')->where('jabatan','=', 'Staff');
+    //         }])->where('id_departement',$middep->id_departement)->get();
+            
+    //         $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data',$data],compact('data'))
+    //         ->setPaper('A4','landscape');
+
+    //         return $pdf->stream('Report Absensi Staff Departemen.pdf');
+    //     }
+    //     else
+    //     {
+    //         return redirect()->back();
+    //     }
+       
+    // }
+
 
     public function resignStaff(Request $request)
     {

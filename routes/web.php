@@ -155,6 +155,8 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('/permintaan_cuti', [CutiadminController::class,'index'])->name('permintaancuti.index');
     Route::post('/permintaan_cuti/{id}', [CutiadminController::class, 'update'])->name('cuti.update');
     Route::post('/permintaan/{id}', [CutiadminController::class, 'tolak'])->name('cuti.tolak');
+    Route::post('/getalokasi', [CutiadminController::class, 'getAlokasiCuti'])->name('get.Alokasicuti');
+    Route::post('/permintaan_cutis', [CutiadminController::class, 'storeCuti'])->name('cuti.stores');
 //izin 
     Route::post('/permintaanizin/{id}', [IzinAdminController::class, 'approved'])->name('izinapproved');
     Route::post('/permintaanizinreject/{id}', [IzinAdminController::class, 'reject'])->name('izinreject');

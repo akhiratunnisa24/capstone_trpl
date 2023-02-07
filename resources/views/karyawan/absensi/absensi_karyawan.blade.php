@@ -29,7 +29,7 @@
                             <h3 align="center"><strong>{{ Auth::user()->name }}</strong></h3>
 
                             <div>
-                                @if (!isset($absensi->jam_masuk) && !isset($absensi->absent))
+                                @if (!isset($absensi->jam_masuk))
                                     <form action="{{ route('absensi.action') }}" method="POST" align="center">
                                         @csrf
                                         @method('POST')
@@ -41,14 +41,7 @@
                                         <h3 align="center">Masuk</h3>
                                     </div>
 
-                                    <div align="center">
-                                        <button type="button" class="btn btn-danger btn-lg" data-toggle="modal"
-                                            data-target="#myModal">
-                                            <i class="fa fa-ban fa-3x"></i>
-                                        </button>
-                                        <h3 align="center">Tidak Masuk</h3>
-                                    </div>
-                                @elseif(!isset($absensi->jam_keluar) && !isset($absensi->absent))
+                                @elseif(!isset($absensi->jam_keluar))
                                     <form action="{{ route('absen_pulang', $absensi->id) }}" method="POST" align="center">
                                         @csrf
                                         <button type="submit" class="btn btn-warning btn-lg m-10">

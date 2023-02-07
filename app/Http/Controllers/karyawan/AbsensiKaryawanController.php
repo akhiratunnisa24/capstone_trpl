@@ -38,6 +38,7 @@ class AbsensiKaryawanController extends Controller
         //     ->where('id_karyawan',Auth::user()->id_pegawai)
         //     ->orderBy('tanggal')
         //     ->get();
+         //$absensi = Absensi::latest()->where('id_karyawan',Auth::user()->id_pegawai)->orderBy('tanggal')->get();
         $iduser = Auth::user()->id_pegawai;
 
         $bulan = $request->query('bulan',Carbon::now()->format('m'));
@@ -56,8 +57,12 @@ class AbsensiKaryawanController extends Controller
         }
         else
         {
-            $absensi = Absensi::latest()->with('karyawans', 'departemens')->where('id_karyawan', $iduser)->get();
-            dd($absensi);
+            // $absensi = Absensi::latest()->where('id_karyawan',Auth::user()->id_pegawai)->get();
+           
+            // $absensi = Absensi::with('karyawans','departemens')->where('absensi.id_karyawan', $iduser)->get();
+            // dd($absensi);
+            $absensi = Absensi::all();
+              // $absensi = Absensi::latest()->with('karyawans', 'departemens')->where('id_karyawan', $iduser)->get();
         }
         return view('karyawan.absensi.history_absensi',compact('absensi','row'));
         

@@ -42,5 +42,10 @@ class Cuti extends Model
     public function datareject()
     {
         return $this->hasMany(Datareject::class,'id');
-    }    
+    }  
+      
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
 }

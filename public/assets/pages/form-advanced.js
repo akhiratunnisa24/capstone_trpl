@@ -273,6 +273,30 @@
                 return;
             }
         });
+        jQuery('#datepicker-autocloseh').datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function(date){
+                if (date < minDate || date >  maxDate)
+                    return {enabled : false};
+                return;
+            }
+         });
+        jQuery('#datepicker-autoclosei').datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            minDate: minDate,
+            maxDate:  maxDate,
+            todayHighlight: true,
+            beforeShowDay: function(date){
+                if (date < minDate || date >  maxDate)
+                    return {enabled : false};
+                return;
+            }
+        });
         // });
        
         jQuery('#datepicker-inline').datepicker();

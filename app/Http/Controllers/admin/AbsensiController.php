@@ -113,7 +113,8 @@ class AbsensiController extends Controller
         // dd($depart);
 
         //mencari nilai keterlambatan karyawan
-        $jdm = "08:00:00";
+        // $jdm = '08:00:00';
+        $jdm = Carbon::createFromFormat('H:i:s', '08:00:00');
         $jm = Carbon::now()->format("H:i:s");
         $jmas= Carbon::parse($jm);
         $tl= $jmas->diff($jdm)->format("%H:%I:%S");
