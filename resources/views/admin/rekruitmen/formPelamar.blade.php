@@ -182,7 +182,7 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label class="form-label">
-                                                            Gaji</label>
+                                                            Gaji yang diharapkan IDR</label>
                                                         <input type="text" name="gajiPelamar" no_kk
                                                             class="form-control" id="gaji"
                                                             aria-describedby="emailHelp" placeholder="Masukkan Gaji"

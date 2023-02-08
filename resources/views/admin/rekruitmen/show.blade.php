@@ -68,7 +68,7 @@
 
 
 
-            <div class="col-sm-6 col-lg-3 nav nav-tabs navtab-bg">
+            {{-- <div class="col-sm-6 col-lg-3 nav nav-tabs navtab-bg">
                 <div class="panel panel-primary text-center active">
                     <div class="panel-heading btn-success">
                         <a href="#tahap1" data-toggle="tab" class="panel-title ">
@@ -77,11 +77,11 @@
                     </div>
                     <div class="panel-body">
                         <h3 class=""><b>Penyerahan CV</b></h3>
-                        {{-- <p class="text-muted"><b>Total {{ $totalTahap1 }} Pelamar</b> --}}
+                        <p class="text-muted"><b>Total {{ $totalTahap1 }} Pelamar</b>
                         </p>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
 
@@ -95,7 +95,7 @@
                         </div>
                         <div class="panel-body">
                             <h3 class=""><b>{{ $k->mrekruitmen->nama_tahapan }}</b></h3>
-                            {{-- <p class="text-muted"><b>Total {{ $totalTahap2 }} Pelamar</b> --}}
+                            {{-- <p class="text-muted"><b>Total {{ $totalTahap2 }} Pelamar</b>  --}}
                             </p>
                         </div>
                     </div>
@@ -139,12 +139,12 @@
                     <div class="panel panel-primary text-center">
                         <ul class="nav nav-tabs navtab-bg nav-justified">
 
-                            <li class="">
+                            {{-- <li class="">
                                 <a href="#tahap1" data-toggle="tab" aria-expanded="false">
                                     <span class="visible-xs"><i class="fa fa-home"></i></span>
                                     <span class="hidden-xs">Penyerahan CV</span>
                                 </a>
-                            </li>
+                            </li> --}}
 
                             @foreach ($posisi as $k)
                                 <li class="">
@@ -175,7 +175,7 @@
 
                 <div class="tab-content">
 
-                    <div class="tab-pane active" id="tahap1">
+                    <div class="tab-pane active" id="1">
 
 
                         <table class="table table-bordered table-striped" style="width:100%">
@@ -204,7 +204,7 @@
                                         <td>{{ $k->email }}</td>
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
-                                        <td>{{ $k->statusrekruitmen->nama_status }}</td>
+                                        <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
                                         <td>
 
                                             {{-- @if ($k->status_lamaran == 'tahap 1') --}}
@@ -216,7 +216,7 @@
                                                     <i class="fa fa-eye btn-info btn-sm "></i>
                                                 </a>
                                             </div>
-
+                                         @include('admin.rekruitmen.showModal')
                                             <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="#">
@@ -225,7 +225,7 @@
                                                         onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
                                                         <option value="">Pilih Tahap Selanjutnya</option>
                                                         @foreach ($metode as $k)
-                                                            <option value="{{ $k->mrekruitmen->nama_tahapan }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                                            <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -252,7 +252,7 @@
                                         </td>
 
 
-                                        @include('admin.rekruitmen.showModal')
+
                                         <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
 
                                     </tr>
@@ -262,7 +262,7 @@
 
                     </div>
 
-                    <div class="tab-pane" id="6">
+                    <div class="tab-pane" id="2">
 
                         <table class="table table-bordered table-striped" style="width:100%">
                             <thead>
@@ -290,7 +290,7 @@
                                         <td>{{ $k->email }}</td>
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
-                                        <td>{{ $k->status_lamaran }}</td>
+                                        <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
                                         <td>
 
                                             {{-- @if ($k->status_lamaran == 'tahap 2') --}}
@@ -301,7 +301,7 @@
                                                     <i class="fa fa-eye btn-info btn-sm "></i>
                                                 </a>
                                             </div>
-
+@include('admin.rekruitmen.showModal')
                                             <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmSave2()">
@@ -310,7 +310,7 @@
                                                         onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
                                                         <option value="">Pilih Tahap Selanjutnya</option>
                                                         @foreach ($metode as $k)
-                                                            <option value="{{ $k->mrekruitmen->nama_tahapan }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                                            <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -330,7 +330,7 @@
                                         </td>
 
 
-                                        @include('admin.rekruitmen.showModal')
+                                        
 
                                     </tr>
                                 @endforeach
@@ -340,7 +340,7 @@
                     </div>
 
 
-                    <div class="tab-pane" id="8">
+                    <div class="tab-pane" id="3">
                         <table class="table table-bordered table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -367,7 +367,7 @@
                                         <td>{{ $k->email }}</td>
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
-                                        <td>{{ $k->status_lamaran }}</td>
+                                        <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
                                         <td>
 
                                             {{-- @if ($k->status_lamaran == 'tahap 2') --}}
@@ -378,7 +378,7 @@
                                                     <i class="fa fa-eye btn-info btn-sm "></i>
                                                 </a>
                                             </div>
-
+@include('admin.rekruitmen.showModal')
                                             <<div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmSave2()">
@@ -387,7 +387,7 @@
                                                         onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
                                                         <option value="">Pilih Tahap Selanjutnya</option>
                                                         @foreach ($metode as $k)
-                                                            <option value="{{ $k->mrekruitmen->nama_tahapan }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                                            <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -407,7 +407,7 @@
                                         </td>
 
 
-                                        @include('admin.rekruitmen.showModal')
+                                        
 
                                     </tr>
                                 @endforeach
@@ -415,7 +415,7 @@
                         </table>
                     </div>
 
-                    <div class="tab-pane" id="10">
+                    <div class="tab-pane" id="4">
                         <table class="table table-bordered table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -442,7 +442,7 @@
                                         <td>{{ $k->email }}</td>
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
-                                        <td>{{ $k->status_lamaran }}</td>
+                                        <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
                                         <td>
 
                                             {{-- @if ($k->status_lamaran == 'tahap 2') --}}
@@ -453,7 +453,7 @@
                                                     <i class="fa fa-eye btn-info btn-sm "></i>
                                                 </a>
                                             </div>
-
+@include('admin.rekruitmen.showModal')
                                             <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmSave2()">
@@ -462,7 +462,7 @@
                                                         onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
                                                         <option value="">Pilih Tahap Selanjutnya</option>
                                                         @foreach ($metode as $k)
-                                                            <option value="{{ $k->mrekruitmen->nama_tahapan }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                                            <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -482,7 +482,7 @@
                                         </td>
 
 
-                                        @include('admin.rekruitmen.showModal')
+                                        
 
                                     </tr>
                                 @endforeach
@@ -490,7 +490,7 @@
                         </table>
                     </div>
 
-                    <div class="tab-pane" id="11">
+                    <div class="tab-pane" id="5">
                         <table class="table table-bordered table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -517,7 +517,7 @@
                                         <td>{{ $k->email }}</td>
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
-                                        <td>{{ $k->status_lamaran }}</td>
+                                        <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
                                         <td>
 
                                             {{-- @if ($k->status_lamaran == 'tahap 2') --}}
@@ -528,7 +528,7 @@
                                                     <i class="fa fa-eye btn-info btn-sm "></i>
                                                 </a>
                                             </div>
-
+@include('admin.rekruitmen.showModal')
                                             <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmSave2()">
@@ -537,7 +537,7 @@
                                                         onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
                                                         <option value="">Pilih Tahap Selanjutnya</option>
                                                         @foreach ($metode as $k)
-                                                            <option value="{{ $k->mrekruitmen->nama_tahapan }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                                            <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -557,7 +557,7 @@
                                         </td>
 
 
-                                        @include('admin.rekruitmen.showModal')
+                                        
 
                                     </tr>
                                 @endforeach
@@ -567,7 +567,7 @@
 
                     
 
-                    <div class="tab-pane" id="12">
+                    <div class="tab-pane" id="6">
 
 
                         <table class="table table-bordered table-striped" style="width:100%">
@@ -596,7 +596,7 @@
                                         <td>{{ $k->email }}</td>
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
-                                        <td>{{ $k->status_lamaran }}</td>
+                                        <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
 
                                         <td>
 
@@ -616,7 +616,7 @@
 
                                     </tr>
                                 @endforeach
-                            </tbody>
+                            </tbody>    
                         </table>
 
                     </div>

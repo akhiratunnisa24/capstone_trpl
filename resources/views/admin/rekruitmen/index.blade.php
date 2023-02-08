@@ -32,14 +32,11 @@
                                 Salin Link Form Rekruitmen </a>
                         </div>
                         @include('admin.rekruitmen.tambahLowonganModal')
+
                         <div class="panel-body">
-
-
-
-
                             <div class="row">
                                 @foreach ($posisi as $k)
-                                    <div class="col-sm-12 col-lg-3">
+                                    <div class="col-sm-3">
                                         <div class="panel panel-primary">
 
                                             {{-- <div class="panel-heading btn-success">
@@ -48,7 +45,7 @@
                                                 </a>
                                             </div> --}}
 
-                                            @if ($k->status == 'Aktif')
+                                            {{-- @if ($k->status == 'Aktif')
                                                 <div class="panel-heading btn-success">
                                                     <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
                                                         <h4 class="panel-title">{{ $k->status }}</h4>
@@ -60,33 +57,41 @@
                                                         <h4 class="panel-title">{{ $k->status }}</h4>
                                                     </a>
                                                 </div>
+                                            @endif --}}
+
+                                            @if ($k->status == 'Aktif')
+                                                <div class="panel-heading btn-success">
+                                                @else
+                                                    <div class="panel-heading btn-danger">
                                             @endif
+                                            <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
+                                                <h4 class="panel-title">{{ $k->status }}</h4>
+                                            </a>
+                                        </div>
 
 
-                                            <div class="panel-body">
-                                                <h3 class=""><b>{{ $k->posisi }}</b></h3>
-                                                <p class="text-muted"><b>Dibutuhkan {{ $k->jumlah_dibutuhkan }} Orang</b>
-                                                </p>
-                                            </div>
-                                            {{-- <a href="/hapuslowongan{{ $k->id }}" type="button"
-                                                class="btn btn-sm btn-danger fa fa-trash"> --}}
 
+                                        <div class="panel-body">
+                                            <h3 class=""><b>{{ $k->posisi }}</b></h3>
+                                            <p class="text-muted"><b>Dibutuhkan {{ $k->jumlah_dibutuhkan }} Orang</b>
+                                            </p>
                                             <button onclick="hapus_karyawan({{ $k->id }})"
                                                 class="btn btn-danger btn-sm">
-                                                <i class="fa fa-trash"></i>
+                                                <i class="fa fa-trash" hidden></i>
                                             </button>
-
                                         </div>
                                     </div>
-                                @endforeach
-
                             </div>
-                            {{-- <a href="{{ url('Form-Rekruitmen-RYNEST') }}">Apply</a> --}}
-                            {{-- <a href="#" id="share-button">Salin Link Form Rekruitmen</a> --}}
-
-
+                            
+                            @endforeach
 
                         </div>
+
+                        {{-- <a href="{{ url('Form-Rekruitmen-RYNEST') }}">Apply</a> --}}
+                        {{-- <a href="#" id="share-button">Salin Link Form Rekruitmen</a> --}}
+
+
+
                     </div>
                 </div>
             </div>

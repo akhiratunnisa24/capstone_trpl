@@ -76,7 +76,7 @@
 
         <div class="form-group row">
             <label for="status" class="col-sm-3 col-form-label">Status Rekruitmen</label>
-            <span class="text-white badge badge-success">Lanjut ke {{$data->status_lamaran}}</span>
+            <span class="text-white badge badge-success">Lanjut ke tahap {{ $data->mrekruitmen->nama_tahapan }}</span>
         </div>
 
     </div>

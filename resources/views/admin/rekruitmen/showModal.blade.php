@@ -90,7 +90,7 @@
                     <div class="col-sm-9">
                         <label>: {{$k->cv}}</label>
                         {{-- <embed src="{{ asset('pdf/' . $k->cv)}}" type="application/pdf" width="100%" height="600px"> --}}
-                            <a href="{{ asset('pdf/' . $k->cv)}}" class="btn btn-primary">Download</a>
+                            <a href="{{ asset('pdf/' . $k->cv)}}" class="btn btn-sm btn-primary">Download</a>
                             {{-- <img src="{{ asset('pdf/' . $k->cv)}}" alt="" style="width:280px;"> --}}
                     </div>
                 </div>
@@ -99,14 +99,10 @@
                 <div class="form-group row">
                     <label for="status" class="col-sm-3 col-form-label">Status Lamaran</label>
                     <div class="col-sm-9">
-                        @if($k->status_lamaran == 'tahap 1')
-                            <span class="badge badge-warning">tahap 1</span>
-                        @elseif($k->status_lamaran == 'tahap 2')
-                            <span class="badge badge-info">tahap 2</span>
-                        @elseif($k->status_lamaran == 'tahap 3')
-                            <span class="badge badge-success">tahap 3</span>
+                        @if($k->status_lamaran == '6')
+                            <span class="badge badge-success">Diterima</span>                       
                         @else
-                            <span class="badge badge-danger">Ditolak</span>
+                            <span class="badge badge-info">{{ $k->mrekruitmen->nama_tahapan }}</span>
                         @endif
                     </div>
                 </div>

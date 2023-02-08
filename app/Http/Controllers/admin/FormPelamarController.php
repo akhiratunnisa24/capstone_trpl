@@ -60,6 +60,6 @@ class FormPelamarController extends Controller
 
         $user->save();
 
-        return redirect('show_formSelesai');
+        return view('admin.rekruitmen.formSelesaiPelamar');
     }
 }

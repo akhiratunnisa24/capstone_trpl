@@ -99,7 +99,7 @@ class RekruitmenController extends Controller
         ->where('id_lowongan', $id)->get();
 
         $metode = NamaTahap::with('mrekruitmen')
-        ->where('id_lowongan', $id)->get('id_mrekruitmen');        
+        ->where('id_lowongan', $id)->get();        
         // dd($metode);  
 
         // $namatahapan = NamaTahap::
@@ -128,33 +128,37 @@ class RekruitmenController extends Controller
             ->where('status_lamaran', '=', 'Psikotest')
             ->count('posisi');
 
-            $totalDiterima = Rekruitmen::all()
+            $totalDiterima = Rekruitmen::all()  
             ->where('id_lowongan', $id)
             ->where('status_lamaran', '=', '2')
             ->count('posisi');
 
-            $dataTahap1 = Rekruitmen::with('statusrekruitmen')->where('id_lowongan', $id)
+            $dataTahap1 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
             ->where('status_lamaran', '=', '1')
             ->get();
 
-            $dataTahap2 = Rekruitmen::with('statusrekruitmen', 'namatahap')->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'Interview ke-1')
+            // $dataTahap2 = Rekruitmen::with('statusrekruitmen', 'namatahap')->where('id_lowongan', $id)
+            // ->where('status_lamaran', '=', 'Interview ke-1')
+            // ->get();
+
+            $dataTahap2 = Rekruitmen::with('mrekruitmen', 'namatahap')->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '2')
             ->get();
 
-            $dataTahap3 = Rekruitmen::with('statusrekruitmen')->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'Psikotest')
+            $dataTahap3 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '3')
             ->get();
 
-            $dataTahap4 = Rekruitmen::with('statusrekruitmen')->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'Medical Check-Up')
+            $dataTahap4 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '4')
             ->get();
 
-            $dataTahap5 = Rekruitmen::with('statusrekruitmen')->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'Interview ke-2')
+            $dataTahap5 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '5')
             ->get();
 
-            $dataDiterima = Rekruitmen::with('statusrekruitmen')->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'Diterima')
+            $dataDiterima = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '6')
             ->get();
 
            
@@ -199,7 +203,7 @@ class RekruitmenController extends Controller
 
         $rekrutmen = Rekruitmen::find($id);
 
-        if ($rekrutmen->status_lamaran == 'Diterima') {
+        if ($rekrutmen->status_lamaran == '6') {
             $lowongan = Lowongan::find($rekrutmen->id_lowongan);
             $lowongan->jumlah_dibutuhkan--;
             if ($lowongan->jumlah_dibutuhkan == 0) {

@@ -43,6 +43,6 @@ class Rekruitmen extends Model
     }
     public function mrekruitmen()
     {
-        return $this->belongsTo(MetodeRekruitmen::class, 'id_mrekruitmen', 'id');
+        return $this->belongsTo(MetodeRekruitmen::class, 'status_lamaran', 'id');
     }   
 }
