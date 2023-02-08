@@ -63,8 +63,8 @@
     </style>
 </head>
 <body>
-    <h1 align="center">PT. Rynest Technology Indomedia</h1>
-    <p id="address">Jl. Tole Iskandar No.11, Sukmajaya, Kec. Sukmajaya, Kota Depok, Jawa Barat 16412</p>
+    <h1 align="center">PT. Global Risk Management (GRM)</h1>
+    <p id="address">Graha GRM Royal Spring Business Park 11, Jl. Ragunan Raya No. 29A, Jakarta Selatan, 12540</p>
     <div class="garis"></div>
     <h3 align="center">Report Absensi Pegawai</h3>
     <table id="absensi">

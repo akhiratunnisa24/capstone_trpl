@@ -570,7 +570,7 @@ class ManagerController extends Controller
         ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
         ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
         ->select('id_departement')->first();
-         $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
+        $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
 
         $idkaryawan = $request->id_karyawan;
         $bulan      = $request->query('bulan',Carbon::now()->format('m'));

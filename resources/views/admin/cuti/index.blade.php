@@ -115,6 +115,10 @@
                                                                     <td>
                                                                         <span class="badge badge-success">Disetujui</span>
                                                                     </td>
+                                                                @elseif($data->status == 'Disetujui Supervisor')
+                                                                    <td>
+                                                                        <span class="badge badge-secondary">Disetujui Supervisor</span>
+                                                                    </td>
                                                                 @elseif($data->status == 3)
                                                                     <td>
                                                                         <span class="badge badge-success">Disetujui HRD</span>
@@ -256,7 +260,8 @@
 
                                                                     <td> 
                                                                         <div class="row">
-                                                                            @if($data->status == 'Pending' || $data->status == 'Disetujui Manager')
+                                                                            {{-- @if($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
+                                                                            @if ($data->karyawan->divisi == $depuser->divisi)    
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izinapproved',$data->id)}}" method="POST"> 
                                                                                         @csrf
@@ -265,13 +270,20 @@
                                                                                     </form>
                                                                                 </div>
                                                                                 <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="" method="POST"> 
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#izReject{{$data->id}}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                                {{-- <div class="col-sm-3" style="margin-left:7px">
                                                                                     <form action="{{ route('izinreject',$data->id)}}" method="POST"> 
                                                                                         @csrf
                                                                                         @method('POST')
                                                                                         <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
                                                                                         <button type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
-                                                                                </div>
+                                                                                </div> --}}
                                                                             @endif
                 
                                                                             <div class="col-sm-3" style="margin-left:5px">
@@ -283,6 +295,7 @@
                                                                             </div>
                                                                             {{-- modal show izin --}}
                                                                             @include('admin.cuti.showizin')
+                                                                            @include('admin.cuti.izinReject')
                                                                         </div>
                                                                     </td> 
                                                                 </tr>

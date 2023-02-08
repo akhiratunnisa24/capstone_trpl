@@ -20,7 +20,8 @@ use Illuminate\Support\Facades\DB;
             <th>Tanggal Lahir</th>
             <th>Jenis Kelamin</th>
             <th>Departemen</th>
-            <th>Manager</th>
+            <th>Atasan Pertama</th>
+            <th>Atasan Kedua</th>
             <th>Jabatan</th>
             <th>Alamat</th>
             <th>Nomor Handphone</th>
@@ -72,7 +73,8 @@ use Illuminate\Support\Facades\DB;
             <td>{{ $k->tgllahir }}</td>
             <td>{{ $k->jenis_kelamin }}</td>
             <td>{{ $k->divisi }}</td>
-            <td>{{ $k->manager }}</td>
+            <td>{{ $k->atasan_pertama }}</td>
+            <td>{{ $k->atasan_kedua }}</td>
             <td>{{ $k->jabatan }}</td>
             <td>{{ $k->alamat }}</td>
             <td>{{ $k->no_hp }}</td>

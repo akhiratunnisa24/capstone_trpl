@@ -64,7 +64,12 @@ class CutiadminController extends Controller
                 ->join('izin','datareject.id_izin','=','izin.id')
                 ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
                 ->first();
-            return view('admin.cuti.index', compact('cuti','izin','type','row','alasan','alasancuti','karyawan','status'));
+            // $deppeg  = Izin::with('karyawan')->join('karyawan')
+            //     ->where('izin.id_karyawan','=','karyawan.id')
+            //     ->select('karyawan.divisi')
+            //     ->get();
+            $depuser = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            return view('admin.cuti.index', compact('cuti','izin','type','row','alasan','alasancuti','karyawan','status','depuser'));
             
         } else 
         {

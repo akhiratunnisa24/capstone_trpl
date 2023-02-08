@@ -40,6 +40,8 @@ class AttendanceImport implements ToModel,WithHeadingRow
                     'KEUANGAN' => 2,
                     'TEKNOLOGI INFORMASI' => 3,
                     'HUMAN RESOURCE' => 4,
+                    'BOD'=> 5,
+                    'BOARD OF DIRECTORS'=>5,
                 ];
                 $data = [
                     'id_karyawan'   => $row['id'],
