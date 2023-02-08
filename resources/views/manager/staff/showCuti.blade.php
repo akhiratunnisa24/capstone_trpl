@@ -59,6 +59,8 @@
                             <span class="badge badge-info">Disetujui Manager</span>
                         @elseif($data->status == 'Disetujui Supervisor')
                             <span class="badge badge-secondary">Disetujui Supervisor</span>
+                        @elseif($data->status == 3)
+                            <span class="badge badge-success">Disetujui</span>
                         @elseif($data->status == 'Disetujui')
                             <span class="badge badge-success">Disetujui</span>
                         @else

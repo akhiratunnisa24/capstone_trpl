@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Models\Izin;
+use App\Models\Datareject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -66,11 +67,41 @@ class IzinAdminController extends Controller
 
     public function reject(Request $request, $id)
     {
-        $izin = Izin::where('id',$id)->first();
         $status = 'Ditolak';
         Izin::where('id',$id)->update([
             'status' => $status,
         ]);
+        $izin = Izin::where('id',$id)->first();
+        $datareject          = new Datareject;
+        $datareject->id_cuti = NULL;
+        $datareject->id_izin = $izin->id;
+        $datareject->alasan  = $request->alasan;
+        $datareject->save(); 
+        
+         //----SEND EMAIL KE KARYAWAN -------
+        //ambil nama jeniscuti
+        $izin = DB::table('izin')
+            ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+            ->where('izin.id',$id)
+            ->select('izin.*','jenisizin.jenis_izin as jenis_izin')
+            ->first();
+        $karyawan = DB::table('izin')
+            ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+            ->where('izin.id',$izin->id)
+            ->select('karyawan.email as email','karyawan.nama as nama')
+            ->first(); 
+         //$tujuan = 'akhiratunnisahasanah0917@gmail.com';
+         $tujuan = $karyawan->email;
+         $data = [
+             'title'    =>$izin->id,
+             'subject'  =>'Notifikasi Izin',
+             'id'       =>$izin->id,
+             'nama'     =>$karyawan->nama,
+             'jenisizin'=>$izin->jenis_izin,
+             'tgl_mulai'=>$izin->tgl_mulai,
+             'status'   =>$izin->status,
+         ];
+        Mail::to($tujuan)->send(new IzinApproveNotification($data));
         return redirect()->route('permintaancuti.index',['type'=>2])->withInput();
     }
 }

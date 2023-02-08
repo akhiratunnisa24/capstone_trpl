@@ -2,36 +2,43 @@
 
 namespace App\Http\Controllers\direktur;
 
+use Carbon\Carbon;
 use App\Models\Cuti;
+use App\Models\Karyawan;
+use App\Models\Datareject;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CutiApproveNotification;
 
 class DirekturController extends Controller
 {
     public function index(Request $request)
     {
+        $id_user_login = Auth::user()->id_pegawai;
         $cuti = DB::table('cuti')
-        ->leftjoin('alokasicuti','cuti.id_jeniscuti','alokasicuti.id_jeniscuti')
-        ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
-        ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
-        ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
-        ->where(function($query) {
-            $query->where('settingalokasi.tipe_approval','=','Bertingkat')
-            ->orWhere(function($query) {
-                $query->whereIn('karyawan.jabatan', ['Manager', 'HRD'])
-                ->where('settingalokasi.tipe_approval','<>','Bertingkat');
-                });
-        })
-        ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','settingalokasi.tipe_approval')
-        ->distinct()
-        ->get();
-        // ->where('settingalokasi.tipe_approval','=','Bertingkat')
-        // ->orWhere('karyawan.jabatan','=','Manager')
-        // ->where('cuti.status','=','Disetujui Manager')
-        // ->orWhere('cuti.status','=','Disetujui')
+            ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+            ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+            ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
+            ->where(function($query) use ($id_user_login) {
+                $query->where('karyawan.jabatan', 'Manager','HRD')
+                 ->orWhere(function($query) use ($id_user_login) {
+                $query->where('karyawan.jabatan', 'Supervisor')
+                ->where('settingalokasi.tipe_approval', 'Bertingkat');
+            });
+            })
+            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.jabatan')
+            ->distinct()
+            ->get();
+        $alasancuti = DB::table('datareject')
+            ->join('cuti','datareject.id_cuti','=','cuti.id')
+            ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
+            ->first();
 
+        // dd($cuti);
         return view('direktur.cuti.index', compact('cuti'));
     }
 
@@ -42,20 +49,19 @@ class DirekturController extends Controller
     }
 
     public function leaveapproved($id){
-        $cuti = Cuti::where('id', $id)->first();
-
+        $cutis = Cuti::where('id', $id)->first();
         // Inisialisasi variable jml_cuti dengan nilai jumlah hari cuti yang diambil
-        $jml_cuti = $cuti->jml_cuti;
+        $jml_cuti = $cutis->jml_cuti;
 
         //Update status cuti menjadi 'Disetujui'
         Cuti::where('id', $id)->update(
             ['status' => 'Disetujui']
         );
-
+        $cuti = Cuti::where('id', $id)->first();
         //Ambil data alokasi cuti yang sesuai dengan id karyawan dan id jenis cuti
-        $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
-            ->where('id_karyawan', $cuti->id_karyawan)
-            ->where('id_jeniscuti', $cuti->id_jeniscuti)
+        $alokasicuti = Alokasicuti::where('id', $cutis->id_alokasi)
+            ->where('id_karyawan', $cutis->id_karyawan)
+            ->where('id_jeniscuti', $cutis->id_jeniscuti)
             ->first();
 
         // Hitung durasi baru setelah pengurangan
@@ -64,7 +70,22 @@ class DirekturController extends Controller
         Alokasicuti::where('id', $alokasicuti->id)
             ->update(
                 ['durasi' => $durasi_baru]
-            );
+        );
+        $epegawai = Karyawan::select('email as email','nama as nama')->where('id','=',$cuti->id_karyawan)->first();
+        $tujuan = $epegawai->email;
+        $data = [
+            'subject'     =>'Notifikasi Cuti Disetujui',
+            'id'          =>$cuti->id,
+            'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+            'keperluan'   =>$cuti->keperluan,
+            'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+            'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+            'jml_cuti'    =>$cuti->jml_cuti,
+            'status'      =>$cuti->status,
+            'nama'        =>$epegawai->nama,
+        ];
+        Mail::to($tujuan)->send(new CutiApproveNotification($data));
+        // dd($alokasicuti,$epegawai,$tujuan,$data);
         return redirect()->back()->withInput();
     }
 
@@ -75,6 +96,43 @@ class DirekturController extends Controller
         Cuti::where('id',$id)->update([
             'status' => $status,
         ]);
+        $cuti = Cuti::where('id',$id)->first();
+
+        $datareject          = new Datareject;
+        $datareject->id_cuti = $cuti->id;
+        $datareject->id_izin = NULL;
+        $datareject->alasan  = $request->alasan;
+        $datareject->save();  
+
+        //----SEND EMAIL KE KARYAWAN -------
+        //ambil nama jeniscuti
+        $ct = DB::table('cuti')
+            ->join('jeniscuti','cuti.id_jeniscuti','=','jeniscuti.id')
+            ->where('cuti.id',$id)
+            ->select('cuti.*','jeniscuti.jenis_cuti as jenis_cuti')
+            ->first();
+
+        //ambil nama dan email karyawan tujuan
+        //sementara tidak digunakan
+        $karyawan = DB::table('cuti')
+            ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+            ->where('cuti.id',$cuti->id)
+            ->select('karyawan.email as email','karyawan.nama as nama')
+            ->first(); 
+        //Stujuan = $karyawan->email;
+        $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+        $data = [
+            'subject'     =>'Notifikasi Cuti Ditolak',
+            'id'          =>$ct->id,
+            'id_jeniscuti'=>$ct->jenis_cuti,
+            'keperluan'   =>$ct->keperluan,
+            'nama'        =>$karyawan->nama,
+            'tgl_mulai'   =>Carbon::parse($ct->tgl_mulai)->format("d M Y"),
+            'tgl_selesai' =>Carbon::parse($ct->tgl_selesai)->format("d M Y"),
+            'jml_cuti'    =>$ct->jml_cuti,
+            'status'      =>$ct->status,
+        ];
+        Mail::to($tujuan)->send(new CutiApproveNotification($data));
         return redirect()->back()->withInput();
     }
 }

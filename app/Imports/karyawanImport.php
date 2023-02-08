@@ -33,6 +33,14 @@ class karyawanImport implements ToModel, WithHeadingRow
 
         if (isset($row['nama']) && isset($row['tanggal_lahir'])) {
             if (!Karyawan::where('nama', $row['nama'])->where('tgllahir', Carbon::parse($row['tanggal_lahir'])->format("Y-m-d"))->exists()) {
+                $departement_map = [
+                    'KONVENSIONAL' => 1,
+                    'KEUANGAN' => 2,
+                    'TEKNOLOGI INFORMASI' => 3,
+                    'HUMAN RESOURCE' => 4,
+                    'BOD'=> 5,
+                    'BOARD OF DIRECTORS'=>5,
+                ];
                 $karyawan = [
                     'nip'           => (Int) $row['nip'] ?? null,
                     'nik'           =>  $row['nik'] ?? null,
@@ -46,11 +54,12 @@ class karyawanImport implements ToModel, WithHeadingRow
                     'no_hp'         => $row['nomor_hp'] ?? null,
                     'status_karyawan'=> $row['status_karyawan'] ?? null,
                     'tipe_karyawan' => $row['tipe_karyawan'] ?? null,
-                    'manager'       => $row['manager'] ?? null,
+                    'atasan_pertama'=> $row['atasan_pertama'] ?? null,
+                    'atasan_kedua'  => $row['atasan_kedua'] ?? null,
                     'no_kk'         => (Int) $row['no_kk'] ?? null,
                     'status_kerja'  => $row['status_kerja'] ?? null,
                     'cuti_tahunan'  => (Int) $row['cuti_tahunan'] ?? null,
-                    'divisi'        => $row['divisi'] ?? null,
+                    'divisi'        => $departement_map[$row['divisi']] ?? null,
                     'no_rek'        => (Int) $row['nomor_rekening'] ?? null,
                     'no_bpjs_kes'   => (Int)  $row['nomor_bpjs_kesehatan'],
                     'no_npwp'       => (Int)  $row['nomor_npwp'],
