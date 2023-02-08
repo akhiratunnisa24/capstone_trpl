@@ -244,6 +244,7 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 
     Route::get('/data-cuti-staff', [DirekturController::class, 'index'])->name('cuti.index');
     Route::post('/data-cuti-staff/{id}', [DirekturController::class, 'leaveapproved'])->name('leave.approved');
+    Route::post('/data-cuti-staffs/{id}', [DirekturController::class, 'leaverejected'])->name('leave.rejected');
 
  //================================================================================
 //ROLE SUPERVISOR

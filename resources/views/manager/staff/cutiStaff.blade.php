@@ -54,6 +54,9 @@
                                                                 <th>Tgl.Selesai</th>
                                                                 <th>Jml. Cuti</th>
                                                                 {{-- <th>Departemen</th> --}}
+                                                                @if(Auth::user()->role == 3)
+                                                                    <th>Approval</th>
+                                                                @endif
                                                                 <th>Status</th>
                                                                 <th>Action</th>        
                                                             </tr>
@@ -69,6 +72,9 @@
                                                                     <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
                                                                     <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                                     <td>{{$data->jml_cuti}} Hari</td>
+                                                                    @if(Auth::user()->role == 3)
+                                                                        <td>{{$data->tipe_approval}}</td>
+                                                                    @endif
                                                                     {{-- <td>{{$data->departemen}}</td> --}}
                                                                     @if($data->status == 'Pending')
                                                                         <td>
@@ -86,6 +92,10 @@
                                                                         <td>
                                                                             <span class="badge badge-success">Disetujui</span>
                                                                         </td>
+                                                                    @elseif($data->status == 3)
+                                                                        <td>
+                                                                            <span class="badge badge-success">Disetujui</span>
+                                                                        </td>
                                                                     @else
                                                                         <td>
                                                                             <span class="badge badge-danger">Ditolak</span>
@@ -93,7 +103,7 @@
                                                                     @endif
                                                                     <td id="b" class="text-center" > 
                                                                         <div class="row">
-                                                                            @if($data->status == 'Pending')
+                                                                            @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 'Pending')
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('cuti.approved',$data->id)}}" method="POST"> 
                                                                                         @csrf
@@ -116,6 +126,22 @@
                                                                                         <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
                                                                                 </div> --}}
+                                                                            @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 'Disetujui Supervisor')
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('cuti.approved',$data->id)}}" method="POST"> 
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui Manager" class="form-control" hidden> 
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:8px">
+                                                                                    <form action="" method="POST"> 
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutiTolak{{$data->id}}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @else
                                                                             @endif
                 
                                                                             <div class="col-sm-3" style="margin-left:6px">

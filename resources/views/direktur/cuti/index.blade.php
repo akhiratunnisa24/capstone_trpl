@@ -40,7 +40,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                             @foreach($cuti as $data)
+                                            @foreach($cuti as $data)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
                                                     <td>{{$data->nama}}</td>
@@ -67,7 +67,7 @@
                                                     @endif
                                                     <td id="b" class="text-center" > 
                                                         <div class="row">
-                                                            @if($data->status == 'Disetujui Manager' || $data->status == 'Pending')
+                                                            @if(($data->jabatan == 'Supervisor' && $data->status == 'Disetujui Manager'))
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('leave.approved',$data->id)}}" method="POST"> 
                                                                         @csrf
@@ -76,14 +76,36 @@
                                                                     </form>
                                                                 </div>
                                                                 <div class="col-sm-3" style="margin-left:8px">
-                                                                    {{-- {{ route('leave.rejected',$data->id)}} --}}
                                                                     <form action="" method="POST"> 
+                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutisTolak{{$data->id}}">
+                                                                            <i class="fa fa-times fa-md"></i>
+                                                                        </a>
+                                                                    </form>
+                                                                </div>
+                                                                 {{-- {{ route('leave.rejected',$data->id)}} --}}
+                                                                    {{-- <form action="" method="POST"> 
                                                                         @csrf
                                                                         @method('POST')
                                                                         <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
                                                                         <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
+                                                                    </form> --}}
+                                                            @elseif(($data->jabatan == 'Manager' && $data->status == 'Pending'))
+                                                                <div class="col-sm-3">
+                                                                    <form action="{{ route('leave.approved',$data->id)}}" method="POST"> 
+                                                                        @csrf
+                                                                        <input type="hidden" name="status" value="Disetujui Manager" class="form-control" hidden> 
+                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
                                                                     </form>
                                                                 </div>
+                                                                <div class="col-sm-3" style="margin-left:8px">
+                                                                    <form action="" method="POST"> 
+                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutisTolak{{$data->id}}">
+                                                                            <i class="fa fa-times fa-md"></i>
+                                                                        </a>
+                                                                    </form>
+                                                                </div>
+                                                            @else
+
                                                             @endif
 
                                                             <div class="col-sm-3" style="margin-left:6px">
@@ -97,6 +119,7 @@
                                                     </td> 
                                                 </tr>
                                                 @include('direktur.cuti.show')
+                                                @include('direktur.cuti.cutiReject')
                                             @endforeach
                                         </tbody>
                                     </table>

@@ -261,7 +261,7 @@
                                                                     <td> 
                                                                         <div class="row">
                                                                             {{-- @if($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
-                                                                            @if ($data->karyawan->divisi == $depuser->divisi)    
+                                                                            @if ($data->karyawan->divisi == $depuser->divisi && $data->status == 'Pending' && $data->id_karyawan != Auth::user()->id_pegawai)    
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izinapproved',$data->id)}}" method="POST"> 
                                                                                         @csrf
