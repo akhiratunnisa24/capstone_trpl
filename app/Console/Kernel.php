@@ -57,7 +57,7 @@ class Kernel extends ConsoleKernel
                     $absen->save();
                 }
 
-                $resigns = Resign::whereDate('tgl_resign', '=', now()->subDay())
+                $resigns = Resign::whereDate('tgl_resign', '=', now())
                 ->where('status', 3)
                 ->get();
                 foreach ($resigns as $resign) {
@@ -67,7 +67,7 @@ class Kernel extends ConsoleKernel
                     }
                 }
         }    
-        })->dailyAt('23:59');
+        })->dailyAt('17:33');
     
     
     }

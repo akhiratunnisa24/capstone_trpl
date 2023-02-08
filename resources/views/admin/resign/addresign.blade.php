@@ -15,42 +15,33 @@
                       @csrf
                       @method('POST')
                       <div class="form-group col-xs-12">
-                          <label for="namaKaryawan" class="form-label">Nama</label>
-                          <select name="namaKaryawan" id="user-select" class="form-control selectpicker"
-                              data-live-search="true" required>
-                              <option>-- Pilih Karyawan --</option>
-                              @foreach ($karyawan1 as $data)
-                                  <option value="{{ $data->id }}" @if ($data->id == request()->nama) selected @endif>
-                                      {{ $data->nama }}
-                                  </option>
-                              @endforeach
-                          </select>
-                      </div>
+                        <label for="namaKaryawan" class="form-label">Nama</label>
+                        <select name="namaKaryawan" id="user-select" class="form-control selectpicker"
+                            data-live-search="true" required>
+                            <option>-- Pilih Karyawan --</option>
+                            @foreach ($karyawan1 as $data)
+                                <option value="{{ $data->id }}" @if ($data->id == request()->nama) selected @endif>
+                                    {{ $data->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
                       <div class="form-group col-xs-12">
                         <label for="departemen1" class="form-label">Departemen</label>
                         <input id="departemen1" class="form-control" name="departemen1" autocomplete="off"
                             placeholder="" readonly>
-
-
                     </div>
-
-
                       <div class="form-group col-xs-12"hidden>
                           <label for="departemen" class="form-label">Departemen</label>
                           <input id="departemen" class="form-control" name="departemen" autocomplete="off"
                               placeholder="" readonly>
-
-
                       </div>
                       <div class="form-group col-xs-12">
                           <label for="tgl_masuk" class="form-label">Tanggal Bergabung</label>
                           <input id="tgl_masuk" type="text" class="form-control" name="tgl_masuk" autocomplete="off"
                               placeholder="" readonly>
-
                       </div>
-
-
                       <div class="form-group">
                           <label for="tgl_resign" class="form-label">Tanggal Resign</label>
                           <div class="input-group">
@@ -77,10 +68,7 @@
                           <label for="alasan" class="form-label">Alasan Resign</label>
                           <textarea id="alasan" type="text" class="form-control" name="alasan" autocomplete="off"
                               placeholder="Alasan Resign"></textarea>
-
-                      </div>
-
-                      {{-- {{-- <div class="form-group"> --}}
+                      </div>                      
                       <div class="col-xs-12">
                           <div class="checkbox checkbox-primary">
 
