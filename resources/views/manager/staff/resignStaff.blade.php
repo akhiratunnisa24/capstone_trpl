@@ -52,80 +52,46 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($staff1 as $r)
-                                                            {{-- @if ($r->id_karyawan == Auth::user()->id_pegawai) --}}
-                                                                <tr>
-                                                                    <td>{{$loop->iteration}}</td>
-                                                                    <td>{{ $r->karyawans->nama }}</td>
-                                                                    <td>{{ $r->departemens->nama_departemen }}</td>
-                                                                    <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}
+                                                              <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $r->karyawans->nama }}</td>
+                                                                <td>{{ $r->departemens->nama_departemen }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}</td>
+                                                                <td>{{ $r->tipe_resign }}</td>
+                                                                <td>
+                                                                  <span class="badge {{ $r->status === 1 ? 'badge-warning' : ($r->status === 2 ? 'badge-info' : ($r->status === 3 ? 'badge-success' : ($r->status === 4 ? 'badge-warning' : 'badge-danger'))) }}">
+                                                                    {{ $r->status === 1 ? 'Pending' : ($r->status === 2 ? 'Disetujui Manager' : ($r->status === 3 ? 'Disetujui HRD' : ($r->status === 4 ? 'Pending HRD' : 'Ditolak'))) }}
+                                                                  </span>
+                                                                </td>
+                                                                    <td class="text-center d-flex justify-content-between">
+                                                                    @if ($r->status === 1)
+                                                                    <form action="{{ route('resign_approved_manager', $r->id) }}" method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status" value=2 hidden>
+                                                                        <button type="submit" class="btn btn-success btn-sm mx-1">
+                                                                          <i class="fa fa-check"></i>
+                                                                        </button>
+                                                                      </form>
+                                                                      <form action="{{ route('resignreject', $r->id) }}" method="POST">
+                                                                        @csrf
+                                                                        @method('POST')
+                                                                        <input type="hidden" name="status" value=5 hidden>
+                                                                        <button type="submit" class="btn btn-danger btn-sm mx-1">
+                                                                          <i class="fa fa-times"></i>
+                                                                        </button>
+                                                                      </form>
+                                                                    @endif  
+                                                                      <form action="" method="POST">
+                                                                        <a class="btn btn-info btn-sm mx-1" data-toggle="modal" data-target="#Showresign{{ $r->id }}">
+                                                                          <i class="fa fa-eye"></i>
+                                                                        </a>
+                                                                      </form>
                                                                     </td>
-                                                                    <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}
-                                                                    </td>
-                                                                    <td>{{ $r->tipe_resign }}</td>
-                                                                   
-                                                                    
-
-                                                                    <!-- data for status -->
-                                                                    @if ($r->status == 1)
-                                                                        <td>
-                                                                            <span class="badge badge-warning">Pending</span>
-                                                                        </td>
-                                                                    @elseif($r->status == 2)
-                                                                        <td>
-                                                                            <span class="badge badge-info">Disetujui
-                                                                                Manager</span>
-                                                                        </td>
-                                                                    @elseif($r->status == 3)
-                                                                        <td>
-                                                                            <span class="badge badge-success">Disetujui</span>
-                                                                        </td>
-                                                                    @elseif($r->status == 4)
-                                                                        <td>
-                                                                            <span class="badge badge-warning">Pending HRD</span>
-                                                                        </td>
-                                                                    @else
-                                                                        <td>
-                                                                            <span class="badge badge-danger">Ditolak</span>
-                                                                        </td>
-                                                                    @endif
-                                                                    <td id="b" class="text-center" > 
-                                                                        <div class="row">
-                                                                            @if($r->status == '1')
-                                                                                <div class="col-sm-3">
-                                                                                    <form action="{{ route('resign_approved_manager',$r->id)}}" method="POST"> 
-                                                                                        @csrf
-                                                                                        <input type="hidden" name="status" value=2 class="form-control" hidden> 
-                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
-                                                                                    </form>
-                                                                                </div>
-                                                                                <div class="col-sm-3" style="margin-left:8px">
-                                                                                    <form action="{{ route('resignreject',$r->id)}}" method="POST"> 
-                                                                                        @csrf
-                                                                                        @method('POST')
-                                                                                        <input type="hidden" name="status" value=5 class="form-control" hidden> 
-                                                                                        <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
-                                                                                    </form>
-                                                                                </div>
-                                                                            @endif   
-                                                                                <div>
-                                                                                   <form action="" method="POST">
-                                                                                        <a class="btn btn-info btn-sm"
-                                                                                            data-toggle="modal"
-                                                                                            data-target="#Showresign{{ $r->id }}">
-                                                                                             <i class="fa fa-eye"></i>
-                                                                                        </a>
-                                                                                    </form>
-                                                                                </div>
-                                                                            
-                
-                                                                            
-                                                                   
-                                                                </tr>
-                                                                {{-- modal show cuti --}}
-                                                                @include('karyawan.resign.showresign')
-                                                            {{-- @endif --}}
-                                                        @endforeach  
-                                                        </tbody>
+                                                              </tr>
+                                                              @include('karyawan.resign.showresign')
+                                                            @endforeach
+                                                          </tbody>
                                                     </table>
                                                 </div>
                                             </div>

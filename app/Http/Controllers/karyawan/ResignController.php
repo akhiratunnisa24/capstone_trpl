@@ -44,13 +44,9 @@ class ResignController extends Controller
             ->join('departemen','karyawan.divisi','=','departemen.id')
             ->where('karyawan.id', Auth::user()->id_pegawai)
             ->select('departemen.id as id_dep','departemen.nama_departemen as departemen')
-            ->first();
-        
+            ->first();       
      
-        // $tes = Auth::user()->karyawan->departemen->nama_departemen;      
-        // $namdiv = $tes->departemen->nama_departemen;
-
-        return view('karyawan.resign.index', compact('karyawan','tes','resign','cek','row'));
+            return view('karyawan.resign.index', compact('karyawan','tes','resign','cek','row'));
     }
 
     /**
@@ -75,15 +71,7 @@ class ResignController extends Controller
             ->where('karyawan.id', Auth::user()->id_pegawai)
             ->select('departemen.id as id_dep')
             ->first();
-        //  $validate = $request->validate([
-        //         'id_karyawan'  => 'required',
-        //         'departemen'  => 'required',
-        //         'tgl_masuk'  => 'required',
-        //         'tgl_resign'    => 'required',
-        //         'tipe_resign'  => 'required',
-        //         'alasan'    => 'required',
-        //     ]);
-        //     dd($validate);
+       
             $resign = New Resign;
             $resign->id_karyawan = $karyawan;
             $resign->departemen = $tes->id_dep;
@@ -111,13 +99,6 @@ class ResignController extends Controller
         {
             Resign::destroy($id);
             return redirect()->back();
-            // $resign3 = Resign::find($id);
-
-            // if ($resign3->status == 1) {
-            //     $resign3->delete();
-            //     return redirect()->back()->with('success', 'Resign has been deleted successfully!');
-            // } else {
-            //     return redirect()->back()->with('error', 'Only pending resign can be deleted!');
-            // }
+            
         }
 }

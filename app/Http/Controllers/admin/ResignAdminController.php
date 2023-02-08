@@ -37,15 +37,16 @@ class ResignAdminController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $karyawan1 = Karyawan::where('status_kerja','Aktif')->get();
+        $karyawan1 = Karyawan::where('status_kerja','Aktif')
+                      ->whereNotIn('id', function($query){
+                          $query->select('id_karyawan')->from('resign');
+                      })->get();
         $idkaryawan = $request->id_karyawan;
         // dd($karyawan);
         $resign = Resign::orderBy('created_at', 'desc')->get();
      
         $tes = Auth::user()->karyawan->departemen->nama_departemen;
-        
-        
-        // $namdiv = $tes->departemen->nama_departemen;
+
 
         return view('admin.resign.index', compact('karyawan','karyawan1','tes','resign','row'));
     }
@@ -83,14 +84,6 @@ class ResignAdminController extends Controller
             $resign->status      = $status->id;
 
             $resign->save();
-
-            // $resign = Resign::where('id',$id)->first();        
-    // $sk = Karyawan::where('id',$resign->id_karyawan);
-    // $resign1 = Resign::where('id',$id)->first();
-    // if ($resign1->tgl_resign <= Carbon::now()) {
-    //     $sk->status_kerja = 'Non-Aktif';
-    // }
-
             return redirect()->back();
 
     }
@@ -99,8 +92,6 @@ class ResignAdminController extends Controller
     {
         
         $resign = Resign::findOrFail($id);
-        // $karyawan = Auth::user()->id_pegawai;
-
         return view('admin.resign.index',compact('resign','karyawan'));
     }
 
@@ -112,17 +103,12 @@ class ResignAdminController extends Controller
             'status' => $status,
         ]);
  
-
-        
         $sk = Karyawan::where('id',$resign->id_karyawan);
         $resign1 = Resign::where('id',$id)->first();
     // dd($resign1);
         if ($resign1->tgl_resign <= Carbon::now()) {
             $sk->status_kerja = 'Non-Aktif';
         }
-    // $sk->update($request->all());
-
-
         return redirect()->route('resignkaryawan');
     }
 
@@ -146,35 +132,18 @@ class ResignAdminController extends Controller
         return redirect()->route('resignkaryawan')->withInput();
     }
 
-        public function getUserData($id)
+    public function getUserData($id)
     {
         $user = Karyawan::with('Departemen')->find($id);
-
         return response()->json($user);
     }
 
-// {
-//     try {
-//         $getUserData = Karyawan::all()
-//             ->where('id', '=', $request->id_pegawai)->first();
-
-//         if (!getUserData) {
-//             throw new \Exception('Data not found');
-//         }
-//         return response()->json($getUserData, 200);
-//     } catch (\Exception $e) {
-//         return response()->json([
-//             'message' => $e->getMessage()
-//         ], 500);
-//     }
-// }
     public function destroy($id)
-        {
-            $resigndelete = Resign::find($id);
-            $resigndelete->delete();
+    {
+        $resigndelete = Resign::find($id);
+        $resigndelete->delete();
 
-            return redirect()->back();
-        }
-
+        return redirect()->back();
+    }
 
 }
