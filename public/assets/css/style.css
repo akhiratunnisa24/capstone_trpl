@@ -3542,3 +3542,8 @@ input[type=number] {
       .alert-button:hover {
         background-color: #3e8e41;
       }
+
+      .btn-group {
+        display: flex;
+        justify-content: space-between;
+      }
