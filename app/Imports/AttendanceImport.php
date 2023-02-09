@@ -31,9 +31,9 @@ class AttendanceImport implements ToModel,WithHeadingRow
 
     public function model(array $row)
     {
-        if(isset($row['id']) && isset($row['tanggal']))
+        if(isset($row['emp_no']) && isset($row['tanggal']))
         {
-            if(!Absensi::where('id_karyawan',$row['id'])->where('tanggal',Carbon::parse($row['tanggal'])->format("Y-m-d"))->exists())
+            if(!Absensi::where('id_karyawan',$row['emp_no'])->where('tanggal',Carbon::parse($row['tanggal'])->format("Y-m-d"))->exists())
             {
                 $departement_map = [
                     'KONVENSIONAL' => 1,
@@ -44,7 +44,7 @@ class AttendanceImport implements ToModel,WithHeadingRow
                     'BOARD OF DIRECTORS'=>5,
                 ];
                 $data = [
-                    'id_karyawan'   => $row['id'],
+                    'id_karyawan'   => $row['emp_no'],
                     'nik'           => $row['nik'] ?? null,
                     'tanggal'       => Carbon::parse($row['tanggal'])->format("Y-m-d"),
                     'shift'         => $row['jam_kerja'] ?? null,
