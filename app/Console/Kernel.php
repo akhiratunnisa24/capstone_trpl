@@ -10,6 +10,7 @@ use App\Models\Karyawan;
 use App\Models\Absensi;
 use App\Models\Tidakmasuk;
 use App\Models\Resign;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,7 +25,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-    
+        
     ];
     
     /**
@@ -35,7 +36,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(UpdateStatusKerja::class)->daily();
+        
             // $karyawanSudahAbsen = DB::table('absensi')->whereDay('created_at', '=', Carbon::now())->pluck('id_karyawan');
             // $karyawan = DB::table('karyawan')->whereNotIn('id', $karyawanSudahAbsen)
             // ->get();
@@ -66,8 +67,23 @@ class Kernel extends ConsoleKernel
                         $karyawan->update(['status_kerja' => 'Non-Aktif']);
                     }
                 }
-        }    
-        })->dailyAt('17:33');
+
+                
+        }
+        $inactiveUsers = User::whereHas('karyawan', function ($query) {
+            $query->where('status_kerja', 'Non-Aktif');
+        })->get();
+        
+            foreach ($inactiveUsers as $user) {
+            Log::info("Deleting user with ID: " . $user->id);
+            if ($user->delete()) {
+            Log::info("User with ID: " . $user->id . " has been deleted");
+            } else {
+            Log::error("Failed to delete user with ID: " . $user->id);
+}
+}
+                    
+        })->dailyAt('23:59');
     
     
     }
