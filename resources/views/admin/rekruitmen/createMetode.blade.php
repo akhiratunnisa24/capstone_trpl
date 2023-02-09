@@ -55,9 +55,16 @@
                                             <td>{{ $k->nama_tahapan }}</td>
                                             <td>
                                                 <div class="d-grid gap-4 " role="group" aria-label="Basic example">
+                                                
+                                                @if ($k->id == '6')
+
+                                                {{-- @elseif($k->id == '1') --}}
+
+                                                @else
                                                     <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal" data-target="#editmetode{{ $k->id }}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
+                                                @endif
 
                                                     {{-- <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal"
                                                     data-alokasi="{{$data->id}}" data-target="#editalokasi">

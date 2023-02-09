@@ -19,6 +19,7 @@ use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\AlokasicutiController;
 use App\Http\Controllers\admin\FormPelamarController;
 use App\Http\Controllers\admin\ResignAdminController;
+use App\Http\Controllers\admin\PdfController;
 
 
 

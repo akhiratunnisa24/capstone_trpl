@@ -20,6 +20,8 @@
         "chart.js": "^4.0.1",
         "ionicons": "^6.0.4",
         "moment": "^2.29.4",
-        "sweetalert2": "^11.4.8"
+        "pdfjs-dist": "^3.3.122",
+        "sweetalert2": "^11.4.8",
+        "viewerjs": "^1.11.2"
     }
 }

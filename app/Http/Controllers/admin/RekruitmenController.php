@@ -15,6 +15,8 @@ use App\Models\MetodeRekruitmen;
 use App\Models\NamaTahap;
 use App\Models\StatusRekruitmen;
 use Illuminate\Support\Facades\Mail;
+use PDF;
+
 
 class RekruitmenController extends Controller
 {
@@ -44,6 +46,7 @@ class RekruitmenController extends Controller
 
         return view('admin.rekruitmen.index', compact('row', 'posisi', 'metode'));
     }
+
 
     /**
      * Show the form for creating a new resource.

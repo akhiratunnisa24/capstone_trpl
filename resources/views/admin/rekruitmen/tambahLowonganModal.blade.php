@@ -23,7 +23,7 @@
 
                     <div class="form-group col-xs-12">
                         <label for="roles">Pilih Tahapan</label>
-                        @foreach ($metode as $m)
+                        @foreach ($metode as $m)    
                             <div class="checkbox checkbox-success" >
                                 {{-- <input type="checkbox" name="checkbox[]" value="1"> --}}
                                 <input type="checkbox" id="checkbox3" class="form-check-input" name="tahapan[]"

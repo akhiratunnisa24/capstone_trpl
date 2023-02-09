@@ -99,6 +99,7 @@
                         <ul class="list-unstyled">
                             <li><a href="{{ route('karyawan.index') }}"><i class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title"> Data Karyawan</span></a>
                             <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Data Departemen</a></li>              
+                            <li><a href="/metode_rekrutmen"><i class="fa fa-sitemap"></i><span></span>Data Rekruitmen</a></li>              
                             <li><a href="#"><i class="mdi mdi-clipboard-check"></i><span></span>Data Bla bla</a></li>                          
                         </ul>
                 </li>

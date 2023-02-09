@@ -90,7 +90,7 @@
                     <div class="col-sm-9">
                         <label>: {{$k->cv}}</label>
                         {{-- <embed src="{{ asset('pdf/' . $k->cv)}}" type="application/pdf" width="100%" height="600px"> --}}
-                            <a href="{{ asset('pdf/' . $k->cv)}}" class="btn btn-sm btn-primary">Download</a>
+                            <a href="{{ asset('pdf/' . $k->cv)}}" class="btn btn-sm btn-primary" target='_blank'>Lihat CV</a>
                             {{-- <img src="{{ asset('pdf/' . $k->cv)}}" alt="" style="width:280px;"> --}}
                     </div>
                 </div>

@@ -9,6 +9,12 @@ import { createApp } from 'vue';
 import moment from 'moment';
 window.moment = moment;
 
+import Viewer from 'viewerjs';
+window.Viewer = Viewer;
+
+import PDFJS from 'pdfjs-dist';
+window.PDFJS = PDFJS;
+
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
