@@ -77,30 +77,34 @@ class AbsensiImport implements ToModel,WithHeadingRow
                     {
                         // dd($tgl);
                         $izin = Izin::where('id_karyawan','=',$row['emp_no'])
-                            ->whereBetween('tgl_mulai', [$tgl,$tgl])->whereBetween('tgl_selesai',[$tgl,$tgl])
+                            ->whereBetween('tgl_mulai', [$tgl,$tgl])->orWhereBetween('tgl_selesai',[$tgl,$tgl])
                             ->where('status','Disetujui')
                             ->select('izin.id','izin.id_karyawan','izin.id_jenisizin','izin.tgl_mulai','izin.tgl_selesai','izin.status')
                             ->first();
                         // $nama = Karyawan::where('id',$row['emp_no'])->select('nama')->first();
-                        dd($tgl,$izin,$nama->nama);
+                        // dd($tgl,$izin,$nama->nama);
 
-                        if($izin && $izin->id_jenisizin == 3)
+                        if($izin)
                         {
-                            dd($row, $izin);
-                            $reason = Jenisizin::where('id',$izin->id_jenisizin)->select('jenis_izin')->first();
-
-                            for($date = Carbon::parse($izin->tgl_mulai);$date->lte(Carbon::parse($izin->tgl_selesai)); $date->addDay())
+                            // dd($tgl,$izin->id_jenisizin,$nama->nama);
+                            if($izin->id_jenisizin == 3)
                             {
-                                $cek = Tidakmasuk::where('id_pegawai', $izin->id_karyawan)->where('tanggal', $date->format('Y-m-d'))->first();
-                                if(!$cek)
+                                // dd($izin);
+                                $reason = Jenisizin::where('id',$izin->id_jenisizin)->select('jenis_izin')->first();
+
+                                for($date = Carbon::parse($izin->tgl_mulai);$date->lte(Carbon::parse($izin->tgl_selesai)); $date->addDay())
                                 {
-                                    $tidakmasuk = new Tidakmasuk;
-                                    $tidakmasuk->id_pegawai = $izin->id_karyawan;
-                                    $tidakmasuk->nama       = $nama->nama;
-                                    $tidakmasuk->divisi     = $departement_map[$row['departemen']];
-                                    $tidakmasuk->status     = $reason->jenis_izin;
-                                    $tidakmasuk->tanggal    = $date->format('Y-m-d');
-                                    $tidakmasuk->save();
+                                    $cek = Tidakmasuk::where('id_pegawai', $izin->id_karyawan)->where('tanggal', $date->format('Y-m-d'))->first();
+                                    if(!$cek)
+                                    {
+                                        $tidakmasuk = new Tidakmasuk;
+                                        $tidakmasuk->id_pegawai = $izin->id_karyawan;
+                                        $tidakmasuk->nama       = $nama->nama;
+                                        $tidakmasuk->divisi     = $departement_map[$row['departemen']];
+                                        $tidakmasuk->status     = $reason->jenis_izin;
+                                        $tidakmasuk->tanggal    = $date->format('Y-m-d');
+                                        $tidakmasuk->save();
+                                    }
                                 }
                             }
                         }
