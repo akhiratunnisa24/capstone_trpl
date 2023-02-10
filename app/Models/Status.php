@@ -14,4 +14,9 @@ class Status extends Model
     {
         return $this->hasMany(Cuti::class);
     }
+
+    public function resigns()
+    {
+        return $this->hasMany(Resign::class);
+    }
 }

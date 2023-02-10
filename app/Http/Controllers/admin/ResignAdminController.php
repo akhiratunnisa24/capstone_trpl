@@ -36,11 +36,14 @@ class ResignAdminController extends Controller
     public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
+
         $karyawan1 = Karyawan::where('status_kerja','Aktif')
                       ->whereNotIn('id', function($query){
                           $query->select('id_karyawan')->from('resign');
                       })->get();
+                      
         $idkaryawan = $request->id_karyawan;
         // dd($karyawan);
         $resign = Resign::orderBy('created_at', 'desc')->get();
