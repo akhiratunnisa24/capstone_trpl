@@ -221,7 +221,7 @@ class HomeController extends Controller
 
         $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"), DB::raw("MONTH(tgl_mulai) as month_number"))
             ->whereYear('tgl_mulai', '=', Carbon::now()->year)
-            ->where('status','=','Disetujui')
+            ->where('status','=',7)
             ->groupBy(DB::raw('MONTHNAME(tgl_mulai)'),DB::raw("MONTH(tgl_mulai)"))
             ->orderBy(DB::raw("MONTH(tgl_mulai)"))
             ->pluck('jumlah', 'month_name');
@@ -279,7 +279,7 @@ class HomeController extends Controller
             ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
             ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
             ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
-            ->where('cuti.status','=','Disetujui')
+            ->where('cuti.status','=',7)
             ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
             ->get();
 

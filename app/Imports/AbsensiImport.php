@@ -11,7 +11,10 @@ use App\Models\Jeniscuti;
 use App\Models\Jenisizin;
 use App\Models\Departemen;
 use App\Models\Tidakmasuk;
+use App\Models\Alokasicuti;
 use Illuminate\Support\Facades\Log;
+use App\Mail\TidakmasukNotification;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -48,8 +51,8 @@ class AbsensiImport implements ToModel,WithHeadingRow
                     
                     //pengecekan ke data cuti apakah ada atau tidak
                     $cuti = Cuti::where('id_karyawan', $row['emp_no'])
-                        ->whereBetween('tgl_mulai', [$tgl,$tgl])->orWhereBetween('tgl_selesai',[$tgl,$tgl])
-                        ->where('status', 'Disetujui')
+                        ->whereBetween('tgl_mulai', [$tgl,$tgl])->OrwhereBetween('tgl_selesai',[$tgl,$tgl])
+                        ->where('status', 7)
                         ->select('cuti.id as id_cuti','cuti.id_karyawan','cuti.id_jeniscuti','cuti.tgl_mulai','cuti.tgl_selesai','cuti.status')
                         ->first();
 
@@ -78,7 +81,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
                         // dd($tgl);
                         $izin = Izin::where('id_karyawan','=',$row['emp_no'])
                             ->whereBetween('tgl_mulai', [$tgl,$tgl])->orWhereBetween('tgl_selesai',[$tgl,$tgl])
-                            ->where('status','Disetujui')
+                            ->where('status',7)
                             ->select('izin.id','izin.id_karyawan','izin.id_jenisizin','izin.tgl_mulai','izin.tgl_selesai','izin.status')
                             ->first();
                         // $nama = Karyawan::where('id',$row['emp_no'])->select('nama')->first();
@@ -86,10 +89,8 @@ class AbsensiImport implements ToModel,WithHeadingRow
 
                         if($izin)
                         {
-                            // dd($tgl,$izin->id_jenisizin,$nama->nama);
                             if($izin->id_jenisizin == 3)
                             {
-                                // dd($izin);
                                 $reason = Jenisizin::where('id',$izin->id_jenisizin)->select('jenis_izin')->first();
 
                                 for($date = Carbon::parse($izin->tgl_mulai);$date->lte(Carbon::parse($izin->tgl_selesai)); $date->addDay())
@@ -108,21 +109,50 @@ class AbsensiImport implements ToModel,WithHeadingRow
                                 }
                             }
                         }
-                        // else
-                        // {
-                        //     $cek = Tidakmasuk::where('id_pegawai', $row['emp_no'])->where('tanggal',\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d"))->first();
-                        //     dd($row);
-                        //     if(!$cek)
-                        //     {
-                        //         $tidakmasuk = new Tidakmasuk;
-                        //         $tidakmasuk->id_pegawai = $row['emp_no'];
-                        //         $tidakmasuk->nama       = $nama->nama;
-                        //         $tidakmasuk->divisi     = $departement_map[$row['departemen']];
-                        //         $tidakmasuk->status     = 'tanpa keterangan';
-                        //         $tidakmasuk->tanggal    = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d");
-                        //         $tidakmasuk->save();
-                        //     }
-                        // } 
+                        else
+                        {
+                            $cek = Tidakmasuk::where('id_pegawai', $row['emp_no'])->where('tanggal',\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d"))->first();
+                            if(!$cek)
+                            {
+                                $nama = Karyawan::where('id',$row['emp_no'])->select('nama')->first();
+
+                                $tidakmasuk = new Tidakmasuk;
+                                $tidakmasuk->id_pegawai = $row['emp_no'];
+                                $tidakmasuk->nama       = $nama->nama;
+                                $tidakmasuk->divisi     = $departement_map[$row['departemen']];
+                                $tidakmasuk->status     = 'tanpa keterangan';
+                                $tidakmasuk->tanggal    = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d");
+                                $tidakmasuk->save();
+
+                                $alokasicuti = Alokasicuti::where('id_jeniscuti','=',1)
+                                    ->where('id_karyawan',  $tidakmasuk->id_pegawai)
+                                    ->first();
+                                $durasi_baru = $alokasicuti->durasi - 1;
+
+                                //update durasi di alokasicutikaryawan
+                                Alokasicuti::where('id_jeniscuti',$alokasicuti->id_jeniscuti)
+                                    ->where('id_karyawan',  $tidakmasuk->id_pegawai)
+                                    ->update(
+                                        ['durasi' => $durasi_baru]
+                                );
+
+                                $epegawai = Karyawan::select('email as email','nama as nama')->where('id','=',$tidakmasuk->id_pegawai)->first();
+                                $tujuan = $epegawai->email;
+                                $data = [
+                                    'subject'     =>'Notifikasi Pengurangan Jatah Cuti Tahunan',
+                                    'id'          =>$alokasicuti->id_jeniscuti,
+                                    'id_jeniscuti'=>$alokasicuti->jeniscutis->jenis_cuti,
+                                    'keterangan'   =>$tidakmasuk->status,
+                                    'tanggal'     =>Carbon::parse($tidakmasuk->tanggal)->format("d M Y"),
+                                    'jml_cuti'    =>1,
+                                    'nama'        =>$epegawai->nama,
+                                    'jatahcuti'   =>$durasi_baru,
+                                ];
+                                Mail::to($tujuan)->send(new TidakmasukNotification($data));
+                                // return redirect()->back();
+                                // dd($nama,$tidakmasuk,$alokasicuti,$durasi_baru,$epegawai,$tujuan,$data);
+                            }
+                        } 
                     }
                 }else
                 {

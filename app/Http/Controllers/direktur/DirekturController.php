@@ -4,6 +4,7 @@ namespace App\Http\Controllers\direktur;
 
 use Carbon\Carbon;
 use App\Models\Cuti;
+use App\Models\Status;
 use App\Models\Karyawan;
 use App\Models\Datareject;
 use App\Models\Alokasicuti;
@@ -54,8 +55,9 @@ class DirekturController extends Controller
         $jml_cuti = $cutis->jml_cuti;
 
         //Update status cuti menjadi 'Disetujui'
+        $status= Status::find(7);
         Cuti::where('id', $id)->update(
-            ['status' => 'Disetujui']
+            ['status' => $status->id]
         );
         $cuti = Cuti::where('id', $id)->first();
         //Ambil data alokasi cuti yang sesuai dengan id karyawan dan id jenis cuti
@@ -81,7 +83,7 @@ class DirekturController extends Controller
             'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
             'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
             'jml_cuti'    =>$cuti->jml_cuti,
-            'status'      =>$cuti->status,
+            'status'      =>$status->name_status,
             'nama'        =>$epegawai->nama,
         ];
         Mail::to($tujuan)->send(new CutiApproveNotification($data));
@@ -92,9 +94,9 @@ class DirekturController extends Controller
     public function leaverejected(Request $request, $id)
     {
         $cuti = Cuti::where('id',$id)->first();
-        $status = 'Ditolak';
+        $status = Status::find(5);
         Cuti::where('id',$id)->update([
-            'status' => $status,
+            'status' => $status->id,
         ]);
         $cuti = Cuti::where('id',$id)->first();
 
@@ -108,8 +110,9 @@ class DirekturController extends Controller
         //ambil nama jeniscuti
         $ct = DB::table('cuti')
             ->join('jeniscuti','cuti.id_jeniscuti','=','jeniscuti.id')
+            ->join('statuses','cuti.status','=','statuses.id')
             ->where('cuti.id',$id)
-            ->select('cuti.*','jeniscuti.jenis_cuti as jenis_cuti')
+            ->select('cuti.*','jeniscuti.jenis_cuti as jenis_cuti','statuses.name_status')
             ->first();
 
         //ambil nama dan email karyawan tujuan
@@ -130,7 +133,7 @@ class DirekturController extends Controller
             'tgl_mulai'   =>Carbon::parse($ct->tgl_mulai)->format("d M Y"),
             'tgl_selesai' =>Carbon::parse($ct->tgl_selesai)->format("d M Y"),
             'jml_cuti'    =>$ct->jml_cuti,
-            'status'      =>$ct->status,
+            'status'      =>$ct->name_status,
         ];
         Mail::to($tujuan)->send(new CutiApproveNotification($data));
         return redirect()->back()->withInput();
