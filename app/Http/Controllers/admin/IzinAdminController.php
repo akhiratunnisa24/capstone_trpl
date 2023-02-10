@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Models\Izin;
+use App\Models\Status;
 use App\Models\Datareject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,14 +36,15 @@ class IzinAdminController extends Controller
     public function approved(Request $request, $id)
     {
         $role = Auth::user()->role;
-        $status = 'Disetujui';
+        $status = Status::find(7);
         Izin::where('id',$id)->update([
-            'status' => $status,
+            'status' => $status->id,
         ]);
         $izin = DB::table('izin')
             ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+            ->join('statuses','izin.status','=','statuses.id')
             ->where('izin.id',$id)
-            ->select('izin.*','jenisizin.jenis_izin as jenis_izin')
+            ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
             ->first();
 
         $karyawan = DB::table('izin')
@@ -59,7 +61,7 @@ class IzinAdminController extends Controller
             'nama'     =>$karyawan->nama,
             'jenisizin'=>$izin->jenis_izin,
             'tgl_mulai'=>$izin->tgl_mulai,
-            'status'   =>$izin->status,
+            'status'   =>$izin->name_status,
         ];
         Mail::to($tujuan)->send(new IzinApproveNotification($data));
         return redirect()->route('permintaancuti.index',['type'=>2]);
@@ -67,9 +69,9 @@ class IzinAdminController extends Controller
 
     public function reject(Request $request, $id)
     {
-        $status = 'Ditolak';
+        $status = Status::find(5);
         Izin::where('id',$id)->update([
-            'status' => $status,
+            'status' => $status->id,
         ]);
         $izin = Izin::where('id',$id)->first();
         $datareject          = new Datareject;
@@ -82,8 +84,9 @@ class IzinAdminController extends Controller
         //ambil nama jeniscuti
         $izin = DB::table('izin')
             ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+            ->join('statuses','izin.status','=','statuses.id')
             ->where('izin.id',$id)
-            ->select('izin.*','jenisizin.jenis_izin as jenis_izin')
+            ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
             ->first();
         $karyawan = DB::table('izin')
             ->join('karyawan','izin.id_karyawan','=','karyawan.id')
@@ -99,7 +102,7 @@ class IzinAdminController extends Controller
              'nama'     =>$karyawan->nama,
              'jenisizin'=>$izin->jenis_izin,
              'tgl_mulai'=>$izin->tgl_mulai,
-             'status'   =>$izin->status,
+             'status'   =>$izin->name_status,
          ];
         Mail::to($tujuan)->send(new IzinApproveNotification($data));
         return redirect()->route('permintaancuti.index',['type'=>2])->withInput();

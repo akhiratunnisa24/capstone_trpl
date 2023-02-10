@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MailController;
 
+use App\Http\Controllers\admin\PdfController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\CutiadminController;
@@ -16,18 +17,17 @@ use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\DepartemenController;
 use App\Http\Controllers\admin\RekruitmenController;
+use App\Http\Controllers\admin\TidakMasukController;
 use App\Http\Controllers\admin\AlokasicutiController;
 use App\Http\Controllers\admin\FormPelamarController;
+
+
+
 use App\Http\Controllers\admin\ResignAdminController;
-use App\Http\Controllers\admin\PdfController;
-
-
-
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
-use App\Http\Controllers\supervisor\SupervisorController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
 use App\Http\Controllers\karyawan\AbsensiKaryawanController;
 use App\Http\Controllers\admin\NotifMailRekruitmenController;
@@ -216,6 +216,11 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::post('/departemen', [DepartemenController::class, 'store'])->name('departemen.store');
     Route::put('/departemen/update{id}', [AlokasicutiController::class,'update'])->name('departemen.update');
     Route::get('/departemen/delete{id}', [DepartemenController::class, 'destroy']) ->name('departemen.delete');
+
+//Absensi Tidak Masuk
+    Route::get('/absensi-tidak-masuk', [TidakMasukController::class,'index'])->name('tidakmasuk.index');
+    Route::get('/absensi-tidak-masuk-pdf',[TidakMasukController::class,'tidakMasukPdf'])->name('tidakmasuk.pdf');
+    Route::get('/absensi-tidak-masuk-excel',[TidakMasukController::class,'tidakMasukExcel'])->name('tidakmasuk.excel');
 
 //================================================================================
 //ROLE MANAGER atau SUPERVISOR

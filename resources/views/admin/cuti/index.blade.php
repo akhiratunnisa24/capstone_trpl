@@ -100,34 +100,12 @@
                                                                 <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
                                                                 <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                                 <td>{{$data->jml_cuti}} Hari</td>
-                                                                {{-- @if($data->status)
-                                                                    <span class="badge badge-{{ $data->status->name_status == 'Pending' ? 'warning' : ($data->status->name_status == 'Disetujui Manager' ? 'info' : ($data->status->name_status == 'Disetujui' ? 'success' : 'danger')) }}">{{ $data->status->name_status }}</span>
-                                                                @endif --}}
-                                                                @if($data->status == 'Pending')
-                                                                    <td>
-                                                                        <span class="badge badge-warning">Pending</span>
-                                                                    </td>
-                                                                @elseif($data->status == 'Disetujui Manager')
-                                                                    <td>
-                                                                        <span class="badge badge-info">Disetujui Manager</span>
-                                                                    </td>
-                                                                @elseif($data->status == 'Disetujui')
-                                                                    <td>
-                                                                        <span class="badge badge-success">Disetujui</span>
-                                                                    </td>
-                                                                @elseif($data->status == 'Disetujui Supervisor')
-                                                                    <td>
-                                                                        <span class="badge badge-secondary">Disetujui Supervisor</span>
-                                                                    </td>
-                                                                @elseif($data->status == 3)
-                                                                    <td>
-                                                                        <span class="badge badge-success">Disetujui HRD</span>
-                                                                    </td>
-                                                                @else
-                                                                    <td>
-                                                                        <span class="badge badge-danger">Ditolak</span>
-                                                                    </td>
-                                                                @endif
+                                                                <td>
+                                                                    <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
+                                                                        {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}
+                                                                    </span>
+                                                                </td>
+
                                                                 <td id="b" class="text-center" > 
                                                                     <div class="row">
                                                                         {{-- @if($data->status == 'Pending' || $data->status == 'Disetujui Manager')
@@ -240,28 +218,16 @@
                                                                     @endif --}}
 
                                                                     {{-- status --}}
-                                                                    @if($data->status == 'Pending')
-                                                                        <td>
-                                                                            <span class="badge badge-warning">Pending</span>
-                                                                        </td>
-                                                                    @elseif($data->status == 'Disetujui Manager')
-                                                                        <td>
-                                                                            <span class="badge badge-info">Disetujui Manager</span>
-                                                                        </td>
-                                                                    @elseif($data->status == 'Disetujui')
-                                                                        <td>
-                                                                            <span class="badge badge-success">Disetujui</span>
-                                                                        </td>
-                                                                    @else
-                                                                        <td>
-                                                                            <span class="badge badge-danger">Ditolak</span>
-                                                                        </td>
-                                                                    @endif
-
+                                                                    <td>
+                                                                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 5 ? 'danger' : ($data->status == 7 ? 'success' : '')) }}">
+                                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 5 ? 'Ditolak' : ($data->status == 7 ? 'Disetujui' : '')) }}
+                                                                        </span>
+                                                                    </td>
+                                                                  
                                                                     <td> 
                                                                         <div class="row">
                                                                             {{-- @if($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
-                                                                            @if ($data->karyawan->divisi == $depuser->divisi && $data->status == 'Pending' && $data->id_karyawan != Auth::user()->id_pegawai)    
+                                                                            @if ($data->karyawan->divisi == $depuser->divisi && $data->status == 1 && $data->id_karyawan != Auth::user()->id_pegawai)    
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izinapproved',$data->id)}}" method="POST"> 
                                                                                         @csrf

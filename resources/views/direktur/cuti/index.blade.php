@@ -48,23 +48,11 @@
                                                     <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
                                                     <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                     <td>{{$data->jml_cuti}} Hari</td>
-                                                    @if($data->status == 'Pending')
-                                                        <td>
-                                                            <span class="badge badge-warning">Pending</span>
-                                                        </td>
-                                                    @elseif($data->status == 'Disetujui Manager')
-                                                        <td>
-                                                            <span class="badge badge-info">Disetujui Manager</span>
-                                                        </td>
-                                                    @elseif($data->status == 'Disetujui')
-                                                        <td>
-                                                            <span class="badge badge-success">Disetujui</span>
-                                                        </td>
-                                                    @else
-                                                        <td>
-                                                            <span class="badge badge-danger">Ditolak</span>
-                                                        </td>
-                                                    @endif
+                                                    <td>
+                                                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
+                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}
+                                                        </span>
+                                                    </td>
                                                     <td id="b" class="text-center" > 
                                                         <div class="row">
                                                             @if(($data->jabatan == 'Supervisor' && $data->status == 'Disetujui Manager'))

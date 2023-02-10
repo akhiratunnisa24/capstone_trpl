@@ -59,7 +59,7 @@ class AbsensiController extends Controller
     
             if(isset($idkaryawan) && isset($bulan) && isset($tahun))
             {
-                $absensi = Absensi::with('karyawans','departemens')->where('id_karyawan', $idkaryawan)
+                $absensi = Absensi::with('karyawans','departemen')->where('id_karyawan', $idkaryawan)
                 ->whereMonth('tanggal', $bulan)
                 ->whereYear('tanggal',$tahun)
                 ->get();

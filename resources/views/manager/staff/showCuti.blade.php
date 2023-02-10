@@ -53,22 +53,12 @@
                 <div class="form-group row">
                     <label for="status" class="col-sm-3 col-form-label">Status Cuti</label>
                     <div class="col-sm-9">
-                        @if($data->status == 'Pending')
-                            <span class="badge badge-warning">Pending</span>
-                        @elseif($data->status == 'Disetujui Manager')
-                            <span class="badge badge-info">Disetujui Manager</span>
-                        @elseif($data->status == 'Disetujui Supervisor')
-                            <span class="badge badge-secondary">Disetujui Supervisor</span>
-                        @elseif($data->status == 3)
-                            <span class="badge badge-success">Disetujui</span>
-                        @elseif($data->status == 'Disetujui')
-                            <span class="badge badge-success">Disetujui</span>
-                        @else
-                            <span class="badge badge-danger">Ditolak</span>
-                        @endif
+                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
+                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}
+                        </span>
                     </div>
                 </div>
-                @if(isset($alasancuti) && $data->id == $alasancuti->id_cuti && $data->status == 'Ditolak')
+                @if(isset($alasancuti) && $data->id == $alasancuti->id_cuti && $data->status == 5)
                     <div class="form-group row">
                         <label for="alasan" class="col-sm-3 col-form-label">Alasan</label>
                         <div class="col-sm-9">

@@ -45,21 +45,24 @@ class CutiadminController extends Controller
                 ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
                 ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
                 ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
-                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','settingalokasi.mode_alokasi')
+                ->leftjoin('statuses','cuti.status','=','statuses.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','settingalokasi.mode_alokasi','statuses.name_status')
                 ->distinct()
                 ->orderBy('created_at','DESC')
                 ->get();
+            // dd($cuti);
             $alasancuti = DB::table('datareject')
                 ->join('cuti','datareject.id_cuti','=','cuti.id')
                 ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
                 ->first();
-            foreach($cuti as $data) {
-                $status = Status::where('id','=',$data->status)->select('name_status')->first();
-            }
-            // $status = Status::where('id','=',$cuti->status)->select('name_status')->get();
+
 
             //DATA IZIN
-            $izin = Izin::all();
+            $izin = Izin::leftjoin('statuses','izin.status','=','statuses.id')
+                ->select('izin.*','statuses.name_status')
+                ->distinct()
+                ->orderBy('created_at','DESC')
+                ->get();
             $alasan = DB::table('datareject')
                 ->join('izin','datareject.id_izin','=','izin.id')
                 ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
@@ -69,7 +72,7 @@ class CutiadminController extends Controller
             //     ->select('karyawan.divisi')
             //     ->get();
             $depuser = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            return view('admin.cuti.index', compact('cuti','izin','type','row','alasan','alasancuti','karyawan','status','depuser'));
+            return view('admin.cuti.index', compact('cuti','izin','type','row','alasan','alasancuti','karyawan','depuser'));
             
         } else 
         {
@@ -99,7 +102,7 @@ class CutiadminController extends Controller
 
     public function storeCuti(Request $request)
     {
-        $status = Status::find(3);
+        $status = Status::find(7);
 
         $cuti = New Cuti;
         $cuti->id_karyawan      = $request->id_karyawan;
