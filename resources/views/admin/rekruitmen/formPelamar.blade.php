@@ -155,7 +155,7 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label class="form-label">Upload CV</label>
-                                                        <input type="file" name="pdfPelamar" class="form-control">
+                                                        <input type="file" name="pdfPelamar" class="form-control" required>
                                                     </div>
                                                 </div>
 

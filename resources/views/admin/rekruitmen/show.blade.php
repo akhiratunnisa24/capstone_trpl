@@ -174,9 +174,7 @@
                 </div>
 
                 <div class="tab-content">
-
                     <div class="tab-pane active" id="1">
-
 
                         <table class="table table-bordered table-striped" style="width:100%">
                             <thead>
@@ -189,6 +187,7 @@
                                     <th>L / P</th>
                                     <th>Alamat</th>
                                     <th>Status</th>
+                                    <th>Tanggal Penyerahan CV</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -205,6 +204,7 @@
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
                                         <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                        <td>{{ $k->tanggal_tahapan }}</td>
                                         <td>
 
                                             {{-- @if ($k->status_lamaran == 'tahap 1') --}}
@@ -216,8 +216,19 @@
                                                     <i class="fa fa-eye btn-info btn-sm "></i>
                                                 </a>
                                             </div>
-                                         @include('admin.rekruitmen.showModal')
+                                            @include('admin.rekruitmen.showModal')
+
                                             <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#lulusModal{{ $k->id }}">
+                                                    <i class="fa fa-check btn-success btn-sm "></i>
+                                                </a>
+                                            </div>
+                                            @include('admin.rekruitmen.lulusModal')
+
+
+                                            {{-- <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="#">
                                                     @csrf
@@ -230,13 +241,117 @@
                                                         @endforeach
                                                     </select>
 
-                                                    {{-- <button type="submit" class="fa fa-check btn-success btn-sm"></button> --}}
-                                                    {{-- <input type="hidden" name="status_lamaran" value="3"
+                                                    <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                    <input type="hidden" name="status_lamaran" value="3"
                                                         class="form-control" hidden>
-                                                    <button type="submit" class="fa fa-check btn-success btn-sm"></button> --}}
+                                                    <button type="submit" class="fa fa-check btn-success btn-sm"></button>
 
                                                 </form>
+                                            </div> --}}
+
+
+                                            <div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="return confirmTolak()">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <input type="hidden" name="status_lamaran" value="Ditolak"
+                                                        class="form-control" hidden>
+                                                    <button type="submit" class="fa fa-times btn-danger btn-sm"></button>
+                                                </form>
                                             </div>
+
+                                            {{-- @endif --}}
+                                        </td>
+
+
+
+                                        <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="tab-pane" id="1">
+
+
+                        <table class="table table-bordered table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>NIK</th>
+                                    <th>Nama</th>
+                                    <th>Tanggal Lahir</th>
+                                    <th>Email</th>
+                                    <th>L / P</th>
+                                    <th>Alamat</th>
+                                    <th>Status</th>
+                                    <th>Tanggal Penyerahan CV</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                @foreach ($dataTahap1 as $k)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $k->nik }}</td>
+                                        <td>{{ $k->nama }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                        <td>{{ $k->email }}</td>
+                                        <td>{{ $k->jenis_kelamin }}</td>
+                                        <td>{{ $k->alamat }}</td>
+                                        <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                        <td>{{ $k->tanggal_tahapan }}</td>
+                                        <td>
+
+                                            {{-- @if ($k->status_lamaran == 'tahap 1') --}}
+
+                                            <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#myModal{{ $k->id }}">
+                                                    <i class="fa fa-eye btn-info btn-sm "></i>
+                                                </a>
+                                            </div>
+                                            @include('admin.rekruitmen.showModal')
+
+                                            <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#lulusModal{{ $k->id }}">
+                                                    <i class="fa fa-check btn-success btn-sm "></i>
+                                                </a>
+                                            </div>
+                                            @include('admin.rekruitmen.lulusModal')
+
+
+                                            {{-- <div class="col-md-3">
+                                                <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                    onsubmit="#">
+                                                    @csrf
+                                                    <select class="form-control selectpicker "
+                                                        onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
+                                                        <option value="">Pilih Tahap Selanjutnya</option>
+                                                        @foreach ($metode as $k)
+                                                            <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
+                                                    <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                    <input type="hidden" name="status_lamaran" value="3"
+                                                        class="form-control" hidden>
+                                                    <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+
+                                                </form>
+                                            </div> --}}
+
+
                                             <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmTolak()">
@@ -275,6 +390,7 @@
                                     <th>L / P</th>
                                     <th>Alamat</th>
                                     <th>Status</th>
+                                    <th>Tanggal Psikotest</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -291,6 +407,7 @@
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
                                         <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                        <td>{{ $k->tanggal_tahapan }}</td>
                                         <td>
 
                                             {{-- @if ($k->status_lamaran == 'tahap 2') --}}
@@ -301,8 +418,18 @@
                                                     <i class="fa fa-eye btn-info btn-sm "></i>
                                                 </a>
                                             </div>
-@include('admin.rekruitmen.showModal')
+                                            @include('admin.rekruitmen.showModal')
+
                                             <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#lulusModal{{ $k->id }}">
+                                                    <i class="fa fa-check btn-success btn-sm "></i>
+                                                </a>
+                                            </div>
+                                            @include('admin.rekruitmen.lulusModal')
+
+                                            {{-- <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmSave2()">
                                                     @csrf
@@ -315,7 +442,8 @@
                                                         @endforeach
                                                     </select>
                                                 </form>
-                                            </div>
+                                            </div> --}}
+
                                             <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmTolak2()">
@@ -330,7 +458,7 @@
                                         </td>
 
 
-                                        
+
 
                                     </tr>
                                 @endforeach
@@ -352,6 +480,7 @@
                                     <th>L / P</th>
                                     <th>Alamat</th>
                                     <th>Status</th>
+                                    <th>Tanggal Interview Ke-1</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -368,6 +497,7 @@
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
                                         <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                        <td>{{ $k->tanggal_tahapan }}</td>
                                         <td>
 
                                             {{-- @if ($k->status_lamaran == 'tahap 2') --}}
@@ -378,8 +508,20 @@
                                                     <i class="fa fa-eye btn-info btn-sm "></i>
                                                 </a>
                                             </div>
-@include('admin.rekruitmen.showModal')
-                                            <<div class="col-md-3">
+                                            @include('admin.rekruitmen.showModal')
+
+                                            <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#lulusModal{{ $k->id }}">
+                                                    <i class="fa fa-check btn-success btn-sm "></i>
+                                                </a>
+                                            </div>
+                                            @include('admin.rekruitmen.lulusModal')
+
+
+
+                                            {{-- <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmSave2()">
                                                     @csrf
@@ -392,7 +534,9 @@
                                                         @endforeach
                                                     </select>
                                                 </form>
-                                            </div>
+                                            </div> --}}
+
+
                                             <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmTolak2()">
@@ -407,7 +551,7 @@
                                         </td>
 
 
-                                        
+
 
                                     </tr>
                                 @endforeach
@@ -427,6 +571,7 @@
                                     <th>L / P</th>
                                     <th>Alamat</th>
                                     <th>Status</th>
+                                    <th>Tanggal Medical Check-Up</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -443,6 +588,7 @@
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
                                         <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                        <td>{{ $k->tanggal_tahapan }}</td>
                                         <td>
 
                                             {{-- @if ($k->status_lamaran == 'tahap 2') --}}
@@ -453,8 +599,18 @@
                                                     <i class="fa fa-eye btn-info btn-sm "></i>
                                                 </a>
                                             </div>
-@include('admin.rekruitmen.showModal')
+                                            @include('admin.rekruitmen.showModal')
+
                                             <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#lulusModal{{ $k->id }}">
+                                                    <i class="fa fa-check btn-success btn-sm "></i>
+                                                </a>
+                                            </div>
+                                            @include('admin.rekruitmen.lulusModal')
+
+                                            {{-- <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmSave2()">
                                                     @csrf
@@ -467,7 +623,8 @@
                                                         @endforeach
                                                     </select>
                                                 </form>
-                                            </div>
+                                            </div> --}}
+
                                             <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmTolak2()">
@@ -482,7 +639,7 @@
                                         </td>
 
 
-                                        
+
 
                                     </tr>
                                 @endforeach
@@ -502,6 +659,7 @@
                                     <th>L / P</th>
                                     <th>Alamat</th>
                                     <th>Status</th>
+                                    <th>Tanggal Interview ke-2</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -518,6 +676,7 @@
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
                                         <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                        <td>{{ $k->tanggal_tahapan }}</td>
                                         <td>
 
                                             {{-- @if ($k->status_lamaran == 'tahap 2') --}}
@@ -528,8 +687,18 @@
                                                     <i class="fa fa-eye btn-info btn-sm "></i>
                                                 </a>
                                             </div>
-@include('admin.rekruitmen.showModal')
+                                            @include('admin.rekruitmen.showModal')
+
                                             <div class="col-md-3">
+                                                @csrf
+                                                <a href="#" data-toggle="modal"
+                                                    data-target="#lulusModal{{ $k->id }}">
+                                                    <i class="fa fa-check btn-success btn-sm "></i>
+                                                </a>
+                                            </div>
+                                            @include('admin.rekruitmen.lulusModal')
+
+                                            {{-- <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmSave2()">
                                                     @csrf
@@ -542,7 +711,9 @@
                                                         @endforeach
                                                     </select>
                                                 </form>
-                                            </div>
+                                            </div> --}}
+
+
                                             <div class="col-md-3">
                                                 <form action="update_pelamar{{ $k->id }}" method="POST"
                                                     onsubmit="return confirmTolak2()">
@@ -557,7 +728,7 @@
                                         </td>
 
 
-                                        
+
 
                                     </tr>
                                 @endforeach
@@ -565,7 +736,7 @@
                         </table>
                     </div>
 
-                    
+
 
                     <div class="tab-pane" id="6">
 
@@ -581,6 +752,7 @@
                                     <th>L / P</th>
                                     <th>Alamat</th>
                                     <th>Status</th>
+                                    <th>Tanggal Diterima</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -597,6 +769,7 @@
                                         <td>{{ $k->jenis_kelamin }}</td>
                                         <td>{{ $k->alamat }}</td>
                                         <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                        <td>{{ $k->tanggal_tahapan }}</td>
 
                                         <td>
 
@@ -616,7 +789,7 @@
 
                                     </tr>
                                 @endforeach
-                            </tbody>    
+                            </tbody>
                         </table>
 
                     </div>

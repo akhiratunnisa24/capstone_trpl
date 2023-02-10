@@ -18,22 +18,33 @@ class RekruitmenSeeder extends Seeder
     {
         DB::table('mrekruitmen')->insert([
             'nama_tahapan' => 'Penyerahan CV',
+            'status' => 'hidden',
         ]);
         DB::table('mrekruitmen')->insert([
             'nama_tahapan' => 'Psikotest',
+            'status' => 'Aktif',
+
         ]);
         DB::table('mrekruitmen')->insert([
             'nama_tahapan' => 'Interview ke-1',
+            'status' => 'Aktif',
+
         ]);
         DB::table('mrekruitmen')->insert([
             'nama_tahapan' => 'Medical Check-Up',
+            'status' => 'Aktif',
+
         ]);
         DB::table('mrekruitmen')->insert([
             'nama_tahapan' => 'Interview ke-2',
+            'status' => 'Aktif',
+
         ]);
         // harus id 6
         DB::table('mrekruitmen')->insert([
             'nama_tahapan' => 'Diterima',
+            'status' => 'hidden',
+
         ]);
 
     

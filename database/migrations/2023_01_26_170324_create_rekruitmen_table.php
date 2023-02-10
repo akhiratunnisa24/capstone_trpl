@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('gaji')->nullable();
             $table->string('cv')->nullable();
             $table->string('status_lamaran')->nullable();
+            $table->date('status_lamaran')->nullable();
 
             $table->timestamps();
         });

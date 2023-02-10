@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lowongan;
 use App\Models\Rekruitmen;
+use Carbon\Carbon;
+
 
 
 
@@ -54,6 +56,7 @@ class FormPelamarController extends Controller
         $user->no_kk = $request->no_kkPelamar;
         $user->gaji = $request->gajiPelamar;
         $user->status_lamaran = '1';
+        $user->tanggal_tahapan = Carbon::now() ;
         $user->cv = $namaFile;
 
 

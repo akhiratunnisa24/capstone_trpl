@@ -27,10 +27,14 @@
     </style>
 </head>
 <body>
-    <strong>Yth. Bapak / Ibu {{ $data->nama }}</strong>
+    @if ($data->jenis_kelamin == 'L')
+    <strong>Yth. Bapak {{ $data->nama }}</strong>
+    @else
+    <strong>Yth. Ibu {{ $data->nama }}</strong>
+    @endif
     <br><br>
     {{-- <p>Anda memiliki notifikasi permintaan <strong>{{$data['id_jeniscuti']}}</strong> dari Saudara/i <strong>{{Auth::user()->id_pegawai}}</strong></p> --}}
-    <p>Selamat anda lolos ke tahap selanjutnya ! </p>
+    <p>Selamat anda lolos ke tahap {{ $data->mrekruitmen->nama_tahapan }} </p>
     <br>
     <label>Detail Pelamar :</label><br>
     <div class="modal-body">
@@ -76,7 +80,14 @@
 
         <div class="form-group row">
             <label for="status" class="col-sm-3 col-form-label">Status Rekruitmen</label>
-            <span class="text-white badge badge-success">Lanjut ke tahap {{ $data->mrekruitmen->nama_tahapan }}</span>
+            <label>Lanjut ke tahap {{ $data->mrekruitmen->nama_tahapan }}</label>
+        </div>
+
+         <div class="form-group row">
+            <label for="status" class="col-sm-3 col-form-label">{{ $data->mrekruitmen->nama_tahapan }} akan dilaksanakan pada </label>
+            <br>
+            <label for="status" class="col-sm-3 col-form-label">Tanggal : </label>
+            <label class="col-sm-3 col-form-label">{{ $data->tanggal_tahapan }}</label>
         </div>
 
     </div>
