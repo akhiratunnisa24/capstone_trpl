@@ -39,7 +39,8 @@ class RekruitmenController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $posisi = Lowongan::all()->sortByDesc('created_at');
-        $metode = MetodeRekruitmen::all();
+        $metode = MetodeRekruitmen::where('status', '=','Aktif')->get();
+        // dd($metode);
 
         
         
@@ -76,12 +77,20 @@ class RekruitmenController extends Controller
 
         $checkbox = $request->tahapan;
         $data = [];
+        $data[] = [
+            'id_lowongan' => $user->id,
+            'id_mrekruitmen' => 1
+        ];
         foreach ($checkbox as $value) {
             $data[] = [
                 'id_lowongan' => $user->id,
                 'id_mrekruitmen' => $value
             ];
         }
+        $data[] = [
+            'id_lowongan' => $user->id,
+            'id_mrekruitmen' => 6
+        ];
         DB::table('namatahapan')->insert($data);
 
 
@@ -196,7 +205,10 @@ class RekruitmenController extends Controller
     {
         
         Rekruitmen::where('id', $id)->update(
-            ['status_lamaran' =>$request->post('status_lamaran')]
+            ['status_lamaran' =>$request->post('status_lamaran'),
+            'tanggal_tahapan' =>$request->post('tgl_tahapan'),
+            
+            ]
         );
 
         $data = Rekruitmen::findOrFail($id);

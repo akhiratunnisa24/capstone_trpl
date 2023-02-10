@@ -59,7 +59,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
                     $nama = Karyawan::where('id',$row['emp_no'])->select('nama')->first();
                     if($cuti) 
                     {
-                        dd($cuti,$row,$nama);
+                        // dd($cuti,$row,$nama);
                         $reason = Jeniscuti::where('id',$cuti->id_jeniscuti)->select('jenis_cuti')->first();
 
                         for($date = Carbon::parse($cuti->tgl_mulai);$date->lte(Carbon::parse($cuti->tgl_selesai)); $date->addDay())
