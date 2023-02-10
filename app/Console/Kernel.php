@@ -69,21 +69,21 @@ class Kernel extends ConsoleKernel
                 }
 
                 
-        }
-        $inactiveUsers = User::whereHas('karyawan', function ($query) {
-            $query->where('status_kerja', 'Non-Aktif');
-        })->get();
-        
-            foreach ($inactiveUsers as $user) {
-            Log::info("Deleting user with ID: " . $user->id);
-            if ($user->delete()) {
-            Log::info("User with ID: " . $user->id . " has been deleted");
-            } else {
-            Log::error("Failed to delete user with ID: " . $user->id);
-}
+                }
+                $inactiveUsers = User::whereHas('karyawan', function ($query) {
+                    $query->where('status_kerja', 'Non-Aktif');
+                })->get();
+                
+                    foreach ($inactiveUsers as $user) {
+                    Log::info("Deleting user with ID: " . $user->id);
+                    if ($user->delete()) {
+                    Log::info("User with ID: " . $user->id . " has been deleted");
+                    } else {
+                    Log::error("Failed to delete user with ID: " . $user->id);
+                }
 }
                     
-        })->dailyAt('23:59');
+        })->dailyAt('15:26');
     
     
     }

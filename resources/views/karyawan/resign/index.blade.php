@@ -68,7 +68,7 @@
                                                   <!-- data for status -->
                                                   <td>
                                                     <span class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 2 ? 'info' : ($r->status == 3 ? 'success' : ($r->status == 4 ? 'warning' : 'danger'))) }}">
-                                                      {{ $r->status == 1 ? 'Pending' : ($r->status == 2 ? 'Disetujui Manager' : ($r->status == 3 ? 'Disetujui HRD' : ($r->status == 4 ? 'Pending HRD' : 'Ditolak'))) }}
+                                                      {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 2 ? $r->statuses->name_status : ($r->status == 3 ? $r->statuses->name_status : ($r->status == 4 ? $r->statuses->name_status : 'Ditolak'))) }}
                                                     </span>
                                                   </td>
                                           
