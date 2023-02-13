@@ -24,14 +24,20 @@ class StatusSeeder extends Seeder
             
         ]);
         Status::insert([
-            'name_status' => 'Disetujui',
+            'name_status' => 'Disetujui HRD',
             
+        ]);
+        Status::insert([
+            'name_status' => 'Pending HRD',
         ]);
         Status::insert([
             'name_status' => 'Ditolak',
         ]);
         Status::insert([
             'name_status' => 'Disetujui Supervisor',
+        ]);
+        Status::insert([
+            'name_status' => 'Disetujui',
         ]);
     }
 }

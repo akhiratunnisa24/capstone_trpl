@@ -26,9 +26,9 @@
                         @foreach ($metode as $m)    
                             <div class="checkbox checkbox-success" >
                                 {{-- <input type="checkbox" name="checkbox[]" value="1"> --}}
-                                <input type="checkbox" id="checkbox3" class="form-check-input" name="tahapan[]"
+                                <input type="checkbox" id="checkbox{{ $loop->iteration }}" class="form-check-input" name="tahapan[]"
                                     value="{{ $m->id }}" >
-                                <label for=checkbox3>
+                                <label for="checkbox{{ $loop->iteration }}">
                                     {{ $m->nama_tahapan }}
                                 </label>
                             </div>

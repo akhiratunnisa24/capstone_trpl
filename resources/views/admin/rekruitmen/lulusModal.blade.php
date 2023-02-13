@@ -15,21 +15,21 @@
                     @csrf
                     @method('POST')
 
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Nama Lengkap</label>
-                    <div class="col-sm-9">
-                        <label>: {{ $k->nama }}</label>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Nama Lengkap</label>
+                        <div class="col-sm-9">
+                            <label>: {{ $k->nama }}</label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Email</label>
-                    <div class="col-sm-9">
-                        <label>: {{ $k->email }}</label>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Email</label>
+                        <div class="col-sm-9">
+                            <label>: {{ $k->email }}</label>
+                        </div>
                     </div>
-                </div>
 
-                {{-- <div class="form-group row">
+                    {{-- <div class="form-group row">
                     <label for="status" class="col-sm-3 col-form-label">Status Lamaran</label>
                     <div class="col-sm-9">
                         @if ($k->status_lamaran == '6')
@@ -40,42 +40,44 @@
                     </div>
                 </div> --}}
 
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Lanjut ke tahap</label>
-                    <div class="col-sm-9">
-                        <select class="form-control datepicker " name="status_lamaran">
-                            <option value="">Pilih Tahap Selanjutnya</option>
-                            @foreach ($metode as $k)
-                                <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
-                                </option>
-                            @endforeach
-                        </select>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Lanjut ke tahap</label>
+                        <div class="col-sm-9">
+                            <select class="form-control datepicker " name="status_lamaran">
+                                <option value="">Pilih Tahap Selanjutnya</option>
+                                @foreach ($metode as $k)
+                                    <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Pilih Tanggal</label>
-                    <div class="col-sm-9">
-                        <input id="datepicker-autoclose26" type="text" class="form-control"
-                                placeholder="yyyy/mm/dd" name="tgl_tahapan" autocomplete="off"
-                                rows="10" required></input>
+                    {{-- <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Pilih Tanggal</label>
+                        <div class="col-sm-9">
+                            <input id="datepicker-autoclose26" type="text" class="form-control"
+                                placeholder="yyyy/mm/dd" name="tgl_tahapan" autocomplete="off" rows="10"
+                                required></input>
+                        </div>
+                    </div> --}}
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Pilih Tanggal</label>
+                        <div class="col-sm-9">
+                        <input type="date" class="form-control" id="date" placeholder="yyyy/mm/dd" name="tgl_tahapan" autocomplete="off" rows="10"
+                                required>
+                        </div>
                     </div>
-                </div>
-                
+
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success" >Submit</button>
+                <button type="submit" class="btn btn-success">Submit</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
-        </form> 
+            </form>
         </div>
     </div>
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
-
-
-
-
-
-

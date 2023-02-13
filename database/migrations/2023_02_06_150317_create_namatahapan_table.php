@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->string('id_lowongan')->nullable();
             $table->integer('id_mrekruitmen')->nullable();
+            $table->integer('urutan')->nullable();
 
             $table->timestamps();
         });

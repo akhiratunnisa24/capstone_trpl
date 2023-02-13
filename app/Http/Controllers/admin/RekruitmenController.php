@@ -30,10 +30,7 @@ class RekruitmenController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+    /**2
      */
     public function index()
     {
@@ -81,12 +78,14 @@ class RekruitmenController extends Controller
             'id_lowongan' => $user->id,
             'id_mrekruitmen' => 1
         ];
+            
         foreach ($checkbox as $value) {
             $data[] = [
                 'id_lowongan' => $user->id,
                 'id_mrekruitmen' => $value
             ];
         }
+
         $data[] = [
             'id_lowongan' => $user->id,
             'id_mrekruitmen' => 6
@@ -108,10 +107,12 @@ class RekruitmenController extends Controller
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $posisi = NamaTahap::with('mrekruitmen')
-        ->where('id_lowongan', $id)->get();
+        ->where('id_lowongan', $id)
+        // ->orderBy('id', 'desc')
+        ->get();
 
         $metode = NamaTahap::with('mrekruitmen')
-        ->where('id_lowongan', $id)->get();        
+        ->where('id_lowongan', $id)->get();     
         // dd($metode);  
 
         // $namatahapan = NamaTahap::
