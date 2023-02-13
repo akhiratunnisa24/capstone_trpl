@@ -27,6 +27,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         
     ];
+
+    
     
     /**
      * Define the application's command schedule.
@@ -75,15 +77,12 @@ class Kernel extends ConsoleKernel
                 })->get();
                 
                     foreach ($inactiveUsers as $user) {
-                    Log::info("Deleting user with ID: " . $user->id);
-                    if ($user->delete()) {
-                    Log::info("User with ID: " . $user->id . " has been deleted");
-                    } else {
-                    Log::error("Failed to delete user with ID: " . $user->id);
+                    Log::info("Updating status_akun for user with ID: " . $user->id);
+                    $user->update(['status_akun' => 0]);
+                    Log::info("Status_akun for user with ID: " . $user->id . " has been updated to 0");
                 }
-}
                     
-        })->dailyAt('15:26');
+        })->dailyAt('11:14');
     
     
     }
