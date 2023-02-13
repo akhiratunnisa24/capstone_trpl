@@ -73,7 +73,7 @@
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
                                                                         {{-- <td>{{ $data->karyawans->nama }}</td> --}}
-                                                                        <td>{{ $data->jeniscutis->jenis_cuti }}</td>
+                                                                        <td>{{ $data->jenis_cuti }}</td>
                                                                         <td>{{ $data->keperluan }}</td>
                                                                         <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
                                                                         </td>
@@ -138,7 +138,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <td>#</td>
-                                                                <th>Karyawan</th>
+                                                                {{-- <th>Karyawan</th> --}}
                                                                 <th>K. Izin</th>
                                                                 <th>Keperluan</th>
                                                                 <th>Tanggal</th>
@@ -154,8 +154,8 @@
                                                                 @if ($data->id_karyawan == Auth::user()->id_pegawai)
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
-                                                                        <td>{{ $data->karyawans->nama }}</td>
-                                                                        <td>{{ $data->jenisizins->jenis_izin }}</td>
+                                                                        {{-- <td>{{ $data->karyawans->nama }}</td> --}}
+                                                                        <td>{{ $data->jenis_izin }}</td>
                                                                         <td>{{ $data->keperluan }}</td>
 
                                                                         <!-- tanggal mulai & tanggal selesai -->

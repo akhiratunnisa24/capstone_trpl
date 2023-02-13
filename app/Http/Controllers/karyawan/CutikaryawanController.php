@@ -39,21 +39,24 @@ class CutikaryawanController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
          //index cuti
-        $cuti = Cuti::all();
-        $alasancuti = DB::table('datareject')
-            ->join('cuti','datareject.id_cuti','=','cuti.id')
-            ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
-            ->first();
+        $cuti = DB::table('cuti')
+            ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+            ->leftjoin('statuses','cuti.status','=','statuses.id')
+            ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
+            ->select('cuti.*', 'jeniscuti.jenis_cuti','statuses.name_status','datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
+            ->distinct()
+            ->orderBy('created_at','DESC')
+            ->get();
         
         //index izin
-        // $izin = Izin::latest()->paginate(10);
-        $izin = Izin::all();
-        $alasan = DB::table('datareject')
-            ->join('izin','datareject.id_izin','=','izin.id')
-            ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
-            ->first();
-        // dd($alasan);
- 
+        $izin = Izin::leftjoin('statuses','izin.status','=','statuses.id')
+            ->leftjoin('datareject','datareject.id_izin','=','izin.id')
+            ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
+            ->select('izin.*','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan','datareject.id_izin as id_izin')
+            ->distinct()
+            ->orderBy('created_at','DESC')
+            ->get();
+
         //create cuti
         $karyawan = Auth::user()->id_pegawai;
         $jeniscuti = DB::table('alokasicuti')
@@ -68,7 +71,8 @@ class CutikaryawanController extends Controller
         //form izin
         $jenisizin = Jenisizin::all();
         $tipe = $request->query('tipe', 1);
-        return view('karyawan.cuti.index', compact('row','izin','jenisizin','cuti','jeniscuti','karyawan','tipe','alasan','alasancuti'));
+        
+        return view('karyawan.cuti.index', compact('row','izin','jenisizin','cuti','jeniscuti','karyawan','tipe'));
     }
 
     public function getDurasi(Request $request)

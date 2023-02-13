@@ -108,7 +108,7 @@
 
                                                                 <td id="b" class="text-center" > 
                                                                     <div class="row">
-                                                                        {{-- @if($data->status == 'Pending' || $data->status == 'Disetujui Manager')
+                                                                        @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                             <div class="col-sm-3">
                                                                                 <form action="{{ url('')}}/permintaan_cuti/<php echo $data->id ?>" method="POST"> 
                                                                                     @csrf
@@ -124,7 +124,24 @@
                                                                                     <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                 </form>
                                                                             </div>
-                                                                        @endif --}}
+                                                                        @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
+                                                                            <div class="col-sm-3">
+                                                                                <form action="{{ url('')}}/permintaan_cuti/<php echo $data->id ?>" method="POST"> 
+                                                                                    @csrf
+                                                                                    <input type="hidden" name="status" value="Disetujui" class="form-control" hidden> 
+                                                                                    <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
+                                                                                </form>
+                                                                            </div>
+                                                                            <div class="col-sm-3" style="margin-left:8px">
+                                                                                <form action="{{ route('cuti.tolak',$data->id)}}" method="POST"> 
+                                                                                    @csrf
+                                                                                    @method('POST')
+                                                                                    <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
+                                                                                    <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
+                                                                                </form>
+                                                                            </div>
+                                                                        @else
+                                                                        @endif
 
                                                                         <div class="col-sm-3" style="margin-left:6px">
                                                                             <form action="" method="POST"> 
@@ -227,7 +244,7 @@
                                                                     <td> 
                                                                         <div class="row">
                                                                             {{-- @if($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
-                                                                            @if ($data->karyawan->divisi == $depuser->divisi && $data->status == 1 && $data->id_karyawan != Auth::user()->id_pegawai)    
+                                                                            @if ($data->karyawan->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $data->id_karyawan != Auth::user()->id_pegawai)    
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izinapproved',$data->id)}}" method="POST"> 
                                                                                         @csrf

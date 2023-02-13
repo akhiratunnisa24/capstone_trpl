@@ -139,7 +139,7 @@
                                                     <label for="exampleInputEmail1" class="form-label">Jabatan</label>
                                                     <select class="form-control selectpicker" name="jabatanKaryawan" required>
                                                         <option value="">Pilih Jabatan</option>
-                                                        <option value="Direktur">Direktur</option>
+                                                        <option value="Management">Management</option>
                                                         <option value="Manager">Manager</option>
                                                         <option value="Supervisor">Supervisor</option>
                                                         <option value="Staff">Staff</option>

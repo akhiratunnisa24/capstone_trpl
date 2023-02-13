@@ -57,11 +57,11 @@
                         </span>
                     </div>
                 </div>
-                @if(isset($alasancuti) && $data->id == $alasancuti->id_cuti && $data->status == 'Ditolak')
+                @if($data->status == 5)
                     <div class="form-group row">
                         <label for="alasan" class="col-sm-3 col-form-label">Alasan</label>
                         <div class="col-sm-9">
-                            <label>: {{$alasan->alasan}}</label>
+                            <label>: {{$data->alasan_cuti}}</label>
                         </div>
                     </div>        
                 @endif

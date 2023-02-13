@@ -19,7 +19,7 @@
                             <select type="text" class="form-control selecpicker @error('role') is-invalid @enderror"
                                 name="role" required autocomplete="role" autofocus placeholder="Role">
                                 <option value="">Pilih Role</option>
-                                <option value="4">Direktur</option>
+                                <option value="4">Management</option>
                                 <option value="3">Manager</option>
                                 <option value="5">Supervisor</option>
                                 <option value="1">HRD</option>

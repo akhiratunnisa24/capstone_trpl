@@ -46,33 +46,21 @@ class CutiadminController extends Controller
                 ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
                 ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
                 ->leftjoin('statuses','cuti.status','=','statuses.id')
-                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','settingalokasi.mode_alokasi','statuses.name_status')
+                ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','settingalokasi.mode_alokasi','statuses.name_status','karyawan.atasan_pertama','karyawan.atasan_kedua','datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
                 ->distinct()
                 ->orderBy('created_at','DESC')
                 ->get();
-            // dd($cuti);
-            $alasancuti = DB::table('datareject')
-                ->join('cuti','datareject.id_cuti','=','cuti.id')
-                ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
-                ->first();
-
 
             //DATA IZIN
             $izin = Izin::leftjoin('statuses','izin.status','=','statuses.id')
-                ->select('izin.*','statuses.name_status')
+                ->leftjoin('datareject','datareject.id_izin','=','izin.id')
+                ->select('izin.*','statuses.name_status','datareject.alasan as alasan','datareject.id_izin as id_izin')
                 ->distinct()
                 ->orderBy('created_at','DESC')
                 ->get();
-            $alasan = DB::table('datareject')
-                ->join('izin','datareject.id_izin','=','izin.id')
-                ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
-                ->first();
-            // $deppeg  = Izin::with('karyawan')->join('karyawan')
-            //     ->where('izin.id_karyawan','=','karyawan.id')
-            //     ->select('karyawan.divisi')
-            //     ->get();
-            $depuser = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            return view('admin.cuti.index', compact('cuti','izin','type','row','alasan','alasancuti','karyawan','depuser'));
+        
+            return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan'));
             
         } else 
         {
@@ -131,7 +119,6 @@ class CutiadminController extends Controller
                 ['durasi' => $durasi_baru]
             );
 
-        // dd($cuti,$jml_cuti,$durasi_baru,$alokasicuti);
         // //mengirim email notifikasi kepada karyawan mengenai alasan dibuatnya cuti tersebut.
         $epegawai = Karyawan::select('email as email','nama as nama')->where('id','=',$cuti->id_karyawan)->first();
         $tujuan = $epegawai->email;

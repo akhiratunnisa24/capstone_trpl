@@ -24,7 +24,7 @@ class StatusSeeder extends Seeder
             
         ]);
         Status::insert([
-            'name_status' => 'Disetujui',
+            'name_status' => 'Disetujui HRD',
             
         ]);
         Status::insert([

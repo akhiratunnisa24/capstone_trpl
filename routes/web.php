@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MailController;
 
 use App\Http\Controllers\admin\PdfController;
+use App\Http\Controllers\admin\JobsController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\CutiadminController;
@@ -19,10 +20,10 @@ use App\Http\Controllers\admin\DepartemenController;
 use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\TidakMasukController;
 use App\Http\Controllers\admin\AlokasicutiController;
+
+
+
 use App\Http\Controllers\admin\FormPelamarController;
-
-
-
 use App\Http\Controllers\admin\ResignAdminController;
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
@@ -221,6 +222,10 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('/absensi-tidak-masuk', [TidakMasukController::class,'index'])->name('tidakmasuk.index');
     Route::get('/absensi-tidak-masuk-pdf',[TidakMasukController::class,'tidakMasukPdf'])->name('tidakmasuk.pdf');
     Route::get('/absensi-tidak-masuk-excel',[TidakMasukController::class,'tidakMasukExcel'])->name('tidakmasuk.excel');
+
+//KPI
+    Route::get('/jobs', [JobsController::class, 'index'])->name('job.index');
+    Route::get('/indikator-kpi', [IndicatorController::class, 'index'])->name('indicator.index');
 
 //================================================================================
 //ROLE MANAGER atau SUPERVISOR

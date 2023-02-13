@@ -128,15 +128,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(!isset($absensi))
-                                                @forelse($absensi as $data)
-
+                                                @foreach($absensi as $data)
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
-                                                            <td>{{$data->karyawan->nama}}</td>
-                                                        {{-- @else
-                                                        <td></td>
-                                                        @endif --}}
+                                                        <td>{{$data->karyawan->nama}}</td>
                                                         <td>{{$data->departemens->nama_departemen}}
                                                         <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
                                                         <td>{{$data->jam_masuk}}</td>
@@ -145,10 +140,9 @@
                                                         <td>{{$data->terlambat}}</td>
                                                         <td>{{$data->plg_cepat}}</td>
                                                     </tr>
-                                                @empty
-                                                    <tr>No data available in table</tr>
-                                                @endforelse
-                                            @endif
+                                                {{-- @empty
+                                                    <tr>No data available in table</tr> --}}
+                                                @endforeach
                                         </tbody>
                                     </table>
                                 </div>

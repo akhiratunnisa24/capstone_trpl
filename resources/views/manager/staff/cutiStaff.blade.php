@@ -83,7 +83,7 @@
                                                                     </td>
                                                                     <td id="b" class="text-center" > 
                                                                         <div class="row">
-                                                                            @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 'Pending')
+                                                                            @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('cuti.approved',$data->id)}}" method="POST"> 
                                                                                         @csrf
@@ -106,7 +106,7 @@
                                                                                         <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
                                                                                 </div> --}}
-                                                                            @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 'Disetujui Supervisor')
+                                                                            @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6)
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('cuti.approved',$data->id)}}" method="POST"> 
                                                                                         @csrf
@@ -212,7 +212,7 @@
 
                                                                     <td> 
                                                                         <div class="row">
-                                                                            @if($data->status == 'Pending')
+                                                                            @if($data->status == 1)
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izin.approved',$data->id)}}" method="POST"> 
                                                                                         @csrf
