@@ -25,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password', 
+        'status_akun'
     ];
 
     /**
@@ -53,7 +54,7 @@ class User extends Authenticatable
         'id',
         'role',
         'name',
-        'email' );
+        'email', );
     }
 
     //hrms_git
