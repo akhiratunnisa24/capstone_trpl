@@ -68,6 +68,8 @@
     <div class="garis"></div>
     <h3 align="center">Report Absensi Staff Departemen</h3>
 
+    <p>DEPARTEMEN: {{$departemen->nama_departemen}}</p>
+
     <table id="absensi">
         <tr>
             <th>No.</th>
@@ -85,7 +87,7 @@
                 <td>{{$loop->iteration}}</td>
                 <td id="n">{{$d->karyawans->nama}}</td>
                 <td>{{$d->departemens->nama_departemen}}</td>
-                <td>{{$d->tanggal}}</td>
+                <td>{{\Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
                 <td>{{$d->jam_masuk}}</td>
                 <td>{{$d->jam_keluar}}</td>
                 <td>{{$d->terlambat}}</td>

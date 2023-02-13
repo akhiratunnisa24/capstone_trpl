@@ -5,11 +5,11 @@
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Data Departemen</h4>
+                <h4 class="pull-left page-title">Data Jobs</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Data Departemen</li>
+                    <li class="active">Data Jobs</li>
                 </ol>
 
                 <div class="clearfix">
@@ -27,43 +27,38 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
-                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                data-target="#AddModal"> Tambah Data Departemen</a>
+                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#addJob"> Tambah Job</a>
                         </div>
-                        @include('admin.departemen.addDepartemen')
+                        @include('admin.kpi.job.addJob')
                         <div class="panel-body">
                             <table id="datatable-responsive13" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        {{-- <th>ID</th> --}}
-                                        <th>Nama Departemen</th>
+                                        <th>Nama Jobs</th>
+                                        <th>Departemen</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($departemen as $data)
+                                    @foreach ($job as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            {{-- <td>{{ $data->id }}</td> --}}
-                                            <td>{{ $data->nama_departemen }}</td>
+                                            <td>{{ $data->nama_job }}</td>
+                                            <td>{{ $data->id_departemen}}</td>
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                    <a class="btn btn-info btn-sm" data-toggle="modal" 
-                                                        data-target="#showDepartmen{{$data->id}}"><i class="fa fa-eye"></i></a>
-
-                                                    <a class="btn btn-success btn-sm editDepartmen" data-toggle="modal" 
-                                                       data-target="#editDepartmen{{$data->id}}"><i class="fa fa-edit"></i>
+                                                    <a class="btn btn-success btn-sm editJob" data-toggle="modal" 
+                                                       data-target="#editJob{{$data->id}}"><i class="fa fa-edit"></i>
                                                     </a>
 
                                                     <button class="btn btn-danger btn-sm" onclick="hapus({{ $data->id }})"><i class="fa fa-trash"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
-                                        @include('admin.departemen.showDepartemen')
-                                        @include('admin.departemen.editDepartemen')
+                                        {{-- @include('admin.kpi.job.editJob') --}}
                                     @endforeach
                                 </tbody>
                             </table>
@@ -73,6 +68,14 @@
             </div>
         </div>
     </div>
+
+    <!-- sweet alert -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+    </script>
 
     <script>
         function hapus(id) {
@@ -93,7 +96,7 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/departemen/delete' ?>' + id;
+                    location.href = '<?= 'http://localhost:8000/job/delete' ?>' + id;
                 }
             })
         }

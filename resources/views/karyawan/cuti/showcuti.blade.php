@@ -16,13 +16,13 @@
                 <div class="form-group row">
                     <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label>
                     <div class="col-sm-9">
-                        <label>: {{$data->karyawans->nama}}</label>
+                        <label>: {{Auth::user()->nama}}</label>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="id_jeniscuti" class="col-sm-3 col-form-label">Kategori Cuti</label>
                     <div class="col-sm-9">
-                        <label>: {{$data->jeniscutis->jenis_cuti}}</label>
+                        <label>: {{$data->jenis_cuti}}</label>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -58,11 +58,11 @@
                     </div>
                 </div>
 
-                @if(isset($alasan) && $data->id == $alasan->id_izin && $data->status == 5)
+                @if($data->status == 5)
                     <div class="form-group row">
                         <label for="alasan" class="col-sm-3 col-form-label">Alasan</label>
                         <div class="col-sm-9">
-                            <label>: {{$alasan->alasan}}</label>
+                            <label>: {{$data->alasan_cuti}}</label>
                         </div>
                     </div>        
                 @endif

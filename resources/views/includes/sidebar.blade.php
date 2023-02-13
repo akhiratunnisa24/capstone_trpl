@@ -103,6 +103,14 @@
                             <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a></li> --}}
                     </ul>
                 </li>
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-database"></i><span class="text-info panel-title">Master KPI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Departemen</a></li>              
+                            <li><a href="/jobs"><i class="fa fa-users"></i><span></span>Jobs</a></li>              
+                            <li><a href="#"><i class="mdi mdi-clipboard-check"></i><span></span>Penilaian</a></li>          
+                        </ul>
+                </li>
 
                 <?php } elseif ($role == 2) { ?>
 
@@ -206,19 +214,19 @@
             </div>
         </div>
 
-        <!--- Role Direktur  -->
+        <!--- Role Direktur / Management -->
         <div id="sidebar-menu">
             <ul>
                 <li>
                     <a href="karyawandashboard" class="waves-effect">
-                        <i class="ti-home"></i><span> Dashboard Direktur </span>
+                        <i class="ti-home"></i><span> Dashboard Management </span>
                     </a>
                 </li>
 
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i
                             class="mdi mdi-book-open-page-variant"></i><span class="text-info panel-title">DATA
-                            DIREKTUR</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                            MANAGEMENT</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
                         <li><a href="/absensi-karyawan" class="waves-effect"><i
                                     class="mdi mdi-account-check"></i><span>Absensi</span></a></li>

@@ -33,11 +33,6 @@ class AbsensiKaryawanController extends Controller
     public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-
-        // $historyabsensi = Absensi::latest()
-        //     ->where('id_karyawan',Auth::user()->id_pegawai)
-        //     ->orderBy('tanggal')
-        //     ->get();
          //$absensi = Absensi::latest()->where('id_karyawan',Auth::user()->id_pegawai)->orderBy('tanggal')->get();
         $iduser = Auth::user()->id_pegawai;
 
@@ -50,19 +45,18 @@ class AbsensiKaryawanController extends Controller
 
         if(isset($bulan) && isset($tahun))
         {
-            $absensi = Absensi::with('karyawans','departemens')->where('id_karyawan', $iduser)
-            ->whereMonth('tanggal', $bulan)
-            ->whereYear('tanggal',$tahun)
-            ->get();
+            $absensi = Absensi::with('karyawans','departemens')
+                ->where('id_karyawan', $iduser)
+                ->whereMonth('tanggal', $bulan)
+                ->whereYear('tanggal',$tahun)
+                ->get();
         }
         else
-        {
-            // $absensi = Absensi::latest()->where('id_karyawan',Auth::user()->id_pegawai)->get();
-           
-            // $absensi = Absensi::with('karyawans','departemens')->where('absensi.id_karyawan', $iduser)->get();
-            // dd($absensi);
-            $absensi = Absensi::all();
-              // $absensi = Absensi::latest()->with('karyawans', 'departemens')->where('id_karyawan', $iduser)->get();
+            {
+                $absensi = Absensi::with('karyawans','departemens')
+                    ->where('absensi.id_karyawan', $iduser)
+                    ->get();
+                dd($absensi);
         }
         return view('karyawan.absensi.history_absensi',compact('absensi','row'));
         

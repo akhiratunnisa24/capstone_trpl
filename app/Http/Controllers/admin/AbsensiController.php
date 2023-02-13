@@ -46,9 +46,8 @@ class AbsensiController extends Controller
         if ($role == 1) {
             //filter data
             $karyawan = Karyawan::all();
-            $idkaryawan = $request->id_karyawan;
-            // dd($idkaryawan);
 
+            $idkaryawan = $request->id_karyawan;
             $bulan = $request->query('bulan',Carbon::now()->format('m'));
             $tahun = $request->query('tahun',Carbon::now()->format('Y'));
 

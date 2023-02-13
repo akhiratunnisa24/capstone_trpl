@@ -110,7 +110,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($absensi as $data)
-                                            @if($data->id_karyawan == Auth::user()->id_pegawai)
+                                            {{-- @if($data->id_karyawan == Auth::user()->id_pegawai) --}}
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
                                                     <td>{{$data->karyawans->nama}}</td>
@@ -121,7 +121,7 @@
                                                     <td>{{$data->terlambat}}</td>
                                                     <td>{{$data->plg_cepat}}</td>
                                                 </tr>
-                                            @endif
+                                            {{-- @endif --}}
                                         @endforeach
                                     </tbody>
                                 </table>
