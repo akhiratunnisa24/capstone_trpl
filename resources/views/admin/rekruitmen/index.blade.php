@@ -39,26 +39,6 @@
                                     <div class="col-sm-3">
                                         <div class="panel panel-primary">
 
-                                            {{-- <div class="panel-heading btn-success">
-                                                <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
-                                                    <h4 class="panel-title">{{ $k->status }}</h4>
-                                                </a>
-                                            </div> --}}
-
-                                            {{-- @if ($k->status == 'Aktif')
-                                                <div class="panel-heading btn-success">
-                                                    <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
-                                                        <h4 class="panel-title">{{ $k->status }}</h4>
-                                                    </a>
-                                                </div>
-                                            @else
-                                                <div class="panel-heading btn-danger">
-                                                    <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
-                                                        <h4 class="panel-title">{{ $k->status }}</h4>
-                                                    </a>
-                                                </div>
-                                            @endif --}}
-
                                             @if ($k->status == 'Aktif')
                                                 <div class="panel-heading btn-success">
                                                 @else
@@ -82,9 +62,7 @@
                                         </div>
                                     </div>
                             </div>
-                            
                             @endforeach
-
                         </div>
 
                         {{-- <a href="{{ url('Form-Rekruitmen-RYNEST') }}">Apply</a> --}}
@@ -97,6 +75,18 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-sm-3 {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+    </style>
 
     <script>
         document.getElementById("share-button").addEventListener("click", function() {

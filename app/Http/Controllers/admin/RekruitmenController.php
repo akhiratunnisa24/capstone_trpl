@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Karyawan;
 use App\Models\Lowongan;
 use App\Models\Rekruitmen;
+use App\Models\Cuti;
+use App\Models\Jeniscuti;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -15,6 +17,7 @@ use App\Models\MetodeRekruitmen;
 use App\Models\NamaTahap;
 use App\Models\StatusRekruitmen;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 use PDF;
 
 
@@ -37,8 +40,18 @@ class RekruitmenController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $posisi = Lowongan::all()->sortByDesc('created_at');
         $metode = MetodeRekruitmen::where('status', '=','Aktif')->get();
-        // dd($metode);
+        
 
+        //pengecekan ke data cuti apakah ada atau tidak
+
+        // $cuti = Cuti::whereDate('tgl_mulai', Carbon::today())
+        // ->whereDate('tgl_selesai', '>=', Carbon::today())
+        // ->where('status', 7)
+        // ->get();
+
+        // $reason = Jeniscuti::where('id', $cuti->id_jeniscuti)->select('jenis_cuti')->first();
+        
+        // dd($reason);
         
         
 

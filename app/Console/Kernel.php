@@ -7,6 +7,8 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Console\Scheduling\Event;
 use App\Events\AbsenKaryawanEvent;
 use App\Models\Karyawan;
+use App\Models\Cuti;
+use App\Models\Izin;
 use App\Models\Absensi;
 use App\Models\Tidakmasuk;
 use App\Models\Resign;
@@ -48,6 +50,13 @@ class Kernel extends ConsoleKernel
                 $schedule->call(function (){
                 $karyawanSudahAbsen = DB::table('absensi')->whereDay('created_at', '=', Carbon::now())->pluck('id_karyawan');
                 $karyawan = DB::table('karyawan')->whereNotIn('id', $karyawanSudahAbsen)->get();
+            
+                //pengecekan ke data cuti apakah ada atau tidak
+
+                $cuti = Cuti::whereDate('tgl_mulai', Carbon::today())
+                ->whereDate('tgl_selesai', '>=', Carbon::today())
+                ->where('status', 7)
+                ->get();
     
             if ($karyawan->count() > 0) {
                 foreach ($karyawan as $karyawan) {
@@ -57,6 +66,25 @@ class Kernel extends ConsoleKernel
                     $absen->divisi = $karyawan->divisi;
                     $absen->status = 'tanpa keterangan';
                     $absen->tanggal = Carbon::today();
+
+                    // cek apakah karyawan memiliki cuti pada hari ini
+                    $cuti = Cuti::where('id_karyawan', $karyawan->id)
+                    ->whereDate('tgl_mulai', '=', Carbon::today())
+                    // ->where('tgl_selesai', '>=', Carbon::today())
+                    ->first();
+                    $izin = Izin::where('id_karyawan', $karyawan->id)
+                    ->whereDate('tgl_mulai', '=', Carbon::today())
+                        // ->where('tgl_selesai', '>=', Carbon::today())
+                        ->first();
+
+                    if ($cuti) {
+                        $absen->status = $cuti->id_jeniscuti;
+                    } else if ($izin) {
+                        $absen->status = $izin->id_jenisizin;
+                    } else {
+                        $absen->status = 'tanpa keterangan';
+                    }
+
                     $absen->save();
                 }
 
@@ -82,7 +110,7 @@ class Kernel extends ConsoleKernel
                     Log::info("Status_akun for user with ID: " . $user->id . " has been updated to 0");
                 }
                     
-        })->dailyAt('11:14');
+        })->dailyAt('17:38');
     
     
     }
