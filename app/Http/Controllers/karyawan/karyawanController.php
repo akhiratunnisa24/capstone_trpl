@@ -572,26 +572,33 @@ class karyawanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $karyawan = karyawan::find($id);
-        $maxId = Karyawan::max('id');
-        $maxId + 1;
-        $request->validate(['foto' => 'image|mimes:jpeg,png,jpg|max:2048']);
+        $karyawan = Karyawan::find($id);
+$maxId = Karyawan::max('id');
+$maxId + 1;
+$request->validate(['foto' => 'image|mimes:jpeg,png,jpg|max:2048']);
 
-        // $user = Auth::user()->id_pegawai;
-        $fotoLama = $karyawan->foto;
-        // dd($fotoLama);  
+$fotoLama = $karyawan->foto;
+
+if ($file = $request->file('foto')) {
+
+    // hapus foto lama dari storage
+    if($fotoLama !== null){
+        $oldImage = public_path('Foto_Profile/'.$fotoLama);
+        if(file_exists($oldImage)){
+            unlink($oldImage);
+        }
+    }
+
+    $extension = $file->getClientOriginalExtension();
+    $filename = '' . time() . $file->getClientOriginalName();
+    $file->move(public_path() . '\Foto_Profile', $filename);
+    $karyawan->foto = $filename;
+
+    $karyawan->save();
+
+    return redirect()->back();
 
 
-
-        if ($file = $request->file('foto')) {
-
-            // Storage::delete('public/Foto_Profile/'.$fotoLama);
-
-            $extension = $file->getClientOriginalExtension();
-            // $filename = md5(time()).'.'.$extension;
-            $filename = '' . time() . $file->getClientOriginalName();
-            $file->move(public_path() . '\Foto_Profile', $filename);
-            $karyawan->foto = $filename;
 
 
             $data = array(
