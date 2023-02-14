@@ -5,29 +5,30 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MailController;
 
-use App\Http\Controllers\admin\PdfController;
-use App\Http\Controllers\admin\JobsController;
+
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\IzinAdminController;
 use App\Http\Controllers\admin\JeniscutiController;
 use App\Http\Controllers\admin\JenisizinController;
+use App\Http\Controllers\admin\MasterkpiController;
 use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\DepartemenController;
 use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\TidakMasukController;
+
+
+
 use App\Http\Controllers\admin\AlokasicutiController;
-
-
-
 use App\Http\Controllers\admin\FormPelamarController;
 use App\Http\Controllers\admin\ResignAdminController;
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
+use App\Http\Controllers\karyawan\KaryawansController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
@@ -226,7 +227,7 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     Route::get('/absensi-tidak-masuk-excel',[TidakMasukController::class,'tidakMasukExcel'])->name('tidakmasuk.excel');
 
 //KPI
-    Route::get('/jobs', [JobsController::class, 'index'])->name('job.index');
+    Route::get('/masterkpi', [MasterkpiController::class, 'index'])->name('master.index');
     Route::get('/indikator-kpi', [IndicatorController::class, 'index'])->name('indicator.index');
 
 //================================================================================
@@ -291,3 +292,5 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 
 // });
     // Route::get('/sendmail', [MailController::class, 'index']);
+
+    Route::get('karyawancreates', [KaryawansController::class, 'create'])->name('creates');

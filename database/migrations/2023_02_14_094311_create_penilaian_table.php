@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kpi', function (Blueprint $table) {
+        Schema::create('penilaian', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_job');
             $table->unsignedBigInteger('id_user');
-            $table->text('indikator');
-            $table->string('target');
-            $table->string('bobot');
-            $table->date('tglaktif');
-            $table->date('tglberakhir');
-            $table->string('status');
+            $table->string('indikator');
+            $table->string('bobot',10);
+            $table->string('target',10);
+            $table->string('realisasi',10);
+            $table->string('skor',10);
+            $table->string('total_nilai',10);
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kpi');
+        Schema::dropIfExists('penilaian');
     }
 };

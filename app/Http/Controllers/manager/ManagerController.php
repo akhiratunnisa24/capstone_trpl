@@ -154,75 +154,38 @@ class ManagerController extends Controller
 
         $tp = $request->query('tp',1);
 
-        $alasan = DB::table('datareject')
-            ->join('izin','datareject.id_izin','=','izin.id')
-            ->select('datareject.alasan as alasan','datareject.id_izin as id_izin')
-            ->first();
-        $alasancuti = DB::table('datareject')
-            ->join('cuti','datareject.id_cuti','=','cuti.id')
-            ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
-            ->first();
-
         if($role == 3)
         {
-            // $cutistaff = DB::table('cuti')
-            //     ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
-            //     ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
-            //     ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
-            //     ->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
-            //     ->orWhere('karyawan.atasan_kedua',Auth::user()->id_pegawai)
-            //     ->where('cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
-            //     ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','settingalokasi.tipe_approval')
-            //     ->distinct()
-            //     ->get();
-            // ->where('cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
-            //     ->where('cuti.id_settingalokasi','settingalokasi.id')
-            // $cutistaff= DB::table('cuti')
-            //     ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
-            //     ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
-            //     ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
-            //     ->where(function($query) use ($row){
-            //         $query->where( 'karyawan.atasan_pertama',Auth::user()->id_pegawai)
-            //     ->orWhere(function($query) use ($row){
-            //             $query->where( 'karyawan.atasan_kedua',Auth::user()->id_pegawai)
-            //             ->where('settingalokasi.tipe_approval', 'Bertingkat');
-            //         });
-            //     })
-            //     ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','settingalokasi.tipe_approval')
-            //     ->distinct()
-            //     ->orderBy('cuti.id', 'desc')
-            //     ->get();
-                
             $cutistaff = DB::table('cuti')
                 ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
                 ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
-                ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
+                ->leftjoin('alokasicuti','cuti.id_alokasi','alokasicuti.id')
+                ->leftjoin('settingalokasi','cuti.id_settingalokasi','settingalokasi.id')
                 ->leftjoin('statuses','cuti.status','=','statuses.id')
+                ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
                 ->where(function($query) use ($row){
-                    $query->where( 'karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                    $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
                     ->orWhere(function($query) use ($row){
-                        $query->where( 'karyawan.atasan_kedua',Auth::user()->id_pegawai)
+                        $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai)
                         ->where('settingalokasi.tipe_approval', 'Bertingkat');
-                    });
+                    });    
                 })
-                ->where('settingalokasi.tipe_approval', 'Bertingkat')
-                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','settingalokasi.tipe_approval','statuses.name_status')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','settingalokasi.tipe_approval','statuses.name_status','datareject.alasan')
                 ->distinct()
                 ->orderBy('cuti.id', 'desc')
                 ->get();
-
-            // dd($cutistaff);
 
             $izinstaff = DB::table('izin')
                 ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
                 ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
                 ->leftjoin('statuses','izin.status','=','statuses.id')
+                ->leftjoin('datareject','datareject.id_izin','=','izin.id')
                 ->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
-                ->select('izin.*','karyawan.nama','jenisizin.jenis_izin','statuses.name_status')
+                ->select('izin.*','karyawan.nama','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan_izin')
                 ->distinct()
                 ->get();
                 
-            return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','alasan','alasancuti'));
+            return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
         }
         elseif($role == 5)
         {

@@ -5,11 +5,11 @@
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Data Jobs</h4>
+                <h4 class="pull-left page-title">Data Master KPI</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Data Jobs</li>
+                    <li class="active">Data Master KPI</li>
                 </ol>
 
                 <div class="clearfix">
@@ -27,9 +27,11 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
-                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#addJob"> Tambah Job</a>
+                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#addJob"> Tambah Master KPI</a>
+                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#editMaster">Edit Master</a>
                         </div>
-                        @include('admin.kpi.job.addJob')
+                        @include('admin.kpi.masterkpi.addMaster')
+                        @include('admin.kpi.masterkpi.editMaster')
                         <div class="panel-body">
                             <table id="datatable-responsive13" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
@@ -38,6 +40,11 @@
                                         <th>#</th>
                                         <th>Nama Jobs</th>
                                         <th>Departemen</th>
+                                        <th>Nama Master</th>
+                                        <th>Bobot</th>
+                                        <th>Target</th>
+                                        <th>Tgl Aktif</th>
+                                        <th>Tgl Berakhir</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -48,10 +55,15 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $data->nama_job }}</td>
                                             <td>{{ $data->id_departemen}}</td>
+                                            <td>{{ $data->nama_master}}</td>
+                                            <td>{{ $data->bobot}}</td>
+                                            <td>{{ $data->target}}</td>
+                                            <td>{{ $data->tglaktif}}</td>
+                                            <td>{{ $data->tglberakhir}}</td>
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                     <a class="btn btn-success btn-sm editJob" data-toggle="modal" 
-                                                       data-target="#editJob{{$data->id}}"><i class="fa fa-edit"></i>
+                                                       data-target="#editMaster{{$data->id}}"><i class="fa fa-edit"></i>
                                                     </a>
 
                                                     <button class="btn btn-danger btn-sm" onclick="hapus({{ $data->id }})"><i class="fa fa-trash"></i></button>

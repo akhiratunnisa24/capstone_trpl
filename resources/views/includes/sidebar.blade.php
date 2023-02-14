@@ -104,11 +104,11 @@
                     </ul>
                 </li>
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-database"></i><span class="text-info panel-title">Master KPI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-server"></i><span class="text-info panel-title">Data Master KPI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Departemen</a></li>              
-                            <li><a href="/jobs"><i class="fa fa-users"></i><span></span>Jobs</a></li>              
-                            <li><a href="#"><i class="mdi mdi-clipboard-check"></i><span></span>Penilaian</a></li>          
+                            {{-- <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Departemen</a></li>               --}}
+                            <li><a href="/masterkpi"><i class="fa fa-tasks"></i><span></span>Master KPI</a></li>              
+                            <li><a href="#"><i class="fa fa-file-text"></i><span></span>Penilaian</a></li>          
                         </ul>
                 </li>
 
