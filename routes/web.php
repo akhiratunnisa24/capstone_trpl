@@ -11,7 +11,6 @@ use App\Http\Controllers\admin\PdfController;
 use App\Http\Controllers\admin\JobsController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\IzinAdminController;
 use App\Http\Controllers\admin\JeniscutiController;
@@ -46,7 +45,6 @@ use App\Http\Controllers\admin\NotifMailRekruitmenController;
 |
 */
 Auth::routes();
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 
 
 // Dashboard
