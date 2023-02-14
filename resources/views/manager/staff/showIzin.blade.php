@@ -84,11 +84,11 @@
                         </span>
                     </div>
                 </div>
-                @if(isset($alasan) && $data->id == $alasan->id_izin && $data->status == 5)
+                @if($data->status == 5)
                     <div class="row">
                         <label for="alasan" class="col-sm-3 col-form-label">Alasan</label>
                         <div class="col-sm-9">
-                            <label>: {{$alasan->alasan}}</label>
+                            <label>: {{$data->alasan_izin}}</label>
                         </div>
                     </div>     
                 @endif

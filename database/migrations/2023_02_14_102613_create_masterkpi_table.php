@@ -13,10 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jobs', function (Blueprint $table) {
+        Schema::create('masterkpi', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_departemen');
             $table->string('nama_job');
+            $table->string('bobot',10);
+            $table->string('target',10);
+            $table->date('tglaktif');
+            $table->date('tglberakhir');
+            $table->Integer('status');
             $table->timestamps();
         });
     }
@@ -28,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('masterkpi');
     }
 };
