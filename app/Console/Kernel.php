@@ -104,24 +104,24 @@ class Kernel extends ConsoleKernel
 
                     // Pengiriman Email Notifikasi jgn di hapus 
 
-                    // $alokasicuti2 = Alokasicuti::where('id_jeniscuti', '=', 3)
-                    //     ->where('id_karyawan',  $absen->id_pegawai)
-                    //     ->first();
-                    // $durasi_baru = $alokasicuti2->durasi - 1;
+                    $alokasicuti2 = Alokasicuti::where('id_jeniscuti', '=', 3)
+                        ->where('id_karyawan',  $absen->id_pegawai)
+                        ->first();
+                    $durasi_baru = $alokasicuti2->durasi - 1;
 
-                    // $epegawai = Karyawan::select('email as email', 'nama as nama')->where('id', '=', $absen->id_pegawai)->first();
-                    // $tujuan = $epegawai->email;
-                    // $data = [
-                    //     'subject'     => 'Notifikasi Pengurangan Jatah Cuti Tahunan',
-                    //     'id'          => $alokasicuti2->id_jeniscuti,
-                    //     'id_jeniscuti' => $alokasicuti2->jeniscutis->jenis_cuti,
-                    //     'keterangan'   => $absen->status,
-                    //     'tanggal'     => Carbon::parse($absen->tanggal)->format("d M Y"),
-                    //     'jml_cuti'    => 1,
-                    //     'nama'        => $epegawai->nama,
-                    //     'jatahcuti'   => $durasi_baru,
-                    // ];
-                    // Mail::to($tujuan)->send(new TidakmasukNotification($data));
+                    $epegawai = Karyawan::select('email as email', 'nama as nama')->where('id', '=', $absen->id_pegawai)->first();
+                    $tujuan = $epegawai->email;
+                    $data = [
+                        'subject'     => 'Notifikasi Pengurangan Jatah Cuti Tahunan',
+                        'id'          => $alokasicuti2->id_jeniscuti,
+                        'id_jeniscuti' => $alokasicuti2->jeniscutis->jenis_cuti,
+                        'keterangan'   => $absen->status,
+                        'tanggal'     => Carbon::parse($absen->tanggal)->format("d M Y"),
+                        'jml_cuti'    => 1,
+                        'nama'        => $epegawai->nama,
+                        'jatahcuti'   => $durasi_baru,
+                    ];
+                    Mail::to($tujuan)->send(new TidakmasukNotification($data));
                     
                 }
 
@@ -148,7 +148,7 @@ class Kernel extends ConsoleKernel
                 }
                     
         })
-        ->dailyAt('19:50');
+        ->dailyAt('09:45');
     
     
     }

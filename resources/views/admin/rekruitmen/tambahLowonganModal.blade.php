@@ -30,7 +30,7 @@
                                     value="{{ $m->id }}" >
                                 <label for="checkbox{{ $loop->iteration }}">
                                     {{ $m->nama_tahapan }}
-                                </label>
+                                </label>    
                             </div>
                         @endforeach
                     </div>

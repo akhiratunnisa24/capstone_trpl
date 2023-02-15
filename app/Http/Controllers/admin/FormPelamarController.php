@@ -65,4 +65,13 @@ class FormPelamarController extends Controller
 
         return view('admin.rekruitmen.formSelesaiPelamar');
     }
+
+    public function create_karyawan_baru(Request $request)
+
+    {
+        $posisi = Lowongan::all()->where('status', '=', 'Aktif');
+        $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
+
+        return view('admin.rekruitmen.tambahKaryawanBaru');
+    }
 }
