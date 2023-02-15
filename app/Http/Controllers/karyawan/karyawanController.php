@@ -202,8 +202,8 @@ class karyawanController extends Controller
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Direktur'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direktur'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Managemen'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Managemen'])->get();
 
             $output = [
                 'row' => $row,
@@ -573,9 +573,9 @@ class karyawanController extends Controller
     public function update(Request $request, $id)
     {
         $karyawan = Karyawan::find($id);
-$maxId = Karyawan::max('id');
-$maxId + 1;
-$request->validate(['foto' => 'image|mimes:jpeg,png,jpg|max:2048']);
+        $maxId = Karyawan::max('id');
+        $maxId + 1;
+        $request->validate(['foto' => 'image|mimes:jpeg,png,jpg|max:2048']);
 
 $fotoLama = $karyawan->foto;
 
@@ -771,8 +771,6 @@ if ($file = $request->file('foto')) {
             );
 
             $data_kdarurat = array(
-                // 'id_pegawai' => $maxId + 1 ,
-
                 'nama' => $request->post('namaKdarurat'),
                 'alamat' => $request->post('alamatKdarurat'),
                 'no_hp' => $request->post('no_hpKdarurat'),
@@ -802,13 +800,17 @@ if ($file = $request->file('foto')) {
         if ($role == 1) {
 
             $karyawan = karyawan::findOrFail($id);
-            $keluarga = Keluarga::where('id_pegawai', $id)->first();
-
-
-            $kdarurat = Kdarurat::where('id_pegawai', $id)->first();
-            $rpendidikan = Rpendidikan::where('id_pegawai', $id)->first();
-            $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->first();
+            $status = Keluarga::where('id_pegawai', $id)->first();
+            $keluarga = Keluarga::where('id_pegawai', $id)->get();
+            $kdarurat = Kdarurat::where('id_pegawai', $id)->get();
+            $rpendidikan = Rpendidikan::where('id_pegawai', $id)->get();
+            $nonformal = Rpendidikan::where('id_pegawai',$id)->where('jenis_pendidikan','!=',null)->get();
+            $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->get();
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $departemen     = Departemen::all();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Managemen'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Managemen'])->get();
 
             $output = [
                 'row' => $row
@@ -820,6 +822,11 @@ if ($file = $request->file('foto')) {
                 'kdarurat' => $kdarurat,
                 'rpendidikan' => $rpendidikan,
                 'rpekerjaan' => $rpekerjaan,
+                'status' =>$status,
+                'nonformal' =>$nonformal,
+                'departemen' =>$departemen,
+                'atasan_pertama'=>$atasan_pertama,
+                'atasan_kedua'=>$atasan_kedua,
             ]);
         } else {
 

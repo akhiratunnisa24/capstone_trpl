@@ -20,22 +20,25 @@
     </div>
 </div>
 
-
-
 <div class="panel panel-primary">
     <div class=" col-sm-0 m-b-0">
 
     </div>
 
     <form action="karyawan/update/{{$karyawan->id}}" method="POST">
-
         @csrf
         @method('put')
 
         <div class="modal-body">
             <table class="table table-bordered table-striped" style="width:100%">
                 <tbody class="col-sm-20">
-                    <label class=""><h4> A. IDENTITAS </h4></label>
+                    <div class="row">
+                        <label class="m-l-10"><h4> A. IDENTITAS </h4></label>
+                        <a class="btn btn-sm btn-success editIdentitas pull-right" data-toggle="modal" data-target="#editIdentitas{{$karyawan->id}}" style="margin-right:10px;margin-top:10px">
+                            <i class="fa fa-edit"> <strong>Edit Identitas Diri</strong></i>
+                        </a>
+                    </div>
+                    @include('admin.karyawan.editIdentitas')
                     <tr>
                         <td style="width: 40%"><strong><label>Nama Lengkap</label></strong></td>
                         <td style="width: 60%"><label>{{$karyawan->nama}}</label></td>
@@ -83,11 +86,214 @@
                         <td><label>Agama</label></td>
                         <td><label>{{$karyawan->agama}}</label></td>
                     </tr>
+                    <tr>
+                        <td><label>Status Pernikahan</label></td>
+                        <td>
+                            @if($status->status_pernikahan == "Sudah")
+                                <label>{{$status->status_pernikahan}} Menikah</label>
+                            @else
+                                <label>{{$status->status_pernikahan}} Menikah</label>
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 
-            <div class="row">
-                <div class="col-md-6">
+           
+            {{-- DATA KELUARGA --}}
+            <label class="m-l-10"><h4>B. KELUARGA </h4></label>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Hubungan</th>
+                        <th>Alamat</th>
+                        <th>Pendidikan Terakhir</th>
+                        <th>Pekerjaan</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($keluarga as $keluarga)
+                        <tr>
+                            <td>{{$loop->iteration }}</td>
+                            <td>{{$keluarga->nama }}</td>
+                            <td>{{\Carbon\Carbon::parse($keluarga->tgllahir)->format('d/m/Y')}}</td>
+                            <td>{{$keluarga->hubungan }}</td> 
+                            <td>{{$keluarga->alamat }}</td>
+                            <td>{{$keluarga->pendidikan_terakhir }}</td>
+                            <td>{{$keluarga->pekerjaan}}</td>
+                            <td class="">
+                                <a class="btn btn-sm btn-success editKeluarga pull-right" data-toggle="modal" data-target="#editKeluarga{{$keluarga->id}}" style="margin-right:10px">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        @include('admin.karyawan.editKeluarga')
+                    @endforeach
+                </tbody>
+            </table>
+            {{-- END DATA KELUARGA --}}
+
+            {{-- KONTAK DARURAT --}}
+            <label class="" width="50%"><h4>C. KONTAK DARURAT </h4></label>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Hubungan</th>
+                        <th>Alamat</th>
+                        <th>Nomor Handphone</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach($kdarurat as $kdarurat)
+                        <tr>
+                            <td>{{$loop->iteration }}</td>
+                            <td>{{$kdarurat->nama }}</td>
+                            <td>{{$kdarurat->hubungan }}</td>
+                            <td>{{$kdarurat->alamat }}</td>
+                            <td>{{$kdarurat->no_hp}}</td>
+                            <td class="">
+                                <a class="btn btn-sm btn-success editDarurat pull-right" data-toggle="modal" data-target="#editDarurat{{$kdarurat->id}}" style="margin-right:10px">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        @include('admin.karyawan.editKontakdarurat')
+                    @endforeach
+                </tbody>
+            </table>
+            {{-- END KONTAK DARURAT --}}
+
+            {{-- RIWAYAT PENDIDIKAN --}}
+            <label class="" width="50%"><h4>D. RIWAYAT PENDIDIKAN </h4></label><br>
+            <td style="width:25%"><label class="text-white badge bg-info"> Pendidikan Formal </label></td>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tingkat</th>
+                        <th>Nama Sekolah</th>
+                        <th>Kota</th>
+                        <th>Jurusan</th>
+                        <th>Tahun Lulus</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach($rpendidikan as $rpendidikan)
+                        @if($rpendidikan->tingkat != null)
+                            <tr>
+                                <td>{{$loop->iteration }}</td>
+                                <td>{{$rpendidikan->tingkat}}</td>
+                                <td>{{$rpendidikan->nama_sekolah}}</td>
+                                <td>{{$rpendidikan->kota_pformal}}</td>
+                                <td>{{$rpendidikan->jurusan}}</td>
+                                <td>{{$rpendidikan->tahun_lulus_formal}}</td>
+                                <td class="">
+                                    <a class="btn btn-sm btn-success editPformal pull-right" data-toggle="modal" data-target="#editPformal{{$rpendidikan->id}}" style="margin-right:10px">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @include('admin.karyawan.editPformal')
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+
+            <td style="width:25%"><label class="text-white badge bg-info"> Pendidikan Non Formal </label></td>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Bidang</th>
+                        <th>Kota</th>
+                        <th>Tahun Lulus</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($nonformal as $rpendidikan)
+                        <tr>
+                            <td>{{$loop->iteration }}</td>
+                            <td>{{$rpendidikan->jenis_pendidikan}}</td>
+                            <td>{{$rpendidikan->kota_pnonformal}}</td>
+                            <td>{{$rpendidikan->tahun_lulus_nonformal}}</td>
+                            <td class="">
+                                <a class="btn btn-sm btn-success editPnformal pull-right" data-toggle="modal" data-target="#editPnformal{{$rpendidikan->id}}" style="margin-right:10px">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        @include('admin.karyawan.editPnformal')
+                    @endforeach
+                </tbody>
+            </table>
+            {{-- END RIWAYAT PENDIDIKAN --}}
+
+            {{-- RIWAYAT PEKERJAAN --}}
+            <label class="" width="50%"><h4>E. RIWAYAT PEKERJAAN </h4></label>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama Perusahaan</th>
+                        <th>Atasan</th>
+                        <th>Direktur</th>
+                        <th>Jabatan</th>
+                        <th>Lama Kerja</th>
+                        <th>Gaji</th>
+                        <th>Alasan Berhenti</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($rpekerjaan as $rpekerjaan)
+                        <tr>
+                            <td>{{$loop->iteration }}</td>
+                            <td>{{$rpekerjaan->nama_perusahaan}}</td>
+                            <td>{{$rpekerjaan->nama_atasan}}</td>
+                            <td>{{$rpekerjaan->nama_direktur}}</td>
+                            <td>{{$rpekerjaan->jabatan}}</td>
+                            <td>{{$rpekerjaan->lama_kerja}}</td>
+                            <td>Rp. {{$rpekerjaan->gaji}},-</td>
+                            <td>{{$rpekerjaan->alasan_berhenti}}</td>
+                            <td class="">
+                                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#editPekerjaan{{$rpekerjaan->id}}" style="margin-right:10px">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        @include('admin.karyawan.editPekerjaan')
+                    @endforeach
+                </tbody>
+            </table>
+               
+            {{-- </div> --}}
+        </div>
+    </form>
+
+
+    <div class="modal-footer">
+
+        <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a>
+
+
+        <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
+    </div>
+</div>
+
+@endsection
+
+    {{-- <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <label class="" width="50%"><h4>B. KELUARGA </h4></label>
@@ -121,8 +327,8 @@
 
                         </tbody>
                     </table>
-                </div>
-                <div class="col-md-6">
+                </div> --}}
+                {{-- <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <label class="" width="50%"><h4>C. KONTAK DARURAT </h4></label>
@@ -148,11 +354,11 @@
 
                         </tbody>
                     </table>
-                </div>
-            </div>
+                </div> --}}
+            {{-- </div>
 
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row"> --}}
+                {{-- <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <label class="" width="100%"><h4>D. RIWAYAT PENDIDIKAN </h4></label>
@@ -245,22 +451,4 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                
-            </div>
-        </div>
-    </form>
-
-
-    <div class="modal-footer">
-
-        <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a>
-
-
-        <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
-    </div>
-</div>
-
-
-
-@endsection
+                </div> --}}

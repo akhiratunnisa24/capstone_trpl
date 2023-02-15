@@ -291,22 +291,24 @@
                                                 <th>Hubungan Keluarga</th>
                                                 <th>Alamat</th>
                                                 <th>Pekerjaan</th>
-                                                {{-- <th>Agama</th> --}}
-                                                <th>Action</th>
+                                                {{-- <th>Action</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        
+                                            @foreach($datakeluarga as $dk)
+                                                <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{ $dk->nama}}</td>
+                                                <td>{{ $dk->tgllahir}}</td>
+                                                <td>{{ $dk->hubungan}}</td>
+                                                <td>{{ $dk->alamat}}</td>
+                                                <td>{{ $dk->pekerjaan}}</td>
+                                                {{-- <td></td> --}}
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table><br>
-                                    <form action="/karyawan/store_page" method="POST" enctype="multipart/form-data">
+                                    <form action="/storedatakeluarga" method="POST" enctype="multipart/form-data">
                                         <div class="control-group after-add-more">
                                             @csrf
                                             @method('post')
@@ -322,8 +324,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1" class="form-label">Status Pernikahan</label>
-                                                                    <select class="form-control selectpicker" name="status_pernikahan"
-                                                                        required>
+                                                                    <select class="form-control selectpicker" name="status_pernikahan">
                                                                         <option value="">Pilih Status Pernikahan</option>
                                                                         <option value="Sudah">Sudah Menikah</option>
                                                                         <option value="Belum">Belum Menikah</option>
@@ -358,6 +359,21 @@
                                                                             <span class="input-group-addon bg-custom b-0"><i
                                                                                     class="mdi mdi-calendar text-white"></i></span>
                                                                         </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">Hubungan</label>
+                                                                        <select class="form-control selectpicker" name="hubungankeluarga" required>
+                                                                            <option value="">Pilih Hubungan</option>
+                                                                            <option value="Ayah">Ayah</option>
+                                                                            <option value="Ibu">Ibu</option>
+                                                                            <option value="Suami">Suami</option>
+                                                                            <option value="Istri">Istri</option>
+                                                                            <option value="Kakak">Kakak</option>
+                                                                            <option value="Adik">Adik</option>
+                                                                            <option value="Anak">Anak</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
         
@@ -401,7 +417,7 @@
                                                     </div>
                                                     <div class="pull-right">
                                                         <button type="submit" name="submit" class="btn btn-sm btn-primary">Simpan</button>
-                                                        <a href="#" class="btn btn-sm btn-danger">Selanjutnya</a>
+                                                        <a href="#kontakdarurat" class="btn btn-sm btn-danger" data-toggle="tab">Selanjutnya</a>
                                                     </div>
                                                 </table>
                                             </div>
@@ -428,23 +444,26 @@
                                                 <th>No HP</th>
                                                 <th>Alamat</th>
                                                 <th>Hubungan Keluarga</th>
-                                                <th>Action</th>
+                                                {{-- <th>Action</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        
+                                            @foreach($kontakdarurat as $kd)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{ $kd->nama}}</td>
+                                                    <td>{{ $kd->no_hp}}</td>
+                                                    <td>{{ $kd->alamat}}</td>
+                                                    <td>{{ $kd->hubungan}}</td>
+                                                    {{-- <td></td> --}}
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table><br>
-                                    <form action="/karyawan/store_page" method="POST" enctype="multipart/form-data">
+                                    <form action="/storekontakdarurat" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('post')
                                         <div class="control-group after-add-more">
-                                            @csrf
-                                            @method('post')
                                             <div class="modal-body">
                                                 <table class="table table-bordered table-striped">
                                                     <div class="col-md-12">
@@ -456,32 +475,23 @@
                                                                 </div>
                                                                 <div class="form-group m-t-10">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Nama Lengkap</label>
-                                                                        <input type="text" name="namaKdarurat"
-                                                                            class="form-control" placeholder="Masukkan Nama" autocomplete="off"
-                                                                            required>
+                                                                        <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
+                                                                        <input type="text" name="namaKdarurat" class="form-control" placeholder="Masukkan Nama" autocomplete="off" required>
                                                                         <div id="emailHelp" class="form-text"></div>
                                                                     </div>
                                                                 </div>
     
                                                                 <div class="form-group ">
                                                                     <div class="mb-3 ">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Alamat</label>
-                                                                        <input class="form-control" name="alamatKdarurat"
-                                                                            rows="9"
-                                                                            placeholder="Masukkan Alamat"></input>
+                                                                        <label for="exampleInputEmail1" class="form-label">Alamat</label>
+                                                                        <input class="form-control" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat"></input>
                                                                     </div>
                                                                 </div>
     
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1" class="form-label">No.
-                                                                            Handphone</label>
-                                                                        <input type="number" name="no_hpKdarurat"
-                                                                            class="form-control" id="no_hp"
-                                                                            placeholder="Masukkan Nomor Handphone" required>
+                                                                        <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
+                                                                        <input type="number" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
@@ -501,7 +511,7 @@
                                                                 </div>
                                                                 <div class="pull-right">
                                                                     <button type="submit" name="submit" class="btn btn-sm btn-primary">Simpan</button>
-                                                                    <a href="#" class="btn btn-sm btn-danger">Selanjutnya</a>
+                                                                    <a href="#riwayatpendidikan" data-toggle="tab" class="btn btn-sm btn-danger">Selanjutnya</a>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md3"></div>
@@ -534,17 +544,19 @@
                                                 <th>Kota</th>
                                                 <th>Jurusan</th>
                                                 <th>Tahun Lulus</th>
-                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            @foreach($pformal as $p)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$p->tingkat }}</td>
+                                                    <td>{{$p->nama_sekolah }}</td>
+                                                    <td>{{$p->kota_pformal }}</td>
+                                                    <td>{{$p->jurusan }}</td>
+                                                    <td>{{$p->tahun_lulus_formal }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table><br>
 
@@ -556,19 +568,20 @@
                                                 <th>Bidang/Jenis</th>
                                                 <th>Kota</th>
                                                 <th>Tahun Lulus</th>
-                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        
+                                            @foreach($nonformal as $nf)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{ $nf->jenis_pendidikan }}</td>
+                                                    <td>{{ $nf->kota_pnonformal }}</td>
+                                                    <td>{{ $nf->tahun_lulus_nonformal }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table><br>
-                                    <form action="/karyawan/store_page" method="POST" enctype="multipart/form-data">
+                                    <form action="/storepformal" method="POST" enctype="multipart/form-data">
                                         <div class="control-group after-add-more">
                                             @csrf
                                             @method('post')
@@ -583,7 +596,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1" class="form-label">Tingkat</label>
-                                                                    <select class="form-control selectpicker" name="tingkat_pendidikan" required>
+                                                                    <select class="form-control selectpicker" name="tingkat_pendidikan">
                                                                         <option value="">Pilih TingkatPendidikan</option>
                                                                         <option value="SD">SD</option>
                                                                         <option value="SMP">SMP</option>
@@ -595,7 +608,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Nama Sekolah</label>
-                                                                        <input type="text" name="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off" required>
+                                                                        <input type="text" name="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
                                                                         <div id="emailHelp" class="form-text">
                                                                         </div>
                                                                     </div>
@@ -605,7 +618,7 @@
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label"> Kota</label>
                                                                         <input type="text" name="kotaPendidikanFormal"  class="form-control"
-                                                                            id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Kota" required>
+                                                                            id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Kota">
                                                                         <div id="emailHelp" class="form-text">
                                                                         </div>
                                                                     </div>
@@ -615,7 +628,7 @@
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label"> Jurusan</label>
                                                                         <input type="text" name="jurusan" no_kk class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                                            placeholder="Masukkan Jurusan" autocomplete="off" required>
+                                                                            placeholder="Masukkan Jurusan" autocomplete="off">
                                                                         <div id="emailHelp" class="form-text">
                                                                         </div>
                                                                     </div>
@@ -626,7 +639,7 @@
                                                                         <label for="exampleInputEmail1" class="form-label">Lulus Tahun</label>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose20" type="text"  class="form-control" placeholder="yyyy" id="4"
-                                                                                    name="tahun_lulusFormal" rows="10" autocomplete="off" required></input><br>
+                                                                                    name="tahun_lulusFormal" rows="10" autocomplete="off"></input><br>
                                                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                         </div>
                                                                     </div>
@@ -673,7 +686,7 @@
                                                                 <div></div><br><br><br><br><br><br><br><br>
                                                                 <div class="pull-right">
                                                                     <button type="submit" name="submit" class="btn btn-sm btn-primary">Simpan</button>
-                                                                    <a href="#" class="btn btn-sm btn-danger">Selanjutnya</a>
+                                                                    <a href="#riwayatpekerjaan" data-toggle="tab" class="btn btn-sm btn-danger">Selanjutnya</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -699,24 +712,30 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Nama</th>
-                                                <th>No HP</th>
-                                                <th>Alamat</th>
-                                                <th>Hubungan Keluarga</th>
-                                                <th>Action</th>
+                                                <th>Nama Perusahaan</th>
+                                                <th>Jabatan</th>
+                                                <th>Lama Kerja</th>
+                                                <th>Gaji</th>
+                                                <th>Atasan Langsung</th>
+                                                <th>Direktur</th>
+                
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        
+                                            @foreach($pekerjaan as $pek)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $pek->nama_perusahaan }}</td>
+                                                    <td>{{ $pek->jabatan }}</td>
+                                                    <td>{{ $pek->lama_kerja }}</td>
+                                                    <td>{{ $pek->gaji }}</td>
+                                                    <td>{{ $pek->nama_atasan }}</td>
+                                                    <td>{{ $pek->nama_direktur }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table><br>
-                                    <form action="/karyawan/store_page" method="POST" enctype="multipart/form-data">
+                                    <form action="/storepekerjaan" method="POST" enctype="multipart/form-data">
                                         <div class="control-group after-add-more">
                                             @csrf
                                             @method('post')
@@ -908,7 +927,7 @@
                                                     </div>
                                                     <div class="pull-right">
                                                         <button type="submit" name="submit" class="btn btn-sm btn-primary">Simpan</button>
-                                                        <a href="#" class="btn btn-sm btn-danger">Selanjutnya</a>
+                                                        <a href="/karyawan" class="btn btn-sm btn-danger">Kembali</a>
                                                     </div>
                                                 </table>
                                             </div>
@@ -924,9 +943,7 @@
             </div>
         </div>
     </div> 
-
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/pages/datatables.init.js"></script>
+    
         {{-- <script src="assets/js/jquery.min.js"></script> --}}
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -939,15 +956,68 @@
     
         <!-- Plugins Init js -->
         <script src="assets/pages/form-advanced.js"></script>
-    <!-- Pre-load all tab content using jQuery -->
-    <script>
-        $(document).ready(function() {
-        $('.tab-content').find('.tab-pane').each(function(index, tab) {
-            var href = $(tab).attr('id');
-            var url = '/' + href + '/form'; // Replace with the URL of the tab content
-            $(tab).load(url);
-        });
-        });
-    </script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".add-more").click(function() {
+                    var html = $(".copy").html();
+                    $(".after-add-more").after(html);
+                });
+
+                // saat tombol remove dklik control group akan dihapus 
+                $("body").on("click", ".remove", function() {
+                    $(this).parents(".control-group").remove();
+                });
+            });
+        </script>
+
+        <script>
+            var rupiah = document.getElementById('gaji');
+            rupiah.addEventListener('keyup', function(e) {
+                // tambahkan 'Rp.' pada saat form di ketik
+                // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+                rupiah.value = formatRupiah(this.value);
+            });
+            /* Fungsi formatRupiah */
+            function formatRupiah(angka, prefix) {
+                var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                    split = number_string.split(','),
+                    sisa = split[0].length % 3,
+                    rupiah = split[0].substr(0, sisa),
+                    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+                // tambahkan titik jika yang di input sudah menjadi angka ribuan
+                if (ribuan) {
+                    separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+                return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+            }
+
+            function previewImage() {
+
+                const image = document.querySelector('#foto');
+                const imgPreview = document.querySelector('.img-preview');
+
+                imgPreview.style.display = 'block';
+
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+            }
+        </script>
+        <!-- Pre-load all tab content using jQuery -->
+        <script>
+            $(document).ready(function() {
+            $('.tab-content').find('.tab-pane').each(function(index, tab) {
+                var href = $(tab).attr('id');
+                var url = '/' + href + '/form'; // Replace with the URL of the tab content
+                $(tab).load(url);
+            });
+            });
+        </script>
     
 @endsection

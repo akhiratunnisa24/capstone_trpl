@@ -294,5 +294,14 @@ Route::post('/data-cuti-staffs/{id}', [DirekturController::class, 'leaverejected
 // });
 // Route::get('/sendmail', [MailController::class, 'index']);
 
-Route::get('karyawancreates', [KaryawansController::class, 'create'])->name('creates');
-Route::post('/storepage', [karyawansController::class, 'store_page'])->name('storepage');
+    Route::get('karyawancreates', [KaryawansController::class, 'create'])->name('creates');
+    Route::post('/storepage', [karyawansController::class, 'store_page'])->name('storepage');
+    Route::post('/storedatakeluarga', [karyawansController::class, 'storedk'])->name('storedk');
+    Route::post('/storekontakdarurat', [karyawansController::class, 'storekd'])->name('storekd');
+    Route::post('/storepformal', [karyawansController::class, 'storepformal'])->name('storepformal');
+    Route::post('/storepekerjaan', [karyawansController::class, 'storepekerjaan'])->name('storepekerjaan');
+    Route::put('/updateIdentitas/{id}', [karyawansController::class, 'update'])->name('update'); 
+    Route::put('/updateKeluarga/{id}', [karyawansController::class, 'updateKeluarga'])->name('updateKeluarga'); 
+    Route::put('/updateKontak/{id}', [karyawansController::class, 'updateKontak'])->name('updateKontak'); 
+    Route::put('/updatePendidikan/{id}', [karyawansController::class, 'updatePendidikan'])->name('updatePendidikan'); 
+    Route::put('/updatePekerjaan/{id}', [karyawansController::class, 'updatePekerjaan'])->name('updatePekerjaan'); 
