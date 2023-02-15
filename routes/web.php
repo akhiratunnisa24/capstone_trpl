@@ -294,3 +294,4 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
     // Route::get('/sendmail', [MailController::class, 'index']);
 
     Route::get('karyawancreates', [KaryawansController::class, 'create'])->name('creates');
+    Route::post('/storepage', [karyawansController::class, 'store_page'])->name('storepage');
