@@ -5,10 +5,12 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Console\Scheduling\Event;
-use App\Events\AbsenKaryawanEvent;
+use App\Mail\TidakmasukNotification;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Karyawan;
 use App\Models\Cuti;
 use App\Models\Izin;
+use App\Models\Alokasicuti;
 use App\Models\Absensi;
 use App\Models\Tidakmasuk;
 use App\Models\Resign;
@@ -68,24 +70,59 @@ class Kernel extends ConsoleKernel
                     $absen->tanggal = Carbon::today();
 
                     // cek apakah karyawan memiliki cuti pada hari ini
-                    $cuti = Cuti::where('id_karyawan', $karyawan->id)
+                    $cuti = Cuti::join('jeniscuti', 'cuti.id_jeniscuti', '=', 'jeniscuti.id')
+                    ->where('id_karyawan', $karyawan->id)
                     ->whereDate('tgl_mulai', '=', Carbon::today())
-                    // ->where('tgl_selesai', '>=', Carbon::today())
                     ->first();
-                    $izin = Izin::where('id_karyawan', $karyawan->id)
+
+                    $izin = Izin::join('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                    ->where('id_karyawan', $karyawan->id)
                     ->whereDate('tgl_mulai', '=', Carbon::today())
-                        // ->where('tgl_selesai', '>=', Carbon::today())
-                        ->first();
+                    ->first();
 
                     if ($cuti) {
-                        $absen->status = $cuti->id_jeniscuti;
+                        $absen->status = $cuti->jeniscuti->jenis_cuti;
                     } else if ($izin) {
-                        $absen->status = $izin->id_jenisizin;
+                        $absen->status = $izin->jenisizins->jenis_izin;
                     } else {
                         $absen->status = 'tanpa keterangan';
+
+                        $alokasicuti = Alokasicuti::where('id_jeniscuti', '=', 3)
+                            ->where('id_karyawan',  $absen->id_pegawai)
+                            ->first();
+                        $durasi_baru = $alokasicuti->durasi - 1;
+
+                        //update durasi di alokasicutikaryawan
+                        Alokasicuti::where('id_jeniscuti', $alokasicuti->id_jeniscuti)
+                            ->where('id_karyawan',  $absen->id_pegawai)
+                            ->update(
+                                ['durasi' => $durasi_baru]
+                            );
                     }
 
                     $absen->save();
+
+                    // Pengiriman Email Notifikasi jgn di hapus 
+
+                    // $alokasicuti2 = Alokasicuti::where('id_jeniscuti', '=', 3)
+                    //     ->where('id_karyawan',  $absen->id_pegawai)
+                    //     ->first();
+                    // $durasi_baru = $alokasicuti2->durasi - 1;
+
+                    // $epegawai = Karyawan::select('email as email', 'nama as nama')->where('id', '=', $absen->id_pegawai)->first();
+                    // $tujuan = $epegawai->email;
+                    // $data = [
+                    //     'subject'     => 'Notifikasi Pengurangan Jatah Cuti Tahunan',
+                    //     'id'          => $alokasicuti2->id_jeniscuti,
+                    //     'id_jeniscuti' => $alokasicuti2->jeniscutis->jenis_cuti,
+                    //     'keterangan'   => $absen->status,
+                    //     'tanggal'     => Carbon::parse($absen->tanggal)->format("d M Y"),
+                    //     'jml_cuti'    => 1,
+                    //     'nama'        => $epegawai->nama,
+                    //     'jatahcuti'   => $durasi_baru,
+                    // ];
+                    // Mail::to($tujuan)->send(new TidakmasukNotification($data));
+                    
                 }
 
                 $resigns = Resign::whereDate('tgl_resign', '=', now())
@@ -110,7 +147,8 @@ class Kernel extends ConsoleKernel
                     Log::info("Status_akun for user with ID: " . $user->id . " has been updated to 0");
                 }
                     
-        })->dailyAt('17:38');
+        })
+        ->dailyAt('19:50');
     
     
     }

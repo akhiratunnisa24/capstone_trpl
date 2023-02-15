@@ -12,4 +12,8 @@ class Jenisizin extends Model
     protected $fillable = [
                             'jenis_izin',
                         ];
+    public function izin()
+    {
+        return $this->hasMany(Izin::class, 'id');
+    }
 }
