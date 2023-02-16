@@ -11,6 +11,7 @@ use App\Models\Rpendidikan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class KaryawansController extends Controller
 {
@@ -22,8 +23,8 @@ class KaryawansController extends Controller
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Direktur'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direktur'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Management'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Management'])->get();
             $user = Karyawan::max('id');
             $datakeluarga = Keluarga::where('id_pegawai',$user)->get();
             $kontakdarurat = Kdarurat::where('id_pegawai',$user)->get();
@@ -58,8 +59,6 @@ class KaryawansController extends Controller
             $tujuan_upload = 'Foto_Profile';
             $fileFoto->move($tujuan_upload, $namaFile);
 
-            $maxId = Karyawan::max('id');
-
             $user = new Karyawan;
             $user->nama = $request->namaKaryawan;
             $user->tgllahir = $request->tgllahirKaryawan;
@@ -89,8 +88,12 @@ class KaryawansController extends Controller
             $user->gaji = $request->gaji;
             $user->tglkeluar = $request->tglkeluar;
             $user->save();
-
-            return redirect()->back()->withInput();
+            
+             // menyimpan data ke cache dengan key "karyawan_cache" selama 60 menit (1 jam)
+            Cache::put('karyawan_cache', $user, 60);
+    
+            return redirect()->back()->with('karyawan_cache', Cache::get('karyawan_cache'));
+           
         }else
         {
             $user = new Karyawan;
@@ -122,17 +125,26 @@ class KaryawansController extends Controller
             $user->tglkeluar = $request->tglkeluar;
             $user->save();
 
-            //  return redirect('karyawan');
-            return redirect()->back()->withInput();
+
+            Cache::put('karyawan_cache', $user, 60);
+            return redirect()->back()->with('karyawan_cache', Cache::get('karyawan_cache'));
+            // dd(Cache::get('karyawan_cache'));
+            // return view('admin.karyawan.creates', compact('user'));
+            // return redirect()->route('karyawancreates', ['tab' => 'datakeluarga']);
+           
         }
     }
 
     public function storedk(Request $request)
     {
-        $user = Karyawan::max('id');
+ 
+        $userFromCache = Cache::get('karyawan_cache');
+        $id = $userFromCache->id;
+
+
 
         $data_keluarga = array(
-            'id_pegawai' => $user,
+            'id_pegawai' =>$id,
             'status_pernikahan' => $request->post('status_pernikahan'),
             'nama' => $request->post('namaPasangan'),
             'tgllahir' => $request->post('tgllahirPasangan'),
@@ -143,9 +155,15 @@ class KaryawansController extends Controller
             'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
         );
-        Keluarga::insert($data_keluarga);
+        // Keluarga::insert($data_keluarga);user
+       
+        $cache_key = 'data_keluarga_' . $id;
+        Cache::put($cache_key, $data_keluarga, 60);
+        dd($userFromCache,$id,$data_keluarga,$cache_key);
 
-        return redirect()->back()->withInput();
+        return view('admin.karyawan.creates', compact('user','cache_key'));
+
+        // return redirect()->back()->withInput();
     }
 
     public function storekd(Request $request)

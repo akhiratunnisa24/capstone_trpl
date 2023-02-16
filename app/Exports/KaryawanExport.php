@@ -27,6 +27,7 @@ class KaryawanExport implements FromView, ShouldAutoSize
             'rpekerjaan'
             )
         ->get();
+        
 
         return view('admin.karyawan/karyawanExport', [
         
