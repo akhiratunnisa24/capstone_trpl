@@ -101,7 +101,12 @@
 
            
             {{-- DATA KELUARGA --}}
-            <label class="m-l-10"><h4>B. KELUARGA </h4></label>
+            <div class="row">
+                <label class="m-l-10"><h4>B. KELUARGA </h4></label>
+                <a class="btn btn-sm btn-dark pull-right" data-toggle="modal" data-target="#addDataKeluarga" style="margin-right:10px;margin-top:10px">
+                    <i class="fa fa-plus"> <strong> Add Data Keluarga</strong></i>
+                </a>
+            </div>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -138,7 +143,12 @@
             {{-- END DATA KELUARGA --}}
 
             {{-- KONTAK DARURAT --}}
-            <label class="" width="50%"><h4>C. KONTAK DARURAT </h4></label>
+            <div class="row">
+                <label class="" width="50%"><h4>C. KONTAK DARURAT </h4></label>
+                <a class="btn btn-sm btn-dark pull-right" data-toggle="modal" data-target="#addKontak" style="margin-right:10px;margin-top:10px">
+                    <i class="fa fa-plus"> <strong> Add Kontak Darurat</strong></i>
+                </a>
+            </div>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -173,7 +183,12 @@
 
             {{-- RIWAYAT PENDIDIKAN --}}
             <label class="" width="50%"><h4>D. RIWAYAT PENDIDIKAN </h4></label><br>
-            <td style="width:25%"><label class="text-white badge bg-info"> Pendidikan Formal </label></td>
+            <div class="row">
+                <td style="width:25%"><label class="text-white badge bg-info"> Pendidikan Formal </label></td>
+                <a class="btn btn-sm btn-dark pull-right" data-toggle="modal" data-target="#addPendidikan" style="margin-right:10px;margin-bottom:10px">
+                    <i class="fa fa-plus"> <strong> Add Pendidikan Formal</strong></i>
+                </a>
+            </div>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -209,7 +224,13 @@
                 </tbody>
             </table>
 
-            <td style="width:25%"><label class="text-white badge bg-info"> Pendidikan Non Formal </label></td>
+            <div class="row">
+                <td style="width:25%"><label class="text-white badge bg-info"> Pendidikan Non Formal </label></td>
+                <a class="btn btn-sm btn-dark pull-right" data-toggle="modal" data-target="#addPnformal" style="margin-right:10px;margin-bottom:10px">
+                    <i class="fa fa-plus"> <strong> Add Pend. Non Formal</strong></i>
+                </a>
+            </div>
+            @include('admin.karyawan.addPnformal')
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -240,7 +261,12 @@
             {{-- END RIWAYAT PENDIDIKAN --}}
 
             {{-- RIWAYAT PEKERJAAN --}}
-            <label class="" width="50%"><h4>E. RIWAYAT PEKERJAAN </h4></label>
+            <div class="row m-t-10">
+                <label class="" width="50%"><h4>E. RIWAYAT PEKERJAAN </h4></label>
+                <a class="btn btn-sm btn-dark pull-right" data-toggle="modal" data-target="#addPekerjaan" style="margin-right:10px;margin-bottom:10px">
+                    <i class="fa fa-plus"> <strong> Add Data Pekerjaan</strong></i>
+                </a>
+            </div>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>

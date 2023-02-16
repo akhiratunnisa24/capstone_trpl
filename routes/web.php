@@ -229,7 +229,7 @@ Route::get('/absensi-tidak-masuk-excel', [TidakMasukController::class, 'tidakMas
 
 //KPI
 Route::get('/masterkpi', [MasterkpiController::class, 'index'])->name('master.index');
-Route::get('/indikator-kpi', [IndicatorController::class, 'index'])->name('indicator.index');
+// Route::get('/indikator-kpi', [IndicatorController::class, 'index'])->name('indicator.index');
 
 //================================================================================
 //ROLE MANAGER atau SUPERVISOR

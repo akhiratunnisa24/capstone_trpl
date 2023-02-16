@@ -110,10 +110,12 @@ use Illuminate\Support\Facades\DB;
             <td>{{ $k->keluarga->pendidikan_terakhir }}</td>
             <td>{{ $k->keluarga->pekerjaan }}</td>
             {{-- KONTAK DARURAT  --}}
-            <td>{{ $k->kdarurat->nama }}</td>
-            <td>{{ $k->kdarurat->alamat }}</td>
-            <td>{{ $k->kdarurat->no_hp }}</td>
-            <td>{{ $k->kdarurat->hubungan }}</td>
+            @if($k->id == $k->kdarurat->id_pegawai)
+                <td>{{ $k->kdarurat->nama }}</td>
+                <td>{{ $k->kdarurat->alamat }}</td>
+                <td>{{ $k->kdarurat->no_hp }}</td>
+                <td>{{ $k->kdarurat->hubungan }}</td>
+            @endif
             
         </tr>
         @endforeach
