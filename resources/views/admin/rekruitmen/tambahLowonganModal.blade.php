@@ -21,18 +21,27 @@
                             required>
                     </div>
 
-                    <div class="form-group col-xs-12">
+                    {{-- <div class="form-group col-xs-12">
                         <label for="roles">Pilih Tahapan</label>
                         @foreach ($metode as $m)    
                             <div class="checkbox checkbox-success" >
-                                {{-- <input type="checkbox" name="checkbox[]" value="1"> --}}
+                                <input type="checkbox" name="checkbox[]" value="1">
                                 <input type="checkbox" id="checkbox{{ $loop->iteration }}" class="form-check-input" name="tahapan[]"
                                     value="{{ $m->id }}" >
                                 <label for="checkbox{{ $loop->iteration }}">
                                     {{ $m->nama_tahapan }}
-                                </label>    
+                                </label>
                             </div>
                         @endforeach
+                    </div> --}}
+
+                    <div class="form-group col-xs-12">
+                        <label for="roles">Pilih Tahapan</label>
+                        <select class="form-control" name="tahapan[]" multiple>
+                            @foreach ($metode as $m)    
+                                <option value="{{ $m->id }}">{{ $m->nama_tahapan }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group col-xs-12">
@@ -87,10 +96,10 @@
             }
         }
 
-        if (!checkboxChecked) {
-            alert('Harus memilih minimal 1 tahapan');
-            return false;
-        }
+        // if (!checkboxChecked) {
+        //     alert('Harus memilih minimal 1 tahapan');
+        //     return false;
+        // }
 
         return true;
     }

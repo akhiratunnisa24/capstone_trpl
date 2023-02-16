@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\RekruitmenNotification;
-use App\Mail\RekruitmenDiterimaNotification;
 use App\Models\MetodeRekruitmen;
 use App\Models\NamaTahap;
 use App\Models\StatusRekruitmen;
@@ -81,12 +80,12 @@ class RekruitmenController extends Controller
         $user->persyaratan = $request->persyaratan;
         $user->save();
 
-        $checkbox = $request->tahapan;
-        $data = [];
-        $data[] = [
-            'id_lowongan' => $user->id,
-            'id_mrekruitmen' => 1
-        ];
+        // $checkbox = $request->tahapan;
+        // $data = [];
+        // $data[] = [
+        //     'id_lowongan' => $user->id,
+        //     'id_mrekruitmen' => 1
+        // ];
             
         // foreach ($checkbox as $value) {
         //     $data[] = [
@@ -95,18 +94,41 @@ class RekruitmenController extends Controller
         //     ];
         // }
 
-         foreach ($checkbox as $value) {
-            $data[] = [
-                'id_lowongan' => $user->id,
-                'id_mrekruitmen' => $value
-            ];
-        }
+        // $data[] = [
+        //     'id_lowongan' => $user->id,
+        //     'id_mrekruitmen' => 6
+        // ];
+        // DB::table('namatahapan')->insert($data);
 
-        $data[] = [
-            'id_lowongan' => $user->id,
-            'id_mrekruitmen' => 6
-        ];
-        DB::table('namatahapan')->insert($data);
+        $tahapan = $request->tahapan;
+$data = [];
+$urutan = 1;
+
+$data[] = [
+    'id_lowongan' => $user->id,
+    'id_mrekruitmen' => 1,
+    'urutan' => $urutan
+];
+
+foreach ($tahapan as $id_tahapan) {
+    $urutan++;
+    $data[] = [
+        'id_lowongan' => $user->id,
+        'id_mrekruitmen' => $id_tahapan,
+        'urutan' => $urutan
+    ];
+}
+
+$urutan++;
+$data[] = [
+    'id_lowongan' => $user->id,
+    'id_mrekruitmen' => 6,
+    'urutan' => $urutan
+];
+
+DB::table('namatahapan')->insert($data);
+
+
 
 
         return redirect()->back();
@@ -242,26 +264,13 @@ class RekruitmenController extends Controller
             ]
         );
 
-        $status_lamaran_baru = $request->post('status_lamaran');
-
         $data = Rekruitmen::findOrFail($id);
         $tujuan = $data->email;
-
-        // $email = new RekruitmenNotification($data);
-        // Mail::to($tujuan)->send($email);
-
-        if ($status_lamaran_baru == 6) {
-            $email = new RekruitmenDiterimaNotification($data);
-            Mail::to($tujuan)->send($email);
-        }
-        else {
-            $email = new RekruitmenNotification($data);
-            Mail::to($tujuan)->send($email);
-        }
-
-
+        $email = new RekruitmenNotification($data);
+        Mail::to($tujuan)->send($email);
 
         $rekrutmen = Rekruitmen::find($id);
+
         if ($rekrutmen->status_lamaran == '6') {
             $lowongan = Lowongan::find($rekrutmen->id_lowongan);
             $lowongan->jumlah_dibutuhkan--;
