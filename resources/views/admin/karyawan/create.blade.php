@@ -781,9 +781,9 @@
                                                                                                         <input
                                                                                                             type="text"
                                                                                                             name="alasanBerhenti"
-                                                                                                            no_kk
-                                                                                                            class="form-control"
-                                                                                                            id="exampleInputEmail1"
+                                                                                                                no_kk
+                                                                                                                class="form-control"
+                                                                                                                id="exampleInputEmail1"
                                                                                                             aria-describedby="emailHelp"
                                                                                                             placeholder="Masukkan Alasan Berhenti" autocomplete="off">
                                                                                                         <div id="emailHelp"
@@ -840,7 +840,7 @@
             </div>
     </div>
     </table>
-    </div>
+    </div>  
     </div>
     </form>
     </div>

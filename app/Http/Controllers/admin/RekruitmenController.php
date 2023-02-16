@@ -118,6 +118,20 @@ class RekruitmenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function rekrutmenupdate(Request $request, $id)
+    {
+
+        Lowongan::where('id', $id)->update(
+            ['jumlah_dibutuhkan' => $request->post('jumlahDibutuhkan'),
+             'status' => $request->post('statusLowongan'),
+            ]
+        );
+
+        return redirect()->back();
+    }
+
+
     public function show($id) 
     {
         $role = Auth::user()->role;

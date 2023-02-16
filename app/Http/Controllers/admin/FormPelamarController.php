@@ -6,6 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lowongan;
 use App\Models\Rekruitmen;
+use App\Models\Karyawan;
+use App\Models\Kdarurat;
+use App\Models\Keluarga;
+use App\Models\Departemen;
+use App\Models\Rpekerjaan;
+use App\Models\Rpendidikan;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 
@@ -72,6 +79,29 @@ class FormPelamarController extends Controller
         $posisi = Lowongan::all()->where('status', '=', 'Aktif');
         $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
 
-        return view('admin.rekruitmen.tambahKaryawanBaru');
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $departemen     = Departemen::all();
+        $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager', 'Direktur'])->get();
+        $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Direktur'])->get();
+        $user = Karyawan::max('id');
+        $datakeluarga = Keluarga::where('id_pegawai', $user)->get();
+        $kontakdarurat = Kdarurat::where('id_pegawai', $user)->get();
+        $pformal = Rpendidikan::where('id_pegawai', $user)->where('jenis_pendidikan', '=', null)->get();
+        $nonformal = Rpendidikan::where('id_pegawai', $user)->where('jenis_pendidikan', '!=', null)->get();
+        $pekerjaan = Rpekerjaan::where('id_pegawai', $user)->get();
+        $output = [
+            'row' => $row,
+            'departemen' => $departemen,
+            'atasan_pertama' => $atasan_pertama,
+            'atasan_kedua' => $atasan_kedua,
+            'user' => $user,
+            'datakeluarga' => $datakeluarga,
+            'kontakdarurat' => $kontakdarurat,
+            'pformal' =>  $pformal,
+            'nonformal' => $nonformal,
+            'pekerjaan' => $pekerjaan,
+        ];
+        
+        return view('admin.rekruitmen.tambahKaryawanBaru', $output);
     }
 }

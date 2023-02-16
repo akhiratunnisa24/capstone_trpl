@@ -42,12 +42,14 @@
             <br>
             <div  class="row">
                 <div class="col-md-6">
+
                     <div class="form-group">
                         <div class="mb-3">
                             <label>Nama Lengkap</label>
                             <input name="namaKaryawan" type="text" class="form-control" value="{{$karyawan->nama}}">
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <div class="mb-3">
                            <label>NIK</label> 

@@ -59,10 +59,17 @@
                                                 class="btn btn-danger btn-sm">
                                                 <i class="fa fa-trash" hidden></i>
                                             </button>
+                                            <button data-toggle="modal"
+                                                        data-target="#myModal{{ $k->id }}" class="btn btn-info btn-sm">
+                                                <i class="fa fa-pencil" hidden></i>
+                                            </button>
                                         </div>
                                     </div>
                             </div>
+                            @include('admin.rekruitmen.editLowonganModal')
+
                             @endforeach
+                            
                         </div>
 
                         {{-- <a href="{{ url('Form-Rekruitmen-RYNEST') }}">Apply</a> --}}

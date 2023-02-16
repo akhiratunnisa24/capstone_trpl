@@ -80,6 +80,9 @@ Route::get('showkaryawantidakmasuk', [karyawanController::class, 'showkaryawanti
 Route::get('data_rekrutmen', [RekruitmenController::class, 'index'])->name('data_rekrutmen');
 Route::post('store_rekrutmen', [RekruitmenController::class, 'store'])->name('store_rekrutmen');
 Route::get('show_rekrutmen{id}', [RekruitmenController::class, 'show'])->name('show_rekrutmen');
+
+Route::put('rekrutmenupdate{id}', [RekruitmenController::class, 'rekrutmenupdate'])->name('update');
+
 Route::get('show_formSelesai', [RekruitmenController::class, 'formSelesai'])->name('formSelesai');
 Route::get('show_kanidat{id}', [RekruitmenController::class, 'show_kanidat'])->name('show_kanidat');
 Route::post('update_pelamar{id}', [RekruitmenController::class, 'update'])->name('update_pelamar');
