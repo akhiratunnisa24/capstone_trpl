@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('namatahapan', function (Blueprint $table) {
             $table->id();
 
-            $table->string('id_lowongan')->nullable();
+            $table->integer('id_lowongan')->nullable();
             $table->integer('id_mrekruitmen')->nullable();
             $table->integer('urutan')->nullable();
 

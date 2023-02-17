@@ -30,6 +30,7 @@
         {{-- <div class="content-page"> --}}
         <!-- Start content -->
         <div class="content">
+            
             <div class="container">
                 <form action="store_pelamar" method="POST" enctype="multipart/form-data" onsubmit="return confirmSave()">
                     @csrf
@@ -39,11 +40,6 @@
                         <div class="col-sm-12">
                             <div class="page-header-title">
                                 <h4 class="pull-left page-title">Form Penerimaan Rekruitmen</h4>
-                                <ol class="breadcrumb pull-right">
-                                    <li><a href="#">RYNEST TI</a></li>
-                                    <li><a href="#">Form</a></li>
-                                    <li class="active">Form Rekruitmen</li>
-                                </ol>
                                 <div class="clearfix"></div>
                             </div>
                         </div>

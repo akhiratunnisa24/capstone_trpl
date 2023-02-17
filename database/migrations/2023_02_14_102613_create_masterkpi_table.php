@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('masterkpi', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_departemen');
-            $table->string('nama_job');
+            $table->string('nama_master');
             $table->string('bobot',10);
             $table->string('target',10);
             $table->date('tglaktif');

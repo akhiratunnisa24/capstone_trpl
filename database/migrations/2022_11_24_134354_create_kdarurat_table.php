@@ -18,9 +18,9 @@ return new class extends Migration
 
             $table->integer('id_pegawai');
             $table->string('nama')->nullable();
-            $table->string('alamat');            
-            $table->string('no_hp');
-            $table->string('hubungan');
+            $table->string('alamat')->nullable();          
+            $table->string('no_hp')->nullable();
+            $table->string('hubungan')->nullable();
 
 
             $table->timestamps();

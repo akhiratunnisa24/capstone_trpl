@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('settingalokasi', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_jeniscuti');
-            $table->enum('tipe_alokasi',['Reguler','Aktual'])->nullable();
             $table->integer('durasi');
             $table->string('mode_alokasi',50)->nullable();
             $table->unsignedBigInteger('departemen')->nullable();

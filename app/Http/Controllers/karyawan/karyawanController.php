@@ -856,8 +856,14 @@ if ($file = $request->file('foto')) {
 
     public function destroy(Request $request, $id)
     {
-        Karyawan::destroy($id);
-        return redirect('karyawan');
+        $karyawan = Karyawan::find($id);
+        $karyawan->keluarga()->delete();
+        $karyawan->kdarurat()->delete();
+        $karyawan->rpekerjaan()->delete();
+        $karyawan->rpendidikan()->delete();
+        $karyawan->delete();
+
+        return redirect()->back();
     }
 
     public function editPassword(Request $data, $id)
