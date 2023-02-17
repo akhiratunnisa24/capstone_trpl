@@ -42,11 +42,13 @@ class TidakMasukController extends Controller
                 ->whereMonth('tanggal', $bulan)
                 ->whereYear('tanggal',$tahun)
                 ->get();
+                // dd($tidakmasuk);
             }else
             {
                 $tidakmasuk = Tidakmasuk::with('departemen')
                 ->orderBy('tanggal','desc')
                 ->get();
+                // dd($tidakmasuk);
             }
             return view('admin.tidakmasuk.index',compact('tidakmasuk','karyawan','row'));
             

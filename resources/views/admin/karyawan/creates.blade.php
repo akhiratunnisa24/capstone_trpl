@@ -752,8 +752,6 @@
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Nama  Perusahaan</label>
                                                                         <input type="text" name="namaPerusahaan"  class="form-control"  placeholder="Masukkan Nama Perusahaan" autocomplete="off">
-                                                                        <div id="emailHelp" class="form-text">
-                                                                        </div>
                                                                     </div>
                                                                 </div>
 
@@ -762,162 +760,61 @@
                                                                         <label for="exampleInputEmail1" class="form-label">  Alamat </label>
                                                                         <input type="text"  name="alamatPerusahaan" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                                                                             placeholder="Masukkan Alamat"autocomplete="off">
-                                                                        <div id="emailHelp"class="form-text">
-                                                                        </div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label
-                                                                            for="exampleInputEmail1"
-                                                                            class="form-label">
-                                                                            Jenis Usaha</label>
-                                                                        <input type="text"
-                                                                            name="jenisUsaha"
-                                                                            no_kk
-                                                                            class="form-control"
-                                                                            id="exampleInputEmail1"
-                                                                            aria-describedby="emailHelp"
-                                                                            placeholder="Masukkan Jenis Usaha" autocomplete="off">
-                                                                        <div id="emailHelp"
-                                                                            class="form-text">
-                                                                        </div>
+                                                                        <label for="exampleInputEmail1" class="form-label">Jenis Usaha</label>
+                                                                        <input type="text" name="jenisUsaha" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Jenis Usaha" autocomplete="off">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label
-                                                                            for="exampleInputEmail1"
-                                                                            class="form-label">
-                                                                            Jabatan</label>
-                                                                        <input type="text"
-                                                                            name="jabatanRpkerejaan"
-                                                                            no_kk
-                                                                            class="form-control"
-                                                                            id="exampleInputEmail1"
-                                                                            aria-describedby="emailHelp"
-                                                                            placeholder="Masukkan Jabatan" autocomplete="off">
-                                                                        <div id="emailHelp"
-                                                                            class="form-text">
-                                                                        </div>
+                                                                        <label for="exampleInputEmail1" class="form-label"> Jabatan</label>
+                                                                        <input type="text" name="jabatanRpkerejaan" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Jabatan" autocomplete="off">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label
-                                                                            for="exampleInputEmail1"
-                                                                            class="form-label">
-                                                                            Nama Atasan
-                                                                            Langsung</label>
-                                                                        <input type="text"
-                                                                            name="namaAtasan"
-                                                                            no_kk
-                                                                            class="form-control"
-                                                                            id="exampleInputEmail1"
-                                                                            aria-describedby="emailHelp"
-                                                                            placeholder="Masukkan Nama Atasan" autocomplete="off">
-                                                                        <div id="emailHelp"
-                                                                            class="form-text">
-                                                                        </div>
+                                                                        <label for="exampleInputEmail1" class="form-label"> Nama Atasan Langsung</label>
+                                                                        <input type="text" name="namaAtasan" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Nama Atasan" autocomplete="off">
+                                                                    
                                                                     </div>
                                                                 </div>
-
-                                                                {{-- <div class="form-group">
-                                                                    <div class="mb-3">
-                                                                        <button class="btn btn-success btn-sm"><i class="fa fa-user-plus"></i>
-                                                                        </button>
-                                                                        <div id="emailHelp"
-                                                                            class="form-text">
-                                                                        </div>
-                                                                    </div>
-                                                                </div> --}}
                                                             </div>
 
                                                             {{-- KANAN --}}
                                                             <div class="col-md-6 m-t-10">
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label
-                                                                            for="exampleInputEmail1"
-                                                                            class="form-label">
-                                                                            Nama
-                                                                            Direktur</label>
-                                                                        <input
-                                                                            type="text"
-                                                                            name="namaDirektur"
-                                                                            no_kk
-                                                                            class="form-control"
-                                                                            id="exampleInputEmail1"
-                                                                            aria-describedby="emailHelp"
-                                                                            placeholder="Masukkan Nama Direktur" autocomplete="off">
-                                                                        <div id="emailHelp"
-                                                                            class="form-text">
-                                                                        </div>
+                                                                        <label for="exampleInputEmail1" class="form-label">  Nama Direktur</label>
+                                                                        <input type="text" name="namaDirektur" class="form-control" id="exampleInputEmail1"
+                                                                            aria-describedby="emailHelp" placeholder="Masukkan Nama Direktur" autocomplete="off">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label
-                                                                            for="exampleInputEmail1"
-                                                                            class="form-label">
-                                                                            Lama
-                                                                            Kerja</label>
-                                                                        <input
-                                                                            type="text"
-                                                                            name="lamaKerja"
-                                                                            no_kk
-                                                                            class="form-control"
-                                                                            id="exampleInputEmail1"
-                                                                            aria-describedby="emailHelp"
-                                                                            placeholder="Masukkan Lama Kerja" autocomplete="off">
-                                                                        <div id="emailHelp"
-                                                                            class="form-text">
-                                                                        </div>
+                                                                        <label for="exampleInputEmail1" class="form-label">Lama Kerja</label>
+                                                                        <input  type="text" name="lamaKerja" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Lama Kerja" autocomplete="off">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label
-                                                                            for="exampleInputEmail1"
-                                                                            class="form-label">
-                                                                            Alasan
-                                                                            Berhenti</label>
-                                                                        <input
-                                                                            type="text"
-                                                                            name="alasanBerhenti"
-                                                                            no_kk
-                                                                            class="form-control"
-                                                                            id="exampleInputEmail1"
-                                                                            aria-describedby="emailHelp"
-                                                                            placeholder="Masukkan Alasan Berhenti" autocomplete="off">
-                                                                        <div id="emailHelp"
-                                                                            class="form-text">
-                                                                        </div>
+                                                                        <label for="exampleInputEmail1" class="form-label">Alasan Berhenti</label>
+                                                                        <input type="text"  name="alasanBerhenti" class="form-control" id="exampleInputEmail1"  aria-describedby="emailHelp" placeholder="Masukkan Alasan Berhenti" autocomplete="off">
+                                                                        
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label
-                                                                            for="exampleInputEmail1"
-                                                                            class="form-label">
-                                                                            Gaji</label>
-                                                                        <input
-                                                                            type="text"
-                                                                            name="gajiRpekerjaan"
-                                                                            no_kk
-                                                                            class="form-control"
-                                                                            id="gaji"
-                                                                            aria-describedby="emailHelp"
-                                                                            placeholder="Masukkan Gaji" autocomplete="off">
-                                                                        <div id="emailHelp"
-                                                                            class="form-text">
-                                                                        </div>
+                                                                        <label for="exampleInputEmail1" class="form-label">Gaji</label>
+                                                                        <input type="text" name="gajiRpekerjaan" class="form-control" id="gaji" aria-describedby="emailHelp" placeholder="Masukkan Gaji" autocomplete="off">
                                                                     </div>
                                                                 </div>
 

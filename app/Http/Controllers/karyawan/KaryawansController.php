@@ -137,11 +137,8 @@ class KaryawansController extends Controller
 
     public function storedk(Request $request)
     {
- 
         $userFromCache = Cache::get('karyawan_cache');
         $id = $userFromCache->id;
-
-
 
         $data_keluarga = array(
             'id_pegawai' =>$id,
@@ -162,16 +159,68 @@ class KaryawansController extends Controller
         dd($userFromCache,$id,$data_keluarga,$cache_key);
 
         return view('admin.karyawan.creates', compact('user','cache_key'));
-
-        // return redirect()->back()->withInput();
     }
+
+    public function storedatakel(Request $request,$id)
+    {
+        $idk = Karyawan::findorFail($id);
+
+        $data_keluarga = array(
+            'id_pegawai' =>$idk->id,
+            'status_pernikahan' => $request->post('status_pernikahan'),
+            'nama' => $request->post('namaPasangan'),
+            'tgllahir' => $request->post('tgllahirPasangan'),
+            'alamat' => $request->post('alamatPasangan'),
+            'pendidikan_terakhir' => $request->post('pendidikan_terakhirPasangan'),
+            'pekerjaan' => $request->post('pekerjaanPasangan'),
+            'hubungan' => $request->post('hubungankeluarga'),
+            'created_at' => new \DateTime(),
+            'updated_at' => new \DateTime(),
+        );
+        Keluarga::insert($data_keluarga);
+        return redirect()->back()->withInput();
+    }
+
 
     public function storekd(Request $request)
     {
         $user = Karyawan::max('id');
 
+        if($user)
+        {
+            $data_kdarurat = array(
+                'id_pegawai' => $user,
+                'nama' => $request->post('namaKdarurat'),
+                'alamat' => $request->post('alamatKdarurat'),
+                'no_hp' => $request->post('no_hpKdarurat'),
+                'hubungan' => $request->post('hubunganKdarurat'),
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+            );
+            Kdarurat::insert($data_kdarurat);
+            return redirect()->back()->withInput();
+        }else
+        {
+            $data_kdarurat = array(
+                'id_pegawai' => $request->post('idpegawai'),
+                'nama' => $request->post('namaKdarurat'),
+                'alamat' => $request->post('alamatKdarurat'),
+                'no_hp' => $request->post('no_hpKdarurat'),
+                'hubungan' => $request->post('hubunganKdarurat'),
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+            );
+            Kdarurat::insert($data_kdarurat);
+            return redirect()->back()->withInput();
+        }
+    }
+
+    public function storekonrat(Request $request,$id)
+    {
+        $idk = Karyawan::findorFail($id);
+
         $data_kdarurat = array(
-            'id_pegawai' => $user,
+            'id_pegawai' => $idk->id,
             'nama' => $request->post('namaKdarurat'),
             'alamat' => $request->post('alamatKdarurat'),
             'no_hp' => $request->post('no_hpKdarurat'),
@@ -181,7 +230,6 @@ class KaryawansController extends Controller
         );
         Kdarurat::insert($data_kdarurat);
         return redirect()->back()->withInput();
-        // dd($data_kdarurat);
     }
 
     public function storepformal(Request $request)
@@ -228,10 +276,56 @@ class KaryawansController extends Controller
         return redirect()->back()->withInput();
     }
 
+    //store setelah show data karyawan
+    public function storespformal(Request $request,$id)
+    {
+        $idk = Karyawan::findorFail($id);
+        if($request->tingkat_pendidikan)
+        {
+            $r_pendidikan = array(
+                'id_pegawai' => $idk->id,
+                'tingkat' => $request->post('tingkat_pendidikan'),
+                'nama_sekolah' => $request->post('nama_sekolah'),
+                'kota_pformal' => $request->post('kotaPendidikanFormal'),
+                'jurusan' => $request->post('jurusan'),
+                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
+
+                'jenis_pendidikan' =>null,
+                'kota_pnonformal' => null,
+                'tahun_lulus_nonformal' =>null,
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+            );
+    
+            Rpendidikan::insert($r_pendidikan);
+            return redirect()->back()->withInput();
+        }else
+        {
+            $r_pendidikan = array(
+                'id_pegawai' => $idk->id,
+                'tingkat' => null,
+                'nama_sekolah' =>null,
+                'kota_pformal' => null,
+                'jurusan' => null,
+                'tahun_lulus_formal' =>null,
+
+                'jenis_pendidikan' => $request->post('jenis_pendidikan'),
+                'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
+                'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+            );
+    
+            Rpendidikan::insert($r_pendidikan);
+            return redirect()->back()->withInput();
+        }
+    }
+
+    //store ketika creates data
     public function storepekerjaan(Request $request)
     {
+    
         $user = Karyawan::max('id');
-
         $r_pekerjaan = array(
             'id_pegawai' => $user,
             'nama_perusahaan' => $request->post('namaPerusahaan'),
@@ -243,16 +337,35 @@ class KaryawansController extends Controller
             'lama_kerja' => $request->post('lamaKerja'),
             'alasan_berhenti' => $request->post('alasanBerhenti'),
             'gaji' => $request->post('gajiRpekerjaan'),
-
+    
             'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
-
         );
         Rpekerjaan::insert($r_pekerjaan);
-
         return redirect()->back()->withInput();
     }
 
+    //store ketika show data
+    public function storespekerjaan(Request $request,$id)
+    {
+        $idk = Karyawan::findorFail($id);
+        $r_pekerjaan = array(
+            'id_pegawai' => $idk->id,
+            'nama_perusahaan' => $request->post('namaPerusahaan'),
+            'alamat' => $request->post('alamatPerusahaan'),
+            'jenis_usaha' => $request->post('jenisUsaha'),
+            'jabatan' => $request->post('jabatanRpkerejaan'),
+            'nama_atasan' => $request->post('namaAtasan'),
+            'nama_direktur' => $request->post('namaDirektur'),
+            'lama_kerja' => $request->post('lamaKerja'),
+            'alasan_berhenti' => $request->post('alasanBerhenti'),
+            'gaji' => $request->post('gajiRpekerjaan'),
+            'created_at' => new \DateTime(),
+            'updated_at' => new \DateTime(),
+        );
+        Rpekerjaan::insert($r_pekerjaan);
+        return redirect()->back()->withInput();
+    }
 
     public function update(Request $request,$id)
     {
@@ -408,4 +521,11 @@ class KaryawansController extends Controller
         Rpekerjaan::where('id', $idPekerjaan)->update($r_pekerjaan);
         return redirect()->back();
     }
+
+    public function destroy(Request $request,$id)
+    {
+        Rpekerjaan::destroy($id);
+        return redirect('karyawan');
+    }
+    
 }

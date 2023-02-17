@@ -3,11 +3,56 @@
 @section('content')
 
 <!-- Header -->
+{{-- <div class="col-10">
+	<div class="d-flex py-5">
+		<div class="w-80p h-80p rounded-circle overflow-hidden">
+			<div class="avatar d-inline">
+				<span aria-live="polite" aria-busy="true">
+					<span class="react-loading-skeleton avatar-img rounded-circle user" style="border-radius:50%">
+‌					</span>
+				</span>
+			</div>
+		</div>
+		<div class="flex-grow-1 mt-1 ms-4">
+			<div class="mb-0">
+				<span class="text-muted font-size-14">Selamat Datang,</span>
+			</div>
+			<span class="d-block mb-2">
+				<h4 class="fw-bolder mb-3">
+				</h4>
+			</span>
+		</div>
+	</div>
+</div> --}}
 <div class="row">
     <div class="col-sm-12">
-
+        {{-- <div class="page-header-title"> --}}
+            {{-- <div class="flex-grow-1 mt-1 ms-4 col-mb-12 d-flex">
+                <div class="col-mb-5" style="margin-left:20px">
+                    <a href="" class="dropdown-toggle profile waves-effect waves-light"><img src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="user-img" class="img-circle" style="width:80px;height:80px"> </a>
+                        <span class="text-muted font-size-14">Selamat Datang,</span>
+                        <span class="d-block mb-2"><h4 class="fw-bolder mb-3">{{$karyawan->nama}}</h4></span>
+                </div>
+                    {{-- <div class="d-block mb-2 ms-3">
+                        <h4 class="fw-bolder mb-3">{{$karyawan->nama}}</h4>
+                    </div> --}} 
+                {{-- </div>
+            </div> --}}
+            
+            {{-- <div class="flex-grow-1 mt-1 ms-4 col-mb-12">
+                <div class="col-mb-3" style="margin-left:20px">
+                    <a href="" class="dropdown-toggle profile waves-effect waves-light"><img src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="user-img" class="img-circle" style="width:100px;height:100px"> </a>
+                </div>
+                <div class='col-mb-9' style="margin-left:20px">
+                    <div class="mb-0">
+                        <span class="text-muted font-size-14">Selamat Datang,</span>
+                    </div>
+                    <span class="d-block mb-2"><h4 class="fw-bolder mb-3">{{$karyawan->nama}}</h4></span>
+                </div>
+            </div> --}}
+        {{-- </div> --}}
         <div class="page-header-title">
-            <h4 class="pull-left page-title ">Detail Karyawan</h4>
+            <h4 class="pull-left page-title ">Profile</h4>
 
             <ol class="breadcrumb pull-right">
                 <li>Human Resources Management System</li>
