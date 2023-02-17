@@ -21,7 +21,7 @@
                             required>
                     </div>
 
-                    {{-- <div class="form-group col-xs-12">
+                    <div class="form-group col-xs-12">
                         <label for="roles">Pilih Tahapan</label>
                         @foreach ($metode as $m)    
                             <div class="checkbox checkbox-success" >
@@ -33,16 +33,16 @@
                                 </label>
                             </div>
                         @endforeach
-                    </div> --}}
+                    </div>
 
-                    <div class="form-group col-xs-12">
+                    {{-- <div class="form-group col-xs-12">
                         <label for="roles">Pilih Tahapan</label>
                         <select class="form-control" name="tahapan[]" multiple>
                             @foreach ($metode as $m)    
                                 <option value="{{ $m->id }}">{{ $m->nama_tahapan }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group col-xs-12">
                         <label class="form-label">Jumlah Dibutuhkan</label>
