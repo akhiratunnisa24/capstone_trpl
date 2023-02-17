@@ -4,6 +4,7 @@ namespace App\Http\Controllers\karyawan;
 
 use Carbon\Carbon;
 use App\Models\Izin;
+use App\Models\Status;
 use App\Models\Karyawan;
 use App\Models\Departemen;
 use Illuminate\Http\Request;
@@ -29,6 +30,8 @@ class IzinkaryawanController extends Controller
     {
         $karyawan = Auth::user()->id_pegawai;
         // $karyawan = Auth::user()->karyawans->id;
+        $status = Status::find(1);
+        
         if($request->id_jenisizin == 1 || $request->id_jenisizin == 2)
         {
             $validate = $request->validate([
@@ -55,7 +58,7 @@ class IzinkaryawanController extends Controller
             $time_range= $jamselesai->diff($jammulai)->format("%H:%I");
 
             $izin->jml_jam     = $time_range;
-            $izin->status      = 'Pending';
+            $izin->status      = $status->id;
             $izin->save();
 
             $idatasan = DB::table('karyawan')
@@ -105,7 +108,7 @@ class IzinkaryawanController extends Controller
             $izin->jam_selesai = NULL;
             $izin->jml_hari    = $request->jml_hari;
             $izin->jml_jam     = $request->jml_jam ?? NULL;
-            $izin->status      = 'Pending';
+            $izin->status      = $status->id;
             // dd($izin);
             $izin->save();
 

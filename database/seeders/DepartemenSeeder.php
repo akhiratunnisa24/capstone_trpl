@@ -27,5 +27,8 @@ class DepartemenSeeder extends Seeder
         Departemen::insert([
             'nama_departemen' => "HUMAN RESOURCE",
         ]);
+        Departemen::insert([
+            'nama_departemen' => "BOARD OF DIRECTORS (BOD)",
+        ]);
     }
 }
