@@ -34,7 +34,7 @@
                 <tbody class="col-sm-20">
                     <div class="row">
                         <label class="m-l-10"><h4> A. IDENTITAS </h4></label>
-                        <a class="btn btn-sm btn-success editIdentitas pull-right" data-toggle="modal" data-target="#editIdentitas{{$karyawan->id}}" style="margin-right:10px;margin-top:10px">
+                        <a class="btn btn-sm btn-primary editIdentitas pull-right" data-toggle="modal" data-target="#editIdentitas{{$karyawan->id}}" style="margin-right:10px;margin-top:10px">
                             <i class="fa fa-edit"> <strong>Edit Identitas Diri</strong></i>
                         </a>
                     </div>
@@ -103,9 +103,10 @@
             {{-- DATA KELUARGA --}}
             <div class="row">
                 <label class="m-l-10"><h4>B. KELUARGA </h4></label>
-                <a class="btn btn-sm btn-dark pull-right" data-toggle="modal" data-target="#addDataKeluarga" style="margin-right:10px;margin-top:10px">
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addKeluarga" style="margin-right:10px;margin-top:10px">
                     <i class="fa fa-plus"> <strong> Add Data Keluarga</strong></i>
                 </a>
+                @include('admin.karyawan.addKeluarga')
             </div>
             <table class="table table-bordered table-striped">
                 <thead>
@@ -131,7 +132,7 @@
                             <td>{{$keluarga->pendidikan_terakhir }}</td>
                             <td>{{$keluarga->pekerjaan}}</td>
                             <td class="">
-                                <a class="btn btn-sm btn-success editKeluarga pull-right" data-toggle="modal" data-target="#editKeluarga{{$keluarga->id}}" style="margin-right:10px">
+                                <a class="btn btn-sm btn-primary editKeluarga pull-right" data-toggle="modal" data-target="#editKeluarga{{$keluarga->id}}" style="margin-right:10px">
                                     <i class="fa fa-edit"></i>
                                 </a>
                             </td>
@@ -145,9 +146,10 @@
             {{-- KONTAK DARURAT --}}
             <div class="row">
                 <label class="" width="50%"><h4>C. KONTAK DARURAT </h4></label>
-                <a class="btn btn-sm btn-dark pull-right" data-toggle="modal" data-target="#addKontak" style="margin-right:10px;margin-top:10px">
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addKontak" style="margin-right:10px;margin-top:10px">
                     <i class="fa fa-plus"> <strong> Add Kontak Darurat</strong></i>
                 </a>
+                @include('admin.karyawan.addKontak')
             </div>
             <table class="table table-bordered table-striped">
                 <thead>
@@ -170,7 +172,7 @@
                             <td>{{$kdarurat->alamat }}</td>
                             <td>{{$kdarurat->no_hp}}</td>
                             <td class="">
-                                <a class="btn btn-sm btn-success editDarurat pull-right" data-toggle="modal" data-target="#editDarurat{{$kdarurat->id}}" style="margin-right:10px">
+                                <a class="btn btn-sm btn-primary editDarurat pull-right" data-toggle="modal" data-target="#editDarurat{{$kdarurat->id}}" style="margin-right:10px">
                                     <i class="fa fa-edit"></i>
                                 </a>
                             </td>
@@ -185,9 +187,10 @@
             <label class="" width="50%"><h4>D. RIWAYAT PENDIDIKAN </h4></label><br>
             <div class="row">
                 <td style="width:25%"><label class="text-white badge bg-info"> Pendidikan Formal </label></td>
-                <a class="btn btn-sm btn-dark pull-right" data-toggle="modal" data-target="#addPendidikan" style="margin-right:10px;margin-bottom:10px">
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPformal" style="margin-right:10px;margin-bottom:10px">
                     <i class="fa fa-plus"> <strong> Add Pendidikan Formal</strong></i>
                 </a>
+                @include('admin.karyawan.addPformal')
             </div>
             <table class="table table-bordered table-striped">
                 <thead>
@@ -213,7 +216,7 @@
                                 <td>{{$rpendidikan->jurusan}}</td>
                                 <td>{{$rpendidikan->tahun_lulus_formal}}</td>
                                 <td class="">
-                                    <a class="btn btn-sm btn-success editPformal pull-right" data-toggle="modal" data-target="#editPformal{{$rpendidikan->id}}" style="margin-right:10px">
+                                    <a class="btn btn-sm btn-primary editPformal pull-right" data-toggle="modal" data-target="#editPformal{{$rpendidikan->id}}" style="margin-right:10px">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                 </td>
@@ -226,7 +229,7 @@
 
             <div class="row">
                 <td style="width:25%"><label class="text-white badge bg-info"> Pendidikan Non Formal </label></td>
-                <a class="btn btn-sm btn-dark pull-right" data-toggle="modal" data-target="#addPnformal" style="margin-right:10px;margin-bottom:10px">
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPnformal" style="margin-right:10px;margin-bottom:10px">
                     <i class="fa fa-plus"> <strong> Add Pend. Non Formal</strong></i>
                 </a>
             </div>
@@ -249,7 +252,7 @@
                             <td>{{$rpendidikan->kota_pnonformal}}</td>
                             <td>{{$rpendidikan->tahun_lulus_nonformal}}</td>
                             <td class="">
-                                <a class="btn btn-sm btn-success editPnformal pull-right" data-toggle="modal" data-target="#editPnformal{{$rpendidikan->id}}" style="margin-right:10px">
+                                <a class="btn btn-sm btn-primary editPnformal pull-right" data-toggle="modal" data-target="#editPnformal{{$rpendidikan->id}}" style="margin-right:10px">
                                     <i class="fa fa-edit"></i>
                                 </a>
                             </td>
@@ -263,9 +266,10 @@
             {{-- RIWAYAT PEKERJAAN --}}
             <div class="row m-t-10">
                 <label class="" width="50%"><h4>E. RIWAYAT PEKERJAAN </h4></label>
-                <a class="btn btn-sm btn-dark pull-right" data-toggle="modal" data-target="#addPekerjaan" style="margin-right:10px;margin-bottom:10px">
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPekerjaan" style="margin-right:10px;margin-bottom:10px">
                     <i class="fa fa-plus"> <strong> Add Data Pekerjaan</strong></i>
                 </a>
+                @include('admin.karyawan.addPekerjaan')
             </div>
             <table class="table table-bordered table-striped">
                 <thead>
@@ -293,26 +297,22 @@
                             <td>Rp. {{$rpekerjaan->gaji}},-</td>
                             <td>{{$rpekerjaan->alasan_berhenti}}</td>
                             <td class="">
-                                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#editPekerjaan{{$rpekerjaan->id}}" style="margin-right:10px">
+                                <a class="btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#editPekerjaan{{$rpekerjaan->id}}" style="margin-right:10px">
                                     <i class="fa fa-edit"></i>
                                 </a>
+                                <button onclick="pekerjaan({{$$rpekerjaan->id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                         @include('admin.karyawan.editPekerjaan')
                     @endforeach
                 </tbody>
             </table>
-               
             {{-- </div> --}}
         </div>
     </form>
 
-
     <div class="modal-footer">
-
-        <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a>
-
-
+        {{-- <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a> --}}
         <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
     </div>
 </div>

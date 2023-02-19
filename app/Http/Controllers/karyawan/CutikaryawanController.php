@@ -5,6 +5,7 @@ namespace App\Http\Controllers\karyawan;
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
+use App\Models\Status;
 use App\Models\Karyawan;
 use App\Models\Jenisizin;
 use App\Models\Datareject;
@@ -105,6 +106,7 @@ class CutikaryawanController extends Controller
     {
         $karyawan = Auth::user()->id_pegawai;
         $role = Auth::user()->role;
+        $status = Status::find(1);
 
         $cuti = New Cuti;
         $cuti->id_karyawan = $karyawan;
@@ -115,7 +117,7 @@ class CutikaryawanController extends Controller
         $cuti->tgl_mulai   = Carbon::parse($request->tgl_mulai)->format("Y-m-d");
         $cuti->tgl_selesai = Carbon::parse($request->tgl_selesai)->format("Y-m-d");
         $cuti->jml_cuti    = $request->jml_cuti;
-        $cuti->status      = 'Pending';
+        $cuti->status      = $status->id;
         $cuti->save();
 
         //sending email cuti

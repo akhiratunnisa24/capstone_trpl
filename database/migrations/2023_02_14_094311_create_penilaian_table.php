@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('penilaian', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_job');
+            $table->unsignedBigInteger('id_master');
             $table->unsignedBigInteger('id_user');
             $table->string('indikator');
             $table->string('bobot',10);

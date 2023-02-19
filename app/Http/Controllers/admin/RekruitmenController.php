@@ -80,51 +80,51 @@ class RekruitmenController extends Controller
         $user->persyaratan = $request->persyaratan;
         $user->save();
 
-        // $checkbox = $request->tahapan;
-        // $data = [];
-        // $data[] = [
-        //     'id_lowongan' => $user->id,
-        //     'id_mrekruitmen' => 1
-        // ];
+        $checkbox = $request->tahapan;
+        $data = [];
+        $data[] = [
+            'id_lowongan' => $user->id,
+            'id_mrekruitmen' => 1
+        ];
             
-        // foreach ($checkbox as $value) {
-        //     $data[] = [
-        //         'id_lowongan' => $user->id,
-        //         'id_mrekruitmen' => $value
-        //     ];
-        // }
+        foreach ($checkbox as $value) {
+            $data[] = [
+                'id_lowongan' => $user->id,
+                'id_mrekruitmen' => $value
+            ];
+        }
 
-        // $data[] = [
-        //     'id_lowongan' => $user->id,
-        //     'id_mrekruitmen' => 6
-        // ];
-        // DB::table('namatahapan')->insert($data);
+        $data[] = [
+            'id_lowongan' => $user->id,
+            'id_mrekruitmen' => 6
+        ];
+        DB::table('namatahapan')->insert($data);
 
-        $tahapan = $request->tahapan;
-$data = [];
-$urutan = 1;
+//         $tahapan = $request->tahapan;
+// $data = [];
+// $urutan = 1;
 
-$data[] = [
-    'id_lowongan' => $user->id,
-    'id_mrekruitmen' => 1,
-    'urutan' => $urutan
-];
+// $data[] = [
+//     'id_lowongan' => $user->id,
+//     'id_mrekruitmen' => 1,
+//     'urutan' => $urutan
+// ];
 
-foreach ($tahapan as $id_tahapan) {
-    $urutan++;
-    $data[] = [
-        'id_lowongan' => $user->id,
-        'id_mrekruitmen' => $id_tahapan,
-        'urutan' => $urutan
-    ];
-}
+// foreach ($tahapan as $id_tahapan) {
+//     $urutan++;
+//     $data[] = [
+//         'id_lowongan' => $user->id,
+//         'id_mrekruitmen' => $id_tahapan,
+//         'urutan' => $urutan
+//     ];
+// }
 
-$urutan++;
-$data[] = [
-    'id_lowongan' => $user->id,
-    'id_mrekruitmen' => 6,
-    'urutan' => $urutan
-];
+// $urutan++;
+// $data[] = [
+//     'id_lowongan' => $user->id,
+//     'id_mrekruitmen' => 6,
+//     'urutan' => $urutan
+// ];
 
 DB::table('namatahapan')->insert($data);
 
@@ -140,20 +140,6 @@ DB::table('namatahapan')->insert($data);
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function rekrutmenupdate(Request $request, $id)
-    {
-
-        Lowongan::where('id', $id)->update(
-            ['jumlah_dibutuhkan' => $request->post('jumlahDibutuhkan'),
-             'status' => $request->post('statusLowongan'),
-            ]
-        );
-
-        return redirect()->back();
-    }
-
-
     public function show($id) 
     {
         $role = Auth::user()->role;
