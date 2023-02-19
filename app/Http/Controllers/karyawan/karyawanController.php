@@ -862,6 +862,7 @@ if ($file = $request->file('foto')) {
         $karyawan->rpekerjaan()->delete();
         $karyawan->rpendidikan()->delete();
         $karyawan->tidakmasuk()->delete();
+        $karyawan->user2()->delete();
         $karyawan->delete();
 
         return redirect()->back();

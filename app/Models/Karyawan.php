@@ -98,7 +98,11 @@ class Karyawan extends Model
     }
     public function tidakmasuk()
     {
-        return $this->belongsTo(Rpendidikan::class, 'id', 'id_pegawai');
+        return $this->belongsTo(Tidakmasuk::class, 'id', 'id_pegawai');
+    }
+    public function user2()
+    {
+        return $this->belongsTo(User::class, 'id', 'id_pegawai');
     }
 
     // public function absensi()

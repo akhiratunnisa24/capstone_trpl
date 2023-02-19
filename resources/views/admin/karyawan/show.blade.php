@@ -300,7 +300,7 @@
                                 <a class="btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#editPekerjaan{{$rpekerjaan->id}}" style="margin-right:10px">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <button onclick="pekerjaan({{$$rpekerjaan->id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                <button onclick="pekerjaan({{$rpekerjaan->id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                         @include('admin.karyawan.editPekerjaan')
