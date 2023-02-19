@@ -93,8 +93,8 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$k->nama}}</td>
-                                        <td>{{$k->karyawan2->jenis_kelamin}}</td>
-                                        <td>{{$k->karyawan2->email}}</td>
+                                        <td>{{$k->karyawan2->nama}}</td>
+                                        <td>{{$k->karyawan2->nama}}</td>
                                         <td>{{$k->departemen->nama_departemen}}</td>
                                         <td>{{\Carbon\Carbon::now()->format('d/m/Y')}}</td>
 

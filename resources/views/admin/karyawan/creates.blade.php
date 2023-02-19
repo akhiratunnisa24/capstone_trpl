@@ -362,7 +362,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Hubungan</label>
-                                                                        <select class="form-control selectpicker" name="hubungankeluarga" required>
+                                                                        <select class="form-control selectpicker" name="hubungankeluarga" >
                                                                             <option value="">Pilih Hubungan</option>
                                                                             <option value="Ayah">Ayah</option>
                                                                             <option value="Ibu">Ibu</option>
