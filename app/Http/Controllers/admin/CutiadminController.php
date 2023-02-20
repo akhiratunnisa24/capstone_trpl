@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use PDF;
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
@@ -40,7 +41,7 @@ class CutiadminController extends Controller
             $type = $request->query('type', 1);
 
             //form create cuti untuk karyawan.
-            //$karyawan = Karyawan::where('id','!=',Auth::user()->id_pegawai)->get();
+            $karyawan = Karyawan::where('id','!=',Auth::user()->id_pegawai)->get();
 
             //data cuti
             // $cuti = DB::table('cuti')
@@ -103,7 +104,6 @@ class CutiadminController extends Controller
             }   
 
              // Filter Data Izin
-             $pegawai = Karyawan::all();
              $idpegawai = $request->id_karyawan;
              $month = $request->query('bulan', Carbon::now()->format('m'));
              $year = $request->query('tahun', Carbon::now()->format('Y'));
@@ -113,44 +113,31 @@ class CutiadminController extends Controller
              $request->session()->put('month', $month);
              $request->session()->put('year', $year);
  
-            //  dd($request);
             if(isset($idpegawai) && isset($month) && isset($year)) 
             {
-                $izin =DB::table('izin')
-                    ->leftjoin('statuses','izin.status','=','statuses.id')
+                $izin = Izin::leftjoin('statuses','izin.status','=','statuses.id')
                     ->leftjoin('datareject','datareject.id_izin','=','izin.id')
                     ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', 'jenisizin.id')
                     ->where('izin.id_karyawan', $idpegawai)
                     ->whereMonth('izin.tgl_mulai', $month)
                     ->whereYear('izin.tgl_mulai', $year)
-                    ->select('izin.*','statuses.name_status','jenisizin.jenis_izin','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
+                    ->select('izin.*','statuses.name_status','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama')
                     ->distinct()
                     ->orderBy('created_at','DESC')
                     ->get();
             }
             else
             {
-                $izin =DB::table('izin')
-                    ->leftjoin('statuses','izin.status','=','statuses.id')
+                $izin = Izin::leftjoin('statuses','izin.status','=','statuses.id')
                     ->leftjoin('datareject','datareject.id_izin','=','izin.id')
                     ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', 'jenisizin.id')
-                    ->select('izin.*','statuses.name_status','jenisizin.jenis_izin','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
+                    ->select('izin.*','statuses.name_status','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama')
                     ->distinct()
                     ->orderBy('created_at','DESC')
                     ->get();
             };
 
-        return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai'));
-
-            //menghapus filter data
-            $request->session()->forget('id_karyawan');
-            $request->session()->forget('bulan');
-            $request->session()->forget('tahun');
-            $request->session()->forget('idpegawai');
-            $request->session()->forget('month');
-            $request->session()->forget('year');
+        return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan'));
         } else 
         {
             return redirect()->back(); 
@@ -272,7 +259,7 @@ class CutiadminController extends Controller
     //     return redirect()->back()->withInput();
     // }
 
-    public function rekapabsensiExcel(Request $request)
+    public function rekapcutiExcel(Request $request)
     {
         $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
 
@@ -297,6 +284,35 @@ class CutiadminController extends Controller
             ->get();
         }
         return Excel::download(new CutiExport($data, $idkaryawan), "Rekap Absensi Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".xlsx");
+    }
+
+    public function rekapcutipdf(Request $request)
+    {
+        $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
+
+        $idkaryawan = $request->id_karyawan;
+        $bulan      = $request->query('bulan', Carbon::now()->format('m'));
+        $tahun      = $request->query('tahun', Carbon::now()->format('Y'));
+
+        // simpan session
+        $idkaryawan = $request->session()->get('idkaryawan');
+        $bulan      = $request->session()->get('bulan');
+        $tahun      = $request->session()->get('tahun',);
+
+        // dd($idkaryawan,$bulan,$tahun );
+
+        if (isset($idkaryawan) && isset($bulan) && isset($tahun)) {
+            $data = Cuti::where('id_karyawan', $idkaryawan)
+                ->whereMonth('tgl_mulai', $bulan)
+                ->whereYear('tgl_mulai', $tahun)
+                ->get();
+        } else {
+            $data = Cuti::all();
+        }
+
+        $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan])
+            ->setPaper('a4', 'landscape');
+        return $pdf->stream("Rekap Cuti Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf");
     }
 
 }

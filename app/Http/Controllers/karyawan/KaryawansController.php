@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\karyawan;
 
+use Carbon\Carbon;
 use App\Models\Karyawan;
 use App\Models\Kdarurat;
 use App\Models\Keluarga;
@@ -9,6 +10,7 @@ use App\Models\Departemen;
 use App\Models\Rpekerjaan;
 use App\Models\Rpendidikan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -87,7 +89,12 @@ class KaryawansController extends Controller
             $user->kontrak = $request->kontrak;
             $user->gaji = $request->gaji;
             $user->tglkeluar = $request->tglkeluar;
+<<<<<<< HEAD
+            // $user->save();
+=======
+            $user->status_kerja = 'Aktif';
             $user->save();
+>>>>>>> 02cc7ae3c0554285ea70c12dc8b4ce40b2a06fb3
             
              // menyimpan data ke cache dengan key "karyawan_cache" selama 60 menit (1 jam)
             Cache::put('karyawan_cache', $user, 60);
@@ -135,9 +142,17 @@ class KaryawansController extends Controller
         }
     }
 
+    public function createdakel(Request $request)
+    {
+        $karyawan = $request->session()->get('karyawan');
+  
+        return view('admin.karyawan.createDakel',compact('karyawan'));
+    }
+
     public function storedk(Request $request)
     {
         $userFromCache = Cache::get('karyawan_cache');
+    
         $id = $userFromCache->id;
 
         $data_keluarga = array(
@@ -387,58 +402,47 @@ class KaryawansController extends Controller
             $file->move(public_path() . '\Foto_Profile', $filename);
             $karyawan->foto = $filename;
             $karyawan->save();
-            
-            $data = array(
 
-                'nama' => $request->post('namaKaryawan'),
-                'tgllahir' => $request->post('tgllahirKaryawan'),
-                'jenis_kelamin' => $request->post('jenis_kelaminKaryawan'),
-                'alamat' => $request->post('alamatKaryawan'),
-                'no_hp' => $request->post('no_hpKaryawan'),
-                'email' => $request->post('emailKaryawan'),
-                'agama' => $request->post('agamaKaryawan'),
-                'nik' => $request->post('nikKaryawan'),
-                'gol_darah' => $request->post('gol_darahKaryawan'),
-                'jabatan' => $request->post('jabatanKaryawan'),
-                'divisi'=>$request->post('divisi'),
-                'atasan_pertama'=>$request->post('atasan_pertama'),
-                'atasan_kedua'=>$request->post('atasan_kedua'),
-                'updated_at' => new \DateTime(),
-                'foto' => $filename,
-            );
-            // $idKaryawan = $request->post('id_karyawan');
-            // Karyawan::where('id', $idKaryawan)->update($data);
-            Karyawan::where('id', $id)->update($data);
-
+            $pegawai = Karyawan::find($id);
+            $pegawai->nama = $request->namaKaryawan;
+            $pegawai->nik = $request->nikKaryawan;
+            $pegawai->tgllahir = $request->tgllahirKaryawan;
+            $pegawai->jenis_kelamin = $request->jenis_kelaminKaryawan;
+            $pegawai->alamat = $request->alamatKaryawan;
+            $pegawai->no_hp = $request->no_hpKaryawan;
+            $pegawai->email = $request->emailKaryawan;
+            $pegawai->agama = $request->agamaKaryawan;
+            $pegawai->gol_darah = $request->gol_darahKaryawan;
+            $pegawai->jabatan = $request->jabatanKaryawan;
+            $pegawai->divisi = $request->divisi;
+            $pegawai->atasan_pertama = $request->atasan_pertama;
+            $pegawai->atasan_kedua = $request->atasan_kedua;
+            $pegawai->foto = $filename;
+          
+            $pegawai->update();
             return redirect()->back();
-            dd($data);
         }
         else
         {
+            // dd($request->all());
+            $pegawai = Karyawan::find($id);
+            $pegawai->nama = $request->namaKaryawan;
+            $pegawai->nik = $request->nikKaryawan;
+            $pegawai->tgllahir = $request->tgllahirKaryawan;
+            $pegawai->jenis_kelamin = $request->jenis_kelaminKaryawan;
+            $pegawai->alamat = $request->alamatKaryawan;
+            $pegawai->no_hp = $request->no_hpKaryawan;
+            $pegawai->email = $request->emailKaryawan;
+            $pegawai->agama = $request->agamaKaryawan;
+            $pegawai->gol_darah = $request->gol_darahKaryawan;
+            $pegawai->jabatan = $request->jabatanKaryawan;
+            $pegawai->divisi = $request->divisi;
+            $pegawai->atasan_pertama = $request->atasan_pertama;
+            $pegawai->atasan_kedua = $request->atasan_kedua;
           
-            $data = array(
-
-                'nama' => $request->post('namaKaryawan'),
-                'tgllahir' => $request->post('tgllahirKaryawan'),
-                'jenis_kelamin' => $request->post('jenis_kelaminKaryawan'),
-                'alamat' => $request->post('alamatKaryawan'),
-                'no_hp' => $request->post('no_hpKaryawan'),
-                'email' => $request->post('emailKaryawan'),
-                'agama' => $request->post('agamaKaryawan'),
-                'nik' => $request->post('nikKaryawan'),
-                'gol_darah' => $request->post('gol_darahKaryawan'),
-                'jabatan' => $request->post('jabatanKaryawan'),
-                'divisi'=>$request->post('divisi'),
-                'atasan_pertama'=>$request->post('atasan_pertama'),
-                'atasan_kedua'=>$request->post('atasan_kedua'),
-                // 'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
-            // $idKaryawan = $request->post('id_karyawan');
-            // Karyawan::where('id', $idKaryawan)->update($data);
-            Karyawan::where('id', $id)->update($data);
+            $pegawai->update();
+           
             return redirect()->back();
-            dd($karyawan,$data);
            
         }
 
@@ -446,63 +450,53 @@ class KaryawansController extends Controller
 
     public function updateKeluarga(Request $request,$id)
     {
-        $data_keluarga = array(
-            'status_pernikahan' => $request->post('status_pernikahan'),
-            'nama' => $request->post('namaPasangan'),
-            'tgllahir' => $request->post('tgllahirPasangan'),
-            'alamat' => $request->post('alamatPasangan'),
-            'pendidikan_terakhir' => $request->post('pendidikan_terakhirPasangan'),
-            'pekerjaan' => $request->post('pekerjaanPasangan'),
-            // 'hubungan' =>$request->post('pekerjaanPasangan'),
-            'updated_at' => new \DateTime(),
-
-        );
-        $idKeluarga = $request->post('id_keluarga');
-        Keluarga::where('id', $idKeluarga)->update($data_keluarga);
+        // dd($request,$id);
+        Keluarga::where('id',$id)->update([
+            'status_pernikahan' =>$request->status_pernikahan,
+            'nama' =>$request->namaPasangan,
+            'hubungan' =>$request->hubungan,
+            'tgllahir' =>$request->tgllahirPasangan,
+            'alamat' =>$request->alamatPasangan,
+            'pendidikan_terakhir' =>$request->pendidikan_terakhirPasangan,
+            'pekerjaan' =>$request->pekerjaanPasangan,
+        ]);
         return redirect()->back();
     }
 
     public function updateKontak(Request $request,$id)
     {
-        $data_kdarurat = array(
+        Kdarurat::where('id', $id)->update([
             'nama' => $request->post('namaKdarurat'),
             'alamat' => $request->post('alamatKdarurat'),
             'no_hp' => $request->post('no_hpKdarurat'),
             'hubungan' => $request->post('hubunganKdarurat'),
+            'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
+        ]);
 
-        );
-
-        $id_kdarurat = $request->post('id_kdarurat');
-        Kdarurat::where('id', $id_kdarurat)->update($data_kdarurat);
         return redirect()->back();
     }
 
     public function updatePendidikan(Request $request,$id)
     {
+        $idp = Rpendidikan::find($id);
         if($request->tingkat_pendidikan)
         {
-            $r_pendidikan = array(
-                'tingkat' => $request->post('tingkat_pendidikan'),
-                'nama_sekolah' => $request->post('nama_sekolah'),
-                'kota_pformal' => $request->post('kotaPendidikanFormal'),
-                'jurusan' => $request->post('jurusan'),
-                'tahun_lulus_formal' => $request->post('tahun_lulus_formal'),
-                'updated_at' => new \DateTime(),
-            );
-
-            $idPendidikan = $request->post('id_pendidikan');
-            Rpendidikan::where('id', $idPendidikan)->update($r_pendidikan);
+            $data = Rpendidikan::where('id', $idp->id)->update([
+                'tingkat' => $request->tingkat_pendidikan,
+                'nama_sekolah' => $request->nama_sekolah,
+                'kota_pformal' => $request->kotaPendidikanFormal,
+                'jurusan' => $request->jurusan,
+                'tahun_lulus_formal' => $request->tahun_lulusFormal,
+                'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
+            ]);
         }else
         {
-            $r_pendidikan = array(
-                'jenis_pendidikan' => $request->post('jenis_pendidikan'),
-                'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-                'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
-                'updated_at' => new \DateTime(),
-            );
-
-            $idPendidikan = $request->post('id_pendidikan');
-            Rpendidikan::where('id', $idPendidikan)->update($r_pendidikan);
+            $data = Rpendidikan::where('id',$idp->id)->update([
+                'jenis_pendidikan' => $request->jenis_pendidikan,
+                'kota_pnonformal' => $request->kotaPendidikanNonFormal,
+                'tahun_lulus_nonformal' => $request->tahunLulusNonFormal,
+                'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
+            ]);
         }
         return redirect()->back();
     }

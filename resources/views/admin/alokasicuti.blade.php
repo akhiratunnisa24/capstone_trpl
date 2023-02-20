@@ -25,12 +25,12 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr class="info">
-                                        <th>#</th>
+                                        <th>No</th>
                                         <th>Nama Karyawan</th>
                                         <th>Cuti Yang Didapat</th>
                                         <th>Durasi Cuti</th>
-                                        <th>Id Alokasi</th>
-                                        <th>Id Settingalokasi</th>
+                                        {{-- <th>Id Alokasi</th>
+                                        <th>Id Settingalokasi</th> --}}
                                         <th>Aktif Dari</th>
                                         <th>Berakhir</th>
                                     </tr>
@@ -42,8 +42,8 @@
                                             <td>{{ $alokasi->karyawans->nama }}</td>
                                             <td>{{ $alokasi->jeniscutis->jenis_cuti }}</td>
                                             <td>{{ $alokasi->durasi }} hari</td>
-                                            <td>{{ $alokasi->id }}</td>
-                                            <td>{{ $alokasi->id_settingalokasi }}</td>
+                                            {{-- <td>{{ $alokasi->id }}</td>
+                                            <td>{{ $alokasi->id_settingalokasi }}</td> --}}
                                             <td>{{ \Carbon\Carbon::parse($alokasi->aktif_dari)->format('d/m/Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($alokasi->sampai)->format('d/m/Y') }}</td>
                                         </tr>

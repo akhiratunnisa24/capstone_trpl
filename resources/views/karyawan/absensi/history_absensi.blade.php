@@ -98,7 +98,7 @@
                                     width="100%">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>No</th>
                                             <th>Nama</th>
                                             <th>Tanggal</th>
                                             <th>Jam Masuk</th>

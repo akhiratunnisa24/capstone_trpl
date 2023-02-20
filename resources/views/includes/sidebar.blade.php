@@ -27,8 +27,9 @@
             <ul>
                 <li><a href="/" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span class="text-info panel-title">Absensi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span class="text-info panel-title">Profile & Absensi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
+                        <li><a href="showkaryawan{{$id}}"><i class="mdi mdi-account-check"></i><span>Profile</span></a></li>
                         <li><a href="/absensi-karyawan"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
                         <li><a href="/history-absensi"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a></li>
                         <li><a href="/alokasi-cuti"><i class="mdi mdi-walk"></i><span>Alokasi Cuti</span></a> </li>
@@ -81,7 +82,7 @@
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-server"></i><span class="text-info panel-title">Data Master KPI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/masterkpi"><i class="fa fa-tasks"></i><span></span>Master KPI</a></li>              
-                            <li><a href="#"><i class="fa fa-file-text"></i><span></span>Penilaian</a></li>          
+                            {{-- <li><a href="#"><i class="fa fa-file-text"></i><span></span>Penilaian</a></li>           --}}
                         </ul>
                 </li>
 
@@ -99,7 +100,7 @@
         <!--- Role Karyawan -->
         <div id="sidebar-menu">
             <ul>
-                <li><a href="karyawandashboard" class="waves-effect"><i class="ti-home"></i><span> Dashboard Karyawan</span></a></li>
+                <li><a href="karyawandashboard" class="waves-effect"><i class="ti-home"></i><span> Dashboard</span></a></li>
                 <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
                 <li><a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a></li>
                 <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a></li>

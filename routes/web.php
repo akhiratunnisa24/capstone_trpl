@@ -168,8 +168,8 @@ Route::post('/permintaan_cuti/{id}', [CutiadminController::class, 'update'])->na
 Route::post('/permintaan/{id}', [CutiadminController::class, 'tolak'])->name('cuti.tolak');
 Route::post('/getalokasi', [CutiadminController::class, 'getAlokasiCuti'])->name('get.Alokasicuti');
 Route::post('/permintaan_cutis', [CutiadminController::class, 'storeCuti'])->name('cuti.stores');
-Route::get('/rekapcutiExcel', [CutiadminController::class, 'rekapabsensiExcel'])->name('rekapabsensiExcel');
-// Route::get('/rekapcutipdf', [AbsensiController::class, 'rekapabsensipdf'])->name('rekapabsensipdf');
+Route::get('/rekapcutiExcel', [CutiadminController::class, 'rekapcutiExcel'])->name('rekapabsensiExcel');
+Route::get('/rekapcutipdf', [CutiadminController::class, 'rekapcutipdf'])->name('rekapabsensipdf');
 //izin 
 Route::post('/permintaanizin/{id}', [IzinAdminController::class, 'approved'])->name('izinapproved');
 Route::post('/permintaanizinreject/{id}', [IzinAdminController::class, 'reject'])->name('izinreject');
@@ -299,14 +299,28 @@ Route::post('/data-cuti-staffs/{id}', [DirekturController::class, 'leaverejected
 // });
 // Route::get('/sendmail', [MailController::class, 'index']);
 
+    //form data karyawan
     Route::get('karyawancreates', [KaryawansController::class, 'create'])->name('creates');
     Route::post('/storepage', [karyawansController::class, 'store_page'])->name('storepage');
+
+    //form data keluarga
+    //Route::get('/create-data-keluarga', [KaryawansController::class, 'createdakel'])->name('create.dakel');
     Route::post('/storedatakeluarga', [karyawansController::class, 'storedk'])->name('storedk');
+
+    //form data kontak darurat
+    //Route::get('/create-kontak-darurat', [KaryawansController::class, 'createkonrat'])->name('create.konrat');
     Route::post('/storekontakdarurat', [karyawansController::class, 'storekd'])->name('storekd');
+    
+    //form data pendidikan
+    //Route::get('/create-data-pendidikan', [KaryawansController::class, 'creatependidikan'])->name('create.pendidikan');
     Route::post('/storepformal', [karyawansController::class, 'storepformal'])->name('storepformal');
     Route::post('/storepnformal', [karyawansController::class, 'storepformal'])->name('storepnformal');
+
+    //form data pekerjaan
+    //Route::get('/create-data-pekerjaan', [KaryawansController::class, 'createpekerjaan'])->name('create.pekerjaan');
     Route::post('/storepekerjaan', [karyawansController::class, 'storepekerjaan'])->name('storepekerjaan');
-    Route::put('/updateIdentitas/{id}', [karyawansController::class, 'update'])->name('update'); 
+
+    Route::put('/updateIdentitas/{id}', [karyawansController::class, 'update'])->name('identitas.update'); 
     Route::put('/updateKeluarga/{id}', [karyawansController::class, 'updateKeluarga'])->name('updateKeluarga'); 
     Route::put('/updateKontak/{id}', [karyawansController::class, 'updateKontak'])->name('updateKontak'); 
     Route::put('/updatePendidikan/{id}', [karyawansController::class, 'updatePendidikan'])->name('updatePendidikan'); 

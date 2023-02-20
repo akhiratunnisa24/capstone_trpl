@@ -51,7 +51,7 @@
                                     <thead>
                                         <tr>
                                             {{-- <th>id</th> --}}
-                                            <th>#</th>
+                                            <th>No</th>
                                             <th>Karyawan</th>
                                             <th>Kategori Cuti</th>
                                             <th>Durasi (Hari)</th>
@@ -91,11 +91,14 @@
                                                     data-target="#showalokasi{{$data->id}}">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal"
+                                                {{-- <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal"
                                                     data-alokasi="{{$data->id}}" data-target="#editalokasi">
                                                     <i class="fa fa-edit"></i>
-                                                    {{-- {{$data->id}} --}}
-                                                </a>
+
+                                                    {{$data->id}}
+
+                                                </a> --}}
+
                                                 <button onclick="hapus_alokasi({{$data->id}})"
                                                     class="btn btn-danger btn-sm">
                                                     <i class="fa fa-trash"></i>

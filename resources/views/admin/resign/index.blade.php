@@ -38,14 +38,14 @@
                                         width="100%">
                                         <thead>
                                             <tr>
-                                                <th>No.</th>
+                                                <th>No</th>
                                                 <th>Karyawan</th>
                                                 <th>Departemen</th>
                                                 {{-- <th>Tanggal Bergabung</th> --}}
                                                 <th>Tanggal Resign</th>
                                                 {{-- <th>Tipe Resign</th> --}}
                                                 <th>Status</th>
-                                                <th>Action</th>
+                                                <th>Action</th> 
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -53,7 +53,7 @@
                                               <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $r->karyawan->nama }}</td>
-                                                <td>{{ $r->departemens->nama_departemen }}</td>
+                                                <td>{{ $r->departemens->nama_departemen ?? " " }}</td>
                                                 {{-- <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td> --}}
                                                 <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}</td>
                                                 {{-- <td>{{ $r->tipe_resign }}</td> --}}

@@ -48,10 +48,10 @@ class ResignAdminController extends Controller
         // dd($karyawan);
         $resign = Resign::orderBy('created_at', 'desc')->get();
      
-        $tes = Auth::user()->karyawan->departemen->nama_departemen;
+        // $tes = Auth::user()->karyawan->departemen->nama_departemen;
 
 
-        return view('admin.resign.index', compact('karyawan','karyawan1','tes','resign','row'));
+        return view('admin.resign.index', compact('karyawan','karyawan1','resign','row'));
     }
 
     /**

@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label>Hubungan</label>
-                                    <select type="text" class="form-control selectpicker" name="hubunganKdarurat" required>
+                                    <select type="text" class="form-control" name="hubunganKdarurat" required>
                                         <option value="">Pilih Hubungan</option>
                                         <option value="Ayah" @if($kdarurat->hubungan == "Ayah") selected @endif >Ayah</option>
                                         <option value="Ibu"  @if($kdarurat->hubungan == "Ibu") selected @endif >Ibu</option>
@@ -44,14 +44,19 @@
                                         <option value="Adik" @if($kdarurat->hubungan == "Adik") selected @endif>Adik</option>
                                         <option value="Anak" @if($kdarurat->hubungan == "Anak") selected @endif>Anak</option>
                                     </select>
-                                
+                                    
                                 </div>
                             </div> 
+                            {{-- <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Hubungan</label>
+                                    <input type="text" name="hubunganKdarurat" autocomplete="off" class="form-control" value="{{$kdarurat->hubungan}}">
+                                </div>
+                            </div>  --}}
                         </div>
                     </div>
             
                     <div class="modal-footer">
-                        <input type="hidden" name="id" id="id">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Update</button>
                     </div>

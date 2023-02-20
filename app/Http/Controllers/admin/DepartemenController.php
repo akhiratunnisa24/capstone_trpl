@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\admin;
 
 use App\Models\Departemen;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 class DepartemenController extends Controller
 {
-    
+
     /**
      * Create a new controller instance.
      *
@@ -18,17 +21,25 @@ class DepartemenController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function index(Request $request)
     {
-        $departemen = Departemen::orderBy('id','asc')->get();
-        return view('admin.departemen.index', compact('departemen'));
+        $role = Auth::user()->role;
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $departemen = Departemen::orderBy('id', 'asc')->get();
+            return view('admin.departemen.index', compact('departemen', 'row'));
+        } else {
+
+            return redirect()->back();
+        }
     }
 
     public function store(Request $request)
@@ -36,12 +47,11 @@ class DepartemenController extends Controller
         $request->validate([
             'nama_departemen' => 'required',
         ]);
-        $departemen = New Departemen;
+        $departemen = new Departemen;
         $departemen->nama_departemen = $request->nama_departemen;
         $departemen->save();
-        
-        return redirect('/departemen');
 
+        return redirect('/departemen');
     }
 
     public function update(Request $request, $id)
@@ -51,7 +61,6 @@ class DepartemenController extends Controller
         $departemen->update();
 
         return redirect()->back();
-        
     }
 
     public function destroy($id)
@@ -61,5 +70,4 @@ class DepartemenController extends Controller
 
         return redirect('/departemen');
     }
-   
 }

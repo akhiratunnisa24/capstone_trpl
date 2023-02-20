@@ -63,7 +63,7 @@
                                                     width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>#</th>
+                                                            <th>No</th>
                                                             <th>Kategori Cuti</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -76,11 +76,11 @@
                                                             <td class="text-center">
                                                                 <div class="d-grid gap-2 " role="group"
                                                                     aria-label="Basic example">
-                                                                    <a id="bs" class="btn btn-info btn-sm Modalshowcuti"
+                                                                    {{-- <a id="bs" class="btn btn-info btn-sm Modalshowcuti"
                                                                         data-toggle="modal"
                                                                         data-target="#Modalshowcuti{{$data->id}}">
                                                                         <i class="fa fa-eye"></i>
-                                                                    </a>
+                                                                    </a> --}}
                                                                     <a id="bs"
                                                                         class="btn btn-success btn-sm Modaleditcuti"
                                                                         data-toggle="modal"

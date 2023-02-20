@@ -339,7 +339,18 @@
             autoclose: true,
             todayHighlight: true,
         });
-        // });
+        jQuery("#datepicker-autoclosen").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autocloseo").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
 
         jQuery("#datepicker-inline").datepicker();
         jQuery("#datepicker-multiple-date").datepicker({

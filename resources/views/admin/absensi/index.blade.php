@@ -146,7 +146,7 @@
                                     <table id="datatable-responsive3" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
+                                                <th>No</th>
                                                 <th>Karyawan</th>
                                                 <th>Tanggal</th>
                                                 <th>Jam Masuk</th>
