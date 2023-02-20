@@ -5,11 +5,11 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-header-title">
-            <h4 class="pull-left page-title">Dashboard HRD</h4>
+            <h4 class="pull-left page-title">Dashboard</h4>
 
             <ol class="breadcrumb pull-right">
                 <li>Human Resources Management System</li>
-                <li class="active">Dashboard HRD</li>
+                <li class="active">Dashboard</li>
             </ol>
 
             <div class="clearfix"></div>

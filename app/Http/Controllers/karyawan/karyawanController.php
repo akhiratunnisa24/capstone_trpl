@@ -860,6 +860,8 @@ if ($file = $request->file('foto')) {
         $karyawan->kdarurat()->delete();
         $karyawan->rpekerjaan()->delete();
         $karyawan->rpendidikan()->delete();
+        $karyawan->tidakmasuk()->delete();
+        $karyawan->user2()->delete();
         $karyawan->delete();
 
         return redirect()->back();
@@ -1054,16 +1056,18 @@ if ($file = $request->file('foto')) {
             // ->whereNotIn('id', $karyawanSudahAbsen)
             // ->get();
 
-            $tidakMasuk = Tidakmasuk::with('departemen','karyawan2')
+            $tidakMasuk = Tidakmasuk::with('departemen', 'karyawan2')
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->whereDay('tanggal', '=', Carbon::now())
                 ->get();
+            // dd($tidakMasuk);
 
             $tidakMasukBulanIni = Tidakmasuk::with('departemen', 'karyawan2')
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->get();
+            // dd($tidakMasukBulanIni);
 
             $tidakMasukBulanLalu = Tidakmasuk::with('departemen', 'karyawan2')
                 ->whereYear('tanggal', '=', Carbon::now()->year)

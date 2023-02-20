@@ -172,13 +172,13 @@ class HomeController extends Controller
         // dd($totalKaryawanPerbulan);
 
         // ambil jumlah karyawan yang sudah absen
-        $totalabsenPerbulan = DB::table('absensi')
-                    ->whereYear('tanggal', '=', Carbon::now()->year)
-                    ->whereMonth('tanggal', '=', Carbon::now()->month)
-                    ->count('id_karyawan');
+        // $totalabsenPerbulan = DB::table('absensi')
+        //             ->whereYear('tanggal', '=', Carbon::now()->year)
+        //             ->whereMonth('tanggal', '=', Carbon::now()->month)
+        //             ->count('id_karyawan');
 
         // jumlah karyawan yang belum absen / tidak masuk
-        $totalTidakAbsenPerbulan = $totalKaryawanPerbulan - $totalabsenPerbulan ;
+        // $totalTidakAbsenPerbulan = $totalKaryawanPerbulan - $totalabsenPerbulan ;
         
 
         // $totalKaryawanabsenperbulan = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
@@ -261,16 +261,24 @@ class HomeController extends Controller
         //=====================
         
         //absen masuk bulan lalu    
-        $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-            ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
-            ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
-            ->count('jam_masuk');
+        // $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+        //     ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
+        //     ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
+        //     ->count('jam_masuk');
+
+        $absenBulanLalu = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+        ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+        ->count('jam_masuk');;
 
         //absen terlambat bulan lalu
-        $absenTerlambatbulanlalu = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-            ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
-            ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
-            ->count('terlambat');
+        // $absenTerlambatbulanlalu = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+        //     ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
+        //     ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
+        //     ->count('terlambat');
+
+        $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
+        ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+        ->count('terlambat');
 
         //Data alokasi cuti masing2 karyawan
         $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
@@ -322,8 +330,7 @@ class HomeController extends Controller
                 'cutibulanlalu' => $cutibulanlalu,
                 'cutidanizibulanlalu' => $cutidanizibulanlalu,
                 // 'labelTahun' => $labelTahun,
-                'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,
-                'totalTidakAbsenPerbulan' => $totalTidakAbsenPerbulan,
+                'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,    
                 'tidakMasukBulanIni' => $tidakMasukBulanIni,
                 'tidakMasukHariIni' => $tidakMasukHariIni,
 

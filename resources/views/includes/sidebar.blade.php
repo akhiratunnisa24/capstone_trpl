@@ -25,9 +25,9 @@
         <!--- Role HRD -->
         <div id="sidebar-menu">
             <ul>
-                <li><a href="/" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title"> Dashboard</span></a></li>
+                <li><a href="/" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span class="text-info panel-title">DATA PRIBADI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span class="text-info panel-title">Absensi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
                         <li><a href="/absensi-karyawan"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
                         <li><a href="/history-absensi"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a></li>
@@ -36,16 +36,9 @@
                         </li>
                     </ul>
                 </li>
+                <li><a href="{{ route('karyawan.index') }}" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title">Data Karyawan</span></a></li>
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-database"></i><span class="text-info panel-title">DATA MASTER</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Data Departemen</a></li>              
-                            <li><a href="/metode_rekrutmen"><i class="fa fa-sitemap"></i><span></span>Data Rekruitmen</a></li>                      
-                        </ul>
-                </li>
-                <li><a href="{{ route('karyawan.index') }}" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title"> Data Karyawan</span></a></li>
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span  class="text-info panel-title">Absensi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span  class="text-info panel-title">Absensi Karyawan</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
                         <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
                         <li><a href="/absensi-tidak-masuk"><i class="mdi mdi-calendar-remove"></i><span>Data Tidak Masuk</span></a></li>
@@ -76,6 +69,13 @@
                     <ul class="list-unstyled">
                         <li><a href="/resign_admin"><i class="fa fa-server"></i><span>Resign Karyawan</span></a></li>
                     </ul>
+                </li>
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-database"></i><span class="text-info panel-title">Data Master</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Data Departemen</a></li>              
+                            <li><a href="/metode_rekrutmen"><i class="fa fa-sitemap"></i><span></span>Data Rekruitmen</a></li>                      
+                        </ul>
                 </li>
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-server"></i><span class="text-info panel-title">Data Master KPI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>

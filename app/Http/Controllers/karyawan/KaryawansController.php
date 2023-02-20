@@ -386,7 +386,8 @@ class KaryawansController extends Controller
             $filename = '' . time() . $file->getClientOriginalName();
             $file->move(public_path() . '\Foto_Profile', $filename);
             $karyawan->foto = $filename;
-
+            $karyawan->save();
+            
             $data = array(
 
                 'nama' => $request->post('namaKaryawan'),
