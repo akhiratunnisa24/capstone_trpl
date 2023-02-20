@@ -43,9 +43,9 @@
                                                                 <th>No.</th>
                                                                 <th>Karyawan</th>
                                                                 <th>Departemen</th>
-                                                                <th>Tanggal Bergabung</th>
+                                                                {{-- <th>Tanggal Bergabung</th> --}}
                                                                 <th>Tanggal Resign</th>
-                                                                <th>Tipe Resign</th>
+                                                                {{-- <th>Tipe Resign</th> --}}
                                                                 <th>Status</th>
                                                                 <th>Action</th>
                                                             </tr>
@@ -56,15 +56,15 @@
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $r->karyawans->nama }}</td>
                                                                 <td>{{ $r->departemens->nama_departemen }}</td>
-                                                                <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td>
+                                                                {{-- <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td> --}}
                                                                 <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}</td>
-                                                                <td>{{ $r->tipe_resign }}</td>
+                                                                {{-- <td>{{ $r->tipe_resign }}</td> --}}
                                                                 <td>
                                                                     <span class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 2 ? 'info' : ($r->status == 3 ? 'success' : ($r->status == 4 ? 'warning' : 'danger'))) }}">
                                                                         {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 2 ? $r->statuses->name_status : ($r->status == 3 ? $r->statuses->name_status : ($r->status == 4 ? $r->statuses->name_status : 'Ditolak'))) }}
                                                                       </span>
                                                                 </td>
-                                                                    <td class="text-center d-flex justify-content-between">
+                                                                    {{-- <td class="text-center d-flex justify-content-between">
                                                                     @if ($r->status === 1)
                                                                     <form action="{{ route('resign_approved_manager', $r->id) }}" method="POST">
                                                                         @csrf
@@ -87,7 +87,32 @@
                                                                           <i class="fa fa-eye"></i>
                                                                         </a>
                                                                       </form>
-                                                                    </td>
+                                                                    </td> --}}
+
+                                                                    <td id="b" class="text-center">
+                                                                        <div class="btn-group" role="group">
+                                                                            @if ($r->status === 8)
+                                                                            <form action="{{ route('resign_approved_manager', $r->id) }}" method="POST">
+                                                                              @csrf
+                                                                              <input type="hidden" name="status" value=2 class="form-control" hidden>
+                                                                              <button type="submit" class="btn btn-success btn-sm">
+                                                                                <i class="fa fa-check"></i>
+                                                                              </button>
+                                                                            </form>
+                                                                            <form action="{{ route('resignreject', $r->id) }}" method="POST">
+                                                                              @csrf
+                                                                              @method('POST')
+                                                                              <input type="hidden" name="status" value=5 class="form-control" hidden>
+                                                                              <button type="submit" class="btn btn-danger btn-sm">
+                                                                                <i class="fa fa-times"></i>
+                                                                              </button>
+                                                                            </form>
+                                                                          @endif
+                                                                          <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#Showresign{{ $r->id }}">
+                                                                            <i class="fa fa-eye"></i>
+                                                                          </a>
+                                                                        </div>
+                                                                      </td>
                                                               </tr>
                                                               @include('karyawan.resign.showresign')
                                                             @endforeach

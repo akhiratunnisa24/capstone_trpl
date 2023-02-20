@@ -6,7 +6,7 @@
           <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-center" id="addresign">Form Permintaan Resign</h4>
+                <h4 class="modal-title text-center" id="addresign">Form Resign</h4>
             </div>
 
               <div class="modal-body">
@@ -14,7 +14,7 @@
                   <form method="POST" action="{{ route('resign.store') }}">
                       @csrf
                       @method('POST')
-                      <div class="form-group col-xs-12">
+                      <div class="form-group col-xs-15">        
                         <label for="namaKaryawan" class="form-label">Nama</label>
                         <select name="namaKaryawan" id="user-select" class="form-control selectpicker"
                             data-live-search="true" required>
@@ -25,24 +25,24 @@
                                 </option>
                             @endforeach
                         </select>
-                    </div>
+                      </div>
 
-                      <div class="form-group col-xs-12">
+                      <div class="form-group col-xs-15">
                         <label for="departemen1" class="form-label">Departemen</label>
                         <input id="departemen1" class="form-control" name="departemen1" autocomplete="off"
                             placeholder="" readonly>
                     </div>
-                      <div class="form-group col-xs-12"hidden>
+                      <div class="form-group col-xs-15"hidden>
                           <label for="departemen" class="form-label">Departemen</label>
                           <input id="departemen" class="form-control" name="departemen" autocomplete="off"
                               placeholder="" readonly>
                       </div>
-                      <div class="form-group col-xs-12">
+                      <div class="form-group col-xs-15">
                           <label for="tgl_masuk" class="form-label">Tanggal Bergabung</label>
                           <input id="tgl_masuk" type="text" class="form-control" name="tgl_masuk" autocomplete="off"
                               placeholder="" readonly>
                       </div>
-                      <div class="form-group">
+                      <div class="form-group col-xs-15">
                           <label for="tgl_resign" class="form-label">Tanggal Resign</label>
                           <div class="input-group">
                               <input type="text" class="form-control" placeholder="yyyy/mm/dd"
@@ -53,7 +53,7 @@
                           </div>
                       </div>
 
-                      <div class="form-group col-xs-12">
+                      <div class="form-group col-xs-15">
                           <label for="tipe_resign" class="form-label">Tipe Resign</label>
                           {{-- <input id="tipe_resign" class="form-control" name="tipe_resign" autocomplete="off" readonly> --}}
                           <select class="form-control" name="tipe_resign" required>
@@ -64,7 +64,7 @@
                           </select>
                       </div>
 
-                      <div class="form-group col-xs-12">
+                      <div class="form-group col-xs-15">
                           <label for="alasan" class="form-label">Alasan Resign</label>
                           <textarea id="alasan" type="text" class="form-control" name="alasan" autocomplete="off"
                               placeholder="Alasan Resign" required></textarea>

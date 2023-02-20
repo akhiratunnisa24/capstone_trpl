@@ -7,7 +7,7 @@
                 <h4 class="modal-title text-center" id="Showresign">Detail Permintaan Resign</h4>
             </div>
             <div class="modal-body">
-                <div class="form-group row">
+                <div class="form-group row" hidden>
                     <label for="id" class="col-sm-3 col-form-label">Id Resign</label>
                     <div class="col-sm-9">
                         <label>: {{$r->id}}</label>
@@ -47,8 +47,8 @@
                 <div class="form-group row">
                     <label for="status" class="col-sm-3 col-form-label">Status Resign</label>
                     <div class="col-sm-9">
-                        @if($r->status == '1')
-                            <span class="badge badge-warning">Pending</span>
+                        @if($r->status == '8')
+                            <span class="badge badge-warning">Pending Manager</span>
                         @elseif($r->status == '2')
                             <span class="badge badge-info">Disetujui Manager</span>
                         @elseif($r->status == '3')
