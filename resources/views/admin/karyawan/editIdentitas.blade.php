@@ -120,7 +120,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Atasan Langsung (SPV/Manager/Direktur)</label>
+                                    <label for="exampleInputEmail1" class="form-label">Atasan Langsung (SPV/Manager/Management)</label>
                                     <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
                                         <option value="">Pilih Atasan Langsung</option>
                                         @foreach ($atasan_pertama as $atasan)
@@ -135,7 +135,7 @@
                                 </div>
             
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Atasan (Manager/Direktur)</label>
+                                    <label for="exampleInputEmail1" class="form-label">Atasan (Manager/Management)</label>
                                     <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
                                         <option value="">Pilih Atasan</option>
                                         @foreach ($atasan_kedua as $atasan)
@@ -153,7 +153,7 @@
                                        <label>Jabatan</label> 
                                        <select type="text" class="form-control selectpicker" name="jabatanKaryawan" required>
                                         <option value="">Pilih Jabatan</option>
-                                        <option value="Direktur" @if($karyawan->jabatan == "Direktur") selected @endif >Direktur</option>
+                                        <option value="Management" @if($karyawan->jabatan == "Management") selected @endif >Management</option>
                                         <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager</option>
                                         <option value="Supervisor" @if($karyawan->jabatan == "Supervisor") selected @endif >Supervisor</option>
                                         <option value="HRD" @if($karyawan->jabatan == "HRD") selected @endif >HRD</option>
@@ -167,9 +167,8 @@
                     </div>
             
                     <div class="modal-footer">
-                        <input type="hidden" name="id" id="id">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Update</button>
+                        <button type="submit" value="submit" class="btn btn-success">Update</button>
                     </div>
                 </form>
             </div>

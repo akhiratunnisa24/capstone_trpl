@@ -17,13 +17,13 @@
                 <div class="row">
                     <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label>
                     <div class="col-sm-9">
-                        <label>: {{$data->karyawans->nama}}</label>
+                        <label>: {{$data->nama}}</label>
                     </div>
                 </div>
                 <div class="row">
                     <label for="id_jeniscuti" class="col-sm-3 col-form-label">Kategori Izin</label>
                     <div class="col-sm-9">
-                        <label>: {{$data->jenisizins->jenis_izin}}</label>
+                        <label>: {{$data->jenis_izin}}</label>
                     </div>
                 </div>
                 <div class="row">

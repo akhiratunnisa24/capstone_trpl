@@ -406,13 +406,16 @@ class KaryawansController extends Controller
                 'updated_at' => new \DateTime(),
                 'foto' => $filename,
             );
-            $idKaryawan = $request->post('id_karyawan');
-            Karyawan::where('id', $idKaryawan)->update($data);
+            // $idKaryawan = $request->post('id_karyawan');
+            // Karyawan::where('id', $idKaryawan)->update($data);
+            Karyawan::where('id', $id)->update($data);
 
             return redirect()->back();
+            dd($data);
         }
         else
         {
+          
             $data = array(
 
                 'nama' => $request->post('namaKaryawan'),
@@ -431,10 +434,12 @@ class KaryawansController extends Controller
                 // 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
             );
-            $idKaryawan = $request->post('id_karyawan');
-            Karyawan::where('id', $idKaryawan)->update($data);
-
+            // $idKaryawan = $request->post('id_karyawan');
+            // Karyawan::where('id', $idKaryawan)->update($data);
+            Karyawan::where('id', $id)->update($data);
             return redirect()->back();
+            dd($karyawan,$data);
+           
         }
 
     }
@@ -454,7 +459,6 @@ class KaryawansController extends Controller
         );
         $idKeluarga = $request->post('id_keluarga');
         Keluarga::where('id', $idKeluarga)->update($data_keluarga);
-        dd($data_keluarga);
         return redirect()->back();
     }
 

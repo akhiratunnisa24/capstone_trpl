@@ -59,130 +59,104 @@
                             {{-- {{ route('cuti.index') }} --}}
                      {{--   </div>
                     </div> --}}
-
                     <div class="content">
                         <div class="container">
-
-                            <div class="panel-body">
-                    <form class="" action="">
-                        <div class="row">
-                            {{-- <div class="col-sm-1"></div> --}}
-                            <div class="col-sm-3 col-xs-12">
-                                <div class="m-t-20">
-                                    <div class="form-group">
-                                        <label>Karyawan</label>
-
-                                        <select name="id_karyawan" id="id_karyawan" class="form-control selectpicker" data-live-search="true" required>
-                                            <option>-- Pilih Karyawan --</option>
-                                            @foreach ($karyawan as $data)
-                                                <option value="{{ $data->id}}"
-                                                    @if ($data->id ==request()->id_karyawan)
-                                                    selected
-                                                    @endif
-                                                    >{{ $data->nama }}
-                                                </option>
-                                            @endforeach
-                                        </select> 
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- <div class="col-sm-3 col-xs-12">
-                                <div class="m-t-20">
-                                    <div class="form-group">
-                                        <label>Departemen</label>
-
-                                        <select name="id_departemen" id="id_departemen" class="form-control">
-                                            <option>-- Pilih Departemen --</option>
-                                            <option value="KONVENSIONAL" {{ ('KONVENSIONAL' === request()->departemen) ? 'selected' : '' }}>
-                                                KONVENSIONAL
-                                            </option>
-                                            {{-- @foreach ($departemen as $data) --}}
-                                                {{-- <option value="{{ $data->id}}" --}}
-                                                    {{-- @if ($data->id ==request()->id_departemen)
-                                                    selected
-                                                    @endif --}}
-                                                    {{-- >{{ $data->departemen }}
-                                                </option> --}}
-                                            {{-- @endforeach --}}
-                                        {{-- </select>                                                  
-                                    </div>
-                                </div>
-                            </div>   --}}
-                            <div class="col-sm-3 col-xs-12">
-                                <div class="m-t-20">
-                                    <div class="form-group">
-                                        <label>Bulan</label>
-                                        <select name="bulan" id="bulan" class="col-md-3 form-control selectpicker" data-live-search="true" required>
-                                            <option value="">-- Pilih Bulan --</option>
-                                            <option value="01" {{ ('01' === request()->bulan) ? 'selected' : '' }}>Januari</option>
-                                            <option value="02" {{ ('02' === request()->bulan) ? 'selected' : '' }}>Februari</option>
-                                            <option value="03" {{ ('03' === request()->bulan) ? 'selected' : '' }}>Maret</option>
-                                            <option value="04" {{ ('04' === request()->bulan) ? 'selected' : '' }}>April</option>
-                                            <option value="05" {{ ('05' === request()->bulan) ? 'selected' : '' }}>Mei</option>
-                                            <option value="06" {{ ('06' === request()->bulan) ? 'selected' : '' }}>Juni</option>
-                                            <option value="07" {{ ('07' === request()->bulan) ? 'selected' : '' }}>Juli</option>
-                                            <option value="08" {{ ('08' === request()->bulan) ? 'selected' : '' }}>Agustus</option>
-                                            <option value="09" {{ ('09' === request()->bulan) ? 'selected' : '' }}>September</option>
-                                            <option value="10" {{ ('10' === request()->bulan) ? 'selected' : '' }}>Oktober</option>
-                                            <option value="11" {{ ('11' === request()->bulan) ? 'selected' : '' }}>November</option>
-                                            <option value="12" {{ ('12' === request()->bulan) ? 'selected' : '' }}>Desember</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-12">
-                                <div class="m-t-20">
-                                    <div class="form-group">
-                                        <label>Tahun</label>
-                                        <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" data-live-search="true" required>
-                                            <option value="" required>-- Pilih Tahun --</option>
-                                            {{-- {{ ('01' === request()->bulan) ? 'selected' : '' }} --}}
-                                            <option value="2011" {{ ('2011' === request()->tahun) ? 'selected' : '' }}>2011</option>
-                                            <option value="2012" {{ ('2012' === request()->tahun) ? 'selected' : '' }}>2012</option>
-                                            <option value="2013" {{ ('2013' === request()->tahun) ? 'selected' : '' }}>2013</option>
-                                            <option value="2014" {{ ('2014' === request()->tahun) ? 'selected' : '' }}>2014</option>
-                                            <option value="2015" {{ ('2015' === request()->tahun) ? 'selected' : '' }}>2015</option>
-                                            <option value="2016" {{ ('2016' === request()->tahun) ? 'selected' : '' }}>2016</option>
-                                            <option value="2017" {{ ('2017' === request()->tahun) ? 'selected' : '' }}>2017</option>
-                                            <option value="2018" {{ ('2018' === request()->tahun) ? 'selected' : '' }}>2018</option>
-                                            <option value="2019" {{ ('2019' === request()->tahun) ? 'selected' : '' }}>2019</option>
-                                            <option value="2020" {{ ('2020' === request()->tahun) ? 'selected' : '' }}>2020</option>
-                                            <option value="2021" {{ ('2021' === request()->tahun) ? 'selected' : '' }}>2021</option>
-                                            <option value="2022" {{ ('2022' === request()->tahun) ? 'selected' : '' }}>2022</option>
-                                            <option value="2023" {{ ('2023' === request()->tahun) ? 'selected' : '' }}>2023</option>
-                                            <option value="2024" {{ ('2024' === request()->tahun) ? 'selected' : '' }}>2024</option>
-                                            <option value="2025" {{ ('2025' === request()->tahun) ? 'selected' : '' }}>2025</option>
-                                            <option value="2026" {{ ('2026' === request()->tahun) ? 'selected' : '' }}>2026</option>
-                                            <option value="2027" {{ ('2027' === request()->tahun) ? 'selected' : '' }}>2027</option>
-                                            <option value="2028" {{ ('2028' === request()->tahun) ? 'selected' : '' }}>2028</option>
-                                            <option value="2029" {{ ('2029' === request()->tahun) ? 'selected' : '' }}>2029</option>
-                                            <option value="2030" {{ ('2030' === request()->tahun) ? 'selected' : '' }}>2030</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-xs-12">
-                                <div class="" style="margin-top:26px">
-                                    <div class="form-group">
-                                        <label></label>
-                                        <div>
-                                            <button type="submit" id="search" class="btn btn-md btn-success fa fa-filter"> Filter</button>
-                                            <a href="{{ route('absensi.index') }}" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
                             <div class="row">
-                                <div class="col-md-15">
+                                <div class="col-md-20">
+                                    <form class="" action="">
+                                        <div class="row">
+                                            {{-- <div class="col-sm-1"></div> --}}
+                                            <div class="col-sm-3 col-xs-12">
+                                                <div class="m-t-20">
+                                                    <div class="form-group">
+                                                        <label>Karyawan</label>
+
+                                                        <select name="id_karyawan" id="id_karyawan" class="form-control selectpicker" data-live-search="true" required>
+                                                            <option>-- Pilih Karyawan --</option>
+                                                            @foreach ($karyawan as $data)
+                                                                <option value="{{ $data->id}}"
+                                                                    @if ($data->id ==request()->id_karyawan)
+                                                                    selected
+                                                                    @endif
+                                                                    >{{ $data->nama }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select> 
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3 col-xs-12">
+                                                <div class="m-t-20">
+                                                    <div class="form-group">
+                                                        <label>Bulan</label>
+                                                        <select name="bulan" id="bulan" class="col-md-3 form-control selectpicker" data-live-search="true" required>
+                                                            <option value="">-- Pilih Bulan --</option>
+                                                            <option value="01" {{ ('01' === request()->bulan) ? 'selected' : '' }}>Januari</option>
+                                                            <option value="02" {{ ('02' === request()->bulan) ? 'selected' : '' }}>Februari</option>
+                                                            <option value="03" {{ ('03' === request()->bulan) ? 'selected' : '' }}>Maret</option>
+                                                            <option value="04" {{ ('04' === request()->bulan) ? 'selected' : '' }}>April</option>
+                                                            <option value="05" {{ ('05' === request()->bulan) ? 'selected' : '' }}>Mei</option>
+                                                            <option value="06" {{ ('06' === request()->bulan) ? 'selected' : '' }}>Juni</option>
+                                                            <option value="07" {{ ('07' === request()->bulan) ? 'selected' : '' }}>Juli</option>
+                                                            <option value="08" {{ ('08' === request()->bulan) ? 'selected' : '' }}>Agustus</option>
+                                                            <option value="09" {{ ('09' === request()->bulan) ? 'selected' : '' }}>September</option>
+                                                            <option value="10" {{ ('10' === request()->bulan) ? 'selected' : '' }}>Oktober</option>
+                                                            <option value="11" {{ ('11' === request()->bulan) ? 'selected' : '' }}>November</option>
+                                                            <option value="12" {{ ('12' === request()->bulan) ? 'selected' : '' }}>Desember</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 col-xs-12">
+                                                <div class="m-t-20">
+                                                    <div class="form-group">
+                                                        <label>Tahun</label>
+                                                        <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" data-live-search="true" required>
+                                                            <option value="" required>-- Pilih Tahun --</option>
+                                                            {{-- {{ ('01' === request()->bulan) ? 'selected' : '' }} --}}
+                                                            <option value="2011" {{ ('2011' === request()->tahun) ? 'selected' : '' }}>2011</option>
+                                                            <option value="2012" {{ ('2012' === request()->tahun) ? 'selected' : '' }}>2012</option>
+                                                            <option value="2013" {{ ('2013' === request()->tahun) ? 'selected' : '' }}>2013</option>
+                                                            <option value="2014" {{ ('2014' === request()->tahun) ? 'selected' : '' }}>2014</option>
+                                                            <option value="2015" {{ ('2015' === request()->tahun) ? 'selected' : '' }}>2015</option>
+                                                            <option value="2016" {{ ('2016' === request()->tahun) ? 'selected' : '' }}>2016</option>
+                                                            <option value="2017" {{ ('2017' === request()->tahun) ? 'selected' : '' }}>2017</option>
+                                                            <option value="2018" {{ ('2018' === request()->tahun) ? 'selected' : '' }}>2018</option>
+                                                            <option value="2019" {{ ('2019' === request()->tahun) ? 'selected' : '' }}>2019</option>
+                                                            <option value="2020" {{ ('2020' === request()->tahun) ? 'selected' : '' }}>2020</option>
+                                                            <option value="2021" {{ ('2021' === request()->tahun) ? 'selected' : '' }}>2021</option>
+                                                            <option value="2022" {{ ('2022' === request()->tahun) ? 'selected' : '' }}>2022</option>
+                                                            <option value="2023" {{ ('2023' === request()->tahun) ? 'selected' : '' }}>2023</option>
+                                                            <option value="2024" {{ ('2024' === request()->tahun) ? 'selected' : '' }}>2024</option>
+                                                            <option value="2025" {{ ('2025' === request()->tahun) ? 'selected' : '' }}>2025</option>
+                                                            <option value="2026" {{ ('2026' === request()->tahun) ? 'selected' : '' }}>2026</option>
+                                                            <option value="2027" {{ ('2027' === request()->tahun) ? 'selected' : '' }}>2027</option>
+                                                            <option value="2028" {{ ('2028' === request()->tahun) ? 'selected' : '' }}>2028</option>
+                                                            <option value="2029" {{ ('2029' === request()->tahun) ? 'selected' : '' }}>2029</option>
+                                                            <option value="2030" {{ ('2030' === request()->tahun) ? 'selected' : '' }}>2030</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 col-xs-12">
+                                                <div class="" style="margin-top:26px">
+                                                    <div class="form-group">
+                                                        <label></label>
+                                                        <div>
+                                                            <button type="submit" id="search" class="btn btn-md btn-success fa fa-filter"> Filter</button>
+                                                            <a href="/permintaan_cuti" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <div class="panel panel-primary">
                                         {{-- <div class="panel-heading"  style="height:35px"> --}}
                                             <div class="panel-heading clearfix">
                                                 <a href="/rekapcutiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                            <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
+                                                <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
                                                 <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                                     data-target="#Modals"> Tambah Cuti Karyawan</a>
                                             </div>
@@ -210,9 +184,10 @@
                                                             @foreach($cuti as $data)
                                                             <tr>
                                                                 <td>{{$loop->iteration}}</td>
-                                                                {{-- <td>{{$data->nama}}</td> --}}
-                                                                <td>{{$data->karyawans->nama}}</td>
-                                                                <td>{{$data->jeniscutis->jenis_cuti}}</td>
+                                                                <td>{{$data->nama}}</td>
+                                                                {{-- <td>{{$data->karyawans->nama}}</td> --}}
+                                                                {{-- <td>{{$data->jeniscutis->jenis_cuti}}</td> --}}
+                                                                <td>{{$data->jenis_cuti}}</td>
                                                                 <td>{{$data->keperluan}}</td>
                                                                 <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
                                                                 <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
@@ -280,8 +255,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- <div class="panel-body">
+                                    
+                                    </div> --}}
                                 </div>
-                            </div> 
+                            </div>
                         </div> 
                     </div> 
                 </div>
@@ -294,9 +272,100 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-20">
+                                    <form class="" action="">
+                                        <div class="row">
+                                            {{-- <div class="col-sm-1"></div> --}}
+                                            <div class="col-sm-3 col-xs-12">
+                                                <div class="m-t-20">
+                                                    <div class="form-group">
+                                                        <label>Karyawan</label>
+    
+                                                        <select name="idpegawai" id="idpegawai" class="form-control selectpicker" data-live-search="true" required>
+                                                            <option>-- Pilih Karyawan --</option>
+                                                            @foreach ($pegawai as $data)
+                                                                <option value="{{ $data->id}}"
+                                                                    @if ($data->id ==request()->id_karyawan)
+                                                                    selected
+                                                                    @endif
+                                                                    >{{ $data->nama }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select> 
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                            <div class="col-sm-3 col-xs-12">
+                                                <div class="m-t-20">
+                                                    <div class="form-group">
+                                                        <label>Bulan</label>
+                                                        <select name="month" id="month" class="col-md-3 form-control selectpicker" data-live-search="true" required>
+                                                            <option value="">-- Pilih Bulan --</option>
+                                                            <option value="01" {{ ('01' === request()->month) ? 'selected' : '' }}>Januari</option>
+                                                            <option value="02" {{ ('02' === request()->month) ? 'selected' : '' }}>Februari</option>
+                                                            <option value="03" {{ ('03' === request()->month) ? 'selected' : '' }}>Maret</option>
+                                                            <option value="04" {{ ('04' === request()->month) ? 'selected' : '' }}>April</option>
+                                                            <option value="05" {{ ('05' === request()->month) ? 'selected' : '' }}>Mei</option>
+                                                            <option value="06" {{ ('06' === request()->month) ? 'selected' : '' }}>Juni</option>
+                                                            <option value="07" {{ ('07' === request()->month) ? 'selected' : '' }}>Juli</option>
+                                                            <option value="08" {{ ('08' === request()->month) ? 'selected' : '' }}>Agustus</option>
+                                                            <option value="09" {{ ('09' === request()->month) ? 'selected' : '' }}>September</option>
+                                                            <option value="10" {{ ('10' === request()->month) ? 'selected' : '' }}>Oktober</option>
+                                                            <option value="11" {{ ('11' === request()->month) ? 'selected' : '' }}>November</option>
+                                                            <option value="12" {{ ('12' === request()->month) ? 'selected' : '' }}>Desember</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 col-xs-12">
+                                                <div class="m-t-20">
+                                                    <div class="form-group">
+                                                        <label>Tahun</label>
+                                                        <select name="year" id="year" class="col-md-3 form-control selectpicker" data-live-search="true" required>
+                                                            <option value="" required>-- Pilih Tahun --</option>
+                                                            {{-- {{ ('01' === request()->bulan) ? 'selected' : '' }} --}}
+                                                            <option value="2011" {{ ('2011' === request()->year) ? 'selected' : '' }}>2011</option>
+                                                            <option value="2012" {{ ('2012' === request()->year) ? 'selected' : '' }}>2012</option>
+                                                            <option value="2013" {{ ('2013' === request()->year) ? 'selected' : '' }}>2013</option>
+                                                            <option value="2014" {{ ('2014' === request()->year) ? 'selected' : '' }}>2014</option>
+                                                            <option value="2015" {{ ('2015' === request()->year) ? 'selected' : '' }}>2015</option>
+                                                            <option value="2016" {{ ('2016' === request()->year) ? 'selected' : '' }}>2016</option>
+                                                            <option value="2017" {{ ('2017' === request()->year) ? 'selected' : '' }}>2017</option>
+                                                            <option value="2018" {{ ('2018' === request()->year) ? 'selected' : '' }}>2018</option>
+                                                            <option value="2019" {{ ('2019' === request()->year) ? 'selected' : '' }}>2019</option>
+                                                            <option value="2020" {{ ('2020' === request()->year) ? 'selected' : '' }}>2020</option>
+                                                            <option value="2021" {{ ('2021' === request()->year) ? 'selected' : '' }}>2021</option>
+                                                            <option value="2022" {{ ('2022' === request()->year) ? 'selected' : '' }}>2022</option>
+                                                            <option value="2023" {{ ('2023' === request()->year) ? 'selected' : '' }}>2023</option>
+                                                            <option value="2024" {{ ('2024' === request()->year) ? 'selected' : '' }}>2024</option>
+                                                            <option value="2025" {{ ('2025' === request()->year) ? 'selected' : '' }}>2025</option>
+                                                            <option value="2026" {{ ('2026' === request()->year) ? 'selected' : '' }}>2026</option>
+                                                            <option value="2027" {{ ('2027' === request()->year) ? 'selected' : '' }}>2027</option>
+                                                            <option value="2028" {{ ('2028' === request()->year) ? 'selected' : '' }}>2028</option>
+                                                            <option value="2029" {{ ('2029' === request()->year) ? 'selected' : '' }}>2029</option>
+                                                            <option value="2030" {{ ('2030' === request()->year) ? 'selected' : '' }}>2030</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 col-xs-12">
+                                                <div class="" style="margin-top:26px">
+                                                    <div class="form-group">
+                                                        <label></label>
+                                                        <div>
+                                                            <button type="submit" id="search" class="btn btn-md btn-success fa fa-filter"> Filter</button>
+                                                            <a href="/permintaan_cuti" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <div class="panel panel-primary">
-                                        <div class="panel-heading" style="height:35px">
-                                            {{-- <strong>Data Permintaan Izin</strong> --}}
+                                        <div class="panel-heading">
+                                            {{-- /rekapizinExcel --}}
+                                            <a href="" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
+                                            <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">
@@ -320,8 +389,10 @@
                                                             @foreach($izin as $data)
                                                                 <tr>
                                                                     <td>{{$loop->iteration}}</td>
-                                                                    <td>{{$data->karyawans->nama}}</td>
-                                                                    <td>{{$data->jenisizins->jenis_izin}}</td>
+                                                                    {{-- <td>{{$data->karyawans->nama}}</td>
+                                                                    <td>{{$data->jenisizins->jenis_izin}}</td> --}}
+                                                                    <td>{{$data->nama}}</td>
+                                                                    <td>{{$data->jenis_izin}}</td>
                                                                     <td>{{$data->keperluan}}</td>
 
                                                                     {{-- tanggal mulai & tanggal selesai --}}
@@ -362,7 +433,7 @@
                                                                     <td> 
                                                                         <div class="row">
                                                                             {{-- @if($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
-                                                                            @if ($data->karyawan->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $data->id_karyawan != Auth::user()->id_pegawai)    
+                                                                            @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izinapproved',$data->id)}}" method="POST"> 
                                                                                         @csrf
@@ -385,6 +456,7 @@
                                                                                         <button type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
                                                                                 </div> --}}
+                                                                            @else
                                                                             @endif
                 
                                                                             <div class="col-sm-3" style="margin-left:5px">
