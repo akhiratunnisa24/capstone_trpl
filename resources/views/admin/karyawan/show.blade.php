@@ -25,9 +25,10 @@
 
     </div>
 
-    <form action="karyawan/update/{{$karyawan->id}}" method="POST">
-        @csrf
-        @method('put')
+    {{-- karyawan/update/{{$karyawan->id}} --}}
+    {{-- <form action="" method="POST"> --}}
+        {{-- @csrf
+        @method('put') --}}
 
         <div class="modal-body">
             <table class="table table-bordered table-striped" style="width:100%">
@@ -300,7 +301,7 @@
                                 <a class="btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#editPekerjaan{{$rpekerjaan->id}}" style="margin-right:10px">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <button onclick="pekerjaan({{$$rpekerjaan->id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                {{-- <button onclick="pekerjaan({{$$rpekerjaan->id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                             </td>
                         </tr>
                         @include('admin.karyawan.editPekerjaan')
@@ -309,7 +310,7 @@
             </table>
             {{-- </div> --}}
         </div>
-    </form>
+    {{-- </form> --}}
 
     <div class="modal-footer">
         {{-- <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a> --}}

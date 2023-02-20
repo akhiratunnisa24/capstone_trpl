@@ -546,13 +546,14 @@ class karyawanController extends Controller
             $rpekerjaan     = Rpekerjaan::where('id_pegawai', $id)->first();
             $row            = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Direktur'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direktur'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Management'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Management'])->get();
 
             $output = [
                 'row' => $row
             ];
 
+            dd($atasan_pertama, $atasan_kedua);
             return view('admin.karyawan.edit', $output)->with([
                 'karyawan'   => $karyawan,
                 'keluarga'   => $keluarga,
@@ -597,8 +598,6 @@ if ($file = $request->file('foto')) {
     $karyawan->save();
 
     return redirect()->back();
-
-
 
 
             $data = array(
@@ -809,8 +808,8 @@ if ($file = $request->file('foto')) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Managemen'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Managemen'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Management'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Management'])->get();
 
             $output = [
                 'row' => $row
