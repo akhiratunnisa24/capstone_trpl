@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('departemen');
             $table->date('tgl_masuk');
             $table->date('tgl_resign');
-            $table->string('tipe_resign');
-            $table->text('alasan');
+            $table->string('tipe_resign')->nullable();
+            $table->text('alasan')->nullable();
             $table->unsignedBigInteger('status');
             $table->timestamps();
         });

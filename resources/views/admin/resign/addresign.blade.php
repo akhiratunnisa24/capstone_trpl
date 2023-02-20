@@ -67,7 +67,7 @@
                       <div class="form-group col-xs-12">
                           <label for="alasan" class="form-label">Alasan Resign</label>
                           <textarea id="alasan" type="text" class="form-control" name="alasan" autocomplete="off"
-                              placeholder="Alasan Resign"></textarea>
+                              placeholder="Alasan Resign" required></textarea>
                       </div>                      
                       <div class="col-xs-12">
                           <div class="checkbox checkbox-primary">

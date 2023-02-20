@@ -112,7 +112,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>No</th>
                         <th>Nama</th>
                         <th>Tanggal Lahir</th>
                         <th>Hubungan</th>
@@ -133,7 +133,7 @@
                             <td>{{$keluarga->pendidikan_terakhir }}</td>
                             <td>{{$keluarga->pekerjaan}}</td>
                             <td class="">
-                                <a class="btn btn-sm btn-primary editKeluarga pull-right" data-toggle="modal" data-target="#editKeluarga{{$keluarga->id}}" style="margin-right:10px">
+                                <a class="btn btn-sm btn-primary editKeluarga pull-right" data-toggle="modal" data-target="NoeditKeluarga{{$keluarga->id}}" style="margin-right:10px">
                                     <i class="fa fa-edit"></i>
                                 </a>
                             </td>
@@ -147,7 +147,7 @@
             {{-- KONTAK DARURAT --}}
             <div class="row">
                 <label class="" width="50%"><h4>C. KONTAK DARURAT </h4></label>
-                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addKontak" style="margin-right:10px;margin-top:10px">
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="NoaddKontak" style="margin-right:10px;margin-top:10px">
                     <i class="fa fa-plus"> <strong> Add Kontak Darurat</strong></i>
                 </a>
                 @include('admin.karyawan.addKontak')
@@ -155,7 +155,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>No</th>
                         <th>Nama</th>
                         <th>Hubungan</th>
                         <th>Alamat</th>
@@ -173,7 +173,7 @@
                             <td>{{$kdarurat->alamat }}</td>
                             <td>{{$kdarurat->no_hp}}</td>
                             <td class="">
-                                <a class="btn btn-sm btn-primary editDarurat pull-right" data-toggle="modal" data-target="#editDarurat{{$kdarurat->id}}" style="margin-right:10px">
+                                <a class="btn btn-sm btn-primary editDarurat pull-right" data-toggle="modal" data-target="NoeditDarurat{{$kdarurat->id}}" style="margin-right:10px">
                                     <i class="fa fa-edit"></i>
                                 </a>
                             </td>
@@ -188,7 +188,7 @@
             <label class="" width="50%"><h4>D. RIWAYAT PENDIDIKAN </h4></label><br>
             <div class="row">
                 <td style="width:25%"><label class="text-white badge bg-info"> Pendidikan Formal </label></td>
-                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPformal" style="margin-right:10px;margin-bottom:10px">
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="NoaddPformal" style="margin-right:10px;margin-bottom:10px">
                     <i class="fa fa-plus"> <strong> Add Pendidikan Formal</strong></i>
                 </a>
                 @include('admin.karyawan.addPformal')

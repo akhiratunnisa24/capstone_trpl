@@ -67,11 +67,10 @@ class karyawanController extends Controller
             //         $absen->save();
             //     }
             // }    
-            // dd($karyawan);
+            // dd($karyawan);       
 
 
         $role = Auth::user()->role;
-
         if ($role == 1) {
 
             $karyawan = karyawan::all()->sortByDesc('created_at');
@@ -147,6 +146,12 @@ class karyawanController extends Controller
                 ->whereTime('jam_masuk', '>', '08:00:00')
                 ->count();
 
+            //absen masuk bulan ini    
+            $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+                ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->count('jam_masuk');
+
             //absen masuk bulan lalu    
             $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
@@ -181,7 +186,7 @@ class karyawanController extends Controller
                 'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
                 'absenTidakmasuk' => $absenTidakmasuk,
                 'alokasicuti' => $alokasicuti,
-                // 'sisacuti' => $sisacuti,
+                'absenBulanini' => $absenBulanini,
                 'absenBulanlalu' => $absenBulanlalu,
                 'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
 
@@ -259,6 +264,7 @@ class karyawanController extends Controller
             $user->kontrak = $request->kontrak;
             $user->gaji = $request->gaji;
             $user->tglkeluar = $request->tglkeluar;
+            $user->status_kerja = 'Aktif';
             $user->save();
 
             // $profile = new Kdarurat();

@@ -268,13 +268,13 @@ class HomeController extends Controller
 
         $absenBulanLalu = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
         ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-        ->count('jam_masuk');;
+        ->count('jam_masuk');
 
-        //absen terlambat bulan lalu
-        // $absenTerlambatbulanlalu = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-        //     ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
-        //     ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
-        //     ->count('terlambat');
+        //absen masuk bulan ini    
+        $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+            ->whereYear('tanggal', '=', Carbon::now()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->count('jam_masuk');
 
         $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
         ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
@@ -307,6 +307,8 @@ class HomeController extends Controller
         $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
             ->whereMonth('created_at', '=', Carbon::now()->month)
             ->count('jam_masuk');
+        
+        $tahun = Carbon::now()->year;
     
         if ($role == 1){
             
@@ -329,7 +331,7 @@ class HomeController extends Controller
                 'dataIzinbulanlalu' => $dataIzinbulanlalu,
                 'cutibulanlalu' => $cutibulanlalu,
                 'cutidanizibulanlalu' => $cutidanizibulanlalu,
-                // 'labelTahun' => $labelTahun,
+                'tahun' => $tahun,
                 'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,    
                 'tidakMasukBulanIni' => $tidakMasukBulanIni,
                 'tidakMasukHariIni' => $tidakMasukHariIni,
@@ -345,6 +347,7 @@ class HomeController extends Controller
                 'absenTidakmasuk' => $absenTidakmasuk,
                 'alokasicuti' => $alokasicuti,
                 'sisacuti' => $sisacuti,
+                'absenBulanini' => $absenBulanini,
                 'absenBulanlalu'=> $absenBulanlalu,
                 'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
             ];
@@ -358,6 +361,7 @@ class HomeController extends Controller
                 'absenTidakmasuk' => $absenTidakmasuk,
                 'alokasicuti' => $alokasicuti,
                 'sisacuti' => $sisacuti,
+                'absenBulanini' => $absenBulanini,
                 'absenBulanlalu'=> $absenBulanlalu,
                 'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
             ];

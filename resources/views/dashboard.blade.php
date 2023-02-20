@@ -49,7 +49,7 @@
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $absenTerlambatHariIni }}</b></h3>
-                <p class="text-muted"><b>Lorem Ipsum </b> </p>
+                <p class="text-muted"><b>Total Terlambat</b> </p>
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $totalTidakAbsenHariIni }}</b></h3>
-                <p class="text-muted"><b>Lorem Ipsum</b></p>
+                <p class="text-muted"><b>Total Terlambat </b></p>
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $absenTerlambat }}</b></h3>
-                <p class="text-muted"><b>Lorem Ipsum </b> </p>
+                <p class="text-muted"><b>Total Terlambat  </b> </p>
             </div>
         </div>
     </div>
