@@ -37,6 +37,18 @@
                         <span class="hidden-xs">Permintaan Izin</span>
                     </a>
                 </li>
+                {{-- <li class="nav-item active">
+                    <a class="nav-link {{ $activeTab === 'cuti' ? 'active' : '' }}" href="{{ route('permintaancuti.index', ['active_tab' => 'cuti']) }}?active_tab=cuti"  id="tab1" data-toggle="tab" aria-expanded="false">
+                        <span class="visible-xs"><i class="fa fa-home"></i></span>
+                        <span class="hidden-xs">Permintaan Cuti</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ $activeTab === 'izin' ? 'active' : '' }}" href="{{ route('permintaancuti.index', ['active_tab' => 'izin']) }}?active_tab=izin" id="tab2" data-toggle="tab" aria-expanded="true">
+                        <span class="visible-xs"><i class="fa fa-user"></i></span>
+                        <span class="hidden-xs">Permintaan Izin</span>
+                    </a>
+                </li> --}}
             </ul>
             <div class="tab-content">
                 {{-- LIST CUTI --}}
@@ -370,7 +382,7 @@
                                         <div class="panel-body m-b-5">
                                             <div class="row">
                                                 <div class="col-md-20 col-sm-20 col-xs-20">
-                                                    <table  id="datatable-responsive4" class="table dt-responsive table-striped table-bordered" width="100%">
+                                                    <table  id="datatable-responsive14" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>#</th>
@@ -509,5 +521,55 @@
         }else{
             $('#tab2').click();
         }
-    </script>    
+    </script>  
+    <script>
+        $(document).ready(function() {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+                var target = $(e.target).attr('href');
+                if (target === '#izin') {
+                    // Panggil fungsi untuk mengambil data pada tab izin
+                    getIzin();
+                }
+            });
+
+            function getIzin()
+            {
+                $.ajax({
+                url: '/izin',
+                type: 'GET',
+                success: function(response) {
+                    var data = response.izin;
+                    $('#datatable-responsive14').DataTable().clear().draw();
+                    $('#datatable-responsive14').DataTable({
+                        "data": data,
+                        "columns": [
+                            { "data": "id" },
+                            { "data": "nama" },
+                            { "data": "jenis_izin" },
+                            { "data": "keperluan" },
+                            { "data": "tgl_mulai" },
+                            { "data": "tgl_selesai" },
+                            { "data": "lama_izin" },
+                            { "data": "name_status" },
+                            { "data": "action" }
+                        ],
+                        "columnDefs": [
+                            { "searchable": false, "orderable": false, "targets": 8 },
+                            { "className": "text-center", "targets": [0, 6, 7, 8] },
+                            { "width": "10%", "targets": [6] }
+                        ],
+                        "order": [[ 0, "desc" ]],
+                        "language": {
+                            "url": "/js/Indonesian.json"
+                        },
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            }); 
+            }
+        });
+    </script>
+      
 @endsection

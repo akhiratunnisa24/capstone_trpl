@@ -7,7 +7,7 @@
                 <h4 class="modal-title" id="myLargeModalLabel">Edit Identitas Diri</h4>
             </div>
             <div class="modal-body">
-                <form id="" action="/updateIdentitas/{{$karyawan->id}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('identitas.update',$karyawan->id)}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -39,11 +39,10 @@
                             <div class="form-group">
                                 <div class="mb-3">
                                    <label>Jenis Kelamin</label> 
-                                   <select class="form-control selectpicker" name="jenis_kelaminKaryawan" required>
-                                    <option value="">Pilih Jenis Kelamin</option>
-                                    <option value="L" @if($karyawan->jenis_kelamin == "L") selected @endif >Laki-Laki</option>
-                                    <option value="P" @if($karyawan->jenis_kelamin == "P") selected @endif >Perempuan</option>
-                                </select>
+                                    <select class="form-control" name="jenis_kelaminKaryawan">
+                                        <option value="L" {{ $karyawan->jenis_kelamin == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                                        <option value="P" {{ $karyawan->jenis_kelamin == 'P' ? 'selected' : '' }}>Perempuan</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -56,26 +55,26 @@
                             <div class="form-group">
                                 <div class="mb-3">
                                    <label>Agama</label> 
-                                   <select class="form-control selectpicker" name="agamaKaryawan">
+                                    <select class="form-control" name="agamaKaryawan">
                                         <option value="">Pilih Agama</option>
-                                        <option value="Islam" @if($karyawan->agama == "Islam") selected @endif>Islam</option>
-                                        <option value="Kristen" @if($karyawan->agama == "Kristen") selected @endif>Kristen</option>
-                                        <option value="Katholik" @if($karyawan->agama == "Katholik") selected @endif>Katholik</option>
-                                        <option value="Hindu" @if($karyawan->agama == "Hindu") selected @endif>Hindu</option>
-                                        <option value="Budha" @if($karyawan->agama == "Budha") selected @endif>Budha</option>
-                                        <option value="Khong Hu Chu" @if($karyawan->agama == "Khong Hu Chu") selected @endif>Khong Hu Chu</option>
+                                        <option value="Islam" {{ $karyawan->agama == 'Islam' ? 'selected' : '' }}>Islam</option>
+                                        <option value="Kristen" {{ $karyawan->agama == 'Kristen' ? 'selected' : '' }}>Kristen</option>
+                                        <option value="Katholik" {{ $karyawan->agama == 'Katholik' ? 'selected' : '' }}>Katholik</option>
+                                        <option value="Hindu" {{ $karyawan->agama == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                                        <option value="Budha"{{ $karyawan->agama == 'Budha' ? 'selected' : '' }}>Budha</option>
+                                        <option value="Khong Hu Chu"{{ $karyawan->agama == 'Khong Hu Chu' ? 'selected' : '' }}>Khong Hu Chu</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
                                    <label>Golongan Darah</label> 
-                                   <select class="form-control selectpicker" name="gol_darahKaryawan" required>
+                                   <select class="form-control" name="gol_darahKaryawan" required>
                                     <option value="">Pilih Golongan Darah</option>
-                                    <option value="A" @if($karyawan->gol_darah == "A") selected @endif >A</option>
-                                    <option value="B" @if($karyawan->gol_darah == "B") selected @endif >B</option>
-                                    <option value="AB" @if($karyawan->gol_darah == "AB") selected @endif >AB</option>
-                                    <option value="O" @if($karyawan->gol_darah == "O") selected @endif >O</option>
+                                    <option value="A" {{ $karyawan->gol_darah == 'A' ? 'selected' : '' }}>A</option>
+                                    <option value="B" {{ $karyawan->gol_darah == 'B' ? 'selected' : '' }}>B</option>
+                                    <option value="AB"{{ $karyawan->gol_darah == 'AB' ? 'selected' : '' }}>AB</option>
+                                    <option value="O" {{ $karyawan->gol_darah == 'O' ? 'selected' : '' }}>O</option>
                                 </select>
                                 </div>
                             </div>
@@ -108,7 +107,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1" class="form-label">Departemen</label>
-                                    <select class="form-control selectpicker" name="divisi" data-live-search="true" required>
+                                    <select class="form-control" name="divisi">
                                         <option value="">Pilih Departemen</option>
                                         @foreach ($departemen as $d)
                                             <option value="{{ $d->id }}"
@@ -121,7 +120,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1" class="form-label">Atasan Langsung (SPV/Manager/Management)</label>
-                                    <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
+                                    <select class="form-control" name="atasan_pertama">
                                         <option value="">Pilih Atasan Langsung</option>
                                         @foreach ($atasan_pertama as $atasan)
                                             <option value="{{ $atasan->id }}"
@@ -129,14 +128,13 @@
                                                     selected
                                                 @endif>{{ $atasan->nama }}
                                             </option>
-                                               
                                         @endforeach
                                     </select>
                                 </div>
             
                                 <div class="form-group">
                                     <label for="exampleInputEmail1" class="form-label">Atasan (Manager/Management)</label>
-                                    <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
+                                    <select class="form-control" name="atasan_kedua">
                                         <option value="">Pilih Atasan</option>
                                         @foreach ($atasan_kedua as $atasan)
                                             <option value="{{ $atasan->id }}"
@@ -150,8 +148,8 @@
 
                                 <div class="form-group">
                                     <div class="mb-3">
-                                       <label>Jabatan</label> 
-                                       <select type="text" class="form-control selectpicker" name="jabatanKaryawan" required>
+                                       <label for="jabatanKaryawan">Jabatan</label> 
+                                       <select class="form-control" name="jabatanKaryawan" required>
                                         <option value="">Pilih Jabatan</option>
                                         <option value="Management" @if($karyawan->jabatan == "Management") selected @endif >Management</option>
                                         <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager</option>
