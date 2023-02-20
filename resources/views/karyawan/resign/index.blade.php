@@ -25,16 +25,16 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading clearfix">
-                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" 
-                              @if (!$cek) 
-                                data-toggle="modal" data-target="#Modal">Form Ajukan Resign
-                              @else 
-                                onclick="alert('Kamu tidak bisa mengajukan resign lebih dari satu')"
-                                class="alert-button">Form Ajukan Resign
-                              @endif
-                            </a>
+                          <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" 
+                                @if (!$cek || $status0 == 5 || $jumlah_resign == 0) 
+                                    data-toggle="modal" data-target="#Modal"
+                                @else 
+                                    onclick="alert('Kamu tidak bisa mengajukan resign lebih dari satu')"
+                                    class="alert-button"
+                                @endif
+                            >Form Ajukan Resign</a>
                           </div>
-                        <!-- modals tambah data cuti -->
+                        <!-- modals resign -->
                         @include('karyawan.resign.addresign')
 
                         <div class="panel-body m-b-5">
@@ -48,7 +48,7 @@
                                                 {{-- <th>#</th> --}}
                                                 <th>Karyawan</th>
                                                 <th>Departemen</th>
-                                                <th>Tanggal Bergabung</th>
+                                                {{-- <th>Tanggal Bergabung</th> --}}
                                                 <th>Tanggal Resign</th>
                                                 <th>Tipe Resign</th>
                                                 <th>Status</th>
@@ -61,14 +61,14 @@
                                                 <tr>
                                                   <td>{{ $r->karyawans->nama }}</td>
                                                   <td>{{ $r->departemens->nama_departemen }}</td>
-                                                  <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td>
+                                                  {{-- <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td> --}}
                                                   <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}</td>
                                                   <td>{{ $r->tipe_resign }}</td>
                                           
                                                   <!-- data for status -->
                                                   <td>
-                                                    <span class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 2 ? 'info' : ($r->status == 3 ? 'success' : ($r->status == 4 ? 'warning' : 'danger'))) }}">
-                                                      {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 2 ? $r->statuses->name_status : ($r->status == 3 ? $r->statuses->name_status : ($r->status == 4 ? $r->statuses->name_status : 'Ditolak'))) }}
+                                                    <span class="badge badge-{{ $r->status == 8 ? 'warning' : ($r->status == 2 ? 'info' : ($r->status == 3 ? 'success' : ($r->status == 4 ? 'warning' : 'danger'))) }}">
+                                                      {{ $r->status == 8 ? $r->statuses->name_status : ($r->status == 2 ? $r->statuses->name_status : ($r->status == 3 ? $r->statuses->name_status : ($r->status == 4 ? $r->statuses->name_status : 'Ditolak'))) }}
                                                     </span>
                                                   </td>
                                           
@@ -78,7 +78,7 @@
                                                         <i class="fa fa-eye"></i>
                                                       </a>
                                                     </form>
-                                                    @if($r->status == 1)                                                            
+                                                    @if($r->status == 8)                                                            
                                                       <a href="resigndelete{{ $r->id }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan resign ini?')"><i class="fa fa-trash"></i></a>                                                                                                                       
                                                     @endif
                                                   </td>

@@ -100,38 +100,21 @@ class RekruitmenController extends Controller
         ];
         DB::table('namatahapan')->insert($data);
 
-//         $tahapan = $request->tahapan;
-// $data = [];
-// $urutan = 1;
+        // $urutan = 1;
+        // $data = [];
+        // foreach ($request->tahapan as $key => $value) {
+        //     if (!empty($value)) {
+        //         $data[] = [
+        //             'id_lowongan' => $user->id,
+        //             'id_mrekruitmen' => $key,
+        //             'urutan' => $urutan
+        //         ];
+        //         $urutan++;
+        //     }
+        // }
+        // DB::table('namatahapan')->insert($data);
 
-// $data[] = [
-//     'id_lowongan' => $user->id,
-//     'id_mrekruitmen' => 1,
-//     'urutan' => $urutan
-// ];
-
-// foreach ($tahapan as $id_tahapan) {
-//     $urutan++;
-//     $data[] = [
-//         'id_lowongan' => $user->id,
-//         'id_mrekruitmen' => $id_tahapan,
-//         'urutan' => $urutan
-//     ];
-// }
-
-// $urutan++;
-// $data[] = [
-//     'id_lowongan' => $user->id,
-//     'id_mrekruitmen' => 6,
-//     'urutan' => $urutan
-// ];
-
-DB::table('namatahapan')->insert($data);
-
-
-
-
-        return redirect()->back();
+        // return redirect()->back();
     }
 
     /**
