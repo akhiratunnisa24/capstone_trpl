@@ -45,7 +45,7 @@
                                 <div class="mb-3">
                                     <label>Lulus Tahun</label>
                                     <div class="input-group">
-                                        <input id="datepicker-autoclose3" type="text"
+                                        <input id="datepicker-autoclosen" type="text"
                                                 class="form-control" value="{{$rpendidikan->tahun_lulus_formal}}" placeholder="yyyy" id="4"
                                                 name="tahun_lulusFormal" rows="10" autocomplete="off"><br>
                                         <span class="input-group-addon bg-custom b-0"><i
@@ -60,7 +60,6 @@
                     </div>
             
                     <div class="modal-footer">
-                        <input type="hidden" name="id" id="id">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Update</button>
                     </div>
