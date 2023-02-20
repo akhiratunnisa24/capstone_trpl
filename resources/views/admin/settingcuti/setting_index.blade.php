@@ -35,7 +35,7 @@
                                 <table id="datatable-responsive11" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>No</th>
                                             <th>Kategori Cuti</th>
                                             <th>Durasi (Hari)</th>
                                             <th>Mode Alokasi</th>
@@ -64,10 +64,10 @@
                                                     data-toggle="modal" data-target="#Modalshowsetting{{$data->id}}">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a id="bs" class="btn btn-sm btn-success editsetting"
+                                                {{-- <a id="bs" class="btn btn-sm btn-success editsetting"
                                                     data-toggle="modal" data-target="#editsetting{{$data->id}}">
                                                     <i class="fa fa-edit"></i>
-                                                </a>
+                                                </a> --}}
                                                 <button onclick="settingalokasi({{$data->id}})"
                                                     class="btn btn-danger btn-sm">
                                                     <i class="fa fa-trash"></i>

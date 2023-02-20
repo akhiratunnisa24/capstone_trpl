@@ -36,7 +36,7 @@
 
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>No</th>
                                         {{-- <th>ID</th> --}}
                                         <th>Nama Departemen</th>
                                         <th>Action</th>
@@ -51,8 +51,8 @@
                                             <td>{{ $data->nama_departemen }}</td>
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                    <a class="btn btn-info btn-sm" data-toggle="modal" 
-                                                        data-target="#showDepartmen{{$data->id}}"><i class="fa fa-eye"></i></a>
+                                                    {{-- <a class="btn btn-info btn-sm" data-toggle="modal" 
+                                                        data-target="#showDepartmen{{$data->id}}"><i class="fa fa-eye"></i></a> --}}
 
                                                     <a class="btn btn-success btn-sm editDepartmen" data-toggle="modal" 
                                                        data-target="#editDepartmen{{$data->id}}"><i class="fa fa-edit"></i>

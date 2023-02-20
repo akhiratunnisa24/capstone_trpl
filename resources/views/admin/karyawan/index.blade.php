@@ -49,11 +49,12 @@
 
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>No</th>
                                         <th>Nama</th>
+                                        <th>Departemen</th>
                                         <th>Tanggal Lahir</th>
                                         <th>L / P</th>
-                                        <th>Alamat</th>
+                                        {{-- <th>Alamat</th> --}}
                                         <th>Email</th>
                                         <th>Agama</th>
                                         <th>Action</th>
@@ -66,9 +67,10 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nama }}</td>
+                                            <td>{{ $k->departemen->nama_departemen }}</td>
                                             <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
                                             <td>{{ $k->jenis_kelamin }}</td>
-                                            <td>{{ $k->alamat }}</td>
+                                            {{-- <td>{{ $k->alamat }}</td> --}}
                                             <td>{{ $k->email }}</td>
                                             <td>{{ $k->agama }}</td>
                                             <td>

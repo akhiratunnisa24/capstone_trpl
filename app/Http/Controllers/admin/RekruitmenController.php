@@ -36,23 +36,29 @@ class RekruitmenController extends Controller
      */
     public function index()
     {
-        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $posisi = Lowongan::all()->sortByDesc('created_at');
-        $metode = MetodeRekruitmen::where('status', '=','Aktif')->get();
+        $role = Auth::user()->role;
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $posisi = Lowongan::all()->sortByDesc('created_at');
+            $metode = MetodeRekruitmen::where('status', '=', 'Aktif')->get();
 
 
-        //pengecekan ke data cuti apakah ada atau tidak
+            //pengecekan ke data cuti apakah ada atau tidak
 
-        // $alokasicuti = Alokasicuti::where('id_jeniscuti', '=', 1)
-        //     ->first();
-        
-        // dd($alokasicuti);
-        
-        
+            // $alokasicuti = Alokasicuti::where('id_jeniscuti', '=', 1)
+            //     ->first();
 
-        return view('admin.rekruitmen.index', compact('row', 'posisi', 'metode'));
+            // dd($alokasicuti);
+
+
+
+            return view('admin.rekruitmen.index', compact('row', 'posisi', 'metode'));
+        } else {
+
+            return redirect()->back();
+        }
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -72,7 +78,7 @@ class RekruitmenController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $user = new Lowongan();
         $user->posisi = $request->posisi;
         $user->jumlah_dibutuhkan = $request->jumlah_dibutuhkan;
@@ -86,7 +92,7 @@ class RekruitmenController extends Controller
             'id_lowongan' => $user->id,
             'id_mrekruitmen' => 1
         ];
-            
+
         foreach ($checkbox as $value) {
             $data[] = [
                 'id_lowongan' => $user->id,
@@ -100,33 +106,33 @@ class RekruitmenController extends Controller
         ];
         DB::table('namatahapan')->insert($data);
 
-//         $tahapan = $request->tahapan;
-// $data = [];
-// $urutan = 1;
+        //         $tahapan = $request->tahapan;
+        // $data = [];
+        // $urutan = 1;
 
-// $data[] = [
-//     'id_lowongan' => $user->id,
-//     'id_mrekruitmen' => 1,
-//     'urutan' => $urutan
-// ];
+        // $data[] = [
+        //     'id_lowongan' => $user->id,
+        //     'id_mrekruitmen' => 1,
+        //     'urutan' => $urutan
+        // ];
 
-// foreach ($tahapan as $id_tahapan) {
-//     $urutan++;
-//     $data[] = [
-//         'id_lowongan' => $user->id,
-//         'id_mrekruitmen' => $id_tahapan,
-//         'urutan' => $urutan
-//     ];
-// }
+        // foreach ($tahapan as $id_tahapan) {
+        //     $urutan++;
+        //     $data[] = [
+        //         'id_lowongan' => $user->id,
+        //         'id_mrekruitmen' => $id_tahapan,
+        //         'urutan' => $urutan
+        //     ];
+        // }
 
-// $urutan++;
-// $data[] = [
-//     'id_lowongan' => $user->id,
-//     'id_mrekruitmen' => 6,
-//     'urutan' => $urutan
-// ];
+        // $urutan++;
+        // $data[] = [
+        //     'id_lowongan' => $user->id,
+        //     'id_mrekruitmen' => 6,
+        //     'urutan' => $urutan
+        // ];
 
-DB::table('namatahapan')->insert($data);
+        // DB::table('namatahapan')->insert($data);
 
 
 
@@ -140,24 +146,24 @@ DB::table('namatahapan')->insert($data);
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) 
+    public function show($id)
     {
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $posisi = NamaTahap::with('mrekruitmen')
-        ->where('id_lowongan', $id)
-        // ->orderBy('id', 'desc')
-        ->get();
+            ->where('id_lowongan', $id)
+            // ->orderBy('id', 'desc')
+            ->get();
 
         $metode = NamaTahap::with('mrekruitmen')
-        ->where('id_lowongan', $id)->get();     
+            ->where('id_lowongan', $id)->get();
         // dd($metode);  
 
         // $namatahapan = NamaTahap::
 
 
         // $idmrekruitmen = StatusRekruitmen::all()->sortByDesc('id');   
-        
+
 
 
         if ($role == 1) {
@@ -165,57 +171,56 @@ DB::table('namatahapan')->insert($data);
             $lowongan = lowongan::findOrFail($id);
 
             $totalTahap1 = Rekruitmen::all()
-            ->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', '1')
-            ->count('posisi');
+                ->where('id_lowongan', $id)
+                ->where('status_lamaran', '=', '1')
+                ->count('posisi');
 
             $totalTahap2 = Rekruitmen::all()
-            ->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'Interview ke-1')
-            ->count('posisi');
+                ->where('id_lowongan', $id)
+                ->where('status_lamaran', '=', 'Interview ke-1')
+                ->count('posisi');
 
             $totalTahap3 = Rekruitmen::all()
-            ->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', 'Psikotest')
-            ->count('posisi');
+                ->where('id_lowongan', $id)
+                ->where('status_lamaran', '=', 'Psikotest')
+                ->count('posisi');
 
-            $totalDiterima = Rekruitmen::all()  
-            ->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', '2')
-            ->count('posisi');
+            $totalDiterima = Rekruitmen::all()
+                ->where('id_lowongan', $id)
+                ->where('status_lamaran', '=', '2')
+                ->count('posisi');
 
             $dataTahap1 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', '1')
-            ->get();
+                ->where('status_lamaran', '=', '1')
+                ->get();
 
             // $dataTahap2 = Rekruitmen::with('statusrekruitmen', 'namatahap')->where('id_lowongan', $id)
             // ->where('status_lamaran', '=', 'Interview ke-1')
             // ->get();
 
             $dataTahap2 = Rekruitmen::with('mrekruitmen', 'namatahap')->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', '2')
-            ->get();
+                ->where('status_lamaran', '=', '2')
+                ->get();
 
             $dataTahap3 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', '3')
-            ->get();
+                ->where('status_lamaran', '=', '3')
+                ->get();
 
             $dataTahap4 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', '4')
-            ->get();
+                ->where('status_lamaran', '=', '4')
+                ->get();
 
             $dataTahap5 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', '5')
-            ->get();
+                ->where('status_lamaran', '=', '5')
+                ->get();
 
             $dataDiterima = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
-            ->where('status_lamaran', '=', '6')
-            ->get();
+                ->where('status_lamaran', '=', '6')
+                ->get();
 
-           
 
-            return view('admin.rekruitmen.show', compact('totalDiterima','lowongan', 'totalTahap1', 'totalTahap2', 'totalTahap3', 'dataTahap1', 'dataTahap2', 'dataTahap3', 'dataTahap4', 'dataTahap5', 'row', 'dataDiterima', 'posisi', 'metode' ));
 
+            return view('admin.rekruitmen.show', compact('totalDiterima', 'lowongan', 'totalTahap1', 'totalTahap2', 'totalTahap3', 'dataTahap1', 'dataTahap2', 'dataTahap3', 'dataTahap4', 'dataTahap5', 'row', 'dataDiterima', 'posisi', 'metode'));
         } else {
 
             return redirect()->back();
@@ -242,11 +247,12 @@ DB::table('namatahapan')->insert($data);
      */
     public function update(Request $request, $id)
     {
-        
+
         Rekruitmen::where('id', $id)->update(
-            ['status_lamaran' =>$request->post('status_lamaran'),
-            'tanggal_tahapan' =>$request->post('tgl_tahapan'),
-            
+            [
+                'status_lamaran' => $request->post('status_lamaran'),
+                'tanggal_tahapan' => $request->post('tgl_tahapan'),
+
             ]
         );
 
@@ -280,12 +286,11 @@ DB::table('namatahapan')->insert($data);
             // $karyawan->save();
         }
 
-        
+
         return redirect()->back();
-        
     }
 
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -298,6 +303,16 @@ DB::table('namatahapan')->insert($data);
         // Lowongan::destroy($id);
 
         $lowongan = Lowongan::find($id);
+
+        // hapus file pdf jika terkait dengan rekruitmen
+        $rekruitmen = $lowongan->rekruitmen2;
+        if ($rekruitmen->cv) {
+            $pdf_path = public_path('pdf/' . $rekruitmen->cv);
+            if (file_exists($pdf_path)) {
+                unlink($pdf_path);
+            }
+        }
+
         $lowongan->namatahap()->delete();
         $lowongan->rekruitmen2()->delete();
         $lowongan->delete();
@@ -328,7 +343,7 @@ DB::table('namatahapan')->insert($data);
     //     $posisi = Rekruitmen::with('lowongan')
     //     ->get();
     //     // dd($posisi);
-        
+
 
     //     // Simpan file ke folder public/pdf
     //     $filePdf = $request->file('pdfPelamar');
@@ -351,7 +366,7 @@ DB::table('namatahapan')->insert($data);
     //     $user->status_lamaran = 'tahap 1';
     //     $user->cv = $namaFile ;
 
-      
+
 
     //     $user->save();
 
@@ -386,12 +401,19 @@ DB::table('namatahapan')->insert($data);
     }
     public function create_metode()
     {
-        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $metode = MetodeRekruitmen::all();
+        $role = Auth::user()->role;
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $metode = MetodeRekruitmen::all();
 
 
 
-        return view('admin.rekruitmen.createMetode', compact('row', 'metode'));
+            return view('admin.rekruitmen.createMetode', compact('row', 'metode'));
+        } else {
+
+            return redirect()->back();
+        }
     }
 
     public function store_metode_rekrutmen(Request $request)
@@ -417,10 +439,8 @@ DB::table('namatahapan')->insert($data);
     public function metode_rekrutmen_destroy($id)
     {
         MetodeRekruitmen::destroy($id);
-        
+
         return redirect()->back();
         // return redirect('karyawan'); 
     }
-
-
 }

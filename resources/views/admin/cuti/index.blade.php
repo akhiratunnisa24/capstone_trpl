@@ -156,9 +156,11 @@
                                         {{-- <div class="panel-heading"  style="height:35px"> --}}
                                             <div class="panel-heading clearfix">
                                                 <a href="/rekapcutiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                                                <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
-                                                <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                                    data-target="#Modals"> Tambah Cuti Karyawan</a>
+                                                <a href="/rekapcutipdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
+                                                
+                                                {{-- <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
+                                                    data-target="#Modals"> Tambah Cuti Karyawan</a> --}}
+
                                             </div>
                                         <!-- modals tambah data cuti -->
                                         @include('admin.cuti.addcuti')
@@ -169,7 +171,7 @@
                                                     <table  id="datatable-responsive3" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th>#</th>
+                                                                <th>No</th>
                                                                 <th>Karyawan</th>
                                                                 <th>Kategori Cuti</th>
                                                                 <th>Keperluan</th>
@@ -373,7 +375,7 @@
                                                     <table  id="datatable-responsive4" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th>#</th>
+                                                                <th>No</th>
                                                                 <th>Karyawan</th>
                                                                 <th>Kategori Izin</th>
                                                                 <th>Keperluan</th>

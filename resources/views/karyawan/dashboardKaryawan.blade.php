@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Dashboard {{ $row->nama }}</h4>
+                <h4 class="pull-left page-title">Dashboard </h4>
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Dashboard {{ $row->nama }}</li>
+                    <li class="active">Dashboard</li>
                 </ol>
                 <div class="clearfix"></div>
             </div>
@@ -25,7 +25,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr class="info">
-                                        <th>#</th>
+                                        <th>No</th>
                                         {{-- <th>settingalokasi</th> --}}
                                         <th>Nama Karyawan</th>
                                         <th>Cuti Yang Didapat</th>
@@ -73,23 +73,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-info">
-                    <h4 class="panel-title">Data Absen Bulan Lalu</h4>
-                </div>
-                <div class="panel-body">
-                    <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
-                    <p class="text-muted"><b>Kali absensi</b></p>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End Row -->
 
-    <!-- baris kedua -->
-    <div class="row">
-
-        <div class="col-sm-6 col-lg-3">
+         <div class="col-sm-6 col-lg-3">
             <div id="a" class="panel panel-primary text-center">
                 <div class="panel-heading btn-success">
                     <h4 class="panel-title">Absen Hari Ini</h4>
@@ -113,6 +98,25 @@
                 <?php } ?>
             </div>
         </div>
+        
+    </div> <!-- End Row -->
+
+    <!-- baris kedua -->
+    <div class="row">
+
+       
+         <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-teal text-center">
+                <div class="panel-heading btn-success">
+                    <h4 class="panel-title">Data Absen Bulan Ini</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>{{ $absenBulanini }}</b></h3>
+                    <p class="text-muted"><b>Kali absensi</b></p>
+                </div>
+            </div>
+        </div>
+
 
         <div class="col-sm-6 col-lg-3">
             <div id="a" class="panel panel-teal text-center">

@@ -87,6 +87,7 @@ class KaryawansController extends Controller
             $user->kontrak = $request->kontrak;
             $user->gaji = $request->gaji;
             $user->tglkeluar = $request->tglkeluar;
+            $user->status_kerja = 'Aktif';
             $user->save();
             
              // menyimpan data ke cache dengan key "karyawan_cache" selama 60 menit (1 jam)

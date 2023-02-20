@@ -56,7 +56,7 @@
                                                         cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th>#</th>
+                                                                <th>No</th>
                                                                 {{-- <th>Karyawan</th> --}}
                                                                 <th>Kategori Cuti</th>
                                                                 <th>Keperluan</th>
@@ -137,7 +137,7 @@
                                                         cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <td>#</td>
+                                                                <th>No</th>
                                                                 {{-- <th>Karyawan</th> --}}
                                                                 <th>K. Izin</th>
                                                                 <th>Keperluan</th>

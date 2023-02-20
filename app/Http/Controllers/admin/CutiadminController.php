@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use PDF;
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
@@ -272,7 +273,7 @@ class CutiadminController extends Controller
     //     return redirect()->back()->withInput();
     // }
 
-    public function rekapabsensiExcel(Request $request)
+    public function rekapcutiExcel(Request $request)
     {
         $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
 
@@ -297,6 +298,35 @@ class CutiadminController extends Controller
             ->get();
         }
         return Excel::download(new CutiExport($data, $idkaryawan), "Rekap Absensi Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".xlsx");
+    }
+
+    public function rekapcutipdf(Request $request)
+    {
+        $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
+
+        $idkaryawan = $request->id_karyawan;
+        $bulan      = $request->query('bulan', Carbon::now()->format('m'));
+        $tahun      = $request->query('tahun', Carbon::now()->format('Y'));
+
+        // simpan session
+        $idkaryawan = $request->session()->get('idkaryawan');
+        $bulan      = $request->session()->get('bulan');
+        $tahun      = $request->session()->get('tahun',);
+
+        // dd($idkaryawan,$bulan,$tahun );
+
+        if (isset($idkaryawan) && isset($bulan) && isset($tahun)) {
+            $data = Cuti::where('id_karyawan', $idkaryawan)
+                ->whereMonth('tgl_mulai', $bulan)
+                ->whereYear('tgl_mulai', $tahun)
+                ->get();
+        } else {
+            $data = Cuti::all();
+        }
+
+        $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan])
+            ->setPaper('a4', 'landscape');
+        return $pdf->stream("Rekap Cuti Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf");
     }
 
 }
