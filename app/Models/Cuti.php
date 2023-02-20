@@ -21,6 +21,11 @@ class Cuti extends Model
         return $this->belongsTo(Karyawan::class,'id_karyawan','id');
     }
 
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status', 'id');
+    }
+
     public function alokasi(){
         return $this->belongsTo(Alokasicuti::class,'id_alokasi','id');
     }
@@ -42,10 +47,5 @@ class Cuti extends Model
     public function datareject()
     {
         return $this->hasMany(Datareject::class,'id');
-    }  
-      
-    public function status()
-    {
-        return $this->belongsTo(Status::class);
-    }
+    } 
 }

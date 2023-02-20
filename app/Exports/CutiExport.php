@@ -17,6 +17,6 @@ class CutiExport implements FromView, ShouldAutoSize
     {
         $cuti = Cuti::with('karyawans')->get();
 
-        return view('admin/absensi/absensiExcel', ['absensi' => $cuti]);
+        return view('admin/cuti/cutiExcel', ['cuti' => $cuti]);
     }
 }

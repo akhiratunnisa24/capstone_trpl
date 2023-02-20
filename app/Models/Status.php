@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Status extends Model
 {
     use HasFactory;
+    protected $table = 'statuses';
     protected $fillable = ['nama_status'];
 
     public function cuttis()
@@ -18,5 +19,9 @@ class Status extends Model
     public function resigns()
     {
         return $this->hasMany(Resign::class);
+    }
+    public function cuti()
+    {
+        return $this->hasMany(Cuti::class, 'status', 'id');
     }
 }

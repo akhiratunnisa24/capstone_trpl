@@ -294,10 +294,10 @@ class CutiadminController extends Controller
                 ->get();
             // dd($data);
         } else {
-            $data = Cuti::with('karyawans', 'departemens')
+            $data = Cuti::with('karyawans')
             ->get();
         }
-        return Excel::download(new CutiExport($data, $idkaryawan), "Rekap Absensi Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".xlsx");
+        return Excel::download(new CutiExport($data, $idkaryawan), "Rekap Cuti Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".xlsx");
     }
 
     public function rekapcutipdf(Request $request)
