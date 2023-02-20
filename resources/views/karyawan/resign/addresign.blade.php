@@ -14,7 +14,7 @@
                 <form method="POST" action="{{ route('resignkaryawan.store')}}">
                     @csrf
                     @method('POST')
-                    <div class="form-group col-xs-12" id="namaKaryawan">
+                    <div class="form-group col-xs-15" id="namaKaryawan">
                         <label for="id_karyawan" class="form-label">Nama</label>
                         <input id="id_karyawan" type="text" class="form-control" value="{{Auth::user()->name}}" name="nama"
                             autocomplete="off" placeholder="Nama Karyawan" readonly>
@@ -22,13 +22,13 @@
                     </div>
 
 
-                    <div class="form-group col-xs-12" id="departemen">
+                    <div class="form-group col-xs-15" id="departemen">
                         <label for="departemen" class="form-label">Departemen</label>
                         <input id="departemen" class="form-control" value="{{$tes->departemen}} " name="departemen" autocomplete="off" placeholder="Nama Karyawan" readonly>
                         
                     
                     </div>
-                    <div class="form-group col-xs-12">
+                    <div class="form-group col-xs-15">
                         <label for="tgl_masuk" class="form-label">Tanggal Bergabung</label>
                         <input value="{{$karyawan->tglmasuk}}" id="tgl_masuk" type="text" class="form-control" name="tgl_masuk"
                             autocomplete="off" placeholder="" readonly>
@@ -36,7 +36,7 @@
                     </div>
 
                     
-                    <div class="form-group">
+                    <div class="form-group col-xs-15">
                         <label for="tgl_resign" class="form-label">Tanggal Resign</label>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose23" name="tgl_resign" onchange=(tgl_resign()) autocomplete="off">
@@ -44,7 +44,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-xs-12">
+                    <div class="form-group col-xs-15">
                         <label for="tipe_resign" class="form-label" >Tipe Resign</label>
                         <input id="tipe_resign" class="form-control" value="Normal Resign" name="tipe_resign" autocomplete="off" readonly>
                         {{-- <select class="form-control"
@@ -56,7 +56,7 @@
                         </select> --}}
                     </div>
                     
-                    <div class="form-group col-xs-12">
+                    <div class="form-group col-xs-15">
                         <label for="alasan" class="form-label">Alasan Resign</label>
                         <textarea id="alasan" type="text" class="form-control" name="alasan"
                             autocomplete="off" placeholder="Alasan Resign"></textarea>

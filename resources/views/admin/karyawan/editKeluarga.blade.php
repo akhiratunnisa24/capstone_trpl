@@ -12,13 +12,13 @@
                     @method('PUT')
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="hidden" name="id_keluarga" value="{{$keluarga->id}}">
+                            <input type="hidden" id="id" name="id_keluarga" value="{{$keluarga->id}}">
                             @if($keluarga->status_pernikahan != null)
                                 <div class="form-group">
                               
                                     <div class="mb-3">
                                         <label>Status Pernikahan</label>
-                                        <select type="text" class="form-control selectpicker" name="status_pernikahan" required>
+                                        <select type="text" class="form-control selectpicker" id="status_pernikahan" name="status_pernikahan" required>
                                             <option value="">Pilih Status Pernikahan</option>
                                             <option value="Belum" @if($keluarga->status_pernikahan == "Belum") selected @endif >Belum Menikah</option>
                                             <option value="Sudah" @if($keluarga->status_pernikahan == "Sudah") selected @endif >Sudah Menikah</option>
@@ -28,14 +28,36 @@
                             @endif
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Nama Pasangan</label>
-                                    <input type="text" name="namaPasangan" class="form-control" autocomplete="off" value="{{$keluarga->nama}}">
+                                    <label>Nama Keluarga</label>
+                                    <input type="text" name="namaPasangan" id="nama" class="form-control" autocomplete="off" value="{{$keluarga->nama}}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label>Tanggal Lahir </label>
-                                    <input type="text" name="tgllahirPasangan" autocomplete="off" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose16" value="{{\Carbon\Carbon::parse($keluarga->tgllahir)->format('Y/m/d')}}">
+                                    <input type="text" name="tgllahirPasangan" id="tgllahir" autocomplete="off" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose16" value="{{\Carbon\Carbon::parse($keluarga->tgllahir)->format('Y/m/d')}}">
+                                </div>
+                            </div>
+                            {{-- <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Hubungan</label>
+                                    <input type="text" name="hubungan" id="hubungan" autocomplete="off" class="form-control" value="{{$keluarga->hubungan}}">
+                                </div>
+                            </div> --}}
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label for="hubungan">Hubungan</label>
+                                    <select type="text" class="form-control" id="hubungan" name="hubungan">
+                                        <option value="">Pilih Hubungan</option>
+                                        <option value="Ayah" @if($keluarga->hubungan == "Ayah") selected @endif >Ayah</option>
+                                        <option value="Ibu"  @if($keluarga->hubungan == "Ibu") selected @endif >Ibu</option>
+                                        <option value="Suami" @if($keluarga->hubungan == "Suami") selected @endif>Suami</option>
+                                        <option value="Istri" @if($keluarga->hubungan == "Istri") selected @endif>Istri</option>
+                                        <option value="Kakak" @if($keluarga->hubungan == "Kakak") selected @endif>Kakak</option>
+                                        <option value="Adik" @if($keluarga->hubungan == "Adik") selected @endif>Adik</option>
+                                        <option value="Anak" @if($keluarga->hubungan == "Anak") selected @endif>Anak</option>
+                                    </select>
+                                
                                 </div>
                             </div>
                             <div class="form-group">
@@ -60,7 +82,6 @@
                     </div>
             
                     <div class="modal-footer">
-                        <input type="hidden" name="id" id="id">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Update</button>
                     </div>

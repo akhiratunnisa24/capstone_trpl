@@ -39,5 +39,8 @@ class StatusSeeder extends Seeder
         Status::insert([
             'name_status' => 'Disetujui',
         ]);
+        Status::insert([
+            'name_status' => 'Pending Manager',
+        ]);
     }
 }

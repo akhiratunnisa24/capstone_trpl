@@ -37,12 +37,26 @@
 
                     {{-- <div class="form-group col-xs-12">
                         <label for="roles">Pilih Tahapan</label>
-                        <select class="form-control" name="tahapan[]" multiple>
-                            @foreach ($metode as $m)    
-                                <option value="{{ $m->id }}">{{ $m->nama_tahapan }}</option>
-                            @endforeach
-                        </select>
+                        <label for="urutan" class="pull-right">Urutan</label>
+                        <div class="clearfix"></div>
+                        @foreach ($metode as $m)    
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p>{{ $m->nama_tahapan }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if($m->id == 1)
+                                            <input type="text" id="tahapan{{ $m->id }}" class="form-control" name="tahapan[{{ $m->id }}]" value="{{ $m->id == 1 ? 1 : '' }}" readonly>
+                                        @else
+                                            <input type="number" id="tahapan{{ $m->id }}" class="form-control" name="tahapan[{{ $m->id }}]">
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div> --}}
+              
 
                     <div class="form-group col-xs-12">
                         <label class="form-label">Jumlah Dibutuhkan</label>

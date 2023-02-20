@@ -41,7 +41,7 @@ class CutiadminController extends Controller
             $type = $request->query('type', 1);
 
             //form create cuti untuk karyawan.
-            //$karyawan = Karyawan::where('id','!=',Auth::user()->id_pegawai)->get();
+            $karyawan = Karyawan::where('id','!=',Auth::user()->id_pegawai)->get();
 
             //data cuti
             // $cuti = DB::table('cuti')
@@ -104,7 +104,6 @@ class CutiadminController extends Controller
             }   
 
              // Filter Data Izin
-             $pegawai = Karyawan::all();
              $idpegawai = $request->id_karyawan;
              $month = $request->query('bulan', Carbon::now()->format('m'));
              $year = $request->query('tahun', Carbon::now()->format('Y'));
@@ -114,44 +113,31 @@ class CutiadminController extends Controller
              $request->session()->put('month', $month);
              $request->session()->put('year', $year);
  
-            //  dd($request);
             if(isset($idpegawai) && isset($month) && isset($year)) 
             {
-                $izin =DB::table('izin')
-                    ->leftjoin('statuses','izin.status','=','statuses.id')
+                $izin = Izin::leftjoin('statuses','izin.status','=','statuses.id')
                     ->leftjoin('datareject','datareject.id_izin','=','izin.id')
                     ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', 'jenisizin.id')
                     ->where('izin.id_karyawan', $idpegawai)
                     ->whereMonth('izin.tgl_mulai', $month)
                     ->whereYear('izin.tgl_mulai', $year)
-                    ->select('izin.*','statuses.name_status','jenisizin.jenis_izin','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
+                    ->select('izin.*','statuses.name_status','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama')
                     ->distinct()
                     ->orderBy('created_at','DESC')
                     ->get();
             }
             else
             {
-                $izin =DB::table('izin')
-                    ->leftjoin('statuses','izin.status','=','statuses.id')
+                $izin = Izin::leftjoin('statuses','izin.status','=','statuses.id')
                     ->leftjoin('datareject','datareject.id_izin','=','izin.id')
                     ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', 'jenisizin.id')
-                    ->select('izin.*','statuses.name_status','jenisizin.jenis_izin','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
+                    ->select('izin.*','statuses.name_status','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama')
                     ->distinct()
                     ->orderBy('created_at','DESC')
                     ->get();
             };
 
-        return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai'));
-
-            //menghapus filter data
-            $request->session()->forget('id_karyawan');
-            $request->session()->forget('bulan');
-            $request->session()->forget('tahun');
-            $request->session()->forget('idpegawai');
-            $request->session()->forget('month');
-            $request->session()->forget('year');
+        return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan'));
         } else 
         {
             return redirect()->back(); 

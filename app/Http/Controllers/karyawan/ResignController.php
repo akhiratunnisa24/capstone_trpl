@@ -35,6 +35,17 @@ class ResignController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $cek = Resign::where('id_karyawan', Auth::user()->id_pegawai)->exists();
+        $status0 = 0;
+        if ($cek) {
+            $resign0 = Resign::where('id_karyawan', Auth::user()->id_pegawai)->first();
+            $status0 = $resign0->status ?? 0;
+            $jumlah_resign = Resign::where('id_karyawan', Auth::user()->id_pegawai)->count();
+            if ($status0 != 5 && $jumlah_resign > 1) {
+                $cek = false;
+            }
+        }
+
+        
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
         // dd($karyawan);
         $resign = Resign::all();
@@ -50,7 +61,7 @@ class ResignController extends Controller
 
             
      
-            return view('karyawan.resign.index', compact('karyawan','tes','resign','cek','row'));
+            return view('karyawan.resign.index', compact('karyawan','tes','resign','cek','row','status0'));
     }
 
     /**
@@ -69,7 +80,7 @@ class ResignController extends Controller
     public function store(Request $request)
     {
         $karyawan = Auth::user()->id_pegawai;
-        $status = Status::find(1);
+        $status = Status::find(8);
         $tes = DB::table('karyawan')
             ->join('departemen','karyawan.divisi','=','departemen.id')
             ->where('karyawan.id', Auth::user()->id_pegawai)

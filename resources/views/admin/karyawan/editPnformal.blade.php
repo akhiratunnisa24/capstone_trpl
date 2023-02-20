@@ -29,7 +29,7 @@
                                 <div class="mb-3">
                                     <label>Lulus Tahun</label>
                                     <div class="input-group">
-                                        <input id="datepicker-autoclose4" type="text"
+                                        <input id="datepicker-autocloseo" type="text"
                                                 class="form-control" placeholder="yyyy" id="4"  value="{{$rpendidikan->tahun_lulus_nonformal}}"
                                                 name="tahunLulusNonFormal" autocomplete="off" rows="10"><br>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
