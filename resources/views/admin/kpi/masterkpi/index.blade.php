@@ -37,8 +37,7 @@
 
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Nama Jobs</th>
+                                        <th>No</th>
                                         <th>Departemen</th>
                                         <th>Nama Master</th>
                                         <th>Bobot</th>
@@ -53,7 +52,6 @@
                                     @foreach ($job as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $data->nama_job }}</td>
                                             <td>{{ $data->id_departemen}}</td>
                                             <td>{{ $data->nama_master}}</td>
                                             <td>{{ $data->bobot}}</td>

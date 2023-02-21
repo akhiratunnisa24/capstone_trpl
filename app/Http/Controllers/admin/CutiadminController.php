@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CutiExport;
+use App\Mail\CutiApproveNotification;
+
 
 
 class CutiadminController extends Controller
@@ -228,11 +230,13 @@ class CutiadminController extends Controller
     public function update(Request $request, $id)
     {
         $cuti = Cuti::where('id', $id)->first();
+        // Inisialisasi variable jml_cuti dengan nilai jumlah hari cuti yang diambil
         $jml_cuti = $cuti->jml_cuti;
-        // dd($jml_cuti);
+
+        //Update status cuti menjadi 'Disetujui'
         $status = Status::find(7);
         Cuti::where('id', $id)->update(
-            ['status' => $status->id]
+            ['status' => $status->id,]
         );
 
         //Ambil data alokasi cuti yang sesuai dengan id karyawan dan id jenis cuti
@@ -248,15 +252,32 @@ class CutiadminController extends Controller
             ->update(
                 ['durasi' => $durasi_baru]
             );
+
+        //ambil data karyawan   
+        $to = $cuti->karyawans->email;
+        $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+        $data = [
+            'subject'     => 'Notifikasi Cuti Disetujui',
+            'id'          => $cuti->id,
+            'id_jeniscuti' => $cuti->jeniscutis->jenis_cuti,
+            'nama'      => $cuti->karyawans->nama,
+            'keperluan'   => $cuti->keperluan,
+            'tgl_mulai'   => Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+            'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+            'jml_cuti'    => $cuti->jml_cuti,
+            'status'      => $status->name_status,
+        ];
+        Mail::to($to)->send(new CutiApproveNotification($data));
+
         return redirect()->back()->withInput();
     }
 
     public function tolak(Request $request, $id)
     {
         $cuti = Cuti::where('id',$id)->first();
-        $status = Status::find($id);
+        $status = '5';
         Cuti::where('id',$id)->update([
-            'status' => $status->id,
+            'status' => $status,
         ]);
         return redirect()->back()->withInput();
     }
