@@ -64,13 +64,7 @@
                                 <span class="input-group-addon bg-custom b-0"><i
                                         class="mdi mdi-calendar text-white"></i></span>
                             </div><!-- input-group -->
-                        </div>
-                        <div class="col-sm-3 col-xs-12">
-                            <button type="submit" id="cari" class="btn btn-md btn-success fa fa-filter" style="margin-left: 15px;height: 37px" > Filter</button>
-                            <a href="" class="btn btn-md btn-success fa fa-refresh " style="height: 37px;"> Reset</a>
-                            {{-- {{ route('cuti.index') }} --}}
-                     {{--   </div>
-                    </div> --}}
+                        </div> --}}
                     <div class="content">
                         <div class="container">
                             <div class="row">
