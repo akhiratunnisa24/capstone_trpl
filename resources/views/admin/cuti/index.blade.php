@@ -211,7 +211,7 @@
                                                                     <div class="row">
                                                                         @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                             <div class="col-sm-3">
-                                                                                <form action="{{ url('')}}/permintaan_cuti/<php echo $data->id ?>" method="POST"> 
+                                                                                <form action="/permintaan_cuti/{{$data->id}}" method="POST"> 
                                                                                     @csrf
                                                                                     <input type="hidden" name="status" value="Disetujui" class="form-control" hidden> 
                                                                                     <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
@@ -227,7 +227,7 @@
                                                                             </div>
                                                                         @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
                                                                             <div class="col-sm-3">
-                                                                                <form action="{{ url('')}}/permintaan_cuti/<php echo $data->id ?>" method="POST"> 
+                                                                                <form action="/permintaan_cuti/{{$data->id}}" method="POST"> 
                                                                                     @csrf
                                                                                     <input type="hidden" name="status" value="Disetujui" class="form-control" hidden> 
                                                                                     <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
