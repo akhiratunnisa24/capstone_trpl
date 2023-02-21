@@ -48,7 +48,7 @@ class ResignController extends Controller
         
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
         // dd($karyawan);
-        $resign = Resign::all();
+        $resign = Resign::orderBy('created_at', 'desc')->get();
 
       
      
