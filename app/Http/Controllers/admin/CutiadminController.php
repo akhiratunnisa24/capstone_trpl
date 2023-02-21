@@ -57,7 +57,8 @@ class CutiadminController extends Controller
             //     ->get();
 
             // Filter Data Cuti
-            $karyawan = Karyawan::all();
+
+            // $karyawan = Karyawan::all();
 
             $idkaryawan = $request->id_karyawan;
             $bulan = $request->query('bulan', Carbon::now()->format('m'));
