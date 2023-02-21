@@ -39,7 +39,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-20 col-sm-20 col-xs-20">
-                                    <table id="datatable-responsive7" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                                    {{-- <table id="datatable-responsive7" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -48,9 +48,9 @@
                                                 <th>Alamat</th>
                                                 <th>Hubungan Keluarga</th>
                                                 {{-- <th>Action</th> --}}
-                                            </tr>
+                                            {{-- </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody> --}}
                                             {{-- @foreach($kontakdarurat as $kd)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
@@ -60,9 +60,9 @@
                                                     <td>{{ $kd->hubungan}}</td>
                                                     {{-- <td></td> --}}
                                                 {{-- </tr>
-                                            @endforeach --}} 
+                                            @endforeach 
                                         </tbody>
-                                    </table><br>
+                                    </table><br> --}}
                                     <form action="/storekontakdarurat" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('post')
@@ -71,8 +71,8 @@
                                                 <table class="table table-bordered table-striped">
                                                     <div class="col-md-12">
                                                         <div class="row">
-                                                            <div class="col-md-3"></div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-2"></div>
+                                                            <div class="col-md-8">
                                                                 <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5  ">
                                                                     <label class="text-white">Kontak Darurat</label>
                                                                 </div>
@@ -87,7 +87,7 @@
                                                                 <div class="form-group ">
                                                                     <div class="mb-3 ">
                                                                         <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                                        <input class="form-control" value="{{ $kontakdarurat->alamat ?? '' }}" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat"></input>
+                                                                        <input class="form-control" value="{{ $kontakdarurat->alamat ?? '' }}" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat" required></input>
                                                                     </div>
                                                                 </div>
 
@@ -102,13 +102,13 @@
                                                                         <label for="exampleInputEmail1" class="form-label">Hubungan</label>
                                                                         <select class="form-control selectpicker" name="hubunganKdarurat" required>
                                                                             <option value="">Pilih Hubungan</option>
-                                                                            <option value="Ayah">Ayah</option>
-                                                                            <option value="Ibu">Ibu</option>
-                                                                            <option value="Suami">Suami</option>
-                                                                            <option value="Istri">Istri</option>
-                                                                            <option value="Kakak">Kakak</option>
-                                                                            <option value="Adik">Adik</option>
-                                                                            <option value="Anak">Anak</option>
+                                                                            <option value="Ayah" {{ $kontakdarurat->hubungan ?? 'Ayah' == '' ? 'selected' : '' }}>Ayah</option>
+                                                                            <option value="Ibu" {{ $kontakdarurat->hubungan ?? 'Ibu' == '' ? 'selected' : '' }}>Ibu</option>
+                                                                            <option value="Suami" {{ $kontakdarurat->hubungan ?? 'Suami' == '' ? 'selected' : '' }}>Suami</option>
+                                                                            <option value="Istri" {{ $kontakdarurat->hubungan ?? 'Istri' == '' ? 'selected' : '' }}>Istri</option>
+                                                                            <option value="Kakak" {{ $kontakdarurat->hubungan ?? 'Kakak' == '' ? 'selected' : '' }}>Kakak</option>
+                                                                            <option value="Adik" {{ $kontakdarurat->hubungan ?? 'Adik' == '' ? 'selected' : '' }}>Adik</option>
+                                                                            <option value="Anak" {{ $kontakdarurat->jhubungan ?? 'Anak' == '' ? 'selected' : '' }}>Anak</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -118,11 +118,12 @@
                                                                     </div>
                                                                     <div class="pull-right">
                                                                         {{-- <button type="submit" name="submit" class="btn btn-sm btn-success">Simpan</button> --}}
-                                                                        <a href="/create-data-pendidikan" type="submit" name="submit" class="btn btn-sm btn-danger">Selanjutnya <i class="fa fa-forward"></i></a>
+                                                                        {{-- /create-data-pendidikan --}}
+                                                                        <button type="submit" name="submit" class="btn btn-sm btn-danger">Selanjutnya <i class="fa fa-forward"></i></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md3"></div>
+                                                            <div class="col-md-2"></div>
                                                         </div>
                                                     </div>
                                                 </table>
