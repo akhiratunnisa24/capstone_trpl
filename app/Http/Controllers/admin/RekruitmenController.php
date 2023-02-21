@@ -290,6 +290,19 @@ class RekruitmenController extends Controller
         return redirect()->back();
     }
 
+    public function rekrutmenupdate(Request $request, $id)
+    {
+
+        Lowongan::where('id', $id)->update(
+            [
+                'jumlah_dibutuhkan' => $request->post('jumlahDibutuhkan'),
+                'status' => $request->post('statusLowongan'),
+
+            ]
+        );
+        return redirect()->back();
+    }
+
 
 
     /**
@@ -305,12 +318,22 @@ class RekruitmenController extends Controller
         $lowongan = Lowongan::find($id);
 
         // hapus file pdf jika terkait dengan rekruitmen
+        // $rekruitmen = $lowongan->rekruitmen2;
+        // if ($rekruitmen->cv) {
+        //     $pdf_path = public_path('pdf/' . $rekruitmen->cv);
+        //     if (file_exists($pdf_path)) {
+        //         unlink($pdf_path);
+        //     }
+        // }
+
         $rekruitmen = $lowongan->rekruitmen2;
-        if ($rekruitmen->cv) {
+        if ($rekruitmen && $rekruitmen->cv) {
             $pdf_path = public_path('pdf/' . $rekruitmen->cv);
             if (file_exists($pdf_path)) {
                 unlink($pdf_path);
             }
+        } else {
+            // Tidak ada cv terkait dengan rekruitmen
         }
 
         $lowongan->namatahap()->delete();

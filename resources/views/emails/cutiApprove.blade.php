@@ -27,7 +27,7 @@
     </style>
 </head>
 <body>
-    @if($data['status'] == 'Disetujui')
+    @if($data['status'] == 'Disetujui' )
         <strong>Ada Kabar baik nih buat Anda,</strong>
         <br><br>
         <p>permintaan <strong>{{$data['id_jeniscuti']}}</strong> Anda telah <strong>DISETUJUI</strong> oleh <strong>{{Auth::user()->name}}</strong></p>
@@ -71,7 +71,7 @@
 
         <div class="form-group row" id="statuscuti">
             <label for="status" class="col-sm-3 col-form-label">Status Cuti</label>
-            @if($data['status'] == 'Disetujui')
+            @if($data['status'] == 'Disetujui' )
                 <span class="text-white badge badge-info">DISETUJUI</span>
             @else
                 <span class="text-white badge badge-danger">DITOLAK</span>

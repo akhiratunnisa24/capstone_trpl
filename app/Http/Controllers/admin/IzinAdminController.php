@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use PDF;
 use App\Models\Izin;
 use App\Models\Status;
 use App\Models\Datareject;
@@ -11,6 +12,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\IzinApproveNotification;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\IzinExport;
+
+
+
 
 class IzinAdminController extends Controller
 {
@@ -106,5 +113,61 @@ class IzinAdminController extends Controller
          ];
         Mail::to($tujuan)->send(new IzinApproveNotification($data));
         return redirect()->route('permintaancuti.index',['type'=>2])->withInput();
+    }
+
+    public function rekapizinExcel(Request $request)
+    {
+        $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
+
+        $idkaryawan = $request->id_karyawan;
+        $bulan      = $request->query('bulan', Carbon::now()->format('m'));
+        $tahun      = $request->query('tahun', Carbon::now()->format('Y'));
+
+        // simpan session
+        $idkaryawan = $request->session()->get('idkaryawan');
+        $bulan      = $request->session()->get('bulan');
+        $tahun      = $request->session()->get('tahun',);
+
+        if (isset($idkaryawan) && isset($bulan) && isset($tahun)) {
+            $data = Izin::with('karyawans')
+            ->where('id_karyawan', $idkaryawan)
+                ->whereMonth('tgl_mulai', $bulan)
+                ->whereYear('tgl_mulai', $tahun)
+                ->get();
+            // dd($data);
+        } else {
+            $data = Izin::with('karyawans')
+            ->get();
+        }
+        return Excel::download(new IzinExport($data, $idkaryawan), "Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".xlsx");
+    }
+
+    public function rekapizinpdf(Request $request)
+    {
+        $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
+
+        $idkaryawan = $request->id_karyawan;
+        $bulan      = $request->query('bulan', Carbon::now()->format('m'));
+        $tahun      = $request->query('tahun', Carbon::now()->format('Y'));
+
+        // simpan session
+        $idkaryawan = $request->session()->get('idkaryawan');
+        $bulan      = $request->session()->get('bulan');
+        $tahun      = $request->session()->get('tahun',);
+
+        // dd($idkaryawan,$bulan,$tahun );
+
+        if (isset($idkaryawan) && isset($bulan) && isset($tahun)) {
+            $data = Izin::where('id_karyawan', $idkaryawan)
+                ->whereMonth('tgl_mulai', $bulan)
+                ->whereYear('tgl_mulai', $tahun)
+                ->get();
+        } else {
+            $data = Izin::all();
+        }
+
+        $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idkaryawan' => $idkaryawan])
+            ->setPaper('a4', 'landscape');
+        return $pdf->stream("Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf");
     }
 }

@@ -137,7 +137,7 @@
                                                 cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
+                                                        <th>No</th>
                                                         <th>Kategori Izin</th>
                                                         <th>Action</th>
                                                     </tr>

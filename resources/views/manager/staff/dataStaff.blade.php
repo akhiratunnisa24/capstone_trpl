@@ -32,7 +32,7 @@
                                 <table id="datatable-responsive9" class="table table-striped dt-responsive table-bordered" width="100%">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>No</th>
                                             <th>Nama Staff</th>
                                             <th>NIK</th>
                                             <th>Departemen</th>

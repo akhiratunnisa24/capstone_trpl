@@ -64,13 +64,7 @@
                                 <span class="input-group-addon bg-custom b-0"><i
                                         class="mdi mdi-calendar text-white"></i></span>
                             </div><!-- input-group -->
-                        </div>
-                        <div class="col-sm-3 col-xs-12">
-                            <button type="submit" id="cari" class="btn btn-md btn-success fa fa-filter" style="margin-left: 15px;height: 37px" > Filter</button>
-                            <a href="" class="btn btn-md btn-success fa fa-refresh " style="height: 37px;"> Reset</a>
-                            {{-- {{ route('cuti.index') }} --}}
-                     {{--   </div>
-                    </div> --}}
+                        </div> --}}
                     <div class="content">
                         <div class="container">
                             <div class="row">
@@ -217,7 +211,7 @@
                                                                     <div class="row">
                                                                         @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                             <div class="col-sm-3">
-                                                                                <form action="{{ url('')}}/permintaan_cuti/<php echo $data->id ?>" method="POST"> 
+                                                                                <form action="/permintaan_cuti/{{ $data->id }}" method="POST"> 
                                                                                     @csrf
                                                                                     <input type="hidden" name="status" value="Disetujui" class="form-control" hidden> 
                                                                                     <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
@@ -233,7 +227,7 @@
                                                                             </div>
                                                                         @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
                                                                             <div class="col-sm-3">
-                                                                                <form action="{{ url('')}}/permintaan_cuti/<php echo $data->id ?>" method="POST"> 
+                                                                                <form action="/permintaan_cuti/{{ $data->id }}" method="POST"> 
                                                                                     @csrf
                                                                                     <input type="hidden" name="status" value="Disetujui" class="form-control" hidden> 
                                                                                     <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
@@ -378,8 +372,8 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             {{-- /rekapizinExcel --}}
-                                            <a href="" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                                            <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
+                                            <a href="/rekapizinExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
+                                            <a href="/rekapizinpdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">
