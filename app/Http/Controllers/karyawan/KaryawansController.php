@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Cache;
 
 class KaryawansController extends Controller
 {
-    public function create()
+    //data karyawan
+    public function create(Request $request)
     {
         $role = Auth::user()->role;
 
@@ -27,12 +28,15 @@ class KaryawansController extends Controller
             $departemen     = Departemen::all();
             $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Management'])->get();
             $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Management'])->get();
+            //tidak dipakai
             $user = Karyawan::max('id');
             $datakeluarga = Keluarga::where('id_pegawai',$user)->get();
             $kontakdarurat = Kdarurat::where('id_pegawai',$user)->get();
             $pformal = Rpendidikan::where('id_pegawai',$user)->where('jenis_pendidikan','=',null)->get();
             $nonformal = Rpendidikan::where('id_pegawai',$user)->where('jenis_pendidikan','!=',null)->get();
             $pekerjaan = Rpekerjaan::where('id_pegawai',$user)->get();
+
+            $karyawan = $request->session()->get('karyawan');
             $output = [
                 'row' => $row,
                 'departemen' => $departemen,
@@ -44,6 +48,7 @@ class KaryawansController extends Controller
                 'pformal' =>  $pformal,
                 'nonformal' => $nonformal,
                 'pekerjaan' =>$pekerjaan,
+                'karyawan'=>$karyawan
             ];
             return view('admin.karyawan.creates', $output);
         } else {
@@ -60,176 +65,464 @@ class KaryawansController extends Controller
             $namaFile = '' . time() . $fileFoto->getClientOriginalName();
             $tujuan_upload = 'Foto_Profile';
             $fileFoto->move($tujuan_upload, $namaFile);
+            // $karyawan->save();
 
-            $user = new Karyawan;
-            $user->nama = $request->namaKaryawan;
-            $user->tgllahir = $request->tgllahirKaryawan;
-            $user->jenis_kelamin = $request->jenis_kelaminKaryawan;
-            $user->alamat = $request->alamatKaryawan;
-            $user->no_hp = $request->no_hpKaryawan;
-            $user->email = $request->emailKaryawan;
-            $user->agama = $request->agamaKaryawan;
-            $user->nik = $request->nikKaryawan;
-            $user->gol_darah = $request->gol_darahKaryawan;
-            $user->foto = $namaFile;
-            $user->jabatan = $request->jabatanKaryawan;
-            $user->tglmasuk = $request->tglmasukKaryawan;
-            $user->atasan_pertama = $request->atasan_pertama;
-            $user->atasan_kedua = $request->atasan_kedua;
-            $user->status_karyawan = $request->status_karyawan;
-            $user->tipe_karyawan = $request->tipe_karyawan;
-            $user->no_kk = $request->no_kk;
-            $user->status_kerja = $request->status_kerja;
-            $user->cuti_tahunan = $request->cuti_tahunan;
-            $user->divisi = $request->divisi;
-            $user->no_rek = $request->no_rek;
-            $user->no_bpjs_kes = $request->no_bpjs_ket;
-            $user->no_npwp = $request->no_npwp;
-            $user->no_bpjs_ket = $request->no_bpjs_ket;
-            $user->kontrak = $request->kontrak;
-            $user->gaji = $request->gaji;
-            $user->tglkeluar = $request->tglkeluar;
-<<<<<<< HEAD
-            // $user->save();
-=======
-            $user->status_kerja = 'Aktif';
-            $user->save();
->>>>>>> 02cc7ae3c0554285ea70c12dc8b4ce40b2a06fb3
-            
+            if(empty($request->session()->get('karyawan')))
+            {
+                $karyawan                = new Karyawan;
+                $karyawan->nama          = $request->namaKaryawan;
+                $karyawan->tgllahir      = $request->tgllahirKaryawan;
+                $karyawan->jenis_kelamin = $request->jenis_kelaminKaryawan;
+                $karyawan->alamat        = $request->alamatKaryawan;
+                $karyawan->no_hp         = $request->no_hpKaryawan;
+                $karyawan->email         = $request->emailKaryawan;
+                $karyawan->agama         = $request->agamaKaryawan;
+                $karyawan->nik           = $request->nikKaryawan;
+                $karyawan->gol_darah     = $request->gol_darahKaryawan;
+                $karyawan->foto          = $namaFile;
+                $karyawan->jabatan       = $request->jabatanKaryawan;
+                $karyawan->tglmasuk      = $request->tglmasukKaryawan;
+                $karyawan->atasan_pertama= $request->atasan_pertama;
+                $karyawan->atasan_kedua  = $request->atasan_kedua;
+                $karyawan->status_karyawan= $request->status_karyawan;
+                $karyawan->tipe_karyawan = $request->tipe_karyawan;
+                $karyawan->no_kk         = $request->no_kk;
+                $karyawan->status_kerja  = $request->status_kerja;
+                $karyawan->cuti_tahunan  = $request->cuti_tahunan;
+                $karyawan->divisi        = $request->divisi;
+                $karyawan->no_rek        = $request->no_rek;
+                $karyawan->no_bpjs_kes   = $request->no_bpjs_ket;
+                $karyawan->no_npwp       = $request->no_npwp;
+                $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
+                $karyawan->kontrak       = $request->kontrak;
+                $karyawan->gaji          = $request->gaji;
+                $karyawan->tglkeluar     = $request->tglkeluar;
+                $karyawan->status_kerja  = 'Aktif';
+
+                $request->session()->put('karyawan', $karyawan);
+            }else
+            {
+                $karyawan = $request->session()->get('karyawan');
+
+                $karyawan->nama          = $request->namaKaryawan;
+                $karyawan->tgllahir      = $request->tgllahirKaryawan;
+                $karyawan->jenis_kelamin = $request->jenis_kelaminKaryawan;
+                $karyawan->alamat        = $request->alamatKaryawan;
+                $karyawan->no_hp         = $request->no_hpKaryawan;
+                $karyawan->email         = $request->emailKaryawan;
+                $karyawan->agama         = $request->agamaKaryawan;
+                $karyawan->nik           = $request->nikKaryawan;
+                $karyawan->gol_darah     = $request->gol_darahKaryawan;
+                $karyawan->foto          = $namaFile;
+                $karyawan->jabatan       = $request->jabatanKaryawan;
+                $karyawan->tglmasuk      = $request->tglmasukKaryawan;
+                $karyawan->atasan_pertama= $request->atasan_pertama;
+                $karyawan->atasan_kedua  = $request->atasan_kedua;
+                $karyawan->status_karyawan= $request->status_karyawan;
+                $karyawan->tipe_karyawan = $request->tipe_karyawan;
+                $karyawan->no_kk         = $request->no_kk;
+                $karyawan->status_kerja  = $request->status_kerja;
+                $karyawan->cuti_tahunan  = $request->cuti_tahunan;
+                $karyawan->divisi        = $request->divisi;
+                $karyawan->no_rek        = $request->no_rek;
+                $karyawan->no_bpjs_kes   = $request->no_bpjs_ket;
+                $karyawan->no_npwp       = $request->no_npwp;
+                $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
+                $karyawan->kontrak       = $request->kontrak;
+                $karyawan->gaji          = $request->gaji;
+                $karyawan->tglkeluar     = $request->tglkeluar;
+                $karyawan->status_kerja  = 'Aktif';
+
+                $request->session()->put('karyawan', $karyawan);
+
+            }
+            return redirect()->route('create.dakel');
              // menyimpan data ke cache dengan key "karyawan_cache" selama 60 menit (1 jam)
-            Cache::put('karyawan_cache', $user, 60);
-    
-            return redirect()->back()->with('karyawan_cache', Cache::get('karyawan_cache'));
+            // Cache::put('karyawan_cache', $karyawan, 60);
+            //return redirect()->back()->with('karyawan_cache', Cache::get('karyawan_cache'));
            
         }else
         {
-            $user = new Karyawan;
-            $user->nama = $request->namaKaryawan;
-            $user->tgllahir = $request->tgllahirKaryawan;
-            $user->jenis_kelamin = $request->jenis_kelaminKaryawan; 
-            $user->alamat = $request->alamatKaryawan;
-            $user->no_hp = $request->no_hpKaryawan;
-            $user->email = $request->emailKaryawan;
-            $user->agama = $request->agamaKaryawan;
-            $user->nik = $request->nikKaryawan;
-            $user->gol_darah = $request->gol_darahKaryawan;
-            $user->jabatan = $request->jabatanKaryawan;
-            $user->tglmasuk = $request->tglmasukKaryawan;
-            $user->atasan_pertama = $request->atasan_pertama;
-            $user->atasan_kedua = $request->atasan_kedua;
-            $user->status_karyawan = $request->status_karyawan;
-            $user->tipe_karyawan = $request->tipe_karyawan;
-            $user->no_kk = $request->no_kk;
-            $user->status_kerja = $request->status_kerja;
-            $user->cuti_tahunan = $request->cuti_tahunan;
-            $user->divisi = $request->divisi;
-            $user->no_rek = $request->no_rek;
-            $user->no_bpjs_kes = $request->no_bpjs_ket;
-            $user->no_npwp = $request->no_npwp;
-            $user->no_bpjs_ket = $request->no_bpjs_ket;
-            $user->kontrak = $request->kontrak;
-            $user->gaji = $request->gaji;
-            $user->tglkeluar = $request->tglkeluar;
-            $user->save();
+            if(empty($request->session()->get('product')))
+            {
+                $karyawan               = new Karyawan;
+                $karyawan->nama         = $request->namaKaryawan;
+                $karyawan->tgllahir     = $request->tgllahirKaryawan;
+                $karyawan->jenis_kelamin= $request->jenis_kelaminKaryawan; 
+                $karyawan->alamat       = $request->alamatKaryawan;
+                $karyawan->no_hp        = $request->no_hpKaryawan;
+                $karyawan->email        = $request->emailKaryawan;
+                $karyawan->agama        = $request->agamaKaryawan;
+                $karyawan->nik          = $request->nikKaryawan;
+                $karyawan->gol_darah    = $request->gol_darahKaryawan;
+                $karyawan->jabatan      = $request->jabatanKaryawan;
+                $karyawan->tglmasuk     = $request->tglmasukKaryawan;
+                $karyawan->atasan_pertama= $request->atasan_pertama;
+                $karyawan->atasan_kedua = $request->atasan_kedua;
+                $karyawan->status_karyawan= $request->status_karyawan;
+                $karyawan->tipe_karyawan= $request->tipe_karyawan;
+                $karyawan->no_kk        = $request->no_kk;
+                $karyawan->status_kerja = $request->status_kerja;
+                $karyawan->cuti_tahunan = $request->cuti_tahunan;
+                $karyawan->divisi       = $request->divisi;
+                $karyawan->no_rek       = $request->no_rek;
+                $karyawan->no_bpjs_kes  = $request->no_bpjs_ket;
+                $karyawan->no_npwp      = $request->no_npwp;
+                $karyawan->no_bpjs_ket  = $request->no_bpjs_ket;
+                $karyawan->kontrak      = $request->kontrak;
+                $karyawan->gaji         = $request->gaji;
+                $karyawan->tglkeluar    = $request->tglkeluar;
+                $karyawan->status_kerja = 'Aktif';
 
+                $request->session()->put('karyawan', $karyawan);
+            }else
+            {
+                $karyawan = $request->session()->get('karyawan');
 
-            Cache::put('karyawan_cache', $user, 60);
-            return redirect()->back()->with('karyawan_cache', Cache::get('karyawan_cache'));
-            // dd(Cache::get('karyawan_cache'));
-            // return view('admin.karyawan.creates', compact('user'));
-            // return redirect()->route('karyawancreates', ['tab' => 'datakeluarga']);
+                $karyawan->nama          = $request->namaKaryawan;
+                $karyawan->tgllahir      = $request->tgllahirKaryawan;
+                $karyawan->jenis_kelamin = $request->jenis_kelaminKaryawan;
+                $karyawan->alamat        = $request->alamatKaryawan;
+                $karyawan->no_hp         = $request->no_hpKaryawan;
+                $karyawan->email         = $request->emailKaryawan;
+                $karyawan->agama         = $request->agamaKaryawan;
+                $karyawan->nik           = $request->nikKaryawan;
+                $karyawan->gol_darah     = $request->gol_darahKaryawan;
+                $karyawan->jabatan       = $request->jabatanKaryawan;
+                $karyawan->tglmasuk      = $request->tglmasukKaryawan;
+                $karyawan->atasan_pertama= $request->atasan_pertama;
+                $karyawan->atasan_kedua  = $request->atasan_kedua;
+                $karyawan->status_karyawan= $request->status_karyawan;
+                $karyawan->tipe_karyawan = $request->tipe_karyawan;
+                $karyawan->no_kk         = $request->no_kk;
+                $karyawan->status_kerja  = $request->status_kerja;
+                $karyawan->cuti_tahunan  = $request->cuti_tahunan;
+                $karyawan->divisi        = $request->divisi;
+                $karyawan->no_rek        = $request->no_rek;
+                $karyawan->no_bpjs_kes   = $request->no_bpjs_ket;
+                $karyawan->no_npwp       = $request->no_npwp;
+                $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
+                $karyawan->kontrak       = $request->kontrak;
+                $karyawan->gaji          = $request->gaji;
+                $karyawan->tglkeluar     = $request->tglkeluar;
+                $karyawan->status_kerja  = 'Aktif';
+
+                $request->session()->put('karyawan', $karyawan);
+            }
+            return redirect()->route('create.dakel');
+            // Cache::put('karyawan_cache', $karyawan, 60);
+            //return redirect()->back()->with('karyawan_cache', Cache::get('karyawan_cache'));
            
         }
     }
 
+    //data keluarga
     public function createdakel(Request $request)
     {
-        $karyawan = $request->session()->get('karyawan');
-  
-        return view('admin.karyawan.createDakel',compact('karyawan'));
+        $role = Auth::user()->role;
+        if($role == 1) 
+        {
+            $karyawan    = $request->session()->get('karyawan');
+            $datakeluarga= $request->session()->get('datakeluarga');
+            return view('admin.karyawan.createDakel',compact('karyawan','datakeluarga'));
+        } else {
+
+            return redirect()->back();
+        }
     }
 
     public function storedk(Request $request)
     {
-        $userFromCache = Cache::get('karyawan_cache');
-    
-        $id = $userFromCache->id;
+        // $userFromCache = Cache::get('karyawan_cache');
+        // $id = $userFromCache->id;
+        $validatedData = $request->validate([
+            'id_pegawai'=> 'required',
+            'status_pernikahan'=> 'required',
+            'nama' => 'required',
+            'tgllahir'=> 'required',
+            'alamat' => 'required',
+            'pendidikan_terakhir'=> 'required',
+            'pekerjaan'=> 'required',
+            'hubungan'=> 'required',
+        ]);
+        $datakeluarga = $request->session()->get('datakeluarga');
+        $datakeluarga->fill($validatedData);
+        $request->session()->put('datakeluarga', $datakeluarga);
 
-        $data_keluarga = array(
-            'id_pegawai' =>$id,
-            'status_pernikahan' => $request->post('status_pernikahan'),
-            'nama' => $request->post('namaPasangan'),
-            'tgllahir' => $request->post('tgllahirPasangan'),
-            'alamat' => $request->post('alamatPasangan'),
-            'pendidikan_terakhir' => $request->post('pendidikan_terakhirPasangan'),
-            'pekerjaan' => $request->post('pekerjaanPasangan'),
-            'hubungan' => $request->post('hubungankeluarga'),
-            'created_at' => new \DateTime(),
-            'updated_at' => new \DateTime(),
-        );
+        return redirect()->route('create.konrat');
+        // $data_keluarga = array(
+        //     'id_pegawai' =>$id,
+        //     'status_pernikahan' => $request->post('status_pernikahan'),
+        //     'nama' => $request->post('namaPasangan'),
+        //     'tgllahir' => $request->post('tgllahirPasangan'),
+        //     'alamat' => $request->post('alamatPasangan'),
+        //     'pendidikan_terakhir' => $request->post('pendidikan_terakhirPasangan'),
+        //     'pekerjaan' => $request->post('pekerjaanPasangan'),
+        //     'hubungan' => $request->post('hubungankeluarga'),
+        //     'created_at' => new \DateTime(),
+        //     'updated_at' => new \DateTime(),
+        // );
+
         // Keluarga::insert($data_keluarga);user
-       
-        $cache_key = 'data_keluarga_' . $id;
-        Cache::put($cache_key, $data_keluarga, 60);
-        dd($userFromCache,$id,$data_keluarga,$cache_key);
+        // $cache_key = 'data_keluarga_' . $id;
+        // Cache::put($cache_key, $data_keluarga, 60);
+        // dd($userFromCache,$id,$data_keluarga,$cache_key);
 
-        return view('admin.karyawan.creates', compact('user','cache_key'));
+        // return view('admin.karyawan.creates', compact('user','cache_key'));
     }
 
+    //data kontak darurat
+    public function createkonrat(Request $request)
+    {
+        $role = Auth::user()->role;
+        if($role == 1) 
+        {
+            $karyawan     = $request->session()->get('karyawan');
+            $datakeluarga = $request->session()->get('datakeluarga');
+            $kontakdarurat= $request->session()->get('kontakdarurat');
+            return view('admin.karyawan.createKonrat',compact('karyawan','datakeluarga','kontakdarurat'));
+        } else {
+
+            return redirect()->back();
+        }    
+    }
+     public function storekd(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'no_hp' => 'required',
+            'hubungan'=> 'required',
+        ]);
+        $kontakdarurat = $request->session()->get('kontakdarurat');
+        $kontakdarurat->fill($validatedData);
+        $request->session()->put('kontakdarurat', $kontakdarurat);
+
+        return redirect()->route('create.pendidikan');
+        // $user = Karyawan::max('id');
+
+        // if($user)
+        // {
+        //     $data_kdarurat = array(
+        //         'id_pegawai' => $user,
+        //         'nama' => $request->post('namaKdarurat'),
+        //         'alamat' => $request->post('alamatKdarurat'),
+        //         'no_hp' => $request->post('no_hpKdarurat'),
+        //         'hubungan' => $request->post('hubunganKdarurat'),
+        //         'created_at' => new \DateTime(),
+        //         'updated_at' => new \DateTime(),
+        //     );
+        //     Kdarurat::insert($data_kdarurat);
+        //     return redirect()->back()->withInput();
+        // }else
+        // {
+        //     $data_kdarurat = array(
+        //         'id_pegawai' => $request->post('idpegawai'),
+        //         'nama' => $request->post('namaKdarurat'),
+        //         'alamat' => $request->post('alamatKdarurat'),
+        //         'no_hp' => $request->post('no_hpKdarurat'),
+        //         'hubungan' => $request->post('hubunganKdarurat'),
+        //         'created_at' => new \DateTime(),
+        //         'updated_at' => new \DateTime(),
+        //     );
+        //     Kdarurat::insert($data_kdarurat);
+        //     return redirect()->back()->withInput();
+        // }
+    }
+
+    //data untuk pendidikan
+    public function creatependidikan(Request $request)
+    {
+        $role = Auth::user()->role;
+        if ($role == 1) 
+        {
+            $karyawan     = $request->session()->get('karyawan');
+            $datakeluarga = $request->session()->get('datakeluarga');
+            $kontakdarurat= $request->session()->get('kontakdarurat');
+            $pendidikan   = $request->session()->get('pendidikan');
+    
+            return view('admin.karyawan.createPendidikan',compact('karyawan','datakeluarga','kontakdarurat','pendidikan'));
+        }else 
+        {
+            return redirect()->back();
+        }
+    }
+
+    //store ketika creates data
+    public function storepformal(Request $request)
+    {
+
+        // $user = Karyawan::max('id');
+
+        if($request->tingkat_pendidikan)
+        {
+            $validatedData = $request->validate([
+                'id_pegawai' =>'required',
+                'tingkat' => 'required',
+                'nama_sekolah' => 'required',
+                'kota_pformal' => 'required',
+                'jurusan' => 'required',
+                'tahun_lulus_formal' => 'required',
+            ]);
+            $pendidikan = $request->session()->get('pendidikan');
+            $pendidikan->fill($validatedData);
+            $request->session()->put('pendidikan', $pendidikan);
+    
+            return redirect()->route('create.pekerjaan');
+
+            // $r_pendidikan = array(
+            //     'id_pegawai' => $user,
+            //     'tingkat' => $request->post('tingkat_pendidikan'),
+            //     'nama_sekolah' => $request->post('nama_sekolah'),
+            //     'kota_pformal' => $request->post('kotaPendidikanFormal'),
+            //     'jurusan' => $request->post('jurusan'),
+            //     'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
+
+            //     'jenis_pendidikan' =>null,
+            //     'kota_pnonformal' => null,
+            //     'tahun_lulus_nonformal' =>null,
+            //     'created_at' => new \DateTime(),
+            //     'updated_at' => new \DateTime(),
+            // );
+            // Rpendidikan::insert($r_pendidikan);
+        }else
+        {
+            $validatedData = $request->validate([
+                'id_pegawai' =>'required',
+                'jenis_pendidikan' => 'required',
+                'kota_pnonformal' => 'required',
+                'tahun_lulus_nonformal' => 'required',
+            ]);
+            $pendidikan = $request->session()->get('pendidikan');
+            $pendidikan->fill($validatedData);
+            $request->session()->put('pendidikan', $pendidikan);
+    
+            return redirect()->route('create.pekerjaan');
+            // $r_pendidikan = array(
+            //     'id_pegawai' => $user,
+            //     'tingkat' => null,
+            //     'nama_sekolah' =>null,
+            //     'kota_pformal' => null,
+            //     'jurusan' => null,
+            //     'tahun_lulus_formal' =>null,
+
+            //     'jenis_pendidikan' => $request->post('jenis_pendidikan'),
+            //     'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
+            //     'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
+            //     'created_at' => new \DateTime(),
+            //     'updated_at' => new \DateTime(),
+            // );
+            // Rpendidikan::insert($r_pendidikan);
+        }
+        // return redirect()->back()->withInput();
+    }
+
+    //data untuk pendidikan
+    public function createpekerjaan(Request $request)
+    {
+        $role = Auth::user()->role;
+        if ($role == 1) 
+        {
+            $karyawan     = $request->session()->get('karyawan');
+            $datakeluarga = $request->session()->get('datakeluarga');
+            $kontakdarurat= $request->session()->get('kontakdarurat');
+            $pendidikan   = $request->session()->get('pendidikan');
+            $pekerjaan    = $request->session()->get('pekerjaan');
+            return view('admin.karyawan.createPekerjaan',compact('pekerjaan','karyawan','datakeluarga','kontakdarurat','pendidikan'));
+        } else 
+        {
+            return redirect()->back();
+        }
+    }
+
+    //===================================================================================
+     //store ketika creates data
+    public function storepekerjaan(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id_pegawai' =>'required',
+            'nama_perusahaan' =>'required',
+            'alamat' =>'required',
+            'jenis_usaha' =>'required',
+            'jabatan' => 'required',
+            'nama_atasan' =>'required',
+            'nama_direktur' => 'required',
+            'lama_kerja' => 'required',
+            'alasan_berhenti' => 'required',
+            'gaji' =>'required',
+            
+        ]);
+        $pekerjaan = $request->session()->get('pekerjaan');
+        $pekerjaan->fill($validatedData);
+        $request->session()->put('pekerjaan', $pekerjaan);
+
+        //meyimpan data ke database
+        $karyawan= $request->session()->get('karyawan');
+        $karyawan->save();
+
+        $datakeluarga= $request->session()->get('datakeluarga');
+        $datakeluarga->save();
+
+        $kontakdarurat= $request->session()->get('kontakdarurat');
+        $kontakdarurat->save();
+
+        $pendidikan= $request->session()->get('pendidikan');
+        $pendidikan->save();
+
+        $pekerjaan= $request->session()->get('pekerjaan');
+        $pekerjaan->save();  
+        
+        //hapus data pada session
+        $request->session()->forget('karyawan');
+        $request->session()->forget('datakeluarga');
+        $request->session()->forget('kontakdarurat');
+        $request->session()->forget('pendidikan');
+        $request->session()->forget('pekerjaan');
+        
+        return redirect('/karyawan');
+
+          // $user = Karyawan::max('id');
+        // $r_pekerjaan = array(
+        //     'id_pegawai' => $user,
+        //     'nama_perusahaan' => $request->post('namaPerusahaan'),
+        //     'alamat' => $request->post('alamatPerusahaan'),
+        //     'jenis_usaha' => $request->post('jenisUsaha'),
+        //     'jabatan' => $request->post('jabatanRpkerejaan'),
+        //     'nama_atasan' => $request->post('namaAtasan'),
+        //     'nama_direktur' => $request->post('namaDirektur'),
+        //     'lama_kerja' => $request->post('lamaKerja'),
+        //     'alasan_berhenti' => $request->post('alasanBerhenti'),
+        //     'gaji' => $request->post('gajiRpekerjaan'),
+    
+        //     'created_at' => new \DateTime(),
+        //     'updated_at' => new \DateTime(),
+        // );
+        // Rpekerjaan::insert($r_pekerjaan);
+        // return redirect()->back()->withInput();
+    }
+
+    //store daa kelaurga setelah show
     public function storedatakel(Request $request,$id)
     {
         $idk = Karyawan::findorFail($id);
 
         $data_keluarga = array(
-            'id_pegawai' =>$idk->id,
+            'id_pegawai'        =>$idk->id,
             'status_pernikahan' => $request->post('status_pernikahan'),
-            'nama' => $request->post('namaPasangan'),
-            'tgllahir' => $request->post('tgllahirPasangan'),
-            'alamat' => $request->post('alamatPasangan'),
-            'pendidikan_terakhir' => $request->post('pendidikan_terakhirPasangan'),
-            'pekerjaan' => $request->post('pekerjaanPasangan'),
-            'hubungan' => $request->post('hubungankeluarga'),
-            'created_at' => new \DateTime(),
-            'updated_at' => new \DateTime(),
+            'nama'              => $request->post('namaPasangan'),
+            'tgllahir'          => $request->post('tgllahirPasangan'),
+            'alamat'            => $request->post('alamatPasangan'),
+            'pendidikan_terakhir'=> $request->post('pendidikan_terakhirPasangan'),
+            'pekerjaan'         => $request->post('pekerjaanPasangan'),
+            'hubungan'          => $request->post('hubungankeluarga'),
+            'created_at'        => new \DateTime(),
+            'updated_at'         => new \DateTime(),
         );
         Keluarga::insert($data_keluarga);
         return redirect()->back()->withInput();
     }
 
-
-    public function storekd(Request $request)
-    {
-        $user = Karyawan::max('id');
-
-        if($user)
-        {
-            $data_kdarurat = array(
-                'id_pegawai' => $user,
-                'nama' => $request->post('namaKdarurat'),
-                'alamat' => $request->post('alamatKdarurat'),
-                'no_hp' => $request->post('no_hpKdarurat'),
-                'hubungan' => $request->post('hubunganKdarurat'),
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
-            Kdarurat::insert($data_kdarurat);
-            return redirect()->back()->withInput();
-        }else
-        {
-            $data_kdarurat = array(
-                'id_pegawai' => $request->post('idpegawai'),
-                'nama' => $request->post('namaKdarurat'),
-                'alamat' => $request->post('alamatKdarurat'),
-                'no_hp' => $request->post('no_hpKdarurat'),
-                'hubungan' => $request->post('hubunganKdarurat'),
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
-            Kdarurat::insert($data_kdarurat);
-            return redirect()->back()->withInput();
-        }
-    }
-
+    //store kontak darurat ketika show data
     public function storekonrat(Request $request,$id)
     {
         $idk = Karyawan::findorFail($id);
@@ -247,51 +540,7 @@ class KaryawansController extends Controller
         return redirect()->back()->withInput();
     }
 
-    public function storepformal(Request $request)
-    {
-        $user = Karyawan::max('id');
-
-        if($request->tingkat_pendidikan)
-        {
-            $r_pendidikan = array(
-                'id_pegawai' => $user,
-                'tingkat' => $request->post('tingkat_pendidikan'),
-                'nama_sekolah' => $request->post('nama_sekolah'),
-                'kota_pformal' => $request->post('kotaPendidikanFormal'),
-                'jurusan' => $request->post('jurusan'),
-                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
-
-                'jenis_pendidikan' =>null,
-                'kota_pnonformal' => null,
-                'tahun_lulus_nonformal' =>null,
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
-    
-            Rpendidikan::insert($r_pendidikan);
-        }else
-        {
-            $r_pendidikan = array(
-                'id_pegawai' => $user,
-                'tingkat' => null,
-                'nama_sekolah' =>null,
-                'kota_pformal' => null,
-                'jurusan' => null,
-                'tahun_lulus_formal' =>null,
-
-                'jenis_pendidikan' => $request->post('jenis_pendidikan'),
-                'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-                'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
-    
-            Rpendidikan::insert($r_pendidikan);
-        }
-        return redirect()->back()->withInput();
-    }
-
-    //store setelah show data karyawan
+    //store pendidikan setelah show data karyawan
     public function storespformal(Request $request,$id)
     {
         $idk = Karyawan::findorFail($id);
@@ -336,31 +585,7 @@ class KaryawansController extends Controller
         }
     }
 
-    //store ketika creates data
-    public function storepekerjaan(Request $request)
-    {
-    
-        $user = Karyawan::max('id');
-        $r_pekerjaan = array(
-            'id_pegawai' => $user,
-            'nama_perusahaan' => $request->post('namaPerusahaan'),
-            'alamat' => $request->post('alamatPerusahaan'),
-            'jenis_usaha' => $request->post('jenisUsaha'),
-            'jabatan' => $request->post('jabatanRpkerejaan'),
-            'nama_atasan' => $request->post('namaAtasan'),
-            'nama_direktur' => $request->post('namaDirektur'),
-            'lama_kerja' => $request->post('lamaKerja'),
-            'alasan_berhenti' => $request->post('alasanBerhenti'),
-            'gaji' => $request->post('gajiRpekerjaan'),
-    
-            'created_at' => new \DateTime(),
-            'updated_at' => new \DateTime(),
-        );
-        Rpekerjaan::insert($r_pekerjaan);
-        return redirect()->back()->withInput();
-    }
-
-    //store ketika show data
+    //store pekerjaan ketika show data
     public function storespekerjaan(Request $request,$id)
     {
         $idk = Karyawan::findorFail($id);
@@ -382,6 +607,8 @@ class KaryawansController extends Controller
         return redirect()->back()->withInput();
     }
 
+     //===================================================================================
+    //edit data karyawan
     public function update(Request $request,$id)
     {
         $karyawan = Karyawan::find($id);
@@ -448,6 +675,7 @@ class KaryawansController extends Controller
 
     }
 
+    //update data keluarga
     public function updateKeluarga(Request $request,$id)
     {
         // dd($request,$id);
@@ -463,6 +691,7 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
+    //update data kontak darurat
     public function updateKontak(Request $request,$id)
     {
         Kdarurat::where('id', $id)->update([
@@ -476,6 +705,7 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
+    //update data pendidikan
     public function updatePendidikan(Request $request,$id)
     {
         $idp = Rpendidikan::find($id);
@@ -501,6 +731,7 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
+    //update data pekerjaan
     public function updatePekerjaan(Request $request,$id)
     {
         $r_pekerjaan = array(
@@ -521,6 +752,7 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
+    //hapus data pekerjaan
     public function destroy(Request $request,$id)
     {
         Rpekerjaan::destroy($id);

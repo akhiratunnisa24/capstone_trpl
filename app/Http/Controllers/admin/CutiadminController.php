@@ -58,6 +58,7 @@ class CutiadminController extends Controller
 
             // Filter Data Cuti
             $karyawan = Karyawan::all();
+            $pegawai = Karyawan::all();
 
             $idkaryawan = $request->id_karyawan;
             $bulan = $request->query('bulan', Carbon::now()->format('m'));
@@ -115,29 +116,31 @@ class CutiadminController extends Controller
  
             if(isset($idpegawai) && isset($month) && isset($year)) 
             {
-                $izin = Izin::leftjoin('statuses','izin.status','=','statuses.id')
+                $izin = DB::table('izin')->leftjoin('statuses','izin.status','=','statuses.id')
                     ->leftjoin('datareject','datareject.id_izin','=','izin.id')
                     ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                    ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
                     ->where('izin.id_karyawan', $idpegawai)
                     ->whereMonth('izin.tgl_mulai', $month)
                     ->whereYear('izin.tgl_mulai', $year)
-                    ->select('izin.*','statuses.name_status','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama')
+                    ->select('izin.*','statuses.name_status','jenisizin.jenis_izin','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
                     ->distinct()
                     ->orderBy('created_at','DESC')
                     ->get();
             }
             else
             {
-                $izin = Izin::leftjoin('statuses','izin.status','=','statuses.id')
+                $izin =DB::table('izin')->leftjoin('statuses','izin.status','=','statuses.id')
                     ->leftjoin('datareject','datareject.id_izin','=','izin.id')
                     ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->select('izin.*','statuses.name_status','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama')
+                    ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                    ->select('izin.*','statuses.name_status','jenisizin.jenis_izin','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
                     ->distinct()
                     ->orderBy('created_at','DESC')
                     ->get();
             };
 
-        return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan'));
+        return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai'));
         } else 
         {
             return redirect()->back(); 
