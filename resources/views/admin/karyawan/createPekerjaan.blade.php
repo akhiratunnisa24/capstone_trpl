@@ -39,7 +39,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20 col-sm-20 col-xs-20">
-                                <table id="datatable-responsive10" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                                {{-- <table id="datatable-responsive10" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -64,8 +64,8 @@
                                                 <td>{{ $pek->nama_direktur }}</td>
                                             </tr>
                                         @endforeach --}}
-                                    </tbody>
-                                </table><br>
+                                    {{-- </tbody>
+                                </table><br> --}}
                                 <form action="/storepekerjaan" method="POST" enctype="multipart/form-data">
                                     <div class="control-group after-add-more">
                                         @csrf

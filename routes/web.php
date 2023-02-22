@@ -168,11 +168,13 @@ Route::post('/permintaan_cuti/{id}', [CutiadminController::class, 'update'])->na
 Route::post('/permintaan/{id}', [CutiadminController::class, 'tolak'])->name('cuti.tolak');
 Route::post('/getalokasi', [CutiadminController::class, 'getAlokasiCuti'])->name('get.Alokasicuti');
 Route::post('/permintaan_cutis', [CutiadminController::class, 'storeCuti'])->name('cuti.stores');
-Route::get('/rekapcutiExcel', [CutiadminController::class, 'rekapcutiExcel'])->name('rekapabsensiExcel');
-Route::get('/rekapcutipdf', [CutiadminController::class, 'rekapcutipdf'])->name('rekapabsensipdf');
+Route::get('/rekapcutiExcel', [CutiadminController::class, 'rekapcutiExcel'])->name('rekapcutiExcel');
+Route::get('/rekapcutipdf', [CutiadminController::class, 'rekapcutipdf'])->name('rekapcutipdf');
 //izin 
 Route::post('/permintaanizin/{id}', [IzinAdminController::class, 'approved'])->name('izinapproved');
 Route::post('/permintaanizinreject/{id}', [IzinAdminController::class, 'reject'])->name('izinreject');
+Route::get('/rekapizinExcel', [IzinAdminController::class, 'rekapizinExcel'])->name('rekapizinExcel');
+Route::get('/rekapizinpdf', [IzinAdminController::class, 'rekapizinpdf'])->name('rekapizinpdf');
 //kategori cuti
 Route::get('/kategori_cuti', [JeniscutiController::class, 'index'])->name('kategori.index');
 Route::post('/kategori_cuti', [JeniscutiController::class, 'store'])->name('kategori.store');

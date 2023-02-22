@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CutiExport;
+use App\Mail\CutiApproveNotification;
+
 
 
 class CutiadminController extends Controller
@@ -225,42 +227,60 @@ class CutiadminController extends Controller
         return view('admin.cuti.index',compact('cuti','karyawan'));
     }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $cuti = Cuti::where('id', $id)->first();
-    //     // Inisialisasi variable jml_cuti dengan nilai jumlah hari cuti yang diambil
-    //     $jml_cuti = $cuti->jml_cuti;
+    public function update(Request $request, $id)
+    {
+        $cuti = Cuti::where('id', $id)->first();
+        // Inisialisasi variable jml_cuti dengan nilai jumlah hari cuti yang diambil
+        $jml_cuti = $cuti->jml_cuti;
 
-    //     //Update status cuti menjadi 'Disetujui'
-    //     Cuti::where('id', $id)->update(
-    //         ['status' => 'Disetujui']
-    //     );
+        //Update status cuti menjadi 'Disetujui'
+        $status = Status::find(7);
+        Cuti::where('id', $id)->update(
+            ['status' => $status->id,]
+        );
 
-    //     //Ambil data alokasi cuti yang sesuai dengan id karyawan dan id jenis cuti
-    //     $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
-    //         ->where('id_karyawan', $cuti->id_karyawan)
-    //         ->where('id_jeniscuti', $cuti->id_jeniscuti)
-    //         ->first();
+        //Ambil data alokasi cuti yang sesuai dengan id karyawan dan id jenis cuti
+        $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+            ->where('id_karyawan', $cuti->id_karyawan)
+            ->where('id_jeniscuti', $cuti->id_jeniscuti)
+            ->first();
 
-    //     // Hitung durasi baru setelah pengurangan
-    //     $durasi_baru = $alokasicuti->durasi - $jml_cuti;
-    //     // dd($durasi_baru);
-    //     Alokasicuti::where('id', $alokasicuti->id)
-    //         ->update(
-    //             ['durasi' => $durasi_baru]
-    //         );
-    //     return redirect()->back()->withInput();
-    // }
+        // Hitung durasi baru setelah pengurangan
+        $durasi_baru = $alokasicuti->durasi - $jml_cuti;
+        // dd($durasi_baru);
+        Alokasicuti::where('id', $alokasicuti->id)
+            ->update(
+                ['durasi' => $durasi_baru]
+            );
 
-    // public function tolak(Request $request, $id)
-    // {
-    //     $cuti = Cuti::where('id',$id)->first();
-    //     $status = 'Ditolak';
-    //     Cuti::where('id',$id)->update([
-    //         'status' => $status,
-    //     ]);
-    //     return redirect()->back()->withInput();
-    // }
+        //ambil data karyawan   
+        $to = $cuti->karyawans->email;
+        $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+        $data = [
+            'subject'     => 'Notifikasi Cuti Disetujui',
+            'id'          => $cuti->id,
+            'id_jeniscuti' => $cuti->jeniscutis->jenis_cuti,
+            'nama'      => $cuti->karyawans->nama,
+            'keperluan'   => $cuti->keperluan,
+            'tgl_mulai'   => Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+            'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+            'jml_cuti'    => $cuti->jml_cuti,
+            'status'      => $status->name_status,
+        ];
+        Mail::to($to)->send(new CutiApproveNotification($data));
+
+        return redirect()->back()->withInput();
+    }
+
+    public function tolak(Request $request, $id)
+    {
+        $cuti = Cuti::where('id',$id)->first();
+        $status = '5';
+        Cuti::where('id',$id)->update([
+            'status' => $status,
+        ]);
+        return redirect()->back()->withInput();
+    }
 
     public function rekapcutiExcel(Request $request)
     {

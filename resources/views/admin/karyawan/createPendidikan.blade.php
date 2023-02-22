@@ -39,7 +39,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20 col-sm-20 col-xs-20">
-                                <table id="datatable-responsive8" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                                {{-- <table id="datatable-responsive8" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                 <span class="badge badge-info"><strong>A. PENDIDIKAN FORMAL</strong></span>
                                     <thead>
                                         <tr>
@@ -62,10 +62,10 @@
                                                 <td>{{$p->tahun_lulus_formal }}</td>
                                             </tr>
                                         @endforeach --}}
-                                    </tbody>
-                                </table><br>
+                                    {{-- </tbody>
+                                </table><br> --}}
 
-                                <span class="badge badge-info"><strong>B. PENDIDIKAN NON FORMAL</strong></span>
+                                {{-- <span class="badge badge-info"><strong>B. PENDIDIKAN NON FORMAL</strong></span>
                                 <table id="datatable-responsive9" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
@@ -84,8 +84,8 @@
                                                 <td>{{ $nf->tahun_lulus_nonformal }}</td>
                                             </tr>
                                         @endforeach --}}
-                                    </tbody>
-                                </table><br>
+                                    {{-- </tbody>
+                                </table><br> --}} 
                                 <form action="/storepformal" method="POST" enctype="multipart/form-data">
                                     <div class="control-group after-add-more">
                                         @csrf
@@ -114,7 +114,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Nama Sekolah</label>
-                                                                    <input type="text" value="{{ $pendidikan->nama ?? '' }}" name="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
+                                                                    <input type="text" value="{{ $pendidikan->nama_sekolah ?? '' }}" name="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
                                                                     <div id="emailHelp" class="form-text">
                                                                     </div>
                                                                 </div>
@@ -193,7 +193,7 @@
                                                             <a href="/create-kontak-darurat" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
                                                         </div>
                                                         <div class="pull-right">
-                                                            <a href="/create-data-pekerjaan" type="submit" name="submit" class="btn btn-sm btn-danger">Selanjutnya <i class="fa fa-forward"></i></a>
+                                                            <button type="submit" name="submit" class="btn btn-sm btn-danger">Selanjutnya <i class="fa fa-forward"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -413,13 +413,14 @@ class ManagerController extends Controller
             ->first();
 
         //ambil nama dan email karyawan tujuan
+        
         //sementara tidak digunakan
         $karyawan = DB::table('cuti')
             ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
             ->where('cuti.id',$cuti->id)
             ->select('karyawan.email as email','karyawan.nama as nama')
             ->first(); 
-        //Stujuan = $karyawan->email;
+        // Stujuan = $karyawan->email;
         $tujuan = 'akhiratunnisahasanah0917@gmail.com';
         $data = [
             'subject'     =>'Notifikasi Cuti Ditolak',

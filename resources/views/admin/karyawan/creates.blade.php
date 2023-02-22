@@ -36,6 +36,10 @@
             <div class="panel panel-secondary" id="riwayatpekerjaan">
                 <div class="panel-heading"></div>
                 <div class="content">
+                    {{-- alert danger --}}
+                    <div class="alert alert-danger" id="error-message" style="display: none;">
+                        <button type="button" class="close" onclick="$('#error-message').hide()">&times;</button>
+                    </div>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20 col-sm-20 col-xs-20">
@@ -76,12 +80,10 @@
                         
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
-                                                                <select class="form-control selectpicker" value="{{ $karyawan->jenis_kelamin ?? '' }}" name="jenis_kelaminKaryawan" required>
+                                                                <select class="form-control selectpicker" name="jenis_kelaminKaryawan" required>
                                                                     <option value="">Pilih Jenis Kelamin</option>
-                                                                    <option value="L">Laki-Laki</option>
-                                                                    <option value="P">Perempuan</option>
-                                                                    {{-- <option value="L">Laki-Laki</option>
-                                                                    <option value="P">Perempuan</option> --}}
+                                                                    <option value="L" {{ $karyawan->jenis_kelamin == 'L' ? 'selected' : '' }}>Laki-Laki</option>
+                                                                    <option value="P" {{ $karyawan->jenis_kelamin == 'P' ? 'selected' : '' }}>Perempuan</option>
                                                                 </select>
                                                             </div>
                         
@@ -90,7 +92,10 @@
                                                                 <select class="form-control selectpicker" name="divisi" data-live-search="true" required>
                                                                     <option value="">Pilih Departemen</option>
                                                                     @foreach ($departemen as $d)
-                                                                        <option value="{{ $d->id }}">{{ $d->nama_departemen ?? '' }}</option>
+                                                                    <option value="{{ $d->id }}" 
+                                                                        {{ $karyawan->divisi == $d->id ? 'selected' : '' }}>
+                                                                        {{ $d->nama_departemen ?? '' }}
+                                                                    </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -100,40 +105,43 @@
                                                                 <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
                                                                     <option value="">Pilih Atasan Langsung</option>
                                                                     @foreach ($atasan_pertama as $atasan)
-                                                                        <option value="{{ $atasan->id }}">{{ $atasan->nama ?? '' }}</option>
+                                                                        <option value="{{ $atasan->id }}" 
+                                                                            {{ $karyawan->atasan_pertama == $atasan->id ? 'selected' : '' }}>
+                                                                            {{ $atasan->nama ?? '' }}
+                                                                        </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                        
+                                                            
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1" class="form-label">Atasan (Manager/Direktur)</label>
                                                                 <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
                                                                     <option value="">Pilih Atasan</option>
                                                                     @foreach ($atasan_kedua as $atasan)
-                                                                        <option value="{{ $atasan->atasan }}">{{ $atasan->nama ?? '' }}
+                                                                        <option value="{{ $atasan->id }}"
+                                                                             {{ $karyawan->atasan_kedua == $atasan->id ? 'selected' : '' }}>
+                                                                             {{ $atasan->nama ?? '' }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                        
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1" class="form-label">Jabatan</label>
                                                                 <select class="form-control selectpicker" name="jabatanKaryawan" required>
                                                                     <option value="">Pilih Jabatan</option>
-                                                                    <option value="Management">Management</option>
-                                                                    <option value="Manager">Manager</option>
-                                                                    <option value="Supervisor">Supervisor</option>
-                                                                    <option value="Staff">Staff</option>
+                                                                    <option value="Management"  {{ $karyawan->jabatan ?? '' == 'Management' ? 'selected' : '' }}>Management</option>
+                                                                    <option value="Manager" {{ $karyawan->jabatan ?? '' == 'Manager' ? 'selected' : '' }}>Manager</option>
+                                                                    <option value="Supervisor" {{ $karyawan->jabatan ?? '' == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
+                                                                    <option value="Staff" {{ $karyawan->jabatan ?? '' == 'Staff' ? 'selected' : '' }}>Staff</option>
                                                                 </select>
                                                             </div>
                         
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                                    <textarea class="form-control" autocomplete="off" value="{{ $karyawan->alamat ?? '' }}" name="alamatKaryawan" rows="3"></textarea><br>
+                                                                    <textarea class="form-control" autocomplete="off" value="{{ $karyawan->alamat ?? '' }}" name="alamatKaryawan" rows="3" required></textarea><br>
                                                                 </div>
                                                             </div>
-                        
                                                         </div>
                         
                                                         <!-- baris sebelah kanan  -->
@@ -163,20 +171,19 @@
                                                                             class="form-label">Agama</label>
                                                                         <select class="form-control selectpicker" name="agamaKaryawan" required>
                                                                             <option value="">Pilih Agama</option>
-                                                                            <option value="Islam">Islam</option>
-                                                                            <option value="Kristen">Kristen</option>
-                                                                            <option value="Katholik">Katholik</option>
-                                                                            <option value="Hindu">Hindu</option>
-                                                                            <option value="Budha">Budha</option>
-                                                                            <option value="Khong Hu Chu">Khong Hu Chu</option>
+                                                                            <option value="Islam" {{ $karyawan->agama ?? '' == 'Islam' ? 'selected' : '' }}>Islam</option>
+                                                                            <option value="Kristen" {{ $karyawan->agama ?? '' == 'Kristen' ? 'selected' : '' }}>Kristen</option>
+                                                                            <option value="Katholik" {{ $karyawan->agama ?? '' == 'Katholik' ? 'selected' : '' }}>Katholik</option>
+                                                                            <option value="Hindu" {{ $karyawan->agama ?? '' == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                                                                            <option value="Budha" {{ $karyawan->agama ?? '' == 'Budha' ? 'selected' : '' }}>Budha</option>
+                                                                            <option value="Khong Hu Chu" {{ $karyawan->agama ?? '' == 'Khong Hu Chu' ? 'selected' : '' }}>Khong Hu Chu</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                         
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1" class="form-label">Tanggal
-                                                                            Masuk</label>
+                                                                        <label for="exampleInputEmail1" class="form-label">Tanggal Masuk</label>
                                                                         <div class="input-group">
                                                                             <input type="text" class="form-control"
                                                                                 placeholder="yyyy/mm/dd" id="datepicker-autoclose2"
@@ -218,9 +225,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                
-                                                    <button type="submit" name="submit" class="btn btn-sm btn-primary">Simpan</button>
-                                                    <a href="create-data-keluarga" class="btn btn-sm btn-danger">Selanjutnya <i class="fa fa-forward"></i></a>
+                                                    {{-- <button type="submit" id="btnsimpan" name="submit" class="btn btn-sm btn-primary">Simpan</button> --}}
+                                                    <a href="/create-data-keluarga" type="submit"  name="submit" id="btnselanjutnya" class="btn btn-sm btn-danger">Simpan & Selanjutnya <i class="fa fa-forward"></i></a>
                                                 </div>
                         
                                             </table>
@@ -256,4 +262,23 @@
         }
      </script>
 
+    {{-- <script>
+        $(document).ready(function() {
+            $("#btnselanjutnya").attr('disabled', true);
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#btnsimpan").click(function() {
+                $("#btnselanjutnya").attr('disabled', false);
+            });
+            
+            $("#btnselanjutnya").click(function() {
+                if ($("#btnsimpan").attr('disabled')) {
+                    alert("Silakan klik tombol 'Simpan' terlebih dahulu!");
+                    return false;
+                }
+            });
+        });
+    </script> --}}
 @endsection

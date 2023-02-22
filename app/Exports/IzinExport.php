@@ -3,13 +3,14 @@
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
-use App\Models\Cuti;
+use App\Models\Izin;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class CutiExport implements FromView, ShouldAutoSize
+class IzinExport implements FromView, ShouldAutoSize
 {
+
     //UNTUK DATA ABSENSI BERDASARKAN FILTER
     protected $idkaryawan;
     protected $data;
@@ -29,9 +30,9 @@ class CutiExport implements FromView, ShouldAutoSize
     {
         // $cuti = Cuti::with('karyawans')->get();
 
-        $cuti = $this->data;
+        $izin = $this->data;
         $idkaryawan = $this->idkaryawan;
 
-        return view('admin/cuti/cutiExcel', ['cuti' => $cuti]);
+        return view('admin/cuti/izinExcel', ['izin' => $izin]);
     }
 }
