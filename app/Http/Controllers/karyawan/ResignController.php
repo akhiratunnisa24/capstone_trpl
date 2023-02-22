@@ -61,7 +61,7 @@ class ResignController extends Controller
 
             
      
-            return view('karyawan.resign.index', compact('karyawan','tes','resign','cek','row','status0'));
+            return view('karyawan.resign.index', compact('karyawan','tes','resign','cek','row','status0', 'jumlah_resign'));
     }
 
     /**

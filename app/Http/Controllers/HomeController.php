@@ -82,11 +82,11 @@ class HomeController extends Controller
              // Total
         $cutidanizinPerbulan    = $dataIzinPerbulan + $cutiPerbulan;
         // Data Cuti dan Izin Bulan Lalu
-        $dataIzinbulanlalu   = Izin::whereYear('created_at', '=', Carbon::now()->year)
-            ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
+        $dataIzinbulanlalu   = Izin::whereYear('tgl_mulai', '=', Carbon::now()->year)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
             ->count('jml_hari');
-        $cutibulanlalu       = Cuti::whereYear('created_at', '=', Carbon::now()->year)
-            ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
+        $cutibulanlalu       = Cuti::whereYear('tgl_mulai', '=', Carbon::now()->year)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
             ->count('jml_cuti');
             // Total
         $cutidanizibulanlalu    = $dataIzinbulanlalu + $cutibulanlalu;
@@ -271,8 +271,7 @@ class HomeController extends Controller
         ->count('jam_masuk');
 
         //absen masuk bulan ini    
-        $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-            ->whereYear('tanggal', '=', Carbon::now()->year)
+        $absenBulanini  = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->count('jam_masuk');
 

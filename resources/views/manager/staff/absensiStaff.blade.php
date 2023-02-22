@@ -116,7 +116,7 @@
                                     <table id="datatable-responsive10" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
+                                                <th>No</th>
                                                 <th>Karyawan</th>
                                                 <th>Departemen</th>
                                                 <th>Tanggal</th>

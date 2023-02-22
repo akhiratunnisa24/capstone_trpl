@@ -131,22 +131,44 @@ class CutikaryawanController extends Controller
             ->first();
             
         // $tujuan = 'andiny700@gmail.com';
-        $tujuan = $atasan->email;
-        $data = [
-            'subject'     =>'Pemberitahuan Permintaan Cuti',
-            'body'        =>'Anda Memiliki 1 Permintaan Cuti yang harus di Approved',
-            'id'          =>$cuti->id,
-            'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
-            'keperluan'   =>$cuti->keperluan,
-            'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
-            'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
-            'jml_cuti'    =>$cuti->jml_cuti,
-            'status'      =>$cuti->status,
-            'atasan_depar'=>$atasan->jabatan,
-            'nama_atasan' =>$atasan->nama,
-            'role'        =>$role,
-        ];
-        Mail::to($tujuan)->send(new CutiNotification($data));
+        // $tujuan = $atasan->email;
+        // $data = [
+        //     'subject'     =>'Pemberitahuan Permintaan Cuti',
+        //     'body'        =>'Anda Memiliki 1 Permintaan Cuti yang harus di Approved',
+        //     'id'          =>$cuti->id,
+        //     'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+        //     'keperluan'   =>$cuti->keperluan,
+        //     'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+        //     'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+        //     'jml_cuti'    =>$cuti->jml_cuti,
+        //     'status'      =>$cuti->status,
+        //     'atasan_depar'=>$atasan->jabatan,
+        //     'nama_atasan' =>$atasan->nama,
+        //     'role'        =>$role,
+        // ];
+        // Mail::to($tujuan)->send(new CutiNotification($data));
+
+        if ($atasan) {
+            $tujuan = $atasan->email;
+            $data = [
+                    'subject' => 'Pemberitahuan Permintaan Cuti',
+                    'body' => 'Anda Memiliki 1 Permintaan Cuti yang harus di Approved',
+                    'id' => $cuti->id,
+                    'id_jeniscuti' => $cuti->jeniscutis->jenis_cuti,
+                    'keperluan' => $cuti->keperluan,
+                    'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+                    'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+                    'jml_cuti' => $cuti->jml_cuti,
+                    'status' => $cuti->status,
+                    'atasan_depar' => $atasan->jabatan,
+                    'nama_atasan' => $atasan->nama,
+                    'role' => $role,
+                ];
+            Mail::to($tujuan)->send(new CutiNotification($data));
+        } else {
+            // proses jika data atasan tidak ada / email tidak ada
+        }
+
         return redirect()->back()
             ->with('success','Email Notifikasi Berhasil Dikirim');
     }

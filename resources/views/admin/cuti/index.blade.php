@@ -211,7 +211,7 @@
                                                                     <div class="row">
                                                                         @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                             <div class="col-sm-3">
-                                                                                <form action="/permintaan_cuti/{{$data->id}}" method="POST"> 
+                                                                                <form action="/permintaan_cuti/{{ $data->id }}" method="POST"> 
                                                                                     @csrf
                                                                                     <input type="hidden" name="status" value="Disetujui" class="form-control" hidden> 
                                                                                     <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
@@ -227,7 +227,7 @@
                                                                             </div>
                                                                         @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
                                                                             <div class="col-sm-3">
-                                                                                <form action="/permintaan_cuti/{{$data->id}}" method="POST"> 
+                                                                                <form action="/permintaan_cuti/{{ $data->id }}" method="POST"> 
                                                                                     @csrf
                                                                                     <input type="hidden" name="status" value="Disetujui" class="form-control" hidden> 
                                                                                     <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
@@ -372,8 +372,8 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
                                             {{-- /rekapizinExcel --}}
-                                            <a href="" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                                            <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
+                                            <a href="/rekapizinExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
+                                            <a href="/rekapizinpdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">
