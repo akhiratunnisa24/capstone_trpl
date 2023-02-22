@@ -59,8 +59,8 @@
                                                 {{-- <td>{{ $r->tipe_resign }}</td> --}}
                                                   <!-- data for status -->
                                             <td>
-                                              <span class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 2 ? 'info' : ($r->status == 3 ? 'success' : ($r->status == 4 ? 'warning' : 'danger'))) }}">
-                                                {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 2 ? $r->statuses->name_status : ($r->status == 3 ? $r->statuses->name_status : ($r->status == 4 ? $r->statuses->name_status : 'Ditolak'))) }}
+                                              <span class="badge badge-{{ $r->status == 8 ? 'warning' : ($r->status == 2 ? 'info' : ($r->status == 3 ? 'success' : ($r->status == 4 ? 'warning' : 'danger'))) }}">
+                                                {{ $r->status == 8 ? $r->statuses->name_status : ($r->status == 2 ? $r->statuses->name_status : ($r->status == 3 ? $r->statuses->name_status : ($r->status == 4 ? $r->statuses->name_status : 'Ditolak'))) }}
                                               </span>
                                             </td>
                                             <td id="b" class="text-center">
