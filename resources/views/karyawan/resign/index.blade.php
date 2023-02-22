@@ -25,14 +25,19 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading clearfix">
-                          <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" 
-                                @if (!$cek || $status0 == 5 || $jumlah_resign == 0) 
-                                    data-toggle="modal" data-target="#Modal"
-                                @else 
-                                    onclick="alert('Kamu tidak bisa mengajukan resign lebih dari satu')"
-                                    class="alert-button"
-                                @endif
-                            >Form Ajukan Resign</a>
+                          <a href="#" class="btn btn-sm btn-dark fa fa-plus pull-right"
+                            @if ($status0 == 5 && $status1 == 8)
+                                onclick="alert('Kamu tidak bisa mengajukan resign lagi')"
+                                class="alert-button"
+                            @elseif ($jumlah_resign > 0 && $status0 != 5)
+                                onclick="alert('Kamu tidak bisa mengajukan resign lagi')"
+                                class="alert-button"
+                            @else
+                                data-toggle="modal" data-target="#Modal"
+                            @endif>
+                            Form Ajukan Resign
+                        </a>
+
                           </div>
                         <!-- modals resign -->
                         @include('karyawan.resign.addresign')
