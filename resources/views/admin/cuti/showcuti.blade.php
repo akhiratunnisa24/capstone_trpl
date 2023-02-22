@@ -7,12 +7,12 @@
                 <h4 class="modal-title text-center" id="Showcuti">Detail Cuti Staff</h4>
             </div>
             <div class="modal-body">
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label for="id" class="col-sm-3 col-form-label">Id Cuti</label>
                     <div class="col-sm-9">
                         <label>: {{$data->id}}</label>
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-group row">
                     <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label>
                     <div class="col-sm-9">

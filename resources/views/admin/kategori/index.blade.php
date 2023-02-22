@@ -150,23 +150,23 @@
                                                         <td class="text-center">
                                                             <div class="d-grid gap-2 " role="group"
                                                                 aria-label="Basic example">
-                                                                <a id="bs" class="btn btn-info btn-sm Modalshowizin"
+                                                                {{-- <a id="bs" class="btn btn-info btn-sm Modalshowizin"
                                                                     data-toggle="modal"
                                                                     data-target="#Modalshowizin{{$data->id}}">
                                                                     <i class="fa fa-eye"></i>
-                                                                </a>
+                                                                </a> --}}
                                                                 <a id="bs" class="btn btn-sm btn-success Modaleditizin"
                                                                     data-toggle="modal"
                                                                     data-target="#Modaleditizin{{$data->id}}">
                                                                     <i class="fa fa-edit"></i>
                                                                 </a>
                                                                 @csrf
-                                                                {{-- @method('DELETE')
+                                                                @method('DELETE')
                                                                 <button id="bs" type="submit"
                                                                     class="btn btn-danger btn-sm"
                                                                     onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                                     <i class="fa fa-trash"></i>
-                                                                </button> --}}
+                                                                </button>
                                                             </div>
                                                         </td>
                                                     </tr>

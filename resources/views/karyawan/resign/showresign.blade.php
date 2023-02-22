@@ -47,8 +47,8 @@
                 <div class="form-group row">
                     <label for="status" class="col-sm-3 col-form-label">Status Resign</label>
                     <div class="col-sm-9">
-                        @if($r->status == '8')
-                            <span class="badge badge-warning">Pending Manager</span>
+                        @if($r->status == '1')
+                            <span class="badge badge-warning">Pending</span>
                         @elseif($r->status == '2')
                             <span class="badge badge-info">Disetujui Manager</span>
                         @elseif($r->status == '3')

@@ -41,7 +41,7 @@
                                             <th>Mode Alokasi</th>
                                             <th>Departemen</th>
                                             <th>JK/Status</th>
-                                            <th>T. Aprproval</th>
+                                            <th>T. Approval</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>

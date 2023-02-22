@@ -6,11 +6,11 @@
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Data Karyawan</h4>
+                <h4 class="pull-left page-title">Data Metode Rekruitmen</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Data Karyawan</li>
+                    <li class="active">Data Metode Rekruitmen</li>
                 </ol>
 
                 <div class="clearfix">
@@ -29,9 +29,9 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 m-b-10">
-                            {{-- <a type="button" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
+                            <a type="button" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
                                 data-target="#myModal"> Tambah
-                                Metode Rekruitmen</a> --}}
+                                Metode Rekruitmen</a>
                         </div>
                         @include('admin.rekruitmen.tambahMetodeModal')
                         <div class="panel-body">
@@ -50,34 +50,37 @@
 
                                 <tbody>
                                     @foreach ($metode as $k)
+                                            @if ($k->id == '6')
+
+                                            @else
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $k->nama_tahapan }}</td>
-                                            <td>
-                                                <div class="d-grid gap-4 " role="group" aria-label="Basic example">
-                                                
-                                                @if ($k->id == '6')
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $k->nama_tahapan }}</td>
+                                                <td>
+                                            <div >
 
-                                                {{-- @elseif($k->id == '1') --}}
-
-                                                @else
-                                                    <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal" data-target="#editmetode{{ $k->id }}">
+                                                {{-- @if ($k->id == '6') --}}
+                                                    {{-- @elseif($k->id == '1') --}}
+                                                {{-- @else --}}
+                                                    <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal"
+                                                        data-target="#editmetode{{ $k->id }}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                @endif
+                                                {{-- @endif --}}
 
-                                                    {{-- <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal"
+                                                {{-- <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal"
                                                     data-alokasi="{{$data->id}}" data-target="#editalokasi">
                                                     <i class="fa fa-edit"></i> --}}
 
 
-                                                    {{-- <button onclick="hapus_karyawan({{ $k->id }})"
+                                                {{-- <button onclick="hapus_karyawan({{ $k->id }})"
                                                         class="btn btn-danger btn-sm">
                                                         <i class="fa fa-trash"></i>
                                                     </button> --}}
-                                                </div>
-                                                <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
+                                            </div>
+                                            <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
                                             </td>
+                                            @endif
 
                                         </tr>
                                         @include('admin.rekruitmen.editMetodeModal')
