@@ -55,7 +55,7 @@
                                                     </td>
                                                     <td id="b" class="text-center" > 
                                                         <div class="row">
-                                                            @if(($data->jabatan == 'Supervisor' && $data->status == 'Disetujui Manager'))
+                                                            @if(($data->jabatan == 'Supervisor' && $data->status == 2))
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('leave.approved',$data->id)}}" method="POST"> 
                                                                         @csrf
@@ -77,7 +77,7 @@
                                                                         <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
                                                                         <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                     </form> --}}
-                                                            @elseif(($data->jabatan == 'Manager' && $data->status == 'Pending'))
+                                                            @elseif(($data->jabatan == 'Manager' && $data->status == 1))
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('leave.approved',$data->id)}}" method="POST"> 
                                                                         @csrf

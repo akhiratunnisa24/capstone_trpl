@@ -58,7 +58,6 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 m-t-10">
-                        
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
@@ -139,7 +138,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                                    <textarea class="form-control" autocomplete="off" value="{{ $karyawan->alamat ?? '' }}" name="alamatKaryawan" rows="3" required></textarea><br>
+                                                                    <textarea class="form-control" autocomplete="off" value="{{$karyawan->alamat ?? ''}}" name="alamatKaryawan" rows="3" required></textarea><br>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -226,7 +225,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     {{-- <button type="submit" id="btnsimpan" name="submit" class="btn btn-sm btn-primary">Simpan</button> --}}
-                                                    <a href="/create-data-keluarga" type="submit"  name="submit" id="btnselanjutnya" class="btn btn-sm btn-danger">Simpan & Selanjutnya <i class="fa fa-forward"></i></a>
+                                                    <button type="submit"  name="submit" id="btnselanjutnya" class="btn btn-sm btn-success">Simpan & Selanjutnya <i class="fa fa-forward"></i></button>
                                                 </div>
                         
                                             </table>

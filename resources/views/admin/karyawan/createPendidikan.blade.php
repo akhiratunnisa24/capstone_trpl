@@ -95,10 +95,15 @@
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         {{-- KIRI --}}
-                                                        <div class="col-md-6">
-                                                            <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5 ">
-                                                                <label class="text-white">Pendidikan Formal</label>
+                                                        <div class="col-md-12">
+                                                            <div class="modal-header bg-primary panel-heading  col-sm-15 m-b-5">
+                                                                <label class="text-white m-b-10">D. RIWAYAT PENDIDIKAN</label>
                                                             </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            {{-- <div class="modal-header panel-heading  col-sm-15 m-b-5 m-t-10"> --}}
+                                                                <span class="badge badge-info col-sm-15 m-b-5 m-t-10"><label class="text-white"> 1. Pendidikan Formal</label></span>
+                                                            {{-- </div> --}}
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1" class="form-label">Tingkat</label>
                                                                 <select class="form-control selectpicker" name="tingkat_pendidikan">
@@ -154,9 +159,9 @@
 
                                                         {{-- KANAN --}}
                                                         <div class="col-md-6">
-                                                            <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                                <label class="text-white">Pendidikan NonFormal</label>
-                                                            </div>
+                                                            {{-- <div class="modal-header  panel-heading  col-sm-15 m-b-5 m-t-10"> --}}
+                                                                <span class="badge badge-info col-sm-15 m-b-5 m-t-10"><label class="text-white"> 2. Pendidikan Non Formal</label></span>
+                                                            {{-- </div> --}}
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Bidang / Jenis</label>
@@ -193,7 +198,7 @@
                                                             <a href="/create-kontak-darurat" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
                                                         </div>
                                                         <div class="pull-right">
-                                                            <button type="submit" name="submit" class="btn btn-sm btn-danger">Selanjutnya <i class="fa fa-forward"></i></button>
+                                                            <button type="submit" name="submit" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>

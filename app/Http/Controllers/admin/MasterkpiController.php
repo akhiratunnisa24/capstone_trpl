@@ -18,5 +18,10 @@ class MasterkpiController extends Controller
 
         return view('admin.kpi.masterkpi.index', compact('job','departemen'));
     }
+
+    public function indikator(Request $request)
+    {
+        return view('admin.kpi.indicator.index');
+    }
     
 }
