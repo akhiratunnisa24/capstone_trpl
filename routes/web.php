@@ -29,6 +29,8 @@ use App\Http\Controllers\admin\ResignAdminController;
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\karyawan\KaryawansController;
+use App\Http\Controllers\manager\KpimanagerController;
+use App\Http\Controllers\karyawan\KpikaryawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
@@ -145,6 +147,8 @@ Route::get('resigndelete{id}', [ResignController::class, 'delete'])->name('resig
 Route::get('/export-absensi', [AbsensiKaryawanController::class, 'absensiPeroranganExcel'])->name('expor.absensi');
 Route::get('/export-absensi-pdf', [AbsensiKaryawanController::class, 'absensiPeroranganPdf'])->name('pdf.absensi');
 
+//kpi
+Route::get('/kpi', [KpikaryawanController::class, 'index'])->name('kpi.karyawan');
 //==================================================================================
 
 //HALAMAN ADMIN
@@ -236,7 +240,7 @@ Route::get('/absensi-tidak-masuk-excel', [TidakMasukController::class, 'tidakMas
 
 //KPI
 Route::get('/masterkpi', [MasterkpiController::class, 'index'])->name('master.index');
-// Route::get('/indikator-kpi', [IndicatorController::class, 'index'])->name('indicator.index');
+Route::get('/indikator-kpi', [MasterkpiController::class, 'indikator'])->name('indicator.index');
 
 //================================================================================
 //ROLE MANAGER atau SUPERVISOR
@@ -261,12 +265,17 @@ Route::get('/resignmanager/{id}', [ResignAdminController::class, 'show'])->name(
 Route::post('/permintaan_resign_manager/{id}', [ResignAdminController::class, 'approvedmanager'])->name('resign_approved_manager');
 Route::post('/permintaanresign_reject/{id}', [ResignAdminController::class, 'reject'])->name('resign_reject');
 
+//KPI
+Route::get('/master-kpi', [KpimanagerController::class, 'index'])->name('manager.kpi');
+Route::get('/data-kpi', [KpimanagerController::class, 'data'])->name('data.kpi');
+
 //================================================================================
 //ROLE DIREKTUR
 
 Route::get('/data-cuti-staff', [DirekturController::class, 'index'])->name('cuti.index');
 Route::post('/data-cuti-staff/{id}', [DirekturController::class, 'leaveapproved'])->name('leave.approved');
 Route::post('/data-cuti-staffs/{id}', [DirekturController::class, 'leaverejected'])->name('leave.rejected');
+Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direktur.staff');
 
 //================================================================================
 //ROLE SUPERVISOR

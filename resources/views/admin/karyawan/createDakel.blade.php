@@ -155,18 +155,17 @@
                                                                     <div id="emailHelp" class="form-text"></div>
                                                                 </div>
                                                             </div>
-
+                                                            <div class="row">
+                                                                <div class="pull-left">
+                                                                    <a href="/karyawancreates" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
+                                                                </div>
+                                                                <div class="pull-right">
+                                                                    {{-- <button type="submit" name="submit" class="btn btn-sm btn-success">Simpan</button> --}}
+                                                                    <button type="submit" name="submit" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="col-md-2"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="pull-left">
-                                                        <a href="/karyawancreates" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
-                                                    </div>
-                                                    <div class="pull-right">
-                                                        {{-- <button type="submit" name="submit" class="btn btn-sm btn-success">Simpan</button> --}}
-                                                        <button type="submit" name="submit" class="btn btn-sm btn-danger">Selanjutnya <i class="fa fa-forward"></i></button>
                                                     </div>
                                                 </div>
                                             </table>

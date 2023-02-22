@@ -37,6 +37,10 @@ class KaryawansController extends Controller
             // $pekerjaan = Rpekerjaan::where('id_pegawai',$user)->get();
 
             $karyawan = $request->session()->get('karyawan');
+            if(!$karyawan) {
+                // Buat instance baru dari model atau objek yang sesuai
+                $karyawan = new Karyawan;
+            }
             $output = [
                 'row' => $row,
                 'departemen' => $departemen,
@@ -100,6 +104,7 @@ class KaryawansController extends Controller
                 $karyawan->status_kerja  = 'Aktif';
 
                 $request->session()->put('karyawan', $karyawan);
+                dd($karyawan);
             }else
             {
                 $karyawan = $request->session()->get('karyawan');
@@ -134,6 +139,7 @@ class KaryawansController extends Controller
                 $karyawan->status_kerja  = 'Aktif';
 
                 $request->session()->put('karyawan', $karyawan);
+                dd($karyawan);
 
             }
             return redirect()->route('create.dakel');
@@ -382,32 +388,42 @@ class KaryawansController extends Controller
 
         $request->session()->put('pekerjaan', $pekerjaan);
  
-        dd($pekerjaan);
+        // dd($pekerjaan);
 
+        // return redirect()->back();
          //meyimpan data ke database
          $karyawan= $request->session()->get('karyawan');
          $karyawan->save();
+         $idKaryawan = $karyawan->id;
+        //  dd($idKaryawan);
  
-         $datakeluarga= $request->session()->get('datakeluarga');
+        //  $idkaryawan = 
+         $datakeluarga = $request->session()->get('datakeluarga');
+         dd($datakeluarga);
+         $datakeluarga->id_pegawai = $idKaryawan;
+        //  dd($datakeluarga->id_pegawai);
+         $datakeluarga = $request->session()->put('datakeluarga');
+
+         $datakeluarga = $request->session()->get('datakeluarga');
          $datakeluarga->save();
  
-         $kontakdarurat= $request->session()->get('kontakdarurat');
-         $kontakdarurat->save();
+        //  $kontakdarurat= $request->session()->get('kontakdarurat');
+        //  $kontakdarurat->save();
  
-         $pendidikan= $request->session()->get('pendidikan');
-         $pendidikan->save();
+        //  $pendidikan= $request->session()->get('pendidikan');
+        //  $pendidikan->save();
  
-         $pekerjaan= $request->session()->get('pekerjaan');
-         $pekerjaan->save();  
+        //  $pekerjaan= $request->session()->get('pekerjaan');
+        //  $pekerjaan->save();  
          
-         //hapus data pada session
-         $request->session()->forget('karyawan');
-         $request->session()->forget('datakeluarga');
-         $request->session()->forget('kontakdarurat');
-         $request->session()->forget('pendidikan');
-         $request->session()->forget('pekerjaan');
+        //  //hapus data pada session
+        //  $request->session()->forget('karyawan');
+        //  $request->session()->forget('datakeluarga');
+        //  $request->session()->forget('kontakdarurat');
+        //  $request->session()->forget('pendidikan');
+        //  $request->session()->forget('pekerjaan');
          
-         return redirect('/karyawan');
+        //  return redirect('/karyawan');
  
            // $user = Karyawan::max('id');
          // $r_pekerjaan = array(

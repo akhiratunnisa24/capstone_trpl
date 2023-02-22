@@ -27,21 +27,24 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
-                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#addIndikator"> Tambah Indikator</a>
-                            <a href="" class="btn btn-sm btn-dark fa fa-edit pull-right" data-toggle="modal" data-target="#editIndikator"> Edit Indikator</a>
+                            <a href="" class="btn btn-sm btn-dark fa fa-eye pull-right" data-toggle="modal" data-target="#showKpi"> Show Data</a>
                         </div>
                         {{-- @include('admin.kpi.job.addJob') --}}
-                        @include('admin.kpi.indicator.addIndikator');
-                        @include('admin.kpi.indicator.editIndikator');
+                        @include('manager.kpi.showdata')
+                     
                         <div class="panel-body">
                             <table id="datatable-responsive13" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Nama</th>
                                         <th>Master Kpi</th>
                                         <th>Indikator</th>
                                         <th>deskripsi</th>
+                                        <th>KPI Target</th>
+                                        <th>KPI Aktual</th>
+                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>

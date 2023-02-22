@@ -82,7 +82,8 @@
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-server"></i><span class="text-info panel-title">Data Master KPI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/masterkpi"><i class="fa fa-tasks"></i><span></span>Master KPI</a></li>              
-                            {{-- <li><a href="#"><i class="fa fa-file-text"></i><span></span>Penilaian</a></li>           --}}
+                            {{-- <li><a href="#"><i class="fa fa-file-text"></i><span></span>Penilaian</a></li>          
+                            <li><a href="/indikator-kpi" class="waves-effect"><i class="fa fa-book"></i><span>Indikator</span></a></li> --}}
                         </ul>
                 </li>
 
@@ -105,6 +106,7 @@
                 <li><a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a></li>
                 <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a></li>
                 <li><a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a></li>
+                {{-- <li><a href="/kpi" class="waves-effect"><i class="fa fa-book"></i><span>Input KPI</span></a></li> --}}
             </ul>
 
             <?php } elseif ($role == 3) { ?>
@@ -130,6 +132,7 @@
                         <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
                         <li><a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a></li>
                         <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a></li>
+                        {{-- <li><a href="/kpi" class="waves-effect"><i class="fa fa-book"></i><span>Input KPI</span></a></li> --}}
                     </ul>
                 </li>
 
@@ -143,6 +146,14 @@
                         <li><a href="/resign_manager" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Data Resign Staff</span></a></li>
                     </ul>
                 </li>
+        
+                {{-- <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book-open-page-variant"></i><span class="text-info panel-title">DATA KPI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                    <ul class="list-unstyled">
+                        <li><a href="/master-kpi" class="waves-effect"><i class="fa fa-book"></i><span>Indikator KPI</span></a></li>
+                        <li><a href="/data-kpi" class="waves-effect"><i class="fa fa-book"></i><span>Data KPI</span></a></li>
+                    </ul>
+                </li> --}}
 
             </ul>
 
@@ -176,7 +187,7 @@
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span class="text-info panel-title">Data Staff</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
                         <li><a href="/data-cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a></li>
-                         <li> <a href="/data-staff" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a></li>
+                         {{-- <li> <a href="/data-staf" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a></li> --}}
                     </ul>
                 </li>
             </ul>
@@ -204,6 +215,7 @@
                         <li><a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a></li>
                         <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a></li>
                         <li><a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a></li>
+                        {{-- <li><a href="/kpi" class="waves-effect"><i class="fa fa-book"></i><span>Input KPI</span></a></li> --}}
                     </ul>
                 </li>
                 <li class="has_sub">

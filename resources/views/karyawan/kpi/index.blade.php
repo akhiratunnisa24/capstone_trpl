@@ -5,11 +5,11 @@
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Data Indikator KPI</h4>
+                <h4 class="pull-left page-title">Data KPI</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Data Indikator KPI</li>
+                    <li class="active">Data KPI</li>
                 </ol>
 
                 <div class="clearfix">
@@ -27,21 +27,23 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
-                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#addIndikator"> Tambah Indikator</a>
-                            <a href="" class="btn btn-sm btn-dark fa fa-edit pull-right" data-toggle="modal" data-target="#editIndikator"> Edit Indikator</a>
+                            <a href="" class="btn btn-sm btn-dark fa fa-eye pull-right" data-toggle="modal" data-target="#showDatakpi"> Detail</a>
+                            <a href="" class="btn btn-sm btn-dark fa fa-pencil pull-right" data-toggle="modal" data-target="#nilai"> Input Nilai</a>
                         </div>
-                        {{-- @include('admin.kpi.job.addJob') --}}
-                        @include('admin.kpi.indicator.addIndikator');
-                        @include('admin.kpi.indicator.editIndikator');
+                        @include('karyawan.kpi.show')
+                        @include('karyawan.kpi.nilai')
+                     
                         <div class="panel-body">
                             <table id="datatable-responsive13" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Nama</th>
                                         <th>Master Kpi</th>
                                         <th>Indikator</th>
                                         <th>deskripsi</th>
+                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>

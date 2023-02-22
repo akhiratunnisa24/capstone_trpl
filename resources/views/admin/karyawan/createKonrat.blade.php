@@ -74,7 +74,7 @@
                                                             <div class="col-md-2"></div>
                                                             <div class="col-md-8">
                                                                 <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5  ">
-                                                                    <label class="text-white">Kontak Darurat</label>
+                                                                    <label class="text-white">C. KONTAK DARURAT</label>
                                                                 </div>
                                                                 <div class="form-group m-t-10">
                                                                     <div class="mb-3">
@@ -119,7 +119,7 @@
                                                                     <div class="pull-right">
                                                                         {{-- <button type="submit" name="submit" class="btn btn-sm btn-success">Simpan</button> --}}
                                                                         {{-- /create-data-pendidikan --}}
-                                                                        <button type="submit" name="submit" class="btn btn-sm btn-danger">Selanjutnya <i class="fa fa-forward"></i></button>
+                                                                        <button type="submit" name="submit" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></button>
                                                                     </div>
                                                                 </div>
                                                             </div>

@@ -76,7 +76,7 @@
                                                     <div class="row">
                                                         <div>
                                                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                                <label class="text-white m-b-10">E. Riwayat Pekerjaan</label>
+                                                                <label class="text-white m-b-10">E. RIWAYAT PEKERJAAN</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 m-t-10">
@@ -158,7 +158,7 @@
                                                         <a href="/create-data-pendidikan" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
                                                     </div>
                                                     <div class="pull-right">
-                                                        <a href="/karyawan" type="submit" name="submit" class="btn btn-sm btn-success"><strong><i class="fa fa-paper-plane"></i></strong>  Simpan Data</a>
+                                                        <button type="submit" name="submit" class="btn btn-sm btn-success"><strong><i class="fa fa-paper-plane"></i></strong>  Simpan Data</button>
                                                     </div>
                                                 </div>
                                             </table>

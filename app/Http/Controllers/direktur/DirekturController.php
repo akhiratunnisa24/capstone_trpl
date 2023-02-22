@@ -26,14 +26,17 @@ class DirekturController extends Controller
             ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
             ->where(function($query) use ($id_user_login) {
                 $query->where('karyawan.jabatan', 'Manager','HRD')
+                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                  ->orWhere(function($query) use ($id_user_login) {
                 $query->where('karyawan.jabatan', 'Supervisor')
+                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
                 ->where('settingalokasi.tipe_approval', 'Bertingkat');
             });
             })
-            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.jabatan')
+            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.jabatan','karyawan.atasan_pertama','karyawan.atasan_kedua')
             ->distinct()
             ->get();
+        // dd($cuti);
         $alasancuti = DB::table('datareject')
             ->join('cuti','datareject.id_cuti','=','cuti.id')
             ->select('datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
