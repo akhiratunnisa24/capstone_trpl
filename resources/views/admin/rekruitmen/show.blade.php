@@ -50,7 +50,18 @@
                         <td><label> {{ $lowongan->persyaratan }}</label></td>
                     </tr>
                     <tr>
+                        <td><label>Periode Lamaran</label></td>
+                        <td>
+                            @if ($lowongan->tgl_mulai && $lowongan->tgl_selesai)
+                                <label>{{ date('d/m/Y', strtotime($lowongan->tgl_mulai)) }}</label> sampai dengan
+                                <label>{{ date('d/m/Y', strtotime($lowongan->tgl_selesai)) }}</label>
+                            @else
+                                <label>Periode lamaran tidak tersedia</label>
+                            @endif
+                        </td>
+                    </tr>
 
+                    <tr>
                 </tbody>
             </table>
 

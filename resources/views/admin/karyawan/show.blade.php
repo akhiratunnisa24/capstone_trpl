@@ -89,13 +89,14 @@
                     </tr>
                     <tr>
                         <td><label>Status Pernikahan</label></td>
-                        <td>
+                        {{-- <td>
                             @if($status->status_pernikahan == "Sudah")
                                 <label>{{$status->status_pernikahan}} Menikah</label>
                             @else
                                 <label>{{$status->status_pernikahan}} Menikah</label>
                             @endif
-                        </td>
+                        </td> --}}
+                        <td><label>{{ $status->status_pernikahan ?? 'Belum ' }} Menikah</label></td>
                     </tr>
                 </tbody>
             </table>

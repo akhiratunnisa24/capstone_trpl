@@ -387,9 +387,10 @@ class KaryawansController extends Controller
         $request->session()->put('pekerjaan', $pekerjaan);
  
          //meyimpan data ke database
-        $karyawan= $request->session()->get('karyawan');
-        $karyawan->save();
-        $idKaryawan = $karyawan->id;
+         $karyawan= $request->session()->get('karyawan');
+         $karyawan->save();
+         $idKaryawan = $karyawan->id;
+        //  dd($idKaryawan);    
  
         $datakeluarga = $request->session()->get('datakeluarga');
         $datakeluarga['id_pegawai'] = $idKaryawan;

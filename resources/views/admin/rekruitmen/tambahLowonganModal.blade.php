@@ -23,11 +23,11 @@
 
                     <div class="form-group col-xs-12">
                         <label for="roles">Pilih Tahapan</label>
-                        @foreach ($metode as $m)    
-                            <div class="checkbox checkbox-success" >
+                        @foreach ($metode as $m)
+                            <div class="checkbox checkbox-success">
                                 <input type="checkbox" name="checkbox[]" value="1">
-                                <input type="checkbox" id="checkbox{{ $loop->iteration }}" class="form-check-input" name="tahapan[]"
-                                    value="{{ $m->id }}" >
+                                <input type="checkbox" id="checkbox{{ $loop->iteration }}" class="form-check-input"
+                                    name="tahapan[]" value="{{ $m->id }}">
                                 <label for="checkbox{{ $loop->iteration }}">
                                     {{ $m->nama_tahapan }}
                                 </label>
@@ -46,7 +46,7 @@
                                         <p>{{ $m->nama_tahapan }}</p>
                                     </div>
                                     <div class="col-md-6">
-                                        @if($m->id == 1)
+                                        @if ($m->id == 1)
                                             <input type="text" id="tahapan{{ $m->id }}" class="form-control" name="tahapan[{{ $m->id }}]" value="{{ $m->id == 1 ? 1 : '' }}" readonly>
                                         @else
                                             <input type="number" id="tahapan{{ $m->id }}" class="form-control" name="tahapan[{{ $m->id }}]">
@@ -56,7 +56,7 @@
                             </div>
                         @endforeach
                     </div> --}}
-              
+
 
                     <div class="form-group col-xs-12">
                         <label class="form-label">Jumlah Dibutuhkan</label>
@@ -65,8 +65,21 @@
                     </div>
 
                     <div class="form-group col-xs-12">
+                        <label class="form-label">Periode Lamaran</label>
+                        <div>
+                            <div class="input-daterange input-group" id="date-range">
+                                <input type="text" class="form-control" name="tglmulai" required/>
+                                <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                <input type="text" class="form-control" name="tglselesai" required/>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-xs-12">
                         <label class="form-label">Persyaratan</label>
-                        <textarea type="text" class="form-control " rows="9" name="persyaratan" placeholder="Masukkan Persyaratan" required></textarea>
+                        <textarea type="text" class="form-control " rows="9" name="persyaratan" placeholder="Masukkan Persyaratan"
+                            required></textarea>
                     </div>
 
 
@@ -103,7 +116,7 @@
         var checkboxes = document.getElementsByName('tahapan[]');
         var checkboxChecked = false;
 
-        for (var i=0; i<checkboxes.length; i++) {
+        for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
                 checkboxChecked = true;
                 break;
