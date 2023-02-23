@@ -87,18 +87,28 @@ class ResignController extends Controller
             ->where('karyawan.id', Auth::user()->id_pegawai)
             ->select('departemen.id as id_dep')
             ->first();
-       
-            $resign = New Resign;
-            $resign->id_karyawan = $karyawan;
-            $resign->departemen = $tes->id_dep;
-            $resign->tgl_masuk = Carbon::parse($request->tgl_masuk)->format("Y-m-d");
-            $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
-            $resign->tipe_resign = $request->tipe_resign;
-            $resign->alasan      = $request->alasan;          
-            $resign->status      = $status->id;
-
-            $resign->save();
-            return redirect()->back();
+    
+        $resign = New Resign;
+        $resign->id_karyawan = $karyawan;
+        $resign->departemen = $tes->id_dep;
+        $resign->tgl_masuk = Carbon::parse($request->tgl_masuk)->format("Y-m-d");
+        $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
+        $resign->tipe_resign = $request->tipe_resign;
+        $resign->alasan      = $request->alasan;
+        $resign->status      = $status->id;
+    
+        // Upload file PDF
+        if ($request->hasFile('filepdf')) {
+            $file = $request->file('filepdf');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $path = public_path('pdf/' . $filename);
+            $file->move('pdf/', $filename);
+        
+            $resign->filepdf = $filename;
+        }
+    
+        $resign->save();
+        return redirect()->back();
 
     }
 
