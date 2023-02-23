@@ -47,17 +47,9 @@
                 <div class="form-group row">
                     <label for="status" class="col-sm-3 col-form-label">Status Resign</label>
                     <div class="col-sm-9">
-                        @if($r->status == '1')
-                            <span class="badge badge-warning">Pending</span>
-                        @elseif($r->status == '2')
-                            <span class="badge badge-info">Disetujui Manager</span>
-                        @elseif($r->status == '3')
-                            <span class="badge badge-success">Disetujui</span>
-                        @elseif($r->status == '4')
-                            <span class="badge badge-warning">Pending HRD</span>
-                        @else
-                            <span class="badge badge-danger">Ditolak</span>
-                        @endif
+                        <span class="badge badge-{{ $r->status == 8 ? 'warning' : ($r->status == 2 ? 'info' : ($r->status == 3 ? 'success' : ($r->status == 4 ? 'warning' : 'danger'))) }}">
+                            {{ $r->status == 8 ? $r->statuses->name_status : ($r->status == 2 ? $r->statuses->name_status : ($r->status == 3 ? $r->statuses->name_status : ($r->status == 4 ? $r->statuses->name_status : 'Ditolak'))) }}
+                          </span>
                     </div>
                 </div>
 
