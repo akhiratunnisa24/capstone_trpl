@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('tgl_resign');
             $table->string('tipe_resign')->nullable();
             $table->text('alasan')->nullable();
+            $table->string('filepdf')->nullable();
             $table->unsignedBigInteger('status');
             $table->timestamps();
         });
