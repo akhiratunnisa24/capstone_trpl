@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('posisi')->nullable();
             $table->integer('jumlah_dibutuhkan')->nullable();
             $table->string('status')->nullable();
+            $table->date('tgl_mulai')->nullable();
+            $table->date('tgl_selesai')->nullable();
             $table->string('persyaratan')->nullable();
 
             $table->timestamps();

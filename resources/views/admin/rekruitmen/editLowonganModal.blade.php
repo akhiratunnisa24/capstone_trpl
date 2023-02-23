@@ -36,8 +36,20 @@
                                     Aktif</option>
                             </select>
                         </div>
-
                     </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-9 col-form-label">Periode Lamaran</label>
+                        <div class="col-sm-12">
+                            <div class="input-daterange input-group" >
+                                <input id="date" type="date" class="form-control" name="tglmulai" value="{{ $k->tgl_mulai }}"/>
+                                <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                <input id="date" type="date" class="form-control" name="tglselesai" value="{{ $k->tgl_selesai }}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    
 
             </div>
 

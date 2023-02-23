@@ -38,8 +38,8 @@
                             <a href="/exportexcelkaryawan" class="btn btn-sm btn-dark fa fa-cloud-upload "> Export Excel
                             </a>
 
-                            {{-- <a href="karyawancreates" type="button" class="btn btn-sm btn-dark fa fa-user-plus pull-right"> Tambah
-                                Data Karyawan</a> --}}
+                            <a href="karyawancreates" type="button" class="btn btn-sm btn-dark fa fa-user-plus pull-right"> Tambah
+                                Data Karyawan</a>
                         </div>
                         @include('admin.karyawan.addAkunModal')
                         <div class="panel-body">

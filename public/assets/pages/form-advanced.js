@@ -360,10 +360,16 @@
             multidateSeparator: ",",
         });
         jQuery("#date-range").datepicker({
+            // autoclose: true,
             toggleActive: true,
         });
 
         jQuery("#date-range2").datepicker({
+            toggleActive: true,
+        });
+
+        jQuery("#date-range3").datepicker({
+            // autoclose: true,
             toggleActive: true,
         });
 

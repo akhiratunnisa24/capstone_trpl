@@ -104,7 +104,7 @@ class KaryawansController extends Controller
                 $karyawan->status_kerja  = 'Aktif';
 
                 $request->session()->put('karyawan', $karyawan);
-                dd($karyawan);
+                // dd($karyawan);
             }else
             {
                 $karyawan = $request->session()->get('karyawan');
@@ -139,7 +139,7 @@ class KaryawansController extends Controller
                 $karyawan->status_kerja  = 'Aktif';
 
                 $request->session()->put('karyawan', $karyawan);
-                dd($karyawan);
+                // dd($karyawan);
 
             }
             return redirect()->route('create.dakel');
@@ -395,7 +395,7 @@ class KaryawansController extends Controller
          $karyawan= $request->session()->get('karyawan');
          $karyawan->save();
          $idKaryawan = $karyawan->id;
-        //  dd($idKaryawan);
+        //  dd($idKaryawan);    
  
         //  $idkaryawan = 
          $datakeluarga = $request->session()->get('datakeluarga');

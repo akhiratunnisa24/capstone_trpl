@@ -24,7 +24,8 @@ class FormPelamarController extends Controller
 
     {
         // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $posisi = Lowongan::all()->where('status', '=', 'Aktif');
+        // $posisi = Lowongan::all()->where('status', '=', 'Aktif');
+        $posisi = Lowongan::all()->where('status', '=', 'Aktif')->where('tgl_selesai','<',Carbon::now());
         $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
 
         if ($openRekruitmen->count() > 0) {
@@ -40,7 +41,7 @@ class FormPelamarController extends Controller
             'pdfPelamar' => 'required|mimes:pdf'
         ]);
         $posisi = Rekruitmen::with('lowongan')
-        ->get();
+            ->get();
         // dd($posisi);
 
 
@@ -63,7 +64,7 @@ class FormPelamarController extends Controller
         $user->no_kk = $request->no_kkPelamar;
         $user->gaji = $request->gajiPelamar;
         $user->status_lamaran = '1';
-        $user->tanggal_tahapan = Carbon::now() ;
+        $user->tanggal_tahapan = Carbon::now();
         $user->cv = $namaFile;
 
 
@@ -101,7 +102,7 @@ class FormPelamarController extends Controller
             'nonformal' => $nonformal,
             'pekerjaan' => $pekerjaan,
         ];
-        
+
         return view('admin.rekruitmen.tambahKaryawanBaru', $output);
     }
 }

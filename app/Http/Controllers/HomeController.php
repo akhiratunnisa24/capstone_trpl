@@ -279,8 +279,12 @@ class HomeController extends Controller
         ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
         ->count('terlambat');
 
-        //Data alokasi cuti masing2 karyawan
-        $alokasicuti = Alokasicuti::where('id_karyawan',Auth::user()->id_pegawai)->get();
+        //Data alokasi cuti seljuruh karyawan
+        $alokasicuti = Alokasicuti::all();
+
+        // keterangan absen terhadap login
+        $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+            ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
         //untuk mencari sisa cuti karyawan
         $sisacuti = DB::table('alokasicuti')
@@ -334,6 +338,8 @@ class HomeController extends Controller
                 'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,    
                 'tidakMasukBulanIni' => $tidakMasukBulanIni,
                 'tidakMasukHariIni' => $tidakMasukHariIni,
+                'alokasicuti' => $alokasicuti,
+                'absenKaryawan' => $absenKaryawan,
 
             ];
             return view('admin.karyawan.dashboardhrd', $output);

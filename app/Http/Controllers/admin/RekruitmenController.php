@@ -83,6 +83,8 @@ class RekruitmenController extends Controller
         $user->posisi = $request->posisi;
         $user->jumlah_dibutuhkan = $request->jumlah_dibutuhkan;
         $user->status = 'Aktif';
+        $user->tgl_mulai =  Carbon::parse($request->tglmulai)->format("Y-m-d");
+        $user->tgl_selesai =  Carbon::parse($request->tglselesai)->format("Y-m-d");
         $user->persyaratan = $request->persyaratan;
         $user->save();
 
@@ -297,6 +299,8 @@ class RekruitmenController extends Controller
             [
                 'jumlah_dibutuhkan' => $request->post('jumlahDibutuhkan'),
                 'status' => $request->post('statusLowongan'),
+                'tgl_mulai' => $request->post('tglmulai'),
+                'tgl_selesai' => $request->post('tglselesai'),
 
             ]
         );
