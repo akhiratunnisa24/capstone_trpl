@@ -19,10 +19,10 @@
 
     <div class="row">
         <div class="col-lg-6">
-            <div class="panel-group" id="accordion-test-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
+            <div class="panel-group " id="accordion-test-2">
+                <div class="panel panel-default ">
+                    <div class="panel-heading ">
+                        <h4 class="panel-title " >
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#1"
                                 aria-expanded="false" class="dropdown-toggle waves-effect waves-light collapsed">
                                 Permintaan Cuti Karyawan
@@ -38,7 +38,7 @@
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#2"
                                 class="collapsed" aria-expanded="false">
-                                Permintaan Resign Karyawan
+                                Permintaan Izin Karyawan
                             </a>
                         </h4>
                     </div>
@@ -111,7 +111,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($alokasicuti as $alokasi)
+                                            @foreach ($alokasicuti2 as $alokasi)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     {{-- <td>{{ $alokasi->id}}</td>
@@ -156,12 +156,12 @@
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#5"
                                 aria-expanded="false" class="collapsed">
-                                Data Izin Karyawan
+                                Data ### Karyawan
                             </a>
                         </h4>
                     </div>
                     <div id="5" class="panel-collapse collapse">
-                        sdfsfsdf
+                        sdadas
                     </div>
                 </div>
 

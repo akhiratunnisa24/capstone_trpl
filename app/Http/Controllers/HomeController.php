@@ -280,7 +280,11 @@ class HomeController extends Controller
         ->count('terlambat');
 
         //Data alokasi cuti seljuruh karyawan
-        $alokasicuti = Alokasicuti::all();
+        $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)->get();
+
+        //Data alokasi cuti seljuruh karyawan
+        $alokasicuti2 = Alokasicuti::all();
+
 
         // keterangan absen terhadap login
         $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
@@ -340,6 +344,7 @@ class HomeController extends Controller
                 'tidakMasukHariIni' => $tidakMasukHariIni,
                 'alokasicuti' => $alokasicuti,
                 'absenKaryawan' => $absenKaryawan,
+                'alokasicuti2' => $alokasicuti2,
 
             ];
             return view('admin.karyawan.dashboardhrd', $output);

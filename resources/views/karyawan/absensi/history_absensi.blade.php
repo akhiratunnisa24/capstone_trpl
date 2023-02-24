@@ -103,7 +103,7 @@
                                             <th>Tanggal</th>
                                             <th>Jam Masuk</th>
                                             <th>Jam Keluar</th>
-                                            <th>Jml Hadir</th>
+                                            <th>Jam Hadir</th>
                                             <th>Telat</th>
                                             <th>P. cepat</th>
                                         </tr>

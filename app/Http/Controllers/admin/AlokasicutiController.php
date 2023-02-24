@@ -181,8 +181,9 @@ class AlokasicutiController extends Controller
 
     public function show($id)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $alokasicuti = Alokasicuti::find($id);
-        return view('admin.alokasicuti.showalokasi',compact('alokasicuti'));
+        return view('admin.alokasicuti.showalokasi',compact('alokasicuti','row'));
     }
 
     //get data alokascuti
@@ -278,8 +279,9 @@ class AlokasicutiController extends Controller
 
     public function alokasicuti(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)->get();
-        return view('admin.alokasicuti', compact('alokasicuti'));
+        return view('admin.alokasicuti', compact('alokasicuti','row'));
     }
 }
 
