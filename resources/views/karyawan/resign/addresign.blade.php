@@ -65,7 +65,7 @@
 
                     <div class="form-group">
                         <label for="filepdf">File PDF</label>
-                        <input type="file" name="filepdf" id="filepdf" required>
+                        <input type="file" name="filepdf" id="filepdf" accept="application/pdf" required>
                     </div>
 
                     {{-- {{-- <div class="form-group"> --}}

@@ -60,6 +60,13 @@
                     </div>
                 </div>
 
+               <!-- Button "Buka File PDF" pada modal show -->
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">File PDF</label>
+                    <button type="button" class="btn btn-primary small" onclick="window.open('{{ asset('pdf/' . $r->filepdf) }}', '_blank')">Buka File PDF</button>
+                    </div>
+              
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
