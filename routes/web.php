@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
 
+use App\Http\Controllers\KalenderController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -19,10 +20,10 @@ use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\DepartemenController;
 use App\Http\Controllers\admin\RekruitmenController;
+
+
+
 use App\Http\Controllers\admin\TidakMasukController;
-
-
-
 use App\Http\Controllers\admin\AlokasicutiController;
 use App\Http\Controllers\admin\FormPelamarController;
 use App\Http\Controllers\admin\ResignAdminController;
@@ -345,3 +346,6 @@ Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direkt
     Route::post('/storespnformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
     Route::post('/storespekerjaan/{id}', [karyawansController::class, 'storespekerjaan'])->name('storespekerjaan');
     Route::get('/delete-pekerjaan/{id}', [karyawansController::class, 'destroy'])->name('destroy.pekerjaan');
+
+//Kalender
+    Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender');

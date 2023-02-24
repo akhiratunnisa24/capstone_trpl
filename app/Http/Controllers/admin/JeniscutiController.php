@@ -30,8 +30,8 @@ class JeniscutiController extends Controller
 
         $type = $request->query('type', 1);
         
-        $jeniscuti = Jeniscuti::latest()->paginate(10);
-        $jenisizin = Jenisizin::latest()->paginate(10);
+        $jeniscuti = Jeniscuti::all();
+        $jenisizin = Jenisizin::all();
         return view('admin.kategori.index', compact('jeniscuti','jenisizin','type','row'));
 
         } else {

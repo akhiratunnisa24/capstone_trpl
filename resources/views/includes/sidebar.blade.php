@@ -26,6 +26,9 @@
         <div id="sidebar-menu">
             <ul>
                 <li><a href="/" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>
+                {{-- <li>
+                    <a href="/kalender" class="waves-effect"><i class="ti-calendar"></i><span class="text-info panel-title"> Kalender</span></a>
+                </li> --}}
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span class="text-info panel-title">Informasi Pribadi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
@@ -82,8 +85,8 @@
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-server"></i><span class="text-info panel-title">Data Master KPI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/masterkpi"><i class="fa fa-tasks"></i><span></span>Master KPI</a></li>              
-                            {{-- <li><a href="#"><i class="fa fa-file-text"></i><span></span>Penilaian</a></li>          
-                            <li><a href="/indikator-kpi" class="waves-effect"><i class="fa fa-book"></i><span>Indikator</span></a></li> --}}
+                            <li><a href="/indikator-kpi" class="waves-effect"><i class="fa fa-book"></i><span>Indikator</span></a></li>
+                            <li><a href="#"><i class="fa fa-file-text"></i><span></span>Penilaian</a></li>          
                         </ul>
                 </li>
 
