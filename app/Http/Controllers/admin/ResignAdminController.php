@@ -69,25 +69,57 @@ class ResignAdminController extends Controller
      */
     public function store(Request $request)
     {
+        // $karyawan = Auth::user()->id_pegawai;
+        // $status = Status::find(4);  
+        // $tes = DB::table('karyawan')
+        //     ->join('departemen','karyawan.divisi','=','departemen.id')
+        //     ->where('karyawan.id', )
+        //     ->select('departemen.id as id_dep')
+        //     ->first();
+             
+        //     $resign = New Resign;
+        //     $resign->id_karyawan = $request->namaKaryawan;
+        //     $resign->departemen = $request->departemen;
+        //     $resign->tgl_masuk = Carbon::parse($request->tgl_masuk)->format("Y-m-d");
+        //     $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
+        //     $resign->tipe_resign = $request->tipe_resign;
+        //     $resign->alasan      = $request->alasan;          
+        //     $resign->status      = $status->id;
+
+        //     $resign->save();
+        //     return redirect()->back();
+
+        // mendapatkan id karyawan yang sedang login
         $karyawan = Auth::user()->id_pegawai;
-        $status = Status::find(4);  
+
+        // mendapatkan data status resign dengan id = 8
+        $status = Status::find(4);
+
+        // mendapatkan id departemen karyawan yang sedang login
         $tes = DB::table('karyawan')
             ->join('departemen','karyawan.divisi','=','departemen.id')
             ->where('karyawan.id', )
             ->select('departemen.id as id_dep')
             ->first();
-             
-            $resign = New Resign;
-            $resign->id_karyawan = $request->namaKaryawan;
-            $resign->departemen = $request->departemen;
-            $resign->tgl_masuk = Carbon::parse($request->tgl_masuk)->format("Y-m-d");
-            $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
-            $resign->tipe_resign = $request->tipe_resign;
-            $resign->alasan      = $request->alasan;          
-            $resign->status      = $status->id;
 
-            $resign->save();
-            return redirect()->back();
+        // menyimpan file pdf ke dalam folder public/pdf
+        $file = $request->file('filepdf');
+        $filename = time() . '-' . $file->getClientOriginalName(); // mendapatkan nama asli file
+        $file->move(public_path('pdf'), $filename);
+
+        // menyimpan data resign ke dalam database
+        $resign = new Resign;
+        $resign->id_karyawan = $request->namaKaryawan;
+        $resign->departemen = $request->departemen;
+        $resign->tgl_masuk = Carbon::parse($request->tgl_masuk)->format("Y-m-d");
+        $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
+        $resign->tipe_resign = $request->tipe_resign;
+        $resign->alasan      = $request->alasan;          
+        $resign->status      = $status->id;
+        $resign->filepdf     = $filename; // menyimpan nama file di kolom filepdf
+
+        $resign->save();
+        return redirect()->back();
 
     }
 

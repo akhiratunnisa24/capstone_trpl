@@ -11,7 +11,7 @@
 
               <div class="modal-body">
 
-                  <form method="POST" action="{{ route('resign.store') }}">
+                  <form method="POST" action="{{ route('resign.store') }}" method="POST" enctype="multipart/form-data">
                       @csrf
                       @method('POST')
                       <div class="form-group col-xs-15">        
@@ -69,18 +69,25 @@
                           <textarea id="alasan" type="text" class="form-control" name="alasan" autocomplete="off"
                               placeholder="Alasan Resign" required></textarea>
                       </div>                      
-                      <div class="col-xs-12">
+                      {{-- <div class="col-xs-12">
                           <div class="checkbox checkbox-primary">
 
                           </div>
-                      </div>
+                      </div> --}}
+
+                      <div class="form-group">
+                        <label for="filepdf">File PDF</label>
+                        <input type="file" name="filepdf" id="filepdf" accept="application/pdf" required>
+                    </div>
 
                       <div class="form-group text-center m-t-20">
-                          <div class="col-xs-12">
+                          <div class="col-xs-15">
                               <button class="btn btn-primary w-md waves-effect waves-light"
                                   type="submit">Ajukan</button>
                           </div>
                       </div>
+
+                     
 
                   </form>
 
