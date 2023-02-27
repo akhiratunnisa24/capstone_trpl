@@ -10,6 +10,8 @@ use App\Models\Izin;
 use App\Models\Karyawan;
 use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
+use App\Models\Lowongan;
+use App\Models\Resign;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -134,22 +136,7 @@ class HomeController extends Controller
                     ->whereDay('tanggal', '=', Carbon::now())
                     ->count('id_karyawan');
 
-        // jumlah karyawan yang belum absen / tidak masuk
         $totalTidakAbsenHariIni = $totalKaryawan - $totalabsen ;
-        // dd($totalTidakAbsenHariIni);
-
-
-        //ambil jumlah Karyawan absen tidak masuk perbulan     
-        // $totalKaryawanabsenperbulan = karyawan::pluck('id');
-        // ambil jumlah karyawan yang sudah absen
-        // $totalabsenperbulan = DB::table('absensi')
-        //             ->whereYear('tanggal', '=', Carbon::now()->year)
-        //             ->whereMonth('tanggal', '=', Carbon::now()->month)    
-        //             // ->whereDay('created_at', '=', Carbon::now())    
-        //             ->whereNotIn("id_karyawan", $totalKaryawanabsenperbulan)
-        //             ->get();
-
-        // DB::table(..)->select(..)->whereNotIn('book_price', [100,200])->get();
         $tidakMasukHariIni = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereDay('tanggal', '=', Carbon::now())
@@ -167,58 +154,6 @@ class HomeController extends Controller
 
         $to = Carbon::parse($today);
         $weekDay = $firstDayofMonth->diffInWeekdays($to);
-        //ambil jumlah Karyawan       
-        $totalKaryawanPerbulan = $totalKaryawan * $weekDay ;
-        // dd($totalKaryawanPerbulan);
-
-        // ambil jumlah karyawan yang sudah absen
-        // $totalabsenPerbulan = DB::table('absensi')
-        //             ->whereYear('tanggal', '=', Carbon::now()->year)
-        //             ->whereMonth('tanggal', '=', Carbon::now()->month)
-        //             ->count('id_karyawan');
-
-        // jumlah karyawan yang belum absen / tidak masuk
-        // $totalTidakAbsenPerbulan = $totalKaryawanPerbulan - $totalabsenPerbulan ;
-        
-
-        // $totalKaryawanabsenperbulan = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
-        // ->whereMonth('tanggal', '=', Carbon::now()->month)
-        // ->whereDay('tanggal', '=', Carbon::now()->day)
-        // ->pluck('id_karyawan')->implode(',');
-        
-        // $user_info = DB::table('usermetas')
-        //          ->select('browser', DB::raw('count(*) as total'))
-        //          ->groupBy('browser')
-        //          ->get();
-
-        //15,20,6,15,6,20,6
-
-        // $totalabsenperbulan = DB::table('karyawan')
-        // ->whereYear('created_at', '=', Carbon::now()->year)
-        // ->whereMonth('created_at', '=', Carbon::now()->month)
-        // // ->whereDay('created_at', '=', Carbon::now()->day)
-        // ->select('id')
-        // ->whereNotIn('id',[$totalKaryawanabsenperbulan])
-        // ->count();
-
-        // dd($totalabsenperbulan); 
-
-
-
-
-
-
-        //     // Belum / Tidak Masuk Hari Ini
-        // $tidakMasukHariIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
-        // ->whereMonth('tanggal', '=', Carbon::now()->month)
-        // ->whereDay('tanggal', '=', Carbon::now())
-        // ->whereTime('jam_masuk', '>', '08:00:00')
-        // ->count();
-
-        // $sudahAbsen = DB::table('users')
-        //     ->join('absensi', 'users.id_pegawai', '=', 'absensi.id_karyawan')
-        //     ->whereDay('absensi.created_at', '=', Carbon::now())
-        //     ->count();
 
         $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"), DB::raw("MONTH(tgl_mulai) as month_number"))
             ->whereYear('tgl_mulai', '=', Carbon::now()->year)
@@ -227,44 +162,9 @@ class HomeController extends Controller
             ->orderBy(DB::raw("MONTH(tgl_mulai)"))
             ->pluck('jumlah', 'month_name');
 
-        // $getYear = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("YEAR(tgl_mulai) as month_name"))
-        //     ->whereYear('created_at', '=', Carbon::now()->year)
-        //     ->orderBy('tgl_mulai')
-        //     ->pluck('jumlah', 'month_name');
-
-
-
         $labelBulan = $getLabel->keys();    
         // $labelTahun = $getYear->keys();    
         $data = $getLabel->values();
-
-
-        // $karyawan = Karyawan::whereDoesntHave('absensi', function ($query) {
-        //     $query->whereDate(DB::raw('DATE(tanggal)'), Carbon::today());
-        // })->get();
-
-        // if ($karyawan->count() > 0) {
-        //     foreach ($karyawan as $karyawan) {
-        //         $absen = new Tidakmasuk();
-        //         $absen->id_pegawai = $karyawan->id;
-        //         $absen->nama = $karyawan->nama;
-        //         $absen->divisi = $karyawan->divisi;
-        //         $absen->status = 'tanpa keterangan';
-        //         $absen->tanggal = Carbon::today();
-        //         // $absen->save();
-        //     }
-        // }  
-
-        // dd($karyawan);
-
-        // DASHBOARD KARYAWAN
-        //=====================
-        
-        //absen masuk bulan lalu    
-        // $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-        //     ->whereYear('tanggal','=', Carbon::now()->subMonth()->year)
-        //     ->whereMonth('tanggal','=', Carbon::now()->subMonth()->month)
-        //     ->count('jam_masuk');
 
         $absenBulanLalu = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
         ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
@@ -316,7 +216,37 @@ class HomeController extends Controller
             ->count('jam_masuk');
         
         $tahun = Carbon::now()->year;
-    
+
+        $posisi = Lowongan::all()->sortByDesc('created_at');
+
+        $cuti = DB::table('cuti')
+            ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+            ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+            ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+            ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+            ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+            ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama', 'settingalokasi.mode_alokasi', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
+            ->distinct()
+            ->where('status','=','1')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+        $cutijumlah = $cuti->where('status','=','1')->count('status');
+        $izin = DB::table('izin')->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+        ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+        ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+        ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+        ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.nama')
+        ->distinct()
+        ->orderBy('created_at', 'DESC')
+        ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+        ->get();
+        $izinjumlah = $izin->count();
+        // dd($cutijumlah);
+
+        $resign = Resign::orderBy('created_at', 'desc')->get();
+        $resignjumlah = $resign->count();
+
         if ($role == 1){
             
             $output = [
@@ -345,6 +275,13 @@ class HomeController extends Controller
                 'alokasicuti' => $alokasicuti,
                 'absenKaryawan' => $absenKaryawan,
                 'alokasicuti2' => $alokasicuti2,
+                'posisi' => $posisi,
+                'cuti' => $cuti,
+                'cutijumlah' => $cutijumlah,
+                'izin' => $izin,
+                'izinjumlah' => $izinjumlah,
+                'resign' => $resign,
+                'resignjumlah' => $resignjumlah,
 
             ];
             return view('admin.karyawan.dashboardhrd', $output);

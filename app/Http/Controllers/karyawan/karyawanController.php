@@ -48,33 +48,14 @@ class karyawanController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function index()
-    {
-        // event(new AbsenKaryawanEvent());
-
-
-            // $karyawanSudahAbsen = DB::table('absensi')->whereDay('created_at', '=', Carbon::now())->pluck('id_karyawan');
-            // $karyawan = DB::table('karyawan')->whereNotIn('id', $karyawanSudahAbsen)->get();
-
-            // if ($karyawan->count() > 0) {
-            //     foreach ($karyawan as $karyawan) {
-            //         $absen = new Tidakmasuk();
-            //         $absen->id_pegawai = $karyawan->id;
-            //         $absen->nama = $karyawan->nama;
-            //         $absen->divisi = $karyawan->divisi;
-            //         $absen->status = 'tanpa keterangan';
-            //         $absen->tanggal = Carbon::today();
-            //         $absen->save();
-            //     }
-            // }    
-            // dd($karyawan);       
-
-
+    public function index(Request $request)
+    {   
         $role = Auth::user()->role;
         if ($role == 1) {
 
-            $karyawan = karyawan::all()->sortByDesc('created_at');
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $karyawan = karyawan::all()->sortByDesc('created_at');
+
 
             //ambil id_karyawan yang belum punya akun
             $user = DB::table('users')->pluck('id_pegawai');
@@ -89,6 +70,7 @@ class karyawanController extends Controller
             return redirect()->back();
         }
     }
+
 
     // public function getEmail(Request $request)
     // {

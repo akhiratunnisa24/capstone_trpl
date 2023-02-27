@@ -74,6 +74,8 @@ Route::put('karyawanupdate{id}', [karyawanController::class, 'update'])->name('u
 Route::get('karyawancreate', [karyawanController::class, 'create'])->name('create');
 Route::get('editPassword{id}', [karyawanController::class, 'editPassword'])->name('editPassword');
 Route::put('updatePassword{id}', [karyawanController::class, 'updatePassword'])->name('updatePassword');
+// Route::get('karyawancari', [karyawanController::class, 'searchkaryawan'])->name('searchkaryawan');
+
 
 Route::get('showkaryawancuti', [karyawanController::class, 'showKaryawanCuti'])->name('showKaryawanCuti');
 Route::get('showkaryawanabsen', [karyawanController::class, 'showkaryawanabsen'])->name('showkaryawanabsen');
