@@ -164,7 +164,7 @@ class ResignAdminController extends Controller
         Resign::where('id',$id)->update([
             'status' => $status,
         ]);
-        return redirect()->route('resignkaryawan')->withInput();
+        return redirect()->back()->withInput();
     }
 
     public function getUserData($id)

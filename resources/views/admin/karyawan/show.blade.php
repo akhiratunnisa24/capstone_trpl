@@ -134,7 +134,7 @@
                             <td>{{$keluarga->pendidikan_terakhir }}</td>
                             <td>{{$keluarga->pekerjaan}}</td>
                             <td class="">
-                                <a class="btn btn-sm btn-primary editKeluarga pull-right" data-toggle="modal" data-target="NoeditKeluarga{{$keluarga->id}}" style="margin-right:10px">
+                                <a class="btn btn-sm btn-primary editKeluarga pull-right" data-toggle="modal" data-target="#editKeluarga{{$keluarga->id}}" style="margin-right:10px">
                                     <i class="fa fa-edit"></i>
                                 </a>
                             </td>
