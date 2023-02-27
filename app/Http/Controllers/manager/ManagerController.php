@@ -698,7 +698,9 @@ class ManagerController extends Controller
         ->select('divisi')->first();
         
         $staff1= Resign::with('departemens','karyawan')
-        ->where('departemen',$manager_iddep->divisi)->get();
+        ->where('departemen',$manager_iddep->divisi)
+        ->orderByDesc('created_at')
+        ->get();
         return view('manager\staff.resignStaff', compact('karyawan','karyawan1','resign','tes','staff1','row'));
     }
 
