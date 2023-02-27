@@ -39,7 +39,7 @@
                                         <th>No</th>
                                         {{-- <th>ID</th> --}}
                                         <th>Nama Departemen</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 

@@ -431,7 +431,7 @@
                                                             <th>Hubungan Keluarga</th>
                                                             <th>Alamat</th>
                                                             <th>Pekerjaan</th>
-                                                            {{-- <th>Action</th> --}}
+                                                            {{-- <th>Aksi</th> --}}
                                                         </tr>
                                                     </thead>
                                                     <tbody>

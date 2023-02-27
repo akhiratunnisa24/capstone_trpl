@@ -202,7 +202,7 @@ class AlokasicutiController extends Controller
     public function update(Request $request, $id)
     {
         $alokasicuti = Alokasicuti::find($id);
-        // dd($request->all());
+        dd($request->all());
         if($request->id_jeniscuti == 1)
         {
             $validate = $request->validate([
@@ -219,8 +219,8 @@ class AlokasicutiController extends Controller
                 'id_jeniscuti' =>$request->id_jeniscuti,
                 'durasi'       =>$request->durasi,
                 'mode_alokasi' =>$request->mode_alokasi,
-                'tgl_masuk'    => Carbon::parse($request->tgl_masuk)->format('Y-m-d'),
-                'tgl_sekarang' => Carbon::parse($request->tgl_sekarang)->format('Y-m-d'),
+                // 'tgl_masuk'    => Carbon::parse($request->tgl_masuk)->format('Y-m-d'),
+                // 'tgl_sekarang' => Carbon::parse($request->tgl_sekarang)->format('Y-m-d'),
                 'aktif_dari'   => Carbon::parse($request->aktif_dari)->format('Y-m-d'),
                 'sampai'       => Carbon::parse($request->sampai)->format('Y-m-d'),
             ]);

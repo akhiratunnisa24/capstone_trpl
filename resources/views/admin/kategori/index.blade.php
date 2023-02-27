@@ -65,7 +65,7 @@
                                                         <tr>
                                                             <th>No</th>
                                                             <th>Kategori Cuti</th>
-                                                            <th>Action</th>
+                                                            <th>Aksi</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -139,7 +139,7 @@
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Kategori Izin</th>
-                                                        <th>Action</th>
+                                                        <th>Aksi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -150,11 +150,6 @@
                                                         <td class="text-center">
                                                             <div class="d-grid gap-2 " role="group"
                                                                 aria-label="Basic example">
-                                                                {{-- <a id="bs" class="btn btn-info btn-sm Modalshowizin"
-                                                                    data-toggle="modal"
-                                                                    data-target="#Modalshowizin{{$data->id}}">
-                                                                    <i class="fa fa-eye"></i>
-                                                                </a> --}}
                                                                 <a id="bs" class="btn btn-sm btn-success Modaleditizin"
                                                                     data-toggle="modal"
                                                                     data-target="#Modaleditizin{{$data->id}}">
@@ -162,11 +157,15 @@
                                                                 </a>
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button id="bs" type="submit"
+                                                                <button onclick="izin({{$data->id}})"
+                                                                    class="btn btn-danger btn-sm">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                                {{-- <button id="bs" type="submit"
                                                                     class="btn btn-danger btn-sm"
                                                                     onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                                     <i class="fa fa-trash"></i>
-                                                                </button>
+                                                                </button> --}}
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -239,6 +238,31 @@
         } else {
             $('#tab2').click();
         }
+</script>
+
+<script type="text/javascript">
+    function izin(id){
+            swal.fire({
+                title:"Apakah anda yakin?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swal.fire({
+                        title : "Terhapus!",
+                        text: "Data berhasil di hapus..",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                    })
+                    location.href = '<?= "http://localhost:8000/kategorizindelete/" ?>'+id;
+                }
+            })
+    }
 </script>
 <?php if(@$_SESSION['sukses']){ ?>
 <script>

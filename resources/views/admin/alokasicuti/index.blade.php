@@ -60,7 +60,7 @@
                                             <th>id setting</th> --}}
                                             <th>Aktif Dari</th>
                                             <th>Sampai</th>
-                                            <th>Action</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
 
@@ -92,13 +92,9 @@
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                                 {{-- <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal"
-                                                    data-alokasi="{{$data->id}}" data-target="#editalokasi">
+                                                    data-alokasi="{{$data->id}}" data-target="#editalokasi{{$data->id}} ">
                                                     <i class="fa fa-edit"></i>
-
-                                                    {{$data->id}}
-
                                                 </a> --}}
-
                                                 <button onclick="hapus_alokasi({{$data->id}})"
                                                     class="btn btn-danger btn-sm">
                                                     <i class="fa fa-trash"></i>

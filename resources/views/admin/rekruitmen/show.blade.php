@@ -117,7 +117,7 @@
                                         <th>Alamat</th>
                                         <th>Status</th>
                                         <th>Tanggal Penyerahan CV</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -219,7 +219,7 @@
                                         <th>Alamat</th>
                                         <th>Status</th>
                                         <th>Tanggal Psikotest</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -310,7 +310,7 @@
                                         <th>Alamat</th>
                                         <th>Status</th>
                                         <th>Tanggal Interview Ke-1</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -402,7 +402,7 @@
                                         <th>Alamat</th>
                                         <th>Status</th>
                                         <th>Tanggal Medical Check-Up</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -491,7 +491,7 @@
                                         <th>Alamat</th>
                                         <th>Status</th>
                                         <th>Tanggal Interview ke-2</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -585,7 +585,7 @@
                                         <th>Alamat</th>
                                         <th>Status</th>
                                         <th>Tanggal Diterima</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 

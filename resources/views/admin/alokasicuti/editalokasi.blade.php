@@ -1,8 +1,7 @@
 {{-- FORM SETTING ALOKASI--}}
 <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
-<div class="modal fade" data-alokasi="{{$data->id}}" id="editalokasi" tabindex="-1" role="dialog"
-    aria-labelledby="editalokasi" aria-hidden="true">
+<div class="modal fade" id="editalokasi{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="editalokasi" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -59,7 +58,6 @@
                                 </div>
                             </div>
 
-
                             <div class="col-md-6">
                                 @if($data->tgl_masuk != null && $data->tgl_sekarang != null)
                                 <div class="" id="tglmulai">
@@ -84,6 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @else
                                 @endif
                                 <div class="" id="tanggalmulai">
                                     <div class="form-group">

@@ -47,12 +47,6 @@
                                     
                                 </div>
                             </div> 
-                            {{-- <div class="form-group">
-                                <div class="mb-3">
-                                    <label>Hubungan</label>
-                                    <input type="text" name="hubunganKdarurat" autocomplete="off" class="form-control" value="{{$kdarurat->hubungan}}">
-                                </div>
-                            </div>  --}}
                         </div>
                     </div>
             

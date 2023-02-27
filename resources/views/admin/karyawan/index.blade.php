@@ -57,7 +57,7 @@
                                         {{-- <th>Alamat</th> --}}
                                         <th>Email</th>
                                         <th>Agama</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 

@@ -267,6 +267,11 @@
                 }
             },
         });
+        jQuery("#datepicker-autoclosee").datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true,
+            todayHighlight: true,
+        });
 
         //pengajuan cuti oleh karyawan
         // var aktif_dari = $("#aktif_dari").val();

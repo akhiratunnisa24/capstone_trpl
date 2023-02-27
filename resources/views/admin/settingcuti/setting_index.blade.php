@@ -38,11 +38,11 @@
                                             <th>No</th>
                                             <th>Kategori Cuti</th>
                                             <th>Durasi (Hari)</th>
-                                            <th>Mode Alokasi</th>
+                                            {{-- <th>Mode Alokasi</th> --}}
                                             <th>Departemen</th>
                                             <th>JK/Status</th>
                                             <th>T. Approval</th>
-                                            <th>Action</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -51,7 +51,7 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                             <td>{{$data->durasi}}</td>
-                                            <td>{{$data->mode_alokasi}}</td>
+                                            {{-- <td>{{$data->mode_alokasi}}</td> --}}
                                             @if($data->departemen !=null)
                                             <td>{{$data->departemens->nama_departemen}}</td>
                                             @else

@@ -43,7 +43,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Tahapan</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 

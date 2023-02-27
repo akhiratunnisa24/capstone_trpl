@@ -96,8 +96,10 @@
                                                                     <option value="">Pilih Status Pernikahan</option>
                                                                     {{-- <option value="Sudah" {{ $datakeluarga->status_pernikahan == 'Sudah' ? 'selected' : '' }}>Sudah Menikah</option>
                                                                     <option value="Belum" {{ $datakeluarga->status_pernikahan == 'Belum' ? 'selected' : '' }}>Belum Menikah</option> --}}
-                                                                    <option value="Sudah">Sudah Menikah</option>
-                                                                    <option value="Belum">Belum Menikah</option>
+                                                                    <option value="Sudah Menikah">Sudah Menikah</option>
+                                                                    <option value="Belum Menikah">Belum Menikah</option>
+                                                                    <option value="Duda">Duda</option>
+                                                                    <option value="Janda">Janda</option>
                                                                 </select>
                                                             </div>
                                                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-10 m-t-10">

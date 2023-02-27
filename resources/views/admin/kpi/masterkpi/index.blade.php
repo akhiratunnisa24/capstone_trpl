@@ -44,7 +44,7 @@
                                         <th>Target</th>
                                         <th>Tgl Aktif</th>
                                         <th>Tgl Berakhir</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 

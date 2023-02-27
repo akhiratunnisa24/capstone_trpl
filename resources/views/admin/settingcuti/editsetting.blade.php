@@ -79,11 +79,11 @@
                                     <option value="P" @if(in_array("P", $data->mode_karyawan_array)) selected @endif>
                                         @if(in_array("P", $data->mode_karyawan_array)) Perempuan @else Perempuan @endif
                                     </option>
-                                    <option value="Sudah" @if(in_array("Sudah", $data->mode_karyawan_array)) selected @endif>
-                                        @if(in_array("Sudah", $data->mode_karyawan_array)) Sudah Menikah @else Sudah Menikah @endif
+                                    <option value="Sudah Menikah" @if(in_array("Sudah Menikah", $data->mode_karyawan_array)) selected @endif>
+                                        @if(in_array("Sudah Menikah", $data->mode_karyawan_array)) Sudah Menikah @else Sudah Menikah @endif
                                     </option>
-                                    <option value="Belum" @if(in_array("Belum", $data->mode_karyawan_array)) selected @endif>
-                                        @if(in_array("Belum", $data->mode_karyawan_array)) Belum Menikah @else Belum Menikah @endif
+                                    <option value="Belum Menikah" @if(in_array("Belum Menikah", $data->mode_karyawan_array)) selected @endif>
+                                        @if(in_array("Belum Menikah", $data->mode_karyawan_array)) Belum Menikah @else Belum Menikah @endif
                                     </option>
                                     <option value="Lama Kerja" @if(in_array("Lama Kerja",$data->mode_karyawan_array)) selected @endif>
                                         @if(in_array("Lama Kerja", $data->mode_karyawan_array)) Lama Kerja @else Lama Kerja @endif

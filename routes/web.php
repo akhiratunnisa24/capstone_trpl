@@ -193,7 +193,7 @@ Route::get('/kategoridelete{id}', [JeniscutiController::class, 'destroy'])->name
 Route::post('/kategori_izin', [JenisizinController::class, 'store'])->name('izin.store');
 Route::put('/izin_update/{id}', [JenisizinController::class, 'update'])->name('izin_update');
 Route::get('/izin_show/{id}', [JenisizinController::class, 'show'])->name('izin_show');
-// Route::delete('/destroy/{id}', [JeniscutiController::class, 'destroy']) ->name('destroy');
+Route::get('/kategorizindelete/{id}', [JenisizinController::class, 'destroy']) ->name('destroy.jizin');
 
 //setting alokasi
 Route::get('/settingalokasi', [SettingalokasicutiController::class, 'index'])->name('setting_alokasi.index');

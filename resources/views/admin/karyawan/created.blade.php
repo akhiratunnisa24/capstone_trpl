@@ -289,7 +289,7 @@
                                                 <th>Hubungan Keluarga</th>
                                                 <th>Alamat</th>
                                                 <th>Pekerjaan</th>
-                                                {{-- <th>Action</th> --}}
+                                                {{-- <th>Aksi</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -301,7 +301,7 @@
                                                 <td>{{ $dk->hubungan}}</td>
                                                 <td>{{ $dk->alamat}}</td>
                                                 <td>{{ $dk->pekerjaan}}</td>
-                                                {{-- <td></td> --}}
+                                                {{-- <td>Aksi</td> --}}
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -443,7 +443,7 @@
                                                 <th>No HP</th>
                                                 <th>Alamat</th>
                                                 <th>Hubungan Keluarga</th>
-                                                {{-- <th>Action</th> --}}
+                                                {{-- <th>Aksi</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
