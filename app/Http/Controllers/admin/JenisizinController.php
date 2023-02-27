@@ -48,6 +48,9 @@ class JenisizinController extends Controller
 
     public function destroy($id)
     {
-        
+        $jenisizin = Jenisizin::find($id);
+        $jenisizin->delete();
+
+        return redirect('/kategori_cuti');
     }
 }

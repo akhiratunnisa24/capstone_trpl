@@ -160,6 +160,19 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <div class="mb-3">
+                                        <label>Status Pernikahan</label>
+                                        <select type="text" class="form-control" id="status_pernikahan" name="status_pernikahan" required>
+                                            <option value="">Pilih Status Pernikahan</option>
+                                            <option value="Belum Menikah" @if($status->status_pernikahan == "Belum Menikah") selected @endif >Belum Menikah</option>
+                                            <option value="Sudah Menikah" @if($status->status_pernikahan == "Sudah Menikah") selected @endif >Sudah Menikah</option>
+                                            <option value="Duda" @if($status->status_pernikahan == "Duda") selected @endif >Duda</option>
+                                            <option value="Janda" @if($status->status_pernikahan == "Janda") selected @endif >Janda</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

@@ -1,71 +1,79 @@
 @extends('layouts.default')
-
 @section('content')
-
-<!-- Header -->
-{{-- <div class="col-10">
-	<div class="d-flex py-5">
-		<div class="w-80p h-80p rounded-circle overflow-hidden">
-			<div class="avatar d-inline">
-				<span aria-live="polite" aria-busy="true">
-					<span class="react-loading-skeleton avatar-img rounded-circle user" style="border-radius:50%">
-‌					</span>
-				</span>
-			</div>
-		</div>
-		<div class="flex-grow-1 mt-1 ms-4">
-			<div class="mb-0">
-				<span class="text-muted font-size-14">Selamat Datang,</span>
-			</div>
-			<span class="d-block mb-2">
-				<h4 class="fw-bolder mb-3">
-				</h4>
-			</span>
-		</div>
-	</div>
-</div> --}}
 <div class="row">
     <div class="col-sm-12">
-        {{-- <div class="page-header-title"> --}}
-            {{-- <div class="flex-grow-1 mt-1 ms-4 col-mb-12 d-flex">
-                <div class="col-mb-5" style="margin-left:20px">
-                    <a href="" class="dropdown-toggle profile waves-effect waves-light"><img src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="user-img" class="img-circle" style="width:80px;height:80px"> </a>
-                        <span class="text-muted font-size-14">Selamat Datang,</span>
-                        <span class="d-block mb-2"><h4 class="fw-bolder mb-3">{{$karyawan->nama}}</h4></span>
-                </div>
-                    {{-- <div class="d-block mb-2 ms-3">
-                        <h4 class="fw-bolder mb-3">{{$karyawan->nama}}</h4>
-                    </div> --}} 
-                {{-- </div>
-            </div> --}}
-            
-            {{-- <div class="flex-grow-1 mt-1 ms-4 col-mb-12">
-                <div class="col-mb-3" style="margin-left:20px">
-                    <a href="" class="dropdown-toggle profile waves-effect waves-light"><img src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="user-img" class="img-circle" style="width:100px;height:100px"> </a>
-                </div>
-                <div class='col-mb-9' style="margin-left:20px">
-                    <div class="mb-0">
-                        <span class="text-muted font-size-14">Selamat Datang,</span>
-                    </div>
-                    <span class="d-block mb-2"><h4 class="fw-bolder mb-3">{{$karyawan->nama}}</h4></span>
-                </div>
-            </div> --}}
-        {{-- </div> --}}
         <div class="page-header-title">
-            <h4 class="pull-left page-title ">Profile</h4>
-
-            <ol class="breadcrumb pull-right">
-                <li>Human Resources Management System</li>
-                <li class="active">Detail Karyawan</li>
-            </ol>
-
-            <div class="clearfix">
+            <div class="flex-grow-1 mt-1 ms-4 col-mb-12 d-flex">
+                <div class="row col-mb-12" style="margin-left:20px">
+                    <a href="" class="dropdown-toggle profile waves-effect waves-light pull-left"><img src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="user-img" class="img-circle" style="width:80px;height:80px"> </a>
+                    <div class="col-md-7 pull-left m-t-10">
+                        <span class="text-muted font-size-14">Selamat Datang,</span>
+                        <span class="text-muted d-block mb-2"><h4 class="fw-bolder mb-3">{{$karyawan->nama}}</h4></span>
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-
+<div class="row">
+    <div class="col-sm-3">
+        <div class="panel panel-primary" style="border-radius:30px">
+            <div class="panel-body">
+                <div class="row col-mb-12" style="margin-left:10px">
+                     <a href=""><i class="fa m-t-15 fa-user-secret fa-3x text-success pull-left"></i></a>
+                    <div class="col-md-7 pull-left">
+                        <a href=""><h2 class=""><b>5</b></h2></a>
+                        <a href=""><span class="text-muted font-size-14">Data Keluarga</span></a>
+                    </div>
+                    
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="panel panel-primary" style="border-radius:30px">
+            <div class="panel-body">
+                <div class="row col-mb-12" style="margin-left:15px">
+                    <a href=""><i class="fa m-t-15 fa-phone-square fa-3x text-success pull-left"></i></a>
+                    <div class="col-md-7 pull-left">
+                        <a href=""><h2 class=""><b>1</b></h2></a>
+                        <a href=""><span class="text-muted font-size-14">Kontak Darurat</span></a>
+                    </div>
+                    
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="panel panel-primary" style="border-radius:30px">
+            <div class="panel-body">
+                <div class="row col-mb-12" style="margin-left:15px">
+                    <a href=""><i class="fa m-t-15 fa-mortar-board (alias) fa-3x text-success pull-left"></i></a>
+                    <div class="col-md-7 pull-left">
+                        <a href=""><h2 class=""><b>3</b></h2></a>
+                        <a href=""><span class="text-muted font-size-14">Data Pendidikan</span></a>
+                    </div>
+                    
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="panel panel-primary" style="border-radius:30px">
+            <div class="panel-body">
+                <div class="row col-mb-12" style="margin-left:10px">
+                    <a href=""><i class="fa m-t-15 fa-briefcase fa-3x text-success pull-left"></i></a>
+                    <div class="col-md-7 pull-left">
+                        <a href=""><h2 class=""><b>2</b></h2></a>
+                        <a href=""><span class="text-muted font-size-14">Data Pekerjaan</span></a>
+                    </div>
+                    
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>  
 
 <div class="panel panel-primary">
     <div class=" col-sm-0 m-b-0">
@@ -78,54 +86,172 @@
         <div class="modal-body">
             <table class="table table-bordered table-striped" style="width:100%">
                 <tbody class="col-sm-20">
-                    <label class=""><h4> A. IDENTITAS </h4></label>
-                    <tr>
-                        <td style="width: 40%"><strong><label>Nama Lengkap</label></strong></td>
-                        <td style="width: 60%"><label>{{$karyawan->nama}}</label></td>
-                        <td rowspan="6" colspan="2" class="text-center">
-                            <img src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="" style="width:280px;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label>Nomor KTP / NIK</label></td>
-                        <td><label>{{$karyawan->nik}} </label></td>
-                    </tr>
-                    <tr>
-                        <td><label>Tanggal Lahir</label></td>
-                        <td><label>{{\Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y')}}</label></td>
-                    </tr>
-                    <tr>
-                        <td><label>Jenis Kelamin</label></td>
-                        @if($karyawan->jenis_kelamin == 'P')
-                            <td><label>Perempuan</label></td>
-                        @else
-                            <td><label>Laki-Laki</label></td>
-                        @endif
-                    </tr>
-                    <tr>
-                        <td><label>Alamat</label></td>
-                        <td><label>{{$karyawan->alamat}}</label></td>
-                    </tr>
-                    <tr>
-                        <td><label>Nomor Handphone</label></td>
-                        <td><label>{{$karyawan->no_hp}}</label></td>
-                    </tr>
-                    <tr>
-                        <td><label>Golongan Darah</label></td>
-                        <td><label>{{$karyawan->gol_darah}} </label></td><tr></tr>
-                    </tr>
-                    <tr>
-                        <td><label>Email</label></td>
-                        <td><label>{{$karyawan->email}}</label></td>
-                    </tr>
-                    <tr>
-                        <td><label>Jabatan</label></td>
-                        <td><label>{{$karyawan->jabatan}} </label></td>
-                    </tr>
-                    <tr>
-                        <td><label>Agama</label></td>
-                        <td><label>{{$karyawan->agama}}</label></td>
-                    </tr>
+                    <div class="col-md-4 row">
+                        <label class=""><h4> A. DATA DIRI</h4></label>
+                        <div class="my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">Nama lengkap *</label>
+                                            <p style="text-transform: uppercase;">{{$karyawan->nama}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">Tanggal Lahir *</label>
+                                            <p style="text-transform: uppercase;">{{\Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y')}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">Nomor Induk Kependudukan (NIK) *</label>
+                                            <p style="text-transform: uppercase;">{{$karyawan->nik}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">Jenis Kelamin *</label>
+                                            @if($karyawan->jenis_kelamin == 'P')
+                                                <p style="text-transform: uppercase;">Perempuan</p>
+                                            @else
+                                            <p style="text-transform: uppercase;">Laki-Laki</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+   
+                    </div>
+
+                    <div class="col-md-4 row">
+                        <label class=""><h4 class="text-white">#</h4></label>
+                        <div class="my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">E-Mail *</label>
+                                            <p>{{$karyawan->email}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">Agama *</label>
+                                            <p style="text-transform: uppercase;">{{$karyawan->agama}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">Golongan Darah *</label>
+                                            <p style="text-transform: uppercase;">{{$karyawan->gol_darah}} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">Alamat *</label>
+                                            <p style="text-transform: uppercase;">{{$karyawan->alamat}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col-md-4 row">
+                        <label class=""><h4 class="text-white">#</h4></label>
+                        <div class="row my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">Departemen *</label>
+                                            <p style="text-transform: uppercase;">{{$karyawan->departemens->nama_departemen}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">Jabatan *</label>
+                                            <p style="text-transform: uppercase;">{{$karyawan->jabatan}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">Nama Atasan *</label>
+                                            @if($karyawan->atasan_pertama != null)
+                                                <p style="text-transform: uppercase;">{{$karyawan->atasan_pertama}}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row my-5">
+                            <div class="col-12 pl-0">
+                                <div class="form-group mb-3">
+                                    <div class="row align-items-end">
+                                        <div class="col-md mb-md-0 m-l-15">
+                                            <label class="font-size-14 fw-bold">Nama Atasan (SPV / Manager / Management)</label>
+                                            @if($karyawan->atasan_kedua != null)
+                                                <p style="text-transform: uppercase;">{{$karyawan->atasan_kedua}}</p>
+                                            @else
+                                                <p style="text-transform: uppercase;">-</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
                 </tbody>
             </table>
 

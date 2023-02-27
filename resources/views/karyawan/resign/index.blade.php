@@ -57,7 +57,7 @@
                                                 <th>Tanggal Resign</th>
                                                 <th>Tipe Resign</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>

@@ -47,7 +47,7 @@
                                                 <th>No HP</th>
                                                 <th>Alamat</th>
                                                 <th>Hubungan Keluarga</th>
-                                                {{-- <th>Action</th> --}}
+                                                {{-- <th>Aksi</th> --}}
                                             {{-- </tr>
                                         </thead>
                                         <tbody> --}}

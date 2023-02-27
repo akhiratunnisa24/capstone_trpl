@@ -58,7 +58,7 @@
                                                                     <th>Approval</th>
                                                                 @endif
                                                                 <th>Status</th>
-                                                                <th>Action</th>        
+                                                                <th>Aksi</th>        
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -171,7 +171,7 @@
                                                                 <th>Jml</th>
                                                                 <th>Mulai s/d Selesai</th>
                                                                 <th>Status</th>
-                                                                <th>Action</th>
+                                                                <th>Aksi</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>

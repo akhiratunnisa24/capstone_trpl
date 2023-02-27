@@ -567,6 +567,11 @@ class KaryawansController extends Controller
             $pegawai->foto = $filename;
           
             $pegawai->update();
+
+            // dd($request->status_pernikahan);
+            Keluarga::where('id_pegawai','=',$id)->update([
+                'status_pernikahan' =>$request->status_pernikahan,
+            ]);
             return redirect()->back();
         }
         else
@@ -588,6 +593,11 @@ class KaryawansController extends Controller
             $pegawai->atasan_kedua = $request->atasan_kedua;
           
             $pegawai->update();
+
+            // dd($request->status_pernikahan);
+            Keluarga::where('id_pegawai','=',$id)->update([
+                'status_pernikahan' =>$request->status_pernikahan,
+            ]);
            
             return redirect()->back();
            
@@ -600,7 +610,7 @@ class KaryawansController extends Controller
     {
         // dd($request,$id);
         Keluarga::where('id',$id)->update([
-            'status_pernikahan' =>$request->status_pernikahan,
+            // 'status_pernikahan' =>$request->status_pernikahan,
             'nama' =>$request->namaPasangan,
             'hubungan' =>$request->hubungan,
             'tgllahir' =>$request->tgllahirPasangan,

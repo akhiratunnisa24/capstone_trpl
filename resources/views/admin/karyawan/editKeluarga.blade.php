@@ -13,19 +13,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <input type="hidden" id="id" name="id_keluarga" value="{{$keluarga->id}}">
-                            @if($keluarga->status_pernikahan != null)
-                                <div class="form-group">
-                              
-                                    <div class="mb-3">
-                                        <label>Status Pernikahan</label>
-                                        <select type="text" class="form-control selectpicker" id="status_pernikahan" name="status_pernikahan" required>
-                                            <option value="">Pilih Status Pernikahan</option>
-                                            <option value="Belum" @if($keluarga->status_pernikahan == "Belum") selected @endif >Belum Menikah</option>
-                                            <option value="Sudah" @if($keluarga->status_pernikahan == "Sudah") selected @endif >Sudah Menikah</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            @endif
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label>Nama Keluarga</label>
@@ -35,15 +22,11 @@
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label>Tanggal Lahir </label>
-                                    <input type="text" name="tgllahirPasangan" id="tgllahir" autocomplete="off" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose16" value="{{\Carbon\Carbon::parse($keluarga->tgllahir)->format('Y/m/d')}}">
+                                    <input type="text" name="tgllahirPasangan"
+                                    autocomplete="off" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclosee" 
+                                    value="{{\Carbon\Carbon::parse($keluarga->tgllahir)->format('Y/m/d')}}">
                                 </div>
                             </div>
-                            {{-- <div class="form-group">
-                                <div class="mb-3">
-                                    <label>Hubungan</label>
-                                    <input type="text" name="hubungan" id="hubungan" autocomplete="off" class="form-control" value="{{$keluarga->hubungan}}">
-                                </div>
-                            </div> --}}
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label for="hubungan">Hubungan</label>
@@ -78,6 +61,7 @@
                                     <input type="text" name="pekerjaanPasangan" autocomplete="off" class="form-control" value="{{$keluarga->pekerjaan}}">
                                 </div>
                             </div> 
+                            
                         </div>
                     </div>
             
@@ -90,3 +74,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/pages/form-advanced.js"></script>

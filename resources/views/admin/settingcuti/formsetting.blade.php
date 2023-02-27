@@ -86,8 +86,8 @@
                                 <select class="form-control" id="mode_employee" name="mode_karyawan[]" multiple style="width:395px">
                                     <option value="L">Laki-laki</option>
                                     <option value="P">Perempuan</option>
-                                    <option value="Sudah">Sudah Menikah</option>
-                                    <option value="Belum">Belum Menikah</option>
+                                    <option value="Sudah Menikah">Sudah Menikah</option>
+                                    <option value="Belum Menikah">Belum Menikah</option>
                                     <option value="Lama Kerja">Lama Kerja</option>
                                 </select>
                             </div>

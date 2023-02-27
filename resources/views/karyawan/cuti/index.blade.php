@@ -64,7 +64,7 @@
                                                                 <th>Tanggal Selesai</th>
                                                                 <th>Jumlah Cuti</th>
                                                                 <th>Status</th>
-                                                                <th>Action</th>
+                                                                <th>Aksi</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -146,7 +146,7 @@
                                                                 <th>Jam M-S</th>
                                                                 <th>Jml. Jam</th>
                                                                 <th>Status</th>
-                                                                <th>Action</th>
+                                                                <th>Aksi</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>

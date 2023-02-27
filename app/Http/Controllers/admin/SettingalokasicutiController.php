@@ -133,11 +133,11 @@ class SettingalokasicutiController extends Controller
                     if(in_array("P", $mode_karyawan_array)){
                         $query->orWhere('karyawan.jenis_kelamin','P');
                     }
-                    if(in_array("Belum",$mode_karyawan_array)){
-                        $query->orWhere('keluarga.status_pernikahan','Belum');
+                    if(in_array("Belum Menikah",$mode_karyawan_array)){
+                        $query->orWhere('keluarga.status_pernikahan','Belum Menikah');
                     }
-                    if(in_array("Sudah",$mode_karyawan_array)){
-                        $query->orWhere('keluarga.status_pernikahan','Sudah');
+                    if(in_array("Sudah Menikah",$mode_karyawan_array)){
+                        $query->orWhere('keluarga.status_pernikahan','Sudah Menikah');
                     }
                 })
                 ->select('karyawan.id','karyawan.jenis_kelamin','keluarga.status_pernikahan')

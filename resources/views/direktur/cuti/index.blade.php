@@ -36,7 +36,7 @@
                                                 <th>Tgl.Selesai</th>
                                                 <th>Jml. Cuti</th>
                                                 <th>Status</th>
-                                                <th>Action</th>        
+                                                <th>Aksi</th>        
                                             </tr>
                                         </thead>
                                         <tbody>
