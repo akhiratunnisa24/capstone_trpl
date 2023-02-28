@@ -54,6 +54,16 @@ class Karyawan extends Model
         );
     }
 
+    public function atasan_pertamaa()
+    {
+        return $this->belongsTo(Karyawan::class, 'atasan_pertama','id');
+    }
+
+    public function atasan_keduab()
+    {
+        return $this->belongsTo(Karyawan::class, 'atasan_kedua','id');
+    }
+
     //hrms_git
     public function userss()
     {
@@ -70,15 +80,6 @@ class Karyawan extends Model
             'nama_departemen',
         );
     }
-
-    // public function departemen()
-    // {
-    //     return $this->hasMany(
-    //         Departemen::class, 
-    //         'id',
-    //         'nama_departemen',
-    //     );
-    // }
     
     public function keluarga()
     {
@@ -104,11 +105,6 @@ class Karyawan extends Model
     {
         return $this->belongsTo(User::class, 'id', 'id_pegawai');
     }
-
-    // public function absensi()
-    // {
-    //     return $this->hasMany(Absensi::class,'id_karyawan','id');
-    // }
     
     public function cuti()
     {
@@ -126,9 +122,5 @@ class Karyawan extends Model
     {
         return $this->belongsTo(Departemen::class, 'divisi', 'id');
     }
-    // public function tidakmasuk2()
-    // {
-    //     return $this->hasMany(Absensi::class, 'id');
-    // }
-    
+
 }

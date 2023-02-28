@@ -39,30 +39,30 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-20 col-sm-20 col-xs-20">
-                                    {{-- <table id="datatable-responsive7" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                                    <table id="datatable-responsive7" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
+                                                <th>No</th>
                                                 <th>Nama</th>
                                                 <th>No HP</th>
                                                 <th>Alamat</th>
                                                 <th>Hubungan Keluarga</th>
-                                                {{-- <th>Aksi</th> --}}
-                                            {{-- </tr>
+                                            </tr>
                                         </thead>
-                                        <tbody> --}}
-                                            {{-- @foreach($kontakdarurat as $kd)
+                                        <tbody>
+                                            @forelse($kontakdarurat as $kd)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
-                                                    <td>{{ $kd->nama}}</td>
-                                                    <td>{{ $kd->no_hp}}</td>
-                                                    <td>{{ $kd->alamat}}</td>
-                                                    <td>{{ $kd->hubungan}}</td>
-                                                    {{-- <td></td> --}}
-                                                {{-- </tr>
-                                            @endforeach 
+                                                    <td>{{ $kd['nama']}}</td>
+                                                    <td>{{ $kd['no_hp']}}</td>
+                                                    <td>{{ $kd['alamat']}}</td>
+                                                    <td>{{ $kd['hubungan']}}</td>
+                                                </tr>
+                                            @empty
+                                                <td>no data available on table</td> 
+                                            @endforelse
                                         </tbody>
-                                    </table><br> --}}
+                                    </table><br>
                                     <form action="/storekontakdarurat" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('post')
@@ -117,9 +117,8 @@
                                                                         <a href="/create-data-keluarga" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
                                                                     </div>
                                                                     <div class="pull-right">
-                                                                        {{-- <button type="submit" name="submit" class="btn btn-sm btn-success">Simpan</button> --}}
-                                                                        {{-- /create-data-pendidikan --}}
-                                                                        <button type="submit" name="submit" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></button>
+                                                                        <button type="submit" name="submit" class="btn btn-sm btn-dark">Simpan</button>
+                                                                        <a href="{{route('create.pendidikan')}}" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
