@@ -228,6 +228,10 @@ class HomeController extends Controller
             ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
             ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama', 'settingalokasi.mode_alokasi', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
             ->distinct()
+            ->where(function ($query) {
+                $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+            })
             ->where('status','=','1')
             ->orderBy('created_at', 'DESC')
             ->get();

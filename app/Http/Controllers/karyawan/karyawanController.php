@@ -57,14 +57,20 @@ class karyawanController extends Controller
             $karyawan = karyawan::all()->sortByDesc('created_at');
 
 
+
+            $query = $request->input('query');
+            $results = Karyawan::where('nama', 'LIKE', '%' . $query . '%')->get();
+
+
             //ambil id_karyawan yang belum punya akun
             $user = DB::table('users')->pluck('id_pegawai');
             $akun = DB::table('karyawan')->whereNotIn("id", $user)->get();
 
             $output = [
-                'row' => $row
+                'row' => $row,
+                'query' => $query,
             ];
-            return view('admin.karyawan.index', compact('karyawan', 'row', 'akun'));
+            return view('admin.karyawan.index', compact('karyawan', 'row', 'akun', 'query', 'results'));
         } else {
 
             return redirect()->back();

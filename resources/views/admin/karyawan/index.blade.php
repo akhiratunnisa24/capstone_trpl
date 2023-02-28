@@ -38,12 +38,97 @@
                             <a href="/exportexcelkaryawan" class="btn btn-sm btn-dark fa fa-cloud-upload "> Export Excel
                             </a>
 
-                            <a href="karyawancreates" type="button" class="btn btn-sm btn-dark fa fa-user-plus pull-right"> Tambah
+                            <a href="karyawancreates" type="button" class="btn btn-sm btn-dark fa fa-user-plus pull-right">
+                                Tambah
                                 Data Karyawan</a>
                         </div>
                         @include('admin.karyawan.addAkunModal')
                         <div class="panel-body">
-                            <table id="datatable-responsive6"
+
+                            <form action="{{ route('search') }}" method="GET">
+                                <div class="col-sm-3 col-xs-12">
+                                    <div class="m-t-20">
+                                        <label>Nama Karyawan</label>
+                                        <input type="text" name="query" class="form-control"
+                                            placeholder="Cari karyawan...">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-12">
+                                    <div style="margin-top:26px">
+                                        <label></label>
+                                        <div>
+                                            <button type="submit" id="search"
+                                                class="btn btn-md btn-success fa fa-filter"> Cari</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            {{-- <div class="container"> --}}
+                                @if ($query)
+                                    <h4 class="text-center  ">Hasil Pencarian untuk "{{ $query }}"</h4>
+                                    @if ($results->isEmpty())
+                                        <p>Tidak ada hasil yang ditemukan.</p>
+                                    @else
+                                        <div class="panel-body" style="padding:1%">
+                                            <div class="row" style="margin-top:40px ">
+                                                <div class="col-md-12">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr class="info">
+                                                                <th>No</th>
+                                                                <th>Nama</th>
+                                                                <th>Departemen</th>
+                                                                <th>Tanggal Lahir</th>
+                                                                <th>L / P</th>
+                                                                <th>Alamat</th>
+                                                                <th>Email</th>
+                                                                <th>Agama</th>
+                                                                <th>Aksi</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($results as $k)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $k->nama }}</td>
+                                                                    <td>{{ $k->departemen->nama_departemen }}</td>
+                                                                    <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}
+                                                                    </td>
+                                                                    <td>{{ $k->jenis_kelamin }}</td>
+                                                                    <td>{{ $k->alamat }}</td>
+                                                                    <td>{{ $k->email }}</td>
+                                                                    <td>{{ $k->agama }}</td>
+                                                                    <td>
+                                                                        <div class="d-grid gap-2 " role="group"
+                                                                            aria-label="Basic example">
+                                                                            <a href="karyawanshow{{ $k->id }}"
+                                                                                class="btn btn-info btn-sm"><i
+                                                                                    class="fa fa-eye"></i></a>
+                                                                            <button
+                                                                                onclick="hapus_karyawan({{ $k->id }})"
+                                                                                class="btn btn-danger btn-sm">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                        <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
+                                                                    </td>
+
+                                                                </tr>
+                                                            @endforeach
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @else
+                                @endif
+                            {{-- </div> --}}
+
+
+                            {{-- <table id="datatable-responsive6"
                                 class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
                                 width="100%">
 
@@ -54,7 +139,7 @@
                                         <th>Departemen</th>
                                         <th>Tanggal Lahir</th>
                                         <th>L / P</th>
-                                        {{-- <th>Alamat</th> --}}
+                                        <th>Alamat</th>
                                         <th>Email</th>
                                         <th>Agama</th>
                                         <th>Aksi</th>
@@ -70,13 +155,13 @@
                                             <td>{{ $k->departemen->nama_departemen }}</td>
                                             <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
                                             <td>{{ $k->jenis_kelamin }}</td>
-                                            {{-- <td>{{ $k->alamat }}</td> --}}
+                                            <td>{{ $k->alamat }}</td>
                                             <td>{{ $k->email }}</td>
                                             <td>{{ $k->agama }}</td>
                                             <td>
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                    <a href="karyawanshow{{ $k->id }}" class="btn btn-info btn-sm"><i
-                                                            class="fa fa-eye"></i></a>
+                                                    <a href="karyawanshow{{ $k->id }}"
+                                                        class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
                                                     <button onclick="hapus_karyawan({{ $k->id }})"
                                                         class="btn btn-danger btn-sm">
                                                         <i class="fa fa-trash"></i>
@@ -88,7 +173,7 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-                            </table>
+                            </table> --}}
                         </div>
                     </div>
                 </div>
@@ -121,9 +206,18 @@
             </div>
         </div>
     </div>
-    
 
 
+    <script>
+        // Ambil elemen input
+        const searchInput = document.querySelector('input[name="query"]');
+
+        // Tambahkan event listener onchange
+        searchInput.addEventListener('change', () => {
+            // Submit form
+            searchInput.closest('form').submit();
+        });
+    </script>
 
     <script>
         function hapus_karyawan(id) {
