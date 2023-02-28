@@ -319,6 +319,7 @@ Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direkt
 
     //form data keluarga
     Route::get('/create-data-keluarga', [KaryawansController::class, 'createdakel'])->name('create.dakel');
+    Route::get('/get-data-keluarga', [KaryawansController::class, 'getDataKeluarga'])->name('get.data.keluarga');
     Route::post('/storedatakeluarga', [karyawansController::class, 'storedk'])->name('storedk');
 
     //form data kontak darurat

@@ -39,7 +39,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20 col-sm-20 col-xs-20">
-                                {{-- <table id="datatable-responsive8" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                                <table id="datatable-responsive8" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                 <span class="badge badge-info"><strong>A. PENDIDIKAN FORMAL</strong></span>
                                     <thead>
                                         <tr>
@@ -52,20 +52,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach($pformal as $p)
+                                        @forelse($pendidikan as $p)
                                             <tr>
                                                 <td>{{$loop->iteration}}</td>
-                                                <td>{{$p->tingkat }}</td>
-                                                <td>{{$p->nama_sekolah }}</td>
-                                                <td>{{$p->kota_pformal }}</td>
-                                                <td>{{$p->jurusan }}</td>
-                                                <td>{{$p->tahun_lulus_formal }}</td>
+                                                <td>{{$p['tingkat'] }}</td>
+                                                <td>{{$p['nama_sekolah'] }}</td>
+                                                <td>{{$p['kota_pformal'] }}</td>
+                                                <td>{{$p['jurusan'] }}</td>
+                                                <td>{{$p['tahun_lulus_formal'] }}</td>
                                             </tr>
-                                        @endforeach --}}
-                                    {{-- </tbody>
-                                </table><br> --}}
+                                        @empty
+                                            <td>no data available</td>
+                                        @endforelse
+                                    </tbody>
+                                </table><br>
 
-                                {{-- <span class="badge badge-info"><strong>B. PENDIDIKAN NON FORMAL</strong></span>
+                                <span class="badge badge-info"><strong>B. PENDIDIKAN NON FORMAL</strong></span>
                                 <table id="datatable-responsive9" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
@@ -76,16 +78,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach($nonformal as $nf)
-                                            <tr>
-                                                <td>{{$loop->iteration}}</td>
-                                                <td>{{ $nf->jenis_pendidikan }}</td>
-                                                <td>{{ $nf->kota_pnonformal }}</td>
-                                                <td>{{ $nf->tahun_lulus_nonformal }}</td>
-                                            </tr>
-                                        @endforeach --}}
-                                    {{-- </tbody>
-                                </table><br> --}} 
+                                        @foreach($pendidikan as $nf)
+                                            @if($nf['jenis_pendidikan'] != null)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{ $nf['jenis_pendidikan'] }}</td>
+                                                    <td>{{ $nf['kota_pnonformal'] }}</td>
+                                                    <td>{{ $nf['tahun_lulus_nonformal'] }}</td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table><br> 
                                 <form action="/storepformal" method="POST" enctype="multipart/form-data">
                                     <div class="control-group after-add-more">
                                         @csrf
@@ -198,7 +202,8 @@
                                                             <a href="/create-kontak-darurat" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
                                                         </div>
                                                         <div class="pull-right">
-                                                            <button type="submit" name="submit" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></button>
+                                                            <button type="submit" name="submit" class="btn btn-sm btn-dark">Simpan</button>
+                                                            <a href="{{route('create.pekerjaan')}}" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>

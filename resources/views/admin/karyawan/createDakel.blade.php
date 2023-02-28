@@ -39,7 +39,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20 col-sm-20 col-xs-20">
-                                    <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                                    {{-- <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -54,27 +54,57 @@
                                          $no = 1;
                                         @endphp
                                             
-                                        @endphp
                                         <tbody>  
                                            
-                                                {{-- @forelse($datakeluarga as $datakeluarga) --}}
+                                                @forelse($datakeluarga as $keluarga)
                                                     <tr>
-                                                        <td>{{$no++}}</td>
-                                                        <td>{{ $datakeluarga->nama}}</td>
-                                                        <td>{{ $datakeluarga->tgllahir}}</td>
-                                                        <td>{{ $datakeluarga->hubungan}}</td>
-                                                        <td>{{ $datakeluarga->alamat}}</td>
-                                                        <td>{{ $datakeluarga->pekerjaan}}</td>
+                                                        <td>{{ $no++ }}</td>
+                                                        <td>{{ $keluarga['nama'] }}</td>
+                                                        <td>{{ $keluarga["tgllahir"] }}</td>
+                                                        <td>{{ $keluarga["hubungan"] }}</td>
+                                                        <td>{{ $keluarga["alamat"] }}</td>
+                                                        <td>{{ $keluarga["pekerjaan"] }}</td>
                                                     </tr>
-                                                {{-- @empty 
+                                                @empty 
                                                     <tr>
                                                         <td>No data available</td>
                                                     </tr> 
-                                                @endforelse --}}
+                                                @endforelse
                                         
                                         
                                         </tbody>
-                                    </table><br> 
+                                    </table><br>  --}}
+                                @php
+                                    $no = 1;
+                                @endphp
+                                <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama</th>
+                                            <th>Tanggal Lahir</th>
+                                            <th>Hubungan</th>
+                                            <th>Alamat</th>
+                                            <th>Pekerjaan</th>
+                                        </tr>
+                                    </thead>
+                                   
+                                    <tbody>
+                                        @forelse($datakeluarga as $data)
+                                            <tr>
+                                                <td>{{$no++}}</td>
+                                                <td>{{$data['nama']}}</td>
+                                                <td>{{$data['tgllahir']}}</td>
+                                                <td>{{$data['hubungan']}}</td>
+                                                <td>{{$data['alamat']}}</td>
+                                                <td>{{$data['pekerjaan']}}</td>
+                                            </tr>
+                                        @empty
+                                            <td>no data available on table</td>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                                      
                                 <form action="/storedatakeluarga" method="POST" enctype="multipart/form-data">
                                     <div class="control-group after-add-more">
                                         @csrf
@@ -200,5 +230,50 @@
      <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
      <script src="assets/pages/form-advanced.js"></script>
 
+    {{-- <script>
+        $(document).ready(function(){
+          $.ajax({
+            url: "{{ route('get.data.keluarga') }}",
+            type: "GET",
+            dataType: "JSON",
+            success:function(response){
+              // Tampilkan data keluarga di halaman web menggunakan jQuery
+              $.each(response, function(item){
+                // var row = "<tr>"
+                //   "<td>" + (i+1) + "</td>" +
+                //   "<td>" + item.nama + "</td>" +
+                //   "<td>" + item.tgllahir + "</td>" +
+                //   "<td>" + item.hubungan + "</td>" +
+                //   "<td>" + item.alamat + "</td>" +
+                //   "<td>" + item.pekerjaan + "</td>" +
+                //   "</tr>";
+                // $('#tabel-data-keluarga').append(row);
+                $('#a').val(item.nama);
+                $('#b').val(item.tgllahir);
+                $('#c').val(item.hubungan);
+                $('#d').val(item.alamat);
+                $('#e').val(item.pekerjaan);
+              });
+            }
+          });
+        });
+    </script> --}}
+    <script>
+        $.ajax({
+            url: '/getDataKeluarga',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // loop through the data and add it to the table
+                $.each(data, function (key, value) {
+                    var row = '<tr><td>' + (key+1) + '</td><td>' + value.nama + '</td><td>' + value.tgllahir + '</td><td>' + value.hubungan + '</td><td>' + value.alamat + '</td><td>' + value.pekerjaan + '</td></tr>';
+                    $('#datatable-responsive6 tbody').append(row);
+                });
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
 
+    </script>
 @endsection

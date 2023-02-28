@@ -566,26 +566,26 @@ class karyawanController extends Controller
         $maxId + 1;
         $request->validate(['foto' => 'image|mimes:jpeg,png,jpg|max:2048']);
 
-$fotoLama = $karyawan->foto;
+        $fotoLama = $karyawan->foto;
 
-if ($file = $request->file('foto')) {
+        if ($file = $request->file('foto')) 
+        {
+            // hapus foto lama dari storage
+            if($fotoLama !== null){
+                $oldImage = public_path('Foto_Profile/'.$fotoLama);
+                if(file_exists($oldImage)){
+                    unlink($oldImage);
+                }
+            }
 
-    // hapus foto lama dari storage
-    if($fotoLama !== null){
-        $oldImage = public_path('Foto_Profile/'.$fotoLama);
-        if(file_exists($oldImage)){
-            unlink($oldImage);
-        }
-    }
+            $extension = $file->getClientOriginalExtension();
+            $filename = '' . time() . $file->getClientOriginalName();
+            $file->move(public_path() . '\Foto_Profile', $filename);
+            $karyawan->foto = $filename;
 
-    $extension = $file->getClientOriginalExtension();
-    $filename = '' . time() . $file->getClientOriginalName();
-    $file->move(public_path() . '\Foto_Profile', $filename);
-    $karyawan->foto = $filename;
+            $karyawan->save();
 
-    $karyawan->save();
-
-    return redirect()->back();
+            return redirect()->back();
 
 
             $data = array(
@@ -787,6 +787,7 @@ if ($file = $request->file('foto')) {
         if ($role == 1) {
 
             $karyawan = karyawan::findOrFail($id);
+            // Memuat nama atasan pertama dan atasan kedua
             $status = Keluarga::where('id_pegawai', $id)->first();
             $keluarga = Keluarga::where('id_pegawai', $id)->get();
             $kdarurat = Kdarurat::where('id_pegawai', $id)->get();
@@ -824,19 +825,33 @@ if ($file = $request->file('foto')) {
     public function showkaryawan($id)
     {
         $karyawan = karyawan::findOrFail($id);
-        $keluarga = Keluarga::where('id_pegawai', $id)->first();
-
-        $kdarurat = Kdarurat::where('id_pegawai', $id)->first();
-        $rpendidikan = Rpendidikan::where('id_pegawai', $id)->first();
-        $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->first();
+        $atasan_pertama_nama = $karyawan->atasan_pertamaa->nama;
+        $atasan_kedua_nama = $karyawan->atasan_kedua;
+        if(!$atasan_kedua_nama){
+            $atasan_kedua_nama = "-";
+        }else
+        {
+            $atasan_kedua_nama = $karyawan->atasan_keduab->nama;
+        }
+       
+        $keluarga = Keluarga::where('id_pegawai', $id)->get();
+        $kdarurat = Kdarurat::where('id_pegawai', $id)->get();
+        $rpendidikan = Rpendidikan::where('id_pegawai', $id)->get();
+        $pendidikan = Rpendidikan::where('id_pegawai', $id)->get();
+        $rpekerjaan = Rpekerjaan::where('id_pegawai', $id)->get();
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+        $jumkaryawan = $keluarga->count();
 
         return view('karyawan.showKaryawan')->with([
             'karyawan' => $karyawan,
             'keluarga' => $keluarga,
             'kdarurat' => $kdarurat,
             'rpendidikan' => $rpendidikan,
+            'pendidikan' => $pendidikan,
             'rpekerjaan' => $rpekerjaan,
+            'atasan_pertama_nama'=> $atasan_pertama_nama,
+            'atasan_kedua_nama'=>$atasan_kedua_nama,
             'row' => $row
         ]);
     }
