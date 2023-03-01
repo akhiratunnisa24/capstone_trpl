@@ -52,7 +52,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($pendidikan as $p)
+                                        @foreach($pendidikan as $p)
                                             <tr>
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$p['tingkat'] }}</td>
@@ -61,9 +61,7 @@
                                                 <td>{{$p['jurusan'] }}</td>
                                                 <td>{{$p['tahun_lulus_formal'] }}</td>
                                             </tr>
-                                        @empty
-                                            <td>no data available</td>
-                                        @endforelse
+                                        @endforeach
                                     </tbody>
                                 </table><br>
 
@@ -91,7 +89,7 @@
                                     </tbody>
                                 </table><br> 
                                 <form action="/storepformal" method="POST" enctype="multipart/form-data">
-                                    <div class="control-group after-add-more">
+                                    {{-- <div class="control-group after-add-more"> --}}
                                         @csrf
                                         @method('post')
                                         <div class="modal-body">
@@ -112,10 +110,10 @@
                                                                 <label for="exampleInputEmail1" class="form-label">Tingkat</label>
                                                                 <select class="form-control selectpicker" name="tingkat_pendidikan">
                                                                     <option value="">Pilih Tingkat Pendidikan</option>
-                                                                    <option value="SD" {{ $pendidikan->tingkat ?? '' == 'SD' ? 'selected' : '' }}>SD</option>
-                                                                    <option value="SMP" {{ $pendidikan->tingkat ?? '' == 'SMP' ? 'selected' : '' }}>SMP</option>
-                                                                    <option value="SMA/K" {{ $pendidikan->tingkat ?? '' == 'SMA/K' ? 'selected' : '' }}>SMA/K</option>
-                                                                    <option value="Universitas" {{ $pendidikan->tingkat ?? '' == 'Universitas' ? 'selected' : '' }}>Universitas</option>
+                                                                    <option value="SD">SD</option>
+                                                                    <option value="SMP">SMP</option>
+                                                                    <option value="SMA/K">SMA/K</option>
+                                                                    <option value="Perguruan Tinggi">Perguruan Tinggi</option>
 
                                                                 </select>
                                                             </div>
@@ -123,38 +121,30 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Nama Sekolah</label>
-                                                                    <input type="text" value="{{ $pendidikan->nama_sekolah ?? '' }}" name="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
-                                                                    <div id="emailHelp" class="form-text">
-                                                                    </div>
+                                                                    <input type="text" name="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label"> Kota</label>
-                                                                    <input type="text" name="kotaPendidikanFormal"  class="form-control"
-                                                                        id="exampleInputEmail1" value="{{ $pendidikan->kota_pformal ?? '' }}" aria-describedby="emailHelp" placeholder="Masukkan Kota">
-                                                                    <div id="emailHelp" class="form-text">
-                                                                    </div>
+                                                                    <label class="form-label"> Kota</label>
+                                                                    <input type="text" name="kotaPendidikanFormal"  class="form-control" id="exampleInputEmail1" placeholder="Masukkan Kota">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label"> Jurusan</label>
-                                                                    <input type="text" name="jurusan" value="{{ $pendidikan->jurusan ?? '' }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                                        placeholder="Masukkan Jurusan" autocomplete="off">
-                                                                    <div id="emailHelp" class="form-text">
-                                                                    </div>
+                                                                    <label class="form-label"> Jurusan</label>
+                                                                    <input type="text" name="jurusan" class="form-control" id="exampleInputEmail1" placeholder="Masukkan Jurusan" autocomplete="off">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Tahun Lulus</label>
+                                                                    <label class="form-label">Tahun Lulus</label>
                                                                     <div class="input-group">
                                                                         <input id="datepicker-autoclose20" type="text"  class="form-control" placeholder="yyyy" id="4"
-                                                                                name="tahun_lulusFormal" value="{{ $pendidikan->tahun_lulus_formal ?? '' }}" rows="10" autocomplete="off"></input><br>
+                                                                                name="tahun_lulusFormal" rows="10" autocomplete="off"></input><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                     </div>
                                                                 </div>
@@ -168,28 +158,24 @@
                                                             {{-- </div> --}}
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Bidang / Jenis</label>
-                                                                    <input type="text" value="{{ $pendidikan->jenis_pendidikan ?? '' }}" name="jenis_pendidikan" class="form-control" placeholder="Masukkan Nama" autocomplete="off"> 
-                                                                    <div id="emailHelp" class="form-text">
-                                                                    </div>
+                                                                    <label class="form-label">Bidang / Jenis</label>
+                                                                    <input type="text" name="jenis_pendidikan" class="form-control" placeholder="Masukkan Nama" autocomplete="off"> 
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label"> Kota</label>
-                                                                    <input type="text" value="{{ $pendidikan->kota_pnonformal ?? '' }}" name="kotaPendidikanNonFormal"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"   placeholder="Masukkan Kota" autocomplete="off">
-                                                                    <div id="emailHelp" class="form-text">
-                                                                    </div>
+                                                                    <label class="form-label"> Kota</label>
+                                                                    <input type="text" name="kotaPendidikanNonFormal"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"   placeholder="Masukkan Kota" autocomplete="off">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Lulus Tahun</label>
+                                                                    <label class="form-label">Lulus Tahun</label>
                                                                     <div class="input-group">
                                                                         <input id="datepicker-autoclose21" type="text" class="form-control" placeholder="yyyy" id="4"
-                                                                                name="tahunLulusNonFormal" value="{{ $pendidikan->tahun_lulus_nonformal ?? '' }}" autocomplete="off" rows="10" ><br>
+                                                                                name="tahunLulusNonFormal" autocomplete="off" rows="10" ><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                     </div>
                                                                 </div>
@@ -209,7 +195,7 @@
                                                 </div>
                                             </table>
                                         </div>
-                                    </div>
+                                    {{-- </div> --}}
                                 </form>                
                             </div>
                         </div>
