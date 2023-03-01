@@ -12,6 +12,10 @@
             input[type=number] {
                 -moz-appearance: textfield;
             }
+            .form-group{
+                margin-left:10px;
+                margin-right:10px
+            }
         </style>
     </head>
     <!-- Header -->

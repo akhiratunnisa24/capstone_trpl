@@ -12,6 +12,15 @@
             input[type=number] {
                 -moz-appearance: textfield;
             }
+
+            .form-group{
+                margin-left:10px;
+                margin-right:10px;
+            }
+
+            .badge a{
+                margin-left:10px;
+            }
         </style>
     </head>
     <!-- Header -->
@@ -38,7 +47,7 @@
                 <div class="content">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-20 col-sm-20 col-xs-20">
+                            <div class="col-md-20 col-sm-20 col-xs-20" style="margin-left:15px;margin-right:15px;">
                                 <table id="datatable-responsive8" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                 <span class="badge badge-info"><strong>A. PENDIDIKAN FORMAL</strong></span>
                                     <thead>
@@ -104,7 +113,7 @@
                                                         </div>
                                                         <div class="col-md-6">
                                                             {{-- <div class="modal-header panel-heading  col-sm-15 m-b-5 m-t-10"> --}}
-                                                                <span class="badge badge-info col-sm-15 m-b-5 m-t-10"><label class="text-white"> 1. Pendidikan Formal</label></span>
+                                                                <span class="form-group badge badge-info col-sm-15 m-b-5 m-t-10"><label class="text-white"> 1. Pendidikan Formal</label></span>
                                                             {{-- </div> --}}
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1" class="form-label">Tingkat</label>
@@ -154,7 +163,7 @@
                                                         {{-- KANAN --}}
                                                         <div class="col-md-6">
                                                             {{-- <div class="modal-header  panel-heading  col-sm-15 m-b-5 m-t-10"> --}}
-                                                                <span class="badge badge-info col-sm-15 m-b-5 m-t-10"><label class="text-white"> 2. Pendidikan Non Formal</label></span>
+                                                                <span class="form-group badge badge-info col-sm-15 m-b-5 m-t-10"><label class="text-white"> 2. Pendidikan Non Formal</label></span>
                                                             {{-- </div> --}}
                                                             <div class="form-group">
                                                                 <div class="mb-3">

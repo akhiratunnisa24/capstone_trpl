@@ -12,6 +12,11 @@
             input[type=number] {
                 -moz-appearance: textfield;
             }
+            
+            .form-group{
+                margin-left:10px;
+                margin-right:10px
+            }
         </style>
     </head>
     <!-- Header -->
@@ -38,45 +43,7 @@
                 <div class="content">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-20 col-sm-20 col-xs-20">
-                                    {{-- <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Nama</th>
-                                                <th>Tanggal Lahir</th>
-                                                <th>Hubungan Keluarga</th>
-                                                <th>Alamat</th>
-                                                <th>Pekerjaan</th>
-                                            </tr>
-                                        </thead>
-                                        @php
-                                         $no = 1;
-                                        @endphp
-                                            
-                                        <tbody>  
-                                           
-                                                @forelse($datakeluarga as $keluarga)
-                                                    <tr>
-                                                        <td>{{ $no++ }}</td>
-                                                        <td>{{ $keluarga['nama'] }}</td>
-                                                        <td>{{ $keluarga["tgllahir"] }}</td>
-                                                        <td>{{ $keluarga["hubungan"] }}</td>
-                                                        <td>{{ $keluarga["alamat"] }}</td>
-                                                        <td>{{ $keluarga["pekerjaan"] }}</td>
-                                                    </tr>
-                                                @empty 
-                                                    <tr>
-                                                        <td>No data available</td>
-                                                    </tr> 
-                                                @endforelse
-                                        
-                                        
-                                        </tbody>
-                                    </table><br>  --}}
-                                @php
-                                    $no = 1;
-                                @endphp
+                            <div class="col-md-20 col-sm-20 col-xs-20" style="margin-left:15px;margin-right:15px;">
                                 <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
@@ -86,27 +53,36 @@
                                             <th>Hubungan</th>
                                             <th>Alamat</th>
                                             <th>Pekerjaan</th>
+                                            <th>Pendidikan Terakhir</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                    
                                     <tbody>
-                                        @forelse($datakeluarga as $data)
+                                        @foreach($datakeluarga as $data)
                                             <tr>
-                                                <td>{{$no++}}</td>
+                                                <td>{{$loop->iteration}}</td>
                                                 <td>{{$data['nama']}}</td>
                                                 <td>{{$data['tgllahir']}}</td>
                                                 <td>{{$data['hubungan']}}</td>
                                                 <td>{{$data['alamat']}}</td>
                                                 <td>{{$data['pekerjaan']}}</td>
+                                                <td>{{$data['pendidikan_terakhir']}}</td>
+                                                <td>
+                                                    <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                        <a class="btn btn-sm btn-primary" id="editKeluarga" style="margin-right:10px">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        <button onclick="" id="hapus_dakel" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                                    </div>
+                                                </td>
                                             </tr>
-                                        @empty
-                                            <td>no data available on table</td>
-                                        @endforelse
+                                        @endforeach
                                     </tbody>
                                 </table>
                                       
                                 <form action="/storedatakeluarga" method="POST" enctype="multipart/form-data">
-                                    <div class="control-group after-add-more">
+                                    {{-- <div class="control-group after-add-more"> --}}
                                         @csrf
                                         @method('post')
                                         <div class="modal-body">
@@ -116,16 +92,14 @@
                                                         <!-- FORM -->
                                                         <div class="col-md-2"></div>
                                                         <!-- SEBELAH KANAN -->
-                                                        <div class="col-md-8">
-                                                            <div class="modal-header bg-info panel-heading  col-sm-15 m-b-10 ">
+                                                        <div class="col-md-8 m-t-10">
+                                                            <div class="bg-info panel-heading  col-sm-15 m-b-10">
                                                                 <label class="text-white">Status Pernikahan *)</label>
                                                             </div>
-                                                            <div class="form-group">
+                                                            <div class="form-group m-l-5 m-r-5" style="margin-left:10px;margin-right:10px;">
                                                                 <label for="exampleInputEmail1" class="form-label">Status Pernikahan</label>
                                                                 <select class="form-control selectpicker" name="status_pernikahan">
                                                                     <option value="">Pilih Status Pernikahan</option>
-                                                                    {{-- <option value="Sudah" {{ $datakeluarga->status_pernikahan == 'Sudah' ? 'selected' : '' }}>Sudah Menikah</option>
-                                                                    <option value="Belum" {{ $datakeluarga->status_pernikahan == 'Belum' ? 'selected' : '' }}>Belum Menikah</option> --}}
                                                                     <option value="Sudah Menikah">Sudah Menikah</option>
                                                                     <option value="Belum Menikah">Belum Menikah</option>
                                                                     <option value="Duda">Duda</option>
@@ -135,15 +109,17 @@
                                                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-10 m-t-10">
                                                                 <label class="text-white">B. DATA KELUARGA *) </label>
                                                             </div>
-                                                            <div class="form-group">
+                                                            {{-- nomor array --}}
+                                                            <input type="hidden" name="nomorArray" id="nomorArray" value="">
+                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-                                                                    <input type="text" name="namaPasangan" class="form-control" autocomplete="off" placeholder="Masukkan Nama" required>
+                                                                    <input type="text" id="nama" name="namaPasangan" class="form-control" autocomplete="off" placeholder="Masukkan Nama" required>
                                                             
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group">
+                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
                                                                     <div class="input-group">
@@ -153,10 +129,10 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
+                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Hubungan</label>
-                                                                    <select class="form-control selectpicker" name="hubungankeluarga" required>
+                                                                    <select class="form-control selectpicker" id="hubungan" name="hubungankeluarga" required>
                                                                         <option value="">Pilih Hubungan</option>
                                                                         <option value="Ayah">Ayah</option>
                                                                         <option value="Ibu">Ibu</option>
@@ -176,13 +152,13 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                                    <input class="form-control" name="alamatPasangan" autocomplete="off" rows="9" placeholder="Masukkan Alamat"required></input>
+                                                                    <input class="form-control" id="alamat" name="alamatPasangan" autocomplete="off" rows="9" placeholder="Masukkan Alamat"required></input>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1" class="form-label">Pendidikan Terakhir</label>
-                                                                <select class="form-control selectpicker" name="pendidikan_terakhirPasangan"required>
+                                                                <select class="form-control selectpicker" id="pendidikan_terakhir" name="pendidikan_terakhirPasangan"required>
                                                                     <option value="">Pilih Pendidikan Terakhir</option>
                                                                     <option value="SD">SD</option>
                                                                     <option value="SMP">SMP</option>
@@ -197,7 +173,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Pekerjaan</label>
-                                                                    <input type="text" name="pekerjaanPasangan" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Pekerjaan" required>
+                                                                    <input type="text" name="pekerjaanPasangan" class="form-control" id="pekerjaan" aria-describedby="emailHelp" placeholder="Masukkan Pekerjaan" required>
                                                                     <div id="emailHelp" class="form-text"></div>
                                                                 </div>
                                                             </div>
@@ -216,7 +192,7 @@
                                                 </div>
                                             </table>
                                         </div>
-                                    </div>
+                                    {{-- </div> --}}
                                 </form>                
                             </div>
                         </div>
@@ -273,6 +249,72 @@
             error: function (data) {
                 console.log('Error:', data);
             }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $(document).ready(function() {
+                $('#editKeluarga').on('click', function() {
+                    // Ambil nomor array data yang akan dihapus
+                    var nomorArray = $(this).closest('tr').find('td:eq(0)').text();
+
+                      // Isi nomor array ke input hidden pada form
+                    $('#nomor_array').val(nomorArray);
+
+                    // Ambil data dari kolom yang sesuai dengan nomor array
+                    var nama = $(this).closest('tr').find('td:eq(1)').text();
+                    var tgllahir = $(this).closest('tr').find('td:eq(2)').text();
+                    var hubungan = $(this).closest('tr').find('td:eq(3)').text();
+                    var alamat = $(this).closest('tr').find('td:eq(4)').text();
+                    var pekerjaan = $(this).closest('tr').find('td:eq(5)').text();
+                    var pendidikan_terakhir = $(this).closest('tr').find('td:eq(6)').text();
+                    
+                    // Isi data ke dalam form
+                    $('#nama').val(nama);
+                    $('#datepicker-autoclose8').val(tgllahir);
+                    $('#hubungan').val(hubungan);
+                    $('#alamat').val(alamat);
+                    $('#pekerjaan').val(pekerjaan);
+                    $('#pendidikan_terakhir').val(pendidikan_terakhir);
+
+                    // Set opsi yang dipilih pada dropdown select option
+                    var select = document.getElementById("hubungan");
+                    for (var i = 0; i < select.options.length; i++) {
+                        if (select.options[i].value == hubungan) {
+                            select.options[i].selected = true;
+                            break;
+                        }
+                    }
+
+                    // Set opsi yang dipilih pada dropdown select option
+                    var select = document.getElementById("pendidikan_terakhir");
+                    for (var i = 0; i < select.options.length; i++) {
+                        if (select.options[i].value == pendidikan_terakhir) {
+                            select.options[i].selected = true;
+                            break;
+                        }
+                    }
+                });
+            });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#hapus_dakel').on('click', function() {
+                // Ambil index data yang dihapus
+                var index = $(this).closest('tr').index();
+                
+                // Kirim index ke controller untuk menghapus data dari session
+                $.ajax({
+                    url: '/delete-keluarga',
+                    type: 'POST',
+                    data: { index: index },
+                    success: function() {
+                        // Refresh halaman setelah data dihapus
+                        location.reload();
+                    }
+                });
+            });
         });
 
     </script>
