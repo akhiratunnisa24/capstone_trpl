@@ -38,11 +38,11 @@
                 <div class="content">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-20 col-sm-20 col-xs-20">
-                                {{-- <table id="datatable-responsive10" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                            <div class="col-md-20 col-sm-20 col-xs-20" style="margin-left:15px;margin-right:15px;">
+                                <table id="datatable-responsive10" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>No</th>
                                             <th>Nama Perusahaan</th>
                                             <th>Jabatan</th>
                                             <th>Lama Kerja</th>
@@ -53,19 +53,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach($pekerjaan as $pek)
+                                        @foreach($pekerjaan as $pek)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $pek->nama_perusahaan }}</td>
-                                                <td>{{ $pek->jabatan }}</td>
-                                                <td>{{ $pek->lama_kerja }}</td>
-                                                <td>{{ $pek->gaji }}</td>
-                                                <td>{{ $pek->nama_atasan }}</td>
-                                                <td>{{ $pek->nama_direktur }}</td>
+                                                <td>{{ $pek['nama_perusahaan'] }}</td>
+                                                <td>{{ $pek['jabatan'] }}</td>
+                                                <td>{{ $pek['lama_kerja'] }}</td>
+                                                <td>{{ $pek['gaji'] }}</td>
+                                                <td>{{ $pek['nama_atasan'] }}</td>
+                                                <td>{{ $pek['nama_direktur'] }}</td>
                                             </tr>
-                                        @endforeach --}}
-                                    {{-- </tbody>
-                                </table><br> --}}
+                                        @endforeach
+                                    </tbody>
+                                </table><br>
                                 <form action="/storepekerjaan" method="POST" enctype="multipart/form-data">
                                     <div class="control-group after-add-more">
                                         @csrf
@@ -82,37 +82,36 @@
                                                         <div class="col-md-6 m-t-10">
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Nama  Perusahaan</label>
-                                                                    <input type="text" name="namaPerusahaan"  value="{{ $pekerjaan->nama_perusahaan ?? '' }}" class="form-control"  placeholder="Masukkan Nama Perusahaan" autocomplete="off">
+                                                                    <label class="form-label">Nama  Perusahaan</label>
+                                                                    <input type="text" name="namaPerusahaan" class="form-control"  placeholder="Masukkan Nama Perusahaan" autocomplete="off">
                                                                 </div>
                                                             </div>
     
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">  Alamat </label>
-                                                                    <input type="text"  name="alamatPerusahaan" value="{{ $pekerjaan->alamat ?? '' }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                                        placeholder="Masukkan Alamat"autocomplete="off">
+                                                                    <label class="form-label">Alamat </label>
+                                                                    <input type="text"  name="alamatPerusahaan" class="form-control" id="alamat" placeholder="Masukkan Alamat">
                                                                 </div>
                                                             </div>
     
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Jenis Usaha</label>
-                                                                    <input type="text" name="jenisUsaha" value="{{ $pekerjaan->jenis_usaha ?? '' }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Jenis Usaha" autocomplete="off">
+                                                                    <input type="text" name="jenisUsaha" class="form-control" placeholder="Masukkan Jenis Usaha" autocomplete="off">
                                                                 </div>
                                                             </div>
     
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label"> Jabatan</label>
-                                                                    <input type="text" name="jabatanRpkerejaan" value="{{ $pekerjaan->jabatan ?? '' }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Jabatan" autocomplete="off">
+                                                                    <input type="text" name="jabatanRpkerejaan" class="form-control" placeholder="Masukkan Jabatan" autocomplete="off">
                                                                 </div>
                                                             </div>
     
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label"> Nama Atasan Langsung</label>
-                                                                    <input type="text" name="namaAtasan" value="{{ $pekerjaan->nama_atasan ?? '' }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Nama Atasan" autocomplete="off">
+                                                                    <input type="text" name="namaAtasan" class="form-control"  placeholder="Masukkan Nama Atasan" autocomplete="off">
                                                                 
                                                                 </div>
                                                             </div>
@@ -123,22 +122,22 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">  Nama Direktur</label>
-                                                                    <input type="text" name="namaDirektur" value="{{ $pekerjaan->nama_direktur ?? '' }}" class="form-control" id="exampleInputEmail1"
-                                                                        aria-describedby="emailHelp" placeholder="Masukkan Nama Direktur" autocomplete="off">
+                                                                    <input type="text" name="namaDirektur"  class="form-control" 
+                                                                       placeholder="Masukkan Nama Direktur" autocomplete="off">
                                                                 </div>
                                                             </div>
     
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Lama Kerja</label>
-                                                                    <input  type="text" name="lamaKerja" value="{{ $pekerjaan->lama_kerja ?? '' }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Lama Kerja" autocomplete="off">
+                                                                    <input  type="text" name="lamaKerja" class="form-control" placeholder="Masukkan Lama Kerja" autocomplete="off">
                                                                 </div>
                                                             </div>
     
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Alasan Berhenti</label>
-                                                                    <input type="text"  name="alasanBerhenti" value="{{ $pekerjaan->alasan_berhenti ?? '' }}" class="form-control" id="exampleInputEmail1"  aria-describedby="emailHelp" placeholder="Masukkan Alasan Berhenti" autocomplete="off">
+                                                                    <input type="text"  name="alasanBerhenti" class="form-control" placeholder="Masukkan Alasan Berhenti" autocomplete="off">
                                                                     
                                                                 </div>
                                                             </div>
@@ -146,7 +145,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Gaji</label>
-                                                                    <input type="text" name="gajiRpekerjaan" value="{{ $pekerjaan->gaji ?? '' }}" class="form-control" id="gaji" aria-describedby="emailHelp" placeholder="Masukkan Gaji" autocomplete="off">
+                                                                    <input type="text" name="gajiRpekerjaan" class="form-control" id="gaji" placeholder="Masukkan Gaji" autocomplete="off">
                                                                 </div>
                                                             </div>
     
@@ -158,7 +157,8 @@
                                                         <a href="/create-data-pendidikan" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
                                                     </div>
                                                     <div class="pull-right">
-                                                        <button type="submit" name="submit" class="btn btn-sm btn-success"><strong><i class="fa fa-paper-plane"></i></strong>  Simpan Data</button>
+                                                        <button type="submit" name="submit" class="btn btn-sm btn-dark"> Simpan</button>
+                                                        <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data <i class="fa fa-forward"></i></a>
                                                     </div>
                                                 </div>
                                             </table>

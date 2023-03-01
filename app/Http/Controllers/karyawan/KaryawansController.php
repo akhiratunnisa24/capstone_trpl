@@ -62,7 +62,7 @@ class KaryawansController extends Controller
             {
                 $karyawan                = new Karyawan;
                 $karyawan->nama          = $request->namaKaryawan;
-                $karyawan->tgllahir      = $request->tgllahirKaryawan;
+                $karyawan->tgllahir      = \Carbon\Carbon::parse($request->tgllahirKaryawan)->format('Y-m-d');
                 $karyawan->jenis_kelamin = $request->jenis_kelaminKaryawan;
                 $karyawan->alamat        = $request->alamatKaryawan;
                 $karyawan->no_hp         = $request->no_hpKaryawan;
@@ -72,7 +72,7 @@ class KaryawansController extends Controller
                 $karyawan->gol_darah     = $request->gol_darahKaryawan;
                 $karyawan->foto          = $namaFile;
                 $karyawan->jabatan       = $request->jabatanKaryawan;
-                $karyawan->tglmasuk      = $request->tglmasukKaryawan;
+                $karyawan->tglmasuk      = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');
                 $karyawan->atasan_pertama= $request->atasan_pertama;
                 $karyawan->atasan_kedua  = $request->atasan_kedua;
                 $karyawan->status_karyawan= $request->status_karyawan;
@@ -97,7 +97,7 @@ class KaryawansController extends Controller
                 $karyawan = $request->session()->get('karyawan');
 
                 $karyawan->nama          = $request->namaKaryawan;
-                $karyawan->tgllahir      = $request->tgllahirKaryawan;
+                $karyawan->tgllahir      = \Carbon\Carbon::parse($request->tgllahirKaryawan)->format('Y-m-d');
                 $karyawan->jenis_kelamin = $request->jenis_kelaminKaryawan;
                 $karyawan->alamat        = $request->alamatKaryawan;
                 $karyawan->no_hp         = $request->no_hpKaryawan;
@@ -107,7 +107,7 @@ class KaryawansController extends Controller
                 $karyawan->gol_darah     = $request->gol_darahKaryawan;
                 $karyawan->foto          = $namaFile;
                 $karyawan->jabatan       = $request->jabatanKaryawan;
-                $karyawan->tglmasuk      = $request->tglmasukKaryawan;
+                $karyawan->tglmasuk      = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');
                 $karyawan->atasan_pertama= $request->atasan_pertama;
                 $karyawan->atasan_kedua  = $request->atasan_kedua;
                 $karyawan->status_karyawan= $request->status_karyawan;
@@ -140,7 +140,7 @@ class KaryawansController extends Controller
             {
                 $karyawan               = new Karyawan;
                 $karyawan->nama         = $request->namaKaryawan;
-                $karyawan->tgllahir     = $request->tgllahirKaryawan;
+                $karyawan->tgllahir     = \Carbon\Carbon::parse($request->tgllahirKaryawan)->format('Y-m-d');
                 $karyawan->jenis_kelamin= $request->jenis_kelaminKaryawan; 
                 $karyawan->alamat       = $request->alamatKaryawan;
                 $karyawan->no_hp        = $request->no_hpKaryawan;
@@ -149,7 +149,7 @@ class KaryawansController extends Controller
                 $karyawan->nik          = $request->nikKaryawan;
                 $karyawan->gol_darah    = $request->gol_darahKaryawan;
                 $karyawan->jabatan      = $request->jabatanKaryawan;
-                $karyawan->tglmasuk     = $request->tglmasukKaryawan;
+                $karyawan->tglmasuk     = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');
                 $karyawan->atasan_pertama= $request->atasan_pertama;
                 $karyawan->atasan_kedua = $request->atasan_kedua;
                 $karyawan->status_karyawan= $request->status_karyawan;
@@ -173,7 +173,7 @@ class KaryawansController extends Controller
                 $karyawan = $request->session()->get('karyawan');
 
                 $karyawan->nama          = $request->namaKaryawan;
-                $karyawan->tgllahir      = $request->tgllahirKaryawan;
+                $karyawan->tgllahir      = \Carbon\Carbon::parse($request->tgllahirKaryawan)->format('Y-m-d');
                 $karyawan->jenis_kelamin = $request->jenis_kelaminKaryawan;
                 $karyawan->alamat        = $request->alamatKaryawan;
                 $karyawan->no_hp         = $request->no_hpKaryawan;
@@ -182,7 +182,7 @@ class KaryawansController extends Controller
                 $karyawan->nik           = $request->nikKaryawan;
                 $karyawan->gol_darah     = $request->gol_darahKaryawan;
                 $karyawan->jabatan       = $request->jabatanKaryawan;
-                $karyawan->tglmasuk      = $request->tglmasukKaryawan;
+                $karyawan->tglmasuk      = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');
                 $karyawan->atasan_pertama= $request->atasan_pertama;
                 $karyawan->atasan_kedua  = $request->atasan_kedua;
                 $karyawan->status_karyawan= $request->status_karyawan;
@@ -319,13 +319,10 @@ class KaryawansController extends Controller
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
             $kontakdarurat= $request->session()->get('kontakdarurat');
-            // $pendidikan   = $request->session()->get('pendidikan');
             $pendidikan = json_decode(session('pendidikan', '[]'), true);
-            // dd($pendidikan);
-            if(empty($pendidikan)) {
-                // Buat instance baru dari model atau objek yang sesuai
-                // $pendidikan = new Rpendidikan;
-                $pendidikan = [];
+            if(empty($pendidikan)) 
+            {
+               $pendidikan = [];
             }
             return view('admin.karyawan.createPendidikan',compact('karyawan','datakeluarga','kontakdarurat','pendidikan'));
         }else 
@@ -337,94 +334,22 @@ class KaryawansController extends Controller
     //store ketika creates data
     public function storepformal(Request $request)
     {
-        if($request->tingkat_pendidikan)
-        {
-            $pendidikan = json_decode($request->session()->get('pendidikan', '[]'), true);
-            $pendidikanBaru = [
-                'tingkat' => $request->namaKdarurat,
-                'nama_sekolah' => $request->alamatKdarurat,
-                'kota_pformal' => $request->no_hpKdarurat,
-                'jurusan' => $request->hubunganKdarurat,
-                'tahun_lulus_formal'=>$request->tahun_lulusFormal,
-                'jenis_pendidikan'=>null,
-                'kota_pnonformal'=>null,
-                'tahun_lulus_nonformal' =>null,
-            ];
+        $pendidikan = json_decode($request->session()->get('pendidikan', '[]'), true);
+        $pendidikanBaru = [
+            'tingkat' => $request->tingkat_pendidikan,
+            'nama_sekolah' => $request->nama_sekolah,
+            'kota_pformal' => $request->kotaPendidikanFormal,
+            'jurusan' => $request->jurusan,
+            'tahun_lulus_formal'=>$request->tahun_lulusFormal,
+            'jenis_pendidikan'=>$request->jenis_pendidikan,
+            'kota_pnonformal'=>$request->kotaPendidikanNonFormal,
+            'tahun_lulus_nonformal' =>$request->tahunLulusNonFormal,
+        ];
     
-            $pendidikan[] = $pendidikanBaru;
+        $pendidikan[] = $pendidikanBaru;
     
-            dd($pendidikan);
-            session()->put('pendidikan', json_encode($pendidikan));
-            return redirect()->back();
-    
-            // $pendidikan = new Rpendidikan;
-            // $pendidikan->tingkat =  $request->tingkat_pendidikan;
-            // $pendidikan->nama_sekolah = $request->nama_sekolah;
-            // $pendidikan->kota_pformal =  $request->kotaPendidikanFormal;
-            // $pendidikan->jurusan = $request->jurusan;
-            // $pendidikan->tahun_lulus_formal = $request->tahun_lulusFormal;
-
-            // $pendidikan->jenis_pendidikan = null;
-            // $pendidikan->kota_pnonformal =null;
-            // $pendidikan->tahun_lulus_nonformal =null;
-          
-            // $request->session()->put('pendidikan', $pendidikan);
-    
-            // return redirect()->route('create.pekerjaan');
-        }elseif($request->jenis_pendidikan)
-        {
-
-            $pendidikan = json_decode($request->session()->get('pendidikan', '[]'), true);
-            $pendidikanBaru = [
-                'tingkat' =>null,
-                'nama_sekolah' =>null,
-                'kota_pformal' =>null,
-                'jurusan' =>null,
-                'tahun_lulus_formal'=>null,
-                'jenis_pendidikan'=>$request->jenis_pendidikan,
-                'kota_pnonformal'=>$request->kotaPendidikanNonFormal,
-                'tahun_lulus_nonformal' =>$request->tahunLulusNonFormal,
-            ];
-    
-            $pendidikan[] = $pendidikanBaru;
-    
-            session()->put('pendidikan', json_encode($pendidikan));
-            return redirect()->back();
-        }
-        else
-        {
-
-            $pendidikan = json_decode($request->session()->get('pendidikan', '[]'), true);
-            $pendidikanBaru = [
-                'tingkat' => $request->namaKdarurat,
-                'nama_sekolah' => $request->alamatKdarurat,
-                'kota_pformal' => $request->no_hpKdarurat,
-                'jurusan' => $request->hubunganKdarurat,
-                'tahun_lulus_formal'=>$request->tahun_lulusFormal,
-                'jenis_pendidikan'=>$request->jenis_pendidikan,
-                'kota_pnonformal'=>$request->kotaPendidikanNonFormal,
-                'tahun_lulus_nonformal' =>$request->tahunLulusNonFormal,
-            ];
-    
-            $pendidikan[] = $pendidikanBaru;
-    
-            session()->put('pendidikan', json_encode($pendidikan));
-            return redirect()->back();
-
-            // $pendidikan = new Rpendidikan;
-            // $pendidikan->tingkat = null;
-            // $pendidikan->nama_sekolah =null;
-            // $pendidikan->kota_pformal = null;
-            // $pendidikan->jurusan = null;
-            // $pendidikan->tahun_lulus_formal =null;
-
-            // $pendidikan->jenis_pendidikan =  $request->jenis_pendidikan;
-            // $pendidikan->kota_pnonformal = $request->kotaPendidikanNonFormal;
-            // $pendidikan->tahun_lulus_nonformal = $request->tahunLulusNonFormal;
-           
-            // $request->session()->put('pendidikan', $pendidikan);
-        }
-        // return redirect()->route('create.pekerjaan');
+        session()->put('pendidikan', json_encode($pendidikan));
+        return redirect()->back();
     }
 
     //data untuk pekerjaan
@@ -437,11 +362,10 @@ class KaryawansController extends Controller
             $datakeluarga = $request->session()->get('datakeluarga');
             $kontakdarurat= $request->session()->get('kontakdarurat');
             $pendidikan   = $request->session()->get('pendidikan');
-            $pekerjaan    = $request->session()->get('pekerjaan');
-
-            if(!$pekerjaan) {
-                // Buat instance baru dari model atau objek yang sesuai
-                $pekerjaan = new Rpekerjaan;
+            $pekerjaan = json_decode(session('pekerjaan', '[]'), true);
+            if(empty($pekerjaan)) 
+            {
+                $pekerjaan = [];
             }
             return view('admin.karyawan.createPekerjaan',compact('pekerjaan','karyawan','datakeluarga','kontakdarurat','pendidikan'));
         } else 
@@ -451,44 +375,88 @@ class KaryawansController extends Controller
     }
 
      //store ketika creates data
-     public function storepekerjaan(Request $request)
+    public function storepekerjaan(Request $request)
      {
-        $pekerjaan = new Rpekerjaan;
+        $pekerjaan = json_decode($request->session()->get('pekerjaan', '[]'), true);
+        
+        $pekerjaanBaru = [
+            'nama_perusahaan' => $request->namaPerusahaan,
+            'alamat' => $request->alamatPerusahaan,
+            'jenis_usaha' => $request->jenisUsaha,
+            'jabatan' => $request->jabatanRpkerejaan,
+            'nama_atasan' => $request->namaAtasan,
+            'nama_direktur' => $request->namaDirektur,
+            'lama_kerja' => $request->lamaKerja,
+            'alasan_berhenti' => $request->alasanBerhenti,
+            'gaji' => $request->gajiRpekerjaan,
+        ];
 
-        $pekerjaan->nama_perusahaan = $request->namaPerusahaan;
-        $pekerjaan->alamat = $request->alamatPerusahaan;
-        $pekerjaan->jenis_usaha = $request->jenisUsaha;
-        $pekerjaan->jabatan = $request->jabatanRpkerejaan;
-        $pekerjaan->nama_atasan = $request->namaAtasan;
-        $pekerjaan->nama_direktur = $request->namaDirektur;
-        $pekerjaan->lama_kerja = $request->lamaKerja;
-        $pekerjaan->alasan_berhenti = $request->alasanBerhenti;
-        $pekerjaan->gaji = $request->gajiRpekerjaan;
+        $pekerjaan[] = $pekerjaanBaru;
+    
+        session()->put('pekerjaan', json_encode($pekerjaan));
+        return redirect()->back();
+    }
 
-        $request->session()->put('pekerjaan', $pekerjaan);
- 
+    public function previewData(Request $request)
+    {
+        $karyawan = $request->session()->get('karyawan');
+        $atasan_pertama_nama = $karyawan->atasan_pertamaa->nama;
+        $atasan_kedua_nama = $karyawan->atasan_kedua;
+        if(!$atasan_kedua_nama){
+            $atasan_kedua_nama = "-";
+        }else
+        {
+            $atasan_kedua_nama = $karyawan->atasan_keduab->nama;
+        }
+        $datakeluarga = json_decode(session('datakeluarga', '[]'), true);
+        $kontakdarurat = json_decode(session('kontakdarurat', '[]'), true);
+        $pendidikan = json_decode(session('pendidikan', '[]'), true);
+        $pekerjaan = json_decode(session('pekerjaan', '[]'), true);
+
+        return view('admin.karyawan.preview',compact('karyawan','datakeluarga','kontakdarurat','pendidikan','pekerjaan','atasan_pertama_nama','atasan_kedua_nama'));
+    }
+
+    public function storetoDatabase(Request $request)
+    {
          //meyimpan data ke database
          $karyawan= $request->session()->get('karyawan');
          $karyawan->save();
-         $idKaryawan = $karyawan->id;
-        //  dd($idKaryawan);    
+         $idKaryawan = $karyawan->id;  
+        //  dd($idKaryawan);
  
-        $datakeluarga = $request->session()->get('datakeluarga');
-        $datakeluarga['id_pegawai'] = $idKaryawan;
-        $datakeluarga->save();
- 
+        $datakeluarga = json_decode($request->session()->get('datakeluarga', []), true);
+        $datakeluargaMerged = array_map(function($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $datakeluarga);
+        // dd($datakeluargaMerged);
+
+        $datakeluargaModel = Keluarga::insert($datakeluargaMerged);
+        // dd($datakeluargaMerged,$datakeluargaModel);
         
-        $kontakdarurat= $request->session()->get('kontakdarurat');
-        $kontakdarurat['id_pegawai'] = $idKaryawan;
-        $kontakdarurat->save();
+        $kontakdarurat=json_decode($request->session()->get('kontakdarurat',[]), true);
+        $kontakdaruratMerge =  array_map(function($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $kontakdarurat);
+        // dd($kontakdaruratMerge);
+        $kontakdarurats = Kdarurat::insert($kontakdaruratMerge);
  
-        $pendidikan= $request->session()->get('pendidikan');
-        $pendidikan['id_pegawai'] = $idKaryawan;
-        $pendidikan->save();
+        $pendidikan= json_decode($request->session()->get('pendidikan',[]), true);
+        // $pendidikan['id_pegawai'] = $idKaryawan;
+        $pendidikanMerge =  array_map(function($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $pendidikan);
+        $pendidikans= Rpendidikan::insert($pendidikanMerge);
  
-        $pekerjaan= $request->session()->get('pekerjaan');
-        $pekerjaan['id_pegawai'] = $idKaryawan;
-        $pekerjaan->save();  
+        $pekerjaan= json_decode($request->session()->get('pekerjaan', []), true);
+        // $pekerjaan['id_pegawai'] = $idKaryawan;
+        $pekerjaanMerge = array_map(function($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $pekerjaan);
+        $pekerjaans= Rpekerjaan::insert($pekerjaanMerge);
          
          //hapus data pada session
         $request->session()->forget('karyawan');
@@ -496,6 +464,7 @@ class KaryawansController extends Controller
         $request->session()->forget('kontakdarurat');
         $request->session()->forget('pendidikan');
         $request->session()->forget('pekerjaan');
+
          
         return redirect('/karyawan');
     }

@@ -62,7 +62,7 @@
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
                                                                     <input type="text" name="namaKaryawan" class="form-control" value="{{ $karyawan->nama ?? '' }}" placeholder="Masukkan Nama" autocomplete="off" required>
-                                                                    <div id="emailHelp" class="form-text"></div>
+                                                                    
                                                                 </div>
                                                             </div>
                         

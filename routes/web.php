@@ -336,6 +336,10 @@ Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direkt
     Route::get('/create-data-pekerjaan', [KaryawansController::class, 'createpekerjaan'])->name('create.pekerjaan');
     Route::post('/storepekerjaan', [karyawansController::class, 'storepekerjaan'])->name('storepekerjaan');
 
+    //priview data dan save ke database
+    Route::get('/preview-data-karyawan', [KaryawansController::class, 'previewData'])->name('preview.data');
+    Route::post('/storeData', [KaryawansController::class, 'storetoDatabase'])->name('store.data.karyawan');
+
     //update data
     Route::put('/updateIdentitas/{id}', [karyawansController::class, 'update'])->name('identitas.update'); 
     Route::put('/updateKeluarga/{id}', [karyawansController::class, 'updateKeluarga'])->name('updateKeluarga'); 
