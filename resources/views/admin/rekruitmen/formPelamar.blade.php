@@ -73,6 +73,14 @@
 
                                             <div class="form-group">
                                                 <div class="mb-3">
+                                                    <label class="form-label">Persyaratan</label>
+                                                    <input id="persyaratan" type="text" class="form-control"
+                                                        placeholder="Masukkan NIK" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="mb-3">
                                                     <label class="form-label">NIK</label>
                                                     <input type="number" name="nikPelamar" class="form-control"
                                                         placeholder="Masukkan NIK" required>

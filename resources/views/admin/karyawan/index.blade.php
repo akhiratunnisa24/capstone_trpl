@@ -46,21 +46,23 @@
                         <div class="panel-body">
 
                             <form action="{{ route('search') }}" method="GET">
-                                <div class="col-sm-3 col-xs-12">
-                                    <div class="m-t-20">
+                <div class="col-md-12">
+                                <div>
+                                    <div>
                                         <label>Nama Karyawan</label>
                                         <input type="text" name="query" class="form-control"
                                             placeholder="Cari karyawan...">
                                     </div>
                                 </div>
-                                <div class="col-sm-3 col-xs-12">
-                                    <div style="margin-top:26px">
+                                <div >
+                                    <div style="margin-top:0px">
                                         <label></label>
                                         <div>
                                             <button type="submit" id="search"
-                                                class="btn btn-md btn-success fa fa-filter"> Cari</button>
+                                                class="btn btn-md btn-success fa fa-filter"> Cari </button>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </form>
 
