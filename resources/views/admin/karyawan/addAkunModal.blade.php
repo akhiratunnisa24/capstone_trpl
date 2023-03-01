@@ -35,7 +35,7 @@
 
                     <div class="form-group col-xs-12" id="id_pegawai">
                         <label for="id_pegawai" class="form-label">Karyawan</label>
-                        <select id="id_karyawan" class="form-control selecpicker" name="id_pegawai" required>
+                        <select  class="form-control selecpicker" name="id_pegawai" required>
                             <option value="">Pilih Karyawan</option>
                             @foreach ($akun as $k)
                                 <option value="{{ $k->id }}">{{ $k->nama }}</option>

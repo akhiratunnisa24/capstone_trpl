@@ -59,7 +59,7 @@
 
 
 
-                                            <div class="form-group">
+                                            <div class="form-group" id="posisi">
                                                 <label class="form-label">Posisi</label>
                                                 <select id="posisi" class="form-control" name="posisiPelamar"
                                                     required>
@@ -74,8 +74,7 @@
                                             <div class="form-group">
                                                 <div class="mb-3">
                                                     <label class="form-label">Persyaratan</label>
-                                                    <input id="persyaratan" type="text" class="form-control"
-                                                        placeholder="Masukkan NIK" readonly>
+                                                    <textarea id="persyaratan" type="text" class="form-control" readonly></textarea>
                                                 </div>
                                             </div>
 
@@ -229,6 +228,32 @@
         </div>
     </div>
 </body>
+
+
+<!-- script untuk mengambil data Email Karyawan  -->
+<script>
+    $('#posisi').on('change', function(e) {
+        var id_pegawai = e.target.value;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                    .attr('content')
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: '{{ route('getEmail') }}',
+            data: {
+                'id_pegawai': id_pegawai
+            },
+            success: function(data) {
+                // console.log(data);
+                $('#emailKaryawan').val(data.email);
+                console.log(data?.email)
+            }
+        });
+    });
+</script>
 
 <script>
 function confirmSave() {
