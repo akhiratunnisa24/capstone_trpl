@@ -217,23 +217,27 @@ class KaryawansController extends Controller
         {
             $karyawan    = $request->session()->get('karyawan');
             // $datakeluarga = $request->session()->get('datakeluarga',[]);
-            $datakeluarga = json_decode(session('datakeluarga'), true);
+            // $datakeluarga = json_decode(session('datakeluarga'), true);
+            // dd(session('datakeluarga'), '[]');
+            $datakeluarga = json_decode(session('datakeluarga', '[]'), true);
             // dd($datakeluarga);
-            if(!$datakeluarga) {
-                // Buat instance baru dari model atau objek yang sesuai
-                $datakeluarga = new Keluarga;
+            if(empty($datakeluarga)) {
+                $datakeluarga = [];
+                // $datakeluarga = new Keluarga;
             }
             return view('admin.karyawan.createDakel',compact('karyawan','datakeluarga'));
         } else 
         {
             return redirect()->back();
         }
-    }
+    } 
 
     public function storedk(Request $request)
     {
         //get data kelaurga yang disimpan dalam array
-        $datakeluarga = $request->session()->get('datakeluarga', []);
+        // $datakeluarga = $request->session()->get('datakeluarga', []);
+        $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
+
 
         // buat array data keluarga baru
         $datakeluargaBaru = [
@@ -247,7 +251,9 @@ class KaryawansController extends Controller
         ];
 
         // tambahkan data keluarga baru ke dalam array datakeluarga
-        $datakeluarga = $datakeluargaBaru;
+        $datakeluarga[] = $datakeluargaBaru;
+
+        // dd($datakeluarga);
 
         // Simpan instance ke dalam session
         session()->put('datakeluarga', json_encode($datakeluarga));
@@ -263,10 +269,14 @@ class KaryawansController extends Controller
         {
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
-            $kontakdarurat= $request->session()->get('kontakdarurat');
-            if(!$kontakdarurat) {
+            // $kontakdarurat= $request->session()->get('kontakdarurat');
+            $kontakdarurat = json_decode(session('kontakdarurat', '[]'), true);
+           
+            // if(!$kontakdarurat) {
+            if(empty($kontakdarurat)) {    
                 // Buat instance baru dari model atau objek yang sesuai
-                $datakeluarga = new Kdarurat;
+                // $kontakdarurat = new Kdarurat;
+                $kontakdarurat = [];
             }
             return view('admin.karyawan.createKonrat',compact('karyawan','datakeluarga','kontakdarurat'));
         } else {
@@ -276,15 +286,28 @@ class KaryawansController extends Controller
     }
      public function storekd(Request $request)
     {
-            $kontakdarurat = new Kdarurat;
-            $kontakdarurat->nama = $request->namaKdarurat;
-            $kontakdarurat->alamat= $request->alamatKdarurat;
-            $kontakdarurat->no_hp = $request->no_hpKdarurat;
-            $kontakdarurat->hubungan = $request->hubunganKdarurat;
-           
-            $request->session()->put('kontakdarurat', $kontakdarurat);
+        $kontakdarurat = json_decode($request->session()->get('kontakdarurat', '[]'), true);
+        $kontakdaruratBaru = [
+            'nama' => $request->namaKdarurat,
+            'alamat' => $request->alamatKdarurat,
+            'no_hp' => $request->no_hpKdarurat,
+            'hubungan' => $request->hubunganKdarurat,
+        ];
 
-        return redirect()->route('create.pendidikan');
+        $kontakdarurat[] = $kontakdaruratBaru;
+
+        session()->put('kontakdarurat', json_encode($kontakdarurat));
+        return redirect()->back();
+
+        //     $kontakdarurat = new Kdarurat;
+        //     $kontakdarurat->nama = $request->namaKdarurat;
+        //     $kontakdarurat->alamat= $request->alamatKdarurat;
+        //     $kontakdarurat->no_hp = $request->no_hpKdarurat;
+        //     $kontakdarurat->hubungan = $request->hubunganKdarurat;
+           
+        //     $request->session()->put('kontakdarurat', $kontakdarurat);
+
+        // return redirect()->route('create.pendidikan');
     }
 
     //data untuk pendidikan
@@ -296,11 +319,13 @@ class KaryawansController extends Controller
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
             $kontakdarurat= $request->session()->get('kontakdarurat');
-            $pendidikan   = $request->session()->get('pendidikan');
-    
-            if(!$pendidikan) {
+            // $pendidikan   = $request->session()->get('pendidikan');
+            $pendidikan = json_decode(session('pendidikan', '[]'), true);
+            // dd($pendidikan);
+            if(empty($pendidikan)) {
                 // Buat instance baru dari model atau objek yang sesuai
-                $pendidikan = new Rpendidikan;
+                // $pendidikan = new Rpendidikan;
+                $pendidikan = [];
             }
             return view('admin.karyawan.createPendidikan',compact('karyawan','datakeluarga','kontakdarurat','pendidikan'));
         }else 
@@ -314,36 +339,92 @@ class KaryawansController extends Controller
     {
         if($request->tingkat_pendidikan)
         {
-            $pendidikan = new Rpendidikan;
-            $pendidikan->tingkat =  $request->tingkat_pendidikan;
-            $pendidikan->nama_sekolah = $request->nama_sekolah;
-            $pendidikan->kota_pformal =  $request->kotaPendidikanFormal;
-            $pendidikan->jurusan = $request->jurusan;
-            $pendidikan->tahun_lulus_formal = $request->tahun_lulusFormal;
-
-            $pendidikan->jenis_pendidikan = null;
-            $pendidikan->kota_pnonformal =null;
-            $pendidikan->tahun_lulus_nonformal =null;
-          
-            $request->session()->put('pendidikan', $pendidikan);
+            $pendidikan = json_decode($request->session()->get('pendidikan', '[]'), true);
+            $pendidikanBaru = [
+                'tingkat' => $request->namaKdarurat,
+                'nama_sekolah' => $request->alamatKdarurat,
+                'kota_pformal' => $request->no_hpKdarurat,
+                'jurusan' => $request->hubunganKdarurat,
+                'tahun_lulus_formal'=>$request->tahun_lulusFormal,
+                'jenis_pendidikan'=>null,
+                'kota_pnonformal'=>null,
+                'tahun_lulus_nonformal' =>null,
+            ];
     
-            return redirect()->route('create.pekerjaan');
-        }else
-        {
-            $pendidikan = new Rpendidikan;
-            $pendidikan->tingkat = null;
-            $pendidikan->nama_sekolah =null;
-            $pendidikan->kota_pformal = null;
-            $pendidikan->jurusan = null;
-            $pendidikan->tahun_lulus_formal =null;
+            $pendidikan[] = $pendidikanBaru;
+    
+            dd($pendidikan);
+            session()->put('pendidikan', json_encode($pendidikan));
+            return redirect()->back();
+    
+            // $pendidikan = new Rpendidikan;
+            // $pendidikan->tingkat =  $request->tingkat_pendidikan;
+            // $pendidikan->nama_sekolah = $request->nama_sekolah;
+            // $pendidikan->kota_pformal =  $request->kotaPendidikanFormal;
+            // $pendidikan->jurusan = $request->jurusan;
+            // $pendidikan->tahun_lulus_formal = $request->tahun_lulusFormal;
 
-            $pendidikan->jenis_pendidikan =  $request->jenis_pendidikan;
-            $pendidikan->kota_pnonformal = $request->kotaPendidikanNonFormal;
-            $pendidikan->tahun_lulus_nonformal = $request->tahunLulusNonFormal;
-           
-            $request->session()->put('pendidikan', $pendidikan);
+            // $pendidikan->jenis_pendidikan = null;
+            // $pendidikan->kota_pnonformal =null;
+            // $pendidikan->tahun_lulus_nonformal =null;
+          
+            // $request->session()->put('pendidikan', $pendidikan);
+    
+            // return redirect()->route('create.pekerjaan');
+        }elseif($request->jenis_pendidikan)
+        {
+
+            $pendidikan = json_decode($request->session()->get('pendidikan', '[]'), true);
+            $pendidikanBaru = [
+                'tingkat' =>null,
+                'nama_sekolah' =>null,
+                'kota_pformal' =>null,
+                'jurusan' =>null,
+                'tahun_lulus_formal'=>null,
+                'jenis_pendidikan'=>$request->jenis_pendidikan,
+                'kota_pnonformal'=>$request->kotaPendidikanNonFormal,
+                'tahun_lulus_nonformal' =>$request->tahunLulusNonFormal,
+            ];
+    
+            $pendidikan[] = $pendidikanBaru;
+    
+            session()->put('pendidikan', json_encode($pendidikan));
+            return redirect()->back();
         }
-        return redirect()->route('create.pekerjaan');
+        else
+        {
+
+            $pendidikan = json_decode($request->session()->get('pendidikan', '[]'), true);
+            $pendidikanBaru = [
+                'tingkat' => $request->namaKdarurat,
+                'nama_sekolah' => $request->alamatKdarurat,
+                'kota_pformal' => $request->no_hpKdarurat,
+                'jurusan' => $request->hubunganKdarurat,
+                'tahun_lulus_formal'=>$request->tahun_lulusFormal,
+                'jenis_pendidikan'=>$request->jenis_pendidikan,
+                'kota_pnonformal'=>$request->kotaPendidikanNonFormal,
+                'tahun_lulus_nonformal' =>$request->tahunLulusNonFormal,
+            ];
+    
+            $pendidikan[] = $pendidikanBaru;
+    
+            session()->put('pendidikan', json_encode($pendidikan));
+            return redirect()->back();
+
+            // $pendidikan = new Rpendidikan;
+            // $pendidikan->tingkat = null;
+            // $pendidikan->nama_sekolah =null;
+            // $pendidikan->kota_pformal = null;
+            // $pendidikan->jurusan = null;
+            // $pendidikan->tahun_lulus_formal =null;
+
+            // $pendidikan->jenis_pendidikan =  $request->jenis_pendidikan;
+            // $pendidikan->kota_pnonformal = $request->kotaPendidikanNonFormal;
+            // $pendidikan->tahun_lulus_nonformal = $request->tahunLulusNonFormal;
+           
+            // $request->session()->put('pendidikan', $pendidikan);
+        }
+        // return redirect()->route('create.pekerjaan');
     }
 
     //data untuk pekerjaan
