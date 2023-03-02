@@ -44,31 +44,30 @@
                         </div>
                         @include('admin.karyawan.addAkunModal')
                         <div class="panel-body">
-
                             <form action="{{ route('search') }}" method="GET">
-                <div class="col-md-12">
-                                <div>
-                                    <div>
-                                        <label>Nama Karyawan</label>
-                                        <input type="text" name="query" class="form-control"
-                                            placeholder="Cari karyawan...">
-                                    </div>
-                                </div>
-                                <div >
-                                    <div style="margin-top:0px">
-                                        <label></label>
+                                <div class="row col-md-12">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-7">
                                         <div>
-                                            <button type="submit" id="search"
-                                                class="btn btn-md btn-success fa fa-filter"> Cari </button>
+                                            <label>Nama Karyawan</label>
+                                            <input type="text" name="query" class="form-control" placeholder="Cari karyawan...">
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="col-md-1">
+                                        <div style="margin-top:5px">
+                                            <label></label>
+                                            <div>
+                                                <button type="submit" id="search" class="btn btn-md btn-success fa fa-search" style="height: 37px;"> Cari </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
                                 </div>
                             </form>
 
                             {{-- <div class="container"> --}}
                                 @if ($query)
-                                    <h4 class="text-center  ">Hasil Pencarian untuk "{{ $query }}"</h4>
+                                    <h4 class="text-center"  style="margin-top:10px;">Hasil Pencarian untuk "{{ $query }}"</h4>
                                     @if ($results->isEmpty())
                                         <p>Tidak ada hasil yang ditemukan.</p>
                                     @else

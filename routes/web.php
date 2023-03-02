@@ -320,21 +320,27 @@ Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direkt
 
     //form data keluarga
     Route::get('/create-data-keluarga', [KaryawansController::class, 'createdakel'])->name('create.dakel');
-    Route::get('/get-data-keluarga', [KaryawansController::class, 'getDataKeluarga'])->name('get.data.keluarga');
-    Route::post('/storedatakeluarga', [karyawansController::class, 'storedk'])->name('storedk');
+    Route::post('/storedatakeluarga', [KaryawansController::class, 'storedk'])->name('storedk');
+    Route::post('/updatedatakeluarga', [KaryawansController::class, 'updatedk'])->name('updatedk');
+    Route::post('/delete-keluarga/{key}', [KaryawansController::class, 'deletedk'])->name('deletedk');
+
 
     //form data kontak darurat
     Route::get('/create-kontak-darurat', [KaryawansController::class, 'createkonrat'])->name('create.konrat');
-    Route::post('/storekontakdarurat', [karyawansController::class, 'storekd'])->name('storekd');
+    Route::post('/storekontakdarurat', [KaryawansController::class, 'storekd'])->name('storekd');
+    Route::post('/updatekontakdarurat', [KaryawansController::class, 'updatekd'])->name('updatekd');
+    // Route::post('/delete-kontak-darurat/{key}', [KeluargaController::class, 'deletedk'])->name('deletedk');
     
     //form data pendidikan
     Route::get('/create-data-pendidikan', [KaryawansController::class, 'creatependidikan'])->name('create.pendidikan');
     Route::post('/storepformal', [karyawansController::class, 'storepformal'])->name('storepformal');
     Route::post('/storepnformal', [karyawansController::class, 'storepformal'])->name('storepnformal');
+    Route::post('/updatependidikan', [KaryawansController::class, 'updaterPendidikan'])->name('updatePendidikan');
 
     //form data pekerjaan
     Route::get('/create-data-pekerjaan', [KaryawansController::class, 'createpekerjaan'])->name('create.pekerjaan');
     Route::post('/storepekerjaan', [karyawansController::class, 'storepekerjaan'])->name('storepekerjaan');
+    Route::post('/updatepekerjaan', [KaryawansController::class, 'updaterPekerjaan'])->name('updatePekerjaan');
 
     //priview data dan save ke database
     Route::get('/preview-data-karyawan', [KaryawansController::class, 'previewData'])->name('preview.data');
