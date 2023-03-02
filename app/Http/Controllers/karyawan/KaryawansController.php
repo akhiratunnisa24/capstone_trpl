@@ -21,9 +21,8 @@ class KaryawansController extends Controller
     public function create(Request $request)
     {
         $role = Auth::user()->role;
-
-        if ($role == 1) {
-
+        if ($role == 1) 
+        {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
             $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager','Management'])->get();
@@ -31,7 +30,6 @@ class KaryawansController extends Controller
 
             $karyawan = $request->session()->get('karyawan');
             if(!$karyawan) {
-                // Buat instance baru dari model atau objek yang sesuai
                 $karyawan = new Karyawan;
             }
             $output = [
@@ -42,8 +40,8 @@ class KaryawansController extends Controller
                 'karyawan'=>$karyawan
             ];
             return view('admin.karyawan.creates', $output);
-        } else {
-
+        } else 
+        {
             return redirect()->back();
         }
     }
@@ -56,7 +54,6 @@ class KaryawansController extends Controller
             $namaFile = '' . time() . $fileFoto->getClientOriginalName();
             $tujuan_upload = 'Foto_Profile';
             $fileFoto->move($tujuan_upload, $namaFile);
-            // $karyawan->save();
 
             if(empty($request->session()->get('karyawan')))
             {
@@ -91,7 +88,6 @@ class KaryawansController extends Controller
                 $karyawan->status_kerja  = 'Aktif';
 
                 $request->session()->put('karyawan', $karyawan);
-                // dd($karyawan);
             }else
             {
                 $karyawan = $request->session()->get('karyawan');
@@ -126,17 +122,11 @@ class KaryawansController extends Controller
                 $karyawan->status_kerja  = 'Aktif';
 
                 $request->session()->put('karyawan', $karyawan);
-                // dd($karyawan);
-
             }
             return redirect()->route('create.dakel');
-             // menyimpan data ke cache dengan key "karyawan_cache" selama 60 menit (1 jam)
-            // Cache::put('karyawan_cache', $karyawan, 60);
-            //return redirect()->back()->with('karyawan_cache', Cache::get('karyawan_cache'));
-           
         }else
         {
-            if(empty($request->session()->get('product')))
+            if(empty($request->session()->get('karyawan')))
             {
                 $karyawan               = new Karyawan;
                 $karyawan->nama         = $request->namaKaryawan;
@@ -203,9 +193,6 @@ class KaryawansController extends Controller
                 $request->session()->put('karyawan', $karyawan);
             }
             return redirect()->route('create.dakel');
-            // Cache::put('karyawan_cache', $karyawan, 60);
-            //return redirect()->back()->with('karyawan_cache', Cache::get('karyawan_cache'));
-           
         }
     }
 
@@ -216,14 +203,11 @@ class KaryawansController extends Controller
         if($role == 1) 
         {
             $karyawan    = $request->session()->get('karyawan');
-            // $datakeluarga = $request->session()->get('datakeluarga',[]);
-            // $datakeluarga = json_decode(session('datakeluarga'), true);
-            // dd(session('datakeluarga'), '[]');
             $datakeluarga = json_decode(session('datakeluarga', '[]'), true);
-            // dd($datakeluarga);
-            if(empty($datakeluarga)) {
+
+            if(empty($datakeluarga)) 
+            {
                 $datakeluarga = [];
-                // $datakeluarga = new Keluarga;
             }
             return view('admin.karyawan.createDakel',compact('karyawan','datakeluarga'));
         } else 
@@ -234,12 +218,7 @@ class KaryawansController extends Controller
 
     public function storedk(Request $request)
     {
-        //get data kelaurga yang disimpan dalam array
-        // $datakeluarga = $request->session()->get('datakeluarga', []);
         $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
-
-
-        // buat array data keluarga baru
         $datakeluargaBaru = [
             'status_pernikahan' => $request->status_pernikahan,
             'nama' => $request->namaPasangan,
@@ -250,16 +229,49 @@ class KaryawansController extends Controller
             'hubungan' => $request->hubungankeluarga
         ];
 
-        // tambahkan data keluarga baru ke dalam array datakeluarga
         $datakeluarga[] = $datakeluargaBaru;
-
-        // dd($datakeluarga);
-
-        // Simpan instance ke dalam session
         session()->put('datakeluarga', json_encode($datakeluarga));
         return redirect()->back();
-        // return redirect()->route('create.konrat');
     }
+
+    // public function storedk(Request $request)
+    // {
+    //     $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
+
+    //     // Jika ada nomor array yang dikirim, maka lakukan update pada nomor array tersebut
+    //     if ($request->has('nomorArray')) {
+    //         $nomorArray = $request->input('nomorArray');
+    //         // dd($nomorArray);
+    //         $datakeluargaBaru = [
+    //             'status_pernikahan' => $request->status_pernikahan,
+    //             'nama' => $request->namaPasangan,
+    //             'tgllahir' => \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d'),
+    //             'alamat' => $request->alamatPasangan,
+    //             'pendidikan_terakhir' => $request->pendidikan_terakhirPasangan,
+    //             'pekerjaan' => $request->pekerjaanPasangan,
+    //             'hubungan' => $request->hubungankeluarga
+    //         ];
+
+    //         // Update data pada nomor array yang sudah ada
+    //         $datakeluarga[$nomorArray] = $datakeluargaBaru;
+    //     } else {
+    //         // Jika tidak ada nomor array yang dikirim, maka tambahkan data baru pada akhir array
+    //         $datakeluargaBaru = [
+    //             'status_pernikahan' => $request->status_pernikahan,
+    //             'nama' => $request->namaPasangan,
+    //             'tgllahir' => \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d'),
+    //             'alamat' => $request->alamatPasangan,
+    //             'pendidikan_terakhir' => $request->pendidikan_terakhirPasangan,
+    //             'pekerjaan' => $request->pekerjaanPasangan,
+    //             'hubungan' => $request->hubungankeluarga
+    //         ];
+    //         $datakeluarga[] = $datakeluargaBaru;
+    //     }
+
+    //     session()->put('datakeluarga', json_encode($datakeluarga));
+    //     return redirect()->back();
+    // }
+
 
     //data kontak darurat
     public function createkonrat(Request $request)
@@ -269,13 +281,9 @@ class KaryawansController extends Controller
         {
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
-            // $kontakdarurat= $request->session()->get('kontakdarurat');
             $kontakdarurat = json_decode(session('kontakdarurat', '[]'), true);
-           
-            // if(!$kontakdarurat) {
-            if(empty($kontakdarurat)) {    
-                // Buat instance baru dari model atau objek yang sesuai
-                // $kontakdarurat = new Kdarurat;
+            if(empty($kontakdarurat)) 
+            {    
                 $kontakdarurat = [];
             }
             return view('admin.karyawan.createKonrat',compact('karyawan','datakeluarga','kontakdarurat'));
@@ -298,16 +306,6 @@ class KaryawansController extends Controller
 
         session()->put('kontakdarurat', json_encode($kontakdarurat));
         return redirect()->back();
-
-        //     $kontakdarurat = new Kdarurat;
-        //     $kontakdarurat->nama = $request->namaKdarurat;
-        //     $kontakdarurat->alamat= $request->alamatKdarurat;
-        //     $kontakdarurat->no_hp = $request->no_hpKdarurat;
-        //     $kontakdarurat->hubungan = $request->hubunganKdarurat;
-           
-        //     $request->session()->put('kontakdarurat', $kontakdarurat);
-
-        // return redirect()->route('create.pendidikan');
     }
 
     //data untuk pendidikan
@@ -422,28 +420,22 @@ class KaryawansController extends Controller
          $karyawan= $request->session()->get('karyawan');
          $karyawan->save();
          $idKaryawan = $karyawan->id;  
-        //  dd($idKaryawan);
  
         $datakeluarga = json_decode($request->session()->get('datakeluarga', []), true);
         $datakeluargaMerged = array_map(function($item) use ($idKaryawan) {
             $item['id_pegawai'] = $idKaryawan;
             return $item;
         }, $datakeluarga);
-        // dd($datakeluargaMerged);
-
         $datakeluargaModel = Keluarga::insert($datakeluargaMerged);
-        // dd($datakeluargaMerged,$datakeluargaModel);
         
         $kontakdarurat=json_decode($request->session()->get('kontakdarurat',[]), true);
         $kontakdaruratMerge =  array_map(function($item) use ($idKaryawan) {
             $item['id_pegawai'] = $idKaryawan;
             return $item;
         }, $kontakdarurat);
-        // dd($kontakdaruratMerge);
         $kontakdarurats = Kdarurat::insert($kontakdaruratMerge);
  
         $pendidikan= json_decode($request->session()->get('pendidikan',[]), true);
-        // $pendidikan['id_pegawai'] = $idKaryawan;
         $pendidikanMerge =  array_map(function($item) use ($idKaryawan) {
             $item['id_pegawai'] = $idKaryawan;
             return $item;
@@ -451,7 +443,6 @@ class KaryawansController extends Controller
         $pendidikans= Rpendidikan::insert($pendidikanMerge);
  
         $pekerjaan= json_decode($request->session()->get('pekerjaan', []), true);
-        // $pekerjaan['id_pegawai'] = $idKaryawan;
         $pekerjaanMerge = array_map(function($item) use ($idKaryawan) {
             $item['id_pegawai'] = $idKaryawan;
             return $item;
@@ -496,7 +487,6 @@ class KaryawansController extends Controller
     public function storekonrat(Request $request,$id)
     {
         $idk = Karyawan::findorFail($id);
-
         $data_kdarurat = array(
             'id_pegawai' => $idk->id,
             'nama' => $request->post('namaKdarurat'),
@@ -618,7 +608,6 @@ class KaryawansController extends Controller
           
             $pegawai->update();
 
-            // dd($request->status_pernikahan);
             Keluarga::where('id_pegawai','=',$id)->update([
                 'status_pernikahan' =>$request->status_pernikahan,
             ]);
@@ -626,7 +615,6 @@ class KaryawansController extends Controller
         }
         else
         {
-            // dd($request->all());
             $pegawai = Karyawan::find($id);
             $pegawai->nama = $request->namaKaryawan;
             $pegawai->nik = $request->nikKaryawan;
@@ -644,7 +632,6 @@ class KaryawansController extends Controller
           
             $pegawai->update();
 
-            // dd($request->status_pernikahan);
             Keluarga::where('id_pegawai','=',$id)->update([
                 'status_pernikahan' =>$request->status_pernikahan,
             ]);
@@ -658,7 +645,6 @@ class KaryawansController extends Controller
     //update data keluarga
     public function updateKeluarga(Request $request,$id)
     {
-        // dd($request,$id);
         Keluarga::where('id',$id)->update([
             // 'status_pernikahan' =>$request->status_pernikahan,
             'nama' =>$request->namaPasangan,

@@ -12,6 +12,11 @@
             input[type=number] {
                 -moz-appearance: textfield;
             }
+
+            .form-group{
+                margin-left:10px;
+                margin-right:10px
+            }
         </style>
     </head>
     <!-- Header -->
@@ -38,7 +43,7 @@
                     <div class="content">
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-20 col-sm-20 col-xs-20">
+                                <div class="col-md-20 col-sm-20 col-xs-20" style="margin-left:15px;margin-right:15px;">
                                     <table id="datatable-responsive7" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                         <thead>
                                             <tr>
@@ -50,7 +55,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse($kontakdarurat as $kd)
+                                            @foreach($kontakdarurat as $kd)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
                                                     <td>{{ $kd['nama']}}</td>
@@ -58,9 +63,7 @@
                                                     <td>{{ $kd['alamat']}}</td>
                                                     <td>{{ $kd['hubungan']}}</td>
                                                 </tr>
-                                            @empty
-                                                <td>no data available on table</td> 
-                                            @endforelse
+                                            @endforeach
                                         </tbody>
                                     </table><br>
                                     <form action="/storekontakdarurat" method="POST" enctype="multipart/form-data">
@@ -84,7 +87,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="form-group ">
+                                                                <div class="form-group">
                                                                     <div class="mb-3 ">
                                                                         <label for="exampleInputEmail1" class="form-label">Alamat</label>
                                                                         <input class="form-control" value="{{ $kontakdarurat->alamat ?? '' }}" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat" required></input>
@@ -117,8 +120,8 @@
                                                                         <a href="/create-data-keluarga" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
                                                                     </div>
                                                                     <div class="pull-right">
-                                                                        <button type="submit" name="submit" class="btn btn-sm btn-dark">Simpan</button>
-                                                                        <a href="{{route('create.pendidikan')}}" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
+                                                                        <button type="submit" name="submit" id="btn-simpan" class="btn btn-sm btn-dark">Simpan</button>
+                                                                        <a href="{{route('create.pendidikan')}}" class="btn btn-sm btn-success" id="btn-selanjutnya">Selanjutnya <i class="fa fa-forward"></i></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -140,5 +143,5 @@
         {{-- <script src="assets/js/jquery.min.js"></script> --}}
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-        <script src="assets/pages/form-advanced.js"></script>
+        <script src="assets/pages/form-advanced.js"></script>       
 @endsection

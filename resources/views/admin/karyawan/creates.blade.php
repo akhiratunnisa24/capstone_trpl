@@ -43,7 +43,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20 col-sm-20 col-xs-20">
-                                <form action="storepage" method="POST" enctype="multipart/form-data">
+                                <form action="/storepage" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('post')
                                     <div class="control-group after-add-more">
