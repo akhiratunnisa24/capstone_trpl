@@ -204,7 +204,7 @@ class KaryawansController extends Controller
         {
             $karyawan    = $request->session()->get('karyawan');
             $datakeluarga = json_decode(session('datakeluarga', '[]'), true);
-
+            // dd($datakeluarga);
             if(empty($datakeluarga)) 
             {
                 $datakeluarga = [];
@@ -219,6 +219,7 @@ class KaryawansController extends Controller
     public function storedk(Request $request)
     {
         $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
+       
         $datakeluargaBaru = [
             'status_pernikahan' => $request->status_pernikahan,
             'nama' => $request->namaPasangan,
@@ -228,51 +229,41 @@ class KaryawansController extends Controller
             'pekerjaan' => $request->pekerjaanPasangan,
             'hubungan' => $request->hubungankeluarga
         ];
-
-        $datakeluarga[] = $datakeluargaBaru;
+        $datakeluarga[] = $datakeluargaBaru;    
         session()->put('datakeluarga', json_encode($datakeluarga));
         return redirect()->back();
     }
 
-    // public function storedk(Request $request)
+    //update data pada form create
+    public function updatedk(Request $request)
+    {
+        $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
+
+        $index = $request->nomor_index;
+        // dd($datakeluarga,$index);
+        $datakeluarga[$index]['status_pernikahan'] = $request->status_pernikahan;
+        $datakeluarga[$index]['nama'] = $request->namaPasangan;
+        $datakeluarga[$index]['tgllahir'] = \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d');
+        $datakeluarga[$index]['alamat'] = $request->alamatPasangan;
+        $datakeluarga[$index]['pendidikan_terakhir'] = $request->pendidikan_terakhirPasangan;
+        $datakeluarga[$index]['pekerjaan'] = $request->pekerjaanPasangan;
+        $datakeluarga[$index]['hubungan'] = $request->hubungankeluarga;
+
+        session()->put('datakeluarga', json_encode($datakeluarga));
+        return redirect()->back();
+    }
+
+    // //delete data saat form create pertama
+    // public function deletedk(Request $request, $key)
     // {
     //     $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
-
-    //     // Jika ada nomor array yang dikirim, maka lakukan update pada nomor array tersebut
-    //     if ($request->has('nomorArray')) {
-    //         $nomorArray = $request->input('nomorArray');
-    //         // dd($nomorArray);
-    //         $datakeluargaBaru = [
-    //             'status_pernikahan' => $request->status_pernikahan,
-    //             'nama' => $request->namaPasangan,
-    //             'tgllahir' => \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d'),
-    //             'alamat' => $request->alamatPasangan,
-    //             'pendidikan_terakhir' => $request->pendidikan_terakhirPasangan,
-    //             'pekerjaan' => $request->pekerjaanPasangan,
-    //             'hubungan' => $request->hubungankeluarga
-    //         ];
-
-    //         // Update data pada nomor array yang sudah ada
-    //         $datakeluarga[$nomorArray] = $datakeluargaBaru;
-    //     } else {
-    //         // Jika tidak ada nomor array yang dikirim, maka tambahkan data baru pada akhir array
-    //         $datakeluargaBaru = [
-    //             'status_pernikahan' => $request->status_pernikahan,
-    //             'nama' => $request->namaPasangan,
-    //             'tgllahir' => \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d'),
-    //             'alamat' => $request->alamatPasangan,
-    //             'pendidikan_terakhir' => $request->pendidikan_terakhirPasangan,
-    //             'pekerjaan' => $request->pekerjaanPasangan,
-    //             'hubungan' => $request->hubungankeluarga
-    //         ];
-    //         $datakeluarga[] = $datakeluargaBaru;
+    //     if(isset($datakeluarga[$key])) {
+    //         unset($datakeluarga[$key]);
+    //         session()->put('datakeluarga', json_encode($datakeluarga));
     //     }
-
-    //     session()->put('datakeluarga', json_encode($datakeluarga));
     //     return redirect()->back();
     // }
-
-
+    
     //data kontak darurat
     public function createkonrat(Request $request)
     {
@@ -292,17 +283,33 @@ class KaryawansController extends Controller
             return redirect()->back();
         }    
     }
-     public function storekd(Request $request)
+
+    public function storekd(Request $request)
     {
         $kontakdarurat = json_decode($request->session()->get('kontakdarurat', '[]'), true);
         $kontakdaruratBaru = [
-            'nama' => $request->namaKdarurat,
-            'alamat' => $request->alamatKdarurat,
-            'no_hp' => $request->no_hpKdarurat,
+            'nama'     => $request->namaKdarurat,
+            'alamat'   => $request->alamatKdarurat,
+            'no_hp'    => $request->no_hpKdarurat,
             'hubungan' => $request->hubunganKdarurat,
         ];
 
         $kontakdarurat[] = $kontakdaruratBaru;
+
+        session()->put('kontakdarurat', json_encode($kontakdarurat));
+        return redirect()->back();
+    }
+
+    //update data pada form create
+    public function updatekd(Request $request)
+    {
+        $kontakdarurat = json_decode($request->session()->get('kontakdarurat', '[]'), true);
+        $index = $request->nomor_index;
+
+        $kontakdarurat[$index]['nama']    = $request->namaKdarurat;
+        $kontakdarurat[$index]['alamat']  = $request->alamatKdarurat;
+        $kontakdarurat[$index]['no_hp']   = $request->no_hpKdarurat;
+        $kontakdarurat[$index]['hubungan'] = $request->hubunganKdarurat;
 
         session()->put('kontakdarurat', json_encode($kontakdarurat));
         return redirect()->back();
@@ -334,18 +341,36 @@ class KaryawansController extends Controller
     {
         $pendidikan = json_decode($request->session()->get('pendidikan', '[]'), true);
         $pendidikanBaru = [
-            'tingkat' => $request->tingkat_pendidikan,
-            'nama_sekolah' => $request->nama_sekolah,
-            'kota_pformal' => $request->kotaPendidikanFormal,
-            'jurusan' => $request->jurusan,
-            'tahun_lulus_formal'=>$request->tahun_lulusFormal,
-            'jenis_pendidikan'=>$request->jenis_pendidikan,
-            'kota_pnonformal'=>$request->kotaPendidikanNonFormal,
-            'tahun_lulus_nonformal' =>$request->tahunLulusNonFormal,
+            'tingkat'              => $request->tingkat_pendidikan,
+            'nama_sekolah'         => $request->nama_sekolah,
+            'kota_pformal'         => $request->kotaPendidikanFormal,
+            'jurusan'              => $request->jurusan,
+            'tahun_lulus_formal'   => $request->tahun_lulusFormal,
+            'jenis_pendidikan'     => $request->jenis_pendidikan,
+            'kota_pnonformal'      => $request->kotaPendidikanNonFormal,
+            'tahun_lulus_nonformal'=> $request->tahunLulusNonFormal,
         ];
     
         $pendidikan[] = $pendidikanBaru;
     
+        session()->put('pendidikan', json_encode($pendidikan));
+        return redirect()->back();
+    }
+
+    public function updaterPendidikan(Request $request)
+    {
+        $pendidikan = json_decode($request->session()->get('pendidikan', '[]'), true);
+        $index = $request->nomor_index;
+
+        $pendidikan[$index]['tingkat']              = $request->tingkat_pendidikan;
+        $pendidikan[$index]['nama_sekolah']         = $request->nama_sekolah;
+        $pendidikan[$index]['kota_pformal']         = $request->kotaPendidikanFormal;
+        $pendidikan[$index]['jurusan']              = $request->jurusan;
+        $pendidikan[$index]['tahun_lulus_formal']   = $request->tahun_lulusFormal;
+        $pendidikan[$index]['jenis_pendidikan']     = $request->jenis_pendidikan;
+        $pendidikan[$index]['kota_pnonformal']      = $request->kotaPendidikanNonFormal;
+        $pendidikan[$index]['tahun_lulus_nonformal']= $request->tahunLulusNonFormal;
+
         session()->put('pendidikan', json_encode($pendidikan));
         return redirect()->back();
     }
@@ -361,6 +386,7 @@ class KaryawansController extends Controller
             $kontakdarurat= $request->session()->get('kontakdarurat');
             $pendidikan   = $request->session()->get('pendidikan');
             $pekerjaan = json_decode(session('pekerjaan', '[]'), true);
+            // dd($pekerjaan);
             if(empty($pekerjaan)) 
             {
                 $pekerjaan = [];
@@ -379,14 +405,14 @@ class KaryawansController extends Controller
         
         $pekerjaanBaru = [
             'nama_perusahaan' => $request->namaPerusahaan,
-            'alamat' => $request->alamatPerusahaan,
-            'jenis_usaha' => $request->jenisUsaha,
-            'jabatan' => $request->jabatanRpkerejaan,
-            'nama_atasan' => $request->namaAtasan,
-            'nama_direktur' => $request->namaDirektur,
-            'lama_kerja' => $request->lamaKerja,
+            'alamat'          => $request->alamatPerusahaan,
+            'jenis_usaha'     => $request->jenisUsaha,
+            'jabatan'         => $request->jabatanRpekerjaan,
+            'nama_atasan'     => $request->namaAtasan,
+            'nama_direktur'   => $request->namaDirektur,
+            'lama_kerja'      => $request->lamaKerja,
             'alasan_berhenti' => $request->alasanBerhenti,
-            'gaji' => $request->gajiRpekerjaan,
+            'gaji'            => $request->gajiRpekerjaan,
         ];
 
         $pekerjaan[] = $pekerjaanBaru;
@@ -394,6 +420,32 @@ class KaryawansController extends Controller
         session()->put('pekerjaan', json_encode($pekerjaan));
         return redirect()->back();
     }
+
+    public function updaterPekerjaan(Request $request)
+    {
+        $pekerjaan = json_decode($request->session()->get('pekerjaan', '[]'), true);
+        $index = $request->nomor_index;
+
+        // dd($index);
+        $pekerjaan[$index]['nama_perusahaan']= $request->namaPerusahaan;
+        $pekerjaan[$index]['alamat']         = $request->alamatPerusahaan;
+        $pekerjaan[$index]['jenis_usaha']    = $request->jenisUsaha;
+        $pekerjaan[$index]['jabatan']        = $request->jabatanRpekerjaan;
+        $pekerjaan[$index]['nama_atasan']    = $request->namaAtasan;
+        $pekerjaan[$index]['nama_direktur']  = $request->namaDirektur;
+        $pekerjaan[$index]['lama_kerja']     = $request->lamaKerja;
+        $pekerjaan[$index]['alasan_berhenti']= $request->alasanBerhenti;
+        $pekerjaan[$index]['gaji']           = $request->gajiRpekerjaan;
+
+        dd($pekerjaan[$index]['gaji']);
+        session()->put('pekerjaan', json_encode($pekerjaan));
+        
+        // $d= json_decode(session('pekerjaan', '[]'), true);
+        // dd($d);
+
+        return redirect()->back();
+    }
+
 
     public function previewData(Request $request)
     {
