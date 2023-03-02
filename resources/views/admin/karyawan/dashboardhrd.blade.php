@@ -171,8 +171,8 @@
                                                 <th>Karyawan</th>
                                                 <th>Izin</th>
                                                 <th>Tanggal</th>
-                                                <th>Hari</th>
-                                                <th>Jam</th>
+                                                {{-- <th>Hari</th> --}}
+                                                {{-- <th>Jam</th> --}}
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -182,7 +182,7 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $data->nama }}</td>
-                                                    <td>{{ $data->jenis_izin }} Orang</td>
+                                                    <td>{{ $data->jenis_izin }}</td>
                                                     @if ($data->tgl_mulai != null && $data->tgl_selesai != null)
                                                         <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
                                                             s/d
@@ -193,7 +193,7 @@
                                                         </td>
                                                     @endif
 
-                                                    @if ($data->jml_hari != null)
+                                                    {{-- @if ($data->jml_hari != null)
                                                         <td>{{ $data->jml_hari }} Hari</td>
                                                     @else
                                                         <td></td>
@@ -205,7 +205,7 @@
                                                         </td>
                                                     @else
                                                         <td></td>
-                                                    @endif
+                                                    @endif --}}
                                                     <td>
                                                         <span
                                                             class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 5 ? 'danger' : ($data->status == 7 ? 'success' : '')) }}">

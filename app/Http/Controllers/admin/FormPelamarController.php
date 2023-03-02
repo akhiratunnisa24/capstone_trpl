@@ -20,12 +20,15 @@ use Carbon\Carbon;
 
 class FormPelamarController extends Controller
 {
+   
+
     public function create(Request $request)
 
     {
         // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         // $posisi = Lowongan::all()->where('status', '=', 'Aktif');
-        $posisi = Lowongan::all()->where('status', '=', 'Aktif')->where('tgl_selesai','<',Carbon::now());
+        $posisi = Lowongan::all()->where('status', '=', 'Aktif')->where('tgl_selesai','>',Carbon::now());
+        // dd($posisi);
         $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
 
         if ($openRekruitmen->count() > 0) {
@@ -33,6 +36,23 @@ class FormPelamarController extends Controller
         }
 
         return view('admin.rekruitmen.viewTidakAdaLowongan');
+    }
+
+     public function getPersyaratan(Request $request)
+    {
+        try {
+            $getEmail = Lowongan::select('persyaratan')
+            ->where('id', '=', $request->id_pegawai)->first();
+
+            if (!$getEmail) {
+                throw new \Exception('Data not found');
+            }
+            return response()->json($getEmail, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function store(Request $request)

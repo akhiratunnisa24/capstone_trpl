@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->date('tgl_mulai')->nullable();
             $table->date('tgl_selesai')->nullable();
-            $table->string('persyaratan')->nullable();
+            $table->text('persyaratan')->nullable();
 
             $table->timestamps();
         });

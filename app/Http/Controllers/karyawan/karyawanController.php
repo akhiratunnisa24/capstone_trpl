@@ -16,6 +16,7 @@ use App\Models\Rpekerjaan;
 use App\Models\Alokasicuti;
 use App\Models\Rpendidikan;
 use App\Models\Departemen;
+use App\Models\Lowongan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -56,12 +57,11 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan = karyawan::all()->sortByDesc('created_at');
 
-
+            $posisi = Lowongan::all()->where('status', '=', 'Aktif')->where('tgl_selesai', '<', Carbon::now());
 
             $query = $request->input('query');
             $results = Karyawan::where('nama', 'LIKE', '%' . $query . '%')->get();
-
-
+            
             //ambil id_karyawan yang belum punya akun
             $user = DB::table('users')->pluck('id_pegawai');
             $akun = DB::table('karyawan')->whereNotIn("id", $user)->get();
@@ -70,7 +70,7 @@ class karyawanController extends Controller
                 'row' => $row,
                 'query' => $query,
             ];
-            return view('admin.karyawan.index', compact('karyawan', 'row', 'akun', 'query', 'results'));
+            return view('admin.karyawan.index', compact('karyawan', 'row', 'akun', 'query', 'results', 'posisi'));
         } else {
 
             return redirect()->back();
@@ -114,7 +114,22 @@ class karyawanController extends Controller
         }
     }
 
+    public function getEmail2(Request $request)
+    {
+        try {
+            $getEmail = Lowongan::select('persyaratan')
+            ->where('id', '=', $request->id_pegawai)->first();
 
+            if (!$getEmail) {
+                throw new \Exception('Data not found');
+            }
+            return response()->json($getEmail, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 
     public function karyawanDashboard()
     {

@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="form-group col-xs-12" id="id_pegawai">
-                        <label for="id_pegawai" class="form-label">Karyawan</label>
+                        <label class="form-label">Karyawan</label>
                         <select  class="form-control selecpicker" name="id_pegawai" required>
                             <option value="">Pilih Karyawan</option>
                             @foreach ($akun as $k)
@@ -43,11 +43,29 @@
                         </select>
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="emailKaryawan" class="form-label">Email</label>
+                        <label class="form-label">Email</label>
                         <input id="emailKaryawan" type="text" class="form-control" name="emailKaryawan"
                             autocomplete="off" placeholder="Email Address" readonly>
 
                     </div>
+
+                    <div class="form-group col-xs-12" id="id_pegawai2">
+                        <label class="form-label">Karyawan</label>
+                        <select  class="form-control selecpicker" name="id_pegawai" required>
+                            <option value="">Pilih Karyawan</option>
+                            @foreach ($posisi as $d)
+                                                        <option value="{{ $d->id }}">{{ $d->posisi }}
+                                                        </option>
+                                                    @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label class="form-label">Email</label>
+                        <input id="emailKaryawan2" type="text" class="form-control" name="emailKaryawan"
+                            autocomplete="off" placeholder="Email Address" readonly>
+
+                    </div>
+                    
 
                     <div class="form-group col-xs-12">
                         {{-- <div class=""> --}}
@@ -133,6 +151,30 @@
                 // console.log(data);
                 $('#emailKaryawan').val(data.email);
                 console.log(data?.email)
+            }
+        });
+    });
+</script>
+
+<script>
+    $('#id_pegawai2').on('change', function(e) {
+        var id_pegawai = e.target.value;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                    .attr('content')
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: '{{ route('getPersyaratan') }}',
+            data: {
+                'id_pegawai': id_pegawai
+            },
+            success: function(data) {
+                // console.log(data);
+                $('#emailKaryawan2').val(data.persyaratan);
+                console.log(data?.persyaratan)
             }
         });
     });
