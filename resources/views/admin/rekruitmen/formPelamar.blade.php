@@ -1,3 +1,6 @@
+{{-- @extends('layouts.default')
+@section('content') --}}
+
 <!DOCTYPE html>
 
 <head>
@@ -30,9 +33,10 @@
         {{-- <div class="content-page"> --}}
         <!-- Start content -->
         <div class="content">
-            
+
             <div class="container">
-                <form action="store_pelamar" method="POST" enctype="multipart/form-data" onsubmit="return confirmSave()">
+                <form action="store_pelamar" method="POST" enctype="multipart/form-data"
+                    onsubmit="return confirmSave()">
                     @csrf
                     @method('post')
                     <!-- Page-Title -->
@@ -61,8 +65,7 @@
 
                                             <div class="form-group" id="posisi">
                                                 <label class="form-label">Posisi</label>
-                                                <select id="posisi" class="form-control" name="posisiPelamar"
-                                                    required>
+                                                <select class="form-control" name="posisiPelamar" required onchange="getPersyaratan(this.value)">
                                                     <option value="">Pilih Posisi</option>
                                                     @foreach ($posisi as $d)
                                                         <option value="{{ $d->id }}">{{ $d->posisi }}
@@ -74,7 +77,8 @@
                                             <div class="form-group">
                                                 <div class="mb-3">
                                                     <label class="form-label">Persyaratan</label>
-                                                    <textarea id="persyaratan" type="text" class="form-control" readonly></textarea>
+                                                    <textarea name="persyaratan" id="persyaratan" type="text"
+                                                        class="form-control" placeholder="" readonly rows="10"></textarea>    
                                                 </div>
                                             </div>
 
@@ -158,7 +162,8 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label class="form-label">Upload CV</label>
-                                                        <input type="file" name="pdfPelamar" class="form-control" required>
+                                                        <input type="file" name="pdfPelamar" class="form-control"
+                                                            required>
                                                     </div>
                                                 </div>
 
@@ -202,8 +207,6 @@
                                                     </div>
                                                 </div>
 
-
-
                                             </div>
                                         </div>
 
@@ -230,9 +233,46 @@
 </body>
 
 
-<!-- script untuk mengambil data Email Karyawan  -->
+<script>
+    function getPersyaratan(lowongan_id) {
+        $.ajax({
+            url: '/get-persyaratan/' + lowongan_id,
+            type: 'GET',
+            success: function(response) {
+                $('#persyaratan').val(response.persyaratan);
+            }
+        });
+    }
+</script>
+
+
+<!-- script untuk mengambil data Persyaratan  -->
 <script>
     $('#posisi').on('change', function(e) {
+        var posisi = e.target.value;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                    .attr('content')
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: '{{ route('getPersyaratan') }}',
+            data: {
+                'posisi': posisi
+            },
+            success: function(data) {
+                // console.log(data);
+                $('#persyaratan').val(data.persyaratan);
+                console.log(data?.persyaratan)
+            }
+        });
+    });
+</script>
+
+<script>
+    $('#id_pegawai2').on('change', function(e) {
         var id_pegawai = e.target.value;
         $.ajaxSetup({
             headers: {
@@ -242,23 +282,24 @@
         });
         $.ajax({
             type: "POST",
-            url: '{{ route('getEmail') }}',
+            url: '{{ route('getPersyaratan') }}',
             data: {
                 'id_pegawai': id_pegawai
             },
             success: function(data) {
                 // console.log(data);
-                $('#emailKaryawan').val(data.email);
-                console.log(data?.email)
+                $('#emailKaryawan2').val(data.persyaratan);
+                console.log(data?.persyaratan)
             }
         });
     });
 </script>
 
+
 <script>
-function confirmSave() {
-    return confirm("Apakah Anda yakin ingin mengirim data?");
-}
+    function confirmSave() {
+        return confirm("Apakah Anda yakin ingin mengirim data?");
+    }
 </script>
 
 <script>
@@ -296,3 +337,4 @@ function confirmSave() {
 
 
 
+{{-- @endsection --}}

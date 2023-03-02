@@ -21,6 +21,7 @@ use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\DepartemenController;
 use App\Http\Controllers\admin\RekruitmenController;
 
+use App\Models\Lowongan;
 
 
 use App\Http\Controllers\admin\TidakMasukController;
@@ -101,6 +102,14 @@ Route::get('create_pelamar', [FormPelamarController::class, 'create'])->name('cr
 Route::post('store_pelamar', [FormPelamarController::class, 'store'])->name('store_pelamar');
 Route::get('notif_rekrutmen', [NotifMailRekruitmenController::class, 'index']);
 
+Route::post('/getPersyaratan', [FormPelamarController::class, 'getPersyaratan'])->name('getPersyaratan');
+// Route::post('/getemail2', [karyawanController::class, 'getEmail2'])->name('getEmail2');
+
+Route::get('/get-persyaratan/{id}', function ($id) {
+    $lowongan = Lowongan::find($id);
+    return response()->json(['persyaratan' => $lowongan->persyaratan]);
+});
+
 Route::get('Form-Rekruitmen-RYNEST', [FormPelamarController::class, 'create'], function () {
     return view('admin.rekruitmen.formPelamar');
 });
@@ -126,6 +135,7 @@ Route::get('showkaryawan{id}', [karyawanController::class, 'showkaryawan'])->nam
 Route::post('/import_excel', [karyawanController::class, 'importexcel'])->name('importexcelKaryawan');
 Route::get('/exportexcelkaryawan', [karyawanController::class, 'exportExcel'])->name('exportexcelkaryawan');
 Route::post('/getemail', [karyawanController::class, 'getEmail'])->name('getEmail');
+Route::post('/getemail2', [karyawanController::class, 'getEmail2'])->name('getEmail2');
 Route::post('/tidakmasuk', [AbsensiController::class, 'storeTidakmasuk'])->name('tidakmasuk');
 
 
@@ -194,7 +204,7 @@ Route::get('/kategoridelete{id}', [JeniscutiController::class, 'destroy'])->name
 Route::post('/kategori_izin', [JenisizinController::class, 'store'])->name('izin.store');
 Route::put('/izin_update/{id}', [JenisizinController::class, 'update'])->name('izin_update');
 Route::get('/izin_show/{id}', [JenisizinController::class, 'show'])->name('izin_show');
-Route::get('/kategorizindelete/{id}', [JenisizinController::class, 'destroy']) ->name('destroy.jizin');
+Route::get('/kategorizindelete/{id}', [JenisizinController::class, 'destroy'])->name('destroy.jizin');
 
 //setting alokasi
 Route::get('/settingalokasi', [SettingalokasicutiController::class, 'index'])->name('setting_alokasi.index');
@@ -314,46 +324,46 @@ Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direkt
 // });
 // Route::get('/sendmail', [MailController::class, 'index']);
 
-    //form data karyawan
-    Route::get('/karyawancreates', [KaryawansController::class, 'create'])->name('creates');
-    Route::post('/storepage', [karyawansController::class, 'store_page'])->name('storepage');
+//form data karyawan
+Route::get('/karyawancreates', [KaryawansController::class, 'create'])->name('creates');
+Route::post('/storepage', [karyawansController::class, 'store_page'])->name('storepage');
 
-    //form data keluarga
-    Route::get('/create-data-keluarga', [KaryawansController::class, 'createdakel'])->name('create.dakel');
-    Route::get('/get-data-keluarga', [KaryawansController::class, 'getDataKeluarga'])->name('get.data.keluarga');
-    Route::post('/storedatakeluarga', [karyawansController::class, 'storedk'])->name('storedk');
+//form data keluarga
+Route::get('/create-data-keluarga', [KaryawansController::class, 'createdakel'])->name('create.dakel');
+Route::get('/get-data-keluarga', [KaryawansController::class, 'getDataKeluarga'])->name('get.data.keluarga');
+Route::post('/storedatakeluarga', [karyawansController::class, 'storedk'])->name('storedk');
 
-    //form data kontak darurat
-    Route::get('/create-kontak-darurat', [KaryawansController::class, 'createkonrat'])->name('create.konrat');
-    Route::post('/storekontakdarurat', [karyawansController::class, 'storekd'])->name('storekd');
-    
-    //form data pendidikan
-    Route::get('/create-data-pendidikan', [KaryawansController::class, 'creatependidikan'])->name('create.pendidikan');
-    Route::post('/storepformal', [karyawansController::class, 'storepformal'])->name('storepformal');
-    Route::post('/storepnformal', [karyawansController::class, 'storepformal'])->name('storepnformal');
+//form data kontak darurat
+Route::get('/create-kontak-darurat', [KaryawansController::class, 'createkonrat'])->name('create.konrat');
+Route::post('/storekontakdarurat', [karyawansController::class, 'storekd'])->name('storekd');
 
-    //form data pekerjaan
-    Route::get('/create-data-pekerjaan', [KaryawansController::class, 'createpekerjaan'])->name('create.pekerjaan');
-    Route::post('/storepekerjaan', [karyawansController::class, 'storepekerjaan'])->name('storepekerjaan');
+//form data pendidikan
+Route::get('/create-data-pendidikan', [KaryawansController::class, 'creatependidikan'])->name('create.pendidikan');
+Route::post('/storepformal', [karyawansController::class, 'storepformal'])->name('storepformal');
+Route::post('/storepnformal', [karyawansController::class, 'storepformal'])->name('storepnformal');
 
-    //priview data dan save ke database
-    Route::get('/preview-data-karyawan', [KaryawansController::class, 'previewData'])->name('preview.data');
-    Route::post('/storeData', [KaryawansController::class, 'storetoDatabase'])->name('store.data.karyawan');
+//form data pekerjaan
+Route::get('/create-data-pekerjaan', [KaryawansController::class, 'createpekerjaan'])->name('create.pekerjaan');
+Route::post('/storepekerjaan', [karyawansController::class, 'storepekerjaan'])->name('storepekerjaan');
 
-    //update data
-    Route::put('/updateIdentitas/{id}', [karyawansController::class, 'update'])->name('identitas.update'); 
-    Route::put('/updateKeluarga/{id}', [karyawansController::class, 'updateKeluarga'])->name('updateKeluarga'); 
-    Route::put('/updateKontak/{id}', [karyawansController::class, 'updateKontak'])->name('updateKontak'); 
-    Route::put('/updatePendidikan/{id}', [karyawansController::class, 'updatePendidikan'])->name('updatePendidikan'); 
-    Route::put('/updatePekerjaan/{id}', [karyawansController::class, 'updatePekerjaan'])->name('updatePekerjaan'); 
+//priview data dan save ke database
+Route::get('/preview-data-karyawan', [KaryawansController::class, 'previewData'])->name('preview.data');
+Route::post('/storeData', [KaryawansController::class, 'storetoDatabase'])->name('store.data.karyawan');
 
-    //store setelah show data
-    Route::post('/storesdatakeluarga/{id}', [karyawansController::class, 'storedatakel'])->name('storedatakel');
-    Route::post('/storeskontakdarurat/{id}', [karyawansController::class, 'storekonrat'])->name('storekonrat');
-    Route::post('/storespformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
-    Route::post('/storespnformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
-    Route::post('/storespekerjaan/{id}', [karyawansController::class, 'storespekerjaan'])->name('storespekerjaan');
-    Route::get('/delete-pekerjaan/{id}', [karyawansController::class, 'destroy'])->name('destroy.pekerjaan');
+//update data
+Route::put('/updateIdentitas/{id}', [karyawansController::class, 'update'])->name('identitas.update');
+Route::put('/updateKeluarga/{id}', [karyawansController::class, 'updateKeluarga'])->name('updateKeluarga');
+Route::put('/updateKontak/{id}', [karyawansController::class, 'updateKontak'])->name('updateKontak');
+Route::put('/updatePendidikan/{id}', [karyawansController::class, 'updatePendidikan'])->name('updatePendidikan');
+Route::put('/updatePekerjaan/{id}', [karyawansController::class, 'updatePekerjaan'])->name('updatePekerjaan');
+
+//store setelah show data
+Route::post('/storesdatakeluarga/{id}', [karyawansController::class, 'storedatakel'])->name('storedatakel');
+Route::post('/storeskontakdarurat/{id}', [karyawansController::class, 'storekonrat'])->name('storekonrat');
+Route::post('/storespformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
+Route::post('/storespnformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
+Route::post('/storespekerjaan/{id}', [karyawansController::class, 'storespekerjaan'])->name('storespekerjaan');
+Route::get('/delete-pekerjaan/{id}', [karyawansController::class, 'destroy'])->name('destroy.pekerjaan');
 
 //Kalender
-    Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender');
+Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender');
