@@ -251,7 +251,19 @@ class HomeController extends Controller
         $resign = Resign::orderBy('created_at', 'desc')->get();
         $resignjumlah = $resign->count();
 
-        if ($role == 1){
+        // Role Admin
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        if ($role == 0) {
+
+            $output = [
+                'row' => $row,
+
+            ];
+            return view('admin.karyawan.dashboardAdmin', $output);
+
+        } elseif($role == 1){
             
             $output = [
                 'row' => $row,
@@ -289,6 +301,7 @@ class HomeController extends Controller
 
             ];
             return view('admin.karyawan.dashboardhrd', $output);
+
         } elseif ($role == 2) {
 
             $output = [
@@ -303,6 +316,7 @@ class HomeController extends Controller
                 'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
             ];
             return view('karyawan.dashboardKaryawan', $output);
+
         } else {
 
             $output = [
@@ -315,6 +329,30 @@ class HomeController extends Controller
                 'absenBulanini' => $absenBulanini,
                 'absenBulanlalu'=> $absenBulanlalu,
                 'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
+                'data' => $data,
+                'labelBulan' => $labelBulan,
+                'absenTerlambatHariIni' => $absenTerlambatHariIni,
+                'dataIzinHariini' => $dataIzinHariini,
+                'cutidanizin' => $cutidanizin,
+                'dataIzinPerbulan' => $dataIzinPerbulan,
+                'cutidanizinPerbulan' => $cutidanizinPerbulan,
+                'dataIzinbulanlalu' => $dataIzinbulanlalu,
+                'cutibulanlalu' => $cutibulanlalu,
+                'cutidanizibulanlalu' => $cutidanizibulanlalu,
+                'tahun' => $tahun,
+                'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,
+                'tidakMasukBulanIni' => $tidakMasukBulanIni,
+                'tidakMasukHariIni' => $tidakMasukHariIni,
+                'alokasicuti' => $alokasicuti,
+                'absenKaryawan' => $absenKaryawan,
+                'alokasicuti2' => $alokasicuti2,
+                'posisi' => $posisi,
+                'cuti' => $cuti,
+                'cutijumlah' => $cutijumlah,
+                'izin' => $izin,
+                'izinjumlah' => $izinjumlah,
+                'resign' => $resign,
+                'resignjumlah' => $resignjumlah,
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }
