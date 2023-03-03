@@ -1,15 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\Lowongan;
 // use Illuminate\Support\Facades\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Route;
 
+
 use App\Http\Controllers\HomeController;
-
-
 use App\Http\Controllers\KalenderController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\AbsensiController;
+use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\IzinAdminController;
@@ -18,12 +20,12 @@ use App\Http\Controllers\admin\JenisizinController;
 use App\Http\Controllers\admin\MasterkpiController;
 use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
+
 use App\Http\Controllers\admin\DepartemenController;
+
+
+use App\Http\Controllers\admin\OrganisasiController;
 use App\Http\Controllers\admin\RekruitmenController;
-
-use App\Models\Lowongan;
-
-
 use App\Http\Controllers\admin\TidakMasukController;
 use App\Http\Controllers\admin\AlokasicutiController;
 use App\Http\Controllers\admin\FormPelamarController;
@@ -244,8 +246,20 @@ Route::get('/getUserData/{id}', [ResignAdminController::class, 'getUserData'])->
 //Departemen
 Route::get('/departemen', [DepartemenController::class, 'index'])->name('departemen.index');
 Route::post('/departemen', [DepartemenController::class, 'store'])->name('departemen.store');
-Route::put('/departemen/update{id}', [AlokasicutiController::class, 'update'])->name('departemen.update');
+Route::put('/departemen/update/{id}', [DepartemenController::class, 'update'])->name('departemen.update');
 Route::get('/departemen/delete{id}', [DepartemenController::class, 'destroy'])->name('departemen.delete');
+
+//Jabatan
+Route::get('/jabatan', [JabatanController::class, 'index'])->name('jabatan.index');
+Route::post('/jabatan', [JabatanController::class, 'store'])->name('jabatan.store');
+Route::put('/jabatan/update/{id}', [JabatanController::class, 'update'])->name('jabatan.update');
+Route::get('/jabatan/delete{id}', [JabatanController::class, 'destroy'])->name('jabatan.delete');
+
+//setting organisasi
+Route::get('/setting-organisasi', [OrganisasiController::class, 'index'])->name('organisasi.index');
+Route::post('/setting-organisasi', [OrganisasiController::class, 'store'])->name('organisasi.store');
+Route::put('/setting-organisasi/update/{id}', [OrganisasiController::class, 'update'])->name('organisasi.update');
+
 
 //Absensi Tidak Masuk
 Route::get('/absensi-tidak-masuk', [TidakMasukController::class, 'index'])->name('tidakmasuk.index');

@@ -138,7 +138,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                                    <textarea class="form-control" autocomplete="off" value="{{$karyawan->alamat ?? ''}}" name="alamatKaryawan" rows="3" required></textarea><br>
+                                                                    <textarea class="form-control" autocomplete="off" name="alamatKaryawan" rows="3" required>{{ $karyawan->alamat ?? '' }}</textarea><br>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -215,8 +215,14 @@
                         
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label col-sm-4">Pilih Foto Karyawan</label>
-                                                                    <img class="img-preview img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()"> 
+                                                                    @if($karyawan->foto != null)
+                                                                        <img class="img-preview img-fluid mb-3 col-sm-4" src="{{ asset('Foto_Profile/'.$karyawan->foto) }}">
+                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()"> 
+                                                                    @else
+                                                                        <img class="img-preview img-fluid mb-3 col-sm-4">
+                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()" required> 
+                                                                    @endif
+                                                                   
                                                                 </div>
                         
                                                             </div>

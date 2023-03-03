@@ -35,7 +35,7 @@ class DepartemenController extends Controller
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen = Departemen::orderBy('id', 'asc')->get();
-            return view('admin.departemen.index', compact('departemen', 'row'));
+            return view('admin.datamaster.departemen.index', compact('departemen', 'row'));
         } else {
 
             return redirect()->back();

@@ -92,19 +92,24 @@
                                                     <div class="row">
                                                         <div class="col-md-2"></div>
                                                         <div class="col-md-8 m-t-10">
-                                                            <div class="bg-info panel-heading  col-sm-15 m-b-10">
-                                                                <label class="text-white">Status Pernikahan *)</label>
-                                                            </div>
-                                                            <div class="form-group m-l-5 m-r-5" style="margin-left:10px;margin-right:10px;">
-                                                                <label for="exampleInputEmail1" class="form-label">Status Pernikahan</label>
-                                                                <select class="form-control selectpicker" name="status_pernikahan">
-                                                                    <option value="">Pilih Status Pernikahan</option>
-                                                                    <option value="Sudah Menikah">Sudah Menikah</option>
-                                                                    <option value="Belum Menikah">Belum Menikah</option>
-                                                                    <option value="Duda">Duda</option>
-                                                                    <option value="Janda">Janda</option>
-                                                                </select>
-                                                            </div>
+                                                            @if(empty($datakeluarga) || empty(array_filter(array_column($datakeluarga, 'status_pernikahan'))))
+                                                                <!-- Form status pernikahan -->
+                                                                <div class="bg-info panel-heading  col-sm-15 m-b-10">
+                                                                    <label class="text-white">Status Pernikahan *)</label>
+                                                                </div>
+                                                                <div class="form-group m-l-5 m-r-5" style="margin-left:10px;margin-right:10px;">
+                                                                    <label for="exampleInputEmail1" class="form-label">Status Pernikahan</label>
+                                                                    <select class="form-control selectpicker" name="status_pernikahan" required>
+                                                                        <option value="">Pilih Status Pernikahan</option>
+                                                                        <option value="Sudah Menikah">Sudah Menikah</option>
+                                                                        <option value="Belum Menikah">Belum Menikah</option>
+                                                                        <option value="Duda">Duda</option>
+                                                                        <option value="Janda">Janda</option>
+                                                                    </select>
+                                                                </div>
+                                                          
+                                                            @endif
+
                                                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-10 m-t-10">
                                                                 <label class="text-white">B. DATA KELUARGA *) </label>
                                                             </div>
