@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\KalenderController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\ShiftController;
@@ -402,5 +403,10 @@ Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direkt
 //Kalender
 Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender');
 
-// Setting
-Route::get('settingindex', [SettingController::class, 'index'])->name('permintaancuti.index');
+// Managemen User
+Route::get('settinguser', [SettingController::class, 'settinguser'])->name('settinguser');
+Route::put('editUser{id}', [SettingController::class, 'editUser'])->name('editUser');
+
+// Setting Role Login
+Route::get('settingrole', [SettingController::class, 'settingrole'])->name('settingrole');
+

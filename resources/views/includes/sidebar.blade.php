@@ -48,6 +48,9 @@
                             {{-- <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>   --}}
                             <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>  
                             <li><a href="/metode_rekrutmen"><i class="fa fa-user-plus"></i><span></span>Rekruitmen</a></li>                                       
+                            <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li>
+                            <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span> Managemen User</span></a></li>         
+                            <li><a href=""><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li> 
                         </ul>
                 </li>
                 <li><a href="{{ route('karyawan.index') }}" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title">Data Karyawan</span></a></li>
@@ -220,7 +223,7 @@
             <ul>
                 <li>
                     <a href="#" class="waves-effect"><i class="ti-home"></i><span> Dashboard</span></a>
-                    <a href="karyawandashboard" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span> Setting User</span></a>
+                    <a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span> Setting User</span></a>
                 </li>
                 {{-- <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book-open-page-variant"></i><span class="text-info panel-title">Setting User</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
