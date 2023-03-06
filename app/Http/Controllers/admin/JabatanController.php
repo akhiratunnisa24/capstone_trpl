@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Jabatan;
 use App\Models\Karyawan;
+use App\Models\LevelJabatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,8 @@ class JabatanController extends Controller
     
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $jabatan = Jabatan::orderBy('id', 'asc')->get();
-            return view('admin.datamaster.jabatan.index', compact('jabatan', 'row'));
+            $leveljabatan = LevelJabatan::all();
+            return view('admin.datamaster.jabatan.index', compact('jabatan', 'row','leveljabatan'));
         } else {
     
             return redirect()->back();

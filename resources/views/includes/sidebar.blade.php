@@ -45,8 +45,8 @@
                         <ul class="list-unstyled">
                             <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Departemen</a></li> 
                             <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a></li>   
-                            <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>  
-                            <li><a href=""><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li>  
+                            {{-- <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>   --}}
+                            <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>  
                             <li><a href="/metode_rekrutmen"><i class="fa fa-user-plus"></i><span></span>Rekruitmen</a></li>                                       
                             <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li>
                             <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span> Managemen User</span></a></li>         
@@ -93,6 +93,13 @@
                             <li><a href="/masterkpi"><i class="fa fa-tasks"></i><span></span>Master KPI</a></li>              
                             <li><a href="/indikator-kpi" class="waves-effect"><i class="fa fa-book"></i><span>Indikator</span></a></li>
                             <li><a href="#"><i class="fa fa-file-text"></i><span></span>Penilaian</a></li>          
+                        </ul>
+                </li>
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-gears"></i><span class="text-info panel-title">Setting Aplikasi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href=""><i class="fa fa-group (alias)"></i><span></span>Managemen User</a></li> 
+                            <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>        
                         </ul>
                 </li>
 
