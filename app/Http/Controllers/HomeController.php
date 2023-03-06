@@ -261,7 +261,7 @@ class HomeController extends Controller
                 'row' => $row,
 
             ];
-            return view('admin.setting.dashboardAdmin', $output);
+            return view('admin.datamaster.user.dashboardAdmin', $output);
 
         } elseif ($role == 1){
             
