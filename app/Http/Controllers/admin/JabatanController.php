@@ -32,18 +32,21 @@ class JabatanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'level_jabatan' => 'required',
             'nama_jabatan' => 'required',
         ]);
         $jabatan = new Jabatan;
+        $jabatan->level_jabatan = $request->level_jabatan;
         $jabatan->nama_jabatan = $request->nama_jabatan;
         $jabatan->save();
     
-        return redirect('/jabatan');
+        return redirect('/level-jabatan');
     }
     
     public function update(Request $request, $id)
     {
         $jabatan = Jabatan::find($id);
+        $jabatan->level_jabatan = $request->level_jabatan;
         $jabatan->nama_jabatan = $request->nama_jabatan;
         $jabatan->update();
     
@@ -55,7 +58,7 @@ class JabatanController extends Controller
         $jabatan = Jabatan::find($id);
         $jabatan->delete();
     
-        return redirect('/jabatan');
+        return redirect('/level-jabatan');
     }
     
 }

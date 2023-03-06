@@ -32,6 +32,7 @@ use App\Http\Controllers\admin\FormPelamarController;
 use App\Http\Controllers\admin\ResignAdminController;
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
+use App\Http\Controllers\admin\LeveljabatanController;
 use App\Http\Controllers\karyawan\KaryawansController;
 use App\Http\Controllers\manager\KpimanagerController;
 use App\Http\Controllers\karyawan\KpikaryawanController;
@@ -253,7 +254,13 @@ Route::get('/departemen/delete{id}', [DepartemenController::class, 'destroy'])->
 Route::get('/jabatan', [JabatanController::class, 'index'])->name('jabatan.index');
 Route::post('/jabatan', [JabatanController::class, 'store'])->name('jabatan.store');
 Route::put('/jabatan/update/{id}', [JabatanController::class, 'update'])->name('jabatan.update');
-Route::get('/jabatan/delete{id}', [JabatanController::class, 'destroy'])->name('jabatan.delete');
+Route::get('/jabatan/delete/{id}', [JabatanController::class, 'destroy'])->name('jabatan.delete');
+
+//Level Jabatan
+Route::get('/level-jabatan', [LeveljabatanController::class, 'index'])->name('leveljabatan.index');
+Route::post('/level-jabatan', [LeveljabatanController::class, 'store'])->name('leveljabatan.store');
+Route::put('/level-jabatan/update/{id}', [LeveljabatanController::class, 'update'])->name('leveljabatan.update');
+Route::get('/level-jabatan/delete/{id}', [LeveljabatanController::class, 'destroy'])->name('leveljabatan.delete');
 
 //setting organisasi
 Route::get('/setting-organisasi', [OrganisasiController::class, 'index'])->name('organisasi.index');
