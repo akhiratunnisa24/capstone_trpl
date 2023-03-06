@@ -214,26 +214,18 @@
         <div id="sidebar-menu">
             <ul>
                 <li>
-                    <a href="karyawandashboard" class="waves-effect"><i class="ti-home"></i><span> Dashboard</span></a>
+                    <a href="#" class="waves-effect"><i class="ti-home"></i><span> Dashboard</span></a>
+                    <a href="karyawandashboard" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span> Setting User</span></a>
                 </li>
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book-open-page-variant"></i><span class="text-info panel-title">Setting Absen</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                {{-- <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book-open-page-variant"></i><span class="text-info panel-title">Setting User</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
                         <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
                         <li><a href="/history-absensi" class="waves-effect"><i class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a></li>
                         <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a></li>
                         <li><a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a></li>
-                        {{-- <li><a href="/kpi" class="waves-effect"><i class="fa fa-book"></i><span>Input KPI</span></a></li> --}}
                     </ul>
-                </li>
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book-open-page-variant"></i><span class="text-info panel-title">Setting Cuti</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="/data-staff" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a></li>
-                        <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi </span></a></li>
-                        <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Cuti & Izin</span></a></li>
-                    </ul>
-                </li>
+                </li> --}}
                 <?php }
             ?>
             </ul>

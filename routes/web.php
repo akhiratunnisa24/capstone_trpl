@@ -373,3 +373,6 @@ Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direkt
 
 //Kalender
 Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender');
+
+// Setting
+Route::get('settingindex', [SettingController::class, 'index'])->name('permintaancuti.index');

@@ -261,9 +261,9 @@ class HomeController extends Controller
                 'row' => $row,
 
             ];
-            return view('admin.karyawan.dashboardAdmin', $output);
+            return view('admin.setting.dashboardAdmin', $output);
 
-        } elseif($role == 1){
+        } elseif ($role == 1){
             
             $output = [
                 'row' => $row,
