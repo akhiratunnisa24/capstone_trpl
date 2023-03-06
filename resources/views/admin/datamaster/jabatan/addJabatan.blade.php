@@ -11,9 +11,13 @@
                     @csrf
                     @method('POST')
                     <div class="form-group col-sm">
-                        <label for="level_jabatan" class="col-form-label">Level jabatan</label>
-                        <input type="text" class="form-control" name="level_jabatan" id="level_jabatan" autocomplete="off"
-                            placeholder="Pilih Level Jabatan" required>
+                        <label class="form-label">Level Jabatan</label>
+                        <select  class="form-control selecpicker" name="level_jabatan" required>
+                            <option value="">Pilih Level Jabatan</option>
+                            @foreach ($leveljabatan as $level)
+                                <option value="{{ $level->id }}">{{ $level->nama_level }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group col-sm">

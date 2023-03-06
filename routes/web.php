@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KalenderController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\admin\ShiftController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -19,11 +20,11 @@ use App\Http\Controllers\admin\JeniscutiController;
 use App\Http\Controllers\admin\JenisizinController;
 use App\Http\Controllers\admin\MasterkpiController;
 use App\Http\Controllers\karyawan\ResignController;
+
 use App\Http\Controllers\manager\ManagerController;
 
+
 use App\Http\Controllers\admin\DepartemenController;
-
-
 use App\Http\Controllers\admin\OrganisasiController;
 use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\TidakMasukController;
@@ -38,6 +39,7 @@ use App\Http\Controllers\manager\KpimanagerController;
 use App\Http\Controllers\karyawan\KpikaryawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
+use App\Http\Controllers\admin\SettingorganisasiController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
 use App\Http\Controllers\karyawan\AbsensiKaryawanController;
 use App\Http\Controllers\admin\NotifMailRekruitmenController;
@@ -262,10 +264,15 @@ Route::post('/level-jabatan', [LeveljabatanController::class, 'store'])->name('l
 Route::put('/level-jabatan/update/{id}', [LeveljabatanController::class, 'update'])->name('leveljabatan.update');
 Route::get('/level-jabatan/delete/{id}', [LeveljabatanController::class, 'destroy'])->name('leveljabatan.delete');
 
+//Shift
+Route::get('/shift', [ShiftController::class, 'index'])->name('shift.index');
+Route::post('/shift', [ShiftController::class, 'store'])->name('shift.store');
+Route::put('/shift/update/{id}', [ShiftController::class, 'update'])->name('shift.update');
+Route::get('/shift/delete/{id}', [ShiftController::class, 'destroy'])->name('shift.delete');
+
 //setting organisasi
-Route::get('/setting-organisasi', [OrganisasiController::class, 'index'])->name('organisasi.index');
-Route::post('/setting-organisasi', [OrganisasiController::class, 'store'])->name('organisasi.store');
-Route::put('/setting-organisasi/update/{id}', [OrganisasiController::class, 'update'])->name('organisasi.update');
+Route::get('/setting-organisasi', [SettingorganisasiController::class, 'index'])->name('organisasi.index');
+Route::put('/setting-organisasi/update', [SettingorganisasiController::class, 'update'])->name('organisasi.update');
 
 
 //Absensi Tidak Masuk
