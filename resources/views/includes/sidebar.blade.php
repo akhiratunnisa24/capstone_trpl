@@ -43,12 +43,13 @@
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-database"></i><span class="text-info panel-title">Data Master</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Data Departemen</a></li>              
-                            <li><a href="/metode_rekrutmen"><i class="fa fa-sitemap"></i><span></span>Data Rekruitmen</a></li>
-                            
-                            
-
-                            
+                            <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Departemen</a></li>  
+                            <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>  
+                            <li><a href=""><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li>  
+                            <li><a href="/metode_rekrutmen"><i class="fa fa-user-plus"></i><span></span>Rekruitmen</a></li>                                       
+                            <li><a href=""><i class="fa fa-group (alias)"></i><span></span>Managemen User</a></li> 
+                            <li><a href=""><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li> 
+                                     
                         </ul>
                 </li>
                 <li><a href="{{ route('karyawan.index') }}" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title">Data Karyawan</span></a></li>
@@ -85,7 +86,6 @@
                         <li><a href="/resign_admin"><i class="fa fa-server"></i><span>Resign Karyawan</span></a></li>
                     </ul>
                 </li>
-                
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-server"></i><span class="text-info panel-title">Data Master KPI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
