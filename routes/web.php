@@ -63,7 +63,6 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 Route::post('/registrasi', [App\Http\Controllers\HomeController::class, 'registrasi'])->name('registrasi');
 
-
 // Role HRD
 
 Route::prefix('/karyawan')->name('karyawan.')->group(function () {
@@ -401,7 +400,12 @@ Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direkt
     Route::get('/delete-pekerjaan/{id}', [karyawansController::class, 'destroy'])->name('destroy.pekerjaan');
 
 //Kalender
-Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender');
+    Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender');
+    Route::get('/kalender/harilibur',[KalenderController::class, 'getDataHarilibur'])->name('kalender.harilibur');//getdatajson untuk ditampilkan di kalender
+    Route::get('/setting-kalender', [KalenderController::class, 'setting'])->name('setting.kalender');
+    Route::post('/store-kalender', [KalenderController::class, 'storeSetting'])->name('store.kalender');
+    Route::put('/update-kalender/{id}', [KalenderController::class, 'update'])->name('kalender.update'); 
+    Route::get('/delete-kalender/{id}', [KalenderController::class, 'destroy'])->name('shift.delete');
 
 // Managemen User
 Route::get('settinguser', [SettingController::class, 'settinguser'])->name('settinguser');

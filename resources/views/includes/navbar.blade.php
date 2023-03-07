@@ -7,6 +7,10 @@
                 <div class="topbar-left">
                     <div class="text-center">
                         <a href="/" class="logo"><img src="assets/images/logo_white_3.png" height="135" width="195"></a>
+                        {{-- <img src="{{ asset('images/' . SettingHelper::getSetting()->logo) }}" alt="Logo"> --}}
+                        {{-- <img src="{{ asset('images/' . SettingOrganisasiLogo()) }}" alt="Logo" width="100%">
+                        <img src="{{ asset('images/' . SettingOrganisasiLogo()) }}" alt="Logo"> --}}
+
                         <a href="/" class="logo-sm"><img src="assets/images/logo_sm2.png" height="36"></a>
                     </div>
                 </div>

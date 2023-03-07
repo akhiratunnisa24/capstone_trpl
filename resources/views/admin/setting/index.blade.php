@@ -32,21 +32,21 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8" style="margin-left:18%;">
             <div class="panel panel-secondary" id="">
                 <div class="content">
                     {{-- alert danger --}}
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20 col-sm-20 col-xs-20">
-                                <form action="/setting-organisasi/update" method="PUT" enctype="multipart/form-data">
+                                <form action="/setting-organisasi/update" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-body">
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="col-md-2"></div>
-                                                    <div class="col-md-8 m-t-10">
+                            
+                                                    <div class="col-md-12 m-t-10">
                                                         <div class="form-group">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Nama Perusahaan</label>
@@ -84,8 +84,9 @@
                                                         </div>
                         
                                                         <div class="form-group">
-                                                            <div class="mb-3" style="margin-bottom:20px;">
-                                                                <label class="form-label col-sm-4">Logo Perusahaan</label>
+                                                            <label class="form-label pull-left">Logo Perusahaan</label><br>
+                                                            <div class="mb-3">
+                                                                {{-- <label class="form-label col-sm-4 pull-left">Logo Perusahaan</label> --}}
                                                                 @if($settingorganisasi->logo != null)
                                                                     <img class="img-preview img-fluid mb-3 col-sm-4" src="{{ asset('images/'.$settingorganisasi->logo) }}">
                                                                     <input type="file" name="logo" class="form-control" id="foto" onchange="previewImage()"> 
@@ -99,7 +100,7 @@
                                                             <button type="submit"  name="submit" value="submit" class="btn btn-sm btn-success">Update</button>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-2"></div>
+                                                   
                                                 </div>
                                             </div>
                                     </div>

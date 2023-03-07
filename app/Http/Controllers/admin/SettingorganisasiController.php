@@ -31,44 +31,40 @@ class SettingorganisasiController extends Controller
 
     public function update(Request $request)
     {
-        dd($request->all());
         $data = $this->validate(request(), [
-            'nama_perusahaan' => 'required',
-            'logo' => 'required|image|mimes:jpeg,jpg,png',
-            'email' => 'required',
-            'no_telp' => 'required',
-            'kode_pos' =>'required',
-            ''
+            'nama_perusahaan' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpeg,jpg,png|max:2000',
+            'email' => 'nullable|string',
+            'no_telp' => 'nullable|string',
+            'kode_pos' =>'nullable',
+            'alamat' =>'nullable|string'
         ]);
 
-        dd($data);
         $settingorganisasi = SettingOrganisasi::first();
+        $fotoLama = $settingorganisasi->logo;
 
-        if ($request->has('logo'))
+        if ($fileFoto = $request->hasFile('logo'))
         {
-            $settingorganisasi->nama_perusahaan = $request->nama_perusahaan;
-            $settingorganisasi->email = $request->email;
-            $settingorganisasi->alamat = $request->alamat;
-            $settingorganisasi->no_telp = $request->no_telp;
-            $settingorganisasi->kode_pos = $request->kode_pos;
-           
+            if($fotoLama !== null){
+                $oldImage = public_path('images/'.$fotoLama);
+                if(file_exists($oldImage)){
+                    unlink($oldImage);
+                }
+            }
+
             $fileFoto = $request->file('logo');
             $namaFile = '' . time() . $fileFoto->getClientOriginalName();
             $tujuan_upload = 'images';
             $fileFoto->move($tujuan_upload, $namaFile);
 
             $settingorganisasi->logo = $namaFile;
-
-            dd($settingorganisasi);
         }
-        else
-        {
-            $settingorganisasi->nama_perusahaan = $request->nama_perusahaan;
-            $settingorganisasi->email = $request->email;
-            $settingorganisasi->alamat = $request->alamat;
-            $settingorganisasi->no_telp = $request->no_telp;
-            $settingorganisasi->kode_pos = $request->kode_pos;
-        }   
+    
+        $settingorganisasi->nama_perusahaan = $request->nama_perusahaan;
+        $settingorganisasi->email = $request->email;
+        $settingorganisasi->alamat = $request->alamat;
+        $settingorganisasi->no_telp = $request->no_telp;
+        $settingorganisasi->kode_pos = $request->kode_pos;
 
         $settingorganisasi->update();
 
