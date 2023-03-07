@@ -6,89 +6,34 @@
         <div class="modal-content">
 
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title text-center" id="myModalLabel">Buat Akun Karyawan </h4>
+            <h4 class="modal-title text-center" id="myModalLabel">Buat Role Login</h4>
 
 
             <div class="modal-body">
 
-                <form method="POST" action="{{ url('/registrasi') }}">
+                <form method="POST" action="storerole">
                     @csrf
                     @method('POST')
-                    
-                    {{-- <div class="form-group col-xs-12">
+
+                    <div class="form-group col-xs-12">
                         <label class="form-label">Role</label>
-                            <select type="text" class="form-control selecpicker @error('role') is-invalid @enderror"
-                                name="role" required autocomplete="role" autofocus placeholder="Role">
-                                <option value="">Pilih Role</option>
-                                <option value="4">Management</option>
-                                <option value="3">Manager</option>
-                                <option value="5">Supervisor</option>
-                                <option value="1">HRD</option>
-                                <option value="2">Karyawan</option>
+                        <input type="text" class="form-control" name="role"
+                            autocomplete="off" >
+
+                    </div>
+
+                   
+                    <div class="form-group col-xs-12">
+                        <label class="form-label">Status / Level</label>
+                             <select type="text" class="form-control selecpicker"
+                                name="status" required autocomplete="role" autofocus placeholder="Role">
+                                <option value="">Pilih Level</option>
+                                <option value="1">Admin</option>
+                                <option value="2">User</option>
+                                <option value="3">Super Admin</option>
                             </select>
-
-                            @error('role')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                    </div> --}}
-
-                    <div class="form-group col-xs-12">
-                        <label class="form-label">Role</label>
-                        <select  class="form-control selecpicker" name="role" required>
-                            <option value="">Pilih Role</option>
-                            @foreach ($role as $k)
-                                <option value="{{ $k->id }}">{{ $k->role }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group col-xs-12" id="id_pegawai">
-                        <label class="form-label">Karyawan</label>
-                        <select  class="form-control selecpicker" name="id_pegawai" required>
-                            <option value="">Pilih Karyawan</option>
-                            @foreach ($akun as $k)
-                                <option value="{{ $k->id }}">{{ $k->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group col-xs-12">
-                        <label class="form-label">Email</label>
-                        <input id="emailKaryawan" type="text" class="form-control" name="emailKaryawan"
-                            autocomplete="off" placeholder="Email Address" readonly>
                     </div>
                     
-
-                    <div class="form-group col-xs-12">
-                        {{-- <div class=""> --}}
-                            <label for="exampleInputEmail1" class="form-label">Password</label>
-                            <div class="input-group">
-                                <input id="password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror" name="password" required
-                                    autocomplete="new-password" autofocus placeholder="Password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                                <a class="input-group-addon" id="toggle-password4"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
-                            </div>
-                        {{-- </div> --}}
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <label for="exampleInputEmail1" class="form-label">Confirm Password</label>
-                            <div class="input-group">
-                                <input id="password-confirm" type="password" class="form-control"
-                                    name="password_confirmation" required autocomplete="new-password" autofocus
-                                    placeholder="Confirm Password">
-                                <a class="input-group-addon" id="toggle-password5"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
 
                     {{-- {{-- <div class="form-group"> --}}
                         <div class="col-xs-12">
@@ -100,7 +45,7 @@
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
                             <button class="btn btn-primary w-md waves-effect waves-light"
-                                type="submit">Register</button>
+                                type="submit">Tambah</button>
                         </div>
                     </div>
 

@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    @if (Auth::check() && Auth::user()->role !== 2)
+    @if (Auth::check() && Auth::user()->role !== 4)
 
     <div class="row">
         <div class="col-lg-6">
