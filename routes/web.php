@@ -410,7 +410,11 @@ Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direkt
 // Managemen User
 Route::get('settinguser', [SettingController::class, 'settinguser'])->name('settinguser');
 Route::put('editUser{id}', [SettingController::class, 'editUser'])->name('editUser');
+Route::get('hapususer{id}', [SettingController::class, 'hapususer'])->name('hapususer');
 
 // Setting Role Login
 Route::get('settingrole', [SettingController::class, 'settingrole'])->name('settingrole');
+Route::post('storerole', [SettingController::class, 'storerole'])->name('storerole');
+Route::put('editrole{id}', [SettingController::class, 'editrole'])->name('editrole');
+Route::get('hapusrole{id}', [SettingController::class, 'hapusrole'])->name('hapusrole');
 

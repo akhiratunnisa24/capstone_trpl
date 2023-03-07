@@ -57,7 +57,16 @@ class SettingController extends Controller
             ]
         );
 
-        return back()->with("status", "Password changed successfully!");    
+        return back()->with("status", "Password changed successfully!");
+    }
+    public function hapususer($id)
+    {
+        $user = User::find($id);
+
+        $user->delete();
+
+        return redirect()->back();
+        // return redirect('karyawan'); 
     }
 
     public function settingrole(Request $request)
@@ -72,5 +81,42 @@ class SettingController extends Controller
 
             return redirect()->back();
         }
+    }
+    public function storerole(Request $request)
+    {
+        $role = Auth::user()->role;
+        if ($role == 0 || $role == 1) {
+
+        $user = new Role;
+        $user->role = $request->role;
+        $user->status = $request->status;
+        $user->save();
+
+            return redirect()->back();
+        } else {
+
+            return redirect()->back();
+        }
+    }
+    public function editrole(Request $request, $id)
+    {
+
+        Role::where('id', $id)->update(
+            [
+                'role' => $request->post('role'),
+
+            ]
+        );
+
+        return back()->with("status", "Role changed successfully!");
+    }
+    public function hapusrole($id)
+    {
+        $role = Role::find($id);
+
+        $role->delete();
+
+        return redirect()->back();
+        // return redirect('karyawan'); 
     }
 }

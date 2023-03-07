@@ -18,6 +18,7 @@ use App\Models\Rpendidikan;
 use App\Models\Departemen;
 use App\Models\Lowongan;
 use App\Models\Resign;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -67,11 +68,13 @@ class karyawanController extends Controller
             $user = DB::table('users')->pluck('id_pegawai');
             $akun = DB::table('karyawan')->whereNotIn("id", $user)->get();
 
+            $role = Role::all();
+
             $output = [
                 'row' => $row,
                 'query' => $query,
             ];
-            return view('admin.karyawan.index', compact('karyawan', 'row', 'akun', 'query', 'results', 'posisi'));
+            return view('admin.karyawan.index', compact('karyawan', 'row', 'akun', 'query', 'results', 'posisi', 'role'));
         } else {
 
             return redirect()->back();

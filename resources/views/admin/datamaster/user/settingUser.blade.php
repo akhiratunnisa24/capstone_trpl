@@ -62,7 +62,7 @@
                                 data-target="#myModal{{ $data->id }}"><i
                                                     class="fa fa-pencil"></i></a>
 
-                                            <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                            <button  onclick="hapus_karyawan({{ $data->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                         </div>
                                     </td>
 
@@ -77,5 +77,29 @@
         </div>
     </div>
 
+  <script>
+        function hapus_karyawan(id) {
+            swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swal.fire({
+                        title: "Terhapus!",
+                        text: "Data berhasil di hapus..",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                    })
+                    location.href = '<?= 'http://localhost:8000/hapususer' ?>' + id;
+                }
+            })
+        }
+    </script>
 
 @endsection

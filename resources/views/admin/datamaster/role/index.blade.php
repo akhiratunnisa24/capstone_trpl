@@ -19,9 +19,10 @@
 
     <div class="panel panel-primary">
         <div class="panel-heading clearfix">
-            <a href="#" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Tambah Role Login</a>
+            {{-- <a type="button" class="btn btn-sm btn-dark fa fa-sign-in" data-toggle="modal" data-target="#myModal"> Tambah
+                Role Login</a> --}}
         </div>
-
+        @include('admin.datamaster.role.addRoleModal')
 
         <div class="panel-body m-b-5">
             <div class="row">
@@ -31,10 +32,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
                                 <th>Role</th>
-                                <th>Status Akun</th>
-                                <th>Email</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -42,29 +40,20 @@
                             @foreach ($user as $data)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $data->name }}</td>
                                     <td>{{ $data->role }}</td>
-                                    <td>
-                                        @if ($data->status_akun = 1)
-                                           <span class="badge badge-success">Aktif</span>
-                                        @else
-                                            <span class="badge badge-danger">Tidak Aktif</span>
-                                        @endif
-                                    </td>
-                                    <td>{{ $data->email }}</td>
                                     <td>
                                         <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                             <a class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#myModal{{ $data->id }}"><i
-                                                    class="fa fa-pencil"></i></a>
+                                                data-target="#myModal{{ $data->id }}"><i class="fa fa-pencil"></i></a>
 
-                                            <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                            {{-- <button onclick="hapus_karyawan({{ $data->id }})"
+                                                class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                         </div>
                                     </td>
 
                                 </tr>
                                 {{-- modal show cuti --}}
-                                @include('admin.datamaster.user.editPasswordModal')
+                                @include('admin.datamaster.role.editRoleModal')
                             @endforeach
                         </tbody>
                     </table>
@@ -73,5 +62,28 @@
         </div>
     </div>
 
-
+    <script>
+        function hapus_karyawan(id) {
+            swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swal.fire({
+                        title: "Terhapus!",
+                        text: "Data berhasil di hapus..",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                    })
+                    location.href = '<?= 'http://localhost:8000/hapusrole' ?>' + id;
+                }
+            })
+        }
+    </script>
 @endsection
