@@ -47,6 +47,7 @@
         $('#datatable-responsive13').DataTable();
         $('#datatable-responsive14').DataTable();
         $('#datatable-responsive15').DataTable();
+        $('#datatable-responsive16').DataTable();
         
         
         $('#datatable-scroller').DataTable({

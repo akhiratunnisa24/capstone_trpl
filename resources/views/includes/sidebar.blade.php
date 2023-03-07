@@ -26,9 +26,6 @@
         <div id="sidebar-menu">
             <ul>
                 <li><a href="/" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>
-                {{-- <li>
-                    <a href="/kalender" class="waves-effect"><i class="ti-calendar"></i><span class="text-info panel-title"> Kalender</span></a>
-                </li> --}}
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span class="text-info panel-title">Informasi Pribadi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
@@ -88,6 +85,12 @@
                     </ul>
                 </li>
                 <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="ti-calendar"></i><span class="text-info panel-title">Kalender</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                        <ul class="list-unstyled">
+                            <a href="/kalender" class="waves-effect"><i class="ti-calendar"></i><span class="text-info panel-title">Kalender</span></a>
+                        </ul>
+                </li>
+                <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-server"></i><span class="text-info panel-title">Data Master KPI</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/masterkpi"><i class="fa fa-tasks"></i><span></span>Master KPI</a></li>              
@@ -99,7 +102,8 @@
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-gears"></i><span class="text-info panel-title">Setting Aplikasi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href=""><i class="fa fa-group (alias)"></i><span></span>Managemen User</a></li> 
-                            <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>        
+                            <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>   
+                            <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Setting Kalender</span></a></li>
                         </ul>
                 </li>
 

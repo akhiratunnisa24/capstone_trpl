@@ -202,6 +202,16 @@
             viewMode: "years",
             minViewMode: "years",
         });
+        jQuery("#datepicker-autoclose33").datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose34").datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true,
+            todayHighlight: true,
+        });
 
         jQuery("#datepicker-autoclosea1").datepicker({
             format: "yyyy/mm/dd",
