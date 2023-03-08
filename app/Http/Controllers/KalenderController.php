@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use App\Models\SettingHarilibur;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,8 @@ class KalenderController extends Controller
         $role = Auth::user()->role;
         if ($role == 1) 
         {
-            return view('admin.kalender.index');
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            return view('admin.kalender.index',compact('row'));
         }else{
             return redirect()->back();
         }
@@ -25,8 +27,9 @@ class KalenderController extends Controller
         $role = Auth::user()->role;
         if ($role == 1) 
         {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $settingharilibur = SettingHarilibur::all();
-            return view('admin.kalender.setting', compact('settingharilibur'));
+            return view('admin.kalender.setting', compact('settingharilibur','row'));
 
         }else{
             return redirect()->back();
@@ -62,29 +65,29 @@ class KalenderController extends Controller
         return redirect('/setting-kalender');
     }
 
-    public function getDataHarilibur()
-    {
-        $events = array();
-        $settingharilibur = SettingHarilibur::all();
-        if($settingharilibur->count())
-        {
-            foreach ($settingharilibur as $key => $value) {
-                // $events[] = Calendar::event(
-                    $value->keterangan,
-                    true,
-                    new \DateTime($value->tanggal),
-                    new \DateTime($value->tanggal.' +1 day'),
-                    null,
-                    // Add color and link on event
-                    [
-                        'color' => '#f05050',
-                        'url' => '#'
-                    ]
-                );
-            }
-        }
-        $calendar = Calendar::addEvents($events);
-        return $calendar->toJson();
-    }
+    // public function getDataHarilibur()
+    // {
+    //     $events = array();
+    //     $settingharilibur = SettingHarilibur::all();
+    //     if($settingharilibur->count())
+    //     {
+    //         foreach ($settingharilibur as $key => $value) {
+    //             // $events[] = Calendar::event(
+    //                 $value->keterangan,
+    //                 true,
+    //                 new \DateTime($value->tanggal),
+    //                 new \DateTime($value->tanggal.' +1 day'),
+    //                 null,
+    //                 // Add color and link on event
+    //                 [
+    //                     'color' => '#f05050',
+    //                     'url' => '#'
+    //                 ]
+    //             );
+    //         }
+    //     }
+    //     $calendar = Calendar::addEvents($events);
+    //     return $calendar->toJson();
+    // }
 
 }
