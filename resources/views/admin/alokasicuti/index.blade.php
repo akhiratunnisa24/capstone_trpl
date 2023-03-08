@@ -26,6 +26,7 @@
                     <div class="panel-heading clearfix">
                         <a><label></label></a>
                         <a href="" class="btn btn-dark btn-sm fa fa-cloud-download pull-left" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
+                        <a href="" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Reset Cuti Tahunan</a>
                         {{-- <a href="" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="#newalokasi"> Tambah
                             Alokasi</a> --}}
                     </div>
@@ -47,7 +48,7 @@
                     <div class="panel-body m-b-5">
                         <div class="row">
                             <div class="col-md-12">
-                                <table id="datatable-responsive3" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                                <table id="datatable-responsive17" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
                                             {{-- <th>id</th> --}}

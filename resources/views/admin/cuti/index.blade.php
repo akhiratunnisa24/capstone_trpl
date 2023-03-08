@@ -174,7 +174,7 @@
                                         <div class="panel-body m-b-5">
                                             <div class="row">
                                                 <div class="col-md-20 col-sm-20 col-xs-20">
-                                                    <table  id="datatable-responsive3" class="table dt-responsive table-striped table-bordered" width="100%">
+                                                    <table  id="datatable-responsive18" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>

@@ -9,22 +9,24 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\KalenderController;
+use App\Http\Controllers\admin\KalenderController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\ShiftController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\admin\SisacutiController;
+use App\Http\Controllers\admin\SettingabsensiController;
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\IzinAdminController;
 use App\Http\Controllers\admin\JeniscutiController;
 use App\Http\Controllers\admin\JenisizinController;
+
 use App\Http\Controllers\admin\MasterkpiController;
+
+
 use App\Http\Controllers\karyawan\ResignController;
-
 use App\Http\Controllers\manager\ManagerController;
-
-
 use App\Http\Controllers\admin\DepartemenController;
 use App\Http\Controllers\admin\OrganisasiController;
 use App\Http\Controllers\admin\RekruitmenController;
@@ -177,6 +179,7 @@ Route::get('/kpi', [KpikaryawanController::class, 'index'])->name('kpi.karyawan'
 
 //absensi
 Route::get('/absensi', [AbsensiController::class, 'index'])->name('absensi.index');
+Route::get('/setting-absensi', [SettingabsensiController::class, 'setting'])->name('absensi.setting');
 Route::post('/absensi_karyawan', [AbsensiController::class, 'store'])->name('absensi.action');
 Route::post('/absensi_karyawan/{id}', [AbsensiController::class, 'update'])->name('absen_pulang');
 // Route::get('/exportexcel',[AbsensiController::class,'exportExcel'])->name('exportexcel');
@@ -227,6 +230,9 @@ Route::put('/updatealokasi/{id}', [AlokasicutiController::class, 'update']);
 Route::post('/alokasi-import-excel', [AlokasicutiController::class, 'importexcel'])->name('alokasi.importexcel');
 Route::get('/deletealokasi{id}', [AlokasicutiController::class, 'destroy'])->name('deletealokasi');
 Route::get('/alokasi-cuti', [AlokasicutiController::class, 'alokasicuti'])->name('alokasi');
+
+//sisacuti
+Route::get('/sisacuti', [SisacutiController::class, 'index'])->name('sisacuti.index');
 
 //create alokasi cuti
 Route::post('/gettglmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tglmasuk');
@@ -401,7 +407,7 @@ Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direkt
 
 //Kalender
     Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender');
-    Route::get('/kalender/harilibur',[KalenderController::class, 'getDataHarilibur'])->name('kalender.harilibur');//getdatajson untuk ditampilkan di kalender
+    Route::get('/get-harilibur-data',[KalenderController::class, 'getHarilibur'])->name('getharilibur');//getdatajson untuk ditampilkan di kalender
     Route::get('/setting-kalender', [KalenderController::class, 'setting'])->name('setting.kalender');
     Route::post('/store-kalender', [KalenderController::class, 'storeSetting'])->name('store.kalender');
     Route::put('/update-kalender/{id}', [KalenderController::class, 'update'])->name('kalender.update'); 

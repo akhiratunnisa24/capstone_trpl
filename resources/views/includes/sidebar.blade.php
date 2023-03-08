@@ -62,32 +62,26 @@
                                 Organisasi</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ route('karyawan.index') }}" class="waves-effect"><i
-                            class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title">Data
-                            Karyawan</span></a></li>
+                <li><a href="{{ route('karyawan.index') }}" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title">Data Karyawan</span></a></li>
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span
-                            class="text-info panel-title">Absensi Karyawan</span><span class="pull-right"><i
-                                class="mdi mdi-plus"></i></span></a>
+                            class="text-info panel-title">Absensi Karyawan</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
                         <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
-                        <li><a href="/absensi-tidak-masuk"><i class="mdi mdi-calendar-remove"></i><span>Data Tidak
-                                    Masuk</span></a></li>
+                        <li><a href="/setting-absensi"><i class="fa fa-gear (alias)"></i><span>Setting Absensi</span></a></li>
+                        <li><a href="/absensi-tidak-masuk"><i class="mdi mdi-calendar-remove"></i><span>Data Tidak Masuk</span></a></li>
                     </ul>
                 </li>
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-walk"></i><span
-                            class="text-info panel-title">Cuti & Izin</span><span class="pull-right"><i
-                                class="mdi mdi-plus"></i></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-walk"></i><span class="text-info panel-title">Cuti & Izin</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a>
-                        </li>
-                        <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti &
-                                    Izin</span></a></li>
+                        <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a></li>
+                        <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
                         <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a></li>
-                        <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc mdi-2x"></i><span>Alokasi Cuti</span></a>
-                        </li>
+                        <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc"></i><span>Alokasi Cuti</span></a></li>
+                        <li><a href="/settingcuti"><i class="fa fa-gear (alias)"></i><span>Setting Cuti</span></a></li>
+                        <li><a href="/sisacuti"><i class="fa fa-hourglass-2"></i><span>Sisa Cuti</span></a></li>
                     </ul>
                 </li>
 
@@ -131,7 +125,7 @@
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-gears"></i><span
                             class="text-info panel-title">Setting Aplikasi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
-                        <li><a href=""><i class="fa fa-group (alias)"></i><span></span>Managemen User</a></li>
+                        <li><a href="settinguser"><i class="fa fa-group (alias)"></i><span></span>Managemen User</a></li>
                         <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
                         <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Setting Kalender</span></a></li>
                     </ul>
