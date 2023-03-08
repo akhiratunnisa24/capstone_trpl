@@ -18,22 +18,27 @@ class RoleSeeder extends Seeder
         // id 1
         DB::table('role')->insert([
             'role' => 'HRD Manager',
+            'status' => '1',
         ]);
         // id 2
         DB::table('role')->insert([
             'role' => 'HRD Staff',
+            'status' => '2',
         ]);
         // id 3
         DB::table('role')->insert([
             'role' => 'Manager',
+            'status' => '1',
         ]);
         // id 4
         DB::table('role')->insert([
             'role' => 'Staff',
+            'status' => '1',
         ]);
         // id 5
         DB::table('role')->insert([
             'role' => 'Admin',
+            'status' => '1',
         ]);
     }
 }

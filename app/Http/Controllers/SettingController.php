@@ -19,7 +19,7 @@ class SettingController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 0) {
+        if ($role == 5) {
             
             $output = [
 
@@ -34,7 +34,7 @@ class SettingController extends Controller
     public function settinguser(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 0 || $role == 1) {
+        if ($role == 5 || $role == 1) {
 
             $user = User::all();
 
@@ -72,7 +72,7 @@ class SettingController extends Controller
     public function settingrole(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 0 || $role == 1) {
+        if ($role == 5 || $role == 1) {
 
             $user = Role::all();
 
@@ -85,11 +85,10 @@ class SettingController extends Controller
     public function storerole(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 0 || $role == 1) {
+        if ($role == 5 || $role == 1) {
 
         $user = new Role;
         $user->role = $request->role;
-        $user->status = $request->status;
         $user->save();
 
             return redirect()->back();
