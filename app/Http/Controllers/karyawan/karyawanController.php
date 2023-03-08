@@ -68,7 +68,7 @@ class karyawanController extends Controller
             $user = DB::table('users')->pluck('id_pegawai');
             $akun = DB::table('karyawan')->whereNotIn("id", $user)->get();
 
-            $role = Role::all();
+            $role = Role::where('status','1')->get();
 
             $output = [
                 'row' => $row,

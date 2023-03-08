@@ -22,7 +22,7 @@
                             autocomplete="off" value="{{ $data->role }}" >
                     </div>
                     
-                    <div class="form-group col-xs-12">
+                    {{-- <div class="form-group col-xs-12">
                         <label class="form-label">Status / Level</label>
                              <select type="text" class="form-control selecpicker"
                                 name="status" required autocomplete="role" autofocus placeholder="Role">
@@ -31,7 +31,7 @@
                                  <option value="2" {{ $data->status == '2' ? 'selected' : '' }}>User</option>
                                  <option value="3" {{ $data->status == '3' ? 'selected' : '' }}>Super Admin</option>
                             </select>
-                    </div>
+                    </div> --}}
 
                     <div class="col-xs-12">
                         <div class="checkbox checkbox-primary">
