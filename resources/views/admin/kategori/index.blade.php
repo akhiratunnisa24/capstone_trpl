@@ -49,18 +49,14 @@
                             <div class="col-md-20">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading clearfix">
-                                        {{-- <strong>Kategori Cuti</strong> --}}
-                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                            data-target="#Modal"> Tambah Kategori Cuti</a>
+                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#Modal"> Tambah Kategori Cuti</a>
                                     </div>
                                     {{-- MODALS TAMBAH KATEGORI CUTI --}}
                                     @include('admin.kategori.addcuti')
                                     <div class="panel-body m-b-5">
                                         <div class="row">
                                             <div class="col-md-20 col-sm-20 col-xs-20">
-                                                <table id="datatable-responsive"
-                                                    class="table dt-responsive table-striped table-bordered"
-                                                    width="100%">
+                                                <table id="datatable-responsive" class="table dt-responsive table-striped table-bordered" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th>No</th>
@@ -74,23 +70,16 @@
                                                             <td>{{$loop->iteration}}</td>
                                                             <td>{{$data->jenis_cuti}}</td>
                                                             <td class="text-center">
-                                                                <div class="d-grid gap-2 " role="group"
-                                                                    aria-label="Basic example">
+                                                                <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                                     {{-- <a id="bs" class="btn btn-info btn-sm Modalshowcuti"
                                                                         data-toggle="modal"
                                                                         data-target="#Modalshowcuti{{$data->id}}">
                                                                         <i class="fa fa-eye"></i>
                                                                     </a> --}}
-                                                                    <a id="bs"
-                                                                        class="btn btn-success btn-sm Modaleditcuti"
-                                                                        data-toggle="modal"
-                                                                        data-target="#Modaleditcuti{{$data->id}}">
+                                                                    <a id="bs" class="btn btn-success btn-sm Modaleditcuti" data-toggle="modal" data-target="#Modaleditcuti{{$data->id}}">
                                                                         <i class="fa fa-edit"></i>
                                                                     </a>
-                                                                    <button onclick="cuti({{$data->id}})"
-                                                                        class="btn btn-danger btn-sm">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </button>
+                                                                    <button onclick="cuti({{$data->id}})" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i> </button>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -122,8 +111,7 @@
                                 <div class="panel panel-primary">
                                     <div class="panel-heading clearfix">
                                         {{-- <strong>Kategori Izin</strong> --}}
-                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                            data-target="#smallModal"> Tambah Kategori Izin</a>
+                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#smallModal"> Tambah Kategori Izin</a>
                                         {{--
                                     </div> --}}
                                 </div>
@@ -132,9 +120,7 @@
                                 <div class="panel-body m-b-5">
                                     <div class="row">
                                         <div class="col-md-20 col-sm-20 col-xs-20">
-                                            <table id="datatable-responsive1"
-                                                class="table dt-responsive nowrap table-striped table-bordered"
-                                                cellspacing="0" width="100%">
+                                            <table id="datatable-responsive1" class="table dt-responsive nowrap table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
@@ -148,24 +134,14 @@
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data->jenis_izin}}</td>
                                                         <td class="text-center">
-                                                            <div class="d-grid gap-2 " role="group"
-                                                                aria-label="Basic example">
-                                                                <a id="bs" class="btn btn-sm btn-success Modaleditizin"
-                                                                    data-toggle="modal"
-                                                                    data-target="#Modaleditizin{{$data->id}}">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </a>
+                                                            <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                                <a id="bs" class="btn btn-sm btn-success Modaleditizin"  data-toggle="modal"  data-target="#Modaleditizin{{$data->id}}">
+                                                                    <i class="fa fa-edit"></i></a>
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button onclick="izin({{$data->id}})"
-                                                                    class="btn btn-danger btn-sm">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </button>
-                                                                {{-- <button id="bs" type="submit"
-                                                                    class="btn btn-danger btn-sm"
-                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </button> --}}
+                                                                {{-- <button onclick="izin({{$data->id}})" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i></button> --}}
+                                                                {{-- <button id="bs" type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                                    <i class="fa fa-trash"></i> </button> --}}
                                                             </div>
                                                         </td>
                                                     </tr>

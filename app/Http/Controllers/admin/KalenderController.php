@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use App\Models\SettingHarilibur;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class KalenderController extends Controller
@@ -16,9 +17,39 @@ class KalenderController extends Controller
         if ($role == 1) 
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            return view('admin.kalender.index',compact('row'));
+            $getharilibur = SettingHarilibur::all();
+            foreach($getharilibur as $harilibur)
+            {
+                $events[] = [
+                    'title' => $harilibur->keterangan,
+                    'date' => $harilibur->tanggal,
+                ];
+               
+            }
+            return $events;
+           
+            return view('admin.kalender.index',compact('row'),['events'=>$events]);
         }else{
             return redirect()->back();
+        }
+    }
+
+    public function getHarilibur()
+    {
+        try {
+            $getHarilibur = SettingHarilibur::select('id', 'tanggal', 'keterangan')->get();
+            
+            if (!$getHarilibur) {
+                throw new \Exception('Data not found');
+            }
+            // return response()->json($getHarilibur, 200);
+            return response()->json([
+                'events' => $getHarilibur,
+           ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
         }
     }
 

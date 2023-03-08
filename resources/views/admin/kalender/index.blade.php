@@ -22,18 +22,13 @@
         <div class="row">
             <div class="col-lg-2 col-md-2">
 
-                <h4>Created Events</h4>
+                {{-- <h4>Created Events</h4>
                 <form method="post" id="add_event_form">
                     <input type="text" class="form-control new-event-form" placeholder="Add new event..." />
                 </form>
 
                 <div id='external-events'>
                     <h4 class="m-b-15">Draggable Events</h4>
-                    {{-- <div class='fc-event'>My Event 1</div>
-                    <div class='fc-event'>My Event 2</div>
-                    <div class='fc-event'>My Event 3</div>
-                    <div class='fc-event'>My Event 4</div>
-                    <div class='fc-event'>My Event 5</div> --}}
                 </div>
                 <!-- checkbox -->
                 <div class="checkbox checkbox-custom">
@@ -41,7 +36,7 @@
                     <label for="drop-remove">
                         Remove after drop
                     </label>
-                </div>
+                </div> --}}
 
             </div>
 
@@ -71,6 +66,123 @@
     <script src="assets/plugins/moment/moment.js"></script>
     <script src='assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
     <script src="assets/pages/calendar-init.js"></script>
-
     <script src="assets/js/app.js"></script>
+    <script>
+        $(document).ready(function(){
+            var harilibur = json_encode($events);
+            console.log(harilibur);
+            $('#calendar').fullCalendar({
+                header:{
+                    left: 'prev,next today',
+                    center:'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                events : {harilibur}
+            })
+        });
+    </script>
+    {{-- <script>
+        $(document).ready(function () {
+           
+        var SITEURL = "{{ url('/') }}";
+          
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+          
+        var calendar = $('#calendar').fullCalendar({
+                            editable: true,
+                            events: SITEURL + "/get-harilibur-data",
+                            displayEventTime: false,
+                            editable: true,
+                            eventRender: function (event, element, view) {
+                                if (event.allDay === 'true') {
+                                        event.allDay = true;
+                                } else {
+                                        event.allDay = false;
+                                }
+                            },
+                            selectable: true,
+                            selectHelper: true,
+                            select: function (start, end, allDay) {
+                                var title = prompt('Event Title:');
+                                if (title) {
+                                    var start = $.fullCalendar.formatDate(start, "Y-MM-DD");
+                                    var end = $.fullCalendar.formatDate(end, "Y-MM-DD");
+                                    $.ajax({
+                                        url: SITEURL + "/get-harilibur-data",
+                                        data: {
+                                            title: ,
+                                            start: start,
+                                            end: end,
+                                            type: 'add'
+                                        },
+                                        type: "POST",
+                                        success: function (data) {
+                                            displayMessage("Event Created Successfully");
+          
+                                            calendar.fullCalendar('renderEvent',
+                                                {
+                                                    id: data.id,
+                                                    title: title,
+                                                    start: start,
+                                                    end: end,
+                                                    allDay: allDay
+                                                },true);
+          
+                                            calendar.fullCalendar('unselect');
+                                        }
+                                    });
+                                }
+                            },
+         
+                        });
+         
+        });
+         
+        function displayMessage(message) {
+            toastr.success(message, 'Event');
+        } 
+          
+    </script> --}}
+    {{-- <script>
+        $(document).ready(function() {
+            // ajax request to get data from server
+            $.ajax({
+                url: '/get-harilibur-data', // change this url to your endpoint to retrieve data
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // initialize calendar
+                    var calendar = $('#calendar').fullCalendar({
+                        // options for fullcalendar plugin
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,agendaWeek,agendaDay'
+                        },
+                        defaultView: 'month',
+                        selectable: true,
+                        selectHelper: true,
+                        editable: true,
+                        droppable: true,
+                        dragRevertDuration: 0,
+                        eventLimit: true, // allow "more" link when too many events
+                        events: data, // set the events to the retrieved data
+        
+                        // other fullcalendar callbacks here
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // handle error here
+                    console.log('Error:', errorThrown);
+                }
+            });
+        });
+    </script> --}}
+        
+
+
 @endsection
