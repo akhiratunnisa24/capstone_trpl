@@ -179,7 +179,8 @@ Route::get('/kpi', [KpikaryawanController::class, 'index'])->name('kpi.karyawan'
 
 //absensi
 Route::get('/absensi', [AbsensiController::class, 'index'])->name('absensi.index');
-Route::get('/setting-absensi', [SettingabsensiController::class, 'setting'])->name('absensi.setting');
+Route::get('/setting-absensi', [SettingabsensiController::class, 'setting'])->name('absensi.setting');//setting-absensi-update/
+Route::put('/setting-absensi-update/{id}', [SettingabsensiController::class, 'update'])->name('absensi.setting.update');
 Route::post('/absensi_karyawan', [AbsensiController::class, 'store'])->name('absensi.action');
 Route::post('/absensi_karyawan/{id}', [AbsensiController::class, 'update'])->name('absen_pulang');
 // Route::get('/exportexcel',[AbsensiController::class,'exportExcel'])->name('exportexcel');

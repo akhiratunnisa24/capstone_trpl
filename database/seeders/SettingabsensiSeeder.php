@@ -22,6 +22,7 @@ class SettingabsensiSeeder extends Seeder
             'jumlah_terlambat' =>2,
             'sanksi_terlambat' =>'Teguran Biasa',
             'jumlah_tidakmasuk'=>NULL,
+            'status_tidakmasuk'=>NULL, 
             'sanksi_tidak_masuk'=>NULL,
         ]);
         Settingabsensi::insert([
@@ -29,6 +30,7 @@ class SettingabsensiSeeder extends Seeder
             'jumlah_terlambat' =>3,
             'sanksi_terlambat' =>'SP Pertama',
             'jumlah_tidakmasuk'=>NULL,
+            'status_tidakmasuk'=>NULL, 
             'sanksi_tidak_masuk'=>NULL,
         ]);
         Settingabsensi::insert([
@@ -36,6 +38,7 @@ class SettingabsensiSeeder extends Seeder
             'jumlah_terlambat' =>4,
             'sanksi_terlambat' =>'SP Kedua',
             'jumlah_tidakmasuk'=>NULL,
+            'status_tidakmasuk'=>NULL, 
             'sanksi_tidak_masuk'=>NULL,
         ]);
         Settingabsensi::insert([
@@ -43,6 +46,7 @@ class SettingabsensiSeeder extends Seeder
             'jumlah_terlambat' =>5,
             'sanksi_terlambat' =>'SP Ketiga',
             'jumlah_tidakmasuk'=>NULL,
+            'status_tidakmasuk'=>NULL, 
             'sanksi_tidak_masuk'=>NULL,
         ]);
         Settingabsensi::insert([
@@ -50,6 +54,7 @@ class SettingabsensiSeeder extends Seeder
             'jumlah_terlambat' =>NULL,
             'sanksi_terlambat' =>NULL,
             'jumlah_tidakmasuk'=>3,
+            'status_tidakmasuk'=>'tanpa keterangan', 
             'sanksi_tidak_masuk'=>'Potong Gaji',
         ]);
         Settingabsensi::insert([
@@ -57,6 +62,7 @@ class SettingabsensiSeeder extends Seeder
             'jumlah_terlambat' =>NULL,
             'sanksi_terlambat' =>NULL,
             'jumlah_tidakmasuk'=>3,
+            'status_tidakmasuk'=>'tanpa keterangan', 
             'sanksi_tidak_masuk'=>"Potong Cuti Tahunan",
         ]);
     }

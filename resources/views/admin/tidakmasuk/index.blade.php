@@ -102,6 +102,28 @@
             </div>
         </div>
     </div>
+    <div class="container row">
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div class="row col-mb-12">
+                        <a href="#data-keluarga"><label><span class="text-muted font-size-14">Terlambat</span></label></a>
+                        
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div class="row col-mb-12">
+                        <a href="#data-keluarga"><label><span class="text-muted font-size-14">Tidak Masuk</span></label></a>
+    
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div> 
     <!-- Close Header -->
     <!-- Start content -->
     <div class="content">

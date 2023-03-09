@@ -7,7 +7,9 @@ use Carbon\Carbon;
 use App\Models\Karyawan;
 use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
+use App\Models\Settingabsensi;
 use App\Exports\TidakmasukExport;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -39,17 +41,64 @@ class TidakMasukController extends Controller
             if(isset($idkaryawan) && isset($bulan) && isset($tahun))
             {
                 $tidakmasuk = Tidakmasuk::with('departemen')->where('id_pegawai', $idkaryawan)
-                ->whereMonth('tanggal', $bulan)
-                ->whereYear('tanggal',$tahun)
-                ->get();
-                // dd($tidakmasuk);
+                    ->whereMonth('tanggal', $bulan)
+                    ->whereYear('tanggal',$tahun)
+                    ->get();
             }else
             {
                 $tidakmasuk = Tidakmasuk::with('departemen')
                 ->orderBy('tanggal','desc')
                 ->get();
-                // dd($tidakmasuk);
             }
+
+            //< !-- Untuk notifikasi sanksi karyawan -->
+            // $status = DB::table('setting_absensi')
+            //     ->where('status_tidakmasuk', '=', 'tanpa keterangan')
+            //     ->select('jumlah_tidakmasuk', 'sanksi_tidak_masuk')
+            //     ->first();
+
+            // $potongcuti = DB::table('tidakmasuk')
+            //     ->whereIn('status', [$status->status_tidakmasuk])
+            //     ->groupBy('id_pegawai')
+            //     ->havingRaw('COUNT(*) >= 2 OR COUNT(*) > 3 OR COUNT(*) > 5')
+            //     ->get();
+
+            // $cuti = DB::table('setting_absensi')
+            // ->leftJoin('tidakmasuk', function($join) {
+            //     $join->on('setting_absensi.status_tidakmasuk', '=', 'tidakmasuk.status')
+            //         ->where('tidakmasuk.status', '=', 'tanpa keterangan');
+            // })
+            // ->select('tidakmasuk.id_pegawai as id_pegawai','setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
+            // ->whereNotNull('tidakmasuk.id_pegawai')
+            // ->groupBy('tidakmasuk.id_pegawai','setting_absensi.sanksi_tidak_masuk')
+            // ->havingRaw('COUNT(tidakmasuk.id_pegawai) > 2 < 4')
+            // ->orHavingRaw('COUNT(tidakmasuk.id_pegawai)  >5')
+            // ->get();
+
+            
+            $cuti = DB::table('tidakmasuk')
+            ->join('setting_absensi', function ($join) {
+                $join->on('tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+                     ->where('tidakmasuk.status', '=', 'tanpa keterangan');
+            })
+            ->select('tidakmasuk.id_pegawai', 'setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
+            ->groupBy('tidakmasuk.id_pegawai', 'setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk')
+            ->havingRaw('COUNT(tidakmasuk.id_pegawai) >= setting_absensi.jumlah_tidakmasuk')
+            ->get();
+
+            $absensi = SettingAbsensi::leftJoin('tidakmasuk', function($join) {
+                $join->on('setting_absensi.status_tidakmasuk', '=', 'tidakmasuk.status')
+                    ->where('tidakmasuk.status', '=', 'tanpa keterangan');
+            })
+            ->select('tidakmasuk.id_pegawai','setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
+            ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk','tidakmasuk.id_pegawai')
+            ->get();
+            
+
+        
+            return $absensi;
+
+
             return view('admin.tidakmasuk.index',compact('tidakmasuk','karyawan','row'));
             
             //menghapus filter data

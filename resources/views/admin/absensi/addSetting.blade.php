@@ -1,29 +1,20 @@
 <style>
-    .modal-backdrop:nth-child(2n-1) {
-        opacity: 0;
+    .col-form-label{
+        -webkit-text-fill-color: black;
     }
 </style>
-<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="newsetting" aria-hidden="true">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css">
+
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-center" id="newsetting">Setting Absensi</h4>
-            </div>
-
-            @if ($errors->any())
-            <div class="alert alert-danger show" role="alert">
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
+                <h4 class="modal-title text-center" id="add">Tambah Setting Absensi</h4>
+            </div> 
+        
             <div class="modal-body">
-                <form class="input" action="" method="POST"
-                    enctype="multipart/form-data">
+                <form class="input" action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="panel-body">
@@ -72,22 +63,48 @@
                                 </select>
                             </div>
                         </div>
-                        
                     </div>
+                    <div class="form-group col-sm" id="jumlah_terlambat">
+                        <label class="col-form-label">Jumlah Terlambat</label>
+                        <input type="number" class="form-control" autocomplete="off" name="jumlah_terlambat" required>
+                    </div>
+
+                    <div class="form-group col-sm" id="sanksi_terlambat">
+                        <label class="col-form-label">Jenis Sanksi</label>
+                        <select name="sanksi_terlambat" class="form-control" required>
+                            <option value="">Pilih Jenis Sanksi</option>
+                            <option value="Teguran Biasa">Terlambat</option>
+                            <option value="SP Pertama">SP Pertama</option>
+                            <option value="SP Kedua">SP Kedua</option>
+                            <option value="SP Ketiga">SP Ketiga</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-sm" id="jumlah_tidakmasuk">
+                        <label class="col-form-label">Jumlah Tidak Masuk</label>
+                        <input type="number" class="form-control" autocomplete="off" name="jumlah_tidakmasuk" required>
+                    </div>
+
+                    <div class="form-group col-sm"  id="sanksi_tidak_masuk">
+                        <label class="col-form-label">Jenis Sanksi</label>
+                        <select name="sanksi_tidak_masuk" class="form-control" required>
+                            <option value="">Pilih Jenis Sanksi</option>
+                            <option value="Potong Gaji">Potong Gaji</option>
+                            <option value="Potong Cuti Tahunan">Potong Cuti Tahunan</option>
+                        </select>
+                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" name="submit" value="save">Save</button>
+                        <button type="submit" class="btn btn-success" name="submit" value="save">Send</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-<!-- jQuery  -->
 <script src="assets/js/jquery.min.js"></script>
-<script src="assets/pages/form-advanced.js"></script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
 <script type="text/javascript">
     $(function()
         {
@@ -116,9 +133,24 @@
                     $('#sanksi_tidak_masuk').prop("hidden", false);
                 }
             });
-        });
-       
-        // $(document).ready(function () 
-            $("#mode_karyawan").select2();
-        // );
+        }
+    );  
+</script>
+<script>
+    jQuery(function($){
+    $('.clockpicker').clockpicker({
+        format: 'mm'
+    }).find('input').change(function()
+    {
+        console.log(this.value);
+    });
+    var input = $('#single-input').clockpicker({
+        placement: 'bottom',
+        align: 'left',
+        autoclose: true,
+        'default': 'now',
+        format: 'mm'
+    }); 
+});
+
 </script>

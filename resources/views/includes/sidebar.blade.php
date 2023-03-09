@@ -52,8 +52,7 @@
                                 Karyawan</span></a></li>
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span
-                                class="text-info panel-title">Absensi Karyawan</span><span class="pull-right"><i
-                                    class="mdi mdi-plus"></i></span></a>
+                                class="text-info panel-title">Absensi Karyawan</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
                             <li><a href="/absensi-tidak-masuk"><i class="mdi mdi-calendar-remove"></i><span>Data Tidak
@@ -126,16 +125,16 @@
                                     class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Departemen</a></li>
-                            <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a>
-                            </li>
+                            <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a></li>
                             {{-- <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>   --}}
                             <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
-                            <li><a href="/metode_rekrutmen"><i class="fa fa-user-plus"></i><span></span>Rekruitmen</a>
-                            </li>
+                            <li><a href="/metode_rekrutmen"><i class="fa fa-user-plus"></i><span></span>Rekruitmen</a></li>
                             <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li>
                             {{-- <li><a href="#"><i class="fa fa-institution (alias)"></i><span></span>Setting
                                     Organisasi</a></li> --}}
                             {{-- <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span> Managemen User</span></a></li>      --}}
+                            <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span
+                                class="text-info panel-title">Managemen User</span></a></li>
                         </ul>
                     </li>
 
@@ -264,3 +263,7 @@
     </div> <!-- end sidebarinner -->
 </div>
 <div class="content-page">
+
+
+
+

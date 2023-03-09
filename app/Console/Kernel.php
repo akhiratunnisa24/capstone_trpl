@@ -55,6 +55,7 @@ class Kernel extends ConsoleKernel
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->whereDay('tanggal', '=', Carbon::now())->pluck('id_karyawan');
                 $karyawan = DB::table('karyawan')->whereNotIn('id', $karyawanSudahAbsen)->get();
+                // dd($karyawan);
             
                 //pengecekan ke data cuti apakah ada atau tidak
 
@@ -90,41 +91,41 @@ class Kernel extends ConsoleKernel
                     } else {
                         $absen->status = 'tanpa keterangan';
 
-                        $alokasicuti = Alokasicuti::where('id_jeniscuti', '=', 3)
-                            ->where('id_karyawan',  $absen->id_pegawai)
-                            ->first();
-                        $durasi_baru = $alokasicuti->durasi - 1;
+                        // $alokasicuti = Alokasicuti::where('id_jeniscuti', '=', 3)
+                        //     ->where('id_karyawan',  $absen->id_pegawai)
+                        //     ->first();
+                        // $durasi_baru = $alokasicuti->durasi - 1;
 
-                        //update durasi di alokasicutikaryawan
-                        Alokasicuti::where('id_jeniscuti', $alokasicuti->id_jeniscuti)
-                            ->where('id_karyawan',  $absen->id_pegawai)
-                            ->update(
-                                ['durasi' => $durasi_baru]
-                            );
+                        // //update durasi di alokasicutikaryawan
+                        // Alokasicuti::where('id_jeniscuti', $alokasicuti->id_jeniscuti)
+                        //     ->where('id_karyawan',  $absen->id_pegawai)
+                        //     ->update(
+                        //         ['durasi' => $durasi_baru]
+                        //     );
                     }
 
                     $absen->save();
 
                     // Pengiriman Email Notifikasi jgn di hapus 
 
-                    $alokasicuti2 = Alokasicuti::where('id_jeniscuti', '=', 3)
-                        ->where('id_karyawan',  $absen->id_pegawai)
-                        ->first();
-                    $durasi_baru = $alokasicuti2->durasi - 1;
+                    // $alokasicuti2 = Alokasicuti::where('id_jeniscuti', '=', 3)
+                    //     ->where('id_karyawan',  $absen->id_pegawai)
+                    //     ->first();
+                    // $durasi_baru = $alokasicuti2->durasi - 1;
 
-                    $epegawai = Karyawan::select('email as email', 'nama as nama')->where('id', '=', $absen->id_pegawai)->first();
-                    $tujuan = $epegawai->email;
-                    $data = [
-                        'subject'     => 'Notifikasi Pengurangan Jatah Cuti Tahunan',
-                        'id'          => $alokasicuti2->id_jeniscuti,
-                        'id_jeniscuti' => $alokasicuti2->jeniscutis->jenis_cuti,
-                        'keterangan'   => $absen->status,
-                        'tanggal'     => Carbon::parse($absen->tanggal)->format("d M Y"),
-                        'jml_cuti'    => 1,
-                        'nama'        => $epegawai->nama,
-                        'jatahcuti'   => $durasi_baru,
-                    ];
-                    Mail::to($tujuan)->send(new TidakmasukNotification($data));
+                    // $epegawai = Karyawan::select('email as email', 'nama as nama')->where('id', '=', $absen->id_pegawai)->first();
+                    // $tujuan = $epegawai->email;
+                    // $data = [
+                    //     'subject'     => 'Notifikasi Pengurangan Jatah Cuti Tahunan',
+                    //     'id'          => $alokasicuti2->id_jeniscuti,
+                    //     'id_jeniscuti' => $alokasicuti2->jeniscutis->jenis_cuti,
+                    //     'keterangan'   => $absen->status,
+                    //     'tanggal'     => Carbon::parse($absen->tanggal)->format("d M Y"),
+                    //     'jml_cuti'    => 1,
+                    //     'nama'        => $epegawai->nama,
+                    //     'jatahcuti'   => $durasi_baru,
+                    // ];
+                    // Mail::to($tujuan)->send(new TidakmasukNotification($data));
                     
                 }
 
