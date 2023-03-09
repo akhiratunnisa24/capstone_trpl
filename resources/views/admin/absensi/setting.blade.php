@@ -4,10 +4,10 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Data Absensi</h4>
+                <h4 class="pull-left page-title">Setting Absensi</h4>
                 <ol class="breadcrumb pull-right">
                     <li><a href="#">Human Resources Management System</a></li>
-                    <li class="active">Data Absensi</li>
+                    <li class="active">Setting Absensi</li>
                 </ol>
                 <div class="clearfix"></div>
             </div>
@@ -32,9 +32,10 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Toleransi Terlambat (menit)</th>
-                                                <th>Jumlah Terlambat</th>
+                                                <th>Terlambat</th>
                                                 <th>Sanksi Terlambat</th>
-                                                <th>Jumlah Tidak Masuk</th>
+                                                <th>Tidak Masuk</th>
+                                                <th>Status</th>
                                                 <th>Sanksi Tidak Masuk</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -44,13 +45,27 @@
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
                                                     @if($data->toleransi_terlambat !=NULL)
-                                                        <td>{{\Carbon\Carbon::parse($data->toleransi_terlambat)->format('i:s')}}</td>
+                                                        <td>{{\Carbon\Carbon::parse($data->toleransi_terlambat)->format('i')}} menit</td>
                                                     @else
                                                         <td></td>
                                                     @endif
-                                                    <td>{{$data->kjumlah_terlambat}}</td>
+                                                    @if($data->jumlah_terlambat !=NULL)
+                                                        <td>{{$data->jumlah_terlambat}} kali</td>
+                                                    @else
+                                                        <td></td>
+                                                    @endif
                                                     <td>{{$data->sanksi_terlambat}}</td>
-                                                    <td>{{$data->jumlah_tidakmasuk}}</td>
+
+                                                    @if($data->jumlah_tidakmasuk !=NULL)
+                                                        <td>{{$data->jumlah_tidakmasuk}} kali</td>
+                                                    @else
+                                                        <td></td>
+                                                    @endif
+                                                    @if($data->status_tidakmasuk != NULL)
+                                                        <td>{{$data->status_tidakmasuk}}</td>
+                                                    @else
+                                                        <td></td>
+                                                    @endif
                                                     <td>{{$data->sanksi_tidak_masuk}}</td>
                                                     <td class="text-center">
                                                         <div class="d-grid gap-2 " role="group" aria-label="Basic example">
@@ -64,7 +79,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                {{-- @include('admin.absensi.editSetting'); --}}
+                                                @include('admin.absensi.editSetting')
                                             @endforeach
                                         </tbody>
                                     </table>

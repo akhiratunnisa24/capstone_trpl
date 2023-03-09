@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('setting_absensi', function (Blueprint $table) {
             $table->id();
-            $table->time('toleransi_terlambat');
+            $table->time('toleransi_terlambat')->nullable();
             $table->integer('jumlah_terlambat')->nullable();
             $table->enum('sanksi_terlambat',['Teguran Biasa','SP Pertama','SP Kedua','SP Ketiga'])->nullable();
             $table->integer('jumlah_tidakmasuk')->nullable();
+            $table->string('status_tidakmasuk,20')->nullable();
             $table->enum('sanksi_tidak_masuk',['Potong Gaji','Potong Cuti Tahunan'])->nullable();
             $table->timestamps();
         });
