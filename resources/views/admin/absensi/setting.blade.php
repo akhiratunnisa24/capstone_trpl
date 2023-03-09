@@ -48,7 +48,7 @@
                                                     @else
                                                         <td></td>
                                                     @endif
-                                                    <td>{{$data->kjumlah_terlambat}}</td>
+                                                    <td>{{$data->jumlah_terlambat}}</td>
                                                     <td>{{$data->sanksi_terlambat}}</td>
                                                     <td>{{$data->jumlah_tidakmasuk}}</td>
                                                     <td>{{$data->sanksi_tidak_masuk}}</td>

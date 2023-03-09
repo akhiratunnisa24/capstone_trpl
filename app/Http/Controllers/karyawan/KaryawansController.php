@@ -17,6 +17,23 @@ use Illuminate\Support\Facades\Cache;
 
 class KaryawansController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+
     //data karyawan
     public function create(Request $request)
     {
@@ -58,30 +75,41 @@ class KaryawansController extends Controller
             if(empty($request->session()->get('karyawan')))
             {
                 $karyawan                = new Karyawan;
+                $karyawan->nip           = $request->nipKaryawan;
                 $karyawan->nama          = $request->namaKaryawan;
                 $karyawan->tgllahir      = \Carbon\Carbon::parse($request->tgllahirKaryawan)->format('Y-m-d');
+                $karyawan->tempatlahir   = $request->tempatlahirKaryawan;
                 $karyawan->jenis_kelamin = $request->jenis_kelaminKaryawan;
                 $karyawan->alamat        = $request->alamatKaryawan;
                 $karyawan->no_hp         = $request->no_hpKaryawan;
                 $karyawan->email         = $request->emailKaryawan;
                 $karyawan->agama         = $request->agamaKaryawan;
                 $karyawan->nik           = $request->nikKaryawan;
+                $karyawan->no_kk         = $request->nokkKaryawan;
+                $karyawan->no_npwp       = $request->nonpwpKaryawan;
+                $karyawan->no_bpjs_ket   = $request->nobpjskerKaryawan;
+                $karyawan->no_bpjs_kes   = $request->nobpjskesKaryawan;
+                $karyawan->no_akdhk      = $request->noAkdhk;
+                $karyawan->no_program_pensiun   = $request->noprogramPensiun;
+                $karyawan->no_program_askes   = $request->noprogramAskes;
+                $karyawan->no_rek   = $request->norekKaryawan;
+                $karyawan->nama_bank   = $request->nama_bank;
                 $karyawan->gol_darah     = $request->gol_darahKaryawan;
                 $karyawan->foto          = $namaFile;
                 $karyawan->jabatan       = $request->jabatanKaryawan;
+                $karyawan->status_karyawan       = $request->statusKaryawan;
                 $karyawan->tglmasuk      = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');
                 $karyawan->atasan_pertama= $request->atasan_pertama;
                 $karyawan->atasan_kedua  = $request->atasan_kedua;
-                $karyawan->status_karyawan= $request->status_karyawan;
                 $karyawan->tipe_karyawan = $request->tipe_karyawan;
-                $karyawan->no_kk         = $request->no_kk;
+                // $karyawan->no_kk         = $request->no_kk;
                 $karyawan->status_kerja  = $request->status_kerja;
                 $karyawan->cuti_tahunan  = $request->cuti_tahunan;
                 $karyawan->divisi        = $request->divisi;
-                $karyawan->no_rek        = $request->no_rek;
-                $karyawan->no_bpjs_kes   = $request->no_bpjs_ket;
-                $karyawan->no_npwp       = $request->no_npwp;
-                $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
+                // $karyawan->no_rek        = $request->no_rek;
+                // $karyawan->no_bpjs_kes   = $request->no_bpjs_ket;
+                // $karyawan->no_npwp       = $request->no_npwp;
+                // $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
                 $karyawan->kontrak       = $request->kontrak;
                 $karyawan->gaji          = $request->gaji;
                 $karyawan->tglkeluar     = $request->tglkeluar;
@@ -92,30 +120,41 @@ class KaryawansController extends Controller
             {
                 $karyawan = $request->session()->get('karyawan');
 
+                $karyawan->nip          = $request->nipKaryawan;
                 $karyawan->nama          = $request->namaKaryawan;
                 $karyawan->tgllahir      = \Carbon\Carbon::parse($request->tgllahirKaryawan)->format('Y-m-d');
+                $karyawan->tempatlahir   = $request->tempatlahirKaryawan;
                 $karyawan->jenis_kelamin = $request->jenis_kelaminKaryawan;
                 $karyawan->alamat        = $request->alamatKaryawan;
                 $karyawan->no_hp         = $request->no_hpKaryawan;
                 $karyawan->email         = $request->emailKaryawan;
                 $karyawan->agama         = $request->agamaKaryawan;
                 $karyawan->nik           = $request->nikKaryawan;
+                $karyawan->no_kk           = $request->nokkKaryawan;
+                $karyawan->no_npwp       = $request->nonpwpKaryawan;
+                $karyawan->no_bpjs_ket   = $request->nobpjskerKaryawan;
+                $karyawan->no_bpjs_kes   = $request->nobpjskesKaryawan;
+                $karyawan->no_akdhk   = $request->noAkdhk;
+                $karyawan->no_program_pensiun   = $request->noprogramPensiun;
+                $karyawan->no_program_askes   = $request->noprogramAskes;
+                $karyawan->no_rek   = $request->norekKaryawan;
+                $karyawan->nama_bank   = $request->nama_bank;
                 $karyawan->gol_darah     = $request->gol_darahKaryawan;
                 $karyawan->foto          = $namaFile;
                 $karyawan->jabatan       = $request->jabatanKaryawan;
+                $karyawan->status_karyawan       = $request->statusKaryawan;
                 $karyawan->tglmasuk      = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');
                 $karyawan->atasan_pertama= $request->atasan_pertama;
                 $karyawan->atasan_kedua  = $request->atasan_kedua;
-                $karyawan->status_karyawan= $request->status_karyawan;
                 $karyawan->tipe_karyawan = $request->tipe_karyawan;
-                $karyawan->no_kk         = $request->no_kk;
+                // $karyawan->no_kk         = $request->no_kk;
                 $karyawan->status_kerja  = $request->status_kerja;
                 $karyawan->cuti_tahunan  = $request->cuti_tahunan;
                 $karyawan->divisi        = $request->divisi;
-                $karyawan->no_rek        = $request->no_rek;
-                $karyawan->no_bpjs_kes   = $request->no_bpjs_ket;
-                $karyawan->no_npwp       = $request->no_npwp;
-                $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
+                // $karyawan->no_rek        = $request->no_rek;
+                // $karyawan->no_bpjs_kes   = $request->no_bpjs_ket;
+                // $karyawan->no_npwp       = $request->no_npwp;
+                // $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
                 $karyawan->kontrak       = $request->kontrak;
                 $karyawan->gaji          = $request->gaji;
                 $karyawan->tglkeluar     = $request->tglkeluar;
@@ -129,29 +168,40 @@ class KaryawansController extends Controller
             if(empty($request->session()->get('karyawan')))
             {
                 $karyawan               = new Karyawan;
+                $karyawan->nip          = $request->nipKaryawan;
                 $karyawan->nama         = $request->namaKaryawan;
                 $karyawan->tgllahir     = \Carbon\Carbon::parse($request->tgllahirKaryawan)->format('Y-m-d');
+                $karyawan->tempatlahir  = $request->tempatlahirKaryawan;
                 $karyawan->jenis_kelamin= $request->jenis_kelaminKaryawan; 
                 $karyawan->alamat       = $request->alamatKaryawan;
                 $karyawan->no_hp        = $request->no_hpKaryawan;
                 $karyawan->email        = $request->emailKaryawan;
                 $karyawan->agama        = $request->agamaKaryawan;
                 $karyawan->nik          = $request->nikKaryawan;
+                $karyawan->no_kk        = $request->nokkKaryawan;
+                $karyawan->no_npwp       = $request->nonpwpKaryawan;
+                $karyawan->no_bpjs_ket   = $request->nobpjskerKaryawan;
+                $karyawan->no_bpjs_kes   = $request->nobpjskesKaryawan;
+                $karyawan->no_akdhk   = $request->noAkdhk;
+                $karyawan->no_program_pensiun   = $request->noprogramPensiun;
+                $karyawan->no_program_askes   = $request->noprogramAskes;
+                $karyawan->no_rek   = $request->norekKaryawan;
+                $karyawan->nama_bank   = $request->nama_bank;
                 $karyawan->gol_darah    = $request->gol_darahKaryawan;
                 $karyawan->jabatan      = $request->jabatanKaryawan;
+                $karyawan->status_karyawan       = $request->statusKaryawan;
                 $karyawan->tglmasuk     = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');
                 $karyawan->atasan_pertama= $request->atasan_pertama;
                 $karyawan->atasan_kedua = $request->atasan_kedua;
-                $karyawan->status_karyawan= $request->status_karyawan;
                 $karyawan->tipe_karyawan= $request->tipe_karyawan;
-                $karyawan->no_kk        = $request->no_kk;
+                // $karyawan->no_kk        = $request->no_kk;
                 $karyawan->status_kerja = $request->status_kerja;
                 $karyawan->cuti_tahunan = $request->cuti_tahunan;
                 $karyawan->divisi       = $request->divisi;
-                $karyawan->no_rek       = $request->no_rek;
-                $karyawan->no_bpjs_kes  = $request->no_bpjs_ket;
-                $karyawan->no_npwp      = $request->no_npwp;
-                $karyawan->no_bpjs_ket  = $request->no_bpjs_ket;
+                // $karyawan->no_rek       = $request->no_rek;
+                // $karyawan->no_bpjs_kes  = $request->no_bpjs_ket;
+                // $karyawan->no_npwp      = $request->no_npwp;
+                // $karyawan->no_bpjs_ket  = $request->no_bpjs_ket;
                 $karyawan->kontrak      = $request->kontrak;
                 $karyawan->gaji         = $request->gaji;
                 $karyawan->tglkeluar    = $request->tglkeluar;
@@ -162,29 +212,40 @@ class KaryawansController extends Controller
             {
                 $karyawan = $request->session()->get('karyawan');
 
+                $karyawan->nip           = $request->nipKaryawan;
                 $karyawan->nama          = $request->namaKaryawan;
                 $karyawan->tgllahir      = \Carbon\Carbon::parse($request->tgllahirKaryawan)->format('Y-m-d');
+                $karyawan->tempatlahir   = $request->tempatlahirKaryawan;
                 $karyawan->jenis_kelamin = $request->jenis_kelaminKaryawan;
                 $karyawan->alamat        = $request->alamatKaryawan;
                 $karyawan->no_hp         = $request->no_hpKaryawan;
                 $karyawan->email         = $request->emailKaryawan;
                 $karyawan->agama         = $request->agamaKaryawan;
                 $karyawan->nik           = $request->nikKaryawan;
+                $karyawan->no_kk         = $request->nokkKaryawan;
+                $karyawan->no_npwp       = $request->nonpwpKaryawan;
+                $karyawan->no_bpjs_ket   = $request->nobpjskerKaryawan;
+                $karyawan->no_bpjs_kes   = $request->nobpjskesKaryawan;
+                $karyawan->no_akdhk   = $request->noAkdhk;
+                $karyawan->no_program_pensiun   = $request->noprogramPensiun;
+                $karyawan->no_program_askes   = $request->noprogramAskes;
+                $karyawan->no_rek   = $request->norekKaryawan;
+                $karyawan->nama_bank   = $request->nama_bank;   
                 $karyawan->gol_darah     = $request->gol_darahKaryawan;
                 $karyawan->jabatan       = $request->jabatanKaryawan;
+                $karyawan->status_karyawan       = $request->statusKaryawan;
                 $karyawan->tglmasuk      = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');
                 $karyawan->atasan_pertama= $request->atasan_pertama;
                 $karyawan->atasan_kedua  = $request->atasan_kedua;
-                $karyawan->status_karyawan= $request->status_karyawan;
                 $karyawan->tipe_karyawan = $request->tipe_karyawan;
-                $karyawan->no_kk         = $request->no_kk;
+                // $karyawan->no_kk         = $request->no_kk;
                 $karyawan->status_kerja  = $request->status_kerja;
                 $karyawan->cuti_tahunan  = $request->cuti_tahunan;
-                $karyawan->divisi        = $request->divisi;
-                $karyawan->no_rek        = $request->no_rek;
-                $karyawan->no_bpjs_kes   = $request->no_bpjs_ket;
-                $karyawan->no_npwp       = $request->no_npwp;
-                $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
+                // $karyawan->divisi        = $request->divisi;
+                // $karyawan->no_rek        = $request->no_rek;
+                // $karyawan->no_bpjs_kes   = $request->no_bpjs_ket;
+                // $karyawan->no_npwp       = $request->no_npwp;
+                // $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
                 $karyawan->kontrak       = $request->kontrak;
                 $karyawan->gaji          = $request->gaji;
                 $karyawan->tglkeluar     = $request->tglkeluar;
@@ -222,9 +283,12 @@ class KaryawansController extends Controller
        
         $datakeluargaBaru = [
             'status_pernikahan' => $request->status_pernikahan,
+            'jumlah_anak' => $request->jumlahAnak,
             'nama' => $request->namaPasangan,
+            'jenis_kelamin' => $request->jenis_kelaminKeluarga,
             'tgllahir' => \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d'),
-            'alamat' => $request->alamatPasangan,
+            'tempatlahir' => $request->tempatlahirKeluarga,
+            // 'alamat' => $request->alamatPasangan,
             'pendidikan_terakhir' => $request->pendidikan_terakhirPasangan,
             'pekerjaan' => $request->pekerjaanPasangan,
             'hubungan' => $request->hubungankeluarga
@@ -242,9 +306,12 @@ class KaryawansController extends Controller
         $index = $request->nomor_index;
         // dd($datakeluarga,$index);
         $datakeluarga[$index]['status_pernikahan'] = $request->status_pernikahan;
+        $datakeluarga[$index]['jumlah_anak'] = $request->jumlahAnak;
         $datakeluarga[$index]['nama'] = $request->namaPasangan;
+        $datakeluarga[$index]['jenis_kelamin'] = $request->jenis_kelaminKeluarga;
         $datakeluarga[$index]['tgllahir'] = \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d');
-        $datakeluarga[$index]['alamat'] = $request->alamatPasangan;
+        $datakeluarga[$index]['tempatlahir'] = $request->tempatlahirKeluarga;
+        // $datakeluarga[$index]['alamat'] = $request->alamatPasangan;
         $datakeluarga[$index]['pendidikan_terakhir'] = $request->pendidikan_terakhirPasangan;
         $datakeluarga[$index]['pekerjaan'] = $request->pekerjaanPasangan;
         $datakeluarga[$index]['hubungan'] = $request->hubungankeluarga;
@@ -645,6 +712,15 @@ class KaryawansController extends Controller
             $pegawai = Karyawan::find($id);
             $pegawai->nama = $request->namaKaryawan;
             $pegawai->nik = $request->nikKaryawan;
+            $pegawai->no_kk         = $request->nokkKaryawan;
+            $pegawai->no_npwp       = $request->nonpwpKaryawan;
+            $pegawai->no_bpjs_ket   = $request->nobpjskerKaryawan;
+            $pegawai->no_bpjs_kes   = $request->nobpjskesKaryawan;
+            $pegawai->no_akdhk   = $request->noAkdhk;
+            $pegawai->no_program_pensiun   = $request->noprogramPensiun;
+            $pegawai->no_program_askes   = $request->noprogramAskes;
+            $pegawai->no_rek   = $request->norekKaryawan;
+            $pegawai->nama_bank   = $request->nama_bank;
             $pegawai->tgllahir = $request->tgllahirKaryawan;
             $pegawai->jenis_kelamin = $request->jenis_kelaminKaryawan;
             $pegawai->alamat = $request->alamatKaryawan;
@@ -670,6 +746,15 @@ class KaryawansController extends Controller
             $pegawai = Karyawan::find($id);
             $pegawai->nama = $request->namaKaryawan;
             $pegawai->nik = $request->nikKaryawan;
+            $pegawai->no_kk         = $request->nokkKaryawan;
+            $pegawai->no_npwp       = $request->nonpwpKaryawan;
+            $pegawai->no_bpjs_ket   = $request->nobpjskerKaryawan;
+            $pegawai->no_bpjs_kes   = $request->nobpjskesKaryawan;
+            $pegawai->no_akdhk   = $request->noAkdhk;
+            $pegawai->no_program_pensiun   = $request->noprogramPensiun;
+            $pegawai->no_program_askes   = $request->noprogramAskes;
+            $pegawai->no_rek   = $request->norekKaryawan;
+            $pegawai->nama_bank   = $request->nama_bank;
             $pegawai->tgllahir = $request->tgllahirKaryawan;
             $pegawai->jenis_kelamin = $request->jenis_kelaminKaryawan;
             $pegawai->alamat = $request->alamatKaryawan;

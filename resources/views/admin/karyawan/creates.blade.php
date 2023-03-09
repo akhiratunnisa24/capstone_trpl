@@ -58,11 +58,19 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 m-t-10">
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">NIK Karyawan</label>
+                                                                        <input type="text" name="nipKaryawan" value="{{ $karyawan->nip ?? '' }}" class="form-control"
+                                                                            placeholder="Masukkan NIK Karyawan" required>
+                                                                    </div>
+                                                                </div>
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
                                                                     <input type="text" name="namaKaryawan" class="form-control" value="{{ $karyawan->nama ?? '' }}" placeholder="Masukkan Nama" autocomplete="off" required>
-                                                                    
                                                                 </div>
                                                             </div>
                         
@@ -78,13 +86,20 @@
                                                             </div>
                         
                                                             <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Kota Kelahiran</label>
+                                                                    <input type="text" name="tempatlahirKaryawan" class="form-control" value="{{ $karyawan->tempatlahir ?? '' }}" placeholder="Masukkan Kota Kelahiran" autocomplete="off" required>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="form-group">
                                                                 <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
                                                                 <select class="form-control selectpicker" name="jenis_kelaminKaryawan" required>
                                                                     <option value="">Pilih Jenis Kelamin</option>
                                                                     <option value="L" {{ $karyawan->jenis_kelamin == 'L' ? 'selected' : '' }}>Laki-Laki</option>
                                                                     <option value="P" {{ $karyawan->jenis_kelamin == 'P' ? 'selected' : '' }}>Perempuan</option>
                                                                 </select>
-                                                            </div>
+                                                            </div>  
                         
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1" class="form-label">Departemen</label>
@@ -134,13 +149,51 @@
                                                                     <option value="Staff" {{ $karyawan->jabatan ?? '' == 'Staff' ? 'selected' : '' }}>Staff</option>
                                                                 </select>
                                                             </div>
+
+                                                            <div class="form-group">
+                                                                <label for="exampleInputEmail1" class="form-label">Status Karyawan</label>
+                                                                <select class="form-control selectpicker" name="statusKaryawan" required>
+                                                                    <option value="">Pilih Jabatan</option>
+                                                                    <option value="Tetap"  {{ $karyawan->status_karyawan ?? '' == 'Tetap' ? 'selected' : '' }}>Tetap</option>
+                                                                    <option value="Kontrak" {{ $karyawan->status_karyawan ?? '' == 'Kontrak' ? 'selected' : '' }}>Kontrak</option>
+                                                                    <option value="Probation" {{ $karyawan->status_karyawan ?? '' == 'Probation' ? 'selected' : '' }}>Probation</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                    <label for="exampleInputEmail1" class="form-label">Golongan Darah</label>
+                                                                    <select class="form-control selectpicker" name="gol_darahKaryawan" required>
+                                                                        <option value="">Pilih Golongan Darah</option>
+                                                                        <option value="A" {{ $karyawan->gol_darah ?? '' == 'A' ? 'selected' : '' }}>A</option>
+                                                                        <option value="B" {{ $karyawan->gol_darah ?? '' == 'B' ? 'selected' : '' }}>B</option>
+                                                                        <option value="AB" {{ $karyawan->gol_darah ?? '' == 'AB' ? 'selected' : '' }}>AB</option>
+                                                                        <option value="O" {{ $karyawan->gol_darah ?? '' == 'O' ? 'selected' : '' }}>O</option>
+                                                                    </select>
+                                                                </div>
+                        
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label col-sm-4">Pilih Foto Karyawan</label>
+                                                                    @if($karyawan->foto != null)
+                                                                        <img class="img-preview img-fluid mb-3 col-sm-4" src="{{ asset('Foto_Profile/'.$karyawan->foto) }}">
+                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()"> 
+                                                                    @else
+                                                                        <img class="img-preview img-fluid mb-3 col-sm-4">
+                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()" required> 
+                                                                    @endif
+                                                                   
+                                                                </div>
+                                                                </div>
+
+                                                                
                         
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                                    <textarea class="form-control" autocomplete="off" name="alamatKaryawan" rows="3" required>{{ $karyawan->alamat ?? '' }}</textarea><br>
+                                                                    <textarea class="form-control" autocomplete="off" name="alamatKaryawan" rows="5" required>{{ $karyawan->alamat ?? '' }}</textarea><br>
                                                                 </div>
                                                             </div>
+
                                                         </div>
                         
                                                         <!-- baris sebelah kanan  -->
@@ -196,34 +249,87 @@
                         
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1" class="form-label">NIK</label>
+                                                                        <label for="exampleInputEmail1" class="form-label">No. KTP</label>
                                                                         <input type="number" name="nikKaryawan" class="form-control" value="{{ $karyawan->nik ?? '' }}"
                                                                             placeholder="Masukkan NIK" required>
                                                                     </div>
                                                                 </div>
-                        
+
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputEmail1" class="form-label">Golongan Darah</label>
-                                                                    <select class="form-control selectpicker" name="gol_darahKaryawan" required>
-                                                                        <option value="">Pilih Golongan Darah</option>
-                                                                        <option value="A" {{ $karyawan->gol_darah ?? '' == 'A' ? 'selected' : '' }}>A</option>
-                                                                        <option value="B" {{ $karyawan->gol_darah ?? '' == 'B' ? 'selected' : '' }}>B</option>
-                                                                        <option value="AB" {{ $karyawan->gol_darah ?? '' == 'AB' ? 'selected' : '' }}>AB</option>
-                                                                        <option value="O" {{ $karyawan->gol_darah ?? '' == 'O' ? 'selected' : '' }}>O</option>
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">No. Kartu Keluarga</label>
+                                                                        <input type="number" name="nokkKaryawan" class="form-control" value="{{ $karyawan->no_kk ?? '' }}"
+                                                                            placeholder="Masukkan No. Kartu Keluarga" >
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">No. NPWP</label>
+                                                                        <input type="number" name="nonpwpKaryawan" class="form-control" value="{{ $karyawan->no_npwp ?? '' }}"
+                                                                            placeholder="Masukkan No. NPWP" >
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">No. BPJS Ketenagakerjaan</label>
+                                                                        <input type="number" name="nobpjskerKaryawan" class="form-control" value="{{ $karyawan->no_bpjs_ket ?? '' }}"
+                                                                            placeholder="Masukkan No. BPJS Ketenagakerjaan" >
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">No. BPJS Kesehatan</label>
+                                                                        <input type="number" name="nobpjskesKaryawan" class="form-control" value="{{ $karyawan->no_bpjs_kes ?? '' }}"
+                                                                            placeholder="Masukkan No. BPJS Kesehatan" >
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">No. Asuransi AKDHK</label>
+                                                                        <input type="number" name="noAkdhk" class="form-control" value="{{ $karyawan->no_akdhk ?? '' }}"
+                                                                            placeholder="Masukkan No. AKDHK" >
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">No. Program Pensiun</label>
+                                                                        <input type="number" name="noprogramPensiun" class="form-control" value="{{ $karyawan->no_program_pensiun ?? '' }}"
+                                                                            placeholder="Masukkan No. Program Pensiun" >
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">No. Program ASKES</label>
+                                                                        <input type="number" name="noprogramAskes" class="form-control" value="{{ $karyawan->no_program_askes ?? '' }}"
+                                                                            placeholder="Masukkan No. Program ASKES" >
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="exampleInputEmail1" class="form-label">Nama Bank</label>
+                                                                    <select class="form-control selectpicker" name="nama_bank" required>
+                                                                        <option value="">Pilih Bank</option>
+                                                                        <option value="BCA" {{ $karyawan->nama_bank ?? '' == 'BCA' ? 'selected' : '' }}>BCA</option>
+                                                                        <option value="Mandiri" {{ $karyawan->nama_bank ?? '' == 'Mandiri' ? 'selected' : '' }} >Mandiri</option>
                                                                     </select>
                                                                 </div>
-                        
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label col-sm-4">Pilih Foto Karyawan</label>
-                                                                    @if($karyawan->foto != null)
-                                                                        <img class="img-preview img-fluid mb-3 col-sm-4" src="{{ asset('Foto_Profile/'.$karyawan->foto) }}">
-                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()"> 
-                                                                    @else
-                                                                        <img class="img-preview img-fluid mb-3 col-sm-4">
-                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()" required> 
-                                                                    @endif
-                                                                   
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">No. Rekening</label>
+                                                                        <input type="number" name="norekKaryawan" class="form-control" value="{{ $karyawan->no_rek ?? '' }}"
+                                                                            placeholder="Masukkan No. Rekening" >
+                                                                    </div>
                                                                 </div>
+                        
+                        
+                                                                
                         
                                                             </div>
                                                         </div>

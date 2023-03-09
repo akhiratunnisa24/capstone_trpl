@@ -50,7 +50,10 @@ class Kernel extends ConsoleKernel
 
         // $schedule->command('AbsenKaryawanEvent')->dailyAt('23:59');
                 $schedule->call(function (){
-                $karyawanSudahAbsen = DB::table('absensi')->whereDay('created_at', '=', Carbon::now())->pluck('id_karyawan');
+                $karyawanSudahAbsen = DB::table('absensi')
+                ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->whereDay('tanggal', '=', Carbon::now())->pluck('id_karyawan');
                 $karyawan = DB::table('karyawan')->whereNotIn('id', $karyawanSudahAbsen)->get();
             
                 //pengecekan ke data cuti apakah ada atau tidak
@@ -148,7 +151,7 @@ class Kernel extends ConsoleKernel
                 }
                     
         })
-        ->dailyAt('09:45');
+        ->dailyAt('11:21');
     
     
     }

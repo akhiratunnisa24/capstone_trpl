@@ -29,8 +29,8 @@
                     <div class="panel-body">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <div class="form-group col-sm" id="tipe">
-                                    <label class="col-form-label">Tipe Absensi</label>
+                                <div class="form-group col-sm" >
+                                    <label class="">Tipe Absensi</label>
                                     <select name="tipe" id="tipe" class="form-control" required>
                                         <option value="">Pilih Tipe Absensi</option>
                                         <option value="Terlambat">Terlambat</option>
