@@ -17,19 +17,51 @@
                 <form class="input" action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
-                    <div class="form-group" id="tipe">
-                        <label class="col-form-label">Tipe Absensi</label>
-                        <select name="tipe"  class="form-control" required>
-                            <option value="">Pilih Tipe Absensi</option>
-                            <option value="Terlambat">Terlambat</option>
-                            <option value="Tidak Masuk">Tidak Masuk</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="toleransi">
-                        <label for="id_jeniscuti" class="col-form-label">Toleransi Terlambat</label>
-                        <div class="input-group clockpicker pull-center" data-placement="bottom" data-align="top" data-autoclose="true">
-                            <input type="text" class="form-control" autocomplete="off" name="toleransi_terlambat">
-                            <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                    <div class="panel-body">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="form-group col-sm" >
+                                    <label class="">Tipe Absensi</label>
+                                    <select name="tipe" id="tipe" class="form-control" required>
+                                        <option value="">Pilih Tipe Absensi</option>
+                                        <option value="Terlambat">Terlambat</option>
+                                        <option value="Tidak Masuk">Tidak Masuk</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm" id="toleransi">
+                                <label for="id_jeniscuti" class="col-form-label">Toleransi Terlambat</label>
+                                <input type="text" class="form-control" autocomplete="off" name="toleransi_terlambat" placeholder="Masukkan Toleransi Keterlambatan" id="toleransi_terlambat"
+                                required>
+                            </div>
+                            <div class="form-group" id="jumlah_terlambat">
+                                <label class="col-form-label">Jumlah Terlambat</label>
+                                <input type="number" class="form-control" autocomplete="off" name="jumlah_terlambat" 
+                                    required>
+                            </div>
+                            <div class="form-group col-sm"  id="sanksi_terlambat">
+                                <label class="col-form-label">Jenis Sanksi</label>
+                                <select name="sanksi_terlambat" class="form-control" required>
+                                    <option value="">Pilih Jenis Sanksi</option>
+                                    <option value="Teguran Biasa">Terlambat</option>
+                                    <option value="SP Pertama">SP Pertama</option>
+                                    <option value="SP Kedua">SP Kedua</option>
+                                    <option value="SP Ketiga">SP Ketiga</option>
+                                </select>
+                            </div>
+                            <div class="form-group"  id="jumlah_tidakmasuk">
+                                <label class="col-form-label">Jumlah Tidak Masuk</label>
+                                <input type="number" class="form-control" autocomplete="off" name="jumlah_tidakmasuk"
+                                    required>
+                            </div>
+                            <div class="form-group col-sm"  id="sanksi_tidak_masuk">
+                                <label class="col-form-label">Jenis Sanksi</label>
+                                <select name="sanksi_tidak_masuk" class="form-control" required>
+                                    <option value="">Pilih Jenis Sanksi</option>
+                                    <option value="Potong Gaji">Potong Gaji</option>
+                                    <option value="Potong Cuti Tahunan">Potong Cuti Tahunan</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group col-sm" id="jumlah_terlambat">

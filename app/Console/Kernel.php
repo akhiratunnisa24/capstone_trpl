@@ -50,10 +50,10 @@ class Kernel extends ConsoleKernel
 
         // $schedule->command('AbsenKaryawanEvent')->dailyAt('23:59');
                 $schedule->call(function (){
-                $karyawanSudahAbsen = DB::table('absensi')->whereDay('tanggal', '=', Carbon::now())
-                    ->whereYear('tanggal', '=', Carbon::now()->year)
-                    ->whereMonth('tanggal', '=', Carbon::now()->month)
-                    ->pluck('id_karyawan');
+                $karyawanSudahAbsen = DB::table('absensi')
+                ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->whereDay('tanggal', '=', Carbon::now())->pluck('id_karyawan');
                 $karyawan = DB::table('karyawan')->whereNotIn('id', $karyawanSudahAbsen)->get();
                 // dd($karyawan);
             
@@ -152,7 +152,7 @@ class Kernel extends ConsoleKernel
                 }
                     
         })
-        ->dailyAt('23:59');
+        ->dailyAt('11:21');
     
     
     }

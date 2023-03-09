@@ -18,8 +18,11 @@ return new class extends Migration
             $table->integer('id_pegawai');
             $table->string('hubungan')->nullable();
             $table->string('status_pernikahan')->nullable();
-            $table->string('nama')->nullable();            
+            $table->integer('jumlah_anak')->nullable();
+            $table->string('nama')->nullable();
+            $table->enum('jenis_kelamin', ['L', 'P'])->nullable();        
             $table->date('tgllahir')->nullable();
+            $table->string('tempatlahir')->nullable();
             $table->string('alamat')->nullable();
             $table->string('pendidikan_terakhir')->nullable();
             $table->text('pekerjaan')->nullable();

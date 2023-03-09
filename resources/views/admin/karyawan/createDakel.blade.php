@@ -48,12 +48,13 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Tanggal Lahir</th>
                                             <th>Hubungan</th>
-                                            <th>Alamat</th>
-                                            <th>Pekerjaan</th>
+                                            <th>Nama</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>Tanggal Lahir</th>
+                                            <th>Kota Kelahiran</th>
                                             <th>Pendidikan Terakhir</th>
+                                            <th>Pekerjaan</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -62,12 +63,13 @@
                                         @foreach($datakeluarga as $key => $data)
                                             <tr>
                                                 <td id="key">{{ $key }}</td>
-                                                <td>{{$data['nama']}}</td>
-                                                <td>{{$data['tgllahir']}}</td>
                                                 <td>{{$data['hubungan']}}</td>
-                                                <td>{{$data['alamat']}}</td>
-                                                <td>{{$data['pekerjaan']}}</td>
+                                                <td>{{$data['nama']}}</td>
+                                                <td>{{$data['jenis_kelamin']}}</td>
+                                                <td>{{$data['tgllahir']}}</td>
+                                                <td>{{$data['tempatlahir']}}</td>
                                                 <td>{{$data['pendidikan_terakhir']}}</td>
+                                                <td>{{$data['pekerjaan']}}</td>
                                                 <td class="text-center">
                                                     <div class="row d-grid gap-2" role="group" aria-label="Basic example">
                                                         <a class="btn btn-sm btn-info" id="editKeluarga" data-key="{{ $key }}">
@@ -97,6 +99,7 @@
                                                                 <div class="bg-info panel-heading  col-sm-15 m-b-10">
                                                                     <label class="text-white">Status Pernikahan *)</label>
                                                                 </div>
+
                                                                 <div class="form-group m-l-5 m-r-5" style="margin-left:10px;margin-right:10px;">
                                                                     <label for="exampleInputEmail1" class="form-label">Status Pernikahan</label>
                                                                     <select class="form-control selectpicker" name="status_pernikahan" required>
@@ -107,31 +110,19 @@
                                                                         <option value="Janda">Janda</option>
                                                                     </select>
                                                                 </div>
+
+                                                                <div class="form-group m-l-5 m-r-5" style="margin-left:10px;margin-right:10px;">
+                                                                    <label for="exampleInputEmail1" class="form-label">Jumlah Anak</label>
+                                                                    <input type="number" name="jumlahAnak" class="form-control" autocomplete="off" placeholder="Masukkan Jumlah Anak">
+                                                                </div>
                                                           
                                                             @endif
 
                                                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-10 m-t-10">
                                                                 <label class="text-white">B. DATA KELUARGA *) </label>
                                                             </div>
-                                                           
-                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-                                                                    <input type="text" id="namaPasangan" name="namaPasangan" class="form-control" autocomplete="off" placeholder="Masukkan Nama" required>
-                                                            
-                                                                </div>
-                                                            </div>
 
-                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
-                                                                    <div class="input-group">
-                                                                        <input type="text" class="form-control" placeholder="yyyy/mm/dd"
-                                                                            id="datepicker-autoclose8" autocomplete="off" name="tgllahirPasangan" rows="10" required></input><br>
-                                                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            
                                                             <div class="form-group" style="margin-left:10px;margin-right:10px;">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Hubungan</label>
@@ -151,13 +142,48 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
+                                                           
+                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
+                                                                    <input type="text" id="namaPasangan" name="namaPasangan" class="form-control" autocomplete="off" placeholder="Masukkan Nama" required>
+                                                            
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
+                                                                <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
+                                                                <select class="form-control selectpicker" name="jenis_kelaminKeluarga" required>
+                                                                    <option value="">Pilih Jenis Kelamin</option>
+                                                                    <option value="L">Laki-Laki</option>
+                                                                    <option value="P">Perempuan</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control" placeholder="yyyy/mm/dd"
+                                                                            id="datepicker-autoclose8" autocomplete="off" name="tgllahirPasangan" rows="10" required></input><br>
+                                                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
                                                             <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Kota Kelahiran</label>
+                                                                    <input class="form-control"  name="tempatlahirKeluarga" autocomplete="off" rows="9" placeholder="Masukkan Alamat"required></input>
+                                                                </div>
+                                                            </div>
+
+                                                            {{-- <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
                                                                     <input class="form-control" id="alamatPasangan" name="alamatPasangan" autocomplete="off" rows="9" placeholder="Masukkan Alamat"required></input>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
 
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1" class="form-label">Pendidikan Terakhir</label>

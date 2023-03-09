@@ -54,6 +54,7 @@
                                                     @else
                                                         <td></td>
                                                     @endif
+                                                    <td>{{$data->jumlah_terlambat}}</td>
                                                     <td>{{$data->sanksi_terlambat}}</td>
 
                                                     @if($data->jumlah_tidakmasuk !=NULL)

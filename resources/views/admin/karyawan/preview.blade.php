@@ -27,6 +27,18 @@
                         <div class="form-group mb-3">
                             <div class="row align-items-end">
                                 <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">NIK Karyawan *</label>
+                                    <p style="text-transform: uppercase;">{{$karyawan->nik}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-5">
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
                                     <label class="font-size-14 fw-bold">Nama lengkap *</label>
                                     <p style="text-transform: uppercase;">{{$karyawan->nama}}</p>
                                 </div>
@@ -41,6 +53,18 @@
                                 <div class="col-md mb-md-0 m-l-15">
                                     <label class="font-size-14 fw-bold">Tanggal Lahir *</label>
                                     <p style="text-transform: uppercase;">{{$karyawan->tgllahir}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-5">
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">Tempat Lahir *</label>
+                                    <p style="text-transform: uppercase;">{{$karyawan->tempatlahir}}</p>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +98,43 @@
                         </div>
                     </div>
                 </div>
+                <div class="my-5">
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">Nomor NPWP *</label>
+                                    <p style="text-transform: uppercase;">{{$karyawan->no_npwp}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-5">
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">Nomor Asuransi AKDHK</label>
+                                    <p style="text-transform: uppercase;">{{$karyawan->no_akdhk}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">Nama Bank *</label>
+                                    <p>{{$karyawan->nama_bank}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
+            
 
             <div class="col-md-4">
                 <label class=""><h4 class="text-white">#</h4></label>
@@ -126,6 +186,54 @@
                         </div>
                     </div>
                 </div> 
+                <div class="my-5">
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">No. Handphone *</label>
+                                    <p>{{$karyawan->no_hp}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-5">
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">Tanggal Masuk *</label>
+                                    <p>{{$karyawan->tglmasuk}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <div class="my-5">
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">No. BPJS Ketenagakerjaan *</label>
+                                    <p>{{$karyawan->no_bpjs_ket}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-5">
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">No. Program Pensiun *</label>
+                                    <p>{{$karyawan->no_bpjs_ket}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
             </div>
 
             <div class="col-md-4">
@@ -159,6 +267,18 @@
                         <div class="form-group mb-3">
                             <div class="row align-items-end">
                                 <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">Status Karyawan *</label>
+                                    <p>{{$karyawan->status_karyawan}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <div class="row my-5">
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
                                     <label class="font-size-14 fw-bold">Atasan Langsung *</label>
                                     <p>{{$atasan_pertama_nama}}</p>
                                 </div>
@@ -181,9 +301,56 @@
                             </div>
                         </div>
                     </div>
-                </div>    
+                </div>
+                <div class="row my-5">
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">Nomor Kartu Keluarga *</label>
+                                    <p>{{$karyawan->no_kk}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-5">
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">No. BPJS Kesehatan *</label>
+                                    <p>{{$karyawan->no_bpjs_kes}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">No. Program ASKES *</label>
+                                    <p>{{$karyawan->no_bpjs_kes}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 pl-0">
+                        <div class="form-group mb-3">
+                            <div class="row align-items-end">
+                                <div class="col-md mb-md-0 m-l-15">
+                                    <label class="font-size-14 fw-bold">No. Rekening *</label>
+                                    <p>{{$karyawan->no_rek}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                
+                
             </div>
 
+            
         </div>
 
         <div id="data-keluarga">
@@ -196,7 +363,7 @@
                             <th>Nama</th>
                             <th>Tanggal Lahir</th>
                             <th>Hubungan</th>
-                            <th>Alamat</th>
+                            {{-- <th>Alamat</th> --}}
                             <th>Pendidikan Terakhir</th>
                             <th>Pekerjaan</th>
                         </tr>
@@ -208,7 +375,7 @@
                                 <td>{{$keluarga['nama']}}</td>
                                 <td>{{$keluarga['tgllahir']}}</td>
                                 <td>{{$keluarga['hubungan']}}</td>
-                                <td>{{$keluarga['alamat']}}</td>
+                                {{-- <td>{{$keluarga['alamat']}}</td> --}}
                                 <td>{{$keluarga['pendidikan_terakhir']}}</td>
                                 <td>{{$keluarga['pekerjaan']}}</td>
                             </tr>

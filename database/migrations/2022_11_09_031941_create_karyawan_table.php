@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('nik')->nullable();
             $table->string('nama')->nullable();
             $table->date('tgllahir')->nullable();           
+            $table->string('tempatlahir')->nullable();           
             $table->string('email')->unique();         
             $table->string('agama')->nullable(); 
             $table->enum('gol_darah',['A','B','AB','O'])->nullable();   
@@ -39,6 +40,10 @@ return new class extends Migration
             $table->integer('no_bpjs_kes')->nullable();
             $table->integer('no_npwp')->nullable();
             $table->integer('no_bpjs_ket')->nullable();
+            $table->integer('no_akdhk')->nullable();
+            $table->integer('no_program_pensiun')->nullable();
+            $table->integer('no_program_askes')->nullable();
+            $table->string('nama_bank')->nullable(); 
             $table->string('kontrak')->nullable();
             $table->string('jabatan')->nullable();
             $table->string('gaji')->nullable();

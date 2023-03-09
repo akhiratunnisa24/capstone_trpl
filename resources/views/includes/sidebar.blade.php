@@ -55,8 +55,10 @@
                                 class="text-info panel-title">Absensi Karyawan</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
-                            <li><a href="/absensi-tidak-masuk"><i class="mdi mdi-calendar-remove"></i><span>Data Tidak Masuk</span></a></li>
-                            <li><a href="/setting-absensi"><i class="fa fa-gear (alias)"></i><span>Setting Absensi</span></a></li>
+                            <li><a href="/absensi-tidak-masuk"><i class="mdi mdi-calendar-remove"></i><span>Data Tidak
+                                        Masuk</span></a></li>
+                            <li><a href="/setting-absensi"><i class="fa fa-gear (alias)"></i><span>Setting
+                                        Absensi</span></a></li>
                         </ul>
                     </li>
 
@@ -94,6 +96,8 @@
 
                     <li><a href="/data_rekrutmen" class="waves-effect"><i class="fa fa-user-plus"></i><span
                                 class="text-info panel-title">Rekruitmen</span></a></li>
+                    <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span
+                                class="text-info panel-title">Managemen User</span></a></li>
 
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-off"></i><span

@@ -98,20 +98,7 @@
                                                                         <div id="emailHelp" class="form-text"></div>
                                                                     </div>
                                                                 </div>
-
-                                                                <div class="form-group">
-                                                                    <div class="mb-3 ">
-                                                                        <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                                        <input class="form-control" value="{{ $kontakdarurat->alamat ?? '' }}" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat" required></input>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <div class="mb-3">
-                                                                        <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
-                                                                        <input type="number" name="no_hpKdarurat" value="{{ $kontakdarurat->no_hp ?? '' }}" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
-                                                                    </div>
-                                                                </div>
+                                                                
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Hubungan</label>
@@ -125,6 +112,20 @@
                                                                             <option value="Adik" {{ $kontakdarurat->hubungan ?? 'Adik' == '' ? 'selected' : '' }}>Adik</option>
                                                                             <option value="Anak" {{ $kontakdarurat->jhubungan ?? 'Anak' == '' ? 'selected' : '' }}>Anak</option>
                                                                         </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3 ">
+                                                                        <label for="exampleInputEmail1" class="form-label">Alamat</label>
+                                                                        <input class="form-control" value="{{ $kontakdarurat->alamat ?? '' }}" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat" required></input>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
+                                                                        <input type="number" name="no_hpKdarurat" value="{{ $kontakdarurat->no_hp ?? '' }}" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -165,20 +166,6 @@
                                                                         <input type="text" id="namaKdarurat" name="namaKdarurat" class="form-control" placeholder="Masukkan Nama" autocomplete="off" required>
                                                                     </div>
                                                                 </div>
-
-                                                                <div class="form-group">
-                                                                    <div class="mb-3 ">
-                                                                        <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                                        <input class="form-control" id="alamatKdarurat" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat" required></input>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <div class="mb-3">
-                                                                        <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
-                                                                        <input type="number" id="no_hpKdarurat" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
-                                                                    </div>
-                                                                </div>
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Hubungan</label>
@@ -192,6 +179,19 @@
                                                                             <option value="Adik" {{ $kontakdarurat->hubungan ?? 'Adik' == '' ? 'selected' : '' }}>Adik</option>
                                                                             <option value="Anak" {{ $kontakdarurat->jhubungan ?? 'Anak' == '' ? 'selected' : '' }}>Anak</option>
                                                                         </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="mb-3 ">
+                                                                        <label for="exampleInputEmail1" class="form-label">Alamat</label>
+                                                                        <input class="form-control" id="alamatKdarurat" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat" required></input>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
+                                                                        <input type="number" id="no_hpKdarurat" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
