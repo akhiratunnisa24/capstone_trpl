@@ -1,5 +1,6 @@
 @extends('layouts.default')
 @section('content')
+
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
@@ -102,28 +103,61 @@
             </div>
         </div>
     </div>
-    <div class="container row">
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-body">
-                    <div class="row col-mb-12">
-                        <a href="#data-keluarga"><label><span class="text-muted font-size-14">Terlambat</span></label></a>
-                        
-                    </div> 
+    {{-- <div class="container row"> --}}
+        @if(isset($potonggaji) || isset($potongcuti) || isset($tidakmasuk))
+            <div class="col-sm-3">
+                <div class="panel panel-primary">
+                    <div class="panel-body"> 
+                        {{-- <ul> --}}
+                            <li class="dropdown hidden-xs">
+                                <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">Tindakan Tidak Masuk<span class="badge badge-xs badge-danger">3</span></a>
+                                <ul class="dropdown-menu dropdown-menu-lg">
+                                    <li class="text-center notifi-title">Notifikasi Tidak Masuk<span class="badge badge-xs badge-success">3</span></li>
+                                    <li class="list-group">
+                                        @if($potongcuti)
+                                            <a href="javascript:void(0);" class="list-group-item">
+                                                <div class="media">
+                                                    <div class="media-heading">Sanksi Pemotongan Cuti  <span class="badge badge-xs badge-success">{{ $jpc }}</span></div>
+                                                    <p class="m-0">
+                                                    <small>Sejumlah karyawan perlu mendapat tindakan</small>
+                                                    </p>
+                                                </div>
+                                            </a>
+                                        @endif
+                                        @if($potonggaji)
+                                            <a href="javascript:void(0);" class="list-group-item">
+                                            <div class="media">
+                                                <div class="media-body clearfix">
+                                                    <div class="media-heading">Sanksi Pemotongan Gaji  <span class="badge badge-xs badge-success">{{ $jpg }}</span></div>
+                                                    <p class="m-0">
+                                                    <small>Sejumlah karyawan perlu mendapat tindakan</small>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            </a>
+                                        @endif
+                                        @if($tidakmasuk)
+                                            <a href="javascript:void(0);" class="list-group-item">
+                                                <div class="media">
+                                                    <div class="media-body clearfix">
+                                                        <div class="media-heading">Data Tidak Masuk  <span class="badge badge-xs badge-success">{{ $tidakmasuk->count() }}</span></div>
+                                                        <p class="m-0">
+                                                        <small>Sejumlah karyawan perlu mendapat tindakan</small>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        @endif
+                                    </li>
+                                </ul>
+                            </li>
+                        {{-- </ul> --}}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-body">
-                    <div class="row col-mb-12">
-                        <a href="#data-keluarga"><label><span class="text-muted font-size-14">Tidak Masuk</span></label></a>
-    
-                    </div> 
-                </div>
-            </div>
-        </div>
-    </div> 
+        @endif
+    {{-- </div>  --}}
+  
     <!-- Close Header -->
     <!-- Start content -->
     <div class="content">
@@ -168,4 +202,5 @@
     </div> <!-- content -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>   
+    
 @endsection

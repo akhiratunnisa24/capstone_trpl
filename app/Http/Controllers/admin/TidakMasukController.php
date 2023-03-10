@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use PDF;
 use Carbon\Carbon;
+use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
@@ -23,10 +24,10 @@ class TidakMasukController extends Controller
 
     public function index(Request $request)
     {
-        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         
         if ($role == 1) {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan = Karyawan::all();
             $idkaryawan = $request->id_karyawan;
 
@@ -50,56 +51,48 @@ class TidakMasukController extends Controller
                 ->orderBy('tanggal','desc')
                 ->get();
             }
+           
+             // $nottidakmasuk = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+            //                 ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
+            //                 ->where('tidakmasuk.status', '=', 'tanpa keterangan')
+            //                 ->select('tidakmasuk.id_pegawai as id_pegawai','karyawan.nama as nama', 'setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
+            //                 ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Gaji" THEN ' . $pg->jumlah_tidakmasuk . ' ELSE ' . $pct->jumlah_tidakmasuk . ' END')
+            //                 ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai')
+            //                 ->get();
+            //
+            $pg = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Gaji')->select('jumlah_tidakmasuk')->first();
+            $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Cuti Tahunan')->select('jumlah_tidakmasuk')->first();
 
-            //< !-- Untuk notifikasi sanksi karyawan -->
-            // $status = DB::table('setting_absensi')
-            //     ->where('status_tidakmasuk', '=', 'tanpa keterangan')
-            //     ->select('jumlah_tidakmasuk', 'sanksi_tidak_masuk')
-            //     ->first();
+            $potonggaji = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+                ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
+                ->where('tidakmasuk.status', '=', 'tanpa keterangan')
+                ->select('tidakmasuk.id_pegawai as id_pegawai','karyawan.nama as nama', 'setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
+                ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Gaji" THEN ' . $pg->jumlah_tidakmasuk . ' END')
+                ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai')
+                ->get();
+            $jpg = $potonggaji->count();
 
-            // $potongcuti = DB::table('tidakmasuk')
-            //     ->whereIn('status', [$status->status_tidakmasuk])
-            //     ->groupBy('id_pegawai')
-            //     ->havingRaw('COUNT(*) >= 2 OR COUNT(*) > 3 OR COUNT(*) > 5')
+            $potongcuti = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+                ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
+                ->where('tidakmasuk.status', '=', 'tanpa keterangan')
+                ->select('tidakmasuk.id_pegawai as id_pegawai','karyawan.nama as nama', 'setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
+                ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Cuti Tahunan" THEN ' . $pct->jumlah_tidakmasuk . ' END')
+                ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai')
+                ->get();
+            $jpc = $potongcuti->count();
+
+            // $terlambat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
+            //     ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
+            //     ->select('absensi.id_karyawan as id_karyawan','karyawan.nama as nama', 'setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
+            //     ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "Teguran Biasa" END')
+            //     ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
             //     ->get();
+            // $jpc = $potongcuti->count();
 
-            // $cuti = DB::table('setting_absensi')
-            // ->leftJoin('tidakmasuk', function($join) {
-            //     $join->on('setting_absensi.status_tidakmasuk', '=', 'tidakmasuk.status')
-            //         ->where('tidakmasuk.status', '=', 'tanpa keterangan');
-            // })
-            // ->select('tidakmasuk.id_pegawai as id_pegawai','setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
-            // ->whereNotNull('tidakmasuk.id_pegawai')
-            // ->groupBy('tidakmasuk.id_pegawai','setting_absensi.sanksi_tidak_masuk')
-            // ->havingRaw('COUNT(tidakmasuk.id_pegawai) > 2 < 4')
-            // ->orHavingRaw('COUNT(tidakmasuk.id_pegawai)  >5')
-            // ->get();
+            // dd($terlambat);
+            // dd($potonggaji,$jpg, $potongcuti,$jpc);
 
-            
-            $cuti = DB::table('tidakmasuk')
-            ->join('setting_absensi', function ($join) {
-                $join->on('tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
-                     ->where('tidakmasuk.status', '=', 'tanpa keterangan');
-            })
-            ->select('tidakmasuk.id_pegawai', 'setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
-            ->groupBy('tidakmasuk.id_pegawai', 'setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk')
-            ->havingRaw('COUNT(tidakmasuk.id_pegawai) >= setting_absensi.jumlah_tidakmasuk')
-            ->get();
-
-            $absensi = SettingAbsensi::leftJoin('tidakmasuk', function($join) {
-                $join->on('setting_absensi.status_tidakmasuk', '=', 'tidakmasuk.status')
-                    ->where('tidakmasuk.status', '=', 'tanpa keterangan');
-            })
-            ->select('tidakmasuk.id_pegawai','setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
-            ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk','tidakmasuk.id_pegawai')
-            ->get();
-            
-
-        
-            return $absensi;
-
-
-            return view('admin.tidakmasuk.index',compact('tidakmasuk','karyawan','row'));
+            return view('admin.tidakmasuk.index',compact('tidakmasuk','karyawan','row','potonggaji','potongcuti','jpg','jpc'));
             
             //menghapus filter data
             $request->session()->forget('id_karyawan');
