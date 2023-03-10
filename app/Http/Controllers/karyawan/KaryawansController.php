@@ -12,6 +12,7 @@ use App\Models\Rpendidikan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Rorganisasi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -410,12 +411,15 @@ class KaryawansController extends Controller
         $pendidikanBaru = [
             'tingkat'              => $request->tingkat_pendidikan,
             'nama_sekolah'         => $request->nama_sekolah,
+            'nama_lembaga'         => $request->namaLembaga,
             'kota_pformal'         => $request->kotaPendidikanFormal,
             'jurusan'              => $request->jurusan,
             'tahun_lulus_formal'   => $request->tahun_lulusFormal,
             'jenis_pendidikan'     => $request->jenis_pendidikan,
             'kota_pnonformal'      => $request->kotaPendidikanNonFormal,
             'tahun_lulus_nonformal'=> $request->tahunLulusNonFormal,
+            'ijazah_formal'=> $request->noijazahPformal,
+            'ijazah_nonformal'=> $request->noijazahPnonformal,
         ];
     
         $pendidikan[] = $pendidikanBaru;
@@ -431,12 +435,15 @@ class KaryawansController extends Controller
 
         $pendidikan[$index]['tingkat']              = $request->tingkat_pendidikan;
         $pendidikan[$index]['nama_sekolah']         = $request->nama_sekolah;
+        $pendidikan[$index]['nama_lembaga']         = $request->namaLembaga;
         $pendidikan[$index]['kota_pformal']         = $request->kotaPendidikanFormal;
         $pendidikan[$index]['jurusan']              = $request->jurusan;
         $pendidikan[$index]['tahun_lulus_formal']   = $request->tahun_lulusFormal;
         $pendidikan[$index]['jenis_pendidikan']     = $request->jenis_pendidikan;
         $pendidikan[$index]['kota_pnonformal']      = $request->kotaPendidikanNonFormal;
         $pendidikan[$index]['tahun_lulus_nonformal']= $request->tahunLulusNonFormal;
+        $pendidikan[$index]['ijazah_formal']= $request->noijazahPformal;
+        $pendidikan[$index]['ijazah_nonformal']= $request->noijazahPnonformal;
 
         session()->put('pendidikan', json_encode($pendidikan));
         return redirect()->back();
@@ -475,6 +482,7 @@ class KaryawansController extends Controller
             'alamat'          => $request->alamatPerusahaan,
             'jenis_usaha'     => $request->jenisUsaha,
             'jabatan'         => $request->jabatanRpekerjaan,
+            'level'           => $request->levelRpekerjaan,
             'nama_atasan'     => $request->namaAtasan,
             'nama_direktur'   => $request->namaDirektur,
             'lama_kerja'      => $request->lamaKerja,
@@ -498,15 +506,82 @@ class KaryawansController extends Controller
         $pekerjaan[$index]['alamat']         = $request->alamatPerusahaan;
         $pekerjaan[$index]['jenis_usaha']    = $request->jenisUsaha;
         $pekerjaan[$index]['jabatan']        = $request->jabatanRpekerjaan;
+        $pekerjaan[$index]['level']          = $request->levelRpekerjaan;
         $pekerjaan[$index]['nama_atasan']    = $request->namaAtasan;
         $pekerjaan[$index]['nama_direktur']  = $request->namaDirektur;
         $pekerjaan[$index]['lama_kerja']     = $request->lamaKerja;
         $pekerjaan[$index]['alasan_berhenti']= $request->alasanBerhenti;
         $pekerjaan[$index]['gaji']           = $request->gajiRpekerjaan;
 
-        dd($pekerjaan[$index]['gaji']);
+        // dd($pekerjaan[$index]['gaji']);
         session()->put('pekerjaan', json_encode($pekerjaan));
         
+        // $d= json_decode(session('pekerjaan', '[]'), true);
+        // dd($d);
+
+        return redirect()->back();
+    }
+
+    //data untuk pekerjaan
+    public function createorganisasi(Request $request)
+    {
+        $role = Auth::user()->role;
+        if ($role == 1) {
+
+            $karyawan     = $request->session()->get('karyawan');
+            $datakeluarga = $request->session()->get('datakeluarga');
+            $kontakdarurat = $request->session()->get('kontakdarurat');
+            $pendidikan   = $request->session()->get('pendidikan');
+            $pekerjaan   = $request->session()->get('pekerjaan');
+            $organisasi = json_decode(session('organisasi', '[]'), true);
+            // dd($pekerjaan);
+
+            if (empty($organisasi)) {
+                $organisasi = [];
+            }
+
+            return view('admin.karyawan.createOrganisasi', compact('organisasi','pekerjaan', 'karyawan', 'datakeluarga', 'kontakdarurat', 'pendidikan'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    //store ketika creates data
+    public function storeorganisasi(Request $request)
+    {
+        $organisasi = json_decode($request->session()->get('organisasi', '[]'), true);
+
+        $organisasiBaru = [
+            'nama_organisasi' => $request->namaOrganisasi,
+            'alamat'          => $request->alamatOrganisasi,
+            'tgl_mulai'     => \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d'),
+            'tgl_selesai'         => \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d'),
+            'jabatan'     => $request->jabatanRorganisasi,
+            'no_sk'   => $request->noSKorganisasi,
+        ];
+
+        $organisasi[] = $organisasiBaru;
+
+        session()->put('organisasi', json_encode($organisasi));
+        return redirect()->back();
+    }
+
+    public function updaterOrganisasi(Request $request)
+    {
+        $organisasi = json_decode($request->session()->get('organisasi', '[]'), true);
+        $index = $request->nomor_index;
+
+        // dd($index);
+        $organisasi[$index]['nama_organisasi'] = $request->namaOrganisasi;
+        $organisasi[$index]['alamat']         = $request->alamatOrganisasi;
+        $organisasi[$index]['tgl_mulai']    = \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d');
+        $organisasi[$index]['tgl_selesai']        = \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d');
+        $organisasi[$index]['jabatan']          = $request->jabatanRorganisasi;
+        $organisasi[$index]['no_sk']    = $request->noSKorganisasi;
+
+        // dd($pekerjaan[$index]['gaji']);
+        session()->put('organisasi', json_encode($organisasi));
+
         // $d= json_decode(session('pekerjaan', '[]'), true);
         // dd($d);
 
@@ -529,8 +604,9 @@ class KaryawansController extends Controller
         $kontakdarurat = json_decode(session('kontakdarurat', '[]'), true);
         $pendidikan = json_decode(session('pendidikan', '[]'), true);
         $pekerjaan = json_decode(session('pekerjaan', '[]'), true);
+        $organisasi = json_decode(session('organisasi', '[]'), true);
 
-        return view('admin.karyawan.preview',compact('karyawan','datakeluarga','kontakdarurat','pendidikan','pekerjaan','atasan_pertama_nama','atasan_kedua_nama'));
+        return view('admin.karyawan.preview',compact('karyawan','datakeluarga','kontakdarurat','pendidikan','pekerjaan','atasan_pertama_nama','atasan_kedua_nama', 'organisasi'));
     }
 
     public function storetoDatabase(Request $request)
@@ -567,6 +643,13 @@ class KaryawansController extends Controller
             return $item;
         }, $pekerjaan);
         $pekerjaans= Rpekerjaan::insert($pekerjaanMerge);
+
+        $organisasi = json_decode($request->session()->get('organisasi', []), true);
+        $organisasiMerge = array_map(function ($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $organisasi);
+        $organisasis = Rorganisasi::insert($organisasiMerge);
          
          //hapus data pada session
         $request->session()->forget('karyawan');
@@ -574,6 +657,7 @@ class KaryawansController extends Controller
         $request->session()->forget('kontakdarurat');
         $request->session()->forget('pendidikan');
         $request->session()->forget('pekerjaan');
+        $request->session()->forget('organisasi');
 
          
         return redirect('/karyawan');
@@ -581,7 +665,7 @@ class KaryawansController extends Controller
 
     //===================================================================================
 
-    //store daa kelaurga setelah show
+    //store data keluarga setelah show
     public function storedatakel(Request $request,$id)
     {
         $idk = Karyawan::findorFail($id);
@@ -632,6 +716,7 @@ class KaryawansController extends Controller
                 'kota_pformal' => $request->post('kotaPendidikanFormal'),
                 'jurusan' => $request->post('jurusan'),
                 'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
+                'ijazah_formal' => $request->post('noijazahPformal'),
 
                 'jenis_pendidikan' =>null,
                 'kota_pnonformal' => null,
@@ -652,9 +737,12 @@ class KaryawansController extends Controller
                 'jurusan' => null,
                 'tahun_lulus_formal' =>null,
 
+                
+                'nama_lembaga' => $request->post('namaLembaga'),
                 'jenis_pendidikan' => $request->post('jenis_pendidikan'),
                 'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
                 'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
+                'ijazah_nonformal' => $request->post('noijazahPnonformal'),
                 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
             );
@@ -674,6 +762,7 @@ class KaryawansController extends Controller
             'alamat' => $request->post('alamatPerusahaan'),
             'jenis_usaha' => $request->post('jenisUsaha'),
             'jabatan' => $request->post('jabatanRpkerejaan'),
+            'level' => $request->post('levelRpekerjaan'),
             'nama_atasan' => $request->post('namaAtasan'),
             'nama_direktur' => $request->post('namaDirektur'),
             'lama_kerja' => $request->post('lamaKerja'),
@@ -820,14 +909,17 @@ class KaryawansController extends Controller
                 'kota_pformal' => $request->kotaPendidikanFormal,
                 'jurusan' => $request->jurusan,
                 'tahun_lulus_formal' => $request->tahun_lulusFormal,
+                'ijazah_formal' => $request->noijazahPformal,
                 'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
             ]);
         }else
         {
             $data = Rpendidikan::where('id',$idp->id)->update([
                 'jenis_pendidikan' => $request->jenis_pendidikan,
+                'nama_lembaga' => $request->namaLembaga,
                 'kota_pnonformal' => $request->kotaPendidikanNonFormal,
                 'tahun_lulus_nonformal' => $request->tahunLulusNonFormal,
+                'ijazah_nonformal' => $request->noijazahPnonformal,
                 'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
             ]);
         }
@@ -842,6 +934,7 @@ class KaryawansController extends Controller
             'alamat' => $request->post('alamatPerusahaan'),
             'jenis_usaha' => $request->post('jenisUsaha'),
             'jabatan' => $request->post('jabatan'),
+            'level' => $request->post('levelRpekerjaan'),
             'nama_atasan' => $request->post('namaAtasan'),
             'nama_direktur' => $request->post('namaDirektur'),
             'lama_kerja' => $request->post('lamaKerja'),
@@ -860,6 +953,24 @@ class KaryawansController extends Controller
     {
         Rpekerjaan::destroy($id);
         return redirect('karyawan');
+    }
+
+    //update data pekerjaan
+    public function updateOrganisasi(Request $request, $id)
+    {
+        $r_organisasi = array(
+            'nama_organisasi' => $request->post('namaOrganisasi'),
+            'alamat' => $request->post('alamatOrganisasi'),
+            'tgl_mulai' => $request->post('tglmulai'),
+            'tgl_selesai' => $request->post('tglselesai'),
+            'jabatan' => $request->post('jabatanRorganisasi'),
+            'no_sk' => $request->post('noSKorganisasi'),
+            'updated_at' => new \DateTime(),
+        );
+
+        $idOrganisasi = $request->post('id_organisasi');
+        Rorganisasi::where('id', $idOrganisasi)->update($r_organisasi);
+        return redirect()->back();
     }
     
 }

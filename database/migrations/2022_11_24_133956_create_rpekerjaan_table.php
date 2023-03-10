@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('alamat')->nullable();            
             $table->string('jenis_usaha')->nullable();
             $table->string('jabatan')->nullable();
+            $table->string('level')->nullable();
             $table->text('nama_atasan')->nullable();
             $table->text('nama_direktur')->nullable();
             $table->text('lama_kerja')->nullable();

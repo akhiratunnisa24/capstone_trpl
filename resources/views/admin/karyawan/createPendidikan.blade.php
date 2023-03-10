@@ -55,7 +55,7 @@
                                             <th>No</th>
                                             <th>Tingkat Pendidikan</th>
                                             <th>Nama Sekolah</th>
-                                            <th>Kota</th>
+                                            <th>Alamat</th>
                                             <th>Jurusan</th>
                                             <th>Tahun Lulus</th>
                                             <th>Aksi</th>
@@ -95,7 +95,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Bidang/Jenis</th>
-                                            <th>Kota</th>
+                                            <th>Alamat</th>
                                             <th>Tahun Lulus</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -164,8 +164,8 @@
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label"> Kota</label>
-                                                                    <input type="text" name="kotaPendidikanFormal"  class="form-control" id="exampleInputEmail1" placeholder="Masukkan Kota">
+                                                                    <label class="form-label"> Alamat</label>
+                                                                    <input type="text" name="kotaPendidikanFormal"  class="form-control" id="exampleInputEmail1" placeholder="Masukkan Alamat">
                                                                 </div>
                                                             </div>
 
@@ -186,6 +186,14 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">No. Ijazah</label>
+                                                                    <input type="number" name="noijazahPformal"  class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
+                                                                </div>
+                                                            </div>
+
                                                         </div>
 
                                                         {{-- KANAN --}}
@@ -196,14 +204,21 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Bidang / Jenis</label>
-                                                                    <input type="text" name="jenis_pendidikan" class="form-control" placeholder="Masukkan Nama" autocomplete="off"> 
+                                                                    <input type="text" name="jenis_pendidikan" class="form-control" placeholder="Masukkan Jenis Pendidikan" autocomplete="off"> 
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label"> Kota</label>
-                                                                    <input type="text" name="kotaPendidikanNonFormal"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"   placeholder="Masukkan Kota" autocomplete="off">
+                                                                    <label class="form-label">Lembaga Pendidikan</label>
+                                                                    <input type="text" name="namaLembaga" class="form-control" placeholder="Masukkan Nama Lembaga" autocomplete="off"> 
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label"> Alamat</label>
+                                                                    <input type="text" name="kotaPendidikanNonFormal"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"   placeholder="Masukkan Alamat" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -217,6 +232,14 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">No. Ijazah</label>
+                                                                    <input type="number" name="noijazahPnonformal"  class="form-control" id="kotaPendidikanNonFormal" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
+                                                                </div>
+                                                            </div>
+
                                                             <div></div><br><br><br><br><br><br><br><br>
                                                         </div>
                                                     </div>
@@ -275,8 +298,8 @@
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label"> Kota</label>
-                                                                    <input type="text" name="kotaPendidikanFormal" id="kotaPendidikanFormal"  class="form-control" id="exampleInputEmail1" placeholder="Masukkan Kota">
+                                                                    <label class="form-label"> Alamat</label>
+                                                                    <input type="text" name="kotaPendidikanFormal" id="kotaPendidikanFormal"  class="form-control" id="exampleInputEmail1" placeholder="Masukkan Alamat">
                                                                 </div>
                                                             </div>
 
@@ -297,6 +320,14 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">No. Ijazah</label>
+                                                                    <input type="numberv" name="noijazahPformal"  class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
+                                                                </div>
+                                                            </div>
+
                                                         </div>
 
                                                         {{-- KANAN --}}
@@ -307,14 +338,21 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Bidang / Jenis</label>
-                                                                    <input type="text" name="jenis_pendidikan" id="jenis_pendidikan" class="form-control" placeholder="Masukkan Nama" autocomplete="off"> 
+                                                                    <input type="text" name="jenis_pendidikan" id="jenis_pendidikan" class="form-control" placeholder="Masukkan Jenis Pendidikan" autocomplete="off"> 
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label"> Kota</label>
-                                                                    <input type="text" name="kotaPendidikanNonFormal"  class="form-control" id="kotaPendidikanNonFormal" aria-describedby="emailHelp"   placeholder="Masukkan Kota" autocomplete="off">
+                                                                    <label class="form-label">Lembaga Pendidikan</label>
+                                                                    <input type="text" name="namaLembaga" class="form-control" placeholder="Masukkan Nama Lembaga" autocomplete="off"> 
+                                                                </div>
+                                                            </div>  
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Alamat</label>
+                                                                    <input type="text" name="kotaPendidikanNonFormal"  class="form-control" id="kotaPendidikanNonFormal" aria-describedby="emailHelp"   placeholder="Masukkan Alamat" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -328,6 +366,14 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">No. Ijazah</label>
+                                                                    <input type="number" name="noijazahPnonformal"  class="form-control" id="kotaPendidikanNonFormal" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
+                                                                </div>
+                                                            </div>
+
                                                             <div></div><br><br><br><br><br><br><br><br>
                                                         </div>
                                                     </div>

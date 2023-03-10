@@ -508,6 +508,39 @@
                     </table>
             </div>
         </div>
+
+        <div id="riwayat-organisasi">
+            <div class="modal-body" style="margin-left:15px;margin-right:15px;">
+                <label class="" width="100%"><h4>F. RIWAYAT ORGANISASI</h4></label>
+                    <table class="table table-striped">
+                        <thead class="alert alert-info">
+                            <tr>
+                                <th>No</th>
+                                <th>Lembaga</th>
+                                <th>Alamat</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Selesai</th>
+                                <th>Jabatan</th>
+                                <th>Nomor SK</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($organisasi as $org)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $org['nama_organisasi'] }}</td>
+                                    <td>{{ $org['alamat'] }}</td>
+                                    <td>{{ $org['tgl_mulai'] }}</td>
+                                    <td>{{ $org['tgl_selesai'] }}</td>
+                                    <td>{{ $org['jabatan'] }}</td>
+                                    <td>{{ $org['no_sk'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+
          <div class="modal-footer">
             <a href="/create-data-pekerjaan" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Perbaiki</a>
             <button type="submit" name="submit" class="btn btn-sm btn-success"><strong><i class="fa fa-paper-plane"></i></strong> Simpan Data</button>

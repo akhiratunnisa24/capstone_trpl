@@ -48,11 +48,11 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Perusahaan</th>
-                                            <th>Jabatan</th>
+                                            <th>Alamat</th>
                                             <th>Lama Kerja</th>
+                                            <th>Jabatan</th>
+                                            <th>Level</th>
                                             <th>Gaji</th>
-                                            <th>Atasan Langsung</th>
-                                            <th>Direktur</th>
                                             <th>Aksi</th>
             
                                         </tr>
@@ -62,11 +62,11 @@
                                             <tr>
                                                 <td id="key">{{ $key }}</td>
                                                 <td>{{ $pek['nama_perusahaan'] }}</td>
-                                                <td>{{ $pek['jabatan'] }}</td>
+                                                <td>{{ $pek['alamat'] }}</td>
                                                 <td>{{ $pek['lama_kerja'] }}</td>
+                                                <td>{{ $pek['jabatan'] }}</td>
+                                                <td>{{ $pek['level'] }}</td>
                                                 <td>{{ $pek['gaji'] }}</td>
-                                                <td>{{ $pek['nama_atasan'] }}</td>
-                                                <td>{{ $pek['nama_direktur'] }}</td>
                                                 <td class="text-center">
                                                     <div class="row d-grid gap-2" role="group" aria-label="Basic example">
                                                         <a href="#formUpdatePekerjaan" class="btn btn-sm btn-info" id="editPekerjaan" data-key="{{ $key }}">
@@ -113,41 +113,57 @@
     
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Jenis Usaha</label>
-                                                                    <input type="text" name="jenisUsaha" class="form-control" placeholder="Masukkan Jenis Usaha" autocomplete="off">
+                                                                    <label for="exampleInputEmail1" class="form-label">Lama Kerja</label>
+                                                                    <input  type="text" name="lamaKerja" class="form-control" placeholder="Masukkan Lama Kerja" autocomplete="off">
                                                                 </div>
                                                             </div>
     
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label"> Jabatan</label>
+                                                                    <label for="exampleInputEmail1" class="form-label">Jabatan Terakhir</label>
                                                                     <input type="text" name="jabatanRpekerjaan" class="form-control" placeholder="Masukkan Jabatan" autocomplete="off">
                                                                 </div>
                                                             </div>
     
-                                                            <div class="form-group">
+                                                            {{-- <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Jenis Usaha</label>
+                                                                    <input type="text" name="jenisUsaha" class="form-control" placeholder="Masukkan Jenis Usaha" autocomplete="off">
+                                                                </div>
+                                                            </div> --}}
+    
+                                                            {{-- <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label"> Nama Atasan Langsung</label>
                                                                     <input type="text" name="namaAtasan" class="form-control"  placeholder="Masukkan Nama Atasan" autocomplete="off">
                                                                 
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
+
                                                         </div>
     
                                                         {{-- KANAN --}}
                                                         <div class="col-md-6 m-t-10">
-                                                            <div class="form-group">
+
+                                                            {{-- <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">  Nama Direktur</label>
                                                                     <input type="text" name="namaDirektur"  class="form-control" 
                                                                        placeholder="Masukkan Nama Direktur" autocomplete="off">
                                                                 </div>
+                                                            </div> --}}
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">  
+                                                                    <label for="exampleInputEmail1" class="form-label">Level / Pangkat / Golongan</label>
+                                                                    <input type="text" name="levelRpekerjaan" class="form-control" placeholder="Masukkan Level" autocomplete="off">
+                                                                </div>
                                                             </div>
-    
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Lama Kerja</label>
-                                                                    <input  type="text" name="lamaKerja" class="form-control" placeholder="Masukkan Lama Kerja" autocomplete="off">
+                                                                    <label for="exampleInputEmail1" class="form-label">Gaji</label>
+                                                                    <input type="number" name="gajiRpekerjaan" class="form-control" id="gaji" placeholder="Masukkan Gaji" autocomplete="off">
                                                                 </div>
                                                             </div>
     
@@ -159,12 +175,7 @@
                                                                 </div>
                                                             </div>
     
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Gaji</label>
-                                                                    <input type="text" name="gajiRpekerjaan" class="form-control" id="gaji" placeholder="Masukkan Gaji" autocomplete="off">
-                                                                </div>
-                                                            </div>
+                                                            
     
                                                         </div>
                                                     </div>
@@ -175,6 +186,7 @@
                                                     </div>
                                                     <div class="pull-right">
                                                         <button type="submit" name="submit" class="btn btn-sm btn-dark"> Simpan</button>
+                                                         <a href="/create-data-organisasi" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
                                                         <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data <i class="fa fa-forward"></i></a>
                                                     </div>
                                                 </div>
@@ -262,7 +274,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Gaji</label>
-                                                                    <input type="text" name="gaji" class="form-control" id="gajih" placeholder="Masukkan Gaji" autocomplete="off">
+                                                                    <input type="number" name="gaji" class="form-control" id="gajih" placeholder="Masukkan Gaji" autocomplete="off">
                                                                 </div>
                                                             </div>
     
@@ -275,6 +287,7 @@
                                                     </div>
                                                     <div class="pull-right">
                                                         <button type="submit" name="submit" class="btn btn-sm btn-dark"> Update Data</button>
+                                                         <a href="/create-data-organisasi" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
                                                         <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data <i class="fa fa-forward"></i></a>
                                                     </div>
                                                 </div>

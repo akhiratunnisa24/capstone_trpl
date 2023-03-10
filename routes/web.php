@@ -179,7 +179,7 @@ Route::get('/kpi', [KpikaryawanController::class, 'index'])->name('kpi.karyawan'
 
 //absensi
 Route::get('/absensi', [AbsensiController::class, 'index'])->name('absensi.index');
-Route::get('/setting-absensi', [SettingabsensiController::class, 'setting'])->name('absensi.setting');//setting-absensi-update/
+Route::get('/setting-absensi', [SettingabsensiController::class, 'setting'])->name('absensi.setting'); //setting-absensi-update/
 Route::put('/setting-absensi-update/{id}', [SettingabsensiController::class, 'update'])->name('absensi.setting.update');
 Route::post('/absensi_karyawan', [AbsensiController::class, 'store'])->name('absensi.action');
 Route::post('/absensi_karyawan/{id}', [AbsensiController::class, 'update'])->name('absen_pulang');
@@ -359,60 +359,67 @@ Route::get('/data-staf', [DirekturController::class, 'dataStaff'])->name('direkt
 // });
 // Route::get('/sendmail', [MailController::class, 'index']);
 
-    //form data karyawan
-    Route::get('/karyawancreates', [KaryawansController::class, 'create'])->name('creates');
-    Route::post('/storepage', [karyawansController::class, 'store_page'])->name('storepage');
+//form data karyawan
+Route::get('/karyawancreates', [KaryawansController::class, 'create'])->name('creates');
+Route::post('/storepage', [karyawansController::class, 'store_page'])->name('storepage');
 
-    //form data keluarga
-    Route::get('/create-data-keluarga', [KaryawansController::class, 'createdakel'])->name('create.dakel');
-    Route::post('/storedatakeluarga', [KaryawansController::class, 'storedk'])->name('storedk');
-    Route::post('/updatedatakeluarga', [KaryawansController::class, 'updatedk'])->name('updatedk');
-    Route::post('/delete-keluarga/{key}', [KaryawansController::class, 'deletedk'])->name('deletedk');
+//form data keluarga
+Route::get('/create-data-keluarga', [KaryawansController::class, 'createdakel'])->name('create.dakel');
+Route::post('/storedatakeluarga', [KaryawansController::class, 'storedk'])->name('storedk');
+Route::post('/updatedatakeluarga', [KaryawansController::class, 'updatedk'])->name('updatedk');
+Route::post('/delete-keluarga/{key}', [KaryawansController::class, 'deletedk'])->name('deletedk');
 
 
-    //form data kontak darurat
-    Route::get('/create-kontak-darurat', [KaryawansController::class, 'createkonrat'])->name('create.konrat');
-    Route::post('/storekontakdarurat', [KaryawansController::class, 'storekd'])->name('storekd');
-    Route::post('/updatekontakdarurat', [KaryawansController::class, 'updatekd'])->name('updatekd');
-    // Route::post('/delete-kontak-darurat/{key}', [KeluargaController::class, 'deletedk'])->name('deletedk');
-    
-    //form data pendidikan
-    Route::get('/create-data-pendidikan', [KaryawansController::class, 'creatependidikan'])->name('create.pendidikan');
-    Route::post('/storepformal', [karyawansController::class, 'storepformal'])->name('storepformal');
-    Route::post('/storepnformal', [karyawansController::class, 'storepformal'])->name('storepnformal');
-    Route::post('/updatependidikan', [KaryawansController::class, 'updaterPendidikan'])->name('updatePendidikan');
+//form data kontak darurat
+Route::get('/create-kontak-darurat', [KaryawansController::class, 'createkonrat'])->name('create.konrat');
+Route::post('/storekontakdarurat', [KaryawansController::class, 'storekd'])->name('storekd');
+Route::post('/updatekontakdarurat', [KaryawansController::class, 'updatekd'])->name('updatekd');
+// Route::post('/delete-kontak-darurat/{key}', [KeluargaController::class, 'deletedk'])->name('deletedk');
 
-    //form data pekerjaan
-    Route::get('/create-data-pekerjaan', [KaryawansController::class, 'createpekerjaan'])->name('create.pekerjaan');
-    Route::post('/storepekerjaan', [karyawansController::class, 'storepekerjaan'])->name('storepekerjaan');
-    Route::post('/updatepekerjaan', [KaryawansController::class, 'updaterPekerjaan'])->name('updatePekerjaan');
+//form data pendidikan
+Route::get('/create-data-pendidikan', [KaryawansController::class, 'creatependidikan'])->name('create.pendidikan');
+Route::post('/storepformal', [karyawansController::class, 'storepformal'])->name('storepformal');
+Route::post('/storepnformal', [karyawansController::class, 'storepformal'])->name('storepnformal');
+Route::post('/updatependidikan', [KaryawansController::class, 'updaterPendidikan'])->name('updatePendidikan');
 
-    //priview data dan save ke database
-    Route::get('/preview-data-karyawan', [KaryawansController::class, 'previewData'])->name('preview.data');
-    Route::post('/storeData', [KaryawansController::class, 'storetoDatabase'])->name('store.data.karyawan');
+//form data pekerjaan
+Route::get('/create-data-pekerjaan', [KaryawansController::class, 'createpekerjaan'])->name('create.pekerjaan');
+Route::post('/storepekerjaan', [karyawansController::class, 'storepekerjaan'])->name('storepekerjaan');
+Route::post('/updatepekerjaan', [KaryawansController::class, 'updaterPekerjaan'])->name('updatePekerjaan');
 
-    //update data
-    Route::put('/updateIdentitas/{id}', [karyawansController::class, 'update'])->name('identitas.update'); 
-    Route::put('/updateKeluarga/{id}', [karyawansController::class, 'updateKeluarga'])->name('updateKeluarga'); 
-    Route::put('/updateKontak/{id}', [karyawansController::class, 'updateKontak'])->name('updateKontak'); 
-    Route::put('/updatePendidikan/{id}', [karyawansController::class, 'updatePendidikan'])->name('updatePendidikan'); 
-    Route::put('/updatePekerjaan/{id}', [karyawansController::class, 'updatePekerjaan'])->name('updatePekerjaan'); 
+//form data organisasi
+Route::get('/create-data-organisasi', [KaryawansController::class, 'createorganisasi'])->name('create.organisasi');
+Route::post('/storeorganisasi', [karyawansController::class, 'storeorganisasi'])->name('storeorganisasi');
+Route::post('/updateorganisasi', [KaryawansController::class, 'updaterOrganisasi'])->name('updateOrganisasi');
 
-    //store setelah show data
-    Route::post('/storesdatakeluarga/{id}', [karyawansController::class, 'storedatakel'])->name('storedatakel');
-    Route::post('/storeskontakdarurat/{id}', [karyawansController::class, 'storekonrat'])->name('storekonrat');
-    Route::post('/storespformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
-    Route::post('/storespnformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
-    Route::post('/storespekerjaan/{id}', [karyawansController::class, 'storespekerjaan'])->name('storespekerjaan');
-    Route::get('/delete-pekerjaan/{id}', [karyawansController::class, 'destroy'])->name('destroy.pekerjaan');
+
+//priview data dan save ke database
+Route::get('/preview-data-karyawan', [KaryawansController::class, 'previewData'])->name('preview.data');
+Route::post('/storeData', [KaryawansController::class, 'storetoDatabase'])->name('store.data.karyawan');
+
+//update data
+Route::put('/updateIdentitas/{id}', [karyawansController::class, 'update'])->name('identitas.update');
+Route::put('/updateKeluarga/{id}', [karyawansController::class, 'updateKeluarga'])->name('updateKeluarga');
+Route::put('/updateKontak/{id}', [karyawansController::class, 'updateKontak'])->name('updateKontak');
+Route::put('/updatePendidikan/{id}', [karyawansController::class, 'updatePendidikan'])->name('updatePendidikan');
+Route::put('/updatePekerjaan/{id}', [karyawansController::class, 'updatePekerjaan'])->name('updatePekerjaan');
+Route::put('/updateOrganisasi/{id}', [karyawansController::class, 'updateOrganisasi'])->name('updateOrganisasi');
+
+//store setelah show data
+Route::post('/storesdatakeluarga/{id}', [karyawansController::class, 'storedatakel'])->name('storedatakel');
+Route::post('/storeskontakdarurat/{id}', [karyawansController::class, 'storekonrat'])->name('storekonrat');
+Route::post('/storespformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
+Route::post('/storespnformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
+Route::post('/storespekerjaan/{id}', [karyawansController::class, 'storespekerjaan'])->name('storespekerjaan');
+Route::get('/delete-pekerjaan/{id}', [karyawansController::class, 'destroy'])->name('destroy.pekerjaan');
 
 //Kalender
-    Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender');
-    Route::get('/get-harilibur-data',[KalenderController::class, 'getHarilibur'])->name('getharilibur');//getdatajson untuk ditampilkan di kalender
-    Route::get('/setting-kalender', [KalenderController::class, 'setting'])->name('setting.kalender');
-    Route::post('/store-kalender', [KalenderController::class, 'storeSetting'])->name('store.kalender');
-    Route::put('/update-kalender/{id}', [KalenderController::class, 'update'])->name('kalender.update'); 
-    Route::get('/delete-kalender/{id}', [KalenderController::class, 'destroy'])->name('shift.delete');
+Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender');
+Route::get('/get-harilibur-data', [KalenderController::class, 'getHarilibur'])->name('getharilibur'); //getdatajson untuk ditampilkan di kalender
+Route::get('/setting-kalender', [KalenderController::class, 'setting'])->name('setting.kalender');
+Route::post('/store-kalender', [KalenderController::class, 'storeSetting'])->name('store.kalender');
+Route::put('/update-kalender/{id}', [KalenderController::class, 'update'])->name('kalender.update');
+Route::get('/delete-kalender/{id}', [KalenderController::class, 'destroy'])->name('shift.delete');
 
 // Managemen User
 Route::get('settinguser', [SettingController::class, 'settinguser'])->name('settinguser');
@@ -424,4 +431,3 @@ Route::get('settingrole', [SettingController::class, 'settingrole'])->name('sett
 Route::post('storerole', [SettingController::class, 'storerole'])->name('storerole');
 Route::put('editrole{id}', [SettingController::class, 'editrole'])->name('editrole');
 Route::get('hapusrole{id}', [SettingController::class, 'hapusrole'])->name('hapusrole');
-
