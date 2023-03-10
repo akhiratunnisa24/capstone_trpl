@@ -235,16 +235,17 @@ class HomeController extends Controller
             ->where('status','=','1')
             ->orderBy('created_at', 'DESC')
             ->get();
+
         $cutijumlah = $cuti->where('status','=','1')->count('status');
         $izin = DB::table('izin')->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-        ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-        ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-        ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-        ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.nama')
-        ->distinct()
-        ->orderBy('created_at', 'DESC')
-        ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-        ->get();
+            ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+            ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+            ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+            ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.nama')
+            ->distinct()
+            ->orderBy('created_at', 'DESC')
+            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+            ->get();
         $izinjumlah = $izin->count();
         // dd($cutijumlah);
 
