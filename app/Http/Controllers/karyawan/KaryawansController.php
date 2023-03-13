@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Rorganisasi;
+use App\Models\Rprestasi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -522,7 +523,7 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
-    //data untuk pekerjaan
+    //data untuk oganisasi
     public function createorganisasi(Request $request)
     {
         $role = Auth::user()->role;
@@ -588,6 +589,94 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
+    //data untuk prestasi
+    public function createprestasi(Request $request)
+    {
+        $role = Auth::user()->role;
+        if ($role == 1) {
+
+            $karyawan     = $request->session()->get('karyawan');
+            $datakeluarga = $request->session()->get('datakeluarga');
+            $kontakdarurat = $request->session()->get('kontakdarurat');
+            $pendidikan   = $request->session()->get('pendidikan');
+            $pekerjaan   = $request->session()->get('pekerjaan');
+            $organisasi   = $request->session()->get('organisasi');
+            $prestasi = json_decode(session('prestasi', '[]'), true);
+            // dd($pekerjaan);
+
+            if (empty($prestasi)) {
+                $prestasi = [];
+            }
+
+            return view('admin.karyawan.createPrestasi', compact('prestasi','organisasi', 'pekerjaan', 'karyawan', 'datakeluarga', 'kontakdarurat', 'pendidikan'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    //store ketika creates data
+    public function storeprestasi(Request $request)
+    {
+        $prestasi = json_decode($request->session()->get('prestasi', '[]'), true);
+
+        $prestasiBaru = [
+            'keterangan'    => $request->keterangan,
+            'nama_instansi' => $request->namaInstansi,
+            'alamat'        => $request->alamatInstansi,
+            'no_surat'      => $request->noSurat,
+        ];
+
+        $prestasi[] = $prestasiBaru;
+
+        session()->put('prestasi', json_encode($prestasi));
+        return redirect()->back();
+    }
+
+    public function updaterPrestasi(Request $request)
+    {
+        $prestasi = json_decode($request->session()->get('prestasi', '[]'), true);
+        $index = $request->nomor_index;
+
+        
+        $prestasi[$index]['keterangan']       = $request->keterangan;
+        $prestasi[$index]['nama_instansi']    = $request->namaInstansi;
+        $prestasi[$index]['alamat']           = $request->alamatInstansi;
+        $prestasi[$index]['no_surat']         = $request->noSurat;
+
+        session()->put('prestasi', json_encode($prestasi));
+
+        // $d= json_decode(session('pekerjaan', '[]'), true);
+        // dd($d);
+
+        return redirect()->back();
+    }
+
+    //data untuk Surat Keputusan
+    public function createskeputusan(Request $request)
+    {
+        $role = Auth::user()->role;
+        if ($role == 1) {
+
+            $karyawan     = $request->session()->get('karyawan');
+            $datakeluarga = $request->session()->get('datakeluarga');
+            $kontakdarurat = $request->session()->get('kontakdarurat');
+            $pendidikan   = $request->session()->get('pendidikan');
+            $pekerjaan   = $request->session()->get('pekerjaan');
+            $organisasi   = $request->session()->get('organisasi');
+            $prestasi   = $request->session()->get('prestasi');
+            $skeputusan = json_decode(session('skeputusan', '[]'), true);
+            // dd($pekerjaan);
+
+            if (empty($skeputusan)) {
+                $skeputusan = [];
+            }
+
+            return view('admin.karyawan.createSkeputusan', compact('prestasi', 'organisasi', 'pekerjaan', 'karyawan', 'datakeluarga', 'kontakdarurat', 'pendidikan', 'skeputusan'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
 
     public function previewData(Request $request)
     {
@@ -605,8 +694,9 @@ class KaryawansController extends Controller
         $pendidikan = json_decode(session('pendidikan', '[]'), true);
         $pekerjaan = json_decode(session('pekerjaan', '[]'), true);
         $organisasi = json_decode(session('organisasi', '[]'), true);
+        $prestasi    = json_decode(session('prestasi', '[]'), true);
 
-        return view('admin.karyawan.preview',compact('karyawan','datakeluarga','kontakdarurat','pendidikan','pekerjaan','atasan_pertama_nama','atasan_kedua_nama', 'organisasi'));
+        return view('admin.karyawan.preview',compact('karyawan','datakeluarga','kontakdarurat','pendidikan','pekerjaan','atasan_pertama_nama','atasan_kedua_nama', 'organisasi', 'prestasi'));
     }
 
     public function storetoDatabase(Request $request)
@@ -650,6 +740,13 @@ class KaryawansController extends Controller
             return $item;
         }, $organisasi);
         $organisasis = Rorganisasi::insert($organisasiMerge);
+
+        $prestasi = json_decode($request->session()->get('prestasi', []), true);
+        $prestasiMerge = array_map(function ($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $prestasi);
+        $prestasis = Rprestasi::insert($prestasiMerge);
          
          //hapus data pada session
         $request->session()->forget('karyawan');
@@ -658,6 +755,7 @@ class KaryawansController extends Controller
         $request->session()->forget('pendidikan');
         $request->session()->forget('pekerjaan');
         $request->session()->forget('organisasi');
+        $request->session()->forget('prestasi');
 
          
         return redirect('/karyawan');
@@ -772,6 +870,43 @@ class KaryawansController extends Controller
             'updated_at' => new \DateTime(),
         );
         Rpekerjaan::insert($r_pekerjaan);
+        return redirect()->back()->withInput();
+    }
+
+    //store pekerjaan ketika show data
+    public function storesorganisasi(Request $request, $id)
+    {
+        $idk = Karyawan::findorFail($id);
+        $r_organisasi = array(
+            'id_pegawai' => $idk->id,
+            'nama_organisasi' => $request->post('namaOrganisasi'),
+            'alamat' => $request->post('alamatOrganisasi'),
+            'tgl_mulai' => $request->post('tglmulai'),
+            'tgl_selesai' => $request->post('tglselesai'),
+            'jabatan' => $request->post('jabatanRorganisasi'),
+            'no_sk' => $request->post('noSKorganisasi'),
+            'created_at' => new \DateTime(),
+            'updated_at' => new \DateTime(),
+        );
+
+        Rorganisasi::insert($r_organisasi);
+        return redirect()->back()->withInput();
+    }
+
+    public function storesprestasi(Request $request, $id)
+    {
+        $idk = Karyawan::findorFail($id);
+        $r_prestasi = array(
+            'id_pegawai' => $idk->id,
+            'keterangan' => $request->post('keterangan'),
+            'nama_instansi' => $request->post('namaInstansi'),
+            'alamat' => $request->post('alamatInstansi'),
+            'no_surat' => $request->post('noSurat'),
+            'created_at' => new \DateTime(),
+            'updated_at' => new \DateTime(),
+        );
+
+        Rprestasi::insert($r_prestasi);
         return redirect()->back()->withInput();
     }
 
@@ -955,7 +1090,7 @@ class KaryawansController extends Controller
         return redirect('karyawan');
     }
 
-    //update data pekerjaan
+    //update data Organisasi
     public function updateOrganisasi(Request $request, $id)
     {
         $r_organisasi = array(
@@ -970,6 +1105,24 @@ class KaryawansController extends Controller
 
         $idOrganisasi = $request->post('id_organisasi');
         Rorganisasi::where('id', $idOrganisasi)->update($r_organisasi);
+        return redirect()->back();
+    }
+
+    //update data pekerjaan
+    public function updatePrestasi(Request $request, $id)
+    {
+        $r_prestasi = array(
+
+            'keterangan' => $request->post('keterangan'),
+            'nama_instansi' => $request->post('namaInstansi'),
+            'alamat' => $request->post('alamatInstansi'),
+            'no_surat' => $request->post('noSurat'),
+            'updated_at' => new \DateTime(),
+
+        );
+
+        $idOrganisasi = $request->post('id_organisasi');
+        Rprestasi::where('id', $idOrganisasi)->update($r_prestasi);
         return redirect()->back();
     }
     
