@@ -366,13 +366,10 @@
 
             </div>
         </div>
-
         <div class="col-lg-6">
             <div class="panel-group" id="accordion-test-2">
 
-
-
-                <div class="panel panel-default">
+                {{-- <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#4"
@@ -389,7 +386,6 @@
                                         <thead>
                                             <tr class="info">
                                                 <th>No</th>
-                                                {{-- <th>settingalokasi</th> --}}
                                                 <th>Nama Karyawan</th>
                                                 <th>Cuti Yang Didapat</th>
                                                 <th>Durasi Cuti</th>
@@ -401,8 +397,6 @@
                                             @foreach ($alokasicuti2 as $alokasi)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    {{-- <td>{{ $alokasi->id}}</td>
-                                            <td>{{ $alokasi->id_settingalokasi}}</td> --}}
                                                     <td>{{ $alokasi->karyawans->nama }}</td>
                                                     <td>{{ $alokasi->jeniscutis->jenis_cuti }}</td>
                                                     <td>{{ $alokasi->durasi }} hari</td>
@@ -412,7 +406,6 @@
                                                 </tr>
                                             @endforeach
 
-                                            <!-- mencari jumlah cuti -->
                                             @php
                                                 $jml = 0;
                                             @endphp
@@ -436,7 +429,134 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+                @if(isset($potonggaji) || isset($potongcuti) ||  isset($terlambat) ||  isset($telat) ||  isset($datatelat))
+                    @php
+                        $jumlah = $jpc + $jpg;
+                    @endphp
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion-test-2" href="#4"
+                                    aria-expanded="false" class="collapsed">
+                                    Data Tidak Masuk
+                                    @if($potonggaji || $potongcuti)
+                                        <span class="badge badge badge-danger" style="background-color:red">@php  echo $jumlah; @endphp</span>
+                                    @endif
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="4" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <ul class="">
+                                           
+                                            <li class="text-center notifi-title">Notifikasi Tidak Masuk  <span class="badge badge-xs badge-danger">@php  echo $jumlah; @endphp</span></li>
+                                            <li class="list-group">
+                                                @if($potongcuti)
+                                                    <a href="/tindakan-tidak-masuk" class="list-group-item">
+                                                        <div class="media">
+                                                            <div class="media-heading">Sanksi Pemotongan Cuti  <span class="badge badge-xs badge-danger">{{ $jpc }}</span></div>
+                                                            <p class="m-0">
+                                                            <small>Sejumlah karyawan perlu mendapat tindakan</small>
+                                                            </p>
+                                                        </div>
+                                                    </a>
+                                                @endif
+                                                @if($potonggaji)
+                                                    <a href="/tindakan-tidak-masuk" class="list-group-item">
+                                                    <div class="media">
+                                                        <div class="media-body clearfix">
+                                                            <div class="media-heading">Sanksi Pemotongan Gaji  <span class="badge badge-xs badge-danger">{{ $jpg }}</span></div>
+                                                            <p class="m-0">
+                                                            <small>Sejumlah karyawan perlu mendapat tindakan</small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    </a>
+                                                @endif
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        @php
+                             $jum = $jumter+ $jumtel + $jumdat;
+                        @endphp
+                        
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion-test-2" href="#7"
+                                    aria-expanded="false" class="collapsed">
+                                    Notifikasi Terlambat
+                                    @if($terlambat || $telat || $datatelat)
+                                        <span class="badge badge badge-danger" style="background-color:red">@php  echo $jum; @endphp</span>
+                                    @endif
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="7" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <ul class="">
+                                           
+                                            <li class="text-center notifi-title">Notifikasi Terlambat <span class="badge badge-xs badge-danger">@php  echo $jum; @endphp</span></li>
+                                            <li class="list-group">
+                                                @if($terlambat)
+                                                    <a href="/tindakan-terlambat" class="list-group-item">
+                                                        <div class="media">
+                                                            <div class="media-body clearfix">
+                                                                <div class="media-heading">Sanksi Teguran Biasa  <span class="badge badge-xs badge-danger">{{ $jumter }}</span></div>
+                                                                <p class="m-0">
+                                                                <small>Sejumlah karyawan perlu mendapatkan teguran </small>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                @endif
+                                                @if($telat)
+                                                    <a href="/tindakan-terlambat" class="list-group-item">
+                                                        <div class="media">
+                                                            <div class="media-body clearfix">
+                                                                <div class="media-heading">Sanksi SP 1<span class="badge badge-xs badge-danger">{{ $jumtel }}</span></div>
+                                                                <p class="m-0">
+                                                                <small>Sejumlah karyawan perlu mendapatkan surat peringatan pertama </small>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                @else
+                                                @endif
+                                                @if(isset($datatelat))
+                                                    <a href="/tindakan-terlambat" class="list-group-item">
+                                                    <div class="media">
+                                                        <div class="media-body clearfix">
+                                                            <div class="media-heading">Sanksi SP 2<span class="badge badge-xs badge-danger">{{ $jumdat }}</span></div>
+                                                            <p class="m-0">
+                                                            <small>Sejumlah karyawan perlu mendapatkan surat peringatan kedua </small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    </a>
+                                                @else
+                                                @endif
+
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -500,6 +620,7 @@
 
             </div>
         </div>
+        
     </div> <!-- end row -->
 
     <div class="row">

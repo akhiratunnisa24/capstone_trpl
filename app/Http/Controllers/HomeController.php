@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Cuti;
-use App\Models\User;
-use App\Models\Absensi;
 use App\Models\Izin;
+use App\Models\User;
+use App\Models\Resign;
+use App\Models\Absensi;
 use App\Models\Karyawan;
+use App\Models\Lowongan;
 use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
-use App\Models\Lowongan;
-use App\Models\Resign;
 use Illuminate\Http\Request;
+use App\Models\Settingabsensi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -252,6 +253,59 @@ class HomeController extends Controller
         $resign = Resign::orderBy('created_at', 'desc')->get();
         $resignjumlah = $resign->count();
 
+
+        //NOTIFIKASI DATA TINDAKAN TERHADAPA KARYAWAN TIDAK MASUK
+       
+        $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Cuti Tahunan')->select('jumlah_tidakmasuk')->first();
+        $potongcuti = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+            ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
+            ->where('tidakmasuk.status', '=', 'tanpa keterangan')
+            ->select('tidakmasuk.id_pegawai as id_pegawai','karyawan.nama as nama','tidakmasuk.status as keterangan','setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
+            ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Cuti Tahunan" THEN ' . $pct->jumlah_tidakmasuk . ' END')
+            ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai','tidakmasuk.status')
+            ->get();
+        $jpc = $potongcuti->count();
+
+        $pg = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Gaji')->select('jumlah_tidakmasuk')->first();
+        $potonggaji = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+            ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
+            ->where('tidakmasuk.status', '=', 'tanpa keterangan')
+            ->select('tidakmasuk.id_pegawai as id_pegawai','karyawan.nama as nama', 'setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
+            ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Gaji" THEN ' . $pg->jumlah_tidakmasuk . ' END')
+            ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai')
+            ->get();
+        $jpg = $potonggaji->count();
+         //data karyawan terlambat
+         $tb = Settingabsensi::where('sanksi_terlambat', '=', 'Teguran Biasa')->select('jumlah_terlambat')->first();
+         $sp1 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Pertama')->select('jumlah_terlambat')->first();
+         $sp2 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Kedua')->select('jumlah_terlambat')->first();
+         $sp3 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Ketiga')->select('jumlah_terlambat')->first();
+         $terlambat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
+             ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
+             ->select('absensi.id_karyawan as id_karyawan','karyawan.nama as nama', 'setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
+             ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "Teguran Biasa" THEN ' . $tb->jumlah_terlambat . ' END')
+             ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
+             ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
+             ->get();
+         $jumter = $terlambat->count();
+         $telat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
+             ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
+             ->select('absensi.id_karyawan as id_karyawan','karyawan.nama as nama', 'setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
+             ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "SP Pertama" THEN ' . $sp1->jumlah_terlambat . ' END')
+             ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
+             ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
+             ->get();
+         $jumtel = $telat->count();
+         $datatelat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
+             ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
+             ->select('absensi.id_karyawan as id_karyawan','karyawan.nama as nama', 'setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
+             ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "SP Pertama" THEN ' . $sp2->jumlah_terlambat . ' END')
+             ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
+             ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
+             ->get();
+         $jumdat = $datatelat->count();
+        // dd($potongcuti);
+
         // Role Admin
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -299,6 +353,16 @@ class HomeController extends Controller
                 'izinjumlah' => $izinjumlah,
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
+                'potongcuti' =>$potongcuti,
+                'potonggaji'=>$potonggaji,
+                'jpc' => $jpc,
+                'jpg' => $jpg,
+                'terlambat' => $terlambat,
+                'telat'=> $telat,
+                'datatelat' => $datatelat,
+                'jumter' =>$jumter,
+                'jumtel' => $jumtel,
+                'jumdat' => $jumdat,
 
             ];
             return view('admin.karyawan.dashboardhrd', $output);
