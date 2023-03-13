@@ -16,7 +16,7 @@ class SettingabsensiController extends Controller
         $role = Auth::user()->role;        
         if ($role == 1) {
             $settingabsensi = Settingabsensi::all();
-            return view('admin.absensi.setting',compact('settingabsensi','row'));
+            return view('admin.settingabsensi.setting',compact('settingabsensi','row'));
         }
         else
         {

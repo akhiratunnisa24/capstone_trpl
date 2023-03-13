@@ -286,6 +286,10 @@ Route::put('/setting-organisasi/update', [SettingorganisasiController::class, 'u
 Route::get('/absensi-tidak-masuk', [TidakMasukController::class, 'index'])->name('tidakmasuk.index');
 Route::get('/absensi-tidak-masuk-pdf', [TidakMasukController::class, 'tidakMasukPdf'])->name('tidakmasuk.pdf');
 Route::get('/absensi-tidak-masuk-excel', [TidakMasukController::class, 'tidakMasukExcel'])->name('tidakmasuk.excel');
+Route::get('/tindakan-tidak-masuk', [TidakMasukController::class, 'tampil'])->name('tidakmasuk.tampil');
+Route::get('/show-detail{id}', [TidakMasukController::class, 'show'])->name('tidakmasuk.show');
+Route::get('/tindakan-terlambat', [TidakMasukController::class, 'tampilTerlambat'])->name('terlambat.tampil');
+
 
 //KPI
 Route::get('/masterkpi', [MasterkpiController::class, 'index'])->name('master.index');
