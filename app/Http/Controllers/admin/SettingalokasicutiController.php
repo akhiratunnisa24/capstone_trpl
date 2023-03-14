@@ -39,7 +39,7 @@ class SettingalokasicutiController extends Controller
             $setal = Settingalokasi::find($id);
             $jeniscuti = Jeniscuti::all();
             $departemen = Departemen::all();
-            return view('admin.settingcuti.setting_index', compact('settingalokasi', 'jeniscuti', 'setal', 'departemen', 'row'));
+            return view('admin.settingalokasi.setting_index', compact('settingalokasi', 'jeniscuti', 'setal', 'departemen', 'row'));
         } else {
 
             return redirect()->back();
@@ -213,7 +213,7 @@ class SettingalokasicutiController extends Controller
     public function show($id)
     {
         $settingalokasi = Settingalokasi::find($id);
-        return view('admin.settingcuti.showsetting', compact('settingalokasi'));
+        return view('admin.settingalokasi.showsetting', compact('settingalokasi'));
     }
 
     public function update(Request $request, $id)

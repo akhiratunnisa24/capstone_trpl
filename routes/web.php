@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\admin\KalenderController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\ShiftController;
+use App\Http\Controllers\admin\SettingcutiController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\admin\KalenderController;
 use App\Http\Controllers\admin\SisacutiController;
-use App\Http\Controllers\admin\SettingabsensiController;
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\IzinAdminController;
 use App\Http\Controllers\admin\JeniscutiController;
@@ -39,6 +39,7 @@ use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\admin\LeveljabatanController;
 use App\Http\Controllers\karyawan\KaryawansController;
 use App\Http\Controllers\manager\KpimanagerController;
+use App\Http\Controllers\admin\SettingabsensiController;
 use App\Http\Controllers\karyawan\KpikaryawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
@@ -233,6 +234,12 @@ Route::put('/updatealokasi/{id}', [AlokasicutiController::class, 'update']);
 Route::post('/alokasi-import-excel', [AlokasicutiController::class, 'importexcel'])->name('alokasi.importexcel');
 Route::get('/deletealokasi{id}', [AlokasicutiController::class, 'destroy'])->name('deletealokasi');
 Route::get('/alokasi-cuti', [AlokasicutiController::class, 'alokasicuti'])->name('alokasi');
+
+//setting cuti
+Route::get('/settingcuti', [SettingcutiController::class, 'index'])->name('settingcuti.index');
+Route::post('/reset-cuti-tahunan', [SettingcutiController::class, 'resetCutiTahunan'])->name('reset.cuti.tahunan');
+// Route::put('/settingcuti/update', [SettingcutiController::class, 'update'])->name('settingcuti.update');
+
 
 //sisacuti
 Route::get('/sisacuti', [SisacutiController::class, 'index'])->name('sisacuti.index');

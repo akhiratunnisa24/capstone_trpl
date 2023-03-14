@@ -204,13 +204,23 @@ class TidakMasukController extends Controller
             // $sp2 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Kedua')->select('jumlah_terlambat')->first();
             // $sp3 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Ketiga')->select('jumlah_terlambat')->first();
 
+            // $absensi = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
+            //     ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
+            //     ->select('absensi.id_karyawan as id_karyawan', 'absensi.tanggal as tanggal','absensi.terlambat as terlambat','karyawan.nama as nama')
+            //     ->where('absensi.id_karyawan',$id)
+            //     ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)
+            //     ->whereMonth('absensi.tanggal', '=', Carbon::now()->subMonth()->month)
+            //     ->get();
+        
             $absensi = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
                 ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
                 ->select('absensi.id_karyawan as id_karyawan', 'absensi.tanggal as tanggal','absensi.terlambat as terlambat','karyawan.nama as nama')
                 ->where('absensi.id_karyawan',$id)
                 ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)
                 ->whereMonth('absensi.tanggal', '=', Carbon::now()->subMonth()->month)
+                ->whereRaw('WEEKDAY(absensi.tanggal) = 0')
                 ->get();
+
 
             return view('admin.tidakmasuk.showpotongcuti', compact('tidakmasuk','absensi','row'));
         }

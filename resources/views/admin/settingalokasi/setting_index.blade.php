@@ -75,8 +75,8 @@
                                             </td>
                                         </tr>
                                         {{-- modals show setting --}}
-                                        @include('admin.settingcuti.showsetting')
-                                        @include('admin.settingcuti.editsetting')
+                                        @include('admin.settingalokasi.showsetting')
+                                        @include('admin.settingalokasi.editsetting')
                                         {{-- @include('admin.settingcuti.editsetting',explode(",", $data->kode_karyawan)) --}}
                                         @endforeach
                                     </tbody>
@@ -89,7 +89,7 @@
         </div>
     </div> <!-- content -->
     {{-- form setting --}}
-    @include('admin.settingcuti.formsetting')
+    @include('admin.settingalokasi.formsetting')
 
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>

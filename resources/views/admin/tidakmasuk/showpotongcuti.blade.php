@@ -68,7 +68,7 @@
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Tanggal</th>
-                                            <th>Keterangan</th>
+                                            <th>Jumlah Terlambat (Jam)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -76,7 +76,7 @@
                                             <tr>
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$ab->nama}}</td>
-                                                <td>{{$ab->tanggal}}</td>
+                                                <td>{{\Carbon\Carbon::parse($ab->tanggal)->format('d/m/Y')}}</td>
                                                 <td>{{$ab->terlambat}}</td>
                                             </tr>
                                         @endforeach
