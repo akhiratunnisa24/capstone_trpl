@@ -123,4 +123,14 @@ class Karyawan extends Model
         return $this->belongsTo(Departemen::class, 'divisi', 'id');
     }
 
+    public function settingcuti()
+    {
+        return $this->hasMany(Settingcuti::class, 'id');
+    }
+
+    public function sisacuti()
+    {
+        return $this->hasMany(Sisacuti::class, 'id');
+    }
+
 }

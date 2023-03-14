@@ -17,4 +17,14 @@ class Jeniscuti extends Model
     {
         return $this->hasMany(Cuti::class, 'id');
     }
+
+    public function settingcuti()
+    {
+        return $this->hasMany(Settingcuti::class, 'id');
+    }
+
+    public function sisacuti()
+    {
+        return $this->hasMany(Sisacuti::class, 'id');
+    }
 }

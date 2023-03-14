@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-header-title">
-            <h4 class="pull-left page-title">Sisa Cuti Tahunan</h4>
+            <h4 class="pull-left page-title">Sisa Cuti Tahun Sebelumnya</h4>
             
             <ol class="breadcrumb pull-right">
                 <li>Human Resources Management System</li>
@@ -24,8 +24,7 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
-                        <a><label></label></a>
-                        <a href="" class="btn btn-dark btn-sm fa fa-refresh pull-left"> Reset Cuti Tahunan</a>
+                       
                     </div>
                     @if(session()->has('success'))
                         <div class="alert alert-success">

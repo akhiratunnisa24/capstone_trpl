@@ -152,7 +152,7 @@ class Kernel extends ConsoleKernel
                 }
                     
         })
-        ->dailyAt('09:20');
+        ->dailyAt('09:15');
     
     
     }

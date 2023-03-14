@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sisacuti', function (Blueprint $table) {
+        Schema::create('setting_cuti', function (Blueprint $table) {
             $table->id();
             $table->integer('id_pegawai');
-            $table->integer('id_setting');
-            $table->integer('jenis_cuti');
+            $table->integer('id_jeniscuti');
             $table->integer('jumlah_cuti');
             $table->integer('sisa_cuti')->nullable();
             $table->year('periode');
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sisacuti');
+        Schema::dropIfExists('setting_cuti');
     }
 };
