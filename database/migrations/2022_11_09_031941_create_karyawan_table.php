@@ -47,7 +47,8 @@ return new class extends Migration
             $table->string('kontrak')->nullable();
             $table->string('jabatan')->nullable();
             $table->string('gaji')->nullable();
-
+            $table->string('status_pernikahan')->nullable();
+            $table->integer('jumlah_anak')->nullable();
 
             $table->date('tglmasuk')->nullable();
             $table->date('tglkeluar')->nullable();

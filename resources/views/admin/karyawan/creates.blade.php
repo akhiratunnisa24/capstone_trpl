@@ -200,6 +200,29 @@
                         
                                                         <div class="col-md-6 m-t-10">
                                                             <div class="form-group">
+
+                                                                
+                        
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Status Pernikahan</label>
+                                                                    <select class="form-control selectpicker" name="status_pernikahan" required>
+                                                                        <option value="">Pilih Status Pernikahan</option>
+                                                                        <option value="Sudah Menikah" {{ $karyawan->status_pernikahan ?? '' == 'Sudah Menikah' ? 'selected' : '' }} >Sudah Menikah</option>
+                                                                        <option value="Belum Menikah" {{ $karyawan->status_pernikahan ?? '' == 'Belum Menikah' ? 'selected' : '' }}>Belum Menikah</option>
+                                                                        <option value="Duda" {{ $karyawan->status_pernikahan ?? '' == 'Duda' ? 'selected' : '' }}>Duda</option>
+                                                                        <option value="Janda" {{ $karyawan->status_pernikahan ?? '' == 'Janda' ? 'selected' : '' }}>Janda</option>
+                                                                    </select>
+                                                                </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Jumlah Anak</label>
+                                                                    <input type="number" name="jumlahAnak" value="{{ $karyawan->jumlah_anak ?? '' }}"    class="form-control" autocomplete="off" placeholder="Masukkan Jumlah Anak">
+                                                                </div>
+                                                                </div>
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
@@ -312,12 +335,14 @@
                                                                 </div>
 
                                                                 <div class="form-group">
+                                                                    <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Nama Bank</label>
                                                                     <select class="form-control selectpicker" name="nama_bank" required>
                                                                         <option value="">Pilih Bank</option>
                                                                         <option value="BCA" {{ $karyawan->nama_bank ?? '' == 'BCA' ? 'selected' : '' }}>BCA</option>
                                                                         <option value="Mandiri" {{ $karyawan->nama_bank ?? '' == 'Mandiri' ? 'selected' : '' }} >Mandiri</option>
                                                                     </select>
+                                                                </div>
                                                                 </div>
 
                                                                 <div class="form-group">
@@ -327,8 +352,6 @@
                                                                             placeholder="Masukkan No. Rekening" >
                                                                     </div>
                                                                 </div>
-                        
-                        
                                                                 
                         
                                                             </div>

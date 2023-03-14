@@ -46,7 +46,8 @@ use Illuminate\Support\Facades\DB;
             <th>Jabatan</th>
             <th>Nama Atasan Langsung</th>
             <th>Nama Direktur</th>
-            <th>Lama Kerja</th>
+            <th>Tanggal Mulai</th>
+            <th>Tanggal Selesai</th>
             <th>Alasan Berhenti</th>
             <th>Gaji</th>
             {{-- KELUARGA  --}}
@@ -84,24 +85,26 @@ use Illuminate\Support\Facades\DB;
             <td>{{ $k->nik }}</td>
             <td>{{ $k->gol_darah }}</td>
             {{-- RIWAYAT PENDIDIKAN  --}}
-            <td>{{ $k->rpendidikan->tingkat }}</td>
-            <td>{{ $k->rpendidikan->nama_sekolah }}</td>
-            <td>{{ $k->rpendidikan->kota_pformal }}</td>
-            <td>{{ $k->rpendidikan->jurusan }}</td>
-            <td>{{ $k->rpendidikan->tahun_lulus_formal }}</td>
-            <td>{{ $k->rpendidikan->jenis_pendidikan }}</td>
-            <td>{{ $k->rpendidikan->kota_pnonformal }}</td>
-            <td>{{ $k->rpendidikan->tahun_lulus_nonformal }}</td>
+            <td>{{ $k->rpendidikan->tingkat ?? '' }}</td>
+            <td>{{ $k->rpendidikan->nama_sekolah ?? ''  }}</td>
+            <td>{{ $k->rpendidikan->kota_pformal ?? ''  }}</td>
+            <td>{{ $k->rpendidikan->jurusan ?? ''  }}</td>
+            <td>{{ $k->rpendidikan->tahun_lulus_formal ?? ''  }}</td>
+            <td>{{ $k->rpendidikan->jenis_pendidikan ?? ''  }}</td>
+            <td>{{ $k->rpendidikan->kota_pnonformal ?? ''  }}</td>
+            <td>{{ $k->rpendidikan->tahun_lulus_nonformal ?? ''  }}</td>
             {{-- RIWAYAT PEKERJAAN  --}}
-            <td>{{ $k->rpekerjaan->nama_perusahaan  }}</td>
-            <td>{{ $k->rpekerjaan->alamat  }}</td>
-            <td>{{ $k->rpekerjaan->jenis_usaha  }}</td>
-            <td>{{ $k->rpekerjaan->jabatan  }}</td>
-            <td>{{ $k->rpekerjaan->nama_atasan  }}</td>
-            <td>{{ $k->rpekerjaan->nama_direktur  }}</td>
-            <td>{{ $k->rpekerjaan->lama_kerja  }}</td>
-            <td>{{ $k->rpekerjaan->alasan_berhenti  }}</td>
-            <td>Rp {{ $k->rpekerjaan->gaji  }},- </td>
+            <td>{{ $k->rpekerjaan->nama_perusahaan ?? ''  }}</td>
+            <td>{{ $k->rpekerjaan->alamat ?? ''  }}</td>
+            <td>{{ $k->rpekerjaan->jenis_usaha ?? ''  }}</td>
+            <td>{{ $k->rpekerjaan->jabatan ?? ''  }}</td>
+            <td>{{ $k->rpekerjaan->nama_atasan ?? ''  }}</td>
+            <td>{{ $k->rpekerjaan->nama_direktur ?? ''  }}</td>
+            <td>{{ $k->rpekerjaan->tgl_mulai ?? ''  }}</td>
+            <td>{{ $k->rpekerjaan->tgl_selesai ?? ''  }}</td>
+            <td>{{ $k->rpekerjaan->lama_kerja ?? ''  }}</td>
+            <td>{{ $k->rpekerjaan->alasan_berhenti ?? ''  }}</td>
+            <td>Rp {{ $k->rpekerjaan->gaji ?? ''  }},- </td>
             {{-- KELUARGA  --}}
             <td>{{ $k->keluarga->status_pernikahan }}</td>
             <td>{{ $k->keluarga->nama }}</td>

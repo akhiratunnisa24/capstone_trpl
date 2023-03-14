@@ -918,6 +918,8 @@ class karyawanController extends Controller
         $karyawan->kdarurat()->delete();
         $karyawan->rpekerjaan()->delete();
         $karyawan->rpendidikan()->delete();
+        $karyawan->rorganisasi()->delete();
+        $karyawan->rprestasi()->delete();
         $karyawan->tidakmasuk()->delete();
         $karyawan->user2()->delete();
         $karyawan->delete();
@@ -1137,6 +1139,24 @@ class karyawanController extends Controller
                 'row' => $row,
             ];
             return view('admin.karyawan.showKaryawanTidakMasuk', compact('tidakMasuk', 'row', 'tidakMasukBulanIni', 'tidakMasukBulanLalu'));
+        } else {
+
+            return redirect()->back();
+        }
+    }
+
+    public function karyawanupload()
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $output = [
+                'row' => $row,
+            ];
+            return view('admin.karyawan.createUpload', $output);
         } else {
 
             return redirect()->back();

@@ -94,7 +94,7 @@
                                                     <div class="row">
                                                         <div class="col-md-2"></div>
                                                         <div class="col-md-8 m-t-10">
-                                                            @if(empty($datakeluarga) || empty(array_filter(array_column($datakeluarga, 'status_pernikahan'))))
+                                                            {{-- @if(empty($datakeluarga) || empty(array_filter(array_column($datakeluarga, 'status_pernikahan'))))
                                                                 <!-- Form status pernikahan -->
                                                                 <div class="bg-info panel-heading  col-sm-15 m-b-10">
                                                                     <label class="text-white">Status Pernikahan *)</label>
@@ -116,7 +116,7 @@
                                                                     <input type="number" name="jumlahAnak" class="form-control" autocomplete="off" placeholder="Masukkan Jumlah Anak">
                                                                 </div>
                                                           
-                                                            @endif
+                                                            @endif --}}
 
                                                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-10 m-t-10">
                                                                 <label class="text-white">B. DATA KELUARGA *) </label>

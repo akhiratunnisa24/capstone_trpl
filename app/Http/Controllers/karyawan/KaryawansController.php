@@ -114,6 +114,8 @@ class KaryawansController extends Controller
                 // $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
                 $karyawan->kontrak       = $request->kontrak;
                 $karyawan->gaji          = $request->gaji;
+                $karyawan->status_pernikahan    = $request->status_pernikahan;
+                $karyawan->jumlah_anak          = $request->jumlahAnak;
                 $karyawan->tglkeluar     = $request->tglkeluar;
                 $karyawan->status_kerja  = 'Aktif';
 
@@ -159,6 +161,8 @@ class KaryawansController extends Controller
                 // $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
                 $karyawan->kontrak       = $request->kontrak;
                 $karyawan->gaji          = $request->gaji;
+                $karyawan->status_pernikahan    = $request->status_pernikahan;
+                $karyawan->jumlah_anak          = $request->jumlahAnak;
                 $karyawan->tglkeluar     = $request->tglkeluar;
                 $karyawan->status_kerja  = 'Aktif';
 
@@ -206,6 +210,8 @@ class KaryawansController extends Controller
                 // $karyawan->no_bpjs_ket  = $request->no_bpjs_ket;
                 $karyawan->kontrak      = $request->kontrak;
                 $karyawan->gaji         = $request->gaji;
+                $karyawan->status_pernikahan    = $request->status_pernikahan;
+                $karyawan->jumlah_anak          = $request->jumlahAnak;
                 $karyawan->tglkeluar    = $request->tglkeluar;
                 $karyawan->status_kerja = 'Aktif';
 
@@ -250,6 +256,8 @@ class KaryawansController extends Controller
                 // $karyawan->no_bpjs_ket   = $request->no_bpjs_ket;
                 $karyawan->kontrak       = $request->kontrak;
                 $karyawan->gaji          = $request->gaji;
+                $karyawan->status_pernikahan    = $request->status_pernikahan;
+                $karyawan->jumlah_anak          = $request->jumlahAnak;
                 $karyawan->tglkeluar     = $request->tglkeluar;
                 $karyawan->status_kerja  = 'Aktif';
 
@@ -486,7 +494,8 @@ class KaryawansController extends Controller
             'level'           => $request->levelRpekerjaan,
             'nama_atasan'     => $request->namaAtasan,
             'nama_direktur'   => $request->namaDirektur,
-            'lama_kerja'      => $request->lamaKerja,
+            'tgl_mulai'      => $request->tglmulai,
+            'tgl_selesai'      => $request->tglselesai,
             'alasan_berhenti' => $request->alasanBerhenti,
             'gaji'            => $request->gajiRpekerjaan,
         ];
@@ -510,7 +519,8 @@ class KaryawansController extends Controller
         $pekerjaan[$index]['level']          = $request->levelRpekerjaan;
         $pekerjaan[$index]['nama_atasan']    = $request->namaAtasan;
         $pekerjaan[$index]['nama_direktur']  = $request->namaDirektur;
-        $pekerjaan[$index]['lama_kerja']     = $request->lamaKerja;
+        $pekerjaan[$index]['tgl_mulai']     = $request->tglmulai;
+        $pekerjaan[$index]['tgl_selesai']     = $request->tglselesai;
         $pekerjaan[$index]['alasan_berhenti']= $request->alasanBerhenti;
         $pekerjaan[$index]['gaji']           = $request->gajiRpekerjaan;
 
@@ -649,32 +659,6 @@ class KaryawansController extends Controller
         // dd($d);
 
         return redirect()->back();
-    }
-
-    //data untuk Surat Keputusan
-    public function createskeputusan(Request $request)
-    {
-        $role = Auth::user()->role;
-        if ($role == 1) {
-
-            $karyawan     = $request->session()->get('karyawan');
-            $datakeluarga = $request->session()->get('datakeluarga');
-            $kontakdarurat = $request->session()->get('kontakdarurat');
-            $pendidikan   = $request->session()->get('pendidikan');
-            $pekerjaan   = $request->session()->get('pekerjaan');
-            $organisasi   = $request->session()->get('organisasi');
-            $prestasi   = $request->session()->get('prestasi');
-            $skeputusan = json_decode(session('skeputusan', '[]'), true);
-            // dd($pekerjaan);
-
-            if (empty($skeputusan)) {
-                $skeputusan = [];
-            }
-
-            return view('admin.karyawan.createSkeputusan', compact('prestasi', 'organisasi', 'pekerjaan', 'karyawan', 'datakeluarga', 'kontakdarurat', 'pendidikan', 'skeputusan'));
-        } else {
-            return redirect()->back();
-        }
     }
 
 
@@ -863,7 +847,8 @@ class KaryawansController extends Controller
             'level' => $request->post('levelRpekerjaan'),
             'nama_atasan' => $request->post('namaAtasan'),
             'nama_direktur' => $request->post('namaDirektur'),
-            'lama_kerja' => $request->post('lamaKerja'),
+            'tgl_mulai' => $request->post('tglmulai'),
+            'tgl_selesai' => $request->post('tglselesai'),
             'alasan_berhenti' => $request->post('alasanBerhenti'),
             'gaji' => $request->post('gajiRpekerjaan'),
             'created_at' => new \DateTime(),
@@ -957,6 +942,8 @@ class KaryawansController extends Controller
             $pegawai->atasan_pertama = $request->atasan_pertama;
             $pegawai->atasan_kedua = $request->atasan_kedua;
             $pegawai->foto = $filename;
+            $pegawai->status_pernikahan    = $request->status_pernikahan;
+            $pegawai->jumlah_anak          = $request->jumlahAnak;
           
             $pegawai->update();
 
@@ -990,6 +977,8 @@ class KaryawansController extends Controller
             $pegawai->divisi = $request->divisi;
             $pegawai->atasan_pertama = $request->atasan_pertama;
             $pegawai->atasan_kedua = $request->atasan_kedua;
+            $pegawai->status_pernikahan    = $request->status_pernikahan;
+            $pegawai->jumlah_anak          = $request->jumlahAnak;
           
             $pegawai->update();
 
@@ -1072,7 +1061,8 @@ class KaryawansController extends Controller
             'level' => $request->post('levelRpekerjaan'),
             'nama_atasan' => $request->post('namaAtasan'),
             'nama_direktur' => $request->post('namaDirektur'),
-            'lama_kerja' => $request->post('lamaKerja'),
+            'tgl_mulai' => $request->post('tglmulai'),
+            'tgl_selesai' => $request->post('tglselesai'),
             'alasan_berhenti' => $request->post('alasanBerhenti'),
             'gaji' => $request->post('gajiRpekerjaan'),
             'updated_at' => new \DateTime(),

@@ -284,6 +284,7 @@
                                 
                                 @if ($resignjumlah)
                                     <span class="badge badge badge-danger" style="background-color:red">{{ $resignjumlah }}</span>
+                                @else
 
                                 @endif
                             </a>
@@ -442,6 +443,9 @@
                                     Data Tidak Masuk
                                     @if($potonggaji || $potongcuti)
                                         <span class="badge badge badge-danger" style="background-color:red">@php  echo $jumlah; @endphp</span>
+
+                                    @else
+                                    
                                     @endif
                                 </a>
                             </h4>
@@ -600,20 +604,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#6"
-                                aria-expanded="false" class="collapsed">
-                                Data lorem ipsum
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="6" class="panel-collapse collapse">
-                        sdfsfsdf
                     </div>
                 </div>
 

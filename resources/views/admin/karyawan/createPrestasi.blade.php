@@ -143,7 +143,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
-                                                                        class="form-label">Nomor Surat </label>
+                                                                        class="form-label">Nomor Surat / Sertifikat </label>
                                                                     <input type="number" name="noSurat"
                                                                         class="form-control" placeholder="Masukkan Nomor Surat"
                                                                         autocomplete="off">
@@ -162,7 +162,6 @@
                                                     <div class="pull-right">
                                                         <button type="submit" name="submit"
                                                             class="btn btn-sm btn-dark"> Simpan</button>
-                                                         <a href="/create-data-skeputusan" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
                                                         <a href="/preview-data-karyawan"
                                                             class="btn btn-sm btn-primary">Lihat Data <i
                                                                 class="fa fa-forward"></i></a>
@@ -227,7 +226,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
-                                                                        class="form-label">Nomor Surat </label>
+                                                                        class="form-label">Nomor Surat / Sertifikat </label>
                                                                     <input type="number" name="noSurat"
                                                                         class="form-control" placeholder="Masukkan Nomor Surat"
                                                                         autocomplete="off">
@@ -246,7 +245,6 @@
                                             <div class="pull-right">
                                                 <button type="submit" name="submit" class="btn btn-sm btn-dark"> Update
                                                     Data</button>
-                                                         <a href="/create-data-skeputusan" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
                                                 <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data
                                                     <i class="fa fa-forward"></i></a>
                                             </div>

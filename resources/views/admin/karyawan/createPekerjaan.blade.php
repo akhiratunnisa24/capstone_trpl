@@ -49,7 +49,8 @@
                                             <th>No</th>
                                             <th>Nama Perusahaan</th>
                                             <th>Alamat</th>
-                                            <th>Lama Kerja</th>
+                                            <th>Tanggal Masuk</th>
+                                            <th>Tanggal Keluar</th>
                                             <th>Jabatan</th>
                                             <th>Level</th>
                                             <th>Gaji</th>
@@ -63,7 +64,8 @@
                                                 <td id="key">{{ $key }}</td>
                                                 <td>{{ $pek['nama_perusahaan'] }}</td>
                                                 <td>{{ $pek['alamat'] }}</td>
-                                                <td>{{ $pek['lama_kerja'] }}</td>
+                                                <td>{{ $pek['tgl_mulai'] }}</td>
+                                                <td>{{ $pek['tgl_selesai'] }}</td>
                                                 <td>{{ $pek['jabatan'] }}</td>
                                                 <td>{{ $pek['level'] }}</td>
                                                 <td>{{ $pek['gaji'] }}</td>
@@ -110,11 +112,21 @@
                                                                     <input type="text"  name="alamatPerusahaan" class="form-control" id="alamat" placeholder="Masukkan Alamat">
                                                                 </div>
                                                             </div>
-    
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Lama Kerja</label>
-                                                                    <input  type="text" name="lamaKerja" class="form-control" placeholder="Masukkan Lama Kerja" autocomplete="off">
+                                                                    <label class="form-label">Lama Kerja</label>
+                                                                    <div>
+                                                                        <div class="input-daterange input-group"
+                                                                            id="date-range">
+                                                                            <input type="text" class="form-control"
+                                                                                name="tglmulai" id="tglmulai"  />
+                                                                            <span
+                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input type="text" class="form-control"
+                                                                                name="tglselesai" id="tglselesai"  />
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
     
@@ -163,7 +175,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Gaji</label>
-                                                                    <input type="number" name="gajiRpekerjaan" class="form-control" id="gaji" placeholder="Masukkan Gaji" autocomplete="off">
+                                                                    <input type="text" name="gajiRpekerjaan" class="form-control" id="gaji" placeholder="Masukkan Gaji" autocomplete="off">
                                                                 </div>
                                                             </div>
     
@@ -187,7 +199,7 @@
                                                     <div class="pull-right">
                                                         <button type="submit" name="submit" class="btn btn-sm btn-dark"> Simpan</button>
                                                          <a href="/create-data-organisasi" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
-                                                        <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data <i class="fa fa-forward"></i></a>
+                                                        {{-- <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data <i class="fa fa-forward"></i></a> --}}
                                                     </div>
                                                 </div>
                                             </table>
@@ -255,11 +267,21 @@
                                                                     <input type="text" id="namaDirektur" name="namaDirektur"  class="form-control" placeholder="Masukkan Nama Direktur" autocomplete="off">
                                                                 </div>
                                                             </div>
-    
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Lama Kerja</label>
-                                                                    <input  type="text" id="lamaKerja" name="lamaKerja" class="form-control" placeholder="Masukkan Lama Kerja" autocomplete="off">
+                                                                    <label class="form-label">Lama Kerja</label>
+                                                                    <div>
+                                                                        <div class="input-daterange input-group"
+                                                                            id="date-range">
+                                                                            <input type="text" class="form-control"
+                                                                                name="tglmulai" id="tglmulai"  />
+                                                                            <span
+                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input type="text" class="form-control"
+                                                                                name="tglselesai" id="tglselesai"  />
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
     
@@ -274,7 +296,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Gaji</label>
-                                                                    <input type="number" name="gaji" class="form-control" id="gajih" placeholder="Masukkan Gaji" autocomplete="off">
+                                                                    <input type="text" name="gaji" class="form-control" id="gajih" placeholder="Masukkan Gaji" autocomplete="off">
                                                                 </div>
                                                             </div>
     
@@ -288,7 +310,7 @@
                                                     <div class="pull-right">
                                                         <button type="submit" name="submit" class="btn btn-sm btn-dark"> Update Data</button>
                                                          <a href="/create-data-organisasi" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
-                                                        <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data <i class="fa fa-forward"></i></a>
+                                                        {{-- <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data <i class="fa fa-forward"></i></a> --}}
                                                     </div>
                                                 </div>
                                             {{-- </table> --}}
@@ -308,30 +330,6 @@
 
     <script>
         var rupiah = document.getElementById('gaji');
-        rupiah.addEventListener('keyup', function(e) {
-            // tambahkan 'Rp.' pada saat form di ketik
-            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-            rupiah.value = formatRupiah(this.value);
-        });
-        /* Fungsi formatRupiah */
-        function formatRupiah(angka, prefix) {
-            var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                split = number_string.split(','),
-                sisa = split[0].length % 3,
-                rupiah = split[0].substr(0, sisa),
-                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-            // tambahkan titik jika yang di input sudah menjadi angka ribuan
-            if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-            return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
-        }
-    </script>
-
-    <script>
-        var rupiah = document.getElementById('gajih');
         rupiah.addEventListener('keyup', function(e) {
             // tambahkan 'Rp.' pada saat form di ketik
             // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
@@ -385,5 +383,5 @@
             });
         });
     </script>
-
+    
 @endsection

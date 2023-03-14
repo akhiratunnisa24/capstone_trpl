@@ -105,6 +105,14 @@ class Karyawan extends Model
     {
         return $this->belongsTo(User::class, 'id', 'id_pegawai');
     }
+    public function rorganisasi()
+    {
+        return $this->belongsTo(Rorganisasi::class, 'id', 'id_pegawai');
+    }
+    public function rprestasi()
+    {
+        return $this->belongsTo(Rprestasi::class, 'id', 'id_pegawai');
+    }
     
     public function cuti()
     {

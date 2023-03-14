@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string('level')->nullable();
             $table->text('nama_atasan')->nullable();
             $table->text('nama_direktur')->nullable();
-            $table->text('lama_kerja')->nullable();
+            $table->date('tgl_mulai')->nullable();
+            $table->date('tgl_selesai')->nullable();
             $table->text('alasan_berhenti')->nullable();
             $table->text('gaji')->nullable();
 

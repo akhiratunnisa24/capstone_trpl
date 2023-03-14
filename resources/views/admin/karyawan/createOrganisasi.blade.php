@@ -182,9 +182,9 @@
                                                         <button type="submit" name="submit"
                                                             class="btn btn-sm btn-dark"> Simpan</button>
                                                             <a href="/create-data-prestasi" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
-                                                        <a href="/preview-data-karyawan"
+                                                        {{-- <a href="/preview-data-karyawan"
                                                             class="btn btn-sm btn-primary">Lihat Data <i
-                                                                class="fa fa-forward"></i></a>
+                                                                class="fa fa-forward"></i></a> --}}
                                                     </div>
                                                 </div>
                                             </table>
@@ -283,8 +283,8 @@
                                                 <button type="submit" name="submit" class="btn btn-sm btn-dark"> Update
                                                     Data</button>
                                                             <a href="/create-data-prestasi" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
-                                                <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data
-                                                    <i class="fa fa-forward"></i></a>
+                                                {{-- <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data
+                                                    <i class="fa fa-forward"></i></a> --}}
                                             </div>
                                         </div>
                                         {{-- </table> --}}
