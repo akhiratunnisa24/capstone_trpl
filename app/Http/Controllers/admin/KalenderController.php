@@ -26,7 +26,7 @@ class KalenderController extends Controller
                 ];
                
             }
-            return $events;
+            // return $events;
            
             return view('admin.kalender.index',compact('row'),['events'=>$events]);
         }else{
@@ -37,7 +37,7 @@ class KalenderController extends Controller
     public function getHarilibur()
     {
         try {
-            $getHarilibur = SettingHarilibur::select('id', 'tanggal', 'keterangan')->get();
+            $getHarilibur = SettingHarilibur::select('id', 'tanggal','tipe', 'keterangan')->get();
             
             if (!$getHarilibur) {
                 throw new \Exception('Data not found');
@@ -71,6 +71,7 @@ class KalenderController extends Controller
     {
          $settingharilibur  = new SettingHarilibur;
          $settingharilibur ->tanggal = \Carbon\Carbon::parse($request->input('tanggal'))->format('Y-m-d');
+         $settingharilibur ->tipe    = $request->input('tipe');
          $settingharilibur ->keterangan = $request->input('keterangan');
          $settingharilibur ->save();
 
@@ -82,6 +83,7 @@ class KalenderController extends Controller
         // dd($request->all());
         $settingharilibur = array(
             'tanggal' => \Carbon\Carbon::parse($request->post('tanggal'))->format('Y-m-d'),
+            'tipe'    => $request->post('tipe'),
             'keterangan'=>$request->post('keterangan'),
         );
 

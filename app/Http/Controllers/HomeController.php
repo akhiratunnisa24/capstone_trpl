@@ -233,7 +233,7 @@ class HomeController extends Controller
                 $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                     ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
             })
-            ->where('status','=','1')
+            ->where('cuti.status','=','1')
             ->orderBy('created_at', 'DESC')
             ->get();
 

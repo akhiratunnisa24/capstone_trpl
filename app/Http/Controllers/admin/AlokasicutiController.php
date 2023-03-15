@@ -36,7 +36,7 @@ class AlokasicutiController extends Controller
         if ($role == 1) {
 
             //index
-            $alokasicuti = Alokasicuti::all();
+            $alokasicuti = Alokasicuti::where('status', true)->get();
 
             //create
             $karyawan = Karyawan::all();

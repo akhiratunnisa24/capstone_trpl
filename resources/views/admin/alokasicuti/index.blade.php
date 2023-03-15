@@ -26,7 +26,7 @@
                     <div class="panel-heading clearfix">
                         <a><label></label></a>
                         <a href="" class="btn btn-dark btn-sm fa fa-cloud-download pull-left" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
-                        <a href="" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Reset Cuti Tahunan</a>
+                        {{-- <a href="" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Reset Cuti Tahunan</a> --}}
                         {{-- <a href="" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="#newalokasi"> Tambah
                             Alokasi</a> --}}
                     </div>

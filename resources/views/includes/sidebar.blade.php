@@ -70,7 +70,7 @@
                             </li>
                             <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc"></i><span>Alokasi Cuti</span></a>
                             </li>
-                            <li><a href="/settingcuti"><i class="fa fa-gear (alias)"></i><span>Setting Cuti</span></a>
+                            <li><a href="/settingcuti"><i class="fa fa-gear (alias)"></i><span>Setting Cuti Tahunan</span></a>
                             </li>
                             <li><a href="/sisacuti"><i class="fa fa-hourglass-2"></i><span>Sisa Cuti</span></a></li>
                         </ul>

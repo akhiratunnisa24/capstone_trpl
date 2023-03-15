@@ -20,6 +20,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label class="form-label">Tipe Hari Libur</label>
+                            <select class="form-control" name="tipe" required>
+                                <option value="">Pilih Tipe Hari Libur</option>
+                                <option value="Hari Libur Nasional">Hari Libur Nasional</option>
+                                <option value="Cuti Bersama">Cuti Bersama</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group col-sm">
                         <label for="keterangan" class="col-form-label">Keterangan</label>
                         <input type="text" class="form-control" name="keterangan" id="keterangan" autocomplete="off" placeholder="Masukkan Keterangan" required>

@@ -86,6 +86,7 @@ class SettingalokasicutiController extends Controller
                         $alokasicuti->tgl_sekarang     = null;
                         $alokasicuti->aktif_dari       = $year.'-01-01';
                         $alokasicuti->sampai           = $year.'-12-31';
+                        $alokasicuti->status           = 1;
                         $alokasicuti->save();
 
                         Log::info('Data Alokasi Cuti Karyawan Berhasil Disimpan');
@@ -160,6 +161,7 @@ class SettingalokasicutiController extends Controller
                         $alokasicuti->tgl_sekarang     = null;
                         $alokasicuti->aktif_dari       = $year.'-01-01';
                         $alokasicuti->sampai           = $year.'-12-31';
+                        $alokasicuti->status           = 1;
                         $alokasicuti->save();
                     }else
                     {
@@ -198,6 +200,7 @@ class SettingalokasicutiController extends Controller
                         $alokasicuti->tgl_sekarang     = $now;
                         $alokasicuti->aktif_dari       = $year.'-01-01';
                         $alokasicuti->sampai           = $year.'-12-31';
+                        $alokasicuti->status           = 1;
                         $alokasicuti->save();
                     }else
                     {
