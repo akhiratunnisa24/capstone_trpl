@@ -9,5 +9,5 @@ class SettingHarilibur extends Model
 {
     use HasFactory;
     protected $table = 'setting_harilibur';
-    protected $fillable = ['tanggal','keterangan'];
+    protected $fillable = ['tanggal','tipe','keterangan'];
 }

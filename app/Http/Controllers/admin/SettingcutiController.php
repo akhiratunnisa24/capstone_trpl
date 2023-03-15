@@ -23,7 +23,7 @@ class SettingcutiController extends Controller
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $settingcuti = Settingcuti::orderBy('id', 'asc')->get();
-
+            // dd($settingcuti);
             return view('admin.settingcuti.index', compact('settingcuti','row'));
 
         } else {
@@ -37,14 +37,16 @@ class SettingcutiController extends Controller
         $jeniscuti = Jeniscuti::findOrFail(1);
         $alokasicuti = Alokasicuti::select('id_karyawan', 'id_jeniscuti','durasi','aktif_dari')
             ->where('id_jeniscuti', $jeniscuti->id)
-            ->whereYear('tgl_sekarang', Carbon::now()->subYear()->year)
+            ->whereYear('aktif_dari', Carbon::now()->subYear()->year)
             ->get();
 
         // dd($alokasicuti);
         foreach ($alokasicuti as $data) {
             $cek = Settingcuti::where('id_jeniscuti', $data->id_jeniscuti)->where('id_pegawai', $data->id_karyawan)->exists();
+            $ceksisa = Sisacuti::where('id_jeniscuti', $data->id_jeniscuti)->where('id_pegawai', $data->id_karyawan)->exists();
+
             // dd($data);
-            if(!$cek)
+            if(!$cek && !$ceksisa)
             {
                 $settingcuti = new Settingcuti;
                 $settingcuti->id_pegawai   = $data->id_karyawan;
@@ -53,73 +55,69 @@ class SettingcutiController extends Controller
                 $settingcuti->sisa_cuti    = 0;
                 $settingcuti->periode      = \Carbon\Carbon::parse($data->aktif_dari)->format('Y');
                 $settingcuti->save();
-                // dd($settingcuti);
-                Log::info('Data Reset Cuti Tahunan Karyawan Berhasil Disimpan');
+
+                // insert data ke tabel sisacuti
+                $sisacuti = new Sisacuti;
+                $sisacuti->id_pegawai   = $settingcuti->id_pegawai;
+                $sisacuti->id_jeniscuti = $settingcuti->id_jeniscuti;
+                $sisacuti->id_setting   = $settingcuti->id;
+                $sisacuti->jumlah_cuti  = $settingcuti->jumlah_cuti;
+                $sisacuti->sisa_cuti    = $settingcuti->sisa_cuti;
+                $sisacuti->periode      = $settingcuti->periode;
+                $sisacuti->save();
+
+                $alokasi = Alokasicuti::where('id_karyawan', $settingcuti->id_pegawai)
+                    ->where('id_jeniscuti',$settingcuti->id_jeniscuti)
+                    ->whereYear('aktif_dari', Carbon::now()->subYear()->year)
+                    ->update([
+                        'status' => 0,
+                    ]);
+
+                Log::info('Data Reset cuti Tahunan Berhasil Disimpan');
+                Log::info('Data Sisa cuti tahun lalu Berhasil Disimpan');
             }
             else{
     
                 $alokasicutisaatini = Alokasicuti::select('id_karyawan', 'id_jeniscuti','durasi','aktif_dari')
                     ->where('id_jeniscuti', $jeniscuti->id)
-                    ->whereYear('tgl_sekarang', Carbon::now()->year)
+                    ->whereYear('aktif_dari', Carbon::now()->year)
                     ->get();
-                $durasi = 0;
                 //untuk mengatasi error Property [durasi] does not exist on this collection instance. gunakan foreach
                 foreach($alokasicutisaatini as $alokasi)
                 {
-                    $aktif = \Carbon\Carbon::parse($alokasi->aktif_dari)->format('Y');
+
+                    $id_karyawan = $alokasi->id_karyawan;
                     $durasi = $alokasi->durasi;
+                    $aktif = \Carbon\Carbon::parse($alokasi->aktif_dari)->format('Y');
 
-                    $chek = Settingcuti::where('id_jeniscuti', $jeniscuti->id)->where('id_pegawai', $data->id_karyawan)->exists();
-                    if($chek)
+                    $settingcuti = Settingcuti::where('id_jeniscuti', $alokasi->id_jeniscuti)
+                        ->where('id_pegawai', $id_karyawan)
+                        ->first();
+                
+                    $sisacuti = Sisacuti::where('id_jeniscuti',$alokasi->id_jeniscuti)
+                        ->where('id_pegawai', $id_karyawan)
+                        ->first();
+
+                    // $chek = Settingcuti::where('id_jeniscuti', $jeniscuti->id)->where('id_pegawai', $alokasi->id_karyawan)->exists();
+                    // $ceksisacuti = Sisacuti::where('id_jeniscuti',  $jeniscuti->id)->where('id_pegawai', $alokasi->id_karyawan)->exists();
+                    
+                    // dd($chek, $ceksisacuti);
+                    if($settingcuti && $sisacuti)
                     {   
-                        $setting_sebelumnya = Settingcuti::where('id_pegawai',$alokasi->id_karyawan)
-                            ->select('id_pegawai','id_jeniscuti','id_setting','jumlah_cuti','sisa_cuti','periode')
-                            ->first();
+                        $jumlah_cuti = $settingcuti->jumlah_cuti;
+                         // Update data pada settingcuti
+                        $settingcuti->jumlah_cuti = $durasi;
+                        $settingcuti->sisa_cuti   = $jumlah_cuti;
+                        $settingcuti->periode     = $aktif;
+                        $settingcuti->update();
 
-                        if ($setting_sebelumnya) {
-                            $jumlah = $setting_sebelumnya->jumlah_cuti;
+                        // dd($settingcuti);
+                         // Update data pada sisacuti
+                        $sisacuti->jumlah_cuti = $durasi;
+                        $sisacuti->sisa_cuti   = $jumlah_cuti;
+                        $sisacuti->update();
 
-                            $cari = Sisacuti::where('id_jeniscuti', $setting_sebelumnya->id_jeniscuti)->where('id_pegawai', $setting_sebelumnya->id_pegawai)->exists();
-                            if(!$cari)
-                            {
-                                $sisacuti = new Sisacuti;
-                                $sisacuti->id_pegawai   = $setting_sebelumnya->id_pegawai;
-                                $sisacuti->id_setting   = $setting_sebelumnya->id;
-                                $sisacuti->id_jeniscuti = $setting_sebelumnya->id_jeniscuti;
-                                $sisacuti->jumlah_cuti  = $setting_sebelumnya->jumlah_cuti;
-                                $sisacuti->sisa_cuti    = $setting_sebelumnya->sisa_cuti;
-                                $sisacuti->periode      = $setting_sebelumnya->periode;
-                                $sisacuti->save();
-                                // dd($settingcuti);
-                                Log::info('Data Sisa cuti Berhasil Ditambahkan');
-                            }
-                            else{
-                                $sisasaatini = Sisacuti::select('id_pegawai','id_setting','jumlah_cuti','sisa_cuti','periode')
-                                    ->where('id_setting', $setting_sebelumnya->id)
-                                    ->whereYear('periode', Carbon::now()->year)
-                                    ->get();
-
-                                foreach($sisasaatini as $sisasi)
-                                {
-                                    $jumlah = $sisasi->jumlah_cuti;
-                                }
-                            }
-
-                        } else {
-                            $jumlah = 0; // nilai default jika $setting_sebelumnya bernilai null
-                        }
-
-                        $jumlahbaru = $durasi;
-                        $sisabaru   = $jumlah;
-
-                        Settingcuti::where('id_pegawai',$setting_sebelumnya->id_pegawai)
-                            ->update([
-                                'jumlah_cuti' => $jumlahbaru,
-                                'sisa_cuti' => $sisabaru,
-                                'periode' => $aktif,
-                            ]); 
-                        
-                        Log::info('Data Reset Cuti Tahunan Karyawan Berhasil di Update');   
+                        Log::info('Data Reset Cuti Tahunan Berhasil di UPDATE'); 
                     }
                     else{
                         Log::info('Data Reset Cuti Tahunan Tidak Ditemukan');   

@@ -22,7 +22,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 m-b-10" style="height:45px">
                             <a href="" class="pull-right btn btn-dark btn-sm fa fa-plus" data-toggle="modal" data-target="#add"> Tambah Setting</a>
-                            @include('admin.absensi.addSetting')
+                            @include('admin.settingabsensi.addSetting')
                         </div>
                         <div class="panel-body m-b-5">
                             <div class="row">
@@ -54,7 +54,7 @@
                                                     @else
                                                         <td></td>
                                                     @endif
-                                                    <td>{{$data->jumlah_terlambat}}</td>
+                                                   
                                                     <td>{{$data->sanksi_terlambat}}</td>
 
                                                     @if($data->jumlah_tidakmasuk !=NULL)
@@ -80,7 +80,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                @include('admin.absensi.editSetting')
+                                                @include('admin.settingabsensi.editSetting')
                                             @endforeach
                                         </tbody>
                                     </table>

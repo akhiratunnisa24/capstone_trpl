@@ -24,20 +24,8 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
-                       
+                       <p></p>
                     </div>
-                    @if(session()->has('success'))
-                        <div class="alert alert-success">
-                            {{ session()->get('success') }}
-                        </div>
-                    @endif
-
-                    @if(session()->has('error'))
-                        <div class="alert alert-danger">
-                            {{ session()->get('error') }}
-                        </div>
-                    @endif
-
                     <div class="panel-body m-b-5">
                         <div class="row">
                             <div class="col-md-12">
@@ -47,22 +35,23 @@
                                             <th>No</th>
                                             <th>Karyawan</th>
                                             <th>Kategori Cuti</th>
-                                            <th>Jumlah Cuti</th>
-                                            <th>Sisa Cuti</th>
+                                            <th>Jumlah Cuti Tahun Ini </th>
+                                            <th>Sisa Cuti Tahun Lalu</th>
                                             <th>Periode</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        {{-- @foreach($alokasicuti as $data) --}}
-                                        {{-- <tr id="aid{{$data->id}}"></tr> --}}
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        {{-- @endforeach --}}
+                                        @foreach($sisacuti as $data)
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$data->karyawans->nama}}</td>
+                                                <td>{{$data->jeniscutis->jenis_cuti}}</td>
+                                                <td>{{$data->jumlah_cuti}}</td>
+                                                <td>{{$data->sisa_cuti}}</td>
+                                                <td>{{$data->periode}}</td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

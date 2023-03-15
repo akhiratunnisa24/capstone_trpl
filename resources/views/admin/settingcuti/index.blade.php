@@ -4,11 +4,11 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-header-title">
-            <h4 class="pull-left page-title">Setting Cuti Karyawan</h4>
+            <h4 class="pull-left page-title">Setting Cuti tahunan</h4>
 
             <ol class="breadcrumb pull-right">
                 <li>Human Resources Management System</li>
-                <li class="active">Setting Cuti</li>
+                <li class="active">Setting Cuti Tahunan</li>
             </ol>
            
             <div class="clearfix"></div>
@@ -37,8 +37,8 @@
                                             <th>No</th>
                                             <th>Karyawan</th>
                                             <th>kategori Cuti</th>
-                                            <th>Jumlah Cuti</th>
-                                            <th>Sisa Cuti</th>
+                                            <th>Jumlah Cuti Tahun Ini</th>
+                                            <th>Sisa Cuti Tahun Lalu</th>
                                             <th>Periode</th>
                                             {{-- <th>Aksi</th> --}}
                                         </tr>
@@ -78,6 +78,7 @@
             </div>
         </div>
     </div> <!-- content -->
+</div>
 
     <script src="assets/js/jquery.min.js"></script>
 @endsection
