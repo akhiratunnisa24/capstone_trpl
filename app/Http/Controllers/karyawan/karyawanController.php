@@ -283,7 +283,9 @@ class karyawanController extends Controller
             $user->agama = $request->agamaKaryawan;
             $user->nik = $request->nikKaryawan;
             $user->gol_darah = $request->gol_darahKaryawan;
+            
             $user->foto = $namaFile;
+            
             $user->jabatan = $request->jabatanKaryawan;
             $user->tglmasuk = $request->tglmasukKaryawan;
             $user->atasan_pertama = $request->atasan_pertama;
@@ -1139,24 +1141,6 @@ class karyawanController extends Controller
                 'row' => $row,
             ];
             return view('admin.karyawan.showKaryawanTidakMasuk', compact('tidakMasuk', 'row', 'tidakMasukBulanIni', 'tidakMasukBulanLalu'));
-        } else {
-
-            return redirect()->back();
-        }
-    }
-
-    public function karyawanupload()
-    {
-        $role = Auth::user()->role;
-
-        if ($role == 1) {
-
-            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-
-            $output = [
-                'row' => $row,
-            ];
-            return view('admin.karyawan.createUpload', $output);
         } else {
 
             return redirect()->back();

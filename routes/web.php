@@ -47,6 +47,7 @@ use App\Http\Controllers\admin\SettingorganisasiController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
 use App\Http\Controllers\karyawan\AbsensiKaryawanController;
 use App\Http\Controllers\admin\NotifMailRekruitmenController;
+use App\Http\Controllers\admin\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,9 +84,11 @@ Route::put('karyawanupdate{id}', [karyawanController::class, 'update'])->name('u
 Route::get('karyawancreate', [karyawanController::class, 'create'])->name('create');
 Route::get('editPassword{id}', [karyawanController::class, 'editPassword'])->name('editPassword');
 Route::put('updatePassword{id}', [karyawanController::class, 'updatePassword'])->name('updatePassword');
-// Route::get('karyawancari', [karyawanController::class, 'searchkaryawan'])->name('searchkaryawan');
 Route::get('/search', [karyawanController::class, 'index'])->name('search');
-Route::get('/karyawanupload', [KaryawanController::class, 'karyawanupload'])->name('karyawanupload');
+
+//Upload File Digital Karyawan
+Route::get('/karyawanupload', [UploadController::class, 'index'])->name('index');
+Route::post('/storeupload', [UploadController::class, 'store'])->name('store_upload');
 
 
 
