@@ -139,7 +139,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 2 or 3) {
+        if ($role == 2 or 3 or 4) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -873,6 +873,61 @@ class karyawanController extends Controller
                 'atasan_pertama'=>$atasan_pertama,
                 'atasan_kedua'=>$atasan_kedua,
             ]);
+        } else {
+
+            return redirect()->back();
+        }
+    }
+
+    public function showidentitas($id)
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $karyawan = karyawan::findOrFail($id);
+            $departemen     = Departemen::all();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager', 'Management'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Management'])->get();
+
+            $output = [
+                'row' => $row,
+                'karyawan' => $karyawan,
+                'departemen' => $departemen,
+                'atasan_pertama' => $atasan_pertama,
+                'atasan_kedua' => $atasan_kedua,
+            ];
+
+            return view('admin.karyawan.showIdentitas', $output);
+        } else {
+
+            return redirect()->back();
+        }
+    }
+    public function showkeluarga($id)
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $karyawan = karyawan::findOrFail($id);
+            $departemen     = Departemen::all();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager', 'Management'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Management'])->get();
+
+            $output = [
+                'row' => $row,
+                'karyawan' => $karyawan,
+                'departemen' => $departemen,
+                'atasan_pertama' => $atasan_pertama,
+                'atasan_kedua' => $atasan_kedua,
+            ];
+
+            return view('admin.karyawan.showKeluarga', $output);
         } else {
 
             return redirect()->back();

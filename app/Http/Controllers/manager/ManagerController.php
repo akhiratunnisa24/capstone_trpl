@@ -32,7 +32,7 @@ class ManagerController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
-        if ($role == 3) 
+        if ($role == 3 && $row->jabatan == 'Manager') 
         {
             $staff = Karyawan::with('departemens')
                 ->where('atasan_pertama',Auth::user()->id_pegawai)
@@ -41,7 +41,7 @@ class ManagerController extends Controller
 
             return view('manager.staff.dataStaff', compact('staff','row'));
         }
-        elseif($role == 5)
+        elseif($role == 3 && $row->jabatan == 'Supervisor')
         {
             //mengambil id_departemen 
             $staff= Karyawan::with('departemens')

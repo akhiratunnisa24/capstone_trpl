@@ -86,6 +86,10 @@ Route::get('editPassword{id}', [karyawanController::class, 'editPassword'])->nam
 Route::put('updatePassword{id}', [karyawanController::class, 'updatePassword'])->name('updatePassword');
 Route::get('/search', [karyawanController::class, 'index'])->name('search');
 
+// Show Data Karyawan Vesi Baru
+Route::get('showidentitas{id}', [karyawanController::class, 'showidentitas'])->name('showidentitas');
+Route::get('showkeluarga{id}', [karyawanController::class, 'showkeluarga'])->name('showkeluarga');
+
 //Upload File Digital Karyawan
 Route::get('/karyawanupload', [UploadController::class, 'index'])->name('index');
 Route::post('/storeupload', [UploadController::class, 'store'])->name('store_upload');
