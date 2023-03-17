@@ -38,12 +38,12 @@
                                 <select name="id_karyawan" id="id_karyawan" class="form-control" required>
                                     <option value="">Pilih Karyawan</option>
                                     @foreach ($karyawan as $data)
-                                        @foreach ($keluarga as $data_keluarga)
-                                            @if($data->id == $data_keluarga->id_pegawai)
-                                                <option value="{{ $data->id }}">[Status: {{$data_keluarga->status_pernikahan}}, JK: {{ $data->jenis_kelamin}}, Depart: {{ $data->divisi }}] {{ $data->nama }}</option>
-                                                @break
+                                        {{-- @foreach ($keluarga as $data_keluarga)
+                                            @if($data->id == $data_keluarga->id_pegawai) --}}
+                                                <option value="{{ $data->id }}">{{ $data->nama }}</option>
+                                                {{-- @break
                                             @endif
-                                        @endforeach
+                                        @endforeach --}}
                                     @endforeach
                                 </select>
                             </div>

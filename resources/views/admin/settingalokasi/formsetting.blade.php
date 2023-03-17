@@ -32,7 +32,7 @@
                     @method('POST')
                     <div class="panel-body">
                         <div class="col-md-6">
-                            <div class="form-group col-sm" id="jenicuti">
+                            <div class="form-group col-sm" id="jenicutis">
                                 <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
                                 <select name="id_jeniscuti" id="id_jeniscuti" class="form-control">
                                     <option value="">Pilih Kategori Cuti</option>
@@ -54,14 +54,12 @@
                                 <div class="form-group col-sm" id="tipeapproval">
                                     <label for="tipe_approval" class="col-form-label">Tipe Approval</label>
                                     <select name="tipe_approval" id="tipe_approval" class="form-control" required>
-                                        <option value="">Pilih Mode Alokasi</option>
+                                        <option value="">Pilih Tipe Approval</option>
                                         <option value="Tidak Bertingkat">Tidak Bertingkat</option>
                                         <option value="Bertingkat">Bertingkat</option>
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <div class="form-group col-sm" id="modalokasi">
                                     <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
@@ -72,6 +70,8 @@
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group col-sm" id="mode_departemen">
                                 <label for="departemen" class="col-form-label">Departemen</label>
                                 <select name="departemen" id="departemen" class="form-control">
@@ -91,6 +91,22 @@
                                     <option value="Lama Kerja">Lama Kerja</option>
                                 </select>
                             </div>
+                            {{-- <div class="form-group col-sm" id="mode_employees">
+                                <label for="mode_karyawan" class="col-form-label">Karyawan</label>
+                                <select class="form-control" id="modeemployees" name="mode_karyawans" multiple style="width:395px">
+                                    <option value="Lama Kerja">Lama Kerja</option>
+                                </select>
+                            </div> --}}
+                            <div class="form-group">
+                                <div class="form-group col-sm" id="lamakerja">
+                                    <label class="col-form-label">Lama Kerja</label>
+                                    <select name="lama_kerja" id="lama_kerja" class="form-control" required>
+                                        <option value="">Pilih Lama Kerja</option>
+                                        <option value="Lebih Dari Setahun">Lebih Dari 1 Tahun</option>
+                                        <option value="Kurang Dari Setahun">Kurang Dari 1 Tahun</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -108,14 +124,102 @@
 {{-- <script src="assets/js/app.js"></script> --}}
 
 {{-- // Plugins Init js --}}
-<script src="assets/pages/form-advanced.js"></script>
+{{-- <script src="assets/pages/form-advanced.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.2/select2.min.js"></script>
+
+{{-- <script type="text/javascript">
+    $(function()
+        {
+            $('#mode_departemen').prop("hidden", true);
+            $('#mode_employee').prop("hidden", true);
+            $('#mode_employees').prop("hidden", true);
+            $('#lamakerja').prop("hidden", true);
+
+            $('#jeniscutis').on('change', function(e)
+            {
+                var id = $(this).val();
+                console.log(id);
+                if(e.target.value== 1)
+                {
+                    $('#mode_departemen').prop("hidden", true);
+                    $('#mode_employee').prop("hidden", true);
+                    $('#mode_employees').prop("hidden", false);
+                    $('#lamakerja').prop("hidden", false);
+
+                    $('#modalokasi').on('change', function(a)
+                    {
+                        if(a.target.value== 'Berdasarkan Departemen')
+                        {
+                            $('#mode_departemen').prop("hidden", false);
+                            $('#mode_employee').prop("hidden", true);
+                            $('#mode_employees').prop("hidden", false);
+                            $('#lamakerja').prop("hidden", false);
+                        }
+                        if(a.target.value== 'Berdasarkan Karyawan')
+                        {
+                            $('#mode_departemen').prop("hidden", true);
+                            $('#mode_employee').prop("hidden", true);
+                            $('#mode_employees').prop("hidden", false);
+                            $('#lamakerja').prop("hidden", false);
+
+                            $('#mode_employees').on('change', function(b)
+                            {
+                                if(b.target.value== 'Lama Kerja')
+                                {
+                                    $('#mode_departemen').prop("hidden", true);
+                                    $('#mode_employee').prop("hidden", true);
+                                    $('#lamakerja').prop("hidden", false);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    );
+        
+            // $('#modalokasi').on('change', function(a)
+            // {
+            //     if(a.target.value== 'Berdasarkan Departemen')
+            //     {
+            //         $('#mode_departemen').prop("hidden", false);
+            //         $('#mode_employee').prop("hidden", true);
+            //         $('#lamakerja').prop("hidden", true);
+            //     }
+            //     if(a.target.value== 'Berdasarkan Karyawan')
+            //     {
+            //         $('#mode_departemen').prop("hidden", true);
+            //         $('#mode_employee').prop("hidden", false);
+            //         $('#lamakerja').prop("hidden", true);
+
+                    // $('#mode_employee').on('change', function(b)
+                    // {
+                    //     if(b.target.value== 'Lama Kerja')
+                    //     {
+                    //         $('#mode_departemen').prop("hidden", true);
+                    //         $('#mode_employee').prop("hidden",false);
+                    //         $('#lamakerja').prop("hidden", false);
+                    //     }
+                        
+                    // });
+            //     }
+            // });
+
+    //     }
+    // );
+       
+        // $(document).ready(function () 
+            $("#mode_karyawan").select2();
+        // );
+</script> --}}
 
 <script type="text/javascript">
     $(function()
         {
             $('#mode_departemen').prop("hidden", true);
             $('#mode_employee').prop("hidden", true);
+            $('#mode_employees').prop("hidden", true);
+            $('#lamakerja').prop("hidden", true);
         
             $('#modalokasi').on('change', function(a)
             {
@@ -123,11 +227,22 @@
                 {
                     $('#mode_departemen').prop("hidden", false);
                     $('#mode_employee').prop("hidden", true);
+                    $('#lamakerja').prop("hidden", true);  
                 }
                 if(a.target.value== 'Berdasarkan Karyawan')
                 {
                     $('#mode_departemen').prop("hidden", true);
                     $('#mode_employee').prop("hidden", false);
+                    $('#lamakerja').prop("hidden", true);
+
+                    $('#mode_employee').on('change', function(b)
+                    {
+                        if(b.target.value== 'Lama Kerja')
+                        {
+                            $('#mode_departemen').prop("hidden", true);
+                            $('#lamakerja').prop("hidden", false);
+                        }
+                    });
                 }
             });
         });
@@ -136,6 +251,7 @@
             $("#mode_karyawan").select2();
         // );
 </script>
+
 
 <script>
     jQuery('option').mousedown(function(e) {
