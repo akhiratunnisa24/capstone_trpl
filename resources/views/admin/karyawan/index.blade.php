@@ -105,7 +105,10 @@
                                                                     <td>{{ $k->agama }}</td>
                                                                     <td>
                                                                         <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                                            <a href="karyawanshow{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                                                            {{-- <a href="karyawanshow{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a> --}}
+
+                                                                            <a href="showidentitas{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+
                                                                             <button  onclick="hapus_karyawan({{ $k->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                                                         </div>
                                                                         <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->

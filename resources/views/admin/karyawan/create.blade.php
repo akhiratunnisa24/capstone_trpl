@@ -86,7 +86,8 @@
                                                         <div class="input-group">
                                                             <input id="datepicker-autoclose15" type="text"
                                                                 class="form-control" placeholder="yyyy/mm/dd" id="4"
-                                                                name="tgllahirKaryawan" autocomplete="off" rows="10" required></input><br>
+                                                                name="tgllahirKaryawan" autocomplete="off" rows="10"
+                                                                required></input><br>
                                                             <span class="input-group-addon bg-custom b-0"><i
                                                                     class="mdi mdi-calendar text-white"></i></span>
                                                         </div><!-- input-group -->
@@ -95,7 +96,8 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
-                                                    <select class="form-control selectpicker" name="jenis_kelaminKaryawan" required>
+                                                    <select class="form-control selectpicker" name="jenis_kelaminKaryawan"
+                                                        required>
                                                         <option value="">Pilih Jenis Kelamin</option>
                                                         <option value="L">Laki-Laki</option>
                                                         <option value="P">Perempuan</option>
@@ -104,7 +106,8 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1" class="form-label">Departemen</label>
-                                                    <select class="form-control selectpicker" name="divisi" data-live-search="true" required>
+                                                    <select class="form-control selectpicker" name="divisi"
+                                                        data-live-search="true" required>
                                                         <option value="">Pilih Departemen</option>
                                                         @foreach ($departemen as $d)
                                                             <option value="{{ $d->id }}">{{ $d->nama_departemen }}
@@ -114,8 +117,10 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="form-label">Atasan Langsung (SPV/Manager/Direktur)</label>
-                                                    <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
+                                                    <label for="exampleInputEmail1" class="form-label">Atasan Langsung
+                                                        (SPV/Manager/Direktur)</label>
+                                                    <select class="form-control selectpicker" name="atasan_pertama"
+                                                        data-live-search="true">
                                                         <option value="">Pilih Atasan Langsung</option>
                                                         @foreach ($atasan_pertama as $atasan)
                                                             <option value="{{ $atasan->id }}">{{ $atasan->nama }}
@@ -125,8 +130,10 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="form-label">Atasan (Manager/Direktur)</label>
-                                                    <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
+                                                    <label for="exampleInputEmail1" class="form-label">Atasan
+                                                        (Manager/Direktur)</label>
+                                                    <select class="form-control selectpicker" name="atasan_kedua"
+                                                        data-live-search="true">
                                                         <option value="">Pilih Atasan</option>
                                                         @foreach ($atasan_kedua as $atasan)
                                                             <option value="{{ $atasan->atasan }}">{{ $atasan->nama }}
@@ -137,7 +144,8 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1" class="form-label">Jabatan</label>
-                                                    <select class="form-control selectpicker" name="jabatanKaryawan" required>
+                                                    <select class="form-control selectpicker" name="jabatanKaryawan"
+                                                        required>
                                                         <option value="">Pilih Jabatan</option>
                                                         <option value="Management">Management</option>
                                                         <option value="Manager">Manager</option>
@@ -167,7 +175,8 @@
                                                         <div class="mb-3">
                                                             <label for="exampleInputEmail1" class="form-label">No.
                                                                 Handphone</label>
-                                                            <input type="number" name="no_hpKaryawan" class="form-control"
+                                                            <input type="number" name="no_hpKaryawan"
+                                                                class="form-control"
                                                                 placeholder="Masukkan Nomor Handphone" required>
                                                         </div>
                                                     </div>
@@ -177,9 +186,9 @@
                                                             <label for="exampleInputEmail1" class="form-label">Alamat
                                                                 E-mail</label>
                                                             <input type="email" name="emailKaryawan" no_kk
-                                                                class="form-control" id="exampleInputEmail1" autocomplete="off"
-                                                                aria-describedby="emailHelp" placeholder="Masukkan Email" autocomplete="off"
-                                                                required>
+                                                                class="form-control" id="exampleInputEmail1"
+                                                                autocomplete="off" aria-describedby="emailHelp"
+                                                                placeholder="Masukkan Email" autocomplete="off" required>
                                                             <div id="emailHelp" class="form-text"></div>
                                                         </div>
                                                     </div>
@@ -188,7 +197,8 @@
                                                         <div class="mb-3">
                                                             <label for="exampleInputEmail1"
                                                                 class="form-label">Agama</label>
-                                                            <select class="form-control selectpicker" name="agamaKaryawan" required>
+                                                            <select class="form-control selectpicker" name="agamaKaryawan"
+                                                                required>
                                                                 <option value="">Pilih Agama</option>
                                                                 <option value="Islam">Islam</option>
                                                                 <option value="Kristen">Kristen</option>
@@ -207,8 +217,8 @@
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control"
                                                                     placeholder="yyyy/mm/dd" id="datepicker-autoclose2"
-                                                                    name="tglmasukKaryawan" rows="10" autocomplete="off"
-                                                                    required></input><br>
+                                                                    name="tglmasukKaryawan" rows="10"
+                                                                    autocomplete="off" required></input><br>
                                                                 <span class="input-group-addon bg-custom b-0"><i
                                                                         class="mdi mdi-calendar text-white"></i></span>
                                                             </div>
@@ -226,7 +236,8 @@
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1" class="form-label">Golongan
                                                             Darah</label>
-                                                        <select class="form-control selectpicker" name="gol_darahKaryawan" required>
+                                                        <select class="form-control selectpicker" name="gol_darahKaryawan"
+                                                            required>
                                                             <option value="">Pilih Golongan Darah</option>
                                                             <option value="A">A</option>
                                                             <option value="B">B</option>
@@ -267,8 +278,8 @@
                                                         <div class="form-group">
                                                             <label for="exampleInputEmail1" class="form-label">Status
                                                                 Pernikahan</label>
-                                                            <select class="form-control selectpicker" name="status_pernikahan"
-                                                                required>
+                                                            <select class="form-control selectpicker"
+                                                                name="status_pernikahan" required>
                                                                 <option value="">Pilih Status Pernikahan</option>
                                                                 <option value="Sudah">Sudah Menikah</option>
                                                                 <option value="Belum">Belum Menikah</option>
@@ -276,15 +287,15 @@
                                                         </div>
 
                                                         <!-- <div class="form-group">
-                                                    <label for="exampleInputEmail1" class="form-label">Hubungan Keluarga</label>
-                                                    <select class="form-control" name="status_pernikahan" required>
-                                                        <option value="">Pilih Hubungan Keluarga</option>
-                                                        <option value="Sudah">Orang Tua</option>
-                                                        <option value="Belum">Istri</option>
-                                                        <option value="Belum">Saudara Kandung</option>
-                                                        <option value="Belum">Anak</option>
-                                                    </select>
-                                                </div> -->
+                                                        <label for="exampleInputEmail1" class="form-label">Hubungan Keluarga</label>
+                                                        <select class="form-control" name="status_pernikahan" required>
+                                                            <option value="">Pilih Hubungan Keluarga</option>
+                                                            <option value="Sudah">Orang Tua</option>
+                                                            <option value="Belum">Istri</option>
+                                                            <option value="Belum">Saudara Kandung</option>
+                                                            <option value="Belum">Anak</option>
+                                                        </select>
+                                                    </div> -->
 
                                                         <!-- sub judul 2 -->
                                                         <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5 ">
@@ -296,7 +307,8 @@
                                                                 <label for="exampleInputEmail1" class="form-label">Nama
                                                                     Lengkap</label>
                                                                 <input type="text" name="namaPasangan"
-                                                                    class="form-control" autocomplete="off" placeholder="Masukkan Nama">
+                                                                    class="form-control" autocomplete="off"
+                                                                    placeholder="Masukkan Nama">
                                                                 <div id="emailHelp" class="form-text"></div>
                                                             </div>
                                                         </div>
@@ -308,7 +320,8 @@
                                                                 <div class="input-group">
                                                                     <input type="text" class="form-control"
                                                                         placeholder="yyyy/mm/dd"
-                                                                        id="datepicker-autoclose8" autocomplete="off" name="tgllahirPasangan"
+                                                                        id="datepicker-autoclose8" autocomplete="off"
+                                                                        name="tgllahirPasangan"
                                                                         rows="10"></input><br>
                                                                     <span class="input-group-addon bg-custom b-0"><i
                                                                             class="mdi mdi-calendar text-white"></i></span>
@@ -320,8 +333,9 @@
                                                             <div class="mb-3">
                                                                 <label for="exampleInputEmail1"
                                                                     class="form-label">Alamat</label>
-                                                                <input class="form-control" name="alamatPasangan" autocomplete="off"
-                                                                    rows="9" placeholder="Masukkan Alamat"></input>
+                                                                <input class="form-control" name="alamatPasangan"
+                                                                    autocomplete="off" rows="9"
+                                                                    placeholder="Masukkan Alamat"></input>
                                                             </div>
                                                         </div>
 
@@ -356,12 +370,12 @@
                                                             <div class="mb-3">
 
                                                                 <!-- <button class="btn btn-success btn-sm add-more" type="button">
-                                                                <i class="fa fa-user-plus"></i>
-                                                            </button> -->
+                                                                    <i class="fa fa-user-plus"></i>
+                                                                </button> -->
 
                                                                 <!-- <button class="btn btn-success add-more" type="button">
-                                                            <i class="glyphicon glyphicon-plus"></i> Add
-                                                        </button> -->
+                                                                <i class="glyphicon glyphicon-plus"></i> Add
+                                                            </button> -->
 
 
                                                             </div>
@@ -391,8 +405,8 @@
                                                                         class="form-label">Nama
                                                                         Lengkap</label>
                                                                     <input type="text" name="namaKdarurat"
-                                                                        class="form-control" placeholder="Masukkan Nama" autocomplete="off"
-                                                                        required>
+                                                                        class="form-control" placeholder="Masukkan Nama"
+                                                                        autocomplete="off" required>
                                                                     <div id="emailHelp" class="form-text"></div>
                                                                 </div>
                                                             </div>
@@ -418,8 +432,10 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Hubungan</label>
-                                                                    <select class="form-control selectpicker" name="hubunganKdarurat">
+                                                                    <label for="exampleInputEmail1"
+                                                                        class="form-label">Hubungan</label>
+                                                                    <select class="form-control selectpicker"
+                                                                        name="hubunganKdarurat">
                                                                         <option value="">Pilih Hubungan</option>
                                                                         <option value="Ayah">Ayah</option>
                                                                         <option value="Ibu">Ibu</option>
@@ -485,7 +501,8 @@
                                                                                     class="form-label">Nama Sekolah</label>
                                                                                 <input type="text" name="nama_sekolah"
                                                                                     class="form-control"
-                                                                                    placeholder="Masukkan Sekolah" autocomplete="off" required>
+                                                                                    placeholder="Masukkan Sekolah"
+                                                                                    autocomplete="off" required>
                                                                                 <div id="emailHelp" class="form-text">
                                                                                 </div>
                                                                             </div>
@@ -514,8 +531,8 @@
                                                                                     class="form-control"
                                                                                     id="exampleInputEmail1"
                                                                                     aria-describedby="emailHelp"
-                                                                                    placeholder="Masukkan Jurusan" autocomplete="off"
-                                                                                    required>
+                                                                                    placeholder="Masukkan Jurusan"
+                                                                                    autocomplete="off" required>
                                                                                 <div id="emailHelp" class="form-text">
                                                                                 </div>
                                                                             </div>
@@ -526,11 +543,16 @@
                                                                                 <label for="exampleInputEmail1"
                                                                                     class="form-label">Lulus Tahun</label>
                                                                                 <div class="input-group">
-                                                                                    <input id="datepicker-autoclose20" type="text"
-                                                                                            class="form-control" placeholder="yyyy" id="4"
-                                                                                            name="tahun_lulusFormal" rows="10" autocomplete="off" required></input><br>
-                                                                                    <span class="input-group-addon bg-custom b-0"><i
-                                                                                                class="mdi mdi-calendar text-white"></i></span>
+                                                                                    <input id="datepicker-autoclose20"
+                                                                                        type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="yyyy" id="4"
+                                                                                        name="tahun_lulusFormal"
+                                                                                        rows="10" autocomplete="off"
+                                                                                        required></input><br>
+                                                                                    <span
+                                                                                        class="input-group-addon bg-custom b-0"><i
+                                                                                            class="mdi mdi-calendar text-white"></i></span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -556,7 +578,8 @@
                                                                                     <input type="text"
                                                                                         name="jenis_pendidikan"
                                                                                         class="form-control"
-                                                                                        placeholder="Masukkan Nama" autocomplete="off"> 
+                                                                                        placeholder="Masukkan Nama"
+                                                                                        autocomplete="off">
                                                                                     <div id="emailHelp" class="form-text">
                                                                                     </div>
                                                                                 </div>
@@ -571,7 +594,8 @@
                                                                                         no_kk class="form-control"
                                                                                         id="exampleInputEmail1"
                                                                                         aria-describedby="emailHelp"
-                                                                                        placeholder="Masukkan Kota" autocomplete="off">
+                                                                                        placeholder="Masukkan Kota"
+                                                                                        autocomplete="off">
                                                                                     <div id="emailHelp" class="form-text">
                                                                                     </div>
                                                                                 </div>
@@ -580,13 +604,20 @@
                                                                             <div class="form-group">
                                                                                 <div class="mb-3">
                                                                                     <label for="exampleInputEmail1"
-                                                                                        class="form-label">Lulus Tahun</label>
+                                                                                        class="form-label">Lulus
+                                                                                        Tahun</label>
                                                                                     <div class="input-group">
-                                                                                        <input id="datepicker-autoclose21" type="text"
-                                                                                                class="form-control" placeholder="yyyy" id="4"
-                                                                                                name="tahunLulusNonFormal" autocomplete="off" rows="10" ><br>
-                                                                                        <span class="input-group-addon bg-custom b-0"><i
-                                                                                                    class="mdi mdi-calendar text-white"></i></span>
+                                                                                        <input id="datepicker-autoclose21"
+                                                                                            type="text"
+                                                                                            class="form-control"
+                                                                                            placeholder="yyyy"
+                                                                                            id="4"
+                                                                                            name="tahunLulusNonFormal"
+                                                                                            autocomplete="off"
+                                                                                            rows="10"><br>
+                                                                                        <span
+                                                                                            class="input-group-addon bg-custom b-0"><i
+                                                                                                class="mdi mdi-calendar text-white"></i></span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -623,7 +654,8 @@
                                                                                                     <input type="text"
                                                                                                         name="namaPerusahaan"
                                                                                                         class="form-control"
-                                                                                                        placeholder="Masukkan Nama Perusahaan" autocomplete="off">
+                                                                                                        placeholder="Masukkan Nama Perusahaan"
+                                                                                                        autocomplete="off">
                                                                                                     <div id="emailHelp"
                                                                                                         class="form-text">
                                                                                                     </div>
@@ -661,7 +693,8 @@
                                                                                                         class="form-control"
                                                                                                         id="exampleInputEmail1"
                                                                                                         aria-describedby="emailHelp"
-                                                                                                        placeholder="Masukkan Jenis Usaha" autocomplete="off">
+                                                                                                        placeholder="Masukkan Jenis Usaha"
+                                                                                                        autocomplete="off">
                                                                                                     <div id="emailHelp"
                                                                                                         class="form-text">
                                                                                                     </div>
@@ -680,7 +713,8 @@
                                                                                                         class="form-control"
                                                                                                         id="exampleInputEmail1"
                                                                                                         aria-describedby="emailHelp"
-                                                                                                        placeholder="Masukkan Jabatan" autocomplete="off">
+                                                                                                        placeholder="Masukkan Jabatan"
+                                                                                                        autocomplete="off">
                                                                                                     <div id="emailHelp"
                                                                                                         class="form-text">
                                                                                                     </div>
@@ -700,7 +734,8 @@
                                                                                                         class="form-control"
                                                                                                         id="exampleInputEmail1"
                                                                                                         aria-describedby="emailHelp"
-                                                                                                        placeholder="Masukkan Nama Atasan" autocomplete="off">
+                                                                                                        placeholder="Masukkan Nama Atasan"
+                                                                                                        autocomplete="off">
                                                                                                     <div id="emailHelp"
                                                                                                         class="form-text">
                                                                                                     </div>
@@ -743,7 +778,8 @@
                                                                                                             class="form-control"
                                                                                                             id="exampleInputEmail1"
                                                                                                             aria-describedby="emailHelp"
-                                                                                                            placeholder="Masukkan Nama Direktur" autocomplete="off">
+                                                                                                            placeholder="Masukkan Nama Direktur"
+                                                                                                            autocomplete="off">
                                                                                                         <div id="emailHelp"
                                                                                                             class="form-text">
                                                                                                         </div>
@@ -764,7 +800,8 @@
                                                                                                             class="form-control"
                                                                                                             id="exampleInputEmail1"
                                                                                                             aria-describedby="emailHelp"
-                                                                                                            placeholder="Masukkan Lama Kerja" autocomplete="off">
+                                                                                                            placeholder="Masukkan Lama Kerja"
+                                                                                                            autocomplete="off">
                                                                                                         <div id="emailHelp"
                                                                                                             class="form-text">
                                                                                                         </div>
@@ -781,11 +818,12 @@
                                                                                                         <input
                                                                                                             type="text"
                                                                                                             name="alasanBerhenti"
-                                                                                                                no_kk
-                                                                                                                class="form-control"
-                                                                                                                id="exampleInputEmail1"
+                                                                                                            no_kk
+                                                                                                            class="form-control"
+                                                                                                            id="exampleInputEmail1"
                                                                                                             aria-describedby="emailHelp"
-                                                                                                            placeholder="Masukkan Alasan Berhenti" autocomplete="off">
+                                                                                                            placeholder="Masukkan Alasan Berhenti"
+                                                                                                            autocomplete="off">
                                                                                                         <div id="emailHelp"
                                                                                                             class="form-text">
                                                                                                         </div>
@@ -805,7 +843,8 @@
                                                                                                             class="form-control"
                                                                                                             id="gaji"
                                                                                                             aria-describedby="emailHelp"
-                                                                                                            placeholder="Masukkan Gaji" autocomplete="off">
+                                                                                                            placeholder="Masukkan Gaji"
+                                                                                                            autocomplete="off">
                                                                                                         <div id="emailHelp"
                                                                                                             class="form-text">
                                                                                                         </div>
@@ -840,7 +879,7 @@
             </div>
     </div>
     </table>
-    </div>  
+    </div>
     </div>
     </form>
     </div>
@@ -910,6 +949,4 @@
 
     <!-- Plugins Init js -->
     <script src="assets/pages/form-advanced.js"></script>
-
-    
 @endsection
