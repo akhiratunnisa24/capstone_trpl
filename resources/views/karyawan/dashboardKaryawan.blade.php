@@ -435,13 +435,39 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12">
+                            @if(count($sisacuti) > 0)
+                                <table class="table table-striped">
+                                    <label><b>Sisa Cuti Tahun Lalu</b></label>
+                                    <thead>
+                                        <tr class="info">
+                                            <th>No</th>
+                                            <th>Nama Karyawan</th>
+                                            <th>Kategori Cuti</th>
+                                            <th>Sisa Cuti Tahun Lalu</th>
+                                            <th>Periode</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($sisacuti as $sisa)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ Auth::user()->name }}</td>
+                                                <td>{{ $sisa->jeniscutis->jenis_cuti }}</td>
+                                                <td>{{ $sisa->sisa_cuti }} hari</td>
+                                                <td>{{ $sisa->periode}}</td>
+                                             </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
+
                             <table class="table table-striped">
+                                <label><b>Alokasi Cuti Tahun Ini</b></label>
                                 <thead>
                                     <tr class="info">
                                         <th>No</th>
-                                        {{-- <th>settingalokasi</th> --}}
                                         <th>Nama Karyawan</th>
-                                        <th>Cuti Yang Didapat</th>
+                                        <th>Kategori Cuti</th>
                                         <th>Durasi Cuti</th>
                                         <th>Aktif Dari</th>
                                         <th>Berakhir</th>
@@ -451,8 +477,6 @@
                                     @foreach($alokasicuti as $alokasi)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            {{-- <td>{{ $alokasi->id}}</td>
-                                            <td>{{ $alokasi->id_settingalokasi}}</td> --}}
                                             <td>{{ $alokasi->karyawans->nama }}</td>
                                             <td>{{ $alokasi->jeniscutis->jenis_cuti }}</td>
                                             <td>{{ $alokasi->durasi }} hari</td>

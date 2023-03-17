@@ -5,31 +5,32 @@ namespace App\Http\Controllers\karyawan;
 
 use Carbon\Carbon;
 use App\Models\Cuti;
+use App\Models\Izin;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Users;
+use App\Models\Resign;
 use App\Models\Absensi;
 use App\Models\Karyawan;
-use App\Models\Izin;
 use App\Models\Kdarurat;
 use App\Models\Keluarga;
+use App\Models\Lowongan;
+use App\Models\Sisacuti;
+use App\Models\Departemen;
 use App\Models\Rpekerjaan;
+use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
 use App\Models\Rpendidikan;
-use App\Models\Departemen;
-use App\Models\Lowongan;
-use App\Models\Resign;
-use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
 use App\Events\AbsenKaryawanEvent;
-use App\Models\Tidakmasuk;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
 class karyawanController extends Controller
@@ -174,24 +175,27 @@ class karyawanController extends Controller
             $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
-            $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)->get();
+            $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
+                ->where('status','=',1)->get();
+            $sisacuti = Sisacuti::where('id_pegawai',Auth::user()->id_pegawai)->get();
+            // return $sisacuti;
 
             $posisi = Lowongan::all()->sortByDesc('created_at');
 
             $cuti = DB::table('cuti')
-            ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-            ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-            ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-            ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-            ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-            ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama', 'settingalokasi.mode_alokasi', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-            ->distinct()
-            ->where(function ($query) {
-                $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                    ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-            })
-                ->where('status', '=', '1')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama', 'settingalokasi.mode_alokasi', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->where('cuti.status', '=', '1')
                 ->orderBy('created_at', 'DESC')
                 ->get();
             $cutijumlah = $cuti->where('status', '=', '1')->count('status');
@@ -226,6 +230,7 @@ class karyawanController extends Controller
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
                 'posisi' => $posisi,
+                'sisacuti' =>$sisacuti,
 
             ];
             return view('karyawan.dashboardKaryawan', $output);

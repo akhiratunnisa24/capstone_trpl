@@ -32,16 +32,17 @@ class ManagerController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
-        if ($role == 3 && $row->jabatan == 'Manager') 
+        if ($role == 3 && $row->jabatan = "Manager") 
         {
             $staff = Karyawan::with('departemens')
                 ->where('atasan_pertama',Auth::user()->id_pegawai)
                 ->orWhere('atasan_kedua',Auth::user()->id_pegawai)
                 ->get();
+            // dd($staff);
 
             return view('manager.staff.dataStaff', compact('staff','row'));
         }
-        elseif($role == 3 && $row->jabatan == 'Supervisor')
+        elseif($role == 3 && $row->jabatan = "Supervisor")
         {
             //mengambil id_departemen 
             $staff= Karyawan::with('departemens')
@@ -64,7 +65,7 @@ class ManagerController extends Controller
             ->where('absensi.id_karyawan','=',Auth::user()->id_pegawai)
             ->select('id_departement')->first();
 
-        if($role == 3) 
+        if($role == 3 && $row->jabatan = "Manager") 
         {
             $manager_iddep = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
                 ->select('divisi')->first();
@@ -98,7 +99,7 @@ class ManagerController extends Controller
             $request->session()->forget('bulan');
             $request->session()->forget('tahun');
         }
-        elseif($role == 5)
+        elseif($role == 3 && $row->jabatan = "Supervisor")
         {
             $spv = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
                 ->select('divisi')->first();
@@ -154,7 +155,7 @@ class ManagerController extends Controller
 
         $tp = $request->query('tp',1);
 
-        if($role == 3)
+        if($role == 3 && $row->jabatan = "Manager")
         {
             $cutistaff = DB::table('cuti')
                 ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
@@ -187,7 +188,7 @@ class ManagerController extends Controller
                 
             return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
         }
-        elseif($role == 5)
+        elseif($role == 3 && $row->jabatan = "Spervisor")
         {
             $cutistaff = DB::table('cuti')
                 ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
@@ -218,6 +219,7 @@ class ManagerController extends Controller
 
     public function cutiapproved(Request $request, $id)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         $cuti = Cuti::where('id',$id)->first();
 
@@ -231,7 +233,7 @@ class ManagerController extends Controller
             ->select('cuti.*','alokasicuti.*','settingalokasi.tipe_approval')
             ->first();
 
-        if($role == 3)
+        if($role == 3 && $row->jabatan = "Manager")
         {
             // dd($datacuti->status);
             if($datacuti->tipe_approval == 'Tidak Bertingkat')
@@ -307,7 +309,7 @@ class ManagerController extends Controller
                 return redirect()->back()->withInput();
             }
         }
-        elseif($role == 5)
+        elseif($role == 3 && $row->jabatan = "Supervisor")
         {
             if($datacuti->tipe_approval == 'Tidak Bertingkat')
             {
@@ -521,7 +523,7 @@ class ManagerController extends Controller
     {
         $role = Auth::user()->role;
         $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
-
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();    
         //mengambil id_departemen user
         $middep = DB::table('absensi')
             ->join('karyawan','absensi.id_departement','=','karyawan.divisi')
@@ -538,7 +540,7 @@ class ManagerController extends Controller
         $bulan      = $request->session()->get('bulan');
         $tahun      = $request->session()->get('tahun');
 
-        if($role == 3)
+        if ($role == 3 && $row->jabatan = "Manager") 
         {
             if(isset($idkaryawan) && isset($bulan) && isset($tahun))
             {
@@ -562,7 +564,7 @@ class ManagerController extends Controller
                 "REKAP ABSENSI DEPARTEMEN ".$departemen->nama_departemen.".xlsx");
             };
         }
-        elseif($role == 5)
+        elseif ($role == 3 && $row->jabatan = "Supervisor") 
             {
                 if(isset($idkaryawan) && isset($bulan) && isset($tahun))
                 {
@@ -599,6 +601,7 @@ class ManagerController extends Controller
     public function exportpdf(Request $request)
     {
         $role = Auth::user()->role;
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
 
         //mengambil id_departemen user
@@ -616,7 +619,7 @@ class ManagerController extends Controller
         $bulan      = $request->session()->get('bulan');
         $tahun      = $request->session()->get('tahun',);
 
-        if($role == 3)
+        if($role == 3 && $row->jabatan = "Manager")
         {
             if(isset($idkaryawan) && isset($bulan) && isset($tahun))
             {
@@ -642,7 +645,7 @@ class ManagerController extends Controller
             ->setPaper('A4','landscape');
             return $pdf->stream("REKAP ABSENSI BULAN ".$nbulan." "." DEPARTEMEN ".$departemen->nama_departemen.".pdf");
         }
-        elseif($role == 5)
+        elseif($role == 3 && $row->jabatan = "Supervisor")
             {
                 if(isset($idkaryawan) && isset($bulan) && isset($tahun))
                 {
