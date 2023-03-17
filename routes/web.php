@@ -250,6 +250,7 @@ Route::post('/reset-cuti-tahunan', [SettingcutiController::class, 'resetCutiTahu
 
 //sisacuti
 Route::get('/sisacuti', [SisacutiController::class, 'index'])->name('sisacuti.index');
+Route::post('/sisa-cuti/{id}', [SisacutiController::class, 'sendEmail'])->name('siacuti.email');
 
 //create alokasi cuti
 Route::post('/gettglmasuk', [AlokasicutiController::class, 'getTglmasuk'])->name('get.Tglmasuk');

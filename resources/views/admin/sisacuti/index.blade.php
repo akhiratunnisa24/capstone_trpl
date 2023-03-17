@@ -38,6 +38,7 @@
                                             <th>Jumlah Cuti Tahun Ini </th>
                                             <th>Sisa Cuti Tahun Lalu</th>
                                             <th>Periode</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
 
@@ -50,6 +51,16 @@
                                                 <td>{{$data->jumlah_cuti}}</td>
                                                 <td>{{$data->sisa_cuti}}</td>
                                                 <td>{{$data->periode}}</td>
+                                                <td>
+                                                    <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                        <form action="/sisa-cuti/{{$data->id_pegawai}}" method="POST">
+                                                            @csrf
+                                                            @method('POST')
+                                                            <button type="submit" class="btn btn-warning btn-sm fa fa-paper-plane">  Kirim Notifikasi</button>
+                                                        </form>
+                                                    </div>
+
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
