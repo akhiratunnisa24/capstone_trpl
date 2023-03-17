@@ -452,9 +452,9 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ Auth::user()->name }}</td>
-                                                <td>{{ $sisa->jeniscutis->jenis_cuti }}</td>
-                                                <td>{{ $sisa->sisa_cuti }} hari</td>
-                                                <td>{{ $sisa->periode}}</td>
+                                                {{-- <td>{{ $sisa->jeniscutis->jenis_cuti }}</td> --}}
+                                                {{-- <td>{{ $sisa->sisa_cuti }} hari</td>
+                                                <td>{{ $sisa->periode}}</td> --}}
                                              </tr>
                                         @endforeach
                                     </tbody>

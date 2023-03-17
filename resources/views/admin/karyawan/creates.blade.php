@@ -62,7 +62,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">NIK Karyawan</label>
-                                                                        <input type="text" name="nipKaryawan" value="{{ $karyawan->nip ?? '' }}" class="form-control"
+                                                                        <input type="number" name="nipKaryawan" value="{{ $karyawan->nip ?? '' }}" class="form-control"
                                                                             placeholder="Masukkan NIK Karyawan" required>
                                                                     </div>
                                                                 </div>

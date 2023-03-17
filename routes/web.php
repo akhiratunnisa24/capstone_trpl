@@ -88,7 +88,12 @@ Route::get('/search', [karyawanController::class, 'index'])->name('search');
 
 // Show Data Karyawan Vesi Baru
 Route::get('showidentitas{id}', [karyawanController::class, 'showidentitas'])->name('showidentitas');
+Route::get('showpendidikan{id}', [karyawanController::class, 'showpendidikan'])->name('showpendidikan');
+Route::get('showpekerjaan{id}', [karyawanController::class, 'showpekerjaan'])->name('showpekerjaan');
+Route::get('showorganisasi{id}', [karyawanController::class, 'showorganisasi'])->name('showorganisasi');
+Route::get('showprestasi{id}', [karyawanController::class, 'showprestasi'])->name('showprestasi');
 Route::get('showkeluarga{id}', [karyawanController::class, 'showkeluarga'])->name('showkeluarga');
+Route::get('showkontakdarurat{id}', [karyawanController::class, 'showkontakdarurat'])->name('showkontakdarurat');
 
 //Upload File Digital Karyawan
 Route::get('/karyawanupload', [UploadController::class, 'index'])->name('index');

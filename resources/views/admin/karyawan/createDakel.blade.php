@@ -44,6 +44,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20 col-sm-20 col-xs-20" style="margin-left:15px;margin-right:15px;">
+                                
                                 <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>

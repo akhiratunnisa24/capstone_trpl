@@ -48,7 +48,7 @@
                                                 <div class="row">
                                                     <div>
                                                         <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                            <label class="text-white m-b-10">F. DATA KELUARGA</label>
+                                                            <label class="text-white m-b-10">G. DATA KONTAK DARURAT</label>
                                                         </div>
                                                     </div>
 
@@ -60,27 +60,21 @@
                                                                 <th>No</th>
                                                                 <th>Hubungan</th>
                                                                 <th>Nama</th>
-                                                                <th>Jenis Kelamin</th>
-                                                                <th>Tanggal Lahir</th>
-                                                                <th>Kota Kelahiran</th>
-                                                                <th>Pendidikan Terakhir</th>
-                                                                <th>Pekerjaan</th>
+                                                                <th>Alamat</th>
+                                                                <th>Nomor Handphone</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
 
                                                         <tbody>
-                                                            @foreach ($keluarga as $dakel)
+                                                            @foreach ($kontakdarurat as $kdar)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $dakel->hubungan ?? '-' }}</td>
-                                                                    <td>{{ $dakel->nama ?? '-' }}</td>
-                                                                    <td>{{ $dakel->jenis_kelamin ?? '-' }}</td>
-                                                                    <td>{{ $dakel->tgllahir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->tempatlahir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->pendidikan_terakhir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->pekerjaan ?? '-' }}</td>
-                                                                    <td>{{ $dakel->hubungan ?? '-' }}</td>
+                                                                    <td>{{ $kdar->hubungan ?? '-' }}</td>
+                                                                    <td>{{ $kdar->nama ?? '-' }}</td>
+                                                                    <td>{{ $kdar->alamat ?? '-' }}</td>
+                                                                    <td>{{ $kdar->no_hp ?? '-' }}</td>
+                                                                    <td>{{ $kdar->tempatlahir ?? '-' }}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
@@ -90,10 +84,10 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                 <a href="showprestasi{{ $karyawan->id }}" class="btn btn-sm btn-info"
+                                                 <a href="showkeluarga{{ $karyawan->id }}" class="btn btn-sm btn-info"
                                                     type="button">Sebelumnya <i class="fa fa-backward"></i></a>
-                                                <a href="showkontakdarurat{{ $karyawan->id }}" class="btn btn-sm btn-success"
-                                                    type="button">Selanjutnya <i class="fa fa-forward"></i></a>
+                                                <a href="karyawan" class="btn btn-sm btn-danger"
+                                                    type="button">Kembali <i class="fa fa-home"></i></a>
                                             </div>
                                     </div>
                                 </div>

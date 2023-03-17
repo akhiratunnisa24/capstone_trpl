@@ -494,8 +494,8 @@ class KaryawansController extends Controller
             'level'           => $request->levelRpekerjaan,
             'nama_atasan'     => $request->namaAtasan,
             'nama_direktur'   => $request->namaDirektur,
-            'tgl_mulai'      => $request->tglmulai,
-            'tgl_selesai'      => $request->tglselesai,
+            'tgl_mulai'       => \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d'),
+            'tgl_selesai'     => \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d'),
             'alasan_berhenti' => $request->alasanBerhenti,
             'gaji'            => $request->gajiRpekerjaan,
         ];
@@ -519,8 +519,8 @@ class KaryawansController extends Controller
         $pekerjaan[$index]['level']          = $request->levelRpekerjaan;
         $pekerjaan[$index]['nama_atasan']    = $request->namaAtasan;
         $pekerjaan[$index]['nama_direktur']  = $request->namaDirektur;
-        $pekerjaan[$index]['tgl_mulai']     = $request->tglmulai;
-        $pekerjaan[$index]['tgl_selesai']     = $request->tglselesai;
+        $datakeluarga[$index]['tgl_mulai'] = \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d');
+        $datakeluarga[$index]['tgl_selesai'] = \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d');
         $pekerjaan[$index]['alasan_berhenti']= $request->alasanBerhenti;
         $pekerjaan[$index]['gaji']           = $request->gajiRpekerjaan;
 

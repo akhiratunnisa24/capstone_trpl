@@ -48,7 +48,7 @@
                                                 <div class="row">
                                                     <div>
                                                         <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                            <label class="text-white m-b-10">F. DATA KELUARGA</label>
+                                                            <label class="text-white m-b-10">E. RIWAYAT PRESTASI</label>
                                                         </div>
                                                     </div>
 
@@ -58,41 +58,35 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                <th>Hubungan</th>
-                                                                <th>Nama</th>
-                                                                <th>Jenis Kelamin</th>
-                                                                <th>Tanggal Lahir</th>
-                                                                <th>Kota Kelahiran</th>
-                                                                <th>Pendidikan Terakhir</th>
-                                                                <th>Pekerjaan</th>
+                                                                <th>Perihal / Keterangan</th>
+                                                                <th>Instansi Pemberi</th>
+                                                                <th>Alamat Instansi</th>
+                                                                <th>Nomor Surat</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
 
                                                         <tbody>
-                                                            @foreach ($keluarga as $dakel)
+                                                            @foreach ($prestasi as $key => $pres)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $dakel->hubungan ?? '-' }}</td>
-                                                                    <td>{{ $dakel->nama ?? '-' }}</td>
-                                                                    <td>{{ $dakel->jenis_kelamin ?? '-' }}</td>
-                                                                    <td>{{ $dakel->tgllahir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->tempatlahir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->pendidikan_terakhir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->pekerjaan ?? '-' }}</td>
-                                                                    <td>{{ $dakel->hubungan ?? '-' }}</td>
+                                                                    <td>{{ $pres->keterangan ?? '-' }}</td>
+                                                                    <td>{{ $pres->nama_instansi ?? '-' }}</td>
+                                                                    <td>{{ $pres->alamat ?? '-' }}</td>
+                                                                    <td>{{ $pres->no_surat ?? '-' }}</td>
+                                                                    <td>{{ $pres->asda ?? '-' }}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
                                                     </table>
 
-
+                                                    
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                 <a href="showprestasi{{ $karyawan->id }}" class="btn btn-sm btn-info"
+                                                 <a href="showorganisasi{{ $karyawan->id }}" class="btn btn-sm btn-info"
                                                     type="button">Sebelumnya <i class="fa fa-backward"></i></a>
-                                                <a href="showkontakdarurat{{ $karyawan->id }}" class="btn btn-sm btn-success"
+                                                <a href="showkeluarga{{ $karyawan->id }}" class="btn btn-sm btn-success"
                                                     type="button">Selanjutnya <i class="fa fa-forward"></i></a>
                                             </div>
                                     </div>

@@ -27,6 +27,8 @@ use App\Imports\karyawanImport;
 use App\Events\AbsenKaryawanEvent;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Rorganisasi;
+use App\Models\Rprestasi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -911,6 +913,105 @@ class karyawanController extends Controller
             return redirect()->back();
         }
     }
+    public function showpendidikan($id)
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $no = 1;
+            $no2 = 1;
+            $karyawan = karyawan::findOrFail($id);
+            $pendidikan = Rpendidikan::where('id_pegawai', $id)->get();
+            // where('id_pegawai', $id)
+
+            $output = [
+                'row' => $row,
+                'no' => $no,
+                'no2' => $no2,
+                'karyawan' => $karyawan,
+                'pendidikan' => $pendidikan,
+            ];
+
+            return view('admin.karyawan.showPendidikan', $output);
+        } else {
+
+            return redirect()->back();
+        }
+    }
+    public function showpekerjaan($id)
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $karyawan = karyawan::findOrFail($id);
+            $pekerjaan= Rpekerjaan::where('id_pegawai', $id)->get();
+            // where('id_pegawai', $id)
+
+            $output = [
+                'row' => $row,
+                'karyawan' => $karyawan,
+                'pekerjaan' => $pekerjaan,
+            ];
+
+            return view('admin.karyawan.showPekerjaan', $output);
+        } else {
+
+            return redirect()->back();
+        }
+    }
+    public function showorganisasi($id)
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $karyawan = karyawan::findOrFail($id);
+            $organisasi = Rorganisasi::where('id_pegawai', $id)->get();
+            // where('id_pegawai', $id)
+
+            $output = [
+                'row' => $row,
+                'karyawan' => $karyawan,
+                'organisasi' => $organisasi,
+            ];
+
+            return view('admin.karyawan.showOrganisasi', $output);
+        } else {
+
+            return redirect()->back();
+        }
+    }
+    public function showprestasi($id)
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $karyawan = karyawan::findOrFail($id);
+            $prestasi = Rprestasi::where('id_pegawai', $id)->get();
+            // where('id_pegawai', $id)
+
+            $output = [
+                'row' => $row,
+                'karyawan' => $karyawan,
+                'prestasi' => $prestasi,
+            ];
+
+            return view('admin.karyawan.showPrestasi', $output);
+        } else {
+
+            return redirect()->back();
+        }
+    }
     public function showkeluarga($id)
     {
         $role = Auth::user()->role;
@@ -920,19 +1021,40 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $karyawan = karyawan::findOrFail($id);
-            $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager', 'Management'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Management'])->get();
+            $keluarga = Keluarga::where( 'id_pegawai' , $id )->get();
+            // where('id_pegawai', $id)
 
             $output = [
                 'row' => $row,
                 'karyawan' => $karyawan,
-                'departemen' => $departemen,
-                'atasan_pertama' => $atasan_pertama,
-                'atasan_kedua' => $atasan_kedua,
+                'keluarga' => $keluarga,
             ];
 
             return view('admin.karyawan.showKeluarga', $output);
+        } else {
+
+            return redirect()->back();
+        }
+    }
+    public function showkontakdarurat($id)
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $karyawan = karyawan::findOrFail($id);
+            $kontakdarurat = Kdarurat::where('id_pegawai', $id)->get();
+            // where('id_pegawai', $id)
+
+            $output = [
+                'row' => $row,
+                'karyawan' => $karyawan,
+                'kontakdarurat' => $kontakdarurat,
+            ];
+
+            return view('admin.karyawan.showKontakdarurat', $output);
         } else {
 
             return redirect()->back();

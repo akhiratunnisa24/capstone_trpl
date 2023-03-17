@@ -48,7 +48,7 @@
                                                 <div class="row">
                                                     <div>
                                                         <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                            <label class="text-white m-b-10">F. DATA KELUARGA</label>
+                                                            <label class="text-white m-b-10">D. RIWAYAT ORGANISASI</label>
                                                         </div>
                                                     </div>
 
@@ -58,41 +58,39 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                <th>Hubungan</th>
-                                                                <th>Nama</th>
-                                                                <th>Jenis Kelamin</th>
-                                                                <th>Tanggal Lahir</th>
-                                                                <th>Kota Kelahiran</th>
-                                                                <th>Pendidikan Terakhir</th>
-                                                                <th>Pekerjaan</th>
+                                                                <th>Nama Organisasi</th>
+                                                                <th>Alamat</th>
+                                                                <th>Tahun Mulai</th>
+                                                                <th>Tahun Selesai</th>
+                                                                <th>Jabatan</th>
+                                                                <th>Nomor SK</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
 
                                                         <tbody>
-                                                            @foreach ($keluarga as $dakel)
+                                                            @foreach ($organisasi as $key => $org)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $dakel->hubungan ?? '-' }}</td>
-                                                                    <td>{{ $dakel->nama ?? '-' }}</td>
-                                                                    <td>{{ $dakel->jenis_kelamin ?? '-' }}</td>
-                                                                    <td>{{ $dakel->tgllahir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->tempatlahir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->pendidikan_terakhir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->pekerjaan ?? '-' }}</td>
-                                                                    <td>{{ $dakel->hubungan ?? '-' }}</td>
+                                                                    <td>{{ $org->nama_organisasi ?? '-' }}</td>
+                                                                    <td>{{ $org->alamat ?? '-' }}</td>
+                                                                    <td>{{ $org->tgl_mulai ?? '-' }}</td>
+                                                                    <td>{{ $org->tgl_selesai ?? '-' }}</td>
+                                                                    <td>{{ $org->jabatan ?? '-' }}</td>
+                                                                    <td>{{ $org->no_sk ?? '-' }}</td>
+                                                                    <td>{{ $org->asda ?? '-' }}</td>
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
                                                     </table>
 
-
+                                                    
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                 <a href="showprestasi{{ $karyawan->id }}" class="btn btn-sm btn-info"
+                                                 <a href="showpekerjaan{{ $karyawan->id }}" class="btn btn-sm btn-info"
                                                     type="button">Sebelumnya <i class="fa fa-backward"></i></a>
-                                                <a href="showkontakdarurat{{ $karyawan->id }}" class="btn btn-sm btn-success"
+                                                <a href="showprestasi{{ $karyawan->id }}" class="btn btn-sm btn-success"
                                                     type="button">Selanjutnya <i class="fa fa-forward"></i></a>
                                             </div>
                                     </div>

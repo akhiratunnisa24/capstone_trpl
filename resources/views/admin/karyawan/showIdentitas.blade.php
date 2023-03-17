@@ -272,9 +272,8 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     {{-- <button type="submit" id="btnsimpan" name="submit" class="btn btn-sm btn-primary">Simpan</button> --}}
-                                                    <a href="showkeluarga{{ $karyawan->id }}" class="btn btn-sm btn-success" type="button">Selanjutnya <i class="fa fa-forward"></i></a>
+                                                    <a href="showpendidikan{{ $karyawan->id }}" class="btn btn-sm btn-success" type="button">Selanjutnya <i class="fa fa-forward"></i></a>
                                                 </div>
-                        
                                             </table>
                                         </div>
                                     </div>
