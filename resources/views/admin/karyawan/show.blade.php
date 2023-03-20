@@ -181,7 +181,7 @@
             {{-- RIWAYAT PENDIDIKAN --}}
             <label class="" width="50%"><h4>D. RIWAYAT PENDIDIKAN </h4></label><br>
             <div class="row">
-                <td style="width:25%"><label class="text-white badge bg-info"> Pendidikan Formal </label></td>
+                <td style="width:25%"><label class="text-white badge bg-info">1. Pendidikan Formal </label></td>
                 <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPformal" style="margin-right:10px;margin-bottom:10px">
                     <i class="fa fa-plus"> <strong> Add Pendidikan Formal</strong></i>
                 </a>

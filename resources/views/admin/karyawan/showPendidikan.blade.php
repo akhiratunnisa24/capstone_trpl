@@ -56,6 +56,10 @@
                                                         class="table dt-responsive nowrap table-striped table-bordered"
                                                         cellpadding="0" width="100%">
                                                         <span class=""><strong>1. PENDIDIKAN FORMAL</strong></span>
+                                                         <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPformal" style="margin-right:10px;margin-bottom:10px">
+                                                            <i class="fa fa-plus"> <strong> Add Pendidikan Formal</strong></i>
+                                                        </a>
+                                                        @include('admin.karyawan.addPformal')
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>

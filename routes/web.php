@@ -81,19 +81,29 @@ Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 Route::get('karyawanshow{id}', [karyawanController::class, 'show'])->name('show');
 Route::get('karyawanedit{id}', [karyawanController::class, 'edit'])->name('edit');
 Route::put('karyawanupdate{id}', [karyawanController::class, 'update'])->name('update');
+
 Route::get('karyawancreate', [karyawanController::class, 'create'])->name('create');
 Route::get('editPassword{id}', [karyawanController::class, 'editPassword'])->name('editPassword');
 Route::put('updatePassword{id}', [karyawanController::class, 'updatePassword'])->name('updatePassword');
 Route::get('/search', [karyawanController::class, 'index'])->name('search');
 
-// Show Data Karyawan Vesi Baru
+// Identitas Karyawan Vesi Baru
 Route::get('showidentitas{id}', [karyawanController::class, 'showidentitas'])->name('showidentitas');
+Route::get('editidentitas{id}', [karyawanController::class, 'editidentitas'])->name('editidentitas');
+Route::put('updateidentitas{id}', [karyawanController::class, 'updateidentitas'])->name('updateidentitas');
+
+// Pendidikan Karyawan Vesi Baru
 Route::get('showpendidikan{id}', [karyawanController::class, 'showpendidikan'])->name('showpendidikan');
+Route::post('addpformal{id}', [karyawanController::class, 'addpformal'])->name('addpformal');
+
+
 Route::get('showpekerjaan{id}', [karyawanController::class, 'showpekerjaan'])->name('showpekerjaan');
 Route::get('showorganisasi{id}', [karyawanController::class, 'showorganisasi'])->name('showorganisasi');
 Route::get('showprestasi{id}', [karyawanController::class, 'showprestasi'])->name('showprestasi');
 Route::get('showkeluarga{id}', [karyawanController::class, 'showkeluarga'])->name('showkeluarga');
 Route::get('showkontakdarurat{id}', [karyawanController::class, 'showkontakdarurat'])->name('showkontakdarurat');
+
+// Edit Data Karyawan Vesi Baru
 
 //Upload File Digital Karyawan
 Route::get('/karyawanupload', [UploadController::class, 'index'])->name('index');
@@ -444,7 +454,7 @@ Route::put('/updatePrestasi/{id}', [karyawansController::class, 'updatePrestasi'
 //store setelah show data
 Route::post('/storesdatakeluarga/{id}', [karyawansController::class, 'storedatakel'])->name('storedatakel');
 Route::post('/storeskontakdarurat/{id}', [karyawansController::class, 'storekonrat'])->name('storekonrat');
-Route::post('/storespformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
+Route::post('/storespformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');   
 Route::post('/storespnformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
 Route::post('/storespekerjaan/{id}', [karyawansController::class, 'storespekerjaan'])->name('storespekerjaan');
 Route::post('/storesorganisasi/{id}', [karyawansController::class, 'storesorganisasi'])->name('storesorganisasi');

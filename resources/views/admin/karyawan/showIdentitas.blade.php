@@ -271,7 +271,12 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    {{-- <button type="submit" id="btnsimpan" name="submit" class="btn btn-sm btn-primary">Simpan</button> --}}
+
+                                                    <a href="editidentitas{{ $karyawan->id }}" class="btn btn-sm btn-primary" type="button">Edit Data <i class="fa fa-edit"></i></a>
+                                                    
+                                                    {{-- <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#updateIdentitas{{$karyawan->id}}" >
+                                                    <i class="fa fa-edit"> <strong>Edit Identitas Diri</strong></i></a> --}}
+                                                    {{-- @include('admin.karyawan.editIdentitas') --}}
                                                     <a href="showpendidikan{{ $karyawan->id }}" class="btn btn-sm btn-success" type="button">Selanjutnya <i class="fa fa-forward"></i></a>
                                                 </div>
                                             </table>
@@ -286,21 +291,5 @@
         </div>
     </div>  
 
-     {{-- <script>
-        function previewImage() 
-        {
-            const image = document.querySelector('#foto');
-            const imgPreview = document.querySelector('.img-preview');
-
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
-        }
-     </script> --}}
 
 @endsection

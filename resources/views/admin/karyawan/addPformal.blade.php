@@ -7,12 +7,12 @@
                 <h4 class="modal-title text-center" id="myLargeModalLabel">Tambah Data Pendidikan Formal</h4>
             </div>
             <div class="modal-body">
-                <form id="" action="/storespformal/{{$karyawan->id}}" method="POST" enctype="multipart/form-data">
+                <form id="" action="addpformal{{$karyawan->id}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="hidden" name="idpegawai" autocomplete="off" value="{{$karyawan->id}}" class="form-control">
+                            {{-- <input type="hidden" name="idpegawai" autocomplete="off" value="{{$karyawan->id}}" class="form-control"> --}}
                             <div class="form-group">
                                 <label for="exampleInputEmail1" class="form-label">Tingkat Pendidikan</label>
                                 <select class="form-control selectpicker" name="tingkat_pendidikan">

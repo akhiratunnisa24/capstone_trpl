@@ -605,7 +605,7 @@ class karyawanController extends Controller
                 'row' => $row
             ];
 
-            dd($atasan_pertama, $atasan_kedua);
+            // dd($atasan_pertama, $atasan_kedua);
             return view('admin.karyawan.edit', $output)->with([
                 'karyawan'   => $karyawan,
                 'keluarga'   => $keluarga,
@@ -886,6 +886,7 @@ class karyawanController extends Controller
         }
     }
 
+    // show identitas terbaru
     public function showidentitas($id)
     {
         $role = Auth::user()->role;
@@ -913,6 +914,143 @@ class karyawanController extends Controller
             return redirect()->back();
         }
     }
+
+    // Edit identitas terbaru
+
+    public function editidentitas($id)
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $karyawan       = Karyawan::findOrFail($id);
+            $departemen     = Departemen::all();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager', 'Management'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Management'])->get();
+
+            $output = [
+                'row' => $row,
+                'karyawan'   => $karyawan,
+                'departemen' => $departemen,
+                'atasan_pertama' => $atasan_pertama,
+                'atasan_kedua'  => $atasan_kedua,
+            ];
+
+            return view('admin.karyawan.updateIdentitas', $output);
+        } else {
+
+            return redirect()->back();
+        }
+    }
+
+    public function updateidentitas(Request $request, $id)
+    {
+        $karyawan = Karyawan::find($id);
+        $request->validate(['foto' => 'image|mimes:jpeg,png,jpg|max:2048']);
+        $fotoLama = $karyawan->foto;
+
+        if ($file = $request->file('foto')) {
+            // hapus foto lama dari storage
+            if ($fotoLama !== null) {
+                $oldImage = public_path('Foto_Profile/' . $fotoLama);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+
+            $filename = '' . time() . $file->getClientOriginalName();
+            $file->move(public_path() . '\Foto_Profile', $filename);
+            $karyawan->foto = $filename;
+
+            $karyawan->save();
+
+            return redirect()->back();
+
+
+            $data = array(
+
+                'foto' => $filename,
+                'nip' => $request->post('nipKaryawan'),
+                'nama' => $request->post('namaKaryawan'),
+                'tgllahir' => $request->post('tgllahirKaryawan'),
+                'tempatlahir' => $request->post('tempatlahirKaryawan'),
+                'jenis_kelamin' => $request->post('jenis_kelaminKaryawan'),
+                'divisi' => $request->post('divisi'),
+                'atasan_pertama' => $request->post('atasan_pertama'),
+                'atasan_kedua' => $request->post('atasan_kedua'),
+                'jabatan' => $request->post('jabatanKaryawan'),
+                'status_karyawan' => $request->post('statusKaryawan'),
+                'gol_darah' => $request->post('gol_darahKaryawan'),
+                'alamat' => $request->post('alamatKaryawan'),
+                'status_pernikahan' => $request->post('status_pernikahan'),
+                'jumlah_anak' => $request->post('jumlahAnak'),
+                'no_hp' => $request->post('no_hpKaryawan'),
+                'email' => $request->post('emailKaryawan'),
+                'agama' => $request->post('agamaKaryawan'),
+                'tglmasuk' => $request->post('tglmasukKaryawan'),
+                'nik' => $request->post('nikKaryawan'),
+                'no_kk' => $request->post('nokkKaryawan'),
+                'no_npwp' => $request->post('nonpwpKaryawan'),
+                'no_bpjs_ket' => $request->post('nobpjskerKaryawan'),
+                'no_bpjs_kes' => $request->post('nobpjskesKaryawan'),
+                'no_akdhk' => $request->post('noAkdhk'),
+                'no_program_pensiun' => $request->post('noprogramPensiun'),
+                'no_program_askes' => $request->post('noprogramAskes'),
+                'nama_bank' => $request->post('nama_bank'),
+                'no_rek' => $request->post('norekKaryawan'),
+                'updated_at' => new \DateTime(),
+            );
+
+            // $idKaryawan = $request->post('id_karyawan');
+
+            Karyawan::where('id', $id)->update($data);
+
+            return redirect()->back();
+        } else {
+
+            $data = array(
+
+                'nip' => $request->post('nipKaryawan'),
+                'nama' => $request->post('namaKaryawan'),
+                'tgllahir' => $request->post('tgllahirKaryawan'),
+                'tempatlahir' => $request->post('tempatlahirKaryawan'),
+                'jenis_kelamin' => $request->post('jenis_kelaminKaryawan'),
+                'divisi' => $request->post('divisi'),
+                'atasan_pertama' => $request->post('atasan_pertama'),
+                'atasan_kedua' => $request->post('atasan_kedua'),
+                'jabatan' => $request->post('jabatanKaryawan'),
+                'status_karyawan' => $request->post('statusKaryawan'),
+                'gol_darah' => $request->post('gol_darahKaryawan'),
+                'alamat' => $request->post('alamatKaryawan'),
+                'status_pernikahan' => $request->post('status_pernikahan'),
+                'jumlah_anak' => $request->post('jumlahAnak'),
+                'no_hp' => $request->post('no_hpKaryawan'),
+                'email' => $request->post('emailKaryawan'),
+                'agama' => $request->post('agamaKaryawan'),
+                'tglmasuk' => $request->post('tglmasukKaryawan'),
+                'nik' => $request->post('nikKaryawan'),
+                'no_kk' => $request->post('nokkKaryawan'),
+                'no_npwp' => $request->post('nonpwpKaryawan'),
+                'no_bpjs_ket' => $request->post('nobpjskerKaryawan'),
+                'no_bpjs_kes' => $request->post('nobpjskesKaryawan'),
+                'no_akdhk' => $request->post('noAkdhk'),
+                'no_program_pensiun' => $request->post('noprogramPensiun'),
+                'no_program_askes' => $request->post('noprogramAskes'),
+                'nama_bank' => $request->post('nama_bank'),
+                'no_rek' => $request->post('norekKaryawan'),
+                'updated_at' => new \DateTime(),
+            );
+
+            // $idKaryawan = $request->post('id_karyawan');
+
+            Karyawan::where('id', $id)->update($data);
+
+            return redirect()->back();
+        }
+    }
+
     public function showpendidikan($id)
     {
         $role = Auth::user()->role;
@@ -940,6 +1078,52 @@ class karyawanController extends Controller
             return redirect()->back();
         }
     }
+    public function addpformal(Request $request, $id)
+    {
+        $idk = Karyawan::findorFail($id);
+        if ($request->tingkat_pendidikan) {
+            $r_pendidikan = array(
+                'id_pegawai' => $idk->id,
+                'tingkat' => $request->post('tingkat_pendidikan'),
+                'nama_sekolah' => $request->post('nama_sekolah'),
+                'kota_pformal' => $request->post('kotaPendidikanFormal'),
+                'jurusan' => $request->post('jurusan'),
+                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
+                'ijazah_formal' => $request->post('noijazahPformal'),
+
+                'jenis_pendidikan' => null,
+                'kota_pnonformal' => null,
+                'tahun_lulus_nonformal' => null,
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+            );
+
+            Rpendidikan::insert($r_pendidikan);
+            return redirect()->back()->withInput();
+        } else {
+            $r_pendidikan = array(
+                'id_pegawai' => $idk->id,
+                'tingkat' => null,
+                'nama_sekolah' => null,
+                'kota_pformal' => null,
+                'jurusan' => null,
+                'tahun_lulus_formal' => null,
+
+
+                'nama_lembaga' => $request->post('namaLembaga'),
+                'jenis_pendidikan' => $request->post('jenis_pendidikan'),
+                'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
+                'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
+                'ijazah_nonformal' => $request->post('noijazahPnonformal'),
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+            );
+
+            Rpendidikan::insert($r_pendidikan);
+            return redirect()->back()->withInput();
+        }
+    }
+
     public function showpekerjaan($id)
     {
         $role = Auth::user()->role;
@@ -1061,6 +1245,9 @@ class karyawanController extends Controller
         }
     }
 
+    
+
+    // show 1 page non aktif
     public function showkaryawan($id)
     {
         $karyawan = karyawan::findOrFail($id);
