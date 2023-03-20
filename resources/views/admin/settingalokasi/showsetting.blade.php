@@ -28,35 +28,12 @@
                         <label>: {{$data->durasi}} Hari</label>
                     </div>
                 </div>
-
-                <div class="form-group row">
-                    <label for="tipe_approval" class="col-sm-3 col-form-label">Tipe Approval</label>
-                    <div class="col-sm-9">
-                        <label>: {{$data->tipe_approval}}</label>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="mode_alokasi" class="col-sm-3 col-form-label">Mode Alokasi</label>
-                    <div class="col-sm-9">
-                        <label>: {{$data->mode_alokasi}}</label>
-                    </div>
-                </div>
-                @if($data->mode_alokasi == 'Berdasarkan Departemen')
-                <div class="form-group row">
-                    <label for="departemen" class="col-sm-3 col-form-label">Departemen</label>
-                    <div class="col-sm-9">
-                        <label>: {{$data->departemens->nama_departemen}}</label>
-                    </div>
-                </div>
-                @else
                 <div class="form-group row">
                     <label for="mode_karyawan" class="col-sm-3 col-form-label">Mode Karyawan</label>
                     <div class="col-sm-9">
                         <label>: {{$data->mode_karyawan}}</label>
                     </div>
                 </div>
-                @endif
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

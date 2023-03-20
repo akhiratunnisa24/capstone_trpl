@@ -15,7 +15,7 @@ class Alokasicuti extends Model
     protected $table ='alokasicuti';
     protected $fillable = [
         'id_karyawan','id_settingalokasi','id_jeniscuti','durasi',
-        'mode_alokasi','tgl_masuk','tgl_sekarang','aktif_dari','sampai','status'
+        'tgl_masuk','tgl_sekarang','aktif_dari','sampai','status'
     ];
 
     public function cuti()

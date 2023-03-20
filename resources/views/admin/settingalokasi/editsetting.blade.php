@@ -32,52 +32,17 @@
                                 <input type="number" class="form-control" value="{{$data->durasi}}" name="durasi"
                                     id="durasi" required>
                             </div>
-                            <div class="form-group">
-                                <div class="form-group col-sm" id="tipeapproval">
-                                    <label for="tipe_approval" class="col-form-label">Tipe Approval</label>
-                                    <select name="tipe_approval" id="tipe_approval" class="form-control selectpicker" data-live-search="true" required>
-                                        <option value="">Pilih Mode Alokasi</option>
-                                        <option value="Tidak Bertingkat" @if($data->tipe_approval == "Tidak Bertingkat") selected @endif>Tidak Bertingkat</option>
-                                        <option value="Bertingkat" @if($data->tipe_approval == "Bertingkat") selected @endif>Bertingkat</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="col-md-6" id="modealokasii">
-                            <div class="form-group">
-                                <div class="form-group col-sm" id="modealokasii">
-                                    <label for="mode_alokasi" class="col-form-label">Mode Alokasi</label>
-                                    <select name="mode_alokasi" id="mode_lokasi" class="form-control selectpicker" data-live-search="true">
-                                        {{-- @if() --}}
-                                        <option value="{{$data->mode_alokasi}}" selected>{{$data->mode_alokasi}}
-                                        </option>
-                                        {{-- <option value="Berdasarkan Departemen">Berdasarkan Departemen</option>
-                                        <option value="Berdasarkan Karyawan">Berdasarkan Karyawan</option> --}}
-                                    </select>
-                                </div>
-                            </div>
-                            @if($data->mode_alokasi == 'Berdasarkan Departemen')
-                            <div class="form-group col-sm" id="mode_Alokasi_departement">
-                                <label for="departemen" class="col-form-label">Departemen</label>
-                                <select name="departemen" id="departemen" class="form-control selectpicker" data-live-search="true">
-                                    @foreach ($departemen as $item)
-                                    <option value="{{$item->id}}" @if($item->id == $data->departemen)
-                                        selected
-                                        @endif
-                                        >{{$item->nama_departemen}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @else
                             <div class="form-group col-sm" id="mode_employe">
                                 <label for="mode_karyawan" class="col-form-label">Karyawan</label>
                                 <select id="mode_karyawan" name="mode_karyawan[]" multiple="multiple" class="form-control selectpicker" data-live-search="true" style="width:385px">
-                                    <option value="L" @if(in_array("L", $data->mode_karyawan_array)) selected @endif>
-                                        @if(in_array("L", $data->mode_karyawan_array)) Laki-laki @else Laki-laki @endif
+                                    <option value="Laki-Laki" @if(in_array("Laki-Laki", $data->mode_karyawan_array)) selected @endif>
+                                        @if(in_array("Laki-Laki", $data->mode_karyawan_array)) Laki-laki @else Laki-laki @endif
                                     </option>
-                                    <option value="P" @if(in_array("P", $data->mode_karyawan_array)) selected @endif>
-                                        @if(in_array("P", $data->mode_karyawan_array)) Perempuan @else Perempuan @endif
+                                    <option value="Perempuan" @if(in_array("Perempuan", $data->mode_karyawan_array)) selected @endif>
+                                        @if(in_array("Perempuan", $data->mode_karyawan_array)) Perempuan @else Perempuan @endif
                                     </option>
                                     <option value="Sudah Menikah" @if(in_array("Sudah Menikah", $data->mode_karyawan_array)) selected @endif>
                                         @if(in_array("Sudah Menikah", $data->mode_karyawan_array)) Sudah Menikah @else Sudah Menikah @endif
@@ -94,7 +59,6 @@
                                             <option value="{{$item}}" @if(in_array($item, $data->mode_karyawan_array)) selected @endif>{{$item}}</option>
                                     @endforeach --}}
                             </div>
-                            @endif
                         </div>
 
                     </div>
