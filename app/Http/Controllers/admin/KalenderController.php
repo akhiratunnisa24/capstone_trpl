@@ -17,18 +17,19 @@ class KalenderController extends Controller
         if ($role == 1) 
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $getharilibur = SettingHarilibur::all();
-            foreach($getharilibur as $harilibur)
+            $getHarilibur = SettingHarilibur::all();
+            foreach($getHarilibur as $harilibur)
             {
                 $events[] = [
-                    'title' => $harilibur->keterangan,
                     'date' => $harilibur->tanggal,
+                    'title' => $harilibur->keterangan,
+                    'type' => $harilibur->tipe,
                 ];
                
             }
             // return $events;
            
-            return view('admin.kalender.index',compact('row'),['events'=>$events]);
+            return view('admin.kalender.index',compact('row','getHarilibur'),['events'=>$events]);
         }else{
             return redirect()->back();
         }
@@ -38,20 +39,50 @@ class KalenderController extends Controller
     {
         try {
             $getHarilibur = SettingHarilibur::select('id', 'tanggal','tipe', 'keterangan')->get();
-            
+
             if (!$getHarilibur) {
                 throw new \Exception('Data not found');
             }
-            // return response()->json($getHarilibur, 200);
+
+            $events = [];
+
+            foreach ($getHarilibur as $harilibur) {
+                $events[] = [
+                    'title' => $harilibur->keterangan,
+                    'start' => $harilibur->tanggal,
+                    'type' => $harilibur->tipe,
+                ];
+            }
+
             return response()->json([
-                'events' => $getHarilibur,
-           ], 200);
+                'events' => $events,
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
             ], 500);
         }
     }
+
+
+    // public function getHarilibur()
+    // {
+    //     try {
+    //         $getHarilibur = SettingHarilibur::select('id', 'tanggal','tipe', 'keterangan')->get();
+            
+    //         if (!$getHarilibur) {
+    //             throw new \Exception('Data not found');
+    //         }
+    //         // return response()->json($getHarilibur, 200);
+    //         return response()->json([
+    //             'events' => $getHarilibur,
+    //        ], 200);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'message' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
 
     public function setting()
     {

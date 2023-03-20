@@ -91,12 +91,12 @@
                                     <option value="Lama Kerja">Lama Kerja</option>
                                 </select>
                             </div>
-                            {{-- <div class="form-group col-sm" id="mode_employees">
+                            <div class="form-group col-sm" id="mode_employees">
                                 <label for="mode_karyawan" class="col-form-label">Karyawan</label>
                                 <select class="form-control" id="modeemployees" name="mode_karyawans" multiple style="width:395px">
                                     <option value="Lama Kerja">Lama Kerja</option>
                                 </select>
-                            </div> --}}
+                            </div>
                             <div class="form-group">
                                 <div class="form-group col-sm" id="lamakerja">
                                     <label class="col-form-label">Lama Kerja</label>
@@ -237,11 +237,16 @@
 
                     $('#mode_employee').on('change', function(b)
                     {
-                        if(b.target.value== 'Lama Kerja')
-                        {
+                        var selectedValues = $(this).val();
+                        if (selectedValues.includes('Lama Kerja')) {
                             $('#mode_departemen').prop("hidden", true);
                             $('#lamakerja').prop("hidden", false);
                         }
+                        // if(b.target.value== 'Lama Kerja')
+                        // {
+                        //     $('#mode_departemen').prop("hidden", true);
+                        //     $('#lamakerja').prop("hidden", false);
+                        // }
                     });
                 }
             });

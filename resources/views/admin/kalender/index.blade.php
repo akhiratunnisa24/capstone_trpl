@@ -2,6 +2,11 @@
 @section('content')
 <!-- Header -->
 <link href="assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet" />
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="assets/plugins/moment/moment.js"></script>
+<script src='assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
 
 <div class="row">
     <div class="col-sm-12">
@@ -20,9 +25,56 @@
 <div class="content">
     <div class="container">
         <div class="row">
-            <div class="col-lg-2 col-md-2">
+            {{-- <div class="col-lg-2 col-md-2">
+            </div> --}}
 
-                {{-- <h4>Created Events</h4>
+            <div id='calendar' class="col-md- col-lg-12"></div>
+            <script>
+                $(document).ready(function() {
+                    $('#calendar').fullCalendar({
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,agendaWeek,agendaDay'
+                        },
+                        // events: [ 
+                        //     @foreach($getHarilibur as $harilibur) 
+                        //         { 
+                        //             title: "{{$harilibur->keterangan}}", 
+                        //             start:  "{{$harilibur->tanggal}}", 
+                        //             type : "{{ $harilibur->tipe}}" 
+                        //         }, 
+                        //     @endforeach 
+                        // ], 
+                        editable: false,
+                        events: {
+                            url: '/get-harilibur-data',
+                            type: 'GET',
+                            error: function() {
+                                alert('Error fetching events');
+                            },
+                            success: function(data) {
+                            var events = [];
+                            $(data.events).each(function() {
+                                events.push({
+                                    title: this.title,
+                                    start: this.date,
+                                    color: this.tipe == 'Hari Libur Nasional' ? 'red' : 'blue'
+                                });
+                            });
+                            $('#calendar').fullCalendar('renderEvents', events, true);
+                        }
+                        },
+                        eventRender: function(event, element) {
+                            element.attr('title', event.type);
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </div> <!-- container -->
+</div> <!-- content -->
+  {{-- <h4>Created Events</h4>
                 <form method="post" id="add_event_form">
                     <input type="text" class="form-control new-event-form" placeholder="Add new event..." />
                 </form>
@@ -38,19 +90,9 @@
                     </label>
                 </div> --}}
 
-            </div>
-
-            <div id='calendar' class="col-md- col-lg-10"></div>
-
-        </div>
-    </div> <!-- container -->
-</div> <!-- content -->
-
-
 <!-- jQuery  -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/modernizr.min.js"></script>
+   
+    {{-- <script src="assets/js/modernizr.min.js"></script>
     <script src="assets/js/detect.js"></script>
     <script src="assets/js/fastclick.js"></script>
     <script src="assets/js/jquery.slimscroll.js"></script>
@@ -58,15 +100,13 @@
     <script src="assets/js/waves.js"></script>
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script> --}}
 
     <!-- BEGIN PAGE SCRIPTS -->
     <!-- Jquery-Ui -->
-    <script src="assets/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <script src="assets/plugins/moment/moment.js"></script>
-    <script src='assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
-    <script src="assets/pages/calendar-init.js"></script>
-    <script src="assets/js/app.js"></script>
+  
+    {{-- <script src="assets/pages/calendar-init.js"></script> --}}
+    {{-- <script src="assets/js/app.js"></script>
     <script>
         $(document).ready(function(){
             var harilibur = json_encode($events);
@@ -80,7 +120,7 @@
                 events : {harilibur}
             })
         });
-    </script>
+    </script> --}}
     {{-- <script>
         $(document).ready(function () {
            
