@@ -24,11 +24,6 @@ class Departemen extends Model
         return $this->hasMany(Karyawan::class, 'id_departement','id');
     }
 
-    public function settingalokasi()
-    {
-        return $this->hasMany(Settingalokasi::class, 'departemen','id');
-    }
-
     // public function karyawan()
     // {
     //     return $this->belongsTo(Karyawan::class,'id','departemen');

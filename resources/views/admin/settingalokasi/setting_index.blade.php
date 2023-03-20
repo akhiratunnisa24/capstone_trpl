@@ -38,10 +38,7 @@
                                             <th>No</th>
                                             <th>Kategori Cuti</th>
                                             <th>Durasi (Hari)</th>
-                                            {{-- <th>Mode Alokasi</th> --}}
-                                            <th>Departemen</th>
-                                            <th>JK/Status</th>
-                                            <th>T. Approval</th>
+                                            <th>Tipe Alokasi Cuti</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -51,14 +48,7 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                             <td>{{$data->durasi}}</td>
-                                            {{-- <td>{{$data->mode_alokasi}}</td> --}}
-                                            @if($data->departemen !=null)
-                                            <td>{{$data->departemens->nama_departemen}}</td>
-                                            @else
-                                            <td>{{$data->departemen}}</td>
-                                            @endif
                                             <td>{{$data->mode_karyawan}}</td>
-                                            <td>{{$data->tipe_approval}}</td>
                                             <td class="text-center">
                                                 <a id="bs" class="btn btn-info btn-sm Modalshowsetting"
                                                     data-toggle="modal" data-target="#Modalshowsetting{{$data->id}}">

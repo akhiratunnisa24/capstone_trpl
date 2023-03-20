@@ -27,11 +27,11 @@
                         <a><label></label></a>
                         <a href="" class="btn btn-dark btn-sm fa fa-cloud-download pull-left" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
                         {{-- <a href="" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Reset Cuti Tahunan</a> --}}
-                        {{-- <a href="" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="#newalokasi"> Tambah
-                            Alokasi</a> --}}
+                        <a href="" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="#newalokasi"> Tambah
+                            Alokasi</a>
                     </div>
                     {{-- modals --}}
-                    {{-- @include('admin.alokasicuti.addalokasi') --}}
+                    @include('admin.alokasicuti.addalokasi')
                     @include('admin.alokasicuti.importexcel')
                     @if(session()->has('success'))
                         <div class="alert alert-success">
@@ -51,16 +51,13 @@
                                 <table id="datatable-responsive17" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
-                                            {{-- <th>id</th> --}}
                                             <th>No</th>
                                             <th>Karyawan</th>
                                             <th>Kategori Cuti</th>
                                             <th>Durasi (Hari)</th>
-                                            {{-- <th>Mode Alokasi</th> --}}
-                                            {{-- <th>id</th>
-                                            <th>id setting</th> --}}
                                             <th>Aktif Dari</th>
                                             <th>Sampai</th>
+                                            {{-- <th>Status Alokasi</th> --}}
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -69,23 +66,12 @@
                                         @foreach($alokasicuti as $data)
                                         <tr id="aid{{$data->id}}"></tr>
                                         <td>{{$loop->iteration}}</td>
-                                        {{-- <td>{{$data->id_karyawan}}</td> --}}
                                         <td>{{$data->karyawans->nama}}</td>
                                         <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                         <td>{{$data->durasi}} hari</td>
-                                        {{-- <td>{{$data->id}}</td> --}}
-                                        {{-- <td>{{$data->id_settingalokasi}}</td> --}}
-                                        {{-- <td>{{$data->mode_alokasi}}</td> --}}
-                                        {{-- jam mulai & jam selesai --}}
-                                        {{-- @if($data->tgl_masuk != null && $data->tgl_sekarang !=null)
-                                        <td>{{\Carbon\Carbon::parse($data->tgl_masuk)->format('d/m/Y')}}</td>
-                                        <td>{{\Carbon\Carbon::parse($data->tgl_sekarang)->format('d/m/Y')}}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
-                                        @endif --}}
                                         <td>{{\Carbon\Carbon::parse($data->aktif_dari)->format('d/m/Y')}}</td>
                                         <td>{{\Carbon\Carbon::parse($data->sampai)->format('d/m/Y')}}</td>
+                                        {{-- <td>{{$data->status_durasialokasi}}</td> --}}
                                         <td class="text-center">
                                             <div class="row">
                                                 <a id="bs" class="btn btn-info btn-sm showalokasi" data-toggle="modal"

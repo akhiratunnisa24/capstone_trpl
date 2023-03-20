@@ -19,11 +19,12 @@ return new class extends Migration
             $table->unsignedBigInteger('id_settingalokasi');
             $table->unsignedBigInteger('id_jeniscuti');
             $table->integer('durasi')->nullable();
-            $table->string('mode_alokasi')->nullable();
+            $table->enum('status_durasialokasi',['Cuti Tidak Terhutang','Cuti Bersama Terhutang'])->nullable();
             $table->date('tgl_masuk')->nullable();
             $table->date('tgl_sekarang')->nullable();
             $table->date('aktif_dari')->nullable();
             $table->date('sampai')->nullable();
+            $table->boolean('status');
 
             $table->foreign('id_karyawan')->references('id')->on('karyawan')->onDelete('cascade');
             $table->foreign('id_settingalokasi')->references('id')->on('settingalokasi')->onDelete('cascade');

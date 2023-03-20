@@ -37,12 +37,14 @@
                         <label>: {{$data->durasi}} Hari</label>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="mode_alokasi" class="col-sm-3 col-form-label">Mode Alokasi</label>
-                    <div class="col-sm-9">
-                        <label>: {{$data->mode_alokasi}}</label>
+                @if($data->status_durasialokasi != null)
+                    <div class="form-group row">
+                        <label for="tgl_sekarang" class="col-sm-3 col-form-label">Status</label>
+                        <div class="col-sm-9">
+                            <label>: {{$data->status_durasialokasi}}</label>
+                        </div>
                     </div>
-                </div>
+                @endif
                 @if($data->tgl_masuk != null)
                     <div class="form-group row">
                         <label for="tgl_masuk" class="col-sm-3 col-form-label">Tanggal Masuk</label>

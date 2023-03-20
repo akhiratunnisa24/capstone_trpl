@@ -87,7 +87,7 @@ class CutiadminController extends Controller
                     ->where('cuti.id_karyawan', $idkaryawan)
                     ->whereMonth('cuti.tgl_mulai', $bulan)
                     ->whereYear('cuti.tgl_mulai', $tahun)
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama', 'settingalokasi.mode_alokasi', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
+                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->orderBy('created_at', 'DESC')
                     ->get();
@@ -100,7 +100,7 @@ class CutiadminController extends Controller
                     ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
                     ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
                     ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama', 'settingalokasi.mode_alokasi', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
+                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->orderBy('created_at', 'DESC')
                     ->get();
