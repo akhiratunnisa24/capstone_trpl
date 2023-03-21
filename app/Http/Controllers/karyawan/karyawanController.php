@@ -1062,6 +1062,7 @@ class karyawanController extends Controller
             $no2 = 1;
             $karyawan = karyawan::findOrFail($id);
             $pendidikan = Rpendidikan::where('id_pegawai', $id)->get();
+            $nonformal = Rpendidikan::where('id_pegawai', $id)->where('jenis_pendidikan', '!=', null)->get();
             // where('id_pegawai', $id)
 
             $output = [
@@ -1070,6 +1071,7 @@ class karyawanController extends Controller
                 'no2' => $no2,
                 'karyawan' => $karyawan,
                 'pendidikan' => $pendidikan,
+                'nonformal' => $nonformal,
             ];
 
             return view('admin.karyawan.showPendidikan', $output);

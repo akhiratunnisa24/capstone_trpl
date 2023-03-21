@@ -105,7 +105,7 @@
                                                                     <td>{{ $k->agama }}</td>
                                                                     <td>
                                                                         <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                                            <a href="karyawanshow{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                                                            {{-- <a href="karyawanshow{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a> --}}
 
                                                                             <a href="showidentitas{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
 

@@ -106,16 +106,16 @@
                                                             
                                                             <div class="form-group">
                                                                 <label  class="form-label">Jenis Kelamin</label>
-                                                                <select class="form-control selectpicker" name="jenis_kelaminKaryawan" >
+                                                                <select class="form-control" name="jenis_kelaminKaryawan" >
                                                                     <option value="">Pilih Jenis Kelamin</option>
-                                                                    <option value="Laki-Laki" {{ $karyawan->jenis_kelamin == 'Laki-Laki' ? 'selected' : '' }}>Laki-Laki</option>
-                                                                    <option value="Perempuan" {{ $karyawan->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                                                    <option value="Laki-Laki" @if($karyawan->jenis_kelamin == "Laki-Laki") selected @endif>Laki-Laki</option>
+                                                                    <option value="Perempuan" @if($karyawan->jenis_kelamin == "Perempuan") selected @endif>Perempuan</option>
                                                                 </select>
                                                             </div>  
                         
                                                             <div class="form-group">
                                                                 <label  class="form-label">Departemen</label>
-                                                                <select class="form-control selectpicker" name="divisi" >
+                                                                <select class="form-control" name="divisi" >
                                                                     <option value="">Pilih Departemen</option>
                                                                     @foreach ($departemen as $d)
                                                                     <option value="{{ $d->id }}" 
@@ -128,7 +128,7 @@
                         
                                                             <div class="form-group">
                                                                 <label  class="form-label">Atasan Langsung (SPV/Manager/Direktur)</label>
-                                                                 <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
+                                                                 <select class="form-control" name="atasan_pertama" data-live-search="true">
                                                                     <option value="">Pilih Atasan Langsung</option>
                                                                     @foreach ($atasan_pertama as $atasan)
                                                                         <option value="{{ $atasan->id }}" {{ $karyawan->atasan_pertama == $atasan->id ? 'selected' : '' }}>
@@ -140,7 +140,7 @@
                                                             
                                                             <div class="form-group">
                                                                 <label  class="form-label">Atasan (Manager/Direktur)</label>
-                                                                <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
+                                                                <select class="form-control" name="atasan_kedua"  data-live-search="true">
                                                                     <option value="">Pilih Atasan</option>
                                                                     @foreach ($atasan_kedua as $atasan)
                                                                         <option value="{{ $atasan->id }}"
@@ -153,33 +153,33 @@
 
                                                             <div class="form-group">
                                                                 <label  class="form-label">Jabatan</label>
-                                                                <select class="form-control selectpicker" name="jabatanKaryawan" >
+                                                                <select class="form-control" name="jabatanKaryawan" >
                                                                     <option value="">Pilih Jabatan</option>
-                                                                    <option value="Management"  {{ $karyawan->jabatan ?? '' == 'Management' ? 'selected' : '' }}>Management</option>
-                                                                    <option value="Manager" {{ $karyawan->jabatan ?? '' == 'Manager' ? 'selected' : '' }}>Manager</option>
-                                                                    <option value="Supervisor" {{ $karyawan->jabatan ?? '' == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
-                                                                    <option value="Staff" {{ $karyawan->jabatan ?? '' == 'Staff' ? 'selected' : '' }}>Staff</option>
+                                                                    <option value="Management" @if($karyawan->jabatan == "Management") selected @endif>Management</option>
+                                                                    <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif>Manager</option>
+                                                                    <option value="Supervisor" @if($karyawan->jabatan == "Supervisor") selected @endif>Supervisor</option>
+                                                                    <option value="Staff" @if($karyawan->jabatan == "Staff") selected @endif>Staff</option>
                                                                 </select>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <label  class="form-label">Status Karyawan</label>
-                                                                <select class="form-control selectpicker" name="statusKaryawan" >
-                                                                    <option value="">Pilih Jabatan</option>
-                                                                    <option value="Tetap"  {{ $karyawan->status_karyawan ?? '' == 'Tetap' ? 'selected' : '' }}>Tetap</option>
-                                                                    <option value="Kontrak" {{ $karyawan->status_karyawan ?? '' == 'Kontrak' ? 'selected' : '' }}>Kontrak</option>
-                                                                    <option value="Probation" {{ $karyawan->status_karyawan ?? '' == 'Probation' ? 'selected' : '' }}>Probation</option>
+                                                                <select class="form-control" name="statusKaryawan" >
+                                                                    <option value="">Pilih Status Karyawan</option>
+                                                                    <option value="Tetap"  @if($karyawan->status_karyawan == "Tetap") selected @endif>Tetap</option>
+                                                                    <option value="Kontrak" @if($karyawan->status_karyawan == "Kontrak") selected @endif>Kontrak</option>
+                                                                    <option value="Probation" @if($karyawan->status_karyawan == "Probation") selected @endif>Probation</option>
                                                                 </select>
                                                             </div>
 
                                                             <div class="form-group">
                                                                     <label  class="form-label">Golongan Darah</label>
-                                                                    <select class="form-control selectpicker" name="gol_darahKaryawan" >
+                                                                    <select class="form-control" name="gol_darahKaryawan" >
                                                                         <option value="">Pilih Golongan Darah</option>
-                                                                        <option value="A" {{ $karyawan->gol_darah ?? '' == 'A' ? 'selected' : '' }}>A</option>
-                                                                        <option value="B" {{ $karyawan->gol_darah ?? '' == 'B' ? 'selected' : '' }}>B</option>
-                                                                        <option value="AB" {{ $karyawan->gol_darah ?? '' == 'AB' ? 'selected' : '' }}>AB</option>
-                                                                        <option value="O" {{ $karyawan->gol_darah ?? '' == 'O' ? 'selected' : '' }}>O</option>
+                                                                        <option value="A" @if($karyawan->gol_darah == "A") selected @endif>A</option>
+                                                                        <option value="B" @if($karyawan->gol_darah == "B") selected @endif>B</option>
+                                                                        <option value="AB"@if($karyawan->gol_darah == "AB") selected @endif>AB</option>
+                                                                        <option value="O" @if($karyawan->gol_darah == "O") selected @endif>O</option>
                                                                     </select>
                                                                 </div>
 
@@ -204,7 +204,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                     <label  class="form-label">Status Pernikahan</label>
-                                                                    <select class="form-control selectpicker" name="status_pernikahan" >
+                                                                    <select class="form-control" name="status_pernikahan" >
                                                                         <option value="">Pilih Status Pernikahan</option>
                                                                         <option value="Sudah Menikah" @if($karyawan->status_pernikahan == "Sudah Menikah") selected @endif>Sudah Menikah</option>
                                                                         <option value="Belum Menikah" @if($karyawan->status_pernikahan == "Belum Menikah") selected @endif>Belum Menikah</option>
@@ -238,7 +238,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">Agama</label>
-                                                                        <select class="form-control selectpicker" name="agamaKaryawan" >
+                                                                        <select class="form-control" name="agamaKaryawan" >
                                                                             <option value="">Pilih Agama</option>
                                                                             <option value="Islam" @if($karyawan->agama == "Islam") selected @endif>Islam</option>
                                                                             <option value="Kristen" @if($karyawan->agama == "Kristen") selected @endif>Kristen</option>
@@ -327,7 +327,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                     <label  class="form-label">Nama Bank</label>
-                                                                    <select class="form-control selectpicker" name="nama_bank" required>
+                                                                    <select class="form-control" name="nama_bank" required>
                                                                         <option value="">Pilih Bank</option>
                                                                         <option value="BCA" @if($karyawan->nama_bank == "BCA") selected @endif>BCA</option>
                                                                         <option value="Mandiri" @if($karyawan->nama_bank == "Mandiri") selected @endif >Mandiri</option>

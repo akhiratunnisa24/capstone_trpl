@@ -52,30 +52,41 @@
                                                         </div>
                                                     </div>
 
-                                                    <table id="datatable-responsive6"
-                                                        class="table dt-responsive nowrap table-striped table-bordered"
-                                                        cellpadding="0" width="100%">
+                                                    <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
+                                                        data-target="#addKontak"
+                                                        style="margin-right:10px;margin-bottom:10px">
+                                                        <i class="fa fa-plus"> <strong> Add Data Kontak Darurat</strong></i>
+                                                    </a>
+                                                    @include('admin.karyawan.addKontak')
+                                                    <table class="table table-bordered table-striped">
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
+                                                                <th>Nama </th>
                                                                 <th>Hubungan</th>
-                                                                <th>Nama</th>
-                                                                <th>Alamat</th>
                                                                 <th>Nomor Handphone</th>
+                                                                <th>Alamat</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
-
                                                         <tbody>
-                                                            @foreach ($kontakdarurat as $kdar)
+                                                            @foreach ($kontakdarurat as $kondar)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $kdar->hubungan ?? '-' }}</td>
-                                                                    <td>{{ $kdar->nama ?? '-' }}</td>
-                                                                    <td>{{ $kdar->alamat ?? '-' }}</td>
-                                                                    <td>{{ $kdar->no_hp ?? '-' }}</td>
-                                                                    <td>{{ $kdar->tempatlahir ?? '-' }}</td>
+                                                                    <td>{{ $kondar->nama }}</td>
+                                                                    <td>{{ $kondar->hubungan }}</td>
+                                                                    <td>{{ $kondar->no_hp }}</td>
+                                                                    <td>{{ $kondar->alamat }}</td>
+                                                                    <td class="">
+                                                                        <a class="btn btn-sm btn-primary pull-right"
+                                                                            data-toggle="modal"
+                                                                            data-target="#editDarurat{{ $kondar->id }}"
+                                                                            style="margin-right:10px">
+                                                                            <i class="fa fa-edit"></i>
+                                                                        </a>
+                                                                    </td>
                                                                 </tr>
+                                                                @include('admin.karyawan.editKontakdarurat')
                                                             @endforeach
                                                         </tbody>
                                                     </table>

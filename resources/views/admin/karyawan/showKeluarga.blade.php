@@ -51,37 +51,48 @@
                                                             <label class="text-white m-b-10">F. DATA KELUARGA</label>
                                                         </div>
                                                     </div>
-
-                                                    <table id="datatable-responsive6"
-                                                        class="table dt-responsive nowrap table-striped table-bordered"
-                                                        cellpadding="0" width="100%">
+                                                    
+                                                    <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
+                                                        data-target="#addKeluarga"
+                                                        style="margin-right:10px;margin-bottom:10px">
+                                                        <i class="fa fa-plus"> <strong> Add Data Keluarga</strong></i>
+                                                    </a>
+                                                    @include('admin.karyawan.addKeluarga')
+                                                    <table class="table table-bordered table-striped">
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
+                                                                <th>Nama Keluarga</th>
                                                                 <th>Hubungan</th>
-                                                                <th>Nama</th>
                                                                 <th>Jenis Kelamin</th>
-                                                                <th>Tanggal Lahir</th>
                                                                 <th>Kota Kelahiran</th>
+                                                                <th>Tanggal Lahir</th>
                                                                 <th>Pendidikan Terakhir</th>
                                                                 <th>Pekerjaan</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
-
                                                         <tbody>
-                                                            @foreach ($keluarga as $dakel)
+                                                            @foreach ($keluarga as $kel)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $dakel->hubungan ?? '-' }}</td>
-                                                                    <td>{{ $dakel->nama ?? '-' }}</td>
-                                                                    <td>{{ $dakel->jenis_kelamin ?? '-' }}</td>
-                                                                    <td>{{ $dakel->tgllahir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->tempatlahir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->pendidikan_terakhir ?? '-' }}</td>
-                                                                    <td>{{ $dakel->pekerjaan ?? '-' }}</td>
-                                                                    <td>{{ $dakel->hubungan ?? '-' }}</td>
+                                                                    <td>{{ $kel->nama }}</td>
+                                                                    <td>{{ $kel->hubungan }}</td>
+                                                                    <td>{{ $kel->jenis_kelamin }}</td>
+                                                                    <td>{{ $kel->tempatlahir }}</td>
+                                                                    <td>{{ $kel->tgllahir }}</td>
+                                                                    <td>{{ $kel->pendidikan_terakhir }}</td>
+                                                                    <td>{{ $kel->pekerjaan }}</td>
+                                                                    <td class="">
+                                                                        <a class="btn btn-sm btn-primary pull-right"
+                                                                            data-toggle="modal"
+                                                                            data-target="#editKeluarga{{ $kel->id }}"
+                                                                            style="margin-right:10px">
+                                                                            <i class="fa fa-edit"></i>
+                                                                        </a>
+                                                                    </td>
                                                                 </tr>
+                                                                @include('admin.karyawan.editKeluarga')
                                                             @endforeach
                                                         </tbody>
                                                     </table>

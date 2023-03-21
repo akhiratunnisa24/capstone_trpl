@@ -52,30 +52,43 @@
                                                         </div>
                                                     </div>
 
-                                                    <table id="datatable-responsive6"
-                                                        class="table dt-responsive nowrap table-striped table-bordered"
-                                                        cellpadding="0" width="100%">
+                                                    {{-- RIWAYAT PEKERJAAN --}}
+                                                    <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
+                                                        data-target="#addPrestasi"
+                                                        style="margin-right:10px;margin-bottom:10px">
+                                                        <i class="fa fa-plus"> <strong> Add Data Prestasi</strong></i>
+                                                    </a>
+                                                    @include('admin.karyawan.addPrestasi')
+                                                    <table class="table table-bordered table-striped">
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
                                                                 <th>Perihal / Keterangan</th>
                                                                 <th>Instansi Pemberi</th>
                                                                 <th>Alamat Instansi</th>
-                                                                <th>Nomor Surat</th>
+                                                                <th>No. Surat</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
-
                                                         <tbody>
-                                                            @foreach ($prestasi as $key => $pres)
+                                                            @foreach ($prestasi as $pres)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $pres->keterangan ?? '-' }}</td>
-                                                                    <td>{{ $pres->nama_instansi ?? '-' }}</td>
-                                                                    <td>{{ $pres->alamat ?? '-' }}</td>
-                                                                    <td>{{ $pres->no_surat ?? '-' }}</td>
-                                                                    <td>{{ $pres->asda ?? '-' }}</td>
+                                                                    <td>{{ $pres->keterangan }}</td>
+                                                                    <td>{{ $pres->nama_instansi }}</td>
+                                                                    <td>{{ $pres->alamat }}</td>
+                                                                    <td>{{ $pres->no_surat }}</td>
+                                                                    <td class="">
+                                                                        <a class="btn btn-sm btn-primary pull-right"
+                                                                            data-toggle="modal"
+                                                                            data-target="#editPrestasi{{ $pres->id }}"
+                                                                            style="margin-right:10px">
+                                                                            <i class="fa fa-edit"></i>
+                                                                        </a>
+                                                                        {{-- <button onclick="pekerjaan({{$$rpekerjaan->id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
+                                                                    </td>
                                                                 </tr>
+                                                                @include('admin.karyawan.editPrestasi')
                                                             @endforeach
                                                         </tbody>
                                                     </table>

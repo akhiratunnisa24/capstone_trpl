@@ -52,34 +52,47 @@
                                                         </div>
                                                     </div>
 
-                                                    <table id="datatable-responsive6"
-                                                        class="table dt-responsive nowrap table-striped table-bordered"
-                                                        cellpadding="0" width="100%">
+                                                    {{-- RIWAYAT PEKERJAAN --}}
+                                                    <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
+                                                        data-target="#addPekerjaan"
+                                                        style="margin-right:10px;margin-bottom:10px">
+                                                        <i class="fa fa-plus"> <strong> Add Data Organisasi</strong></i>
+                                                    </a>
+                                                    @include('admin.karyawan.addOrganisasi')
+                                                    <table class="table table-bordered table-striped">
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
                                                                 <th>Nama Organisasi</th>
                                                                 <th>Alamat</th>
-                                                                <th>Tahun Mulai</th>
-                                                                <th>Tahun Selesai</th>
+                                                                <th>Tanggal Masuk</th>
+                                                                <th>Tanggal Keluar</th>
                                                                 <th>Jabatan</th>
-                                                                <th>Nomor SK</th>
+                                                                <th>Nomor Surat Keterangan</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
-
                                                         <tbody>
-                                                            @foreach ($organisasi as $key => $org)
+                                                            @foreach ($organisasi as $org)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $org->nama_organisasi ?? '-' }}</td>
-                                                                    <td>{{ $org->alamat ?? '-' }}</td>
-                                                                    <td>{{ $org->tgl_mulai ?? '-' }}</td>
-                                                                    <td>{{ $org->tgl_selesai ?? '-' }}</td>
-                                                                    <td>{{ $org->jabatan ?? '-' }}</td>
-                                                                    <td>{{ $org->no_sk ?? '-' }}</td>
-                                                                    <td>{{ $org->asda ?? '-' }}</td>
+                                                                    <td>{{ $org->nama_organisasi }}</td>
+                                                                    <td>{{ $org->alamat }}</td>
+                                                                    <td>{{ $org->tgl_mulai }}</td>
+                                                                    <td>{{ $org->tgl_selesai }}</td>
+                                                                    <td>{{ $org->jabatan }}</td>
+                                                                    <td>{{ $org->no_sk }}</td>
+                                                                    <td class="">
+                                                                        <a class="btn btn-sm btn-primary pull-right"
+                                                                            data-toggle="modal"
+                                                                            data-target="#editPekerjaan{{ $org->id }}"
+                                                                            style="margin-right:10px">
+                                                                            <i class="fa fa-edit"></i>
+                                                                        </a>
+                                                                        {{-- <button onclick="pekerjaan({{$$rpekerjaan->id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
+                                                                    </td>
                                                                 </tr>
+                                                                @include('admin.karyawan.editOrganisasi')
                                                             @endforeach
                                                         </tbody>
                                                     </table>

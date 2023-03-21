@@ -45,15 +45,19 @@
                                 <div class="mb-3">
                                     <label>Lulus Tahun</label>
                                     <div class="input-group">
-                                        <input id="datepicker-autoclosen" type="text"
+                                        <input  type="date"
                                                 class="form-control" value="{{$rpendidikan->tahun_lulus_formal}}" placeholder="yyyy" id="4"
                                                 name="tahun_lulusFormal" rows="10" autocomplete="off"><br>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                     class="mdi mdi-calendar text-white"></i></span>
                                     </div>
-                                    {{-- <input type="text" name="tahun_lulus_formal" autocomplete="off"
-                                    class="form-control" placeholder="yyyy"
-                                    value="{{$rpendidikan->tahun_lulus_formal}}"> --}}
+                                    <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Nomor Ijazah</label>
+                                    <input type="number" name="noijazahPformal" class="form-control" autocomplete="off"
+                                        value="{{$rpendidikan->ijazah_formal}}">
+                                </div>
+                            </div>
                                 </div>
                             </div>
                         </div>

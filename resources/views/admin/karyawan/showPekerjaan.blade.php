@@ -52,7 +52,58 @@
                                                         </div>
                                                     </div>
 
-                                                    <table id="datatable-responsive6"
+                                                    {{-- RIWAYAT PEKERJAAN --}}
+                                                    <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
+                                                        data-target="#addPekerjaan"
+                                                        style="margin-right:10px;margin-bottom:10px">
+                                                        <i class="fa fa-plus"> <strong> Add Data Pekerjaan</strong></i>
+                                                    </a>
+                                                    @include('admin.karyawan.addPekerjaan')
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Nama Perusahaan</th>
+                                                                <th>Alamat</th>
+                                                                <th>Tanggal Masuk</th>
+                                                                <th>Tanggal Keluar</th>
+                                                                <th>Jabatan</th>
+                                                                <th>Level/Pangkat/Golongan</th>
+                                                                <th>Gaji Terakhir</th>
+                                                                <th>Alasan Berhenti</th>
+                                                                <th>Aksi</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($pekerjaan as $rpekerjaan)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $rpekerjaan->nama_perusahaan }}</td>
+                                                                    <td>{{ $rpekerjaan->alamat }}</td>
+                                                                    <td>{{ $rpekerjaan->tgl_mulai }}</td>
+                                                                    <td>{{ $rpekerjaan->tgl_selesai }}</td>
+                                                                    <td>{{ $rpekerjaan->jabatan }}</td>
+                                                                    <td>{{ $rpekerjaan->level }}</td>
+                                                                    <td>Rp. {{ $rpekerjaan->gaji }},-</td>
+                                                                    <td>{{ $rpekerjaan->alasan_berhenti }}</td>
+                                                                    <td class="">
+                                                                        <a class="btn btn-sm btn-primary pull-right"
+                                                                            data-toggle="modal"
+                                                                            data-target="#editPekerjaan{{ $rpekerjaan->id }}"
+                                                                            style="margin-right:10px">
+                                                                            <i class="fa fa-edit"></i>
+                                                                        </a>
+                                                                        {{-- <button onclick="pekerjaan({{$$rpekerjaan->id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
+                                                                    </td>
+                                                                </tr>
+                                                                @include('admin.karyawan.editPekerjaan')
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                    {{-- </div> --}}
+                                                </div>
+
+                                                {{-- <table id="datatable-responsive6"
                                                         class="table dt-responsive nowrap table-striped table-bordered"
                                                         cellpadding="0" width="100%">
                                                         <thead>
@@ -84,25 +135,25 @@
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
-                                                    </table>
+                                                    </table> --}}
 
-                                                    
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                 <a href="showpendidikan{{ $karyawan->id }}" class="btn btn-sm btn-info"
-                                                    type="button">Sebelumnya <i class="fa fa-backward"></i></a>
-                                                <a href="showorganisasi{{ $karyawan->id }}" class="btn btn-sm btn-success"
-                                                    type="button">Selanjutnya <i class="fa fa-forward"></i></a>
+
                                             </div>
                                     </div>
+                                    <div class="modal-footer">
+                                        <a href="showpendidikan{{ $karyawan->id }}" class="btn btn-sm btn-info"
+                                            type="button">Sebelumnya <i class="fa fa-backward"></i></a>
+                                        <a href="showorganisasi{{ $karyawan->id }}" class="btn btn-sm btn-success"
+                                            type="button">Selanjutnya <i class="fa fa-forward"></i></a>
+                                    </div>
                                 </div>
-                                {{-- </form> --}}
                             </div>
+                            {{-- </form> --}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

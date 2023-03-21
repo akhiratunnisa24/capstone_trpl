@@ -18,6 +18,11 @@
                                     <label>Bidang/ Jenis Pendidikan</label>
                                     <input type="text" name="jenis_pendidikan" autocomplete="off" class="form-control" value="{{$rpendidikan->jenis_pendidikan}}">
                                 </div>
+                            </div><div class="form-group">
+                                <div class="mb-3">
+                                    <label>Nama Lembaga Pendidikan</label>
+                                    <input type="text" name="namaLembaga" autocomplete="off" class="form-control" value="{{$rpendidikan->nama_lembaga}}">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
@@ -29,11 +34,17 @@
                                 <div class="mb-3">
                                     <label>Lulus Tahun</label>
                                     <div class="input-group">
-                                        <input id="datepicker-autocloseo" type="text"
+                                        <input  type="date"
                                                 class="form-control" placeholder="yyyy" id="4"  value="{{$rpendidikan->tahun_lulus_nonformal}}"
                                                 name="tahunLulusNonFormal" autocomplete="off" rows="10"><br>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Nomor Ijazah</label>
+                                    <input type="number" name="noijazahPnonformal" autocomplete="off" class="form-control" value="{{$rpendidikan->ijazah_nonformal}}">
                                 </div>
                             </div>
                         </div>

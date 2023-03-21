@@ -50,6 +50,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Nomor Ijazah</label>
+                                    <input type="number" name="noijazahPformal" class="form-control" autocomplete="off">
+                                </div>
+                            </div>
                         </div>
                     </div>
             

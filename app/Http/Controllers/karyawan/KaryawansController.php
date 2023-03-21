@@ -489,15 +489,15 @@ class KaryawansController extends Controller
         $pekerjaanBaru = [
             'nama_perusahaan' => $request->namaPerusahaan,
             'alamat'          => $request->alamatPerusahaan,
-            'jenis_usaha'     => $request->jenisUsaha,
-            'jabatan'         => $request->jabatanRpekerjaan,
-            'level'           => $request->levelRpekerjaan,
-            'nama_atasan'     => $request->namaAtasan,
-            'nama_direktur'   => $request->namaDirektur,
+            // 'jenis_usaha'     => $request->jenisUsaha,
             'tgl_mulai'       => \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d'),
             'tgl_selesai'     => \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d'),
-            'alasan_berhenti' => $request->alasanBerhenti,
+            'jabatan'         => $request->jabatanRpekerjaan,
+            'level'           => $request->levelRpekerjaan,
+            // 'nama_atasan'     => $request->namaAtasan,
+            // 'nama_direktur'   => $request->namaDirektur,
             'gaji'            => $request->gajiRpekerjaan,
+            'alasan_berhenti' => $request->alasanBerhenti,
         ];
 
         $pekerjaan[] = $pekerjaanBaru;
@@ -754,13 +754,14 @@ class KaryawansController extends Controller
 
         $data_keluarga = array(
             'id_pegawai'        =>$idk->id,
-            'status_pernikahan' => $request->post('status_pernikahan'),
-            'nama'              => $request->post('namaPasangan'),
-            'tgllahir'          => $request->post('tgllahirPasangan'),
-            'alamat'            => $request->post('alamatPasangan'),
-            'pendidikan_terakhir'=> $request->post('pendidikan_terakhirPasangan'),
-            'pekerjaan'         => $request->post('pekerjaanPasangan'),
+            // 'status_pernikahan' => $request->post('status_pernikahan'),
+            'nama'              => $request->post('namaKeluarga'),
             'hubungan'          => $request->post('hubungankeluarga'),
+            'jenis_kelamin'          => $request->post('jenis_kelaminKeluarga'),
+            'tgllahir'          => $request->post('tgllahirKeluarga'),
+            'tempatlahir'            => $request->post('tempatlahirKeluarga'),
+            'pendidikan_terakhir'=> $request->post('pendidikan_terakhirKeluarga'),
+            'pekerjaan'         => $request->post('pekerjaanKeluarga'),
             'created_at'        => new \DateTime(),
             'updated_at'         => new \DateTime(),
         );
@@ -775,9 +776,9 @@ class KaryawansController extends Controller
         $data_kdarurat = array(
             'id_pegawai' => $idk->id,
             'nama' => $request->post('namaKdarurat'),
-            'alamat' => $request->post('alamatKdarurat'),
-            'no_hp' => $request->post('no_hpKdarurat'),
             'hubungan' => $request->post('hubunganKdarurat'),
+            'no_hp' => $request->post('no_hpKdarurat'),
+            'alamat' => $request->post('alamatKdarurat'),
             'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
         );
@@ -847,8 +848,8 @@ class KaryawansController extends Controller
             'level' => $request->post('levelRpekerjaan'),
             'nama_atasan' => $request->post('namaAtasan'),
             'nama_direktur' => $request->post('namaDirektur'),
-            'tgl_mulai' => $request->post('tglmulai'),
-            'tgl_selesai' => $request->post('tglselesai'),
+            'tgl_mulai' => Carbon::parse ($request->post('tglmulai'))->format('Y/m/d'),
+            'tgl_selesai' => Carbon::parse ($request->post('tglselesai'))->format('Y/m/d'),
             'alasan_berhenti' => $request->post('alasanBerhenti'),
             'gaji' => $request->post('gajiRpekerjaan'),
             'created_at' => new \DateTime(),
@@ -858,7 +859,7 @@ class KaryawansController extends Controller
         return redirect()->back()->withInput();
     }
 
-    //store pekerjaan ketika show data
+    //store Organisasi ketika show data
     public function storesorganisasi(Request $request, $id)
     {
         $idk = Karyawan::findorFail($id);
@@ -866,8 +867,8 @@ class KaryawansController extends Controller
             'id_pegawai' => $idk->id,
             'nama_organisasi' => $request->post('namaOrganisasi'),
             'alamat' => $request->post('alamatOrganisasi'),
-            'tgl_mulai' => $request->post('tglmulai'),
-            'tgl_selesai' => $request->post('tglselesai'),
+            'tgl_mulai' => Carbon::parse($request->post('tglmulai'))->format('Y/m/d'),
+            'tgl_selesai' => Carbon::parse($request->post('tglselesai'))->format('Y/m/d'),
             'jabatan' => $request->post('jabatanRorganisasi'),
             'no_sk' => $request->post('noSKorganisasi'),
             'created_at' => new \DateTime(),
@@ -997,12 +998,13 @@ class KaryawansController extends Controller
     {
         Keluarga::where('id',$id)->update([
             // 'status_pernikahan' =>$request->status_pernikahan,
-            'nama' =>$request->namaPasangan,
-            'hubungan' =>$request->hubungan,
-            'tgllahir' =>$request->tgllahirPasangan,
-            'alamat' =>$request->alamatPasangan,
-            'pendidikan_terakhir' =>$request->pendidikan_terakhirPasangan,
-            'pekerjaan' =>$request->pekerjaanPasangan,
+            'nama' =>$request->namaKeluarga,
+            'hubungan' =>$request->hubungankeluarga,
+            'jenis_kelamin' =>$request->jenis_kelaminKeluarga,
+            'tgllahir' =>$request->tgllahirKeluarga,
+            'tempatlahir' =>$request->tempatlahirKeluarga,
+            'pendidikan_terakhir' =>$request->pendidikan_terakhirKeluarga,
+            'pekerjaan' =>$request->pekerjaanKeluarga,
         ]);
         return redirect()->back();
     }
@@ -1012,9 +1014,9 @@ class KaryawansController extends Controller
     {
         Kdarurat::where('id', $id)->update([
             'nama' => $request->post('namaKdarurat'),
-            'alamat' => $request->post('alamatKdarurat'),
-            'no_hp' => $request->post('no_hpKdarurat'),
             'hubungan' => $request->post('hubunganKdarurat'),
+            'no_hp' => $request->post('no_hpKdarurat'),
+            'alamat' => $request->post('alamatKdarurat'),
             'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
         ]);
 
@@ -1032,7 +1034,8 @@ class KaryawansController extends Controller
                 'nama_sekolah' => $request->nama_sekolah,
                 'kota_pformal' => $request->kotaPendidikanFormal,
                 'jurusan' => $request->jurusan,
-                'tahun_lulus_formal' => $request->tahun_lulusFormal,
+                // 'tahun_lulus_formal' => $request->tahun_lulusFormal,
+                'tahun_lulus_formal' => \Carbon\Carbon::parse($request->tahun_lulusFormal)->format('Y'),
                 'ijazah_formal' => $request->noijazahPformal,
                 'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
             ]);
@@ -1042,7 +1045,8 @@ class KaryawansController extends Controller
                 'jenis_pendidikan' => $request->jenis_pendidikan,
                 'nama_lembaga' => $request->namaLembaga,
                 'kota_pnonformal' => $request->kotaPendidikanNonFormal,
-                'tahun_lulus_nonformal' => $request->tahunLulusNonFormal,
+                // 'tahun_lulus_nonformal' => $request->tahunLulusNonFormal,
+                'tahun_lulus_nonformal' => \Carbon\Carbon::parse($request->tahunLulusNonFormal)->format('Y'),
                 'ijazah_nonformal' => $request->noijazahPnonformal,
                 'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
             ]);
@@ -1056,15 +1060,15 @@ class KaryawansController extends Controller
         $r_pekerjaan = array(
             'nama_perusahaan' => $request->post('namaPerusahaan'),
             'alamat' => $request->post('alamatPerusahaan'),
-            'jenis_usaha' => $request->post('jenisUsaha'),
+            'tgl_mulai'       => \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d'),
+            'tgl_selesai'     => \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d'),
+            // 'jenis_usaha' => $request->post('jenisUsaha'),
             'jabatan' => $request->post('jabatan'),
             'level' => $request->post('levelRpekerjaan'),
-            'nama_atasan' => $request->post('namaAtasan'),
-            'nama_direktur' => $request->post('namaDirektur'),
-            'tgl_mulai' => $request->post('tglmulai'),
-            'tgl_selesai' => $request->post('tglselesai'),
-            'alasan_berhenti' => $request->post('alasanBerhenti'),
+            // 'nama_atasan' => $request->post('namaAtasan'),
+            // 'nama_direktur' => $request->post('namaDirektur'),
             'gaji' => $request->post('gajiRpekerjaan'),
+            'alasan_berhenti' => $request->post('alasanBerhenti'),
             'updated_at' => new \DateTime(),
         );
 
@@ -1086,8 +1090,8 @@ class KaryawansController extends Controller
         $r_organisasi = array(
             'nama_organisasi' => $request->post('namaOrganisasi'),
             'alamat' => $request->post('alamatOrganisasi'),
-            'tgl_mulai' => $request->post('tglmulai'),
-            'tgl_selesai' => $request->post('tglselesai'),
+            'tgl_mulai'       => \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d'),
+            'tgl_selesai'     => \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d'),
             'jabatan' => $request->post('jabatanRorganisasi'),
             'no_sk' => $request->post('noSKorganisasi'),
             'updated_at' => new \DateTime(),

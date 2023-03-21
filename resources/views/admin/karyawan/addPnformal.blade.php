@@ -16,8 +16,14 @@
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label>Bidang/ Jenis Pendidikan</label>
-                                    <input type="text" name="jenis_pendidikan" autocomplete="off" class="form-control">
                                     <input type="hidden" name="idpegawai" autocomplete="off" value="{{$karyawan->id}}" class="form-control">
+                                    <input type="text" name="jenis_pendidikan" autocomplete="off" class="form-control">
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Nama Lembaga Pendidikan</label>
+                                    <input type="text" name="namaLembaga" autocomplete="off" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -28,12 +34,18 @@
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Lulus Tahun</label>
+                                    <label>Tahun Lulus</label>
                                     <div class="input-group">
                                         <input id="datepicker-autoclose4" type="text"
                                                 class="form-control" placeholder="yyyy" id="4" name="tahunLulusNonFormal" autocomplete="off" rows="10"><br>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Nomor Ijazah</label>
+                                    <input type="number" name="noijazahPnonformal" autocomplete="off" class="form-control">
                                 </div>
                             </div>
                         </div>

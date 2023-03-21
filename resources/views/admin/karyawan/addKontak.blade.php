@@ -19,24 +19,10 @@
                                     <input type="text" name="namaKdarurat" class="form-control" placeholder="Masukkan Nama" autocomplete="off" required>
                                 </div>
                             </div>
-
-                            <div class="form-group ">
-                                <div class="mb-3 ">
-                                    <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                    <input class="form-control" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat"></input>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
-                                    <input type="number" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Hubungan</label>
-                                    <select class="form-control selectpicker" name="hubunganKdarurat" required>
+                                    <select class="form-control" name="hubunganKdarurat" required>
                                         <option value="">Pilih Hubungan</option>
                                         <option value="Ayah">Ayah</option>
                                         <option value="Ibu">Ibu</option>
@@ -46,6 +32,18 @@
                                         <option value="Adik">Adik</option>
                                         <option value="Anak">Anak</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
+                                    <input type="number" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="mb-3 ">
+                                    <label for="exampleInputEmail1" class="form-label">Alamat</label>
+                                    <input class="form-control" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat"></input>
                                 </div>
                             </div>
                         </div>

@@ -413,6 +413,10 @@
             // autoclose: true,
             toggleActive: true,
         });
+        jQuery("#date-range4").datepicker({
+            // autoclose: true,
+            toggleActive: true,
+        });
 
         //Bootstrap-MaxLength
         // $('input#defaultconfig').maxlength();
