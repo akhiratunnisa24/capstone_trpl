@@ -490,6 +490,7 @@ Route::get('/setting-kalender', [KalenderController::class, 'setting'])->name('s
 Route::post('/store-kalender', [KalenderController::class, 'storeSetting'])->name('store.kalender');
 Route::put('/update-kalender/{id}', [KalenderController::class, 'update'])->name('kalender.update');
 Route::get('/delete-kalender/{id}', [KalenderController::class, 'destroy'])->name('shift.delete');
+Route::post('/store-kegiatan', [KalenderController::class, 'store'])->name('store.kegiatan');
 
 // Managemen User
 Route::get('settinguser', [SettingController::class, 'settinguser'])->name('settinguser');

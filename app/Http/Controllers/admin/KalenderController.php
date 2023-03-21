@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Models\Karyawan;
+use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use App\Models\SettingHarilibur;
 use Illuminate\Support\Facades\DB;
@@ -35,10 +36,26 @@ class KalenderController extends Controller
         }
     }
 
+    public function store(Request $request)
+    {
+        $kegiatan = new Kegiatan;
+        $kegiatan->judul = $request->judul;
+        $kegiatan->tglmulai = $request->tglmulai;
+        $kegiatan->tglselesai = $request->tglselesai;
+        $kegiatan->id_pegawai = $request->id_pegawai;
+    
+        return $kegiatan;
+
+        $kegiatan->save();
+
+        return response()->json(['success'=>'Data berhasil disimpan']);
+    }
+
     public function getHarilibur()
     {
         try {
-            $getHarilibur = SettingHarilibur::select('id', 'tanggal','tipe', 'keterangan')->get();
+            $getHarilibur = SettingHarilibur::select('id', 'tanggal','tipe', 'keterangan')
+                ->get();
 
             if (!$getHarilibur) {
                 throw new \Exception('Data not found');
@@ -73,10 +90,10 @@ class KalenderController extends Controller
     //         if (!$getHarilibur) {
     //             throw new \Exception('Data not found');
     //         }
-    //         // return response()->json($getHarilibur, 200);
-    //         return response()->json([
-    //             'events' => $getHarilibur,
-    //        ], 200);
+    //         return response()->json($getHarilibur, 200);
+    //     //     return response()->json([
+    //     //         'events' => $getHarilibur,
+    //     //    ], 200);
     //     } catch (\Exception $e) {
     //         return response()->json([
     //             'message' => $e->getMessage()

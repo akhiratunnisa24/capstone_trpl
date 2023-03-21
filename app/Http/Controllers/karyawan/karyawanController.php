@@ -178,7 +178,12 @@ class karyawanController extends Controller
                 ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
             $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
-                ->where('status','=',1)->get();
+                ->whereYear('aktif_dari', '=', Carbon::now()->year)
+                ->whereYear('sampai', '=', Carbon::now()->year)
+                ->where('status', '=', 1)
+                ->get();
+                return $alokasicuti;
+
             $sisacuti = Sisacuti::where('id_pegawai',Auth::user()->id_pegawai)->get();
             // return $sisacuti;
 
