@@ -24,19 +24,75 @@
 
 <div class="content">
     <div class="container">
-        <div class="row">
-            {{-- <div class="col-lg-2 col-md-2">
-            </div> --}}
 
-            <div id='calendar' class="col-md- col-lg-12"></div>
-            <script>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="panel panel-secondary">
+                    <div class="panel panel-heading">
+                        <h4  style="margin-left:35px">Form Kegiatan</h4>
+                    </div>
+                    <div class="panel-body">
+                        <form method="POST" id="add_event_form" action="/store-kegiatan">
+                            @csrf
+                            @method('post')
+                            <div class="form-group">
+                                <div class="form-label">Judul Kegiatan</div>
+                                <input type="text" class="form-control" name="judul" id="tglmulai" autocomplete="off" placeholder="Masukkan Judul.." required>
+                                <input type="hidden" class="form-control" name="id_pegawai" id="id_pegawai" value="{{Auth::user()->id_pegawai}}">
+                            </div>
+                            <div class="form-group mt-4">
+                                <div class="form-label">Tgl Mulai</div>
+                                <input type="datetime-local" class="form-control" name="tglmulai" id="mulai">
+                            </div>
+                            <div class="form-group mt-4">
+                                <div class="form-label">Tgl Selesai</div>
+                                <input type="datetime-local" class="form-control" name="tglselesai" id="selesai">
+                            </div>
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-success" style="margin-left:65px">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="col-lg-3 col-md-3">
+                <h4>Form Kegiatan</h4>
+                <form method="post" id="add_event_form">
+                    <div class="page">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="form-label">Judul Kegiatan</div>
+                                <input type="text" class="form-control" name="judul" id="tglmulai">
+                                <input type="hidden" class="form-control" name="id_pegawai" id="id_pegawai" value="{{Auth::user()->id_pegawai}}">
+                            </div>
+                            <div class="form-group mt-4">
+                                <div class="form-label">Tgl Mulai</div>
+                                <input type="datetime-local" class="form-control" name="tglmulai" id="mulai">
+                            </div>
+                            <div class="form-group mt-4">
+                                <div class="form-label">Tgl Selesai</div>
+                                <input type="datetime-local" class="form-control" name="tglselesai" id="selesai">
+                            </div>
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-success">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div> --}}
+            <div id='calendar' class="col-md- col-lg-9"></div>
+        </div>
+    </div> <!-- container -->
+</div> 
+ {{-- <script>
                 $(document).ready(function() {
                     $('#calendar').fullCalendar({
                         header: {
                             left: 'prev,next today',
                             center: 'title',
                             right: 'month,agendaWeek,agendaDay'
-                        },
+                        }, 
                         // events: [ 
                         //     @foreach($getHarilibur as $harilibur) 
                         //         { 
@@ -70,10 +126,8 @@
                         }
                     });
                 });
-            </script>
-        </div>
-    </div> <!-- container -->
-</div> <!-- content -->
+            </script> --}}
+<!-- content -->
   {{-- <h4>Created Events</h4>
                 <form method="post" id="add_event_form">
                     <input type="text" class="form-control new-event-form" placeholder="Add new event..." />
@@ -92,7 +146,7 @@
 
 <!-- jQuery  -->
    
-    {{-- <script src="assets/js/modernizr.min.js"></script>
+   {{-- <script src="assets/js/modernizr.min.js"></script>
     <script src="assets/js/detect.js"></script>
     <script src="assets/js/fastclick.js"></script>
     <script src="assets/js/jquery.slimscroll.js"></script>
@@ -100,12 +154,12 @@
     <script src="assets/js/waves.js"></script>
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/jquery.nicescroll.js"></script>
-    <script src="assets/js/jquery.scrollTo.min.js"></script> --}}
+    <script src="assets/js/jquery.scrollTo.min.js"></script>  --}}
 
     <!-- BEGIN PAGE SCRIPTS -->
     <!-- Jquery-Ui -->
   
-    {{-- <script src="assets/pages/calendar-init.js"></script> --}}
+    <script src="assets/pages/calendar-init.js"></script>
     {{-- <script src="assets/js/app.js"></script>
     <script>
         $(document).ready(function(){

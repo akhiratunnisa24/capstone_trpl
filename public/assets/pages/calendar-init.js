@@ -49,6 +49,7 @@
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 droppable: true, // this allows things to be dropped onto the calendar !!!
+                navLinks: true,
                 drop: function(date, allDay) { // this function is called when something is dropped
 
                     // retrieve the dropped element's stored Event Object
@@ -72,60 +73,67 @@
                     }
 
                 },
-                // events: [{
-                //     title: 'All Day Event',
-                //     start: new Date(y, m, 1)
-                //     },
-                // ]
-                events: [{
-                    start: new Date(y, m, 1),
-                    url: '/get-harilibur-data', // API endpoint to get events data
+                events: { //menampilkan data harilibur ke dalam fullcalendar
+                    url: '/get-harilibur-data',
                     type: 'GET',
-                    error: function() {
-                        alert('There was an error while fetching events!');
+                    success: function(data) {
+                        // console.log(data);
+                        var events = [];
+                    
+                        for (var i = 0; i < data.events.length; i++) {
+
+                            var backgroundColor = '';
+
+                            if (data.events[i].type === 'Hari Libur Nasional') {
+                                backgroundColor = 'red';
+                            } else if (data.events[i].type === 'Cuti Bersama') {
+                                backgroundColor = 'orange';
+                            }
+
+                            var event = {
+                                title: data.events[i].title,
+                                start: new Date(data.events[i].start),
+                                type: data.events[i].type,
+                                backgroundColor: backgroundColor
+                            };
+                    
+                            events.push(event);
+                        }
+                        // hapus sumber event sebelumnya
+                        $('#calendar').fullCalendar('removeEventSources');
+
+                        // tambahkan event baru
+                        $('#calendar').fullCalendar('addEventSource', events);
                     }
-                      
-                }],
+                },
             });
             
-             /*Add new event*/
+            /*Add new event*/
             // Form to add new event
-
-            $("#add_event_form").on('submit', function(ev) {
-                ev.preventDefault();
-
-                var $event = $(this).find('.new-event-form'),
-                    event_name = $event.val();
-
-                if (event_name.length >= 3) {
-
-                    var newid = "new" + "" + Math.random().toString(36).substring(7);
-                    // Create Event Entry
-                    $("#external-events").append(
-                        '<div id="' + newid + '" class="fc-event">' + event_name + '</div>'
-                    );
-
-
-                    var eventObject = {
-                        title: $.trim($("#" + newid).text()) // use the element's text as the event title
-                    };
-
-                    // store the Event Object in the DOM element so we can get to it later
-                    $("#" + newid).data('eventObject', eventObject);
-
-                    // Reset draggable
-                    $("#" + newid).draggable({
-                        revert: true,
-                        revertDuration: 0,
-                        zIndex: 999
-                    });
-
-                    // Reset input
-                    $event.val('').focus();
-                } else {
-                    $event.focus();
-                }
+            $(document).on('submit', '#add_event_form', function(event){
+                event.preventDefault();
+            
+                // mengambil data dari form
+                var formData = {
+                    'judul' : $('input[name=judul]').val(),
+                    'tglmulai' : $('input[name=tglmulai]').val(),
+                    'tglselesai' : $('input[name=tglselesai]').val(),
+                    'id_pegawai' : $('input[name=id_pegawai]').val()
+                };
+            
+                // mengirim data ke server
+                $.ajax({
+                    type : 'POST',
+                    url : '/store-kegiatan',
+                    data : formData,
+                    dataType : 'json',
+                    encode : true
+                })
+                .done(function(data) {
+                    console.log(data);
+                });
             });
+            
 
         }
         else {
