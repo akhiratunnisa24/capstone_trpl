@@ -496,8 +496,10 @@ Route::get('/get-harilibur-data', [KalenderController::class, 'getHarilibur'])->
 Route::get('/setting-kalender', [KalenderController::class, 'setting'])->name('setting.kalender');
 Route::post('/store-kalender', [KalenderController::class, 'storeSetting'])->name('store.kalender');
 Route::put('/update-kalender/{id}', [KalenderController::class, 'update'])->name('kalender.update');
-Route::get('/delete-kalender/{id}', [KalenderController::class, 'destroy'])->name('shift.delete');
+Route::get('/delete-kalender/{id}', [KalenderController::class, 'destroy'])->name('kalender.delete');
 Route::post('/store-kegiatan', [KalenderController::class, 'store'])->name('store.kegiatan');
+Route::put('/update-kegiatan/{id}', [KalenderController::class, 'updatekegiatan'])->name('kegiatan.update');
+Route::get('/delete-kegiatan/{id}', [KalenderController::class, 'delete'])->name('kegiatan.delete');
 
 // Managemen User
 Route::get('settinguser', [SettingController::class, 'settinguser'])->name('settinguser');

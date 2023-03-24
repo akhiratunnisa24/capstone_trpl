@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use Carbon\Carbon;
 use App\Models\Karyawan;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
@@ -15,22 +16,23 @@ class KalenderController extends Controller
     public function index()
     {
         $role = Auth::user()->role;
-        if ($role == 1) 
+        if($role != 5) 
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $getHarilibur = SettingHarilibur::all();
-            foreach($getHarilibur as $harilibur)
-            {
-                $events[] = [
-                    'date' => $harilibur->tanggal,
-                    'title' => $harilibur->keterangan,
-                    'type' => $harilibur->tipe,
-                ];
+            $id_pegawai = Auth::user()->id_pegawai;
+            // $getHarilibur = SettingHarilibur::all();
+            // foreach($getHarilibur as $harilibur)
+            // {
+            //     $events[] = [
+            //         'date' => $harilibur->tanggal,
+            //         'title' => $harilibur->keterangan,
+            //         'type' => $harilibur->tipe,
+            //     ];
                
-            }
+            // }
             // return $events;
            
-            return view('admin.kalender.index',compact('row','getHarilibur'),['events'=>$events]);
+            return view('admin.kalender.index',compact('row','id_pegawai'));
         }else{
             return redirect()->back();
         }
@@ -40,36 +42,59 @@ class KalenderController extends Controller
     {
         $kegiatan = new Kegiatan;
         $kegiatan->judul = $request->judul;
-        $kegiatan->tglmulai = $request->tglmulai;
-        $kegiatan->tglselesai = $request->tglselesai;
+        $kegiatan->tglmulai = \Carbon\Carbon::createFromTimestamp(strtotime($request->input('tglmulai')))->format('Y-m-d H:i:s');
+        $kegiatan->tglselesai = \Carbon\Carbon::createFromTimestamp(strtotime($request->input('tglselesai')))->format('Y-m-d H:i:s') ?? null;
         $kegiatan->id_pegawai = $request->id_pegawai;
-    
-        return $kegiatan;
 
         $kegiatan->save();
+        // return redirect()->back();
 
-        return response()->json(['success'=>'Data berhasil disimpan']);
+        return redirect('/kalender')->with('pesan','Data berhasil disimpan !');
     }
 
     public function getHarilibur()
     {
         try {
-            $getHarilibur = SettingHarilibur::select('id', 'tanggal','tipe', 'keterangan')
-                ->get();
+            $getHarilibur = DB::table('setting_harilibur')->select('id', 'tanggal', 'tipe', 'keterangan')->get();
+            $kegiatan = DB::table('kegiatan') ->select('id', 'tglmulai', 'judul', 'tglselesai','id_pegawai')
+                ->where('id_pegawai', Auth::user()->id_pegawai)->get();
 
-            if (!$getHarilibur) {
-                throw new \Exception('Data not found');
-            }
+            //Menggabungkan kedua data
+            $getData = collect($getHarilibur)->merge($kegiatan);
 
-            $events = [];
-
-            foreach ($getHarilibur as $harilibur) {
-                $events[] = [
-                    'title' => $harilibur->keterangan,
-                    'start' => $harilibur->tanggal,
-                    'type' => $harilibur->tipe,
+            //format data untuk dikembalikan sebagai respon json
+            $events = $getData->map(function ($getData) {
+                $event = [
+                    'id' => $getData->id,
+                    'type' => $getData->tipe ?? null,
                 ];
-            }
+
+                if(isset($getData->id_pegawai)) {
+                    $event['user'] = $getData->id_pegawai ?? null;
+                }
+
+                if(isset($getData->keterangan))
+                {
+                    $event['title'] = $getData->keterangan;
+                }elseif(isset($getData->judul))
+                {
+                    $event['title'] = $getData->judul;
+                }
+
+                if(isset($getData->tanggal))
+                {
+                    $event['start'] = $getData->tanggal;
+                }elseif(isset($getData->tglmulai))
+                {
+                    $event['start'] = $getData->tglmulai;
+                }
+
+                if(isset($getData->tglselesai)) {
+                    $event['end'] = $getData->tglselesai ?? null;
+                }
+
+                return $event;
+            });
 
             return response()->json([
                 'events' => $events,
@@ -81,25 +106,23 @@ class KalenderController extends Controller
         }
     }
 
+    public function updatekegiatan(Request $request, $id)
+    {
+        $kegiatan = Kegiatan::findOrFail($id);
+        $kegiatan->judul = $request->input('judul');
+        $kegiatan->tglmulai = $request->input('tgl');
+        $kegiatan->tglselesai = $request->input('end');
+        $kegiatan->update();
+        
+        return redirect()->route('kegiatan.index')->with('success', 'Data kegiatan berhasil diupdate');
+    }
 
-    // public function getHarilibur()
-    // {
-    //     try {
-    //         $getHarilibur = SettingHarilibur::select('id', 'tanggal','tipe', 'keterangan')->get();
-            
-    //         if (!$getHarilibur) {
-    //             throw new \Exception('Data not found');
-    //         }
-    //         return response()->json($getHarilibur, 200);
-    //     //     return response()->json([
-    //     //         'events' => $getHarilibur,
-    //     //    ], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'message' => $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
+
+    public function delete($id)
+    {
+        DB::table('kegiatan')->where('id', $id)->where('id_pegawai',Auth::user()->id_pegawai)->delete();
+        return redirect('/kalender');
+    }
 
     public function setting()
     {

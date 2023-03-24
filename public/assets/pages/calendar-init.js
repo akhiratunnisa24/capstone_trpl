@@ -91,9 +91,12 @@
                             }
 
                             var event = {
+                                id : data.events[1].id,
                                 title: data.events[i].title,
                                 start: new Date(data.events[i].start),
+                                end: new Date(data.events[i].end),
                                 type: data.events[i].type,
+                                user: data.events[i].user,
                                 backgroundColor: backgroundColor
                             };
                     
@@ -106,33 +109,68 @@
                         $('#calendar').fullCalendar('addEventSource', events);
                     }
                 },
+                // eventClick: function(calEvent, jsEvent, view) {
+                //     if (calEvent.user == id_pegawai) {
+                //         $('#edit-modal').modal();
+                //         $('#edit-modal #id').val(calEvent.id);
+                //         $('#edit-modal #judul').val(calEvent.title);
+                //         $('#edit-modal #deskripsi').val(calEvent.description);
+                //         $('#edit-modal #start').val(moment(calEvent.start).format('YYYY-MM-DD HH:mm:ss'));
+                //         if (calEvent.end != null) {
+                //             $('#edit-modal #end').val(moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss'));
+                //         }
+                //     }
+                // }
+                
+                // eventClick: function(calEvent, jsEvent, view) {
+                //     if (calEvent.editable) { // cek apakah event dapat dihapus
+                //         console.log(calEvent.editable);
+                //         if (calEvent.user == id_pegawai) { // tambahkan kondisi untuk membandingkan id_pegawai
+                //             if (confirm('Apakah Anda yakin ingin menghapus kegiatan ini?')) {
+                //                 $.ajax({
+                //                     url: '/delete-kegiatan/' + calEvent.id,
+                //                     type: 'DELETE',
+                //                     success: function() {
+                //                         $('#calendar').fullCalendar('removeEvents', calEvent.id);
+                //                     },
+                //                     error: function() {
+                //                         alert('Gagal menghapus kegiatan.');
+                //                     }
+                //                 });
+                //             }
+                //         } else {
+                //             alert('Anda tidak diizinkan menghapus kegiatan ini.');
+                //         }
+                //     }
+                // }
+
             });
             
             /*Add new event*/
             // Form to add new event
-            $(document).on('submit', '#add_event_form', function(event){
-                event.preventDefault();
+            // $(document).on('submit', '#add_event_form', function(event){
+            //     event.preventDefault();
             
-                // mengambil data dari form
-                var formData = {
-                    'judul' : $('input[name=judul]').val(),
-                    'tglmulai' : $('input[name=tglmulai]').val(),
-                    'tglselesai' : $('input[name=tglselesai]').val(),
-                    'id_pegawai' : $('input[name=id_pegawai]').val()
-                };
+            //     // mengambil data dari form
+            //     var formData = {
+            //         'judul' : $('input[name=judul]').val(),
+            //         'tglmulai' : $('input[name=tglmulai]').val(),
+            //         'tglselesai' : $('input[name=tglselesai]').val(),
+            //         'id_pegawai' : $('input[name=id_pegawai]').val()
+            //     };
             
-                // mengirim data ke server
-                $.ajax({
-                    type : 'POST',
-                    url : '/store-kegiatan',
-                    data : formData,
-                    dataType : 'json',
-                    encode : true
-                })
-                .done(function(data) {
-                    console.log(data);
-                });
-            });
+            //     // mengirim data ke server
+            //     $.ajax({
+            //         type : 'POST',
+            //         url : '/store-kegiatan',
+            //         data : formData,
+            //         dataType : 'json',
+            //         encode : true
+            //     })
+            //     .done(function(data) {
+            //         console.log(data);
+            //     });
+            // });
             
 
         }
