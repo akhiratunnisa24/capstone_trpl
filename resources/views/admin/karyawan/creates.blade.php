@@ -263,7 +263,7 @@
                                                                             <input type="text" class="form-control"
                                                                                 placeholder="yyyy/mm/dd" id="datepicker-autoclose2"
                                                                                 name="tglmasukKaryawan" rows="10" autocomplete="off" value="{{ $karyawan->tglmasuk ?? '' }}"
-                                                                                required></input><br>
+                                                                                required><br>
                                                                             <span class="input-group-addon bg-custom b-0"><i
                                                                                     class="mdi mdi-calendar text-white"></i></span>
                                                                         </div>
@@ -297,7 +297,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">No. BPJS Ketenagakerjaan</label>
-                                                                        <input type="number" name="nobpjskerKaryawan" class="form-control" value="{{ $karyawan->no_bpjs_ket ?? '' }}"
+                                                                        <input type="number" name="nobpjsketKaryawan" class="form-control" value="{{ $karyawan->no_bpjs_ket ?? '' }}"
                                                                             placeholder="Masukkan No. BPJS Ketenagakerjaan" >
                                                                     </div>
                                                                 </div>

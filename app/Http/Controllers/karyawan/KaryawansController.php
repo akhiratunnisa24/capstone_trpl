@@ -89,7 +89,7 @@ class KaryawansController extends Controller
                 $karyawan->nik           = $request->nikKaryawan;
                 $karyawan->no_kk         = $request->nokkKaryawan;
                 $karyawan->no_npwp       = $request->nonpwpKaryawan;
-                $karyawan->no_bpjs_ket   = $request->nobpjskerKaryawan;
+                $karyawan->no_bpjs_ket   = $request->nobpjsketKaryawan;
                 $karyawan->no_bpjs_kes   = $request->nobpjskesKaryawan;
                 $karyawan->no_akdhk      = $request->noAkdhk;
                 $karyawan->no_program_pensiun   = $request->noprogramPensiun;
@@ -136,7 +136,7 @@ class KaryawansController extends Controller
                 $karyawan->nik           = $request->nikKaryawan;
                 $karyawan->no_kk           = $request->nokkKaryawan;
                 $karyawan->no_npwp       = $request->nonpwpKaryawan;
-                $karyawan->no_bpjs_ket   = $request->nobpjskerKaryawan;
+                $karyawan->no_bpjs_ket   = $request->nobpjsketKaryawan;
                 $karyawan->no_bpjs_kes   = $request->nobpjskesKaryawan;
                 $karyawan->no_akdhk   = $request->noAkdhk;
                 $karyawan->no_program_pensiun   = $request->noprogramPensiun;
@@ -186,7 +186,7 @@ class KaryawansController extends Controller
                 $karyawan->nik          = $request->nikKaryawan;
                 $karyawan->no_kk        = $request->nokkKaryawan;
                 $karyawan->no_npwp       = $request->nonpwpKaryawan;
-                $karyawan->no_bpjs_ket   = $request->nobpjskerKaryawan;
+                $karyawan->no_bpjs_ket   = $request->nobpjsketKaryawan;
                 $karyawan->no_bpjs_kes   = $request->nobpjskesKaryawan;
                 $karyawan->no_akdhk   = $request->noAkdhk;
                 $karyawan->no_program_pensiun   = $request->noprogramPensiun;
@@ -232,7 +232,7 @@ class KaryawansController extends Controller
                 $karyawan->nik           = $request->nikKaryawan;
                 $karyawan->no_kk         = $request->nokkKaryawan;
                 $karyawan->no_npwp       = $request->nonpwpKaryawan;
-                $karyawan->no_bpjs_ket   = $request->nobpjskerKaryawan;
+                $karyawan->no_bpjs_ket   = $request->nobpjsketKaryawan;
                 $karyawan->no_bpjs_kes   = $request->nobpjskesKaryawan;
                 $karyawan->no_akdhk   = $request->noAkdhk;
                 $karyawan->no_program_pensiun   = $request->noprogramPensiun;
@@ -924,7 +924,7 @@ class KaryawansController extends Controller
             $pegawai->nik = $request->nikKaryawan;
             $pegawai->no_kk         = $request->nokkKaryawan;
             $pegawai->no_npwp       = $request->nonpwpKaryawan;
-            $pegawai->no_bpjs_ket   = $request->nobpjskerKaryawan;
+            $pegawai->no_bpjs_ket   = $request->nobpjsketKaryawan;
             $pegawai->no_bpjs_kes   = $request->nobpjskesKaryawan;
             $pegawai->no_akdhk   = $request->noAkdhk;
             $pegawai->no_program_pensiun   = $request->noprogramPensiun;
@@ -960,7 +960,7 @@ class KaryawansController extends Controller
             $pegawai->nik = $request->nikKaryawan;
             $pegawai->no_kk         = $request->nokkKaryawan;
             $pegawai->no_npwp       = $request->nonpwpKaryawan;
-            $pegawai->no_bpjs_ket   = $request->nobpjskerKaryawan;
+            $pegawai->no_bpjs_ket   = $request->nobpjsketKaryawan;
             $pegawai->no_bpjs_kes   = $request->nobpjskesKaryawan;
             $pegawai->no_akdhk   = $request->noAkdhk;
             $pegawai->no_program_pensiun   = $request->noprogramPensiun;

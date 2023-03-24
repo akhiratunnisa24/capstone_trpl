@@ -121,11 +121,18 @@ Route::get('metode_rekrutmen', [RekruitmenController::class, 'create_metode'])->
 Route::post('store_metode_rekrutmen', [RekruitmenController::class, 'store_metode_rekrutmen'])->name('store_metode_rekrutmen');
 Route::put('update_metode_rekrutmen{id}', [RekruitmenController::class, 'update_metode_rekrutmen'])->name('update_metode_rekrutmen');
 Route::get('metode_rekrutmen_destroy{id}', [RekruitmenController::class, 'metode_rekrutmen_destroy'])->name('metode_rekrutmen_destroy');
+
+// FormPelamar Controller
 Route::get('create_pelamar', [FormPelamarController::class, 'create'])->name('create_pelamar');
 Route::post('store_pelamar', [FormPelamarController::class, 'store'])->name('store_pelamar');
+Route::get('/create_data_keluarga_pelamar', [FormPelamarController::class, 'createKeluarga'])->name('createKeluarga');
+Route::post('/storedatakeluarga', [FormPelamarController::class, 'storedk'])->name('storedk');
+    // get persyaratan di form pelamar saat memilih lowongan
+    Route::post('/getPersyaratan', [FormPelamarController::class, 'getPersyaratan'])->name('getPersyaratan');
+
+// Notifikasi Email ke Pelamar
 Route::get('notif_rekrutmen', [NotifMailRekruitmenController::class, 'index']);
 
-Route::post('/getPersyaratan', [FormPelamarController::class, 'getPersyaratan'])->name('getPersyaratan');
 // Route::post('/getemail2', [karyawanController::class, 'getEmail2'])->name('getEmail2');
 
 Route::get('/get-persyaratan/{id}', function ($id) {
