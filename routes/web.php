@@ -122,13 +122,33 @@ Route::post('store_metode_rekrutmen', [RekruitmenController::class, 'store_metod
 Route::put('update_metode_rekrutmen{id}', [RekruitmenController::class, 'update_metode_rekrutmen'])->name('update_metode_rekrutmen');
 Route::get('metode_rekrutmen_destroy{id}', [RekruitmenController::class, 'metode_rekrutmen_destroy'])->name('metode_rekrutmen_destroy');
 
-// FormPelamar Controller
-Route::get('create_pelamar', [FormPelamarController::class, 'create'])->name('create_pelamar');
-Route::post('store_pelamar', [FormPelamarController::class, 'store'])->name('store_pelamar');
-Route::get('/create_data_keluarga_pelamar', [FormPelamarController::class, 'createKeluarga'])->name('createKeluarga');
-Route::post('/storedatakeluarga', [FormPelamarController::class, 'storedk'])->name('storedk');
+// Form Pelamar Controller
+
     // get persyaratan di form pelamar saat memilih lowongan
     Route::post('/getPersyaratan', [FormPelamarController::class, 'getPersyaratan'])->name('getPersyaratan');
+    // Data Identitas
+    Route::get('create_pelamar', [FormPelamarController::class, 'create'])->name('create_pelamar');
+    Route::post('store_pelamar', [FormPelamarController::class, 'store'])->name('store_pelamar');
+    // Data Keluarga
+    Route::get('/create_data_keluarga_pelamar', [FormPelamarController::class, 'createKeluarga'])->name('createKeluarga');
+    Route::post('/store_data_keluarga', [FormPelamarController::class, 'storedk'])->name('store_data_keluarga');
+    Route::post('/update_data_keluarga', [FormPelamarController::class, 'updatedk'])->name('update_data_keluarga');
+    //Data kontak darurat
+    Route::get('/create_kontak_darurat', [FormPelamarController::class, 'createkonrat'])->name('create_kontak_darurat');
+    Route::post('/store_kontak_darurat', [FormPelamarController::class, 'storekd'])->name('store_kontak_darurat');
+    Route::post('/update_kontak_darurat', [FormPelamarController::class, 'updatekd'])->name('/update_kontak_darurat');
+    //form data pendidikan
+    Route::get('/create_data_pendidikan', [FormPelamarController::class, 'creatependidikan'])->name('create_data_pendidikan');
+    Route::post('/storep_formal', [FormPelamarController::class, 'storepformal'])->name('storep_formal');
+    Route::post('/update_pendidikan', [FormPelamarController::class, 'updaterPendidikan'])->name('update_pendidikan');
+    //form data pekerjaan
+    Route::get('/create_data_pekerjaan', [FormPelamarController::class, 'createpekerjaan'])->name('create_data_pekerjaan');
+    Route::post('/store_pekerjaan', [FormPelamarController::class, 'storepekerjaan'])->name('store_pekerjaan');
+    Route::post('/update_pekerjaan', [FormPelamarController::class, 'updaterPekerjaan'])->name('update_pekerjaan');
+    //Form data organisasi
+    Route::get('/create_data_organisasi', [FormPelamarController::class, 'createorganisasi'])->name('create_data_organisasi');
+    Route::post('/store_organisasi', [FormPelamarController::class, 'storeorganisasi'])->name('store_organisasi');
+    Route::post('/update_organisasi', [FormPelamarController::class, 'updaterOrganisasi'])->name('update_organisasi');
 
 // Notifikasi Email ke Pelamar
 Route::get('notif_rekrutmen', [NotifMailRekruitmenController::class, 'index']);

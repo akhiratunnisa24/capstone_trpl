@@ -19,7 +19,7 @@
     </head>
 
     <div class="container">
-        <form action="store_pelamar" method="POST" enctype="multipart/form-data" onsubmit="return confirmSave()">
+        <form action="storedatakeluarga" method="POST" enctype="multipart/form-data" onsubmit="return confirmSave()">
             @csrf
             @method('post')
             <!-- Page-Title -->
@@ -27,6 +27,7 @@
                 <div class="col-sm-12">
                     <div class="page-header-title">
                         <h4 class="pull-left page-title">Form Penerimaan Rekruitmen</h4>
+
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -60,7 +61,8 @@
                                             <tbody>
                                                 @foreach ($datakeluarga as $key => $data)
                                                     <tr>
-                                                        <td id="key">{{ $key }}</td>
+                                                        {{-- <td id="key">{{ $key }}</td> --}}
+                                                        <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $data['hubungan'] }}</td>
                                                         <td>{{ $data['nama'] }}</td>
                                                         <td>{{ $data['jenis_kelamin'] }}</td>
@@ -83,7 +85,6 @@
                                                                         data-key="{{ $key }}"><i
                                                                             class="fa fa-trash"></i></button>
                                                                 </form>
-                                                                {{-- <button type="button" id="hapus_dakel" data-key="{{ $key }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -108,11 +109,9 @@
                                                                 </div>
 
 
-                                                                <div class="form-group"
-                                                                    style="margin-left:10px;margin-right:10px;">
+                                                                <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Hubungan</label>
+                                                                        <label class="form-label">Hubungan</label>
                                                                         <select class="form-control selectpicker"
                                                                             id="hubungan" name="hubungankeluarga"
                                                                             required>
@@ -134,11 +133,9 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="form-group"
-                                                                    style="margin-left:10px;margin-right:10px;">
+                                                                <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Nama Lengkap</label>
+                                                                        <label class="form-label">Nama Lengkap</label>
                                                                         <input type="text" id="namaPasangan"
                                                                             name="namaPasangan" class="form-control"
                                                                             autocomplete="off"
@@ -147,10 +144,8 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="form-group"
-                                                                    style="margin-left:10px;margin-right:10px;">
-                                                                    <label for="exampleInputEmail1"
-                                                                        class="form-label">Jenis Kelamin</label>
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Jenis Kelamin</label>
                                                                     <select class="form-control selectpicker"
                                                                         name="jenis_kelaminKeluarga" required>
                                                                         <option value="">Pilih Jenis Kelamin
@@ -160,46 +155,35 @@
                                                                     </select>
                                                                 </div>
 
-                                                                <div class="form-group"
-                                                                    style="margin-left:10px;margin-right:10px;">
+                                                                <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Tanggal Lahir</label>
+                                                                        <label class="form-label">Tanggal Lahir</label>
                                                                         <div class="input-group">
-                                                                            <input type="text" class="form-control"
+                                                                            <input type="date" class="form-control"
                                                                                 placeholder="yyyy/mm/dd"
-                                                                                id="datepicker-autoclose8"
                                                                                 autocomplete="off"
-                                                                                name="tgllahirPasangan" rows="10"
-                                                                                required></input><br>
-                                                                            <span
+                                                                                name="tgllahirPasangan" required>
+                                                                            {{-- <span
                                                                                 class="input-group-addon bg-custom b-0"><i
-                                                                                    class="mdi mdi-calendar text-white"></i></span>
+                                                                                    class="mdi mdi-calendar text-white"></i></span> --}}
                                                                         </div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Kota Kelahiran</label>
+                                                                        <label class="form-label">Kota
+                                                                            Kelahiran</label>
                                                                         <input class="form-control"
                                                                             name="tempatlahirKeluarga"
                                                                             autocomplete="off" rows="9"
-                                                                            placeholder="Masukkan Alamat"required></input>
+                                                                            placeholder="Masukkan Kota Kelahiran"required>
                                                                     </div>
                                                                 </div>
 
-                                                                {{-- <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                                    <input class="form-control" id="alamatPasangan" name="alamatPasangan" autocomplete="off" rows="9" placeholder="Masukkan Alamat"required></input>
-                                                                </div>
-                                                            </div> --}}
-
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputEmail1"
-                                                                        class="form-label">Pendidikan Terakhir</label>
+                                                                    <label class="form-label">Pendidikan
+                                                                        Terakhir</label>
                                                                     <select class="form-control selectpicker"
                                                                         id="pendidikan_terakhirPasangan"
                                                                         name="pendidikan_terakhirPasangan"required>
@@ -217,8 +201,7 @@
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Pekerjaan</label>
+                                                                        <label class="form-label">Pekerjaan</label>
                                                                         <input type="text" name="pekerjaanPasangan"
                                                                             class="form-control"
                                                                             id="pekerjaanPasangan"
@@ -227,9 +210,10 @@
                                                                         <div id="emailHelp" class="form-text"></div>
                                                                     </div>
                                                                 </div>
+
                                                                 <div class="row">
                                                                     <div class="pull-left">
-                                                                        <a href="/karyawancreates"
+                                                                        <a href="/create_pelamar"
                                                                             class="btn btn-sm btn-info"><i
                                                                                 class="fa fa-backward"></i>
                                                                             Sebelumnya</a>
@@ -237,13 +221,13 @@
                                                                     <div class="pull-right">
                                                                         <button type="submit" name="submit"
                                                                             class="btn btn-sm btn-dark">Simpan</button>
-                                                                        <a href="{{ route('create.konrat') }}"
+                                                                        <a href="/create_kontak_darurat"
                                                                             class="btn btn-sm btn-success">Selanjutnya
                                                                             <i class="fa fa-forward"></i></a>
                                                                     </div>
                                                                 </div>
+
                                                             </div>
-                                                            <div class="col-md-2"></div>
                                                         </div>
                                                     </div>
                                                 </table>
@@ -270,42 +254,9 @@
                                                                     </label>
                                                                 </div>
 
-                                                                <div class="form-group"
-                                                                    style="margin-left:10px;margin-right:10px;">
+                                                                <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Nama Lengkap</label>
-                                                                        <input type="text" id="nama"
-                                                                            name="namaPasangan" class="form-control"
-                                                                            autocomplete="off"
-                                                                            placeholder="Masukkan Nama" required>
-
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group"
-                                                                    style="margin-left:10px;margin-right:10px;">
-                                                                    <div class="mb-3">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Tanggal Lahir</label>
-                                                                        <div class="input-group">
-                                                                            <input type="text" class="form-control"
-                                                                                placeholder="yyyy/mm/dd"
-                                                                                id="datepicker-autoclose30"
-                                                                                autocomplete="off"
-                                                                                name="tgllahirPasangan" rows="10"
-                                                                                required></input><br>
-                                                                            <span
-                                                                                class="input-group-addon bg-custom b-0"><i
-                                                                                    class="mdi mdi-calendar text-white"></i></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group"
-                                                                    style="margin-left:10px;margin-right:10px;">
-                                                                    <div class="mb-3">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Hubungan</label>
+                                                                        <label class="form-label">Hubungan</label>
                                                                         <select class="form-control selectpicker"
                                                                             id="hubungankeluargaa"
                                                                             name="hubungankeluarga" required>
@@ -333,18 +284,61 @@
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Alamat</label>
-                                                                        <input class="form-control" id="alamat"
-                                                                            name="alamatPasangan" autocomplete="off"
-                                                                            rows="9"
-                                                                            placeholder="Masukkan Alamat"required></input>
+                                                                        <label class="form-label">Nama Lengkap</label>
+                                                                        <input type="text" id="nama"
+                                                                            name="namaPasangan" class="form-control"
+                                                                            autocomplete="off"
+                                                                            placeholder="Masukkan Nama" required>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Jenis Kelamin</label>
+                                                                    <select class="form-control selectpicker"
+                                                                        name="jenis_kelaminKeluarga"
+                                                                        id="jenis_kelaminKeluarga" required>
+                                                                        <option value="">Pilih Jenis Kelamin
+                                                                        </option>
+                                                                        <option value="L">Laki-Laki</option>
+                                                                        <option value="P">Perempuan</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Tanggal Lahir</label>
+                                                                        <div class="input-group">
+                                                                            <input type="date" class="form-control"
+                                                                                placeholder="yyyy/mm/dd"
+                                                                                id="tgllahirPasangan"
+                                                                                autocomplete="off"
+                                                                                name="tgllahirPasangan" rows="10"
+                                                                                required><br>
+                                                                            <span
+                                                                                class="input-group-addon bg-custom b-0"><i
+                                                                                    class="mdi mdi-calendar text-white"></i></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Kota
+                                                                            Kelahiran</label>
+                                                                        <input class="form-control"
+                                                                            name="tempatlahirKeluarga"
+                                                                            id="tempatlahirKeluarga"
+                                                                            autocomplete="off" rows="9"
+                                                                            placeholder="Masukkan Kota Kelahiran"required>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputEmail1"
-                                                                        class="form-label">Pendidikan Terakhir</label>
+                                                                    <label class="form-label">Pendidikan
+                                                                        Terakhir</label>
                                                                     <select class="form-control selectpicker"
                                                                         id="pendidikan_terakhir"
                                                                         name="pendidikan_terakhirPasangan"required>
@@ -362,8 +356,7 @@
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label for="exampleInputEmail1"
-                                                                            class="form-label">Pekerjaan</label>
+                                                                        <label class="form-label">Pekerjaan</label>
                                                                         <input type="text" name="pekerjaanPasangan"
                                                                             class="form-control" id="pekerjaan"
                                                                             aria-describedby="emailHelp"
@@ -373,7 +366,7 @@
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="pull-left">
-                                                                        <a href="/karyawancreates"
+                                                                        <a href="/create_pelamar"
                                                                             class="btn btn-sm btn-info"><i
                                                                                 class="fa fa-backward"></i>
                                                                             Sebelumnya</a>
@@ -382,11 +375,12 @@
                                                                         <button type="submit" name="submit"
                                                                             class="btn btn-sm btn-dark">Update
                                                                             Data</button>
-                                                                        <a href="{{ route('create.konrat') }}"
+                                                                        <a href="/create_kontak_darurat"
                                                                             class="btn btn-sm btn-success">Selanjutnya
                                                                             <i class="fa fa-forward"></i></a>
                                                                     </div>
                                                                 </div>
+
                                                             </div>
                                                             <div class="col-md-2"></div>
                                                         </div>
@@ -404,6 +398,7 @@
                 </div>
             </div>
     </div>
+
     {{-- <script src="assets/js/jquery.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
@@ -427,11 +422,13 @@
                 var data = {!! json_encode($datakeluarga) !!}[nomorIndex];
                 // Isi data ke dalam form
                 $('#nama').val(data.nama);
-                $('#datepicker-autoclose30').val(data.tgllahir);
+                $('#tgllahirPasangan').val(data.tgllahir);
                 $('#hubungankeluargaa').val(data.hubungan);
                 $('#alamat').val(data.alamat);
                 $('#pekerjaan').val(data.pekerjaan);
                 $('#pendidikan_terakhir').val(data.pendidikan_terakhir);
+                $('#jenis_kelaminKeluarga').val(data.jenis_kelamin);
+                $('#tempatlahirKeluarga').val(data.tempatlahir);
 
                 // Set opsi yang dipilih pada dropdown select option
                 var select = document.getElementById("hubungankeluargaa");

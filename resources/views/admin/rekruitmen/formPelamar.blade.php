@@ -99,12 +99,12 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Tanggal Lahir</label>
                                                     <div class="input-group">
-                                                        <input id="datepicker-autoclose24" type="text"
-                                                            class="form-control" placeholder="dd/mm/yyyy"
+                                                        <input  type="date"
+                                                            class="form-control" placeholder="yyyy/mm/dd"
                                                             name="tgllahirPelamar" autocomplete="off" rows="10" value="{{ $pelamar->tgllahir ?? '' }}"
                                                             required><br>
-                                                        <span class="input-group-addon bg-custom b-0"><i
-                                                                class="mdi mdi-calendar text-white"></i></span>
+                                                        {{-- <span class="input-group-addon bg-custom b-0"><i
+                                                                class="mdi mdi-calendar text-white"></i></span> --}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -332,7 +332,7 @@
                                 <div class="modal-footer">
 
                                     <button type="submit" name="submit"
-                                        class="btn btn-sm btn-primary">Kirim</button>
+                                        class="btn btn-sm btn-primary">Simpan & Selanjutnya</button>
                                     <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
                                 </div>
 
