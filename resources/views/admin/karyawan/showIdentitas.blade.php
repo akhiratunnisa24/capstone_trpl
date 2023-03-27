@@ -97,9 +97,7 @@
                                                             </div>
                                                             
                                                             <div class="form-group">
-                                                                <label  class="form-label">Jenis Kelamin</label>
-                                                                @if($karyawan->jenis_kelamin == 'P')
-                                                                <label class="form-control" >Perempuan</label>
+                                                                <label  class="form-label">Jenis Kelamin</label>@if($karyawan->jenis_kelamin == 'P')<label class="form-control" >Perempuan</label>
                                                                 @else
                                                                 <label class="form-control">Laki-Laki</label>
                                                                 @endif

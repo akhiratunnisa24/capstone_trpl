@@ -20,6 +20,20 @@ return new class extends Migration
             $table->string('nik')->nullable();
             $table->string('nama')->nullable();
             $table->date('tgllahir')->nullable();
+
+            $table->string('tempatlahir')->nullable();
+            $table->enum('gol_darah', ['A', 'B', 'AB', 'O'])->nullable();
+            $table->string('status_pernikahan')->nullable();
+            $table->integer('jumlah_anak')->nullable();
+            $table->string('no_rek', 20)->nullable();
+            $table->string('no_bpjs_kes', 20)->nullable();
+            $table->string('no_npwp', 20)->nullable();
+            $table->string('no_bpjs_ket', 20)->nullable();
+            $table->string('no_akdhk', 20)->nullable();
+            $table->string('no_program_pensiun', 20)->nullable();
+            $table->string('no_program_askes', 20)->nullable();
+            $table->string('nama_bank')->nullable(); 
+
             $table->string('email')->unique();
             $table->string('agama')->nullable();
             $table->enum('jenis_kelamin', ['L', 'P']);
