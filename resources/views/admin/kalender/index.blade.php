@@ -87,9 +87,6 @@
     <script>
         var id_pegawai = {{ $id_pegawai }};
     </script>
-
     <script src="assets/pages/calendar-init.js"></script>
-    <script>
 
-    </script>
 @endsection

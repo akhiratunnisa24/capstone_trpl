@@ -20,8 +20,6 @@
     </div>
 </div>
 
-<!-- Start right Content here -->
-<!-- Start content -->
 <div class="row">
     <div class="col-lg-20">
         <ul class="nav nav-tabs navtab-bg">
@@ -165,10 +163,6 @@
     </div>
 </div>
 
-
-
-
-
 <!-- sweet alert -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
@@ -182,6 +176,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+@if(Session::has('pesan'))
+    <script>
+        swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            button:true,
+            button:"OK",
+        });
+    </script>
+@endif
 
 {{-- Direct halaman tambah data --}}
 <script type="text/javascript">

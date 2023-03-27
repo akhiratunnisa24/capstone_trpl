@@ -164,7 +164,7 @@
                                                 <a href="/rekapcutiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
                                                 <a href="/rekapcutipdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
                                                 
-                                                {{-- <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
+                                                {{-- <a class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                                     data-target="#Modals"> Tambah Cuti Karyawan</a> --}}
 
                                             </div>

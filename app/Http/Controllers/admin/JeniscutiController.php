@@ -48,7 +48,7 @@ class JeniscutiController extends Controller
         $jeniscuti = Jeniscuti::create($request->all());
         
         // dd($jeniscuti);
-        return redirect('/kategori_cuti');
+        return redirect('/kategori_cuti')->with('pesan','Data berhasil disimpan !');
 
     }
 

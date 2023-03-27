@@ -72,6 +72,28 @@
         </div>
     </div>
 
+    <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+    <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+    </script>
+    <!-- jangan lupa menambahkan script js sweet alert di bawah ini  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+
+    @if(Session::has('pesan'))
+        <script>
+            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
+
     <script>
         function hapus(id) {
             swal.fire({
@@ -96,13 +118,4 @@
             })
         }
     </script>
-
-
-    <?php if(@$_SESSION['sukses']){ ?>
-    <script>
-        swal.fire("Good job!", "<?php echo $_SESSION['sukses']; ?>", "success");
-    </script>
-    <!-- jangan lupa untuk menambahkan unset agar sweet alert tidak muncul lagi saat di refresh -->
-
-    <?php unset($_SESSION['sukses']); } ?>
 @endsection

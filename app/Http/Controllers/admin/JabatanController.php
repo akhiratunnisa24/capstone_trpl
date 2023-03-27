@@ -42,7 +42,7 @@ class JabatanController extends Controller
         $jabatan->nama_jabatan = $request->nama_jabatan;
         $jabatan->save();
     
-        return redirect('/level-jabatan');
+        return redirect('/jabatan')->with('pesan','Data berhasil disimpan !');
     }
     
     public function update(Request $request, $id)
@@ -60,7 +60,7 @@ class JabatanController extends Controller
         $jabatan = Jabatan::find($id);
         $jabatan->delete();
     
-        return redirect('/level-jabatan');
+        return redirect()->back();
     }
     
 }

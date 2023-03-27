@@ -11,7 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\ShiftController;
-use App\Http\Controllers\admin\SettingcutiController;
+use App\Http\Controllers\admin\UploadController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -33,7 +33,9 @@ use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\TidakMasukController;
 use App\Http\Controllers\admin\AlokasicutiController;
 use App\Http\Controllers\admin\FormPelamarController;
+use App\Http\Controllers\admin\JadwalkerjaController;
 use App\Http\Controllers\admin\ResignAdminController;
+use App\Http\Controllers\admin\SettingcutiController;
 use App\Http\Controllers\direktur\DirekturController;
 use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\admin\LeveljabatanController;
@@ -47,7 +49,6 @@ use App\Http\Controllers\admin\SettingorganisasiController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
 use App\Http\Controllers\karyawan\AbsensiKaryawanController;
 use App\Http\Controllers\admin\NotifMailRekruitmenController;
-use App\Http\Controllers\admin\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -299,6 +300,14 @@ Route::get('/shift', [ShiftController::class, 'index'])->name('shift.index');
 Route::post('/shift', [ShiftController::class, 'store'])->name('shift.store');
 Route::put('/shift/update/{id}', [ShiftController::class, 'update'])->name('shift.update');
 Route::get('/shift/delete/{id}', [ShiftController::class, 'destroy'])->name('shift.delete');
+
+//jadwal
+Route::get('/jadwal', [JadwalkerjaController::class, 'index'])->name('jadwal.index');
+Route::post('/getshift', [JadwalkerjaController::class, 'getShift'])->name('get.Shift');
+Route::post('/jadwal', [JadwalkerjaController::class, 'store'])->name('jadwal.store');
+Route::put('/jadwal/update/{id}', [JadwalkerjaController::class, 'update'])->name('jadwal.update');
+Route::get('/jadwal/delete/{id}', [JadwalkerjaController::class, 'destroy'])->name('jadwal.delete');
+
 
 //setting organisasi
 Route::get('/setting-organisasi', [SettingorganisasiController::class, 'index'])->name('organisasi.index');

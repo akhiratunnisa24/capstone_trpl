@@ -19,9 +19,11 @@ class LeveljabatanController extends Controller
     {
         $role = Auth::user()->role;
         if ($role == 1) {
-    
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $leveljabatan = LevelJabatan::orderBy('id', 'asc')->get();
+
+            $leveljabatan = LevelJabatan::all();
+            // dd($leveljabatan);
+
             return view('admin.datamaster.leveljabatan.index', compact('leveljabatan', 'row'));
         } else {
     
@@ -38,7 +40,7 @@ class LeveljabatanController extends Controller
         $leveljabatan->nama_level = $request->nama_level;
         $leveljabatan->save();
     
-        return redirect('/level-jabatan');
+        return redirect('/level-jabatan')->with('pesan','Data berhasil disimpan !');
     }
     
     public function update(Request $request, $id)
@@ -52,16 +54,13 @@ class LeveljabatanController extends Controller
     
     public function destroy($id)
     {
-        $role = Auth::user()->role;
-        if ($role == 1) 
-        {
-            $leveljabatan = LevelJabatan::find($id);
+        $leveljabatan = LevelJabatan::find($id);
+
+        if ($leveljabatan) {
             $leveljabatan->delete();
-    
-            return view('admin.datamaster.leveljabatan.index');
+            return redirect()->back()->with('pesan', 'Data berhasil dihapus');
         } else {
-        
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Data tidak ditemukan atau telah dihapus');
         }
     }
 }

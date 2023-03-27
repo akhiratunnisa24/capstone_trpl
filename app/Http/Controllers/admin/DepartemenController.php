@@ -51,7 +51,7 @@ class DepartemenController extends Controller
         $departemen->nama_departemen = $request->nama_departemen;
         $departemen->save();
 
-        return redirect('/departemen');
+        return redirect('/departemen')->with('pesan','Data berhasil disimpan !');
     }
 
     public function update(Request $request, $id)

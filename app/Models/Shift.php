@@ -10,4 +10,9 @@ class Shift extends Model
     use HasFactory;
     protected $table = 'shift';
     protected $fillable = ['id_pegawai','nama_shift','jam_masuk','jam_pulang'];
+
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class, 'id');
+    }
 }

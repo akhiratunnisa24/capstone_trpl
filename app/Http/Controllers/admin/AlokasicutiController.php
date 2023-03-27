@@ -151,7 +151,7 @@ class AlokasicutiController extends Controller
 
             // dd($alokasicuti);
             $alokasicuti->save();
-            return redirect()->back()->withInput();
+            return redirect()->back()->with('pesan','Data berhasil disimpan !');
         }else
         {
             $validate = $request->validate([
@@ -175,7 +175,8 @@ class AlokasicutiController extends Controller
 
             // dd($alokasicuti);
             $alokasicuti->save();
-            return redirect()->back()->withInput();
+            // return redirect()->back()->withInput();
+            return redirect()->back()->with('pesan','Data berhasil disimpan !');
         }
     }
 
