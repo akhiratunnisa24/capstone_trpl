@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Karyawan;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
-
-use App\Models\User;
-use App\Models\Role;
 
 
 class SettingController extends Controller
@@ -36,9 +37,10 @@ class SettingController extends Controller
         $role = Auth::user()->role;
         if ($role == 5 || $role == 1) {
 
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $user = User::all();
 
-            return view('admin.datamaster.user.settingUser', compact('user',));
+            return view('admin.datamaster.user.settingUser', compact('user','row'));
         } else {
 
             return redirect()->back();
@@ -72,11 +74,12 @@ class SettingController extends Controller
     public function settingrole(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 5 || $role == 1) {
-
+        if ($role == 5 || $role == 1) 
+        {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $user = Role::all();
 
-            return view('admin.datamaster.role.index', compact('user',));
+            return view('admin.datamaster.role.index', compact('user','row'));
         } else {
 
             return redirect()->back();
@@ -85,11 +88,12 @@ class SettingController extends Controller
     public function storerole(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 5 || $role == 1) {
+        if ($role == 5 || $role == 1) 
+        {
 
-        $user = new Role;
-        $user->role = $request->role;
-        $user->save();
+            $user = new Role;
+            $user->role = $request->role;
+            $user->save();
 
             return redirect()->back();
         } else {

@@ -68,7 +68,7 @@ class SettingorganisasiController extends Controller
 
         $settingorganisasi->update();
 
-        return redirect()->back();
+        return redirect('/setting-organisasi')->with('pesan','Data Organisasi berhasil diperbaharui !');
     }
     
 }

@@ -151,11 +151,13 @@ class CutiadminController extends Controller
 
     public function getAlokasiCuti(Request $request)
     {
+        dd($request->id_karyawan);
         try {
             $getAlokasiCuti = Alokasicuti::select('alokasicuti.*','jeniscuti.jenis_cuti')
                 ->join('jeniscuti','alokasicuti.id_jeniscuti','=','jeniscuti.id')
                 ->where('alokasicuti.id_jeniscuti','=',1)
                 ->where('alokasicuti.id_karyawan', '=', $request->id_karyawan)
+                ->where('alokasicuti.status','=',1)
                 ->first();
 
             if (!$getAlokasiCuti) {
@@ -216,7 +218,8 @@ class CutiadminController extends Controller
             'jatahcuti'   =>$durasi_baru,
         ];
         Mail::to($tujuan)->send(new CutiHRDNotification($data));
-        return redirect()->back()->withInput();
+        // return redirect()->back()->withInput();
+        return redirect('/permintaan_cuti')->with('pesan','Data berhasil disimpan !');
     }
 
     public function show($id)

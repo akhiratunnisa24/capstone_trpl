@@ -46,7 +46,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $data->name }}</td>
-                                    <td>{{ $data->role }}</td>
+                                    <td>{{ $data->roles->role}}</td>
                                     <td>
                                         @if ($data->status_akun = 1)
                                            <span class="badge badge-success">Aktif</span>
@@ -76,6 +76,14 @@
             </div>
         </div>
     </div>
+    @if(Session::has('pesan'))
+        <script>
+            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
 
   <script>
         function hapus_karyawan(id) {

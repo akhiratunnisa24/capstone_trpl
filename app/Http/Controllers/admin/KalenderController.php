@@ -146,7 +146,7 @@ class KalenderController extends Controller
          $settingharilibur ->keterangan = $request->input('keterangan');
          $settingharilibur ->save();
 
-        return redirect()->back();
+         return redirect('/setting-kalender')->with('pesan','Data berhasil disimpan !');
     }
 
     public function update(Request $request, $id)

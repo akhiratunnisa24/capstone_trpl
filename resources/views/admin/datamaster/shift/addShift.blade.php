@@ -13,7 +13,7 @@
                     @csrf
                     @method('POST')
                     <div class="form-group col-sm">
-                        <label for="nama_shift" class="col-form-label">Nama Jadwal</label>
+                        <label for="nama_shift" class="col-form-label">Nama Shift</label>
                         <input type="text" class="form-control" name="nama_shift" id="nama_shift" autocomplete="off"
                             placeholder="Masukkan Nama Shift" required>
                     </div>

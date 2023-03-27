@@ -38,7 +38,7 @@
                             <li><a href="/absensi-karyawan"><i
                                         class="mdi mdi-account-check"></i><span>Absensi</span></a>
                             </li>
-                            <li><a href="/history-absensi"><i class="mdi mdi-clipboard-check"></i><span>History
+                            <li><a href="/history-absensi"><i class="fa fa-history"></i><span>History
                                         Absensi</span></a></li>
                             <li><a href="/alokasi-cuti"><i class="mdi mdi-walk"></i><span>Alokasi Cuti</span></a> </li>
                             <li><a href="/cuti-karyawan"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a>
@@ -111,6 +111,7 @@
                             <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a></li>
                             {{-- <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>   --}}
                             <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
+                            <li><a href="jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li>
                             <li><a href="/metode_rekrutmen"><i class="fa fa-user-plus"></i><span></span>Rekruitmen</a></li>
                             <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li>
                             {{-- <li><a href="#"><i class="fa fa-institution (alias)"></i><span></span>Setting
@@ -162,7 +163,7 @@
                     <li><a href="/absensi-karyawan" class="waves-effect"><i
                                 class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
                     <li><a href="/history-absensi" class="waves-effect"><i
-                                class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a></li>
+                                class="fa fa-history"></i><span>History Absensi</span></a></li>
                     <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan
                                 Cuti &
                                 Izin</span></a></li>
@@ -190,7 +191,7 @@
                             <li><a href="/absensi-karyawan" class="waves-effect"><i
                                         class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
                             <li><a href="/history-absensi" class="waves-effect"><i
-                                        class="mdi mdi-clipboard-check"></i><span>History Absensi</span></a>
+                                        class="fa fa-history"></i><span>History Absensi</span></a>
                             </li>
                             <li><a href="/cuti-karyawan" class="waves-effect"><i
                                         class="mdi mdi-walk"></i><span>Ajukan

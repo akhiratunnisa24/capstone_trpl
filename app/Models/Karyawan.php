@@ -141,4 +141,9 @@ class Karyawan extends Model
         return $this->hasMany(Sisacuti::class, 'id');
     }
 
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class, 'id');
+    }
+
 }

@@ -27,7 +27,7 @@ class JenisizinController extends Controller
         $jenisizin = Jenisizin::create($request->all());
         
         // dd($jenisizin);
-        return redirect()->route('kategori.index', ['type'=>2]);
+        return redirect()->route('kategori.index', ['type'=>2])->with('pesan','Data berhasil disimpan !');
     }
 
     public function show($id)

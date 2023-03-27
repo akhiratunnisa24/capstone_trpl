@@ -47,7 +47,7 @@ class ShiftController extends Controller
         );
         // dd($shift);
         DB::table('shift')->insert($shift);
-        return redirect('/shift');
+        return redirect('/shift')->with('pesan','Data berhasil disimpan !');
     }
     
     public function update(Request $request, $id)

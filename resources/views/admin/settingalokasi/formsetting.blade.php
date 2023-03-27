@@ -94,24 +94,25 @@
 {{-- // Plugins Init js --}}
 {{-- <script src="assets/pages/form-advanced.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.2/select2.min.js"></script>
-<script type="text/javascript">
-    $(function()
-    {
-        $('#mode_employee').prop("hidden", false);
-        $('#mode_employees').prop("hidden",false);
-        $('#cutibersama').prop("hidden", false);
+<script>
+    $(document).ready(function() {
+        // Set form awal untuk hidden
+        $('#mode_employee').prop("hidden", true);
+        $('#mode_employees').prop("hidden", true);
+        $('#cutibersama').prop("hidden", true);
 
-        $('#jeniscutis').on('change', function(a)
-        {
-            var idJeniscuti = $('#id_jeniscutis').val();
-            console.log(idJeniscuti);
-            if(a.target.value == 1)
+        //true hilang
+        //false muncul
+
+        $('#id_jeniscutis').on('change', function() {
+            var id_jeniscuti = $(this).val();
+            if(id_jeniscuti == 1) 
             {
                 $('#mode_employee').prop("hidden", true);
                 $('#mode_employees').prop("hidden", false);
                 $('#cutibersama').prop("hidden", false);
-            }else
-            {
+
+            } else {
                 $('#mode_employee').prop("hidden", false);
                 $('#mode_employees').prop("hidden", true);
                 $('#cutibersama').prop("hidden", true);
@@ -119,137 +120,6 @@
         });
     });
 </script>
-
-{{-- <script type="text/javascript">
-    $(function()
-        {
-            $('#mode_departemen').prop("hidden", true);
-            $('#mode_employee').prop("hidden", true);
-            $('#mode_employees').prop("hidden", true);
-            $('#lamakerja').prop("hidden", true);
-
-            $('#jeniscutis').on('change', function(e)
-            {
-                var id = $(this).val();
-                console.log(id);
-                if(e.target.value== 1)
-                {
-                    $('#mode_departemen').prop("hidden", true);
-                    $('#mode_employee').prop("hidden", true);
-                    $('#mode_employees').prop("hidden", false);
-                    $('#lamakerja').prop("hidden", false);
-
-                    $('#modalokasi').on('change', function(a)
-                    {
-                        if(a.target.value== 'Berdasarkan Departemen')
-                        {
-                            $('#mode_departemen').prop("hidden", false);
-                            $('#mode_employee').prop("hidden", true);
-                            $('#mode_employees').prop("hidden", false);
-                            $('#lamakerja').prop("hidden", false);
-                        }
-                        if(a.target.value== 'Berdasarkan Karyawan')
-                        {
-                            $('#mode_departemen').prop("hidden", true);
-                            $('#mode_employee').prop("hidden", true);
-                            $('#mode_employees').prop("hidden", false);
-                            $('#lamakerja').prop("hidden", false);
-
-                            $('#mode_employees').on('change', function(b)
-                            {
-                                if(b.target.value== 'Lama Kerja')
-                                {
-                                    $('#mode_departemen').prop("hidden", true);
-                                    $('#mode_employee').prop("hidden", true);
-                                    $('#lamakerja').prop("hidden", false);
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    );
-        
-            // $('#modalokasi').on('change', function(a)
-            // {
-            //     if(a.target.value== 'Berdasarkan Departemen')
-            //     {
-            //         $('#mode_departemen').prop("hidden", false);
-            //         $('#mode_employee').prop("hidden", true);
-            //         $('#lamakerja').prop("hidden", true);
-            //     }
-            //     if(a.target.value== 'Berdasarkan Karyawan')
-            //     {
-            //         $('#mode_departemen').prop("hidden", true);
-            //         $('#mode_employee').prop("hidden", false);
-            //         $('#lamakerja').prop("hidden", true);
-
-                    // $('#mode_employee').on('change', function(b)
-                    // {
-                    //     if(b.target.value== 'Lama Kerja')
-                    //     {
-                    //         $('#mode_departemen').prop("hidden", true);
-                    //         $('#mode_employee').prop("hidden",false);
-                    //         $('#lamakerja').prop("hidden", false);
-                    //     }
-                        
-                    // });
-            //     }
-            // });
-
-    //     }
-    // );
-       
-        // $(document).ready(function () 
-            $("#mode_karyawan").select2();
-        // );
-</script> --}}
-
-{{-- <script type="text/javascript">
-    $(function()
-        {
-            $('#mode_departemen').prop("hidden", true);
-            $('#mode_employee').prop("hidden", true);
-            $('#mode_employees').prop("hidden", true);
-            $('#lamakerja').prop("hidden", true);
-        
-            $('#modalokasi').on('change', function(a)
-            {
-                if(a.target.value== 'Berdasarkan Departemen')
-                {
-                    $('#mode_departemen').prop("hidden", false);
-                    $('#mode_employee').prop("hidden", true);
-                    $('#lamakerja').prop("hidden", true);  
-                }
-                if(a.target.value== 'Berdasarkan Karyawan')
-                {
-                    $('#mode_departemen').prop("hidden", true);
-                    $('#mode_employee').prop("hidden", false);
-                    $('#lamakerja').prop("hidden", true);
-
-                    $('#mode_employee').on('change', function(b)
-                    {
-                        var selectedValues = $(this).val();
-                        if (selectedValues.includes('Lama Kerja')) {
-                            $('#mode_departemen').prop("hidden", true);
-                            $('#lamakerja').prop("hidden", false);
-                        }
-                        // if(b.target.value== 'Lama Kerja')
-                        // {
-                        //     $('#mode_departemen').prop("hidden", true);
-                        //     $('#lamakerja').prop("hidden", false);
-                        // }
-                    });
-                }
-            });
-        });
-       
-        // $(document).ready(function () 
-            $("#mode_karyawan").select2();
-        // );
-</script> --}}
-
 
 <script>
     jQuery('option').mousedown(function(e) {

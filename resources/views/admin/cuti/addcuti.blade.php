@@ -25,7 +25,7 @@
                         @method('POST')
                         <div class="form-group col-sm">
                             <label for="id_karyawan" class="col-form-label">Nama</label>
-                            <select name="id_karyawan" id="id_karyawan" class="form-control selectpicker" data-live-search="true" required>
+                            <select name="id_karyawan" id="id_karyawan" class="form-control" required>
                                 <option>-- Pilih Karyawan --</option>
                                 @foreach ($karyawan as $data)
                                         <option value="{{ $data->id}}">
@@ -36,7 +36,7 @@
                         </div>
                         <div class="form-group col-sm">
                             <label for="jeniscuti" class="col-form-label">Kategori Cuti</label>
-                            <input type="text" class="form-control" name="jeniscuti" id="jeniscuti" disabled>
+                            <input type="text" class="form-control" name="jeniscuti" id="jeniscuti" readonly>
                         </div>
                         <div class="form-group col-sm">
                             <input type="hidden" class="form-control" name="id_jeniscuti" id="id_jeniscutis">
@@ -118,6 +118,7 @@
         var durasi;
         $('#id_karyawan').on('change',function(e){
             var id_karyawan = e.target.value;
+            console.log(id_karyawan);
             $.ajaxSetup({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
                             .attr('content')
@@ -142,6 +143,36 @@
             });
         });
     </script>
+
+    {{-- <script  type="text/javascript">
+        var durasi;
+        $('#id_karyawan').on('change',function(e){
+            var id_karyawan = e.target.value;
+            console.log(id_karyawan);
+            $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                            .attr('content')
+                        }
+            });
+            $.ajax({
+                type:"POST",
+                url: '{{route('get.Alokasicuti')}}',
+                data: {'id_karyawan':id_karyawan},
+                success:function(data)
+                {
+                    $('#jeniscuti').val(data.jenis_cuti);
+                        $('#id_jeniscutis').val(data.id_jeniscuti);
+                        $('#id_alokasicuti').val(data.id);
+                        $('#id_settingalokasicuti').val(data.id_settingalokasi);
+                        $('#adurasi').val(data.durasi);
+                        $('#aktifdari').val(data.aktif_dari);
+                        $('#sampaitanggal').val(data.sampai);
+                        
+                        durasi     = data.durasi;
+                }
+            });
+        });
+    </script> --}}
 
     <script type="text/javascript">
         function jumlahcutis()
