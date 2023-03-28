@@ -10,8 +10,16 @@
                     @csrf
                     @method('POST')
                     <div class="form-group col-sm">
+                        <label class="col-form-label">Tipe Jadwal</label>
+                        <select name="tipe_jadwal" id="tipe_jadwal" class="form-control" required>
+                            <option>-- Pilih Tipe Jadwal --</option>
+                            <option value="harian">Harian</option>
+                            <option value="bulanan">Bulanan</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm" id="pegawai">
                         <label for="id_pegawai" class="col-form-label">Karyawan</label>
-                        <select name="id_pegawai" id="id_pegawai" class="form-control" required>
+                        <select name="id_pegawai" id="id_pegawai" class="form-control">
                             <option>-- Pilih Karyawan --</option>
                             @foreach ($karyawan as $data)
                                 <option value="{{ $data->id }}">
@@ -31,11 +39,52 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group col-sm">
+                    <div class="form-group col-sm" id="tanggal">
                         <label for="tanggal" class="form-label">Tanggal</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclosep" name="tanggal"  autocomplete="off" rows="10" required>
+                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclosep" name="tanggal"  autocomplete="off" rows="10">
                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                        </div>
+                    </div>
+                    {{-- <div class="form-group" id="date_range">
+                        <div class="mb-3">
+                            <label class="form-label">Tanggal</label>
+                            <div>
+                                <div class="input-daterange input-group" id="date-range5">
+                                    <input type="text" class="form-control" name="tgl_mulai" id="tgl_mulai" autocomplete="off"/>
+                                    <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                    <input type="text" class="form-control" name="tgl_selesai" id="tgl_selesai" autocomplete="off"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <div class="row" id="date_range">
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="m-t-10">
+                               
+                                    <div class="form-group">
+                                        <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose42" name="tgl_mulai"  autocomplete="off" rows="10">
+                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                       
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="m-t-20">
+                               
+                                    <div class="form-group">
+                                        <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose43" name="tgl_selesai"  autocomplete="off" rows="10">
+                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                        </div>
+                                    </div>
+                               
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -70,6 +119,33 @@
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/pages/form-advanced.js"></script>
 <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+<script type="text/javascript">
+    $(function()
+        {
+            $('#pegawai').prop("hidden", true);
+            $('#tanggal').prop("hidden", true);
+            $('#date_range').prop("hidden", true);
+
+            $('#tipe_jadwal').on('change', function(a)
+            {
+                if(a.target.value== 'harian')
+                {
+                    $('#pegawai').prop("hidden", false);
+                    $('#tanggal').prop("hidden", false);  
+                    $('#date_range').prop("hidden", true);
+                }
+                if(a.target.value== 'bulanan')
+                {
+                    $('#pegawai').prop("hidden", true);
+                    $('#tanggal').prop("hidden", true);
+                    $('#date_range').prop("hidden", false);
+                }
+            });
+        }
+    );  
+</script>
+
 
 <script  type="text/javascript">
     $('#id_shift').on('change',function(e){

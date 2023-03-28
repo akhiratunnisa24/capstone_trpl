@@ -197,7 +197,7 @@
                                     @method('post')
                                     <div class="modal-body">
                                         {{-- <table class="table table-bordered table-striped"> --}}
-                                        <input type="text" name="nomor_index" id="nomor_index_update" value="">
+                                        <input type="hidden" name="nomor_index" id="nomor_index_update" value="">
                                         <div class="col-md-12">
                                             <div class="row">
                                                         <div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use PDF;
 use Carbon\Carbon;
+use App\Models\Jadwal;
 use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Tidakmasuk;
@@ -86,17 +87,23 @@ class AbsensiController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         // $absensi=Absensi::where('id_user',Auth::user()->id)
         $absensi=Absensi::where('id_karyawan',Auth::user()->id_pegawai)
-        ->whereDate('tanggal', Carbon::now()->format("Y-m-d"))
-        ->first();//untuk memunculkan data absen pagi dengan pengecekan tanggal
+            ->whereDate('tanggal', Carbon::now()->format("Y-m-d"))
+            ->first();//untuk memunculkan data absen pagi dengan pengecekan tanggal
+
+        $jadwalkaryawan = Jadwal::join('shift','jadwal.id_shift','shift.id')
+            ->where('jadwal.id_pegawai',Auth::user()->id_pegawai)
+            ->whereDate('jadwal.tanggal', Carbon::now()->format("Y-m-d"))
+            ->select('jadwal.*','shift.id as idshift','shift.nama_shift')
+            ->first();
 
         $tidakmasuk=Tidakmasuk::where('id_pegawai',Auth::user()->id_pegawai)
-        ->whereDate('tanggal', Carbon::now()->format("Y-m-d"))
-        ->first();//untuk memunculkan data absen pagi dengan pengecekan tanggal
+            ->whereDate('tanggal', Carbon::now()->format("Y-m-d"))
+            ->first();//untuk memunculkan data absen pagi dengan pengecekan tanggal
         $status = Tidakmasuk::where('id_pegawai', Auth::user()->id_pegawai)->first();
 
         // dd($status);
         // $jk =  Carbon::now()->format("H:i:s");
-        return view('karyawan.absensi.absensi_karyawan',compact('absensi','row','status'));
+        return view('karyawan.absensi.absensi_karyawan',compact('absensi','row','status','jadwalkaryawan'));
     }
 
     public function store(Request $request)
@@ -107,12 +114,19 @@ class AbsensiController extends Controller
         //$depart = Karyawan::select('divisi')->where('id','=', Auth::user()->id_pegawai)->first();
         $depart = DB::table('karyawan')->join('departemen', 'karyawan.divisi','=','departemen.id')
                   ->where('karyawan.id','=',Auth::user()->id_pegawai)->first();
+        
+        $jadwalkaryawan = Jadwal::join('shift','jadwal.id_shift','shift.id')
+            ->where('jadwal.id_pegawai',Auth::user()->id_pegawai)
+            ->whereDate('jadwal.tanggal', Carbon::now()->format("Y-m-d"))
+            ->select('jadwal.*','shift.id as idshift','shift.nama_shift')
+            ->first();
 
         // dd($depart);
 
         //mencari nilai keterlambatan karyawan
         // $jdm = '08:00:00';
-        $jdm = Carbon::createFromFormat('H:i:s', '08:00:00');
+        // $jdm = Carbon::createFromFormat('H:i:s', '08:00:00');
+        $jdm= $jadwalkaryawan->jadwal_masuk;
         $jm = Carbon::now()->format("H:i:s");
         $jmas= Carbon::parse($jm);
         $tl= $jmas->diff($jdm)->format("%H:%I:%S");
@@ -122,9 +136,10 @@ class AbsensiController extends Controller
         $absensi->id_karyawan  = $karyawan;
         $absensi->nik          = null;
         $absensi->tanggal      = Carbon::now()->format("Y-m-d");
-        $absensi->shift        = 'NORMAL';
+        $absensi->shift        = $jadwalkaryawan->nama_shift;
         $absensi->jadwal_masuk = $jdm;
-        $absensi->jadwal_pulang= null;
+        // $absensi->jadwal_masuk = $jadwalkaryawan->jadwal_masuk;
+        $absensi->jadwal_pulang= $jadwalkaryawan->jadwal_pulang;
         $absensi->jam_masuk    = $jmas;
         $absensi->jam_keluar   = null;
         $absensi->normal       = '1';
@@ -154,13 +169,22 @@ class AbsensiController extends Controller
     {
         $absensi = Absensi::where('id',$id)->first(); //mendapatkan data absensi berdasarkan id masing2 user
         //mencari jumlah kehadiran
+        $jadwalkaryawan = Jadwal::join('shift','jadwal.id_shift','shift.id')
+            ->where('jadwal.id_pegawai',Auth::user()->id_pegawai)
+            ->whereDate('jadwal.tanggal', Carbon::now()->format("Y-m-d"))
+            ->select('jadwal.*','shift.id as idshift','shift.nama_shift')
+            ->first();
+
         $jk = Carbon::now()->format("H:i:s"); //mendapatkan jam_keluar pada saat ini
         $aw=Carbon::parse($absensi->jam_masuk);//mendapatkan data jam masuk
         $ak=Carbon::parse($jk);//mendapatkan data jam keluar yang disimpan pada variabel $jk
         $diff=$aw->diff($ak)->format("%H:%I:%S");//mencari jumlah jam kerja pegawai pada hari itu yang nantinya disimpan ke dalam database
 
+       
+
         //mencari value apakah pegawai pulang cepat
-        $jdp = "17:00:00";
+        // $jdp = "17:00:00";
+        $jdp = $jadwalkaryawan->jadwal_pulang;
         $jdplg= Carbon::parse($jdp);
         $jp = $ak;//jadwal pulang sama nilainya dengan $ak
         $plcpt= $jdplg->diff($jp)->format("%H:%I:%S");//value untuk pulang cepat

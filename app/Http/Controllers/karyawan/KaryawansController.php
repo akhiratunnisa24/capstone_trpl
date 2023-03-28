@@ -273,14 +273,17 @@ class KaryawansController extends Controller
         $role = Auth::user()->role;
         if($role == 1) 
         {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
             $karyawan    = $request->session()->get('karyawan');
             $datakeluarga = json_decode(session('datakeluarga', '[]'), true);
             // dd($datakeluarga);
             if(empty($datakeluarga)) 
             {
                 $datakeluarga = [];
+                // dd($datakeluarga);
             }
-            return view('admin.karyawan.createDakel',compact('karyawan','datakeluarga'));
+            return view('admin.karyawan.createDakel',compact('karyawan','datakeluarga','row'));
         } else 
         {
             return redirect()->back();
@@ -293,16 +296,16 @@ class KaryawansController extends Controller
        
         $datakeluargaBaru = [
             'status_pernikahan' => $request->status_pernikahan,
-            'jumlah_anak' => $request->jumlahAnak,
             'nama' => $request->namaPasangan,
             'jenis_kelamin' => $request->jenis_kelaminKeluarga,
             'tgllahir' => \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d'),
             'tempatlahir' => $request->tempatlahirKeluarga,
-            // 'alamat' => $request->alamatPasangan,
             'pendidikan_terakhir' => $request->pendidikan_terakhirPasangan,
             'pekerjaan' => $request->pekerjaanPasangan,
             'hubungan' => $request->hubungankeluarga
         ];
+        // 'jumlah_anak' => $request->jumlahAnak,
+        // 'alamat' => $request->alamatPasangan,
         $datakeluarga[] = $datakeluargaBaru;    
         session()->put('datakeluarga', json_encode($datakeluarga));
         return redirect()->back();
@@ -316,7 +319,7 @@ class KaryawansController extends Controller
         $index = $request->nomor_index;
         // dd($datakeluarga,$index);
         $datakeluarga[$index]['status_pernikahan'] = $request->status_pernikahan;
-        $datakeluarga[$index]['jumlah_anak'] = $request->jumlahAnak;
+        // $datakeluarga[$index]['jumlah_anak'] = $request->jumlahAnak;
         $datakeluarga[$index]['nama'] = $request->namaPasangan;
         $datakeluarga[$index]['jenis_kelamin'] = $request->jenis_kelaminKeluarga;
         $datakeluarga[$index]['tgllahir'] = \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d');
@@ -347,6 +350,8 @@ class KaryawansController extends Controller
         $role = Auth::user()->role;
         if($role == 1) 
         {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
             $kontakdarurat = json_decode(session('kontakdarurat', '[]'), true);
@@ -354,7 +359,7 @@ class KaryawansController extends Controller
             {    
                 $kontakdarurat = [];
             }
-            return view('admin.karyawan.createKonrat',compact('karyawan','datakeluarga','kontakdarurat'));
+            return view('admin.karyawan.createKonrat',compact('karyawan','datakeluarga','kontakdarurat','row'));
         } else {
 
             return redirect()->back();
@@ -398,6 +403,8 @@ class KaryawansController extends Controller
         $role = Auth::user()->role;
         if ($role == 1) 
         {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
             $kontakdarurat= $request->session()->get('kontakdarurat');
@@ -406,7 +413,7 @@ class KaryawansController extends Controller
             {
                $pendidikan = [];
             }
-            return view('admin.karyawan.createPendidikan',compact('karyawan','datakeluarga','kontakdarurat','pendidikan'));
+            return view('admin.karyawan.createPendidikan',compact('karyawan','datakeluarga','kontakdarurat','pendidikan','row'));
         }else 
         {
             return redirect()->back();
@@ -464,6 +471,8 @@ class KaryawansController extends Controller
         $role = Auth::user()->role;
         if ($role == 1) 
         {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
             $kontakdarurat= $request->session()->get('kontakdarurat');
@@ -474,7 +483,7 @@ class KaryawansController extends Controller
             {
                 $pekerjaan = [];
             }
-            return view('admin.karyawan.createPekerjaan',compact('pekerjaan','karyawan','datakeluarga','kontakdarurat','pendidikan'));
+            return view('admin.karyawan.createPekerjaan',compact('pekerjaan','karyawan','datakeluarga','kontakdarurat','pendidikan','row'));
         } else 
         {
             return redirect()->back();
@@ -537,8 +546,9 @@ class KaryawansController extends Controller
     public function createorganisasi(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1) {
-
+        if ($role == 1) 
+        {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
             $kontakdarurat = $request->session()->get('kontakdarurat');
@@ -551,7 +561,7 @@ class KaryawansController extends Controller
                 $organisasi = [];
             }
 
-            return view('admin.karyawan.createOrganisasi', compact('organisasi','pekerjaan', 'karyawan', 'datakeluarga', 'kontakdarurat', 'pendidikan'));
+            return view('admin.karyawan.createOrganisasi', compact('organisasi','pekerjaan', 'karyawan', 'datakeluarga', 'kontakdarurat', 'pendidikan','row'));
         } else {
             return redirect()->back();
         }
@@ -604,7 +614,7 @@ class KaryawansController extends Controller
     {
         $role = Auth::user()->role;
         if ($role == 1) {
-
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
             $kontakdarurat = $request->session()->get('kontakdarurat');
@@ -618,7 +628,7 @@ class KaryawansController extends Controller
                 $prestasi = [];
             }
 
-            return view('admin.karyawan.createPrestasi', compact('prestasi','organisasi', 'pekerjaan', 'karyawan', 'datakeluarga', 'kontakdarurat', 'pendidikan'));
+            return view('admin.karyawan.createPrestasi', compact('prestasi','organisasi', 'pekerjaan', 'karyawan', 'datakeluarga', 'kontakdarurat', 'pendidikan','row'));
         } else {
             return redirect()->back();
         }
@@ -634,6 +644,7 @@ class KaryawansController extends Controller
             'nama_instansi' => $request->namaInstansi,
             'alamat'        => $request->alamatInstansi,
             'no_surat'      => $request->noSurat,
+            'tanggal_surat' => $request->tgl_surat,
         ];
 
         $prestasi[] = $prestasiBaru;
@@ -652,6 +663,7 @@ class KaryawansController extends Controller
         $prestasi[$index]['nama_instansi']    = $request->namaInstansi;
         $prestasi[$index]['alamat']           = $request->alamatInstansi;
         $prestasi[$index]['no_surat']         = $request->noSurat;
+        $prestasi[$index]['tanggal_surat']    = $request->tgl_surat;
 
         session()->put('prestasi', json_encode($prestasi));
 
@@ -664,6 +676,7 @@ class KaryawansController extends Controller
 
     public function previewData(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $karyawan = $request->session()->get('karyawan');
         $atasan_pertama_nama = $karyawan->atasan_pertamaa->nama;
         $atasan_kedua_nama = $karyawan->atasan_kedua;
@@ -680,7 +693,7 @@ class KaryawansController extends Controller
         $organisasi = json_decode(session('organisasi', '[]'), true);
         $prestasi    = json_decode(session('prestasi', '[]'), true);
 
-        return view('admin.karyawan.preview',compact('karyawan','datakeluarga','kontakdarurat','pendidikan','pekerjaan','atasan_pertama_nama','atasan_kedua_nama', 'organisasi', 'prestasi'));
+        return view('admin.karyawan.preview',compact('karyawan','datakeluarga','kontakdarurat','pendidikan','pekerjaan','atasan_pertama_nama','atasan_kedua_nama', 'organisasi', 'prestasi','row'));
     }
 
     public function storetoDatabase(Request $request)

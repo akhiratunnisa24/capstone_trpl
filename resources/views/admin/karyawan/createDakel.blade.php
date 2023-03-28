@@ -156,8 +156,8 @@
                                                                 <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
                                                                 <select class="form-control selectpicker" name="jenis_kelaminKeluarga" required>
                                                                     <option value="">Pilih Jenis Kelamin</option>
-                                                                    <option value="L">Laki-Laki</option>
-                                                                    <option value="P">Perempuan</option>
+                                                                    <option value="Laki-Laki">Laki-Laki</option>
+                                                                    <option value="Perempuan">Perempuan</option>
                                                                 </select>
                                                             </div>
 
@@ -239,25 +239,6 @@
                                                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-10 m-t-10">
                                                                 <label class="text-white">B. DATA KELUARGA *) </label>
                                                             </div>
-                                                           
-                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-                                                                    <input type="text" id="nama" name="namaPasangan" class="form-control" autocomplete="off" placeholder="Masukkan Nama" required>
-                                                            
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
-                                                                    <div class="input-group">
-                                                                        <input type="text" class="form-control" placeholder="yyyy/mm/dd"
-                                                                            id="datepicker-autoclose30" autocomplete="off" name="tgllahirPasangan" rows="10" required></input><br>
-                                                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                             <div class="form-group" style="margin-left:10px;margin-right:10px;">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Hubungan</label>
@@ -277,11 +258,36 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
+                                                                    <input type="text" id="nama" name="namaPasangan" class="form-control" autocomplete="off" placeholder="Masukkan Nama" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
+                                                                <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
+                                                                <select class="form-control selectpicker"id="jeniskelamin" name="jenis_kelaminKeluarga" required>
+                                                                    <option value="">Pilih Jenis Kelamin</option>
+                                                                    <option value="Laki-Laki">Laki-Laki</option>
+                                                                    <option value="Perempuan">Perempuan</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="form-group" style="margin-left:10px;margin-right:10px;">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control" placeholder="yyyy/mm/dd"
+                                                                            id="datepicker-autoclose30" autocomplete="off" name="tgllahirPasangan" rows="10" required></input><br>
+                                                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                                    <input class="form-control" id="alamat" name="alamatPasangan" autocomplete="off" rows="9" placeholder="Masukkan Alamat"required></input>
+                                                                    <label for="exampleInputEmail1" class="form-label">Kota Kelahiran</label>
+                                                                    <input class="form-control" id="tempatlahir" name="tempatlahirKeluarga" autocomplete="off" rows="9" placeholder="Masukkan Alamat"required></input>
                                                                 </div>
                                                             </div>
 
@@ -354,7 +360,9 @@
                 var data = {!! json_encode($datakeluarga) !!}[nomorIndex];
                 // Isi data ke dalam form
                     $('#nama').val(data.nama);
+                    $('#jeniskelamin').val(data.jenis_kelamin);
                     $('#datepicker-autoclose30').val(data.tgllahir);
+                    $('#tempatlahir').val(data.tempatlahir);
                     $('#hubungankeluargaa').val(data.hubungan);
                     $('#alamat').val(data.alamat);
                     $('#pekerjaan').val(data.pekerjaan);
@@ -372,6 +380,14 @@
                     var select = document.getElementById("pendidikan_terakhir");
                     for (var i = 0; i < select.options.length; i++) {
                         if (select.options[i].value == data.pendidikan_terakhir) {
+                            select.options[i].selected = true;
+                            break;
+                        }
+                    }
+                    // Set opsi yang dipilih pada dropdown select option
+                    var select = document.getElementById("jeniskelamin");
+                    for (var i = 0; i < select.options.length; i++) {
+                        if (select.options[i].value == data.jeniskelamin) {
                             select.options[i].selected = true;
                             break;
                         }

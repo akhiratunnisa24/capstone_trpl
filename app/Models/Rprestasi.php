@@ -18,5 +18,6 @@ class Rprestasi extends Model
         'nama_instansi',
         'alamat',
         'no_surat',
+        'tanggal_surat',
     ];
 }
