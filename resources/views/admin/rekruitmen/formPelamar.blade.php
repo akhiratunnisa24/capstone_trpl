@@ -99,12 +99,12 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Tanggal Lahir</label>
                                                     <div class="input-group">
-                                                        <input  type="date"
+                                                        <input id="datepicker-autoclose34" type="text"
                                                             class="form-control" placeholder="yyyy/mm/dd"
                                                             name="tgllahirPelamar" autocomplete="off" rows="10" value="{{ $pelamar->tgllahir ?? '' }}"
                                                             required><br>
-                                                        {{-- <span class="input-group-addon bg-custom b-0"><i
-                                                                class="mdi mdi-calendar text-white"></i></span> --}}
+                                                        <span class="input-group-addon bg-custom b-0"><i
+                                                                class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,7 +137,7 @@
                                                         <option value="A" @if($pelamar->gol_darah == "A") selected @endif >A</option>
                                                         <option value="B" @if($pelamar->gol_darah == "B") selected @endif>B</option>
                                                         <option value="AB" @if($pelamar->gol_darah == "AB") selected @endif>AB</option>
-                                                        <option value="O"> @if($pelamar->gol_darah == "O") selected @endif>O</option>
+                                                        <option value="O" @if($pelamar->gol_darah == "O") selected @endif>O</option>
                                                     </select>
                                                 </div>
                                             </div>

@@ -88,6 +88,7 @@
                                         @method('post')
                                         <div class="modal-body">
                                             <table class="table table-bordered table-striped">
+                                                
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div>
@@ -116,12 +117,12 @@
                                                                     <div>
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range">
-                                                                            <input type="date" class="form-control"
-                                                                                name="tglmulai"   />
+                                                                            <input id="datepicker-autoclose36" type="text" class="form-control"
+                                                                                name="tglmulai" autocomplete="off"  />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="date" class="form-control"
-                                                                                name="tglselesai"  />
+                                                                            <input id="datepicker-autoclose39" type="text" class="form-control"
+                                                                                name="tglselesai" autocomplete="off" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -217,6 +218,10 @@
                                                                 <label class="text-white m-b-10">E. RIWAYAT PEKERJAAN</label>
                                                             </div>
                                                         </div>
+                                                        
+                                                        {{-- Nomor index sebegai ID --}}
+                                        <input type="hidden" name="nomor_index"
+                                                                    id="nomor_index_update" value="">
                                                         <div class="col-md-6 m-t-10">
                                                             <div class="form-group">
                                                                 <div class="mb-3">
@@ -237,12 +242,12 @@
                                                                     <label class="form-label">Lama Kerja</label>
                                                                     <div>
                                                                         <div class="input-daterange input-group">
-                                                                            <input type="date" class="form-control"
-                                                                                name="tglmulai" id="tglmulai"  />
+                                                                            <input id="datepicker-autoclose33" type="text" class="form-control"
+                                                                                name="tglmulai"/>
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="date" class="form-control"
-                                                                                name="tglselesai" id="tglselesai"  />
+                                                                            <input id="datepicker-autoclose34" type="text" class="form-control"
+                                                                                name="tglselesai"/>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -361,10 +366,15 @@
                     $('#levelRpekerjaan').val(data.level);
                     $('#namaAtasan').val(data.nama_atasan);
                     $('#namaDirektur').val(data.nama_direktur);
-                    $('#tglmulai').val(data.tgl_mulai);
-                    $('#tglselesai').val(data.tgl_selesai);
+                    $('#datepicker-autoclose33').val(data.tgl_mulai);
+                    $('#datepicker-autoclose34').val(data.tgl_selesai);
                     $('#alasanBerhenti').val(data.alasan_berhenti);
                     $('#gajih').val(data.gaji);
             });
         });
     </script>
+
+    <!-- datepicker  -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/pages/form-advanced.js"></script>

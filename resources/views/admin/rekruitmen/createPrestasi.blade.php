@@ -1,26 +1,24 @@
-<head>
+  <head>
+        <!-- Datapicker -->
+        <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
-    <!-- Datapicker -->
-    <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
+        <meta charset="utf-8" />
+        <title>HRMS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta content="Admin Dashboard" name="description" />
+        <meta content="ThemeDesign" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <meta charset="utf-8" />
-    <title>HRMS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta content="Admin Dashboard" name="description" />
-    <meta content="ThemeDesign" name="author" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <link rel="shortcut icon" href="{{ asset('') }}assets/images/favicon2.png">
 
-    <link rel="shortcut icon" href="{{ asset('') }}assets/images/favicon2.png">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+    </head>
 
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
-
-</head>
-
-<div class="container">
+    <div class="container">
         <!-- Page-Title -->
         <div class="row" style="margin-top: 30px">
             <div class="col-sm-12">
@@ -34,7 +32,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-secondary" id="riwayatorganisasi">
+            <div class="panel panel-secondary" id="riwayatprestasi">
                 <div class="panel-heading"></div>
                 <div class="content">
                     <div class="container">
@@ -46,28 +44,25 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Organisasi</th>
+                                            <th>Perihal / Keterangan</th>
+                                            <th>Instansi Pemberi</th>
                                             <th>Alamat</th>
-                                            <th>Tanggal Masuk</th>
-                                            <th>Tanggal Keluar</th>
-                                            <th>Jabatan</th>
-                                            <th>Nomor SK</th>
+                                            <th>No. Surat</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($organisasi as $key => $pek)
+                                        @foreach ($prestasi as $key => $pres)
                                             <tr>
                                                 <td id="key">{{ $key }}</td>
-                                                <td>{{ $pek['nama_organisasi'] }}</td>
-                                                <td>{{ $pek['alamat'] }}</td>
-                                                <td>{{ $pek['tgl_mulai'] }}</td>
-                                                <td>{{ $pek['tgl_selesai'] }}</td>
-                                                <td>{{ $pek['jabatan'] }}</td>
-                                                <td>{{ $pek['no_sk'] }}</td>
+                                                <td>{{ $pres['keterangan'] }}</td>
+                                                <td>{{ $pres['nama_instansi'] }}</td>
+                                                <td>{{ $pres['alamat'] }}</td>
+                                                <td>{{ $pres['no_surat'] }}</td>
                                                 <td class="text-center">
                                                     <div class="row d-grid gap-2" role="group" aria-label="Basic example">
-                                                        <a href="#formUpdateOrganisasi" class="btn btn-sm btn-info"
-                                                            id="editOrganisasi" data-key="{{ $key }}">
+                                                        <a href="#formUpdatePrestasi" class="btn btn-sm btn-info"
+                                                            id="editPrestasi" data-key="{{ $key }}">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
                                                         {{-- /delete-pekerjaan/{{$key}} --}}
@@ -85,7 +80,7 @@
                                         @endforeach
                                     </tbody>
                                 </table><br>
-                                <form action="/store_organisasi" id="formCreateOrganisasi" method="POST">
+                                <form action="/store_prestasi" id="formCreatePrestasi" method="POST">
                                     <div class="control-group after-add-more">
                                         @csrf
                                         @method('post')
@@ -96,44 +91,29 @@
                                                         <div>
                                                             <div
                                                                 class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                                <label class="text-white m-b-10">F. RIWAYAT
-                                                                    ORGANISASI</label>
+                                                                <label class="text-white m-b-10">G. RIWAYAT
+                                                                    PRESTASI</label>
                                                             </div>
                                                         </div>
+
                                                         <div class="col-md-6 m-t-10">
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Nama Organisasi</label>
-                                                                    <input type="text" name="namaOrganisasi"
+                                                                    <label class="form-label">Perihal / Keterangan</label>
+                                                                    <input type="text" name="keterangan"
                                                                         class="form-control"
-                                                                        placeholder="Masukkan Nama Organisasi"
+                                                                        placeholder="Masukkan Keterangan"
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Alamat </label>
-                                                                    <input type="text" name="alamatOrganisasi"
-                                                                        class="form-control" id="alamat"
-                                                                        placeholder="Masukkan Alamat">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Lama Bertugas</label>
-                                                                    <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range">
-                                                                            <input id="datepicker-autoclose36" type="text" class="form-control"
-                                                                                name="tglmulai" autocomplete="off" placeholder="yyyy/mm/dd" />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input id="datepicker-autoclose39" type="text" class="form-control"
-                                                                                name="tglselesai"  autocomplete="off" placeholder="yyyy/mm/dd" />
-                                                                        </div>
-                                                                    </div>
+                                                                    <label class="form-label">Instansi Pemberi </label>
+                                                                    <input type="text" name="namaInstansi"
+                                                                        class="form-control"
+                                                                        placeholder="Masukkan Nama Instansi">
                                                                 </div>
                                                             </div>
 
@@ -146,9 +126,9 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
-                                                                        class="form-label">Jabatan Terakhir</label>
-                                                                    <input type="text" name="jabatanRorganisasi"
-                                                                        class="form-control" placeholder="Masukkan Jabatan"
+                                                                        class="form-label">Alamat </label>
+                                                                    <input type="text" name="alamatInstansi"
+                                                                        class="form-control" placeholder="Masukkan Alamat"
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
@@ -156,29 +136,28 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
-                                                                        class="form-label">No. Surat Keterangan / SK</label>
-                                                                    <input type="number" name="noSKorganisasi"
-                                                                        class="form-control" placeholder="Masukkan Nomor SK"
+                                                                        class="form-label">Nomor Surat / Sertifikat </label>
+                                                                    <input type="number" name="noSurat"
+                                                                        class="form-control" placeholder="Masukkan Nomor Surat"
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
-
                                                             
                                                         </div>
+
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="pull-left">
-                                                        <a href="/create_data_pekerjaan" class="btn btn-sm btn-info"><i
+                                                        <a href="/create_data_organisasi" class="btn btn-sm btn-info"><i
                                                                 class="fa fa-backward"></i> Sebelumnya</a>
                                                     </div>
                                                     <div class="pull-right">
                                                         <button type="submit" name="submit"
                                                             class="btn btn-sm btn-dark"> Simpan</button>
-                                                            <a href="/create_data_prestasi" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
-                                                        {{-- <a href="/preview-data-karyawan"
+                                                        <a href="/preview_data_pelamar"
                                                             class="btn btn-sm btn-primary">Lihat Data <i
-                                                                class="fa fa-forward"></i></a> --}}
+                                                                class="fa fa-forward"></i></a>
                                                     </div>
                                                 </div>
                                             </table>
@@ -186,7 +165,7 @@
                                     </div>
                                 </form>
 
-                                <form action="/update_organisasi" id="formUpdateOrganisasi" method="POST">
+                                <form action="/update_prestasi" id="formUpdatePrestasi" method="POST">
                                     @csrf
                                     @method('post')
                                     <div class="modal-body">
@@ -197,44 +176,27 @@
                                                         <div>
                                                             <div
                                                                 class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                                <label class="text-white m-b-10">F. RIWAYAT
-                                                                    ORGANISASI</label>
+                                                                <label class="text-white m-b-10">G. RIWAYAT PRESTASI</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 m-t-10">
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Nama Organisasi</label>
-                                                                    <input type="text" name="namaOrganisasi" id="namaOrganisasi"
+                                                                    <label class="form-label">Perihal / Keterangan</label>
+                                                                    <input type="text" name="keterangan"
                                                                         class="form-control"
-                                                                        placeholder="Masukkan Nama Perusahaan"
+                                                                        placeholder="Masukkan Keterangan" id="keterangan"
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Alamat </label>
-                                                                    <input type="text" name="alamatOrganisasi"
-                                                                        class="form-control" id="alamatOrganisasi"
-                                                                        placeholder="Masukkan Alamat">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Lama Bertugas</label>
-                                                                    <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tglmulai" id="datepicker-autoclose33" autocomplete="off" />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tglselesai" id="datepicker-autoclose34" autocomplete="off" />
-                                                                        </div>
-                                                                    </div>
+                                                                    <label class="form-label">Instansi Pemberi </label>
+                                                                    <input type="text" name="namaInstansi"
+                                                                        class="form-control" id="namaInstansi"
+                                                                        placeholder="Masukkan Nama Instansi">
                                                                 </div>
                                                             </div>
 
@@ -247,38 +209,37 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
-                                                                        class="form-label">Jabatan Terakhir</label>
-                                                                    <input type="text" name="jabatanRorganisasi" id="jabatanRorganisasi"
-                                                                        class="form-control" placeholder="Masukkan Jabatan"
-                                                                        autocomplete="off">
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1"
-                                                                        class="form-label">No. Surat Keterangan / SK</label>
-                                                                    <input type="number" name="noSKorganisasi" id="noSKorganisasi"
-                                                                        class="form-control" placeholder="Masukkan Nomor SK"
+                                                                        class="form-label">Alamat </label>
+                                                                    <input type="text" name="alamatInstansi" id="alamatInstansi"
+                                                                        class="form-control" placeholder="Masukkan Alamat"
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
 
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1"
+                                                                        class="form-label">Nomor Surat / Sertifikat </label>
+                                                                    <input type="number" name="noSurat" id="noSurat"
+                                                                        class="form-control" placeholder="Masukkan Nomor Surat"
+                                                                        autocomplete="off">
+                                                                </div>
+                                                            </div>
                                                             
                                                         </div>
+
                                                     </div>
                                         </div>
                                         <div class="row">
                                             <div class="pull-left">
-                                                <a href="/create_data_pekerjaan" class="btn btn-sm btn-info"><i
+                                                <a href="/create_data_organisasi" class="btn btn-sm btn-info"><i
                                                         class="fa fa-backward"></i> Sebelumnya</a>
                                             </div>
                                             <div class="pull-right">
                                                 <button type="submit" name="submit" class="btn btn-sm btn-dark"> Update
                                                     Data</button>
-                                                            <a href="/create_data_prestasi" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
-                                                {{-- <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data
-                                                    <i class="fa fa-forward"></i></a> --}}
+                                                <a href="/preview_data_pelamar" class="btn btn-sm btn-primary">Lihat Data
+                                                    <i class="fa fa-forward"></i></a>
                                             </div>
                                         </div>
                                         {{-- </table> --}}
@@ -298,12 +259,12 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#formCreateOrganisasi').prop('hidden', false);
-            $('#formUpdateOrganisasi').prop('hidden', true);
-            $(document).on('click', '#editOrganisasi', function() {
+            $('#formCreatePrestasi').prop('hidden', false);
+            $('#formUpdatePrestasi').prop('hidden', true);
+            $(document).on('click', '#editPrestasi', function() {
                 // Menampilkan form update data dan menyembunyikan form create data
-                $('#formCreateOrganisasi').prop('hidden', true);
-                $('#formUpdateOrganisasi').prop('hidden', false);
+                $('#formCreatePrestasi').prop('hidden', true);
+                $('#formUpdatePrestasi').prop('hidden', false);
 
                 // Ambil nomor index data yang akan diubah
                 var nomorIndex = $(this).data('key');
@@ -312,20 +273,13 @@
                 $('#nomor_index_update').val(nomorIndex);
 
                 // Ambil data dari objek yang sesuai dengan nomor index
-                var data = {!! json_encode($organisasi) !!}[nomorIndex];
-                console.log(data.jenis_usaha, data.gaji);
+                var data = {!! json_encode($prestasi) !!}[nomorIndex];
+                // console.log(data.jenis_usaha, data.gaji);
                 // Isi data ke dalam form
-                $('#namaOrganisasi').val(data.nama_organisasi);
-                $('#alamatOrganisasi').val(data.alamat);
-                $('#datepicker-autoclose33').val(data.tgl_mulai);
-                $('#datepicker-autoclose34').val(data.tgl_selesai);
-                $('#jabatanRorganisasi').val(data.jabatan);
-                $('#noSKorganisasi').val(data.no_sk);
+                $('#keterangan').val(data.keterangan);
+                $('#namaInstansi').val(data.nama_instansi);
+                $('#alamatInstansi').val(data.alamat);
+                $('#noSurat').val(data.no_surat);
             });
         });
     </script>
-
-    <!-- datepicker  -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="assets/pages/form-advanced.js"></script>

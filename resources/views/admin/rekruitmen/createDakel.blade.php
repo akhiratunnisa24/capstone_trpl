@@ -19,7 +19,7 @@
     </head>
 
     <div class="container">
-        <form action="storedatakeluarga" method="POST" enctype="multipart/form-data" onsubmit="return confirmSave()">
+        <form action="store_data_keluarga" method="POST" enctype="multipart/form-data" onsubmit="return confirmSave()">
             @csrf
             @method('post')
             <!-- Page-Title -->
@@ -91,7 +91,7 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        <form action="/storedatakeluarga" method="POST" id="formCreateDatakeluarga"
+                                        <form action="/update_data_keluarga" method="POST" id="formCreateDatakeluarga"
                                             enctype="multipart/form-data">
                                             @csrf
                                             @method('post')
@@ -150,8 +150,8 @@
                                                                         name="jenis_kelaminKeluarga" required>
                                                                         <option value="">Pilih Jenis Kelamin
                                                                         </option>
-                                                                        <option value="L">Laki-Laki</option>
-                                                                        <option value="P">Perempuan</option>
+                                                                        <option value="Laki-Laki">Laki-Laki</option>
+                                                                        <option value="Perempuan">Perempuan</option>
                                                                     </select>
                                                                 </div>
 
@@ -159,7 +159,7 @@
                                                                     <div class="mb-3">
                                                                         <label class="form-label">Tanggal Lahir</label>
                                                                         <div class="input-group">
-                                                                            <input type="date" class="form-control"
+                                                                            <input id="datepicker-autoclose36" type="text" class="form-control"
                                                                                 placeholder="yyyy/mm/dd"
                                                                                 autocomplete="off"
                                                                                 name="tgllahirPasangan" required>
@@ -235,7 +235,7 @@
                                             {{-- </div> --}}
                                         </form>
                                         {{-- /updatedatakeluarga  --}}
-                                        <form action="/updatedatakeluarga" method="POST" id="formUpdateDatakeluarga"
+                                        <form action="/update_data_keluarga" method="POST" id="formUpdateDatakeluarga"
                                             enctype="multipart/form-data">
                                             @csrf
                                             @method('post')
@@ -301,8 +301,8 @@
                                                                         id="jenis_kelaminKeluarga" required>
                                                                         <option value="">Pilih Jenis Kelamin
                                                                         </option>
-                                                                        <option value="L">Laki-Laki</option>
-                                                                        <option value="P">Perempuan</option>
+                                                                        <option value="Laki-Laki">Laki-Laki</option>
+                                                                        <option value="Perempuan">Perempuan</option>
                                                                     </select>
                                                                 </div>
 
@@ -310,7 +310,7 @@
                                                                     <div class="mb-3">
                                                                         <label class="form-label">Tanggal Lahir</label>
                                                                         <div class="input-group">
-                                                                            <input type="date" class="form-control"
+                                                                            <input id="datepicker-autoclose39" type="text" class="form-control"
                                                                                 placeholder="yyyy/mm/dd"
                                                                                 id="tgllahirPasangan"
                                                                                 autocomplete="off"
@@ -449,3 +449,7 @@
             });
         });
     </script>
+    <!-- datepicker  -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/pages/form-advanced.js"></script>

@@ -12,7 +12,9 @@ use App\Models\Keluarga;
 use App\Models\Departemen;
 use App\Models\Rpekerjaan;
 use App\Models\Rpendidikan;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Rorganisasi;
+use App\Models\Rprestasi;
+// use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 
@@ -82,7 +84,7 @@ class FormPelamarController extends Controller
             $pelamar->id_lowongan = $request->posisiPelamar;
             $pelamar->nik = $request->nikPelamar;
             $pelamar->nama = $request->namaPelamar;
-            $pelamar->tgllahir = \Carbon\Carbon::parse($request->tgllahirPelamar)->format('Y-m-d');
+            $pelamar->tgllahir = Carbon::parse($request->tgllahirPelamar)->format('Y-m-d');
             $pelamar->tempatlahir = $request->tempatlahirPelamar;
             $pelamar->jenis_kelamin = $request->jenis_kelaminPelamar;
             $pelamar->gol_darah = $request->gol_darahPelamar;
@@ -113,7 +115,7 @@ class FormPelamarController extends Controller
             $pelamar->id_lowongan = $request->posisiPelamar;
             $pelamar->nik = $request->nikPelamar;
             $pelamar->nama = $request->namaPelamar;
-            $pelamar->tgllahir = \Carbon\Carbon::parse($request->tgllahirPelamar)->format('Y-m-d');
+            $pelamar->tgllahir = Carbon::parse($request->tgllahirPelamar)->format('Y-m-d');
             $pelamar->tempatlahir = $request->tempatlahirPelamar;
             $pelamar->jenis_kelamin = $request->jenis_kelaminPelamar;
             $pelamar->gol_darah = $request->gol_darahPelamar;
@@ -147,7 +149,6 @@ class FormPelamarController extends Controller
     {
             $pelamar    = $request->session()->get('pelamar');
             $datakeluarga = json_decode(session('datakeluarga', '[]'), true);
-            // dd($datakeluarga);
             if (empty($datakeluarga)) {
                 $datakeluarga = [];
             }
@@ -160,12 +161,10 @@ class FormPelamarController extends Controller
         $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
 
         $datakeluargaBaru = [
-            // 'status_pernikahan' => $request->status_pernikahan,
-            // 'jumlah_anak' => $request->jumlahAnak,
             'hubungan' => $request->hubungankeluarga,
             'nama' => $request->namaPasangan,
             'jenis_kelamin' => $request->jenis_kelaminKeluarga,
-            'tgllahir' => \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d'),
+            'tgllahir' => Carbon::parse($request->tgllahirPasangan)->format('Y-m-d'),
             'tempatlahir' => $request->tempatlahirKeluarga,
             'pendidikan_terakhir' => $request->pendidikan_terakhirPasangan,
             'pekerjaan' => $request->pekerjaanPasangan,
@@ -173,6 +172,8 @@ class FormPelamarController extends Controller
         $datakeluarga[] = $datakeluargaBaru;
         session()->put('datakeluarga', json_encode($datakeluarga));
         return redirect()->back();
+        // return view('admin.rekruitmen.createDakel');
+         
     }
 
     //update data pada form Pelamar
@@ -185,7 +186,7 @@ class FormPelamarController extends Controller
         $datakeluarga[$index]['hubungan'] = $request->hubungankeluarga;
         $datakeluarga[$index]['nama'] = $request->namaPasangan;
         $datakeluarga[$index]['jenis_kelamin'] = $request->jenis_kelaminKeluarga;
-        $datakeluarga[$index]['tgllahir'] = \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d');
+        $datakeluarga[$index]['tgllahir'] = Carbon::parse($request->tgllahirPasangan)->format('Y-m-d');
         $datakeluarga[$index]['tempatlahir'] = $request->tempatlahirKeluarga;
         // $datakeluarga[$index]['alamat'] = $request->alamatPasangan;
         $datakeluarga[$index]['pendidikan_terakhir'] = $request->pendidikan_terakhirPasangan;
@@ -263,10 +264,10 @@ class FormPelamarController extends Controller
             'nama_lembaga'         => $request->namaLembaga,
             'kota_pformal'         => $request->kotaPendidikanFormal,
             'jurusan'              => $request->jurusan,
-            'tahun_lulus_formal'   => $request->tahun_lulusFormal,
+            'tahun_lulus_formal'   => Carbon::parse($request->tahun_lulusFormal)->format('Y'),
+            'tahun_lulus_nonformal'=> Carbon::parse($request->tahunLulusNonFormal)->format('Y'),
             'jenis_pendidikan'     => $request->jenis_pendidikan,
             'kota_pnonformal'      => $request->kotaPendidikanNonFormal,
-            'tahun_lulus_nonformal' => $request->tahunLulusNonFormal,
             'ijazah_formal' => $request->noijazahPformal,
             'ijazah_nonformal' => $request->noijazahPnonformal,
         ];
@@ -322,8 +323,8 @@ class FormPelamarController extends Controller
             'nama_perusahaan' => $request->namaPerusahaan,
             'alamat'          => $request->alamatPerusahaan,
             // 'jenis_usaha'     => $request->jenisUsaha,
-            'tgl_mulai'       => \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d'),
-            'tgl_selesai'     => \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d'),
+            'tgl_mulai'       => Carbon::parse($request->tglmulai)->format('Y-m-d'),
+            'tgl_selesai'     => Carbon::parse($request->tglselesai)->format('Y-m-d'),
             'jabatan'         => $request->jabatanRpekerjaan,
             'level'           => $request->levelRpekerjaan,
             // 'nama_atasan'     => $request->namaAtasan,
@@ -343,7 +344,6 @@ class FormPelamarController extends Controller
         $pekerjaan = json_decode($request->session()->get('pekerjaan', '[]'), true);
         $index = $request->nomor_index;
 
-        // dd($index);
         $pekerjaan[$index]['nama_perusahaan'] = $request->namaPerusahaan;
         $pekerjaan[$index]['alamat']         = $request->alamatPerusahaan;
         $pekerjaan[$index]['jenis_usaha']    = $request->jenisUsaha;
@@ -351,17 +351,12 @@ class FormPelamarController extends Controller
         $pekerjaan[$index]['level']          = $request->levelRpekerjaan;
         $pekerjaan[$index]['nama_atasan']    = $request->namaAtasan;
         $pekerjaan[$index]['nama_direktur']  = $request->namaDirektur;
-        $datakeluarga[$index]['tgl_mulai'] = \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d');
-        $datakeluarga[$index]['tgl_selesai'] = \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d');
+        $pekerjaan[$index]['tgl_mulai'] = Carbon::parse($request->tglmulai)->format('Y-m-d');
+        $pekerjaan[$index]['tgl_selesai'] = Carbon::parse($request->tglselesai)->format('Y-m-d');
         $pekerjaan[$index]['alasan_berhenti'] = $request->alasanBerhenti;
         $pekerjaan[$index]['gaji']           = $request->gajiRpekerjaan;
-
-        // dd($pekerjaan[$index]['gaji']);
+        
         session()->put('pekerjaan', json_encode($pekerjaan));
-
-        // $d= json_decode(session('pekerjaan', '[]'), true);
-        // dd($d);
-
         return redirect()->back();
     }
 
@@ -392,8 +387,8 @@ class FormPelamarController extends Controller
         $organisasiBaru = [
             'nama_organisasi' => $request->namaOrganisasi,
             'alamat'          => $request->alamatOrganisasi,
-            'tgl_mulai'     => \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d'),
-            'tgl_selesai'         => \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d'),
+            'tgl_mulai'     => Carbon::parse($request->tglmulai)->format('Y-m-d'),
+            'tgl_selesai'   => Carbon::parse($request->tglselesai)->format('Y-m-d'),
             'jabatan'     => $request->jabatanRorganisasi,
             'no_sk'   => $request->noSKorganisasi,
         ];
@@ -412,8 +407,8 @@ class FormPelamarController extends Controller
         // dd($index);
         $organisasi[$index]['nama_organisasi'] = $request->namaOrganisasi;
         $organisasi[$index]['alamat']         = $request->alamatOrganisasi;
-        $organisasi[$index]['tgl_mulai']    = \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d');
-        $organisasi[$index]['tgl_selesai']        = \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d');
+        $organisasi[$index]['tgl_mulai']    = Carbon::parse($request->tglmulai)->format('Y-m-d');
+        $organisasi[$index]['tgl_selesai']        = Carbon::parse($request->tglselesai)->format('Y-m-d');
         $organisasi[$index]['jabatan']          = $request->jabatanRorganisasi;
         $organisasi[$index]['no_sk']    = $request->noSKorganisasi;
 
@@ -424,6 +419,136 @@ class FormPelamarController extends Controller
         // dd($d);
 
         return redirect()->back();
+    }
+
+    //data untuk prestasi
+    public function createprestasi(Request $request)
+    {
+            $pelamar     = $request->session()->get('pelamar');
+            $datakeluarga = $request->session()->get('datakeluarga');
+            $kontakdarurat = $request->session()->get('kontakdarurat');
+            $pendidikan   = $request->session()->get('pendidikan');
+            $pekerjaan   = $request->session()->get('pekerjaan');
+            $organisasi   = $request->session()->get('organisasi');
+            $prestasi = json_decode(session('prestasi', '[]'), true);
+            // dd($pekerjaan);
+
+            if (empty($prestasi)) {
+                $prestasi = [];
+            }
+
+            return view('admin.rekruitmen.createPrestasi', compact('prestasi', 'organisasi', 'pekerjaan', 'pelamar', 'datakeluarga', 'kontakdarurat', 'pendidikan'));
+    }
+
+    //store ketika creates data
+    public function storeprestasi(Request $request)
+    {
+        $prestasi = json_decode($request->session()->get('prestasi', '[]'), true);
+
+        $prestasiBaru = [
+            'keterangan'    => $request->keterangan,
+            'nama_instansi' => $request->namaInstansi,
+            'alamat'        => $request->alamatInstansi,
+            'no_surat'      => $request->noSurat,
+        ];
+
+        $prestasi[] = $prestasiBaru;
+
+        session()->put('prestasi', json_encode($prestasi));
+        return redirect()->back();
+    }
+
+    public function updaterPrestasi(Request $request)
+    {
+        $prestasi = json_decode($request->session()->get('prestasi', '[]'), true);
+        $index = $request->nomor_index;
+
+
+        $prestasi[$index]['keterangan']       = $request->keterangan;
+        $prestasi[$index]['nama_instansi']    = $request->namaInstansi;
+        $prestasi[$index]['alamat']           = $request->alamatInstansi;
+        $prestasi[$index]['no_surat']         = $request->noSurat;
+
+        session()->put('prestasi', json_encode($prestasi));
+        return redirect()->back();
+    }
+
+    public function previewData(Request $request)
+    {
+        $pelamar = $request->session()->get('pelamar');
+
+        $datakeluarga = json_decode(session('datakeluarga', '[]'), true);
+        $kontakdarurat = json_decode(session('kontakdarurat', '[]'), true);
+        $pendidikan = json_decode(session('pendidikan', '[]'), true);
+        $pekerjaan = json_decode(session('pekerjaan', '[]'), true);
+        $organisasi = json_decode(session('organisasi', '[]'), true);
+        $prestasi    = json_decode(session('prestasi', '[]'), true);
+
+        return view('admin.rekruitmen.preview', compact('pelamar', 'datakeluarga', 'kontakdarurat', 'pendidikan', 'pekerjaan', 'organisasi', 'prestasi'));
+    }
+
+    public function storetoDatabase(Request $request)
+    {
+        //meyimpan data ke database
+        $pelamar = $request->session()->get('pelamar');
+        $pelamar->save();
+        $idKaryawan = $pelamar->id;
+
+        $datakeluarga = json_decode($request->session()->get('datakeluarga', []), true);
+        $datakeluargaMerged = array_map(function ($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $datakeluarga);
+        $datakeluargaModel = Keluarga::insert($datakeluargaMerged);
+
+        $kontakdarurat = json_decode($request->session()->get('kontakdarurat', []), true);
+        $kontakdaruratMerge =  array_map(function ($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $kontakdarurat);
+        $kontakdarurats = Kdarurat::insert($kontakdaruratMerge);
+
+        $pendidikan = json_decode($request->session()->get('pendidikan', []), true);
+        $pendidikanMerge =  array_map(function ($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $pendidikan);
+        $pendidikans = Rpendidikan::insert($pendidikanMerge);
+
+        $pekerjaan = json_decode($request->session()->get('pekerjaan', []), true);
+        $pekerjaanMerge = array_map(function ($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $pekerjaan);
+        $pekerjaans = Rpekerjaan::insert($pekerjaanMerge);
+
+        $organisasi = json_decode($request->session()->get('organisasi', []), true);
+        $organisasiMerge = array_map(function ($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $organisasi);
+        $organisasis = Rorganisasi::insert($organisasiMerge);
+
+        $prestasi = json_decode($request->session()->get('prestasi', []), true);
+        $prestasiMerge = array_map(function ($item) use ($idKaryawan) {
+            $item['id_pegawai'] = $idKaryawan;
+            return $item;
+        }, $prestasi);
+        $prestasis = Rprestasi::insert($prestasiMerge);
+
+        //hapus data pada session
+        $request->session()->forget('pelamar');
+        $request->session()->forget('datakeluarga');
+        $request->session()->forget('kontakdarurat');
+        $request->session()->forget('pendidikan');
+        $request->session()->forget('pekerjaan');
+        $request->session()->forget('organisasi');
+        $request->session()->forget('prestasi');
+
+
+        // return redirect('/karyawan');
+        return view('admin.rekruitmen.formSelesaiPelamar');
+
     }
 
     // public function store(Request $request)
@@ -471,7 +596,7 @@ class FormPelamarController extends Controller
         $posisi = Lowongan::all()->where('status', '=', 'Aktif');
         $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
 
-        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $departemen     = Departemen::all();
         $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager', 'Direktur'])->get();
         $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Direktur'])->get();
@@ -482,7 +607,7 @@ class FormPelamarController extends Controller
         $nonformal = Rpendidikan::where('id_pegawai', $user)->where('jenis_pendidikan', '!=', null)->get();
         $pekerjaan = Rpekerjaan::where('id_pegawai', $user)->get();
         $output = [
-            'row' => $row,
+            // 'row' => $row,
             'departemen' => $departemen,
             'atasan_pertama' => $atasan_pertama,
             'atasan_kedua' => $atasan_kedua,

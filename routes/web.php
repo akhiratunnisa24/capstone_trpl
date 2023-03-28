@@ -150,6 +150,13 @@ Route::get('metode_rekrutmen_destroy{id}', [RekruitmenController::class, 'metode
     Route::get('/create_data_organisasi', [FormPelamarController::class, 'createorganisasi'])->name('create_data_organisasi');
     Route::post('/store_organisasi', [FormPelamarController::class, 'storeorganisasi'])->name('store_organisasi');
     Route::post('/update_organisasi', [FormPelamarController::class, 'updaterOrganisasi'])->name('update_organisasi');
+    //form data prestasi
+    Route::get('/create_data_prestasi', [FormPelamarController::class, 'createprestasi'])->name('create_data_prestasi');
+    Route::post('/store_prestasi', [FormPelamarController::class, 'storeprestasi'])->name('store_prestasi');
+    Route::post('/update_prestasi', [FormPelamarController::class, 'updaterPrestasi'])->name('update_prestasi');
+    //preview data dan save ke database
+    Route::get('/preview_data_pelamar', [FormPelamarController::class, 'previewData'])->name('preview_data_pelamar');
+    Route::post('/store_Data', [FormPelamarController::class, 'storetoDatabase'])->name('store_Data');
 
 // Notifikasi Email ke Pelamar
 Route::get('notif_rekrutmen', [NotifMailRekruitmenController::class, 'index']);
