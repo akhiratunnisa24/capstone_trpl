@@ -565,7 +565,8 @@
                                 <th>Perihal / Keterangan</th>
                                 <th>Instansi Pemberi</th>
                                 <th>Alamat</th>
-                                <th>Nomor Surat / Sertifikat</th>
+                                <th>Nomor Surat</th>
+                                <th>Tanggal Surat</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -576,6 +577,7 @@
                                     <td>{{ $pres['nama_instansi'] }}</td>
                                     <td>{{ $pres['alamat'] }}</td>
                                     <td>{{ $pres['no_surat'] }}</td>
+                                    <td>{{ $pres['tanggal_surat'] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

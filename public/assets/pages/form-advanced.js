@@ -237,6 +237,26 @@
             autoclose: true,
             todayHighlight: true,
         });
+        jQuery("#datepicker-autoclose40").datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose41").datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose42").datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose43").datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true,
+            todayHighlight: true,
+        });
         jQuery("#datepicker-autoclosea1").datepicker({
             format: "yyyy/mm/dd",
             autoclose: true,
@@ -435,6 +455,9 @@
         });
         jQuery("#date-range4").datepicker({
             // autoclose: true,
+            toggleActive: true,
+        });
+        jQuery("#date-range5").datepicker({
             toggleActive: true,
         });
 

@@ -73,30 +73,55 @@ class SettingalokasicutiController extends Controller
 
             $mode_karyawan_array = $settingalokasi->getModeKaryawanArrayAttribute();
 
+            // $karyawan = DB::table('karyawan')
+            // ->join('keluarga','karyawan.id','keluarga.id_pegawai')
+            // ->where(function ($query) use ($request,$mode_karyawan_array){
+            //     if(in_array("Laki-Laki",$mode_karyawan_array)){
+            //         $query->orWhere('karyawan.jenis_kelamin','Laki-Laki');
+            //     }
+            //     if(in_array("Perempuan", $mode_karyawan_array)){
+            //         $query->orWhere('karyawan.jenis_kelamin','Perempuan');
+            //     }
+            //     if(in_array("Belum Menikah",$mode_karyawan_array)){
+            //         $query->orWhere('keluarga.status_pernikahan','Belum Menikah');
+            //     }
+            //     if(in_array("Sudah Menikah",$mode_karyawan_array)){
+            //         $query->orWhere('keluarga.status_pernikahan','Sudah Menikah');
+            //     }
+            //     if(in_array("Duda",$mode_karyawan_array)){
+            //         $query->orWhere('keluarga.status_pernikahan','Duda');
+            //     }
+            //     if(in_array("Janda",$mode_karyawan_array)){
+            //         $query->orWhere('keluarga.status_pernikahan','Janda');
+            //     }
+            // })
+            // ->select('karyawan.id','karyawan.jenis_kelamin','keluarga.status_pernikahan')
+            // ->get();
+
             $karyawan = DB::table('karyawan')
-            ->join('keluarga','karyawan.id','keluarga.id_pegawai')
-            ->where(function ($query) use ($request,$mode_karyawan_array){
-                if(in_array("Laki-Laki",$mode_karyawan_array)){
-                    $query->orWhere('karyawan.jenis_kelamin','Laki-Laki');
+            ->where(function ($query) use ($request, $mode_karyawan_array){
+                if(in_array("Laki-Laki", $mode_karyawan_array)){
+                    $query->orWhere('jenis_kelamin', 'Laki-Laki');
                 }
                 if(in_array("Perempuan", $mode_karyawan_array)){
-                    $query->orWhere('karyawan.jenis_kelamin','Perempuan');
+                    $query->orWhere('jenis_kelamin', 'Perempuan');
                 }
-                if(in_array("Belum Menikah",$mode_karyawan_array)){
-                    $query->orWhere('keluarga.status_pernikahan','Belum Menikah');
+                if(in_array("Belum Menikah", $mode_karyawan_array)){
+                    $query->orWhere('status_pernikahan', 'Belum Menikah');
                 }
-                if(in_array("Sudah Menikah",$mode_karyawan_array)){
-                    $query->orWhere('keluarga.status_pernikahan','Sudah Menikah');
+                if(in_array("Sudah Menikah", $mode_karyawan_array)){
+                    $query->orWhere('status_pernikahan', 'Sudah Menikah');
                 }
-                if(in_array("Duda",$mode_karyawan_array)){
-                    $query->orWhere('keluarga.status_pernikahan','Duda');
+                if(in_array("Duda", $mode_karyawan_array)){
+                    $query->orWhere('status_pernikahan', 'Duda');
                 }
-                if(in_array("Janda",$mode_karyawan_array)){
-                    $query->orWhere('keluarga.status_pernikahan','Janda');
+                if(in_array("Janda", $mode_karyawan_array)){
+                    $query->orWhere('status_pernikahan', 'Janda');
                 }
             })
-            ->select('karyawan.id','karyawan.jenis_kelamin','keluarga.status_pernikahan')
+            ->select('id', 'jenis_kelamin', 'status_pernikahan')
             ->get();
+
 
             foreach($karyawan as $karyawan)
             {

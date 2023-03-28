@@ -117,7 +117,11 @@
                                                     <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
                                                     <td>{{$data->jam_masuk}}</td>
                                                     <td>{{$data->jam_keluar}}</td>
-                                                    <td>{{$data->jam_kerja}}</td>
+                                                    @if(isset($data->jam_kerja))
+                                                    {
+                                                        <td>{{$data->jam_kerja}}</td>
+                                                    }
+                                                    @endif
                                                     <td>{{$data->terlambat}}</td>
                                                     <td>{{$data->plg_cepat}}</td>
                                                 </tr>

@@ -213,7 +213,7 @@
                                         @method('post')
                                         <div class="modal-body">
                                             {{-- <table class="table table-bordered table-striped"> --}}
-                                                <input type="text" name="nomor_index" id="nomor_index_update" value="">
+                                                <input type="hidden" name="nomor_index" id="nomor_index_update" value="">
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div>
@@ -235,38 +235,6 @@
                                                                     <input type="text" id="alamatPerusahaan"  name="alamatPerusahaan" class="form-control" id="alamat" placeholder="Masukkan Alamat">
                                                                 </div>
                                                             </div>
-    
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Jenis Usaha</label>
-                                                                    <input type="text" id="JenissUsaha"  name="jenisUsaha" class="form-control" placeholder="Masukkan Jenis Usaha" autocomplete="off">
-                                                                </div>
-                                                            </div>
-    
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label"> Jabatan</label>
-                                                                    <input type="text" id="jabatanRpekerjaan" name="jabatanRpekerjaan" class="form-control" placeholder="Masukkan Jabatan" autocomplete="off">
-                                                                </div>
-                                                            </div>
-    
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label"> Nama Atasan Langsung</label>
-                                                                    <input type="text" id="namaAtasan" name="namaAtasan" class="form-control"  placeholder="Masukkan Nama Atasan" autocomplete="off">
-                                                                
-                                                                </div>
-                                                            </div>
-                                                        </div>
-    
-                                                        {{-- KANAN --}}
-                                                        <div class="col-md-6 m-t-10">
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">  Nama Direktur</label>
-                                                                    <input type="text" id="namaDirektur" name="namaDirektur"  class="form-control" placeholder="Masukkan Nama Direktur" autocomplete="off">
-                                                                </div>
-                                                            </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
@@ -275,21 +243,53 @@
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range">
                                                                             <input type="text" class="form-control"
-                                                                                name="tglmulai" id="tglmulai"  />
+                                                                                name="tglmulai" id="tgl_mulai"  />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tglselesai" id="tglselesai"  />
+                                                                                name="tglselesai" id="tgl_selesai"  />
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-    
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Alasan Berhenti</label>
-                                                                    <input type="text" id="alasanBerhenti"  name="alasanBerhenti" class="form-control" placeholder="Masukkan Alasan Berhenti" autocomplete="off">
-                                                                    
+                                                                    <label for="exampleInputEmail1" class="form-label"> Jabatan</label>
+                                                                    <input type="text" id="jabatanRpekerjaan" name="jabatanRpekerjaan" class="form-control" placeholder="Masukkan Jabatan" autocomplete="off">
+                                                                </div>
+                                                            </div>
+    
+                                                            {{-- <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Jenis Usaha</label>
+                                                                    <input type="text" id="JenissUsaha"  name="jenisUsaha" class="form-control" placeholder="Masukkan Jenis Usaha" autocomplete="off">
+                                                                </div>
+                                                            </div> --}}
+    
+                                                           
+    
+                                                            {{-- <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label"> Nama Atasan Langsung</label>
+                                                                    <input type="text" id="namaAtasan" name="namaAtasan" class="form-control"  placeholder="Masukkan Nama Atasan" autocomplete="off">
+                                                                
+                                                                </div>
+                                                            </div> --}}
+                                                        </div>
+    
+                                                        {{-- KANAN --}}
+                                                        <div class="col-md-6 m-t-10">
+                                                            {{-- <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">  Nama Direktur</label>
+                                                                    <input type="text" id="namaDirektur" name="namaDirektur"  class="form-control" placeholder="Masukkan Nama Direktur" autocomplete="off">
+                                                                </div>
+                                                            </div> --}}
+                                                            <div class="form-group">
+                                                                <div class="mb-3">  
+                                                                    <label for="exampleInputEmail1" class="form-label">Level / Pangkat / Golongan</label>
+                                                                    <input type="text" name="levelRpekerjaan" class="form-control" id="levelpekerjaan" placeholder="Masukkan Level" autocomplete="off">
                                                                 </div>
                                                             </div>
     
@@ -297,6 +297,14 @@
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Gaji</label>
                                                                     <input type="text" name="gaji" class="form-control" id="gajih" placeholder="Masukkan Gaji" autocomplete="off">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Alasan Berhenti</label>
+                                                                    <input type="text" id="alasanBerhenti"  name="alasanBerhenti" class="form-control" placeholder="Masukkan Alasan Berhenti" autocomplete="off">
+                                                                    
                                                                 </div>
                                                             </div>
     
@@ -369,17 +377,21 @@
 
                 // Ambil data dari objek yang sesuai dengan nomor index
                 var data = {!! json_encode($pekerjaan) !!}[nomorIndex];
-                console.log(data.jenis_usaha,data.gaji);
+                console.log(data.gaji, data.tgl_mulai,data.tgl_selesai);
                 // Isi data ke dalam form
                     $('#namaPerusahaan').val(data.nama_perusahaan);
                     $('#alamatPerusahaan').val(data.alamat);
-                    $('#JenissUsaha').val(data.jenis_usaha);
+                    // $('#JenissUsaha').val(data.jenis_usaha);
                     $('#jabatanRpekerjaan').val(data.jabatan);
-                    $('#namaAtasan').val(data.nama_atasan);
-                    $('#namaDirektur').val(data.nama_direktur);
+                    // $('#namaAtasan').val(data.nama_atasan);
+                    // $('#namaDirektur').val(data.nama_direktur);
                     $('#lamaKerja').val(data.lama_kerja);
                     $('#alasanBerhenti').val(data.alasan_berhenti);
                     $('#gajih').val(data.gaji);
+                    $('#levelpekerjaan').val(data.level);
+                    $('#tgl_mulai').val(data.tgl_mulai);
+                    $('#tgl_selesai').val(data.tgl_selesai);
+                    
             });
         });
     </script>

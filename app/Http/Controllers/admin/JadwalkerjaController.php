@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
+use DateTime;
+use Carbon\Carbon;
 use App\Models\Shift;
 use App\Models\Jadwal;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
+use App\Models\SettingHarilibur;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +27,6 @@ class JadwalkerjaController extends Controller
         {
             $row    = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $jadwal = Jadwal::all();
-
             $karyawan= Karyawan::all();
             $shift= Shift::all();
             // dd($jadwal);
@@ -57,22 +59,71 @@ class JadwalkerjaController extends Controller
     
     public function store(Request $request)
     {
-        // dd($request->all());
-        $request->validate([
-            'id_pegawai'   => 'required',
-            'id_shift'     => 'required',
-            'tanggal'      => 'required',
-        ]);
+        // if($request->tipe_jadwal == 'bulanan')
+        if($request->tgl_mulai && $request->tgl_selesai)
+        {
+            $request->validate([
+                'id_shift'     => 'required',
+                'tgl_mulai'    => 'required',
+                'tgl_selesai'  => 'required',
+            ]);
 
-        $jadwal = new Jadwal;
-        $jadwal->id_pegawai   = $request->id_pegawai;
-        $jadwal->id_shift     = $request->id_shift;
-        $jadwal->tanggal      = $request->tanggal;
-        $jadwal->jadwal_masuk = $request->jadwal_masuk;
-        $jadwal->jadwal_pulang= $request->jadwal_pulang;
-        $jadwal->save();
+            $karyawan = Karyawan::all();
+            foreach($karyawan as $data)
+            {
+                $tgl_mulai = Carbon::createFromFormat('Y/m/d', $request->tgl_mulai);
+                $tgl_selesai = Carbon::createFromFormat('Y/m/d', $request->tgl_selesai);
 
-        return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');
+                $tanggal_kerja = array();
+                while($tgl_mulai->lte($tgl_selesai)){
+                    if($tgl_mulai->isWeekday()){
+                        $tanggal_kerja[] = $tgl_mulai->format('Y-m-d');
+                    }
+                    $tgl_mulai->addDay();
+                }
+
+                // Mengecek tanggal kerja yang tidak ada dalam tabel hari libur
+                $tanggal_libur = SettingHarilibur::whereBetween('tanggal', [$request->tgl_mulai, $request->tgl_selesai])->get();
+                foreach ($tanggal_libur as $libur) {
+                    if (in_array($libur->tanggal, $tanggal_kerja)) {
+                        $key = array_search($libur->tanggal, $tanggal_kerja);
+                        if ($key !== false) {
+                            unset($tanggal_kerja[$key]);
+                        }
+                    }
+                }
+
+                foreach($tanggal_kerja as $tanggal)
+                {
+                    $jadwal = new Jadwal();
+                    // $jadwal->tipe_jadwal = $request->tipe_jadwal;
+                    $jadwal->id_pegawai = $data->id;
+                    $jadwal->id_shift = $request->id_shift;
+                    $jadwal->jadwal_masuk = $request->jadwal_masuk;
+                    $jadwal->jadwal_pulang = $request->jadwal_pulang;
+                    $jadwal->tanggal = $tanggal;
+                    $jadwal->save();
+                }  
+            }
+            return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');
+            
+        }else{
+            $request->validate([
+                'id_pegawai'   => 'required',
+                'id_shift'     => 'required',
+                'tanggal'      => 'required',
+            ]);
+    
+            $jadwal = new Jadwal;
+            $jadwal->id_pegawai   = $request->id_pegawai;
+            $jadwal->id_shift     = $request->id_shift;
+            $jadwal->tanggal      = $request->tanggal;
+            $jadwal->jadwal_masuk = $request->jadwal_masuk;
+            $jadwal->jadwal_pulang= $request->jadwal_pulang;
+            $jadwal->save();
+
+            return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');
+        }  
     }
     
     public function update(Request $request, $id)

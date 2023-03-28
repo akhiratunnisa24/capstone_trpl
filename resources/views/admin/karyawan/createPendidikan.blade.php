@@ -54,9 +54,11 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Tingkat Pendidikan</th>
-                                            <th>Nama Sekolah</th>
-                                            <th>Alamat</th>
                                             <th>Jurusan</th>
+                                            <th>Lama Pendidikan</th>
+                                            <th>Lembaga Pendidikan</th>
+                                            <th>Alamat</th>
+                                            <th>Nomor Ijazah</th>
                                             <th>Tahun Lulus</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -67,9 +69,11 @@
                                                 <tr>
                                                     <td id="key">{{ $key }}</td>
                                                     <td>{{$p['tingkat'] }}</td>
+                                                    <td>{{$p['jurusan'] }}</td>
+                                                    <td></td>
                                                     <td>{{$p['nama_sekolah'] }}</td>
                                                     <td>{{$p['kota_pformal'] }}</td>
-                                                    <td>{{$p['jurusan'] }}</td>
+                                                    <td>{{$p['ijazah_formal']}}</td>
                                                     <td>{{$p['tahun_lulus_formal'] }}</td>
                                                     <td class="text-center">
                                                         <div class="row d-grid gap-2" role="group" aria-label="Basic example">
@@ -144,7 +148,7 @@
                                                                 <span class="form-group badge badge-secondary col-sm-15 m-b-5 m-t-10"><label class="text-white"> 1. Pendidikan Formal</label></span>
                                                             {{-- </div> --}}
                                                             <div class="form-group">
-                                                                <label for="exampleInputEmail1" class="form-label">Tingkat</label>
+                                                                <label for="exampleInputEmail1" class="form-label">Tingkat Pendidikan</label>
                                                                 <select class="form-control selectpicker" name="tingkat_pendidikan">
                                                                     <option value="">Pilih Tingkat Pendidikan</option>
                                                                     <option value="SD">SD</option>
@@ -157,7 +161,14 @@
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Nama Sekolah</label>
+                                                                    <label class="form-label"> Jurusan</label>
+                                                                    <input type="text" name="jurusan" class="form-control" id="exampleInputEmail1" placeholder="Masukkan Jurusan" autocomplete="off">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Lembaga Pendidikan</label>
                                                                     <input type="text" name="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
                                                                 </div>
                                                             </div>
@@ -169,12 +180,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label"> Jurusan</label>
-                                                                    <input type="text" name="jurusan" class="form-control" id="exampleInputEmail1" placeholder="Masukkan Jurusan" autocomplete="off">
-                                                                </div>
-                                                            </div>
+                                                           
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
@@ -291,7 +297,7 @@
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Nama Sekolah</label>
+                                                                    <label for="exampleInputEmail1" class="form-label">Lembaga Pendidikan</label>
                                                                     <input type="text" name="nama_sekolah" id="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
                                                                 </div>
                                                             </div>

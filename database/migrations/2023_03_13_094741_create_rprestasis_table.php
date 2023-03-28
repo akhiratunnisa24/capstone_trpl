@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('nama_instansi')->nullable();
             $table->string('alamat')->nullable();
             $table->integer('no_surat')->nullable();
+            $table->date('tanggal_surat')->nullable();
 
             $table->timestamps();
         });
