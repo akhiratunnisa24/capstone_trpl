@@ -41,7 +41,7 @@ class SisacutiController extends Controller
             ->where('sisacuti.id_jeniscuti',$jeniscuti->id)
             ->where('sisacuti.id_pegawai',$id)
             ->select('sisacuti.id_pegawai as id','karyawan.email as email','karyawan.nama as nama','sisacuti.id_jeniscuti as jeniscuti','jeniscuti.jenis_cuti as kategori','sisacuti.sisa_cuti as sisa','sisacuti.periode as tahun')
-            ->get();
+            ->first();
         // dd($email);
         foreach($sisacuti as $sisa){
             $tujuan = $sisa->email;

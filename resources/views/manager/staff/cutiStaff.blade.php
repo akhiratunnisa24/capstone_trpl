@@ -54,9 +54,9 @@
                                                                 <th>Tgl.Selesai</th>
                                                                 <th>Jml. Cuti</th>
                                                                 {{-- <th>Departemen</th> --}}
-                                                                @if(Auth::user()->role == 3)
+                                                                {{-- @if(Auth::user()->role == 3)
                                                                     <th>Approval</th>
-                                                                @endif
+                                                                @endif --}}
                                                                 <th>Status</th>
                                                                 <th>Aksi</th>        
                                                             </tr>
@@ -72,10 +72,7 @@
                                                                     <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
                                                                     <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                                     <td>{{$data->jml_cuti}} Hari</td>
-                                                                    @if(Auth::user()->role == 3)
-                                                                        <td>{{$data->tipe_approval}}</td>
-                                                                    @endif
-                                                                    {{-- <td>{{$data->departemen}}</td> --}}
+                                                    
                                                                     <td>
                                                                         <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
                                                                             {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}

@@ -55,6 +55,7 @@
                             <div class="form-group col-sm" id="mode_employee">
                                 <label for="mode_karyawan" class="col-form-label">Tipe Alokasi</label>
                                 <select class="form-control" id="mode_employee" name="mode_karyawan[]" multiple style="width:507px;height:120px">
+                                    {{-- <option value="Semua Karyawan">Semua Karyawan</option> --}}
                                     <option value="Laki-Laki">Laki-Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                     <option value="Sudah Menikah">Sudah Menikah</option>
