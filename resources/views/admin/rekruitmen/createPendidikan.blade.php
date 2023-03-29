@@ -52,7 +52,8 @@
                                         @foreach($pendidikan as $key => $p)
                                             @if($p['tingkat'] != null)
                                                 <tr>
-                                                    <td id="key">{{ $key }}</td>
+                                                    {{-- <td id="key">{{ $key }}</td> --}}
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{$p['tingkat'] }}</td>
                                                     <td>{{$p['nama_sekolah'] }}</td>
                                                     <td>{{$p['kota_pformal'] }}</td>
@@ -94,12 +95,13 @@
                                         @foreach($pendidikan as $key => $nf)
                                             @if($nf['jenis_pendidikan'] != null)
                                                 <tr>
-                                                    <td id="key">{{ $key }}</td>
+                                                    {{-- <td id="key">{{ $key }}</td> --}}
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $nf['jenis_pendidikan'] }}</td>
                                                     <td>{{ $nf['nama_lembaga'] }}</td>
                                                     <td>{{ $nf['kota_pnonformal'] }}</td>
                                                     <td>{{ $nf['tahun_lulus_nonformal'] }}</td>
-                                                    <td>{{$p['ijazah_nonformal'] }}</td>
+                                                    <td>{{$nf['ijazah_nonformal'] }}</td>
                                                     <td class="text-center">
                                                         <div class="row d-grid gap-2" role="group" aria-label="Basic example">
                                                             <a href="#formUpdatePendidikan" class="btn btn-sm btn-info" id="edittPendidikan" data-key="{{ $key }}">
@@ -157,7 +159,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label"> Alamat</label>
-                                                                    <input type="text" name="kotaPendidikanFormal"  class="form-control" id="exampleInputEmail1" placeholder="Masukkan Alamat">
+                                                                    <input type="text" name="kotaPendidikanFormal"  class="form-control" id="exampleInputEmail1" placeholder="Masukkan Alamat" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -182,7 +184,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">No. Ijazah</label>
-                                                                    <input type="number" name="noijazahPformal"  class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
+                                                                    <input type="text" name="noijazahPformal"  class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -228,7 +230,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">No. Ijazah</label>
-                                                                    <input type="number" name="noijazahPnonformal"  class="form-control" id="kotaPendidikanNonFormal" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
+                                                                    <input type="text" name="noijazahPnonformal"  class="form-control" id="kotaPendidikanNonFormal" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
                                                                 </div>
                                                             </div>
 

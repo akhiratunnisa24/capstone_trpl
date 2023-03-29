@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('rprestasi', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('id_pegawai');
+            $table->integer('id_pegawai')->nullable();
+            $table->integer('id_pelamar')->nullable();
             $table->string('keterangan')->nullable();
             $table->string('nama_instansi')->nullable();
             $table->string('alamat')->nullable();

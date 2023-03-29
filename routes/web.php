@@ -122,6 +122,9 @@ Route::get('metode_rekrutmen', [RekruitmenController::class, 'create_metode'])->
 Route::post('store_metode_rekrutmen', [RekruitmenController::class, 'store_metode_rekrutmen'])->name('store_metode_rekrutmen');
 Route::put('update_metode_rekrutmen{id}', [RekruitmenController::class, 'update_metode_rekrutmen'])->name('update_metode_rekrutmen');
 Route::get('metode_rekrutmen_destroy{id}', [RekruitmenController::class, 'metode_rekrutmen_destroy'])->name('metode_rekrutmen_destroy');
+// show yang baru
+Route::get('showkanidat{id}', [RekruitmenController::class, 'showkanidat'])->name('showkanidat');
+// Route::get('showidentitas{id}', [karyawanController::class, 'showidentitas'])->name('showidentitas');
 
 // Form Pelamar Controller
 

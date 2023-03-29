@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('rpendidikan', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('id_pegawai');
-            $table->enum('tingkat',['SD','SMP','SMA/K','Universitas'])->nullable();
-
+            $table->integer('id_pegawai')->nullable();
+            $table->integer('id_pelamar')->nullable();
+            // $table->enum('tingkat',['SD','SMP','SMA/K','Universitas'])->nullable();
+            $table->string('tingkat')->nullable();
             $table->string('nama_sekolah')->nullable();          
             $table->string('nama_lembaga')->nullable();          
             $table->string('kota_pformal')->nullable();
@@ -27,8 +28,8 @@ return new class extends Migration
             $table->year('tahun_lulus_formal')->nullable();
             $table->year('tahun_lulus_nonformal')->nullable();
             $table->text('jenis_pendidikan')->nullable();
-            $table->integer('ijazah_formal')->nullable();
-            $table->integer('ijazah_nonformal')->nullable();
+            $table->string('ijazah_formal')->nullable();
+            $table->string('ijazah_nonformal')->nullable();
 
 
             $table->timestamps();

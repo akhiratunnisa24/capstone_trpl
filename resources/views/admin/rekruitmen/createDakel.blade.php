@@ -19,7 +19,7 @@
     </head>
 
     <div class="container">
-        <form action="store_data_keluarga" method="POST" enctype="multipart/form-data" onsubmit="return confirmSave()">
+        <form action="store_data_keluarga" method="POST" enctype="multipart/form-data">
             @csrf
             @method('post')
             <!-- Page-Title -->
@@ -206,7 +206,7 @@
                                                                             class="form-control"
                                                                             id="pekerjaanPasangan"
                                                                             aria-describedby="emailHelp"
-                                                                            placeholder="Masukkan Pekerjaan" required>
+                                                                            placeholder="Masukkan Pekerjaan" autocomplete="off">
                                                                         <div id="emailHelp" class="form-text"></div>
                                                                     </div>
                                                                 </div>

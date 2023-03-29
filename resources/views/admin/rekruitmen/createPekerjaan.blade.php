@@ -57,7 +57,8 @@
                                     <tbody>
                                         @foreach($pekerjaan as $key => $pek)
                                             <tr>
-                                                <td id="key">{{ $key }}</td>
+                                                {{-- <td id="key">{{ $key }}</td> --}}
+                                                    <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $pek['nama_perusahaan'] }}</td>
                                                 <td>{{ $pek['alamat'] }}</td>
                                                 <td>{{ $pek['tgl_mulai'] }}</td>
@@ -107,7 +108,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Alamat </label>
-                                                                    <input type="text"  name="alamatPerusahaan" class="form-control" id="alamat" placeholder="Masukkan Alamat">
+                                                                    <input type="text"  name="alamatPerusahaan" class="form-control" id="alamat" placeholder="Masukkan Alamat" autocomplete="off">
                                                                 </div>
                                                             </div>
 

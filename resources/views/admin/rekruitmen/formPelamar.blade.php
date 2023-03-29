@@ -224,7 +224,7 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">No. NPWP *</label>
-                                                        <input type="number" name="nonpwpPelamar"
+                                                        <input type="text" name="nonpwpPelamar"
                                                             class="form-control"
                                                             value="{{ $pelamar->no_npwp ?? '' }}"
                                                             placeholder="Masukkan No. NPWP">

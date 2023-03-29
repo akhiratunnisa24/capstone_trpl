@@ -264,8 +264,8 @@ class FormPelamarController extends Controller
             'nama_lembaga'         => $request->namaLembaga,
             'kota_pformal'         => $request->kotaPendidikanFormal,
             'jurusan'              => $request->jurusan,
-            'tahun_lulus_formal'   => Carbon::parse($request->tahun_lulusFormal)->format('Y'),
-            'tahun_lulus_nonformal'=> Carbon::parse($request->tahunLulusNonFormal)->format('Y'),
+            'tahun_lulus_formal'   => $request->tahun_lulusFormal,
+            'tahun_lulus_nonformal'=> $request->tahunLulusNonFormal,
             'jenis_pendidikan'     => $request->jenis_pendidikan,
             'kota_pnonformal'      => $request->kotaPendidikanNonFormal,
             'ijazah_formal' => $request->noijazahPformal,
@@ -495,43 +495,43 @@ class FormPelamarController extends Controller
         $idKaryawan = $pelamar->id;
 
         $datakeluarga = json_decode($request->session()->get('datakeluarga', []), true);
-        $datakeluargaMerged = array_map(function ($item) use ($idKaryawan) {
-            $item['id_pegawai'] = $idKaryawan;
+        $datakeluargaMerge = array_map(function ($item) use ($idKaryawan) {
+            $item['id_pelamar'] = $idKaryawan;
             return $item;
         }, $datakeluarga);
-        $datakeluargaModel = Keluarga::insert($datakeluargaMerged);
+        $datakeluargas = Keluarga::insert($datakeluargaMerge);
 
         $kontakdarurat = json_decode($request->session()->get('kontakdarurat', []), true);
         $kontakdaruratMerge =  array_map(function ($item) use ($idKaryawan) {
-            $item['id_pegawai'] = $idKaryawan;
+            $item['id_pelamar'] = $idKaryawan;
             return $item;
         }, $kontakdarurat);
         $kontakdarurats = Kdarurat::insert($kontakdaruratMerge);
 
         $pendidikan = json_decode($request->session()->get('pendidikan', []), true);
         $pendidikanMerge =  array_map(function ($item) use ($idKaryawan) {
-            $item['id_pegawai'] = $idKaryawan;
+            $item['id_pelamar'] = $idKaryawan;
             return $item;
         }, $pendidikan);
         $pendidikans = Rpendidikan::insert($pendidikanMerge);
 
         $pekerjaan = json_decode($request->session()->get('pekerjaan', []), true);
         $pekerjaanMerge = array_map(function ($item) use ($idKaryawan) {
-            $item['id_pegawai'] = $idKaryawan;
+            $item['id_pelamar'] = $idKaryawan;
             return $item;
         }, $pekerjaan);
         $pekerjaans = Rpekerjaan::insert($pekerjaanMerge);
 
         $organisasi = json_decode($request->session()->get('organisasi', []), true);
         $organisasiMerge = array_map(function ($item) use ($idKaryawan) {
-            $item['id_pegawai'] = $idKaryawan;
+            $item['id_pelamar'] = $idKaryawan;
             return $item;
         }, $organisasi);
         $organisasis = Rorganisasi::insert($organisasiMerge);
 
         $prestasi = json_decode($request->session()->get('prestasi', []), true);
         $prestasiMerge = array_map(function ($item) use ($idKaryawan) {
-            $item['id_pegawai'] = $idKaryawan;
+            $item['id_pelamar'] = $idKaryawan;
             return $item;
         }, $prestasi);
         $prestasis = Rprestasi::insert($prestasiMerge);

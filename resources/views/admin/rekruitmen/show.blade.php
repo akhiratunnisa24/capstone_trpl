@@ -139,6 +139,12 @@
                                                 {{-- @if ($k->status_lamaran == 'tahap 1') --}}
 
                                                 <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm ">as</i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
                                                         data-target="#myModal{{ $k->id }}">

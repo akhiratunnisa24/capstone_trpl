@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('keluarga', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_pegawai');
+            $table->integer('id_pegawai')->nullable();
             $table->integer('id_pelamar')->nullable();
             $table->string('hubungan')->nullable();
             $table->string('status_pernikahan')->nullable();

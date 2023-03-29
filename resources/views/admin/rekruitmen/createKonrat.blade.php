@@ -52,7 +52,8 @@
                                         <tbody>
                                             @foreach ($kontakdarurat as $key => $kd)
                                                 <tr>
-                                                    <td id="key">{{ $key }}</td>
+                                                    {{-- <td id="key">{{ $key }}</td> --}}
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $kd['nama'] }}</td>
                                                     <td>{{ $kd['no_hp'] }}</td>
                                                     <td>{{ $kd['alamat'] }}</td>
@@ -142,7 +143,7 @@
                                                                             value="{{ $kontakdarurat->alamat ?? '' }}"
                                                                             name="alamatKdarurat" rows="9"
                                                                             placeholder="Masukkan Alamat"
-                                                                            required>
+                                                                            autocomplete="off">
                                                                     </div>
                                                                 </div>
 

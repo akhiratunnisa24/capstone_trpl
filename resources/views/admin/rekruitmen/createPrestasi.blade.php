@@ -54,7 +54,8 @@
                                     <tbody>
                                         @foreach ($prestasi as $key => $pres)
                                             <tr>
-                                                <td id="key">{{ $key }}</td>
+                                                {{-- <td id="key">{{ $key }}</td> --}}
+                                                    <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $pres['keterangan'] }}</td>
                                                 <td>{{ $pres['nama_instansi'] }}</td>
                                                 <td>{{ $pres['alamat'] }}</td>
@@ -113,7 +114,7 @@
                                                                     <label class="form-label">Instansi Pemberi </label>
                                                                     <input type="text" name="namaInstansi"
                                                                         class="form-control"
-                                                                        placeholder="Masukkan Nama Instansi">
+                                                                        placeholder="Masukkan Nama Instansi" autocomplete="off">
                                                                 </div>
                                                             </div>
 

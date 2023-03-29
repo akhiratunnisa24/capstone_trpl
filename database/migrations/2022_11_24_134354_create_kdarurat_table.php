@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('kdarurat', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('id_pegawai');
+            $table->integer('id_pegawai')->nullable();
+            $table->integer('id_pelamar')->nullable();
             $table->string('nama')->nullable();
             $table->string('alamat')->nullable();          
             $table->string('no_hp')->nullable();
