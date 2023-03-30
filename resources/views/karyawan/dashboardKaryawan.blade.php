@@ -28,8 +28,9 @@
                                 class="dropdown-toggle waves-effect waves-light collapsed">
                                 Permintaan Cuti Karyawan
                                 
-                                @if ($cutijumlah)
+                                @if($cutijumlah)
                                     <span class="badge badge badge-danger" style="background-color:red">{{ $cutijumlah }}</span>
+                                @elseif(!$cutijumlah)
                                 @endif
                             </a>
                         </h4>
@@ -62,7 +63,7 @@
                                                     {{-- <td>{{$data->keperluan}}</td> --}}
                                                     <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}</td>
                                                     {{-- <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td> --}}
-                                                    <td>{{ $data->jml_cuti }} Hari</td>
+                                                    {{-- <td>{{ $data->jml_cuti }} Hari</td> --}}
                                                     <td>
                                                         {{-- {{ $data->status }} --}}
                                                         <span
@@ -96,6 +97,28 @@
                                                                     </form>
                                                                 </div>
                                                             @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
+                                                                <div class="col-sm-3">
+                                                                    <form action="/permintaan_cuti/{{ $data->id }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-sm-3" style="margin-left:8px">
+                                                                    <form action="{{ route('cuti.tolak', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('POST')
+                                                                        <input type="hidden" name="status" value="Ditolak"
+                                                                            class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                            @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6)
                                                                 <div class="col-sm-3">
                                                                     <form action="/permintaan_cuti/{{ $data->id }}"
                                                                         method="POST">

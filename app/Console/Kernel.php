@@ -49,7 +49,8 @@ class Kernel extends ConsoleKernel
             // dd($karyawan);
 
         // $schedule->command('AbsenKaryawanEvent')->dailyAt('23:59');
-                $schedule->call(function (){
+        $schedule->call(function ()
+        {
                 $karyawanSudahAbsen = DB::table('absensi')
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
@@ -150,9 +151,27 @@ class Kernel extends ConsoleKernel
                     $user->update(['status_akun' => 0]);
                     Log::info("Status_akun for user with ID: " . $user->id . " has been updated to 0");
                 }
-                    
+
         })
         ->dailyAt('08:42');
+
+        $schedule->call(function () 
+        {
+            $year = Carbon::now()->year;
+            // $year = Carbon::now()->subYear()->year;
+
+            $alokasitahunlalu = Alokasicuti::where('sampai', '<=', Carbon::create($year, 12, 31)->toDateString())
+                ->where('status', '=', '1')
+                ->where('id_jeniscuti','!=',1)
+                ->get();
+            
+            foreach ($alokasitahunlalu as $cut) {
+                Alokasicuti::where('id', '=', $cut->id)
+                    ->update(['status' => 0]);
+            }
+
+        })->yearlyOn(12, 31, '00:01');
+        //->yearlyOn(03, 29, '10:27'); 
     
     
     }

@@ -66,8 +66,10 @@ class SettingalokasicutiController extends Controller
             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
             $settingalokasi->durasi       = $request->durasi;
             $mode = implode(',', $request->mode_karyawan);
-            $settingalokasi['mode_karyawan'] = $mode;
+            $settingalokasi['mode_karyawan']        = $mode;
             $settingalokasi->cuti_bersama_terhutang = null;
+            $settingalokasi->periode = $year;
+            $settingalokasi->status  = 1;
 
             $settingalokasi->save();
 
@@ -158,10 +160,12 @@ class SettingalokasicutiController extends Controller
             ]);
 
             $settingalokasi = new Settingalokasi;
-            $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
-            $settingalokasi->durasi       = $request->durasi;
+            $settingalokasi->id_jeniscuti  = $request->id_jeniscuti;
+            $settingalokasi->durasi        = $request->durasi;
             $settingalokasi->mode_karyawan = $request->mode_karyawans;
             $settingalokasi->cuti_bersama_terhutang = $request->cuti_bersama_terhutang;
+            $settingalokasi->periode       = $year;
+            $settingalokasi->status        = 1;
 
             $settingalokasi->save();
 
@@ -259,6 +263,60 @@ class SettingalokasicutiController extends Controller
             return redirect()->back()->withInput();
         }     
     }
+
+    public function show($id)
+    {
+        $settingalokasi = Settingalokasi::find($id);
+        return view('admin.settingalokasi.showsetting', compact('settingalokasi'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $settingalokasi = Settingalokasi::find($id);
+        if ($request->mode_alokasi == 'Berdasarkan Departemen') {
+            // dd($settingalokasi->departemen);
+            $validate = $request->validate([
+                'id_jeniscuti' => 'required',
+                'durasi'       => 'required',
+            ]);
+
+            $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
+            $settingalokasi->durasi       = $request->durasi;
+            $settingalokasi->mode_alokasi = $request->mode_alokasi;
+            $settingalokasi->departemen   = $request->departemen;
+            $settingalokasi->tipe_approval= $request->tipe_approval;
+
+            $settingalokasi->update();
+            // dd($settingalokasi);
+
+        } else {
+            $validate = $request->validate([
+                'id_jeniscuti' => 'required',
+                'durasi'       => 'required',
+                'mode_alokasi' => 'required',
+                'mode_karyawan' => 'required',
+            ]);
+            $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
+            $settingalokasi->durasi       = $request->durasi;
+            $settingalokasi->mode_alokasi = $request->mode_alokasi;
+            $mode = implode(',', $request->mode_karyawan);
+            $settingalokasi['mode_karyawan'] = $mode;
+            $settingalokasi->tipe_approval= $request->tipe_approval;
+            $settingalokasi->update();
+        }
+        return redirect('/settingalokasi');
+    }
+
+    public function destroy($id)
+    {
+        $settingalokasi = Settingalokasi::find($id);
+        $settingalokasi->delete();
+
+        return redirect('/settingalokasi');
+    }
+}
+
+    
 
     // public function stores(Request $request)
     // {
@@ -428,54 +486,4 @@ class SettingalokasicutiController extends Controller
     // }
 
 
-    public function show($id)
-    {
-        $settingalokasi = Settingalokasi::find($id);
-        return view('admin.settingalokasi.showsetting', compact('settingalokasi'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $settingalokasi = Settingalokasi::find($id);
-        if ($request->mode_alokasi == 'Berdasarkan Departemen') {
-            // dd($settingalokasi->departemen);
-            $validate = $request->validate([
-                'id_jeniscuti' => 'required',
-                'durasi'       => 'required',
-            ]);
-
-            $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
-            $settingalokasi->durasi       = $request->durasi;
-            $settingalokasi->mode_alokasi = $request->mode_alokasi;
-            $settingalokasi->departemen   = $request->departemen;
-            $settingalokasi->tipe_approval= $request->tipe_approval;
-
-            $settingalokasi->update();
-            // dd($settingalokasi);
-
-        } else {
-            $validate = $request->validate([
-                'id_jeniscuti' => 'required',
-                'durasi'       => 'required',
-                'mode_alokasi' => 'required',
-                'mode_karyawan' => 'required',
-            ]);
-            $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
-            $settingalokasi->durasi       = $request->durasi;
-            $settingalokasi->mode_alokasi = $request->mode_alokasi;
-            $mode = implode(',', $request->mode_karyawan);
-            $settingalokasi['mode_karyawan'] = $mode;
-            $settingalokasi->tipe_approval= $request->tipe_approval;
-            $settingalokasi->update();
-        }
-        return redirect('/settingalokasi');
-    }
-
-    public function destroy($id)
-    {
-        $settingalokasi = Settingalokasi::find($id);
-        $settingalokasi->delete();
-
-        return redirect('/settingalokasi');
-    }
-}
+    
