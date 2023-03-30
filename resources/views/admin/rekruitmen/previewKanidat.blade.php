@@ -23,7 +23,7 @@
         <div class="row" style="margin-top: 30px">
             <div class="col-sm-12">
                 <div class="page-header-title">
-                    <h4 class="pull-left page-title">Form Penerimaan Rekruitmen</h4>
+                    <h4 class="pull-left page-title">Detail Pelamar</h4>
 
                     <div class="clearfix"></div>
                 </div>
@@ -549,9 +549,10 @@
             </div>
 
             <div class="modal-footer">
-                <a href="/create_data_prestasi" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Perbaiki</a>
-                <button type="submit" name="submit" class="btn btn-sm btn-success"><strong><i
-                            class="fa fa-paper-plane"></i></strong> Kirim Data</button>
+                <a href="/data_rekrutmen" class="btn btn-sm btn-danger"><i class="fa fa-backward"></i> Kembali</a>
+                {{-- <button onclick="history.back()" class="btn btn-sm btn-danger"><i class="fa fa-backward"></i> Kembali rtes  </button> --}}
+                {{-- <button type="submit" name="submit" class="btn btn-sm btn-success"><strong><i
+                            class="fa fa-paper-plane"></i></strong> Kirim Data</button> --}}
             </div>
         </form>
 

@@ -13,9 +13,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\RekruitmenNotification;
+use App\Models\Kdarurat;
 use App\Models\Keluarga;
 use App\Models\MetodeRekruitmen;
 use App\Models\NamaTahap;
+use App\Models\Rorganisasi;
+use App\Models\Rpekerjaan;
+use App\Models\Rpendidikan;
+use App\Models\Rprestasi;
 use App\Models\StatusRekruitmen;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
@@ -156,16 +161,48 @@ class RekruitmenController extends Controller
                 ->where('status_lamaran', '=', '2')
                 ->count('posisi');
 
+            // Show data Kanidat di Tahap 1
             $dataTahap1 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
                 ->where('status_lamaran', '=', '1')
                 ->get();
+            // // Data Keluarga show di Modal
+            // foreach ($dataTahap1 as $data) {
 
-            $dataKeluarga = Keluarga::where('id_pelamar', $id)
-            ->get();
+            //     $dataKeluarga = Keluarga::where('id_pelamar', $data->id)
+            //         ->get();
 
-            // $dataTahap2 = Rekruitmen::with('statusrekruitmen', 'namatahap')->where('id_lowongan', $id)
-            // ->where('status_lamaran', '=', 'Interview ke-1')
-            // ->get();
+            //     // $dataKeluarga = Keluarga::leftjoin('rekruitmen', 'keluarga.id_pelamar', 'rekruitmen.id')
+            //     // ->select('keluarga.*', 'rekruitmen.id_lowongan as id_rekruitmen')
+            //     // ->where('rekruitmen.id_lowongan', '=', $data->id_lowongan)
+            //     // ->get();
+            // }
+            // // Data Riwayat Pendidikan show di Modal
+            // foreach ($dataTahap1 as $data) {
+
+            //     $dataPendidikan = Rpendidikan::where('id_pelamar', $data->id)
+            //         ->get();
+            // }
+            // // Data Riwayat Pekerjaan show di Modal
+            // foreach ($dataTahap1 as $data) {
+
+            //     $dataPekerjaan = Rpekerjaan::where('id_pelamar', $data->id)
+            //     ->get();
+            // }
+            // foreach ($dataTahap1 as $data) {
+
+            //     $dataOrganisasi = Rorganisasi::where('id_pelamar', $data->id)
+            //     ->get();
+            // }
+            // foreach ($dataTahap1 as $data) {
+
+            //     $dataPrestasi = Rprestasi::where('id_pelamar', $data->id)
+            //     ->get();
+            // }
+            // foreach ($dataTahap1 as $data) {
+
+            //     $dataKdarurat = Kdarurat::where('id_pelamar', $data->id)
+            //     ->get();
+            // }
 
             $dataTahap2 = Rekruitmen::with('mrekruitmen', 'namatahap')->where('id_lowongan', $id)
                 ->where('status_lamaran', '=', '2')
@@ -191,21 +228,26 @@ class RekruitmenController extends Controller
 
             return view('admin.rekruitmen.show', compact(
                 'totalDiterima',
-                 'lowongan',
-                  'totalTahap1',
-                   'totalTahap2',
-                    'totalTahap3',
-                     'dataTahap1',
-                      'dataTahap2',
-                       'dataTahap3',
-                        'dataTahap4',
-                         'dataTahap5',
-                          'row',
-                           'dataDiterima',
-                            'posisi',
-                             'metode',
-                'dataKeluarga'
-                            ));
+                'lowongan',
+                'totalTahap1',
+                'totalTahap2',
+                'totalTahap3',
+                'dataTahap1',
+                'dataTahap2',
+                'dataTahap3',
+                'dataTahap4',
+                'dataTahap5',
+                'row',
+                'dataDiterima',
+                'posisi',
+                'metode',
+                // 'dataKeluarga',
+                // 'dataPendidikan',
+                // 'dataPekerjaan',
+                // 'dataOrganisasi',
+                // 'dataKdarurat',
+                // 'dataPrestasi',
+            ));
         } else {
 
             return redirect()->back();
@@ -220,16 +262,25 @@ class RekruitmenController extends Controller
         if ($role == 1) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $pelamar = Rekruitmen::findOrFail($id);
+            $datakeluarga = Keluarga::where('id_pelamar', $id)->get();
+            $kontakdarurat = Kdarurat::where('id_pelamar', $id)->get();
+            $pendidikan = Rpendidikan::where('id_pelamar', $id)->get();
+            $pekerjaan = Rpekerjaan::where('id_pelamar', $id)->get();
+            $organisasi = Rorganisasi::where('id_pelamar', $id)->get();
+            $prestasi = Rprestasi::where('id_pelamar', $id)->get();
 
-            $karyawan = karyawan::findOrFail($id);
-            $departemen     = Departemen::all();
 
             $output = [
                 'row' => $row,
-                'karyawan' => $karyawan,
-                'departemen' => $departemen,
+                'pelamar' => $pelamar,
+                'datakeluarga' => $datakeluarga,
+                'kontakdarurat' => $kontakdarurat,
+                'pendidikan' => $pendidikan,
+                'pekerjaan' => $pekerjaan,
+                'organisasi' => $organisasi,
+                'prestasi' => $prestasi,
             ];
-
             return view('admin.rekruitmen.previewKanidat', $output);
         } else {
 

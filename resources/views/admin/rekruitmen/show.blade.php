@@ -140,18 +140,18 @@
 
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm ">as</i>
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
                                                 </div>
 
-                                                <div class="col-md-3">
+                                                {{-- <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
                                                         data-target="#myModal{{ $k->id }}">
                                                         <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
                                                 </div>
-                                                @include('admin.rekruitmen.showModal')
+                                                @include('admin.rekruitmen.showModal') --}}
 
                                                 <div class="col-md-3">
                                                     @csrf
@@ -245,14 +245,21 @@
                                             <td>
 
                                                 {{-- @if ($k->status_lamaran == 'tahap 2') --}}
+
                                                 <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+
+                                                {{-- <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
                                                         data-target="#myModal{{ $k->id }}">
                                                         <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
                                                 </div>
-                                                @include('admin.rekruitmen.showModal')
+                                                @include('admin.rekruitmen.showModal') --}}
 
                                                 <div class="col-md-3">
                                                     @csrf
@@ -336,14 +343,21 @@
                                             <td>
 
                                                 {{-- @if ($k->status_lamaran == 'tahap 2') --}}
+
                                                 <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+
+                                                {{-- <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
                                                         data-target="#myModal{{ $k->id }}">
                                                         <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
                                                 </div>
-                                                @include('admin.rekruitmen.showModal')
+                                                @include('admin.rekruitmen.showModal') --}}
 
                                                 <div class="col-md-3">
                                                     @csrf
@@ -428,14 +442,21 @@
                                             <td>
 
                                                 {{-- @if ($k->status_lamaran == 'tahap 2') --}}
+
                                                 <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+
+                                                {{-- <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
                                                         data-target="#myModal{{ $k->id }}">
                                                         <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
                                                 </div>
-                                                @include('admin.rekruitmen.showModal')
+                                                @include('admin.rekruitmen.showModal') --}}
 
                                                 <div class="col-md-3">
                                                     @csrf
@@ -518,13 +539,19 @@
 
                                                 {{-- @if ($k->status_lamaran == 'tahap 2') --}}
                                                 <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+
+                                                {{-- <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
                                                         data-target="#myModal{{ $k->id }}">
                                                         <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
                                                 </div>
-                                                @include('admin.rekruitmen.showModal')
+                                                @include('admin.rekruitmen.showModal') --}}
 
                                                 <div class="col-md-3">
                                                     @csrf
@@ -612,13 +639,20 @@
                                             <td>
 
                                                 {{-- @if ($k->status_lamaran == 'Diterima') --}}
+
                                                 <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                
+                                                {{-- <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
                                                         data-target="#myModal{{ $k->id }}">
                                                         <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
-                                                </div>
+                                                </div> --}}
                                                 {{-- @endif --}}
                                             </td>
 

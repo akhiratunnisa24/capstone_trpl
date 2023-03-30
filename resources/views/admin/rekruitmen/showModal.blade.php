@@ -14,7 +14,7 @@
                         <h4> A. DATA DIRI</h4>
                     </label>
                 </div>
-                
+
                 {{-- BARIS KIRI --}}
                 <div class="col-md-6">
 
@@ -189,43 +189,242 @@
 
                 </div>
 
-                <div class="col-md-12">
-                    <label><h4> B. DATA KELUARGA</h4></label>
+                {{-- <div class="col-md-12">
+                    <label>
+                        <h4> B. RIWAYAT PENDIDIKAN</h4>
+                    </label>
 
                     <table class="table table-striped">
-                            <thead class="alert alert-info">
+                        <br>
+                        <label class="text-white badge bg-info">Pendidikan Formal</label>
+                        <thead class="alert alert-info">
+                            <tr>
+                                <th>No</th>
+                                <th>Tingkat</th>
+                                <th>Nama Sekolah</th>
+                                <th>Alamat</th>
+                                <th>Jurusan</th>
+                                <th>Tahun Lulus</th>
+                                <th>Nomor Ijazah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($dataPendidikan as $k)
                                 <tr>
-                                    <th>No</th>
-                                    <th>Hubungan</th>
-                                    <th>Nama</th>
-                                    <th>Jenis Kelamin</th>
-                                    <th>Tanggal Lahir</th>
-                                    <th>Kota Kelahiran</th>
-                                    <th>Pendidikan Terakhir</th>
-                                    <th>Pekerjaan</th>
-
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $k->tingkat ?? '' }}</td>
+                                    <td>{{ $k->nama_sekolah ?? '' }}</td>
+                                    <td>{{ $k->kota_pformal ?? '' }}</td>
+                                    <td>{{ $k->jurusan ?? '' }}</td>
+                                    <td>{{ $k->tahun_lulus_formal ?? '' }}</td>
+                                    <td>{{ $k->ijazah_formal ?? '' }}</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {{-- @foreach ($k as $k) --}}
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $k->keluarga->hubungan }}</td>
-                                        {{-- <td>{{ $k->keluarga->hubungan }}</td> --}}
-                                        {{-- <td>{{ $k->nama}}</td>
-                                        <td>{{ $k->jenis_kelamin}}</td>
-                                        <td>{{ $k->tgllahir}}</td>
-                                        <td>{{ $k->tempatlahir}}</td>
-                                        <td>{{ $k->pendidikan_terakhir }}</td>
-                                        <td>{{ $k->pekerjaan}}</td> --}}
-                                    </tr>
-                                {{-- @endforeach --}}
-                            </tbody>
-                        </table>
-                   
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    <table class="table table-striped">
+                        <label class="text-white badge bg-info">Pendidikan Non Formal</label>
+                        <thead class="alert alert-info">
+                            <tr>
+                                <th>No</th>
+                                    <th>Jenis/Bidang Pendidikan</th>
+                                    <th>Lembaga Pendidikan</th>
+                                    <th>Alamat</th>
+                                    <th>Tahun Lulus</th>
+                                    <th>Nomor Ijazah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($dataPendidikan as $k)
+                            @if ($k->jenis_pendidikan != null)
+                                <tr>
+                                    <td>{{ $loop->iteration ?? '' }}</td>
+                                    <td>{{ $k->jenis_pendidikan ?? '' }}</td>
+                                    <td>{{ $k->nama_lembaga ?? '' }}</td>
+                                    <td>{{ $k->kota_pnonformal ?? '' }}</td>
+                                    <td>{{ $k->tahun_lulus_nonformal ?? '' }}</td>
+                                    <td>{{ $k->ijazah_nonformal ?? '' }}</td>
+                                </tr>
+                                    @endif
+                            @endforeach
+                        </tbody>
+                    </table>
 
                 </div>
+
+                <div class="col-md-12">
+                    <label>
+                        <h4> C. RIWAYAT PEKERJAAN</h4>
+                    </label>
+
+                    <table class="table table-striped">
+                        <thead class="alert alert-info">
+                            <tr>
+                                <th>No</th>
+                                    <th>Nama Perusahaan</th>
+                                    <th>Alamat</th>
+                                    <th>Tanggal Masuk</th>
+                                    <th>Tanggal Keluar</th>
+                                    <th>Jabatan</th>
+                                    <th>Level</th>
+                                    <th>Gaji</th>
+                                    <th>Alasan Berhenti</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($dataPekerjaan as $k)
+                                <tr>
+                                    <td>{{ $loop->iteration ?? '' }}</td>
+                                    <td>{{ $k->nama_perusahaan ?? '' }}</td>
+                                    <td>{{ $k->alamat ?? '' }}</td>
+                                    <td>{{ $k->tgl_mulai ?? '' }}</td>
+                                    <td>{{ $k->tgl_selesai ?? '' }}</td>
+                                    <td>{{ $k->jabatan ?? '' }}</td>
+                                    <td>{{ $k->level ?? '' }}</td>
+                                    <td>{{ $k->gaji ?? '' }}</td>
+                                    <td>{{ $k->alasan_berhenti ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="col-md-12">
+                    <label>
+                        <h4> D. RIWAYAT ORGANISASI</h4>
+                    </label>
+
+                    <table class="table table-striped">
+                        <thead class="alert alert-info">
+                            <tr>
+                                <th>No</th>
+                                    <th>Nama Organisasi</th>
+                                    <th>Alamat</th>
+                                    <th>Tanggal Masuk</th>
+                                    <th>Tanggal Keluar</th>
+                                    <th>Jabatan</th>
+                                    <th>Nomor SK</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($dataOrganisasi as $k)
+                                <tr>
+                                    <td>{{ $loop->iteration ?? '' }}</td>
+                                    <td>{{ $k->nama_organisasi ?? '' }}</td>
+                                    <td>{{ $k->alamat ?? '' }}</td>
+                                    <td>{{ $k->tgl_mulai ?? '' }}</td>
+                                    <td>{{ $k->tgl_selesai ?? '' }}</td>
+                                    <td>{{ $k->jabatan ?? '' }}</td>
+                                    <td>{{ $k->no_sk ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="col-md-12">
+                    <label>
+                        <h4> E. RIWAYAT PRESTASI</h4>
+                    </label>
+
+                    <table class="table table-striped">
+                        <thead class="alert alert-info">
+                            <tr> 
+                                <th>No</th>
+                                    <th>Perihal / Keterangan</th>
+                                    <th>Instansi Pemberi</th>
+                                    <th>Alamat</th>
+                                    <th>Nomor Surat / Sertifikat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($dataPrestasi as $k)
+                                <tr>
+                                    <td>{{ $loop->iteration ?? '' }}</td>
+                                    <td>{{ $k->keterangan ?? '' }}</td>
+                                    <td>{{ $k->nama_instansi ?? '' }}</td>
+                                    <td>{{ $k->alamat ?? '' }}</td>
+                                    <td>{{ $k->tgl_selesai ?? '' }}</td>
+                                    <td>{{ $k->no_surat ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="col-md-12">
+                    <label>
+                        <h4> F. DATA KELUARGA</h4>
+                    </label>
+
+                    <table class="table table-striped">
+                        <thead class="alert alert-info">
+                            <tr>
+                                <th>No</th>
+                                <th>Hubungan</th>
+                                <th>Nama</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Kota Kelahiran</th>
+                                <th>Pendidikan Terakhir</th>
+                                <th>Pekerjaan</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($dataKeluarga as $k)
+                                <tr>
+                                    <td>{{ $loop->iteration ?? '' }}</td>
+                                    <td>{{ $k->hubungan ?? '' }}</td>
+                                    <td>{{ $k->nama ?? '' }}</td>
+                                    <td>{{ $k->jenis_kelamin ?? '' }}</td>
+                                    <td>{{ $k->tgllahir ?? '' }}</td>
+                                    <td>{{ $k->tempatlahir ?? '' }}</td>
+                                    <td>{{ $k->pendidikan_terakhir ?? '' }}</td>
+                                    <td>{{ $k->pekerjaan ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+
                 
+
+                <div class="col-md-12">
+                    <label>
+                        <h4> G. KONTAK DARURAT</h4>
+                    </label>
+
+                    <table class="table table-striped">
+                        <thead class="alert alert-info">
+                            <tr> 
+                                <th>No</th>
+                                    <th>Nama</th>
+                                    <th>No HP</th>
+                                    <th>Alamat</th>
+                                    <th>Hubungan Keluarga</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($dataKdarurat as $k)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $k->nama ?? '' }}</td>
+                                    <td>{{ $k->no_hp ?? '' }}</td>
+                                    <td>{{ $k->alamat ?? '' }}</td>
+                                    <td>{{ $k->hubungan ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div> --}}
+
 
 
             </div>

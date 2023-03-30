@@ -521,7 +521,7 @@
                 <div id="riwayat-organisasi">
                     <div class="modal-body" style="margin-left:15px;margin-right:15px;">
                         <label class="" width="100%">
-                            <h4>H. RIWAYAT PRESTASI </h4>
+                            <h4>G. RIWAYAT PRESTASI </h4>
                         </label>
                         <table class="table table-striped">
                             <thead class="alert alert-info">
