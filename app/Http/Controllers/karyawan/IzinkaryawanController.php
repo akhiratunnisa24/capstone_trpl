@@ -61,6 +61,10 @@ class IzinkaryawanController extends Controller
             $izin->status      = $status->id;
             $izin->save();
 
+            $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                ->where('izin.id_karyawan','=',$izin->id_karyawan)
+                ->select('karyawan.email')
+                ->first();
             $idatasan = DB::table('karyawan')
                 ->join('izin','karyawan.id','=','izin.id_karyawan')
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
@@ -70,9 +74,11 @@ class IzinkaryawanController extends Controller
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
             // dd(strtoupper($atasan['jabatan']), $atasan['departemen'],$dep['departemen']);
+            // $dari = $emailkry['email'];
             $tujuan = $atasan['email'];
             $data = [
                 'subject'     =>'Pemberitahuan Permintaan Izin',
+                'dari'        =>$emailkry->email,
                 'id'          =>$izin->id,
                 'jenisizin'   =>$izin->jenisizins->jenis_izin,
                 'keperluan'   =>$izin->keperluan,
@@ -85,6 +91,10 @@ class IzinkaryawanController extends Controller
                 'jabatan'     =>strtoupper($atasan['jabatan']),
             ];
             Mail::to($tujuan)->send(new IzinNotification($data));
+            // Mail::send(new IzinNotification($data), [], function ($message) use ($tujuan, $emailkry) {
+            //     $message->from($emailkry['email']);
+            //     $message->to($tujuan);
+            // });
             return redirect()->back()->withInput();
 
         }else{

@@ -35,10 +35,12 @@
                                             <th>No</th>
                                             <th>Karyawan</th>
                                             <th>Kategori Cuti</th>
-                                            <th>Jumlah Cuti Tahun Ini </th>
+                                            {{-- <th>Jumlah Cuti Tahun Ini </th> --}}
                                             <th>Sisa Cuti Tahun Lalu</th>
                                             <th>Periode</th>
-                                            <th>Aksi</th>
+                                            <th>Masa Aktif</th>
+                                            <th>Status</th>
+                                            {{-- <th>Aksi</th> --}}
                                         </tr>
                                     </thead>
 
@@ -48,10 +50,18 @@
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$data->karyawans->nama}}</td>
                                                 <td>{{$data->jeniscutis->jenis_cuti}}</td>
-                                                <td>{{$data->jumlah_cuti}}</td>
+                                                {{-- <td>{{$data->jumlah_cuti}}</td> --}}
                                                 <td>{{$data->sisa_cuti}}</td>
                                                 <td>{{$data->periode}}</td>
+                                                <td>{{\Carbon\Carbon::parse($data->dari)->format('d/m')}} - {{\Carbon\Carbon::parse($data->sampai)->format('d/m Y') }}</td>
                                                 <td>
+                                                    @if($data->status == 1)
+                                                        <span class="badge badge-info">Aktif</span>
+                                                    @else
+                                                        <span class="badge badge-info">Kadaluarsa</span>
+                                                    @endif
+                                                </td>
+                                                {{-- <td>
                                                     <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                         <form action="/sisa-cuti/{{$data->id_pegawai}}" method="POST">
                                                             @csrf
@@ -60,7 +70,7 @@
                                                         </form>
                                                     </div>
 
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>

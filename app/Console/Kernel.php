@@ -2,24 +2,27 @@
 
 namespace App\Console;
 
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Console\Scheduling\Event;
-use App\Mail\TidakmasukNotification;
-use Illuminate\Support\Facades\Mail;
-use App\Models\Karyawan;
+use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
-use App\Models\Alokasicuti;
-use App\Models\Absensi;
-use App\Models\Tidakmasuk;
-use App\Models\Resign;
 use App\Models\User;
+use App\Models\Resign;
+use App\Models\Absensi;
+use App\Models\Karyawan;
+use App\Models\Sisacuti;
+use App\Models\Jeniscuti;
+use App\Models\Tidakmasuk;
+use App\Models\Alokasicuti;
+use App\Mail\SisacutiNotification;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
+use App\Mail\TidakmasukNotification;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Console\Scheduling\Event;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
@@ -76,14 +79,14 @@ class Kernel extends ConsoleKernel
 
                     // cek apakah karyawan memiliki cuti pada hari ini
                     $cuti = Cuti::join('jeniscuti', 'cuti.id_jeniscuti', '=', 'jeniscuti.id')
-                    ->where('id_karyawan', $karyawan->id)
-                    ->whereDate('tgl_mulai', '=', Carbon::today())
-                    ->first();
+                        ->where('id_karyawan', $karyawan->id)
+                        ->whereDate('tgl_mulai', '=', Carbon::today())
+                        ->first();
 
                     $izin = Izin::join('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->where('id_karyawan', $karyawan->id)
-                    ->whereDate('tgl_mulai', '=', Carbon::today())
-                    ->first();
+                        ->where('id_karyawan', $karyawan->id)
+                        ->whereDate('tgl_mulai', '=', Carbon::today())
+                        ->first();
 
                     if ($cuti) {
                         $absen->status = $cuti->jeniscuti->jenis_cuti;
@@ -172,6 +175,41 @@ class Kernel extends ConsoleKernel
 
         })->yearlyOn(12, 31, '00:01');
         //->yearlyOn(03, 29, '10:27'); 
+
+
+        $schedule->call(function () 
+        {
+            $jeniscuti = Jeniscuti::find(1);
+            $sisacuti = Sisacuti::leftjoin('karyawan', 'sisacuti.id_pegawai', '=', 'karyawan.id')
+                ->leftjoin('jeniscuti', 'jeniscuti.id', '=', 'sisacuti.id_jeniscuti')
+                ->where('sisacuti.id_jeniscuti', $jeniscuti->id)
+                ->where('sisacuti.sisa_cuti', '>', 0)
+                ->select('sisacuti.id_pegawai as id', 'karyawan.email as email', 'karyawan.nama as nama', 'sisacuti.id_jeniscuti as jeniscuti', 'jeniscuti.jenis_cuti as kategori', 'sisacuti.sisa_cuti as sisa', 'sisacuti.periode as tahun','sisacuti.dari as dari','sisacuti.sampai as sampai')
+                ->get();
+        
+            foreach($sisacuti as $sisa) {
+                $currentDate = Carbon::now();
+                $isEligible = $currentDate->month == 1 || $currentDate->month == 2 || $currentDate->month == 3;
+                $isInPeriod = $currentDate->between($sisa->dari, $sisa->sampai);
+        
+                if ($isEligible && $isInPeriod) {
+                    $tujuan = $sisa->email;
+        
+                    $data = [
+                        'subject' => 'Notifikasi Sisa Cuti Tahunan '. $sisa->tahun,
+                        'id' => $sisa->id,
+                        'kategori' => $sisa->kategori,
+                        'nama' => $sisa->nama,
+                        'tahun' => $sisa->tahun,
+                        'sisacuti' => $sisa->sisa,
+                        'aktifdari' =>Carbon::parse($sisa->dari)->format('d F Y'),
+                        'sampai' => Carbon::parse($sisa->sampai)->format('d F Y'),
+                    ];
+                    Mail::to($tujuan)->send(new SisacutiNotification($data));
+                }        
+            }
+        })->monthlyOn(30, '01,02,03')->at('15:02');
+        
     
     
     }

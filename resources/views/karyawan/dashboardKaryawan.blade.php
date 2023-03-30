@@ -47,7 +47,7 @@
                                                 <th>Karyawan</th>
                                                 <th>Cuti</th>
                                                 <th>Mulai</th>
-                                                <th>Cuti</th>
+                                                {{-- <th>Cuti</th> --}}
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -458,7 +458,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12">
-                            @if(count($sisacuti) > 0)
+                            @if(count($sisacutis) > 0)
                                 <table class="table table-striped">
                                     <label><b>Sisa Cuti Tahun Lalu</b></label>
                                     <thead>
@@ -471,14 +471,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($sisacuti as $sisa)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ Auth::user()->name }}</td>
-                                                {{-- <td>{{ $sisa->jeniscutis->jenis_cuti }}</td> --}}
-                                                {{-- <td>{{ $sisa->sisa_cuti }} hari</td>
-                                                <td>{{ $sisa->periode}}</td> --}}
-                                             </tr>
+                                        @foreach($sisacutis as $sisa)
+                                            @if($sisa->id_pegawai == Auth::user()->id_pegawai)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $sisa->karyawans->nama }}</td>
+                                                    <td>{{ $sisa->jeniscutis->jenis_cuti }}</td>
+                                                    <td>{{ $sisa->sisa_cuti }} hari</td>
+                                                    <td>{{ $sisa->periode}}</td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

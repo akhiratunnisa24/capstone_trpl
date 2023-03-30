@@ -21,6 +21,9 @@ return new class extends Migration
             $table->integer('jumlah_cuti');
             $table->integer('sisa_cuti')->nullable();
             $table->year('periode');
+            $table->date('dari');
+            $table->date('sampai');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

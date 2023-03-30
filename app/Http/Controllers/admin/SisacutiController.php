@@ -21,8 +21,8 @@ class SisacutiController extends Controller
         if ($role == 1) 
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $sisacuti = Sisacuti::orderBy('id', 'asc')->get();
-
+            $sisacuti = Sisacuti::where('sisa_cuti','!=',0)->get();
+            
             return view('admin.sisacuti.index', compact('sisacuti','row'));
 
         } else {

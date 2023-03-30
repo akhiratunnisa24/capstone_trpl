@@ -39,6 +39,7 @@ class SettingcutiController extends Controller
             ->where('id_jeniscuti', $jeniscuti->id)
             ->whereYear('aktif_dari', Carbon::now()->subYear()->year)
             ->get();
+        $year = Carbon::now()->year;
 
         // dd($alokasicuti);
         foreach ($alokasicuti as $data) {
@@ -61,9 +62,12 @@ class SettingcutiController extends Controller
                 $sisacuti->id_pegawai   = $settingcuti->id_pegawai;
                 $sisacuti->id_jeniscuti = $settingcuti->id_jeniscuti;
                 $sisacuti->id_setting   = $settingcuti->id;
-                $sisacuti->jumlah_cuti  = $settingcuti->jumlah_cuti;
-                $sisacuti->sisa_cuti    = $settingcuti->sisa_cuti;
+                $sisacuti->jumlah_cuti  = $settingcuti->sisa_cuti;
+                $sisacuti->sisa_cuti    = $settingcuti->jumlah_cuti;
                 $sisacuti->periode      = $settingcuti->periode;
+                $sisacuti->dari         = $year.'-01-01';;
+                $sisacuti->sampai       = $year.'-03-31';;
+                $sisacuti->status       = 1;
                 $sisacuti->save();
 
                 $alokasi = Alokasicuti::where('id_karyawan', $settingcuti->id_pegawai)
@@ -115,6 +119,9 @@ class SettingcutiController extends Controller
                          // Update data pada sisacuti
                         $sisacuti->jumlah_cuti = $durasi;
                         $sisacuti->sisa_cuti   = $jumlah_cuti;
+                        $sisacuti->dari         = $year.'-01-01';;
+                        $sisacuti->sampai       = $year.'-03-31';;
+                        $sisacuti->status       = 1;
                         $sisacuti->update();
 
                         Log::info('Data Reset Cuti Tahunan Berhasil di UPDATE'); 

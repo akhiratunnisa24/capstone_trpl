@@ -25,7 +25,8 @@ class IzinNotification extends Mailable
 
     public function build()
     {
-        return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+        // return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+        return $this->from($this->data['dari'])
         ->subject($this->data['subject'])
         ->view('emails.izinindex')->with('data',$this->data);
     }
