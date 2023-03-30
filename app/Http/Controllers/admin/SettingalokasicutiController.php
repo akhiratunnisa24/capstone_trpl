@@ -35,7 +35,8 @@ class SettingalokasicutiController extends Controller
         if ($role == 1) {
 
             $id = Settingalokasi::find('id');
-            $settingalokasi = Settingalokasi::orderBy('id', 'desc')->get();
+            $settingalokasi = Settingalokasi::where('status', true)->get();
+
             //untuk edit
             $setal = Settingalokasi::find($id);
             $jeniscuti = Jeniscuti::all();
@@ -74,31 +75,6 @@ class SettingalokasicutiController extends Controller
             $settingalokasi->save();
 
             $mode_karyawan_array = $settingalokasi->getModeKaryawanArrayAttribute();
-
-            // $karyawan = DB::table('karyawan')
-            // ->join('keluarga','karyawan.id','keluarga.id_pegawai')
-            // ->where(function ($query) use ($request,$mode_karyawan_array){
-            //     if(in_array("Laki-Laki",$mode_karyawan_array)){
-            //         $query->orWhere('karyawan.jenis_kelamin','Laki-Laki');
-            //     }
-            //     if(in_array("Perempuan", $mode_karyawan_array)){
-            //         $query->orWhere('karyawan.jenis_kelamin','Perempuan');
-            //     }
-            //     if(in_array("Belum Menikah",$mode_karyawan_array)){
-            //         $query->orWhere('keluarga.status_pernikahan','Belum Menikah');
-            //     }
-            //     if(in_array("Sudah Menikah",$mode_karyawan_array)){
-            //         $query->orWhere('keluarga.status_pernikahan','Sudah Menikah');
-            //     }
-            //     if(in_array("Duda",$mode_karyawan_array)){
-            //         $query->orWhere('keluarga.status_pernikahan','Duda');
-            //     }
-            //     if(in_array("Janda",$mode_karyawan_array)){
-            //         $query->orWhere('keluarga.status_pernikahan','Janda');
-            //     }
-            // })
-            // ->select('karyawan.id','karyawan.jenis_kelamin','keluarga.status_pernikahan')
-            // ->get();
 
             $karyawan = DB::table('karyawan')
             ->where(function ($query) use ($request, $mode_karyawan_array){
@@ -282,10 +258,8 @@ class SettingalokasicutiController extends Controller
 
             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
             $settingalokasi->durasi       = $request->durasi;
-            $settingalokasi->mode_alokasi = $request->mode_alokasi;
-            $settingalokasi->departemen   = $request->departemen;
-            $settingalokasi->tipe_approval= $request->tipe_approval;
-
+            $settingalokasi->tipe_alokasi = $request->tipe_alokasi;
+           
             $settingalokasi->update();
             // dd($settingalokasi);
 
@@ -293,15 +267,12 @@ class SettingalokasicutiController extends Controller
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
                 'durasi'       => 'required',
-                'mode_alokasi' => 'required',
                 'mode_karyawan' => 'required',
             ]);
             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
             $settingalokasi->durasi       = $request->durasi;
-            $settingalokasi->mode_alokasi = $request->mode_alokasi;
             $mode = implode(',', $request->mode_karyawan);
             $settingalokasi['mode_karyawan'] = $mode;
-            $settingalokasi->tipe_approval= $request->tipe_approval;
             $settingalokasi->update();
         }
         return redirect('/settingalokasi');
@@ -316,7 +287,30 @@ class SettingalokasicutiController extends Controller
     }
 }
 
-    
+     // $karyawan = DB::table('karyawan')
+            // ->join('keluarga','karyawan.id','keluarga.id_pegawai')
+            // ->where(function ($query) use ($request,$mode_karyawan_array){
+            //     if(in_array("Laki-Laki",$mode_karyawan_array)){
+            //         $query->orWhere('karyawan.jenis_kelamin','Laki-Laki');
+            //     }
+            //     if(in_array("Perempuan", $mode_karyawan_array)){
+            //         $query->orWhere('karyawan.jenis_kelamin','Perempuan');
+            //     }
+            //     if(in_array("Belum Menikah",$mode_karyawan_array)){
+            //         $query->orWhere('keluarga.status_pernikahan','Belum Menikah');
+            //     }
+            //     if(in_array("Sudah Menikah",$mode_karyawan_array)){
+            //         $query->orWhere('keluarga.status_pernikahan','Sudah Menikah');
+            //     }
+            //     if(in_array("Duda",$mode_karyawan_array)){
+            //         $query->orWhere('keluarga.status_pernikahan','Duda');
+            //     }
+            //     if(in_array("Janda",$mode_karyawan_array)){
+            //         $query->orWhere('keluarga.status_pernikahan','Janda');
+            //     }
+            // })
+            // ->select('karyawan.id','karyawan.jenis_kelamin','keluarga.status_pernikahan')
+            // ->get();
 
     // public function stores(Request $request)
     // {

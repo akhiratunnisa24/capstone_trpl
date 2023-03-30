@@ -184,8 +184,8 @@ class karyawanController extends Controller
                 ->get();
                 // return $alokasicuti;
 
-            $sisacuti = Sisacuti::where('id_pegawai',Auth::user()->id_pegawai)->get();
-            // return $sisacuti;
+            $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->get();
+          
 
             $posisi = Lowongan::all()->sortByDesc('created_at');
 
@@ -285,7 +285,7 @@ class karyawanController extends Controller
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
                 'posisi' => $posisi,
-                'sisacuti' =>$sisacuti,
+                'sisacutis' =>$sisacutis,
 
             ];
             return view('karyawan.dashboardKaryawan', $output);

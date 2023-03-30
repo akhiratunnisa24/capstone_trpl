@@ -10,6 +10,7 @@ use App\Models\Resign;
 use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Lowongan;
+use App\Models\Sisacuti;
 use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
@@ -200,6 +201,7 @@ class HomeController extends Controller
             ->selectraw('alokasicuti.durasi - cuti.jml_cuti as sisa, cuti.id_jeniscuti,cuti.jml_cuti')
             ->get();
 
+
         // Absen Terlambat Karyawan
         $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
@@ -296,6 +298,8 @@ class HomeController extends Controller
 
         $resign = Resign::orderBy('created_at', 'desc')->get();
         $resignjumlah = $resign->count();
+
+        $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->get();
 
 
         //NOTIFIKASI DATA TINDAKAN TERHADAPA KARYAWAN TIDAK MASUK
@@ -423,6 +427,7 @@ class HomeController extends Controller
                 'absenBulanini' => $absenBulanini,
                 'absenBulanlalu'=> $absenBulanlalu,
                 'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
+                'sisacutis' => $sisacutis,
             ];
             return view('karyawan.dashboardKaryawan', $output);
 
@@ -462,6 +467,7 @@ class HomeController extends Controller
                 'izinjumlah' => $izinjumlah,
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
+                'sisacutis' => $sisacutis,
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }

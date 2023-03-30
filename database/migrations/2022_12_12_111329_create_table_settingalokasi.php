@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('durasi');
             $table->string('mode_karyawan',100)->nullable();
             $table->string('cuti_bersama_terhutang',10)->nullable();
+            $table->year('periode');
+            $table->boolean('status');
             $table->timestamps();
 
             $table->foreign('id_jeniscuti')->references('id')->on('jeniscuti')->onDelete('cascade');

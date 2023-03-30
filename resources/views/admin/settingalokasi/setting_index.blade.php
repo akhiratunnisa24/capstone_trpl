@@ -39,6 +39,8 @@
                                             <th>Kategori Cuti</th>
                                             <th>Durasi (Hari)</th>
                                             <th>Tipe Alokasi Cuti</th>
+                                            <th>Periode</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -49,6 +51,14 @@
                                             <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                             <td>{{$data->durasi}}</td>
                                             <td>{{$data->mode_karyawan}}</td>
+                                            <td>{{$data->periode}}</td>
+                                            <td>
+                                                @if ($data->status = 1)
+                                                    <span class="badge badge-success">Aktif</span>
+                                                @else
+                                                    <span class="badge badge-danger">Tidak Aktif</span>
+                                                @endif
+                                            </td>
                                             <td class="text-center">
                                                 <a id="bs" class="btn btn-info btn-sm Modalshowsetting"
                                                     data-toggle="modal" data-target="#Modalshowsetting{{$data->id}}">
