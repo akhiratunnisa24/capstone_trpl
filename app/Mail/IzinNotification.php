@@ -25,10 +25,14 @@ class IzinNotification extends Mailable
 
     public function build()
     {
-        // return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
-        return $this->from($this->data['dari'])
+        // return $this->from($this->data['dari']);
+        return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
         ->subject($this->data['subject'])
+        ->cc($this->data['karyawan_email'], 'Karyawan')
+        ->cc($this->data['atasan2'], 'Atasan Kedua')
+        ->cc('akhiratunnisahasanah0917@gmail.com','HRD')
         ->view('emails.izinindex')->with('data',$this->data);
+        // ->cc('hrd@grm.com', 'HRD');
     }
 
     /**

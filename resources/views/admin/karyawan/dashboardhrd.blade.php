@@ -431,7 +431,7 @@
                         </div>
                     </div>
                 </div> --}}
-                @if(isset($potonggaji) || isset($potongcuti) ||  isset($terlambat) ||  isset($telat) ||  isset($datatelat))
+                @if(isset($potongtransport) || isset($potonguangmakan) ||  isset($terlambat) ||  isset($telat) ||  isset($datatelat))
                     @php
                         $jumlah = $jpc + $jpg;
                     @endphp
@@ -441,7 +441,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#4"
                                     aria-expanded="false" class="collapsed">
                                     Data Tidak Masuk
-                                    @if($potonggaji || $potongcuti)
+                                    @if($potongtransport || $potonguangmakan)
                                         <span class="badge badge badge-danger" style="background-color:red">@php  echo $jumlah; @endphp</span>
 
                                     @else
@@ -458,21 +458,21 @@
                                            
                                             <li class="text-center notifi-title">Notifikasi Tidak Masuk  <span class="badge badge-xs badge-danger">@php  echo $jumlah; @endphp</span></li>
                                             <li class="list-group">
-                                                @if($potongcuti)
+                                                @if($potonguangmakan)
                                                     <a href="/tindakan-tidak-masuk" class="list-group-item">
                                                         <div class="media">
-                                                            <div class="media-heading">Sanksi Pemotongan Cuti  <span class="badge badge-xs badge-danger">{{ $jpc }}</span></div>
+                                                            <div class="media-heading">Sanksi Pemotongan Uang Makan<span class="badge badge-xs badge-danger">{{ $jpc }}</span></div>
                                                             <p class="m-0">
                                                             <small>Sejumlah karyawan perlu mendapat tindakan</small>
                                                             </p>
                                                         </div>
                                                     </a>
                                                 @endif
-                                                @if($potonggaji)
+                                                @if($potongtransport)
                                                     <a href="/tindakan-tidak-masuk" class="list-group-item">
                                                     <div class="media">
                                                         <div class="media-body clearfix">
-                                                            <div class="media-heading">Sanksi Pemotongan Gaji  <span class="badge badge-xs badge-danger">{{ $jpg }}</span></div>
+                                                            <div class="media-heading">Sanksi Pemotongan Uang Transportasi<span class="badge badge-xs badge-danger">{{ $jpg }}</span></div>
                                                             <p class="m-0">
                                                             <small>Sejumlah karyawan perlu mendapat tindakan</small>
                                                             </p>

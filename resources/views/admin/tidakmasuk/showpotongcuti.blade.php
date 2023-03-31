@@ -22,7 +22,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-primary">
-                            <div class="panel-heading  col-sm-15"><p class="text-primary">#</p>
+                            <div class="panel-heading  col-sm-12">
+                                <h5 class="text-white">Detail Data Pemotongan Uang Transportasi</h5>
                             </div>
                             <div class="panel-body" >
                                 <table id="datatable-responsive20" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
@@ -59,7 +60,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-primary">
-                            <div class="panel-heading  col-sm-15"><p class="text-primary">#</p>
+                            <div class="panel-heading  col-sm-12">
+                                <h5 class="text-white">Detail Data Pemotongan Uang Makan</h5>
                             </div>
                             <div class="panel-body" >
                                 <table id="datatable-responsive21" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">

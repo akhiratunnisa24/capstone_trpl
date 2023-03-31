@@ -64,14 +64,16 @@
             <label>: {{$data['jml_hari']}} hari</label>
         </div>
 
-        <div class="form-group row">
-            <label for="jml_jam" class="col-sm-3 col-form-label">Jumlah Jam</label>
-            <label>: {{$data['jml_jam']}} jam</label>
-        </div>
+        @if($data['jml_jam'] != NULL)
+            <div class="form-group row">
+                <label for="jml_jam" class="col-sm-3 col-form-label">Jumlah Jam</label>
+                <label>: {{$data['jml_jam']}} jam</label>
+            </div>
+        @endif
 
         <div class="form-group row" id="statuscuti">
             <label for="status" class="col-sm-3 col-form-label">Status Izin</label>
-            @if($data['status'] == 'Pending')
+            @if($data['status'] == 1)
                 <span class="text-white badge badge-warning">PENDING</span>
             @endif
         </div>

@@ -241,6 +241,24 @@ class HomeController extends Controller
                 ->orderBy('created_at', 'DESC')
                 ->get();
             $cutijumlah = $cuti->count();
+
+            $izin = DB::table('izin')
+                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                    ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                    ->distinct()
+                    ->where(function ($query) {
+                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                    })
+                    ->where('izin.status', '=', '1')
+                    ->orWhere('izin.status','=','6')
+                    ->orderBy('created_at', 'DESC')
+                    ->get();
+            $izinjumlah = $izin->count();
+
         }  
         elseif($row->jabatan == "Supervisor")
         {
@@ -262,6 +280,23 @@ class HomeController extends Controller
                 ->get();
             // return $cuti;
             $cutijumlah = $cuti->count();
+
+            $izin = DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->where('izin.status', '=', '1')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+            $izinjumlah = $izin->count();
+
         }else{
             $cuti = DB::table('cuti')
                 ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -281,19 +316,35 @@ class HomeController extends Controller
                 ->get();
             // return $cuti;
             $cutijumlah = $cuti->count();
+
+            $izin = DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->where('izin.status', '=', '1')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        $izinjumlah = $izin->count();
         }
         
         // return $row->jabatan;
-        $izin = DB::table('izin')->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-            ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-            ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-            ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-            ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.nama')
-            ->distinct()
-            ->orderBy('created_at', 'DESC')
-            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-            ->get();
-        $izinjumlah = $izin->count();
+        // $izin = DB::table('izin')->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+        //     ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+        //     ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+        //     ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+        //     ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.nama')
+        //     ->distinct()
+        //     ->orderBy('created_at', 'DESC')
+        //     ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+        //     ->get();
+        // $izinjumlah = $izin->count();
         // dd($cutijumlah);
 
         $resign = Resign::orderBy('created_at', 'desc')->get();
@@ -304,25 +355,25 @@ class HomeController extends Controller
 
         //NOTIFIKASI DATA TINDAKAN TERHADAPA KARYAWAN TIDAK MASUK
        
-        $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Cuti Tahunan')->select('jumlah_tidakmasuk')->first();
-        $potongcuti = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+        $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Makan')->select('jumlah_tidakmasuk')->first();
+        $potonguangmakan = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
             ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
             ->where('tidakmasuk.status', '=', 'tanpa keterangan')
             ->select('tidakmasuk.id_pegawai as id_pegawai','tidakmasuk.status as keterangan','setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
-            ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Cuti Tahunan" THEN ' . $pct->jumlah_tidakmasuk . ' END')
+            ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Makan" THEN ' . $pct->jumlah_tidakmasuk . ' END')
             ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai','tidakmasuk.status')
             ->get();
-        $jpc = $potongcuti->count();
+        $jpc = $potonguangmakan->count();
 
-        $pg = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Gaji')->select('jumlah_tidakmasuk')->first();
-        $potonggaji = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+        $pg = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Transportasi')->select('jumlah_tidakmasuk')->first();
+        $potongtransport = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
             ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
             ->where('tidakmasuk.status', '=', 'tanpa keterangan')
             ->select('tidakmasuk.id_pegawai as id_pegawai', 'setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
-            ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Gaji" THEN ' . $pg->jumlah_tidakmasuk . ' END')
+            ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Transportasi" THEN ' . $pg->jumlah_tidakmasuk . ' END')
             ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai')
             ->get();
-        $jpg = $potonggaji->count();
+        $jpg = $potongtransport->count();
          //data karyawan terlambat
          $tb = Settingabsensi::where('sanksi_terlambat', '=', 'Teguran Biasa')->select('jumlah_terlambat')->first();
          $sp1 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Pertama')->select('jumlah_terlambat')->first();
@@ -352,7 +403,7 @@ class HomeController extends Controller
              ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
              ->get();
          $jumdat = $datatelat->count();
-        // dd($potongcuti);
+        // dd($potonguangmakan);
 
         // Role Admin
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -401,8 +452,8 @@ class HomeController extends Controller
                 'izinjumlah' => $izinjumlah,
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
-                'potongcuti' =>$potongcuti,
-                'potonggaji'=>$potonggaji,
+                'potonguangmakan' =>$potonguangmakan,
+                'potongtransport'=>$potongtransport,
                 'jpc' => $jpc,
                 'jpg' => $jpg,
                 'terlambat' => $terlambat,

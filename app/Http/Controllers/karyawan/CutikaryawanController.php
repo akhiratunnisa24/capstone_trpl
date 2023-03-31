@@ -120,7 +120,12 @@ class CutikaryawanController extends Controller
         $cuti->status      = $status->id;
         $cuti->save();
 
-        //sending email cuti
+        $emailkry = DB::table('cuti')->join('karyawan','izin.id_karyawan','=','karyawan.id')
+            ->where('cuti.id_karyawan','=',$cuti->id_karyawan)
+            ->select('karyawan.email')
+            ->first();
+
+        //atasan pertama
         $idatasan = DB::table('karyawan')
             ->join('cuti','karyawan.id','=','cuti.id_karyawan')
             ->where('cuti.id_karyawan','=',$cuti->id_karyawan)
@@ -129,8 +134,45 @@ class CutikaryawanController extends Controller
         $atasan = Karyawan::where('id',$idatasan->atasan_pertama)
             ->select('email as email','nama as nama','jabatan as jabatan')
             ->first();
-            
-        // $tujuan = 'andiny700@gmail.com';
+        
+        //atasan kedua
+        $idatasan2 = DB::table('karyawan')
+            ->join('cuti','karyawan.id','=','cuti.id_karyawan')
+            ->where('cuti.id_karyawan','=',$cuti->id_karyawan)
+            ->select('karyawan.atasan_kedua as atasan_kedua')
+            ->first();
+        $atasan2 = Karyawan::where('id',$idatasan2->atasan_kedua)
+            ->select('email as email','nama as nama','jabatan as jabatan')
+            ->first();
+
+        if ($atasan) {
+            $tujuan = $atasan->email;
+            $data = [
+                'subject' => 'Pemberitahuan Permintaan Cuti '. $cuti->jeniscutis->jenis_cuti,
+                'body' => 'Anda Memiliki 1 Permintaan Cuti yang harus di Approved',
+                'id' => $cuti->id,
+                'karyawan_email' =>  $emailkry->email,
+                'id_jeniscuti' => $cuti->jeniscutis->jenis_cuti,
+                'atasan2'     =>$atasan2->email,
+                'keperluan' => $cuti->keperluan,
+                'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+                'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+                'jml_cuti' => $cuti->jml_cuti,
+                'status' => $cuti->status,
+                'atasan_depar' => $atasan->jabatan,
+                'nama_atasan' => $atasan->nama,
+                'role' => $role,
+                ];
+            Mail::to($tujuan)->send(new CutiNotification($data));
+        } else {
+            // proses jika data atasan tidak ada / email tidak ada
+        }
+
+        return redirect()->back()
+            ->with('success','Email Notifikasi Berhasil Dikirim');
+    }
+}
+ // $tujuan = 'andiny700@gmail.com';
         // $tujuan = $atasan->email;
         // $data = [
         //     'subject'     =>'Pemberitahuan Permintaan Cuti',
@@ -148,36 +190,10 @@ class CutikaryawanController extends Controller
         // ];
         // Mail::to($tujuan)->send(new CutiNotification($data));
 
-        if ($atasan) {
-            $tujuan = $atasan->email;
-            $data = [
-                    'subject' => 'Pemberitahuan Permintaan Cuti',
-                    'body' => 'Anda Memiliki 1 Permintaan Cuti yang harus di Approved',
-                    'id' => $cuti->id,
-                    'id_jeniscuti' => $cuti->jeniscutis->jenis_cuti,
-                    'keperluan' => $cuti->keperluan,
-                    'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
-                    'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
-                    'jml_cuti' => $cuti->jml_cuti,
-                    'status' => $cuti->status,
-                    'atasan_depar' => $atasan->jabatan,
-                    'nama_atasan' => $atasan->nama,
-                    'role' => $role,
-                ];
-            Mail::to($tujuan)->send(new CutiNotification($data));
-        } else {
-            // proses jika data atasan tidak ada / email tidak ada
-        }
-
-        return redirect()->back()
-            ->with('success','Email Notifikasi Berhasil Dikirim');
-    }
-
-    // public function show($id)
+         // public function show($id)
     // {
     //     $cuti = Cuti::findOrFail($id);
     //     $karyawan = Auth::user()->id_pegawai;
 
     //     return view('karyawan.kategori.index',compact('cuti','karyawan'));
     // }
-}
