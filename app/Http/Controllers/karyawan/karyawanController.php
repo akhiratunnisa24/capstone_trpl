@@ -27,6 +27,7 @@ use App\Imports\karyawanImport;
 use App\Events\AbsenKaryawanEvent;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Rekruitmen;
 use App\Models\Rorganisasi;
 use App\Models\Rprestasi;
 use Illuminate\Support\Facades\Auth;
@@ -268,6 +269,8 @@ class karyawanController extends Controller
 
             $resign = Resign::orderBy('created_at', 'desc')->get();
             $resignjumlah = $resign->count();
+            $rekruitmen = Rekruitmen::orderBy('created_at', 'desc')->get();
+            $rekruitmenjumlah = $rekruitmen->count();
 
             $output = [
                 'row' => $row,
@@ -286,6 +289,7 @@ class karyawanController extends Controller
                 'resignjumlah' => $resignjumlah,
                 'posisi' => $posisi,
                 'sisacutis' =>$sisacutis,
+                'rekruitmenjumlah' => $rekruitmenjumlah,
 
             ];
             return view('karyawan.dashboardKaryawan', $output);

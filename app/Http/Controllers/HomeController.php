@@ -13,6 +13,7 @@ use App\Models\Lowongan;
 use App\Models\Sisacuti;
 use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
+use App\Models\Rekruitmen;
 use Illuminate\Http\Request;
 use App\Models\Settingabsensi;
 use Illuminate\Support\Facades\DB;
@@ -220,7 +221,8 @@ class HomeController extends Controller
         
         $tahun = Carbon::now()->year;
 
-        $posisi = Lowongan::all()->sortByDesc('created_at');
+        $posisi = Lowongan::all()->where('status', '=', 'Aktif');
+
 
         if($role == 3 && $row->jabatan == "Manager"){
             $cuti = DB::table('cuti')
@@ -352,6 +354,9 @@ class HomeController extends Controller
              ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
              ->get();
          $jumdat = $datatelat->count();
+
+        $rekruitmen = Lowongan::where('status','Aktif');
+        $rekruitmenjumlah = $rekruitmen->count();
         // dd($potongcuti);
 
         // Role Admin
@@ -411,6 +416,7 @@ class HomeController extends Controller
                 'jumter' =>$jumter,
                 'jumtel' => $jumtel,
                 'jumdat' => $jumdat,
+                'rekruitmenjumlah' => $rekruitmenjumlah,
 
             ];
             return view('admin.karyawan.dashboardhrd', $output);
