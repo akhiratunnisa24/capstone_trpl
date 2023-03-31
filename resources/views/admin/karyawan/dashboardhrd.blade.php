@@ -568,6 +568,9 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#5"
                                 aria-expanded="false" class="collapsed">
                                 Data Rekruitmen
+                                 @if ($rekruitmenjumlah)
+                                    <span class="badge badge badge-danger" style="background-color:red">{{ $rekruitmenjumlah }}</span>
+                                @endif
                             </a>
                         </h4>
                     </div>

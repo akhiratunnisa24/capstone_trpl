@@ -15,6 +15,8 @@ use App\Models\Rpendidikan;
 use App\Models\Rorganisasi;
 use App\Models\Rprestasi;
 // use Illuminate\Support\Facades\Auth;
+use App\Mail\RekruitmenApplyNotification;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 
 
@@ -484,6 +486,7 @@ class FormPelamarController extends Controller
         $organisasi = json_decode(session('organisasi', '[]'), true);
         $prestasi    = json_decode(session('prestasi', '[]'), true);
 
+
         return view('admin.rekruitmen.preview', compact('pelamar', 'datakeluarga', 'kontakdarurat', 'pendidikan', 'pekerjaan', 'organisasi', 'prestasi'));
     }
 
@@ -494,42 +497,76 @@ class FormPelamarController extends Controller
         $pelamar->save();
         $idKaryawan = $pelamar->id;
 
-        $datakeluarga = json_decode($request->session()->get('datakeluarga', []), true);
+        // $datakeluarga = json_decode($request->session()->get('datakeluarga', []), true);
+
+        if ($request->session()->has('datakeluarga')) {
+            $datakeluarga = json_decode($request->session()->get('datakeluarga'), true);
+        } else {
+            $datakeluarga = [];
+        }
+
         $datakeluargaMerge = array_map(function ($item) use ($idKaryawan) {
             $item['id_pelamar'] = $idKaryawan;
             return $item;
         }, $datakeluarga);
         $datakeluargas = Keluarga::insert($datakeluargaMerge);
 
-        $kontakdarurat = json_decode($request->session()->get('kontakdarurat', []), true);
+        // $kontakdarurat = json_decode($request->session()->get('kontakdarurat', []), true);
+
+        if ($request->session()->has('kontakdarurat')) {
+            $kontakdarurat = json_decode($request->session()->get('kontakdarurat'), true);
+        } else {
+            $kontakdarurat = [];
+        }
+
         $kontakdaruratMerge =  array_map(function ($item) use ($idKaryawan) {
             $item['id_pelamar'] = $idKaryawan;
             return $item;
         }, $kontakdarurat);
         $kontakdarurats = Kdarurat::insert($kontakdaruratMerge);
 
-        $pendidikan = json_decode($request->session()->get('pendidikan', []), true);
+        // $pendidikan = json_decode($request->session()->get('pendidikan', []), true);
+        if ($request->session()->has('pendidikan')) {
+            $pendidikan = json_decode($request->session()->get('pendidikan'), true);
+        } else {
+            $pendidikan = [];
+        }
         $pendidikanMerge =  array_map(function ($item) use ($idKaryawan) {
             $item['id_pelamar'] = $idKaryawan;
             return $item;
         }, $pendidikan);
         $pendidikans = Rpendidikan::insert($pendidikanMerge);
 
-        $pekerjaan = json_decode($request->session()->get('pekerjaan', []), true);
+        // $pekerjaan = json_decode($request->session()->get('pekerjaan', []), true);
+        if ($request->session()->has('pekerjaan')) {
+            $pekerjaan = json_decode($request->session()->get('pekerjaan'), true);
+        } else {
+            $pekerjaan = [];
+        }
         $pekerjaanMerge = array_map(function ($item) use ($idKaryawan) {
             $item['id_pelamar'] = $idKaryawan;
             return $item;
         }, $pekerjaan);
         $pekerjaans = Rpekerjaan::insert($pekerjaanMerge);
 
-        $organisasi = json_decode($request->session()->get('organisasi', []), true);
+        // $organisasi = json_decode($request->session()->get('organisasi', []), true);
+        if ($request->session()->has('organisasi')) {
+            $organisasi = json_decode($request->session()->get('organisasi'), true);
+        } else {
+            $organisasi = [];
+        }
         $organisasiMerge = array_map(function ($item) use ($idKaryawan) {
             $item['id_pelamar'] = $idKaryawan;
             return $item;
         }, $organisasi);
         $organisasis = Rorganisasi::insert($organisasiMerge);
 
-        $prestasi = json_decode($request->session()->get('prestasi', []), true);
+        // $prestasi = json_decode($request->session()->get('prestasi', []), true);
+        if ($request->session()->has('prestasi')) {
+            $prestasi = json_decode($request->session()->get('prestasi'), true);
+        } else {
+            $prestasi = [];
+        }
         $prestasiMerge = array_map(function ($item) use ($idKaryawan) {
             $item['id_pelamar'] = $idKaryawan;
             return $item;
@@ -544,6 +581,11 @@ class FormPelamarController extends Controller
         $request->session()->forget('pekerjaan');
         $request->session()->forget('organisasi');
         $request->session()->forget('prestasi');
+
+        $data = Rekruitmen::findOrFail($idKaryawan);
+        $tujuan = 'hrd@gmail.com';
+        $email = new RekruitmenApplyNotification($data);
+        Mail::to($tujuan)->send($email);
 
 
         // return redirect('/karyawan');
