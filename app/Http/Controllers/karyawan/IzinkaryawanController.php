@@ -70,15 +70,26 @@ class IzinkaryawanController extends Controller
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
                 ->select('karyawan.atasan_pertama as atasan_pertama')
                 ->first();
+
             $atasan = Karyawan::where('id',$idatasan->atasan_pertama)
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
+
+            $idatasan2 = DB::table('karyawan')
+                ->join('izin','karyawan.id','=','izin.id_karyawan')
+                ->where('izin.id_karyawan','=',$izin->id_karyawan)
+                ->select('karyawan.atasan_kedua as atasan_kedua')
+                ->first();
+            $atasan2 = Karyawan::where('id',$idatasan2->atasan_kedua)
+                ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                ->first();
             // dd(strtoupper($atasan['jabatan']), $atasan['departemen'],$dep['departemen']);
-            // $dari = $emailkry['email'];
             $tujuan = $atasan['email'];
+
             $data = [
-                'subject'     =>'Pemberitahuan Permintaan Izin',
-                'dari'        =>$emailkry->email,
+                'subject'     =>'Pemberitahuan Permintaan Izin '. $izin->jenisizins->jenis_izin,
+                'karyawan_email' =>$emailkry->email,
+                'atasan2'     =>$atasan2->email,
                 'id'          =>$izin->id,
                 'jenisizin'   =>$izin->jenisizins->jenis_izin,
                 'keperluan'   =>$izin->keperluan,
@@ -91,10 +102,6 @@ class IzinkaryawanController extends Controller
                 'jabatan'     =>strtoupper($atasan['jabatan']),
             ];
             Mail::to($tujuan)->send(new IzinNotification($data));
-            // Mail::send(new IzinNotification($data), [], function ($message) use ($tujuan, $emailkry) {
-            //     $message->from($emailkry['email']);
-            //     $message->to($tujuan);
-            // });
             return redirect()->back()->withInput();
 
         }else{
@@ -122,6 +129,11 @@ class IzinkaryawanController extends Controller
             // dd($izin);
             $izin->save();
 
+            $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                ->where('izin.id_karyawan','=',$izin->id_karyawan)
+                ->select('karyawan.email')
+                ->first();
+
             $idatasan = DB::table('karyawan')
                 ->join('izin','karyawan.id','=','izin.id_karyawan')
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
@@ -131,12 +143,24 @@ class IzinkaryawanController extends Controller
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
 
+            $idatasan2 = DB::table('karyawan')
+                ->join('izin','karyawan.id','=','izin.id_karyawan')
+                ->where('izin.id_karyawan','=',$izin->id_karyawan)
+                ->select('karyawan.atasan_kedua as atasan_kedua')
+                ->first();
+            $atasan2 = Karyawan::where('id',$idatasan2->atasan_kedua)
+                ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                ->first();
+            // dd($atasan2);
+
             $tujuan = $atasan['email'];
             // dd($atasan->email,$atasan->nama,$atasan->jabatan);
 
             $data = [
-                'subject'     =>'Pemberitahuan Permintaan Izin',
+                'subject'     =>'Pemberitahuan Permintaan Izin '. $izin->jenisizins->jenis_izin,
                 'id'          =>$izin->id,
+                'karyawan_email' =>$emailkry->email,
+                'atasan2'     =>$atasan2->email,
                 'jenisizin'   =>$izin->jenisizins->jenis_izin,
                 'keperluan'   =>$izin->keperluan,
                 'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d M Y"),

@@ -24,6 +24,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Mail\CutiApproveNotification;
 use App\Mail\CutiAtasan2Notification;
 use App\Mail\IzinApproveNotification;
+use App\Mail\IzinAtasan2Notification;
 use App\Exports\AbsensiDepartemenExport;
 
 class ManagerController extends Controller
@@ -227,7 +228,6 @@ class ManagerController extends Controller
 
         if($row->jabatan == "Manager" && $role == 3)
         {
-            
             $datacuti = DB::table('cuti')
                 ->leftjoin('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
                 ->leftjoin('settingalokasi', 'cuti.id_settingalokasi', '=', 'settingalokasi.id')
@@ -240,7 +240,7 @@ class ManagerController extends Controller
             // dd($datacuti);   
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
-                return  Auth::user()->id_pegawai;
+                // return  Auth::user()->id_pegawai;
                 $cuti = Cuti::where('id',$id)->first();
                 $jml_cuti = $cuti->jml_cuti;
                 $status = Status::find(7);
@@ -261,11 +261,34 @@ class ManagerController extends Controller
                     ['durasi' => $durasi_baru]
                 );
 
+                //KIRIM EMAIL NOTIFIKASI
+
                 //ambil data karyawan
-                $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+                $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+                    ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
+                    ->select('karyawan.email')
+                    ->first();
+                //atasan pertama
+                $idatasan1 = DB::table('karyawan')
+                    ->join('cuti','karyawan.id','=','cuti.id_karyawan')
+                    ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
+                    ->select('karyawan.atasan_pertama as atasan_pertama')
+                    ->first();
+
+                $atasan1 = Karyawan::where('id',$idatasan1->atasan_pertama)
+                    ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                    ->first();
+                
+                //atasan yang login
+                $atasan2 = Auth::user()->email;
+
+                // $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+                $tujuan = $emailkry['email'];
                 $data = [
                     'subject'     =>'Notifikasi Cuti Disetujui',
                     'id'          =>$cuti->id,
+                    'atasan1'     =>$atasan1->email,
+                    'atasan2'     =>$atasan2,
                     'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
                     'keperluan'   =>$cuti->keperluan,
                     'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
@@ -283,7 +306,16 @@ class ManagerController extends Controller
                     'status' => $status->id,
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
-                //ambil nama_atasan
+
+                //KIRIM NOTIFIKASI EMAIL
+
+                //ambil data karyawan
+                $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+                    ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
+                    ->select('karyawan.email')
+                    ->first();
+
+                //ambil nama_atasan kedua
                 $idatasan = DB::table('cuti')
                     ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
                     ->select('karyawan.atasan_kedua as atasan_kedua')
@@ -292,6 +324,9 @@ class ManagerController extends Controller
                 $atasan = Karyawan::where('id',$idatasan->atasan_kedua)
                     ->select('email as email')
                     ->first();
+
+                //atasan pertama
+                $atasan1 = Auth::user()->email;
                 
                 //ambil data karyawan
                 $tujuan = $atasan->email;
@@ -301,6 +336,8 @@ class ManagerController extends Controller
                 $data = [
                     'subject'     =>'Notifikasi Permintaan Cuti',
                     'id'          =>$cuti->id,
+                    'atasan1'     => $atasan1,
+                    'karyawan_email' =>$emailkry->email,
                     'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
                     'keperluan'   =>$cuti->keperluan,
                     'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
@@ -336,7 +373,8 @@ class ManagerController extends Controller
                     'status' => $status->id,
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
-                //ambil nama_atasan
+
+                //ambil nama_atasan kedua
                 $idatasan = DB::table('cuti')
                     ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
                     ->select('karyawan.atasan_kedua as atasan_kedua')
@@ -346,12 +384,22 @@ class ManagerController extends Controller
                     ->select('email as email')
                     ->first();
                 
-                //ambil data karyawan
+                //ambil email atasan pertama 
+                $atasan1 = Auth::user()->email;
+
+                //email karyawan
+                $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+                    ->where('cuti.id_karyawan','=',$dacuti->id_karyawan)
+                    ->select('karyawan.email')
+                    ->first();
+
                 $tujuan = $atasan->email;
                 
                 $data = [
                     'subject'     =>'Notifikasi Permintaan Cuti',
                     'id'          =>$cuti->id,
+                    'atasan1'     => $atasan1,
+                    'karyawan_email' =>$emailkry->email,
                     'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
                     'keperluan'   =>$cuti->keperluan,
                     'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
@@ -371,152 +419,6 @@ class ManagerController extends Controller
             return redirect()->back();
         }   
     }
-
-
-    // public function cutiapproved(Request $request, $id)
-    // {
-    //     $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-    //     $role = Auth::user()->role;
-    //     $cuti = Cuti::where('id',$id)->first();
-
-    //     $atasanpertama = DB::table('cuti')
-    //         ->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
-    //         ->select('cuti.*', 'karyawan.atasan_pertama')
-    //         ->where('karyawan.atasan_pertama', '=',Auth::user()->id_pegawai)
-    //         ->first();
-
-    //     $atasankedua = DB::table('cuti')
-    //         ->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
-    //         ->select('cuti.*','karyawan.atasan_kedua')
-    //         ->where('karyawan.atasan_kedua', '=', Auth::user()->id_pegawai)
-    //         ->first();
-        
-    //     if($role == 3 && $row->jabatan = "Manager")
-    //     {
-          
-    //         return Auth::user()->nama;
-    //         if($atasanpertama &&  $atasanpertama->atasan_pertama  == Auth::user()->id_pegawai)
-    //         {
-              
-    //             $status = Status::find(2);
-    //             Cuti::where('id',$id)->update([
-    //                 'status' => $status->id,
-    //             ]);
-    //             $cuti = Cuti::where('id',$id)->first();
-    //             //ambil nama_atasan
-    //             $idatasan = DB::table('cuti')
-    //                 ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
-    //                 ->select('karyawan.atasan_kedua as atasan_kedua')
-    //                 ->where('cuti.id',$cuti->id)
-    //                 ->first();
-    //             $atasan = Karyawan::where('id',$idatasan->atasan_kedua)
-    //                 ->select('email as email')
-    //                 ->first();
-                
-    //             //ambil data karyawan
-    //             $tujuan = $atasan->email;
-              
-                
-    //             $data = [
-    //                 'subject'     =>'Notifikasi Permintaan Cuti',
-    //                 'id'          =>$cuti->id,
-    //                 'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
-    //                 'keperluan'   =>$cuti->keperluan,
-    //                 'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
-    //                 'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
-    //                 'jml_cuti'    =>$cuti->jml_cuti,
-    //                 'status'      =>$status->name_status,
-    //                 'namakaryawan'=>$cuti->karyawans->nama,
-    //             ];
-    //             Mail::to($tujuan)->send(new CutiAtasan2Notification($data));
-    //             return redirect()->back()->withInput();
-    //         }
-    //         elseif($atasankedua &&  $atasankedua->atasan_kedua == Auth::user()->id_pegawai)
-    //         {
-    //             // dd($atasankaryawan->atasan_kedua);
-    //             $cuti = Cuti::where('id',$id)->first();
-    //             $jml_cuti = $cuti->jml_cuti;
-    //             $status = Status::find(7);
-    //             Cuti::where('id', $id)->update(
-    //                 ['status' => $status->id,]
-    //             );
-        
-    //             $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
-    //                 ->where('id_karyawan', $cuti->id_karyawan)
-    //                 ->where('id_jeniscuti', $cuti->id_jeniscuti)
-    //                 ->where('id_settingalokasi', $cuti->id_settingalokasi)
-    //                 ->first();
-
-    //             $durasi_baru = $alokasicuti->durasi - $jml_cuti;
-
-    //             Alokasicuti::where('id', $alokasicuti->id)
-    //             ->update(
-    //                 ['durasi' => $durasi_baru]
-    //             );
-
-    //             //ambil data karyawan
-    //             $tujuan = 'akhiratunnisahasanah0917@gmail.com';
-    //             $data = [
-    //                 'subject'     =>'Notifikasi Cuti Disetujui',
-    //                 'id'          =>$cuti->id,
-    //                 'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
-    //                 'keperluan'   =>$cuti->keperluan,
-    //                 'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
-    //                 'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
-    //                 'jml_cuti'    =>$cuti->jml_cuti,
-    //                 'status'      =>$cuti->name_status,
-    //             ];
-    //             Mail::to($tujuan)->send(new CutiApproveNotification($data));
-    //             return redirect()->back()->withInput();
-    //         }
-    //         else{
-    //             return redirect()->back();
-    //         }
-    //     }
-    //     elseif($role == 3 && $row->jabatan = "Supervisor")
-    //     {
-    //         dd($atasanpertama->atasan_pertama);
-    //         if($atasanpertama &&  $atasanpertama->atasan_pertama  == Auth::user()->id_pegawai)
-    //         {
-    //             $status = Status::find(6);
-    //             Cuti::where('id',$id)->update([
-    //                 'status' => $status->id,
-    //              ]);
-    //             $cuti = Cuti::where('id',$id)->first();
-    //             //ambil nama_atasan
-    //             $idatasan = DB::table('cuti')
-    //                 ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
-    //                 ->select('karyawan.atasan_kedua as atasan_kedua')
-    //                 ->where('cuti.id',$cuti->id)
-    //                 ->first();
-    //             $atasan = Karyawan::where('id',$idatasan->atasan_kedua)
-    //                 ->select('email as email')
-    //                 ->first();
-    //             dd($idatasan,$atasan);
-                    
-    //             //ambil data karyawan
-    //             $tujuan = $atasan->email;
-                    
-    //             $data = [
-    //                 'subject'     =>'Notifikasi Permintaan Cuti',
-    //                 'id'          =>$cuti->id,
-    //                 'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
-    //                 'keperluan'   =>$cuti->keperluan,
-    //                 'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
-    //                 'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
-    //                 'jml_cuti'    =>$cuti->jml_cuti,
-    //                 'status'      =>$status->name_status,
-    //                 'namakaryawan'=>$cuti->karyawans->nama,
-    //             ];
-    //             Mail::to($tujuan)->send(new CutiAtasan2Notification($data));
-    //             // dd($data,$tujuan);
-    //             return redirect()->back()->withInput();
-    //         }
-    //     }
-    //     else{
-    //         return redirect()->back();
-    //     }   
-    // }
 
     public function cutireject(Request $request, $id)
     {
@@ -568,38 +470,215 @@ class ManagerController extends Controller
 
     public function izinApproved(Request $request, $id)
     {
-        // $izin = Izin::where('id',$id)->first();
-        $status = Status::find(7);
-        Izin::where('id',$id)->update([
-            'status' => $status->id,
-        ]);
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $role = Auth::user()->role;
+        $izn = Izin::where('id',$id)->first();
 
-        $izin = DB::table('izin')
-            ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
-            ->join('statuses','izin.status','=','statuses.id')
-            ->where('izin.id',$id)
-            ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
-            ->first();
+        if($row->jabatan == "Manager" && $role == 3)
+        {
+            $izin = DB::table('izin')
+                ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                ->leftjoin('statuses','izin.status','=','statuses.id')
+                ->leftjoin('karyawan','izin.id_karyawan','=','karyawan.id')
+                ->where('izin.id',$izn->id)
+                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                ->orWhere('karyawan.atasan_kedua',Auth::user()->id_pegawai)
+                ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status','karyawan.atasan_pertama','karyawan.atasan_kedua','karyawan.nama')
+                ->first();
         
-        //ambil data karyawan 
-        $karyawan = DB::table('izin')
-            ->join('karyawan','izin.id_karyawan','=','karyawan.id')
-            ->where('izin.id',$izin->id)
-            ->select('karyawan.email as email','karyawan.nama as nama')
-            ->first(); 
-        $tujuan = $karyawan->email;
-        //$tujuan = 'akhiratunnisahasanah0917@gmail.com';
-        $data = [
-            'title'    =>$izin->id,
-            'subject'  =>'Notifikasi Izin',
-            'id'       =>$izin->id,
-            'nama'     =>$karyawan->nama,
-            'jenisizin'=>$izin->jenis_izin,
-            'tgl_mulai'=>$izin->tgl_mulai,
-            'status'   =>$izin->name_status,
-        ];
-        Mail::to($tujuan)->send(new IzinApproveNotification($data));
-        return redirect()->route('cuti.Staff',['tp'=>2]);
+            if($izin && $izin->atasan_kedua == Auth::user()->id_pegawai)
+            {
+               
+                $status = Status::find(7);
+        
+                Izin::where('id',$id)->update([
+                    'status' => $status->id,
+                ]);
+
+                $izin = Izin::where('id',$id)->first();
+
+                //KIRIM EMAIL NOTIFIKASI
+                $karyawan = DB::table('izin')
+                    ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                    ->where('izin.id',$izin->id)
+                    ->select('karyawan.email as email','karyawan.nama as nama')
+                    ->first(); 
+                $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                    ->where('izin.id_karyawan','=',$izin->id_karyawan)
+                    ->select('karyawan.email')
+                    ->first();
+
+                //atasan pertama
+                $idatasan1 = DB::table('karyawan')
+                    ->join('izin','karyawan.id','=','izin.id_karyawan')
+                    ->where('izin.id_karyawan','=',$izin->id_karyawan)
+                    ->select('karyawan.atasan_pertama as atasan_pertama')
+                    ->first();
+
+                $atasan1 = Karyawan::where('id',$idatasan1->atasan_pertama)
+                    ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                    ->first();
+                
+                //atasan kedua yg login
+                $atasan2 = Auth::user()->email;
+
+                //tujuan email karyawan
+                $tujuan = $karyawan->email;
+
+                $data = [
+                    'title'    =>$izin->id,
+                    'subject'  =>'Notifikasi Izin Disetujui',
+                    'id'       =>$izin->id,
+                    'karyawan_email'=>$emailkry->email,
+                    'id_jenisizin'=>$izin->jenis_izin,
+                    'atasan1'  =>$atasan1->email,
+                    'atasan2'  =>$atasan2,
+                    'nama'     =>$karyawan->nama,
+                    'jenisizin'=>$izin->jenis_izin,
+                    'tgl_mulai'=>$izin->tgl_mulai,
+                    'status'   =>$izin->name_status,
+                    'keperluan'   =>$izin->keperluan,
+                    'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d M Y"),
+                    'tgl_selesai' =>Carbon::parse($izin->tgl_selesai)->format("d M Y"),
+                    'jam_mulai'   =>Carbon::parse($izin->jam_mulai)->format("H:i"),
+                    'jam_selesai' =>Carbon::parse($izin->jam_selesai)->format("H:i"),
+                    'jml_hari'  =>$izin->jml_hari,
+                    'jumlahjam'   =>$izin->jml_jam,
+                    'status'      =>$status->name_status,
+                    'namakaryawan'=>$izin->nama,
+                    'namaatasan2' =>$atasan1->nama,
+                    // 'atasan2'     =>$atasan->email,
+                    'jabatanatasan'=>$atasan1->jabatan,
+                ];
+                Mail::to($tujuan)->send(new IzinApproveNotification($data));
+                return redirect()->route('cuti.Staff',['tp'=>2]);
+            }
+            elseif($izin && $izin->atasan_pertama == Auth::user()->id_pegawai && $row->jabatan = "Manager")
+            {
+                $status = Status::find(2);
+
+                return $status;
+                Izin::where('id',$id)->update([
+                    'status' => $status->id,
+                ]);
+
+                $izinn = Izin::where('id',$id)->first();
+
+                //KIRIM NOTIFIKASI EMAIL
+                $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                    ->where('izin.id_karyawan','=',$izinn->id_karyawan)
+                    ->select('karyawan.email')
+                    ->first();
+
+                //ambil nama_atasan kedua
+                $idatasan = DB::table('izin')
+                    ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                    ->select('karyawan.atasan_kedua as atasan_kedua')
+                    ->where('izin.id',$izinn->id)
+                    ->first();
+                $atasan = Karyawan::where('id',$idatasan->atasan_kedua)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+
+                //atasan pertama
+                $atasan1 = Auth::user()->email;
+
+                //email atasan kedua adalah tujuan utama
+                $tujuan = $atasan->email;
+
+                $data = [
+                    'subject'     =>'Notifikasi Permintaan Izin' .$izin->jenis_izin,
+                    'id'          =>$izinn->id,
+                    'atasan1'     => $atasan1,
+                    'karyawan_email'=>$emailkry->email,
+                    'id_jenisizin'=>$izinn->jenis_izin,
+                    'keperluan'   =>$izinn->keperluan,
+                    'tgl_mulai'   =>Carbon::parse($izinn->tgl_mulai)->format("d M Y"),
+                    'tgl_selesai' =>Carbon::parse($izinn->tgl_selesai)->format("d M Y"),
+                    'jam_mulai'   =>Carbon::parse($izinn->jam_mulai)->format("H:i"),
+                    'jam_selesai' =>Carbon::parse($izinn->jam_selesai)->format("H:i"),
+                    'jumlahhari'  =>$izinn->jml_hari,
+                    'jumlahjam'   =>$izinn->jml_jam,
+                    'status'      =>$status->name_status,
+                    'namakaryawan'=>$izinn->nama,
+                    'namaatasan2' =>$atasan->nama,
+                    'jabatanatasan'=>$atasan->jabatan,
+                ];
+                Mail::to($tujuan)->send(new IzinAtasan2Notification($data));
+                return redirect()->back()->withInput();
+            }  
+            else{
+                return redirect()->back();
+            }
+        }
+        elseif($role == 3 && $row->jabatan = "Supervisor")
+        {
+            $status = Status::find(6);
+            Izin::where('id',$id)->update([
+                'status' => $status->id,
+            ]);
+
+            $izinn = Izin::where('id',$id)->first();
+            // return $izinn;
+            $izin = DB::table('izin')
+                ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                ->leftjoin('statuses','izin.status','=','statuses.id')
+                ->leftjoin('karyawan','izin.id_karyawan','=','karyawan.id')
+                ->where('izin.id',$izinn->id)
+                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                ->orWhere('karyawan.atasan_kedua',Auth::user()->id_pegawai)
+                ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status','karyawan.atasan_pertama','karyawan.atasan_kedua','karyawan.nama')
+                ->first();
+                
+            //KIRIM NOTIFIKASI EMAIL
+            $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                ->where('izin.id_karyawan','=',$izinn->id_karyawan)
+                ->select('karyawan.email')
+                ->first();
+
+            //ambil nama_atasan kedua
+            $idatasan = DB::table('izin')
+                ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                ->select('karyawan.atasan_kedua as atasan_kedua')
+                ->where('izin.id',$izinn->id)
+                ->first();
+            $atasan = Karyawan::where('id',$idatasan->atasan_kedua)
+                ->select('email as email','nama as nama','jabatan')
+                ->first();
+
+            //atasan pertama
+            $atasan1 = Auth::user()->email;
+
+            //email atasan kedua adalah tujuan utama
+            $tujuan = $atasan->email;
+
+            $data = [
+                'subject'     =>'Notifikasi Permintaan Izin' .$izin->jenis_izin,
+                'id'          =>$izin->id,
+                'atasan1'     => $atasan1,
+                'karyawan_email'=>$emailkry->email,
+                'id_jenisizin'=>$izin->jenis_izin,
+                'keperluan'   =>$izin->keperluan,
+                'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d M Y"),
+                'tgl_selesai' =>Carbon::parse($izin->tgl_selesai)->format("d M Y"),
+                'jam_mulai'   =>Carbon::parse($izin->jam_mulai)->format("H:i"),
+                'jam_selesai' =>Carbon::parse($izin->jam_selesai)->format("H:i"),
+                'jml_hari'  =>$izin->jml_hari,
+                'jumlahjam'   =>$izin->jml_jam,
+                'status'      =>$status->name_status,
+                'namakaryawan'=>$izin->nama,
+                'namaatasan2' =>$atasan->nama,
+                // 'atasan2'     =>$atasan->email,
+                'jabatanatasan'=>$atasan->jabatan,
+            ];
+            Mail::to($tujuan)->send(new IzinAtasan2Notification($data));
+            return redirect()->back()->withInput();
+        }
+        else
+        {
+            return redirect()->back(); 
+        }
+        
     }
 
     public function izinReject(Request $request, $id)
@@ -835,6 +914,152 @@ class ManagerController extends Controller
     }
 
 }
+
+// public function cutiapproved(Request $request, $id)
+// {
+//     $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+//     $role = Auth::user()->role;
+//     $cuti = Cuti::where('id',$id)->first();
+
+//     $atasanpertama = DB::table('cuti')
+//         ->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
+//         ->select('cuti.*', 'karyawan.atasan_pertama')
+//         ->where('karyawan.atasan_pertama', '=',Auth::user()->id_pegawai)
+//         ->first();
+
+//     $atasankedua = DB::table('cuti')
+//         ->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
+//         ->select('cuti.*','karyawan.atasan_kedua')
+//         ->where('karyawan.atasan_kedua', '=', Auth::user()->id_pegawai)
+//         ->first();
+    
+//     if($role == 3 && $row->jabatan = "Manager")
+//     {
+      
+//         return Auth::user()->nama;
+//         if($atasanpertama &&  $atasanpertama->atasan_pertama  == Auth::user()->id_pegawai)
+//         {
+          
+//             $status = Status::find(2);
+//             Cuti::where('id',$id)->update([
+//                 'status' => $status->id,
+//             ]);
+//             $cuti = Cuti::where('id',$id)->first();
+//             //ambil nama_atasan
+//             $idatasan = DB::table('cuti')
+//                 ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+//                 ->select('karyawan.atasan_kedua as atasan_kedua')
+//                 ->where('cuti.id',$cuti->id)
+//                 ->first();
+//             $atasan = Karyawan::where('id',$idatasan->atasan_kedua)
+//                 ->select('email as email')
+//                 ->first();
+            
+//             //ambil data karyawan
+//             $tujuan = $atasan->email;
+          
+            
+//             $data = [
+//                 'subject'     =>'Notifikasi Permintaan Cuti',
+//                 'id'          =>$cuti->id,
+//                 'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+//                 'keperluan'   =>$cuti->keperluan,
+//                 'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+//                 'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+//                 'jml_cuti'    =>$cuti->jml_cuti,
+//                 'status'      =>$status->name_status,
+//                 'namakaryawan'=>$cuti->karyawans->nama,
+//             ];
+//             Mail::to($tujuan)->send(new CutiAtasan2Notification($data));
+//             return redirect()->back()->withInput();
+//         }
+//         elseif($atasankedua &&  $atasankedua->atasan_kedua == Auth::user()->id_pegawai)
+//         {
+//             // dd($atasankaryawan->atasan_kedua);
+//             $cuti = Cuti::where('id',$id)->first();
+//             $jml_cuti = $cuti->jml_cuti;
+//             $status = Status::find(7);
+//             Cuti::where('id', $id)->update(
+//                 ['status' => $status->id,]
+//             );
+    
+//             $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+//                 ->where('id_karyawan', $cuti->id_karyawan)
+//                 ->where('id_jeniscuti', $cuti->id_jeniscuti)
+//                 ->where('id_settingalokasi', $cuti->id_settingalokasi)
+//                 ->first();
+
+//             $durasi_baru = $alokasicuti->durasi - $jml_cuti;
+
+//             Alokasicuti::where('id', $alokasicuti->id)
+//             ->update(
+//                 ['durasi' => $durasi_baru]
+//             );
+
+//             //ambil data karyawan
+//             $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+//             $data = [
+//                 'subject'     =>'Notifikasi Cuti Disetujui',
+//                 'id'          =>$cuti->id,
+//                 'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+//                 'keperluan'   =>$cuti->keperluan,
+//                 'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+//                 'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+//                 'jml_cuti'    =>$cuti->jml_cuti,
+//                 'status'      =>$cuti->name_status,
+//             ];
+//             Mail::to($tujuan)->send(new CutiApproveNotification($data));
+//             return redirect()->back()->withInput();
+//         }
+//         else{
+//             return redirect()->back();
+//         }
+//     }
+//     elseif($role == 3 && $row->jabatan = "Supervisor")
+//     {
+//         dd($atasanpertama->atasan_pertama);
+//         if($atasanpertama &&  $atasanpertama->atasan_pertama  == Auth::user()->id_pegawai)
+//         {
+//             $status = Status::find(6);
+//             Cuti::where('id',$id)->update([
+//                 'status' => $status->id,
+//              ]);
+//             $cuti = Cuti::where('id',$id)->first();
+//             //ambil nama_atasan
+//             $idatasan = DB::table('cuti')
+//                 ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+//                 ->select('karyawan.atasan_kedua as atasan_kedua')
+//                 ->where('cuti.id',$cuti->id)
+//                 ->first();
+//             $atasan = Karyawan::where('id',$idatasan->atasan_kedua)
+//                 ->select('email as email')
+//                 ->first();
+//             dd($idatasan,$atasan);
+                
+//             //ambil data karyawan
+//             $tujuan = $atasan->email;
+                
+//             $data = [
+//                 'subject'     =>'Notifikasi Permintaan Cuti',
+//                 'id'          =>$cuti->id,
+//                 'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+//                 'keperluan'   =>$cuti->keperluan,
+//                 'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+//                 'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+//                 'jml_cuti'    =>$cuti->jml_cuti,
+//                 'status'      =>$status->name_status,
+//                 'namakaryawan'=>$cuti->karyawans->nama,
+//             ];
+//             Mail::to($tujuan)->send(new CutiAtasan2Notification($data));
+//             // dd($data,$tujuan);
+//             return redirect()->back()->withInput();
+//         }
+//     }
+//     else{
+//         return redirect()->back();
+//     }   
+// }
+
 
     // public function exportallpdf()
     // {

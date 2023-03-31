@@ -76,30 +76,30 @@ class TidakMasukController extends Controller
             //                 ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
             //                 ->where('tidakmasuk.status', '=', 'tanpa keterangan')
             //                 ->select('tidakmasuk.id_pegawai as id_pegawai','karyawan.nama as nama', 'setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
-            //                 ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Gaji" THEN ' . $pg->jumlah_tidakmasuk . ' ELSE ' . $pct->jumlah_tidakmasuk . ' END')
+            //                 ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Transportasi" THEN ' . $pg->jumlah_tidakmasuk . ' ELSE ' . $pct->jumlah_tidakmasuk . ' END')
             //                 ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai')
             //                 ->get();
             //
-            $pg = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Gaji')->select('jumlah_tidakmasuk')->first();
-            $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Cuti Tahunan')->select('jumlah_tidakmasuk')->first();
+            $pg = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Transportasi')->select('jumlah_tidakmasuk')->first();
+            $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Makan')->select('jumlah_tidakmasuk')->first();
 
-            $potonggaji = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+            $potongtransport = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
                 ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
                 ->where('tidakmasuk.status', '=', 'tanpa keterangan')
                 ->select('tidakmasuk.id_pegawai as id_pegawai','karyawan.nama as nama', 'setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
-                ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Gaji" THEN ' . $pg->jumlah_tidakmasuk . ' END')
+                ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Transportasi" THEN ' . $pg->jumlah_tidakmasuk . ' END')
                 ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai')
                 ->get();
-            $jpg = $potonggaji->count();
+            $jpg = $potongtransport->count();
 
-            $potongcuti = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+            $potonguangmakan = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
                 ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
                 ->where('tidakmasuk.status', '=', 'tanpa keterangan')
                 ->select('tidakmasuk.id_pegawai as id_pegawai','karyawan.nama as nama','tidakmasuk.status as keterangan','setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
-                ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Cuti Tahunan" THEN ' . $pct->jumlah_tidakmasuk . ' END')
+                ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Makan" THEN ' . $pct->jumlah_tidakmasuk . ' END')
                 ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai','tidakmasuk.status')
                 ->get();
-            $jpc = $potongcuti->count();
+            $jpc = $potonguangmakan->count();
 
     
             //data karyawan terlambat
@@ -134,7 +134,7 @@ class TidakMasukController extends Controller
 
             // dd($jumter);
 
-            return view('admin.tidakmasuk.show',compact('potongcuti','potonggaji','jpc','jpg','terlambat','telat','datatelat','jumdat','jumter','jumtel','row'));
+            return view('admin.tidakmasuk.show',compact('potongtransport','potonguangmakan','jpc','jpg','terlambat','telat','datatelat','jumdat','jumter','jumtel','row'));
         }
         else{
             return redirect()->back();

@@ -15,14 +15,14 @@
         </div>
     </div>
     <!-- Header -->
-    @if(isset($potongcuti))
+    @if(isset($potonguangmakan))
         <div class="content" id="">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-primary">
                             <div class="panel-heading  col-sm-15">
-                                <h5>Sanksi Potong Cuti</h5>
+                                <h5  class="text-white">Sanksi Potong Uang Makan</h5>
                             </div>
                             <div class="panel-body" >
                                 <table id="datatable-responsive19" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
@@ -38,7 +38,7 @@
                                     </thead>
                                    
                                     <tbody>
-                                        @foreach($potongcuti as $item)
+                                        @foreach($potonguangmakan as $item)
                                             <tr>
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$item->nama}}</td>
@@ -60,14 +60,14 @@
             </div>
         </div>
     @endif
-    @if(isset($potonggaji))
+    @if(isset($potongtransport))
         <div class="content">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-primary">
                             <div class="panel-heading  col-sm-15">
-                            <h5>Sanksi Potong Gaji</h5>
+                            <h5 class="text-white">Sanksi Potong Uang Transportasi</h5>
                             </div>
                             <div class="panel-body" >
                                 <table id="datatable-responsive20" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
@@ -83,7 +83,7 @@
                                     </thead>
                                 
                                     <tbody>
-                                        @foreach($potonggaji as $item)
+                                        @foreach($potongtransport as $item)
                                             <tr>
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$item->nama}}</td>

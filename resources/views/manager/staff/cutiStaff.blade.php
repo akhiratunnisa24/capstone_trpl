@@ -202,8 +202,8 @@
 
                                                                     {{-- status --}}
                                                                     <td>
-                                                                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 5 ? 'danger' : ($data->status == 7 ? 'success' : '')) }}">
-                                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 5 ? 'Ditolak' : ($data->status == 7 ? 'Disetujui' : '')) }}
+                                                                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
+                                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}
                                                                         </span>
                                                                     </td>
 

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('sanksi_terlambat',['Teguran Biasa','SP Pertama','SP Kedua','SP Ketiga'])->nullable();
             $table->integer('jumlah_tidakmasuk')->nullable();
             $table->string('status_tidakmasuk,20')->nullable();
-            $table->enum('sanksi_tidak_masuk',['Potong Gaji','Potong Cuti Tahunan'])->nullable();
+            $table->enum('sanksi_tidak_masuk',['Potong Uang Transportasi','Potong Uang Makan'])->nullable();
             $table->timestamps();
         });
     }

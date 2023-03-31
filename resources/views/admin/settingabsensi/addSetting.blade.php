@@ -58,8 +58,8 @@
                                 <label class="col-form-label">Jenis Sanksi</label>
                                 <select name="sanksi_tidak_masuk" class="form-control" required>
                                     <option value="">Pilih Jenis Sanksi</option>
-                                    <option value="Potong Gaji">Potong Gaji</option>
-                                    <option value="Potong Cuti Tahunan">Potong Cuti Tahunan</option>
+                                    <option value="Potong Uang Transportasi">Potong Uang Transportasi</option>
+                                    <option value="Potong Uang Makan">Potong Uang Makan</option>
                                 </select>
                             </div>
                         </div>
@@ -89,8 +89,8 @@
                         <label class="col-form-label">Jenis Sanksi</label>
                         <select name="sanksi_tidak_masuk" class="form-control" required>
                             <option value="">Pilih Jenis Sanksi</option>
-                            <option value="Potong Gaji">Potong Gaji</option>
-                            <option value="Potong Cuti Tahunan">Potong Cuti Tahunan</option>
+                            <option value="Potong Uang Transportasi">Potong Uang Transportasi</option>
+                            <option value="Potong Uang Makan">Potong Uang Makan</option>
                         </select>
                     </div>
 

@@ -177,6 +177,7 @@
                                 
                                 @if ($izinjumlah)
                                     <span class="badge badge badge-danger" style="background-color:red">{{ $izinjumlah }}</span>
+                                @elseif(!$izinjumlah)
                                 @endif
                             </a>
 
@@ -230,9 +231,8 @@
                                                         <td></td>
                                                     @endif --}}
                                                     <td>
-                                                        <span
-                                                            class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 5 ? 'danger' : ($data->status == 7 ? 'success' : '')) }}">
-                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 5 ? 'Ditolak' : ($data->status == 7 ? 'Disetujui' : '')) }}
+                                                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
+                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}
                                                         </span>
                                                     </td>
 
@@ -241,7 +241,7 @@
                                                             {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
                                                             @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                 <div class="col-sm-3">
-                                                                    <form action="{{ route('izinapproved', $data->id) }}"
+                                                                    <form action="{{ route('izin.approved', $data->id) }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         <input type="hidden" name="status"
@@ -259,14 +259,46 @@
                                                                         </a>
                                                                     </form>
                                                                 </div>
-                                                                {{-- <div class="col-sm-3" style="margin-left:7px">
-                                                                                    <form action="{{ route('izinreject',$data->id)}}" method="POST"> 
-                                                                                        @csrf
-                                                                                        @method('POST')
-                                                                                        <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
-                                                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"></button> 
-                                                                                    </form>
-                                                                                </div> --}}
+                                                            @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
+                                                                <div class="col-sm-3">
+                                                                    <form action="{{ route('izin.approved', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                    <form action="" method="POST">
+                                                                        <a class="btn btn-danger btn-sm"
+                                                                            style="height:26px" data-toggle="modal"
+                                                                            data-target="#izReject{{ $data->id }}">
+                                                                            <i class="fa fa-times fa-md"></i>
+                                                                        </a>
+                                                                    </form>
+                                                                </div>
+                                                            @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6)
+                                                                <div class="col-sm-3">
+                                                                    <form action="{{ route('izin.approved', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                    <form action="" method="POST">
+                                                                        <a class="btn btn-danger btn-sm"
+                                                                            style="height:26px" data-toggle="modal"
+                                                                            data-target="#izReject{{ $data->id }}">
+                                                                            <i class="fa fa-times fa-md"></i>
+                                                                        </a>
+                                                                    </form>
+                                                                </div>
                                                             @else
                                                             @endif
 
@@ -471,7 +503,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($sisacutis as $sisa)
+                                        @forelse($sisacutis as $key => $sisa)
                                             @if($sisa->id_pegawai == Auth::user()->id_pegawai)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
@@ -481,7 +513,13 @@
                                                     <td>{{ $sisa->periode}}</td>
                                                 </tr>
                                             @endif
-                                        @endforeach
+                                        @empty
+                                            @if($sisa->id_pegawai != Auth::user()->id_pegawai)
+                                                <tr>
+                                                    <td colspan="12" class="text-center">No data available in table.</td>
+                                                </tr>
+                                            @endif
+                                        @endforelse
                                     </tbody>
                                 </table>
                             @endif

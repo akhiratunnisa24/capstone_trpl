@@ -9,16 +9,16 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CutiAtasan2Notification extends Mailable
+class IzinAtasan2Notification extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data=[];
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
+
     public function __construct($data)
     {
         $this->data = $data;
@@ -31,7 +31,7 @@ class CutiAtasan2Notification extends Mailable
         ->cc($this->data['karyawan_email'], 'Karyawan')
         ->cc($this->data['atasan1'], 'Atasan Pertama')
         ->cc('akhiratunnisahasanah0917@gmail.com','HRD')
-        ->view('emails.cuti2index')->with('data',$this->data);
+        ->view('emails.izin2index')->with('data',$this->data);
     }
     /**
      * Get the attachments for the message.

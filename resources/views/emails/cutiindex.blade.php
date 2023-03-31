@@ -115,7 +115,6 @@
 <body>
 	<div class="wrapper">
 		<div class="header">
-			<h1>Promo Terbaru dari Toko Online</h1>
             {{-- <a class="logo"><img src="assets/images/grm.png" height="135" width="195"></a> --}}
 		</div>
 		<div class="content">

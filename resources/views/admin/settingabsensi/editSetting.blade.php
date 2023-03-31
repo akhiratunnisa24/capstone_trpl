@@ -54,8 +54,8 @@
                             <label class="col-form-label">Jenis Sanksi</label>
                             <select name="sanksi_tidak_masuk" class="form-control" required>
                                 <option value="">Pilih Jenis Sanksi</option>
-                                <option value="Potong Gaji" @if($data->sanksi_tidak_masuk == "Potong Gaji") selected @endif>Potong Gaji</option>
-                                <option value="Potong Cuti Tahunan" @if($data->sanksi_tidak_masuk == "Potong Cuti Tahunan") selected @endif>Potong Cuti Tahunan</option>
+                                <option value="Potong Uang Transportasi" @if($data->sanksi_tidak_masuk == "Potong Uang Transportasi") selected @endif>Potong Uang Transportasi</option>
+                                <option value="Potong Uang Makan" @if($data->sanksi_tidak_masuk == "Potong Uang Makan") selected @endif>Potong Uang Makan</option>
                             </select>
                         </div>
                     @endif

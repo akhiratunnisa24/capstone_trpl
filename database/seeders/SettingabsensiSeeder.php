@@ -53,9 +53,9 @@ class SettingabsensiSeeder extends Seeder
             'toleransi_terlambat' =>NULL,
             'jumlah_terlambat' =>NULL,
             'sanksi_terlambat' =>NULL,
-            'jumlah_tidakmasuk'=>3,
+            'jumlah_tidakmasuk'=>5,
             'status_tidakmasuk'=>'tanpa keterangan', 
-            'sanksi_tidak_masuk'=>'Potong Gaji',
+            'sanksi_tidak_masuk'=>'Potong Uang Transportasi',
         ]);
         Settingabsensi::insert([
             'toleransi_terlambat' =>NULL,
@@ -63,7 +63,7 @@ class SettingabsensiSeeder extends Seeder
             'sanksi_terlambat' =>NULL,
             'jumlah_tidakmasuk'=>3,
             'status_tidakmasuk'=>'tanpa keterangan', 
-            'sanksi_tidak_masuk'=>"Potong Cuti Tahunan",
+            'sanksi_tidak_masuk'=>"Potong Uang Makan",
         ]);
     }
 }
