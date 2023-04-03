@@ -44,7 +44,7 @@ class SettingcutiController extends Controller
         // dd($alokasicuti);
         foreach ($alokasicuti as $data) {
             $cek = Settingcuti::where('id_jeniscuti', $data->id_jeniscuti)->where('id_pegawai', $data->id_karyawan)->exists();
-            $ceksisa = Sisacuti::where('id_jeniscuti', $data->id_jeniscuti)->where('id_pegawai', $data->id_karyawan)->exists();
+            $ceksisa = Sisacuti::where('jenis_cuti', $data->id_jeniscuti)->where('id_pegawai', $data->id_karyawan)->exists();
 
             // dd($data);
             if(!$cek && !$ceksisa)
@@ -60,7 +60,7 @@ class SettingcutiController extends Controller
                 // insert data ke tabel sisacuti
                 $sisacuti = new Sisacuti;
                 $sisacuti->id_pegawai   = $settingcuti->id_pegawai;
-                $sisacuti->id_jeniscuti = $settingcuti->id_jeniscuti;
+                $sisacuti->jenis_cuti   = $settingcuti->id_jeniscuti;
                 $sisacuti->id_setting   = $settingcuti->id;
                 $sisacuti->jumlah_cuti  = $settingcuti->sisa_cuti;
                 $sisacuti->sisa_cuti    = $settingcuti->jumlah_cuti;
@@ -96,9 +96,9 @@ class SettingcutiController extends Controller
 
                     $settingcuti = Settingcuti::where('id_jeniscuti', $alokasi->id_jeniscuti)
                         ->where('id_pegawai', $id_karyawan)
-                        ->first();
+                        ->get();
                 
-                    $sisacuti = Sisacuti::where('id_jeniscuti',$alokasi->id_jeniscuti)
+                    $sisacuti = Sisacuti::where('jenis_cuti',$alokasi->id_jeniscuti)
                         ->where('id_pegawai', $id_karyawan)
                         ->first();
 

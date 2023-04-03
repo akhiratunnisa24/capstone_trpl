@@ -129,13 +129,12 @@
                     @if($data['jml_hari'] > 1)
                         <li>Jumlah hari    :  {{$data['jml_hari']}}</li>
                     @endif
-                    @if($data['jam_selesai'] != NULL)
+                    @if($data['id_jenisizin'] == "Terlambat" || $data['id_jenisizin'] == "Pulang Lebih Awal")
                         <li>Jam            : {{$data['jam_mulai']}} s/d {{$data['jam_selesai']}}</li>
                     @endif
-                    <li>Status         :  <span class="text-white badge badge-info">{{$data['status']}}</span></li>
-                    <li></li>
+                    <li>Status         :  <span class="text-white badge badge-info"><strong>{{$data['status']}}</strong></span></li>
                 </ul><br>
-                <p>Saya mohon Anda untuk segera meninjau permintaan ini dan memberikan persetujuan Anda secepatnya.</p>
+                <p>Mohon Anda untuk segera meninjau permintaan ini dan memberikan persetujuan Anda secepatnya.</p>
                 <p>Terima kasih atas perhatiannya.</p><br>
 
                 <p>Salam Hormat,<br><br></p>

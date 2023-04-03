@@ -49,7 +49,7 @@
                                             <tr>
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$data->karyawans->nama}}</td>
-                                                <td>{{$data->jeniscutis->jenis_cuti}}</td>
+                                                <td>{{$data->jenis_cuti}}</td>
                                                 {{-- <td>{{$data->jumlah_cuti}}</td> --}}
                                                 <td>{{$data->sisa_cuti}}</td>
                                                 <td>{{$data->periode}}</td>
@@ -58,7 +58,7 @@
                                                     @if($data->status == 1)
                                                         <span class="badge badge-info">Aktif</span>
                                                     @else
-                                                        <span class="badge badge-info">Kadaluarsa</span>
+                                                        <span class="badge badge-danger">Kadaluarsa</span>
                                                     @endif
                                                 </td>
                                                 {{-- <td>

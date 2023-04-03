@@ -66,9 +66,10 @@ class CutikaryawanController extends Controller
             ->select('alokasicuti.id','alokasicuti.id_jeniscuti','jeniscuti.jenis_cuti', 'settingalokasi.id as id_settingalokasi', 'alokasicuti.durasi','alokasicuti.aktif_dari','alokasicuti.sampai')
             ->where('alokasicuti.id_karyawan','=', Auth::user()->id_pegawai)
             ->where('alokasicuti.durasi','>',0)
+            ->whereYear('sampai', '=', Carbon::now()->year)
             ->distinct()
             ->get();
-
+        // return $jeniscuti;
         //form izin
         $jenisizin = Jenisizin::all();
         $tipe = $request->query('tipe', 1);
@@ -79,12 +80,7 @@ class CutikaryawanController extends Controller
     public function getDurasi(Request $request)
     {
         try {
-            // $getDurasi = Alokasicuti::select('id','id_settingalokasi','durasi','aktif_dari','sampai')
-            // ->where('id_jeniscuti','=',$request->id_jeniscuti)
-            // ->where('id_karyawan','=',Auth::user()->id_pegawai)
-            // ->first();
-
-            $getDurasi = Alokasicuti::select('alokasicuti.id', 'settingalokasi.id as id_settingalokasi', 'alokasicuti.durasi', 'alokasicuti.aktif_dari', 'alokasicuti.sampai')
+            $getDurasi = Alokasicuti::select('alokasicuti.id', 'settingalokasi.id as id_settingalokasi', 'alokasicuti.durasi', 'alokasicuti.aktif_dari', 'alokasicuti.sampai','alokasicuti.id_jeniscuti')
                 ->join('settingalokasi', 'alokasicuti.id_settingalokasi', '=', 'settingalokasi.id')
                 ->where('alokasicuti.id_jeniscuti','=',$request->id_jeniscuti)
                 ->where('alokasicuti.id_karyawan','=',Auth::user()->id_pegawai)

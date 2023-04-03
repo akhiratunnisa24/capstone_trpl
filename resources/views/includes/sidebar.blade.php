@@ -9,10 +9,12 @@
             <?php
             
             use Illuminate\Support\Facades\Auth;
+            use App\Models\Karyawan;
             
             $id = Auth::user()->id_pegawai;
             $user = Auth::user()->name;
             $role = Auth::user()->role;
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->select('jabatan')->first();
             
             ?>
 
@@ -167,9 +169,15 @@
                     <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan
                                 Cuti &
                                 Izin</span></a></li>
-                    <li><a href="/resign-karyawan" class="waves-effect"><i
-                                class="mdi mdi-account-off"></i><span>Ajukan
-                                Resign</span></a></li>
+                    @if(Auth::user()->role == 4 && $row->jabatan == "Management")
+                        <li class="has_sub">
+                                <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Data
+                                            Cuti
+                                            Staff</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </div>
         @endif
@@ -220,6 +228,7 @@
                 </ul>
             </div>
         @endif
+
 
         <!--- Role Admin -->
         @if (Auth::check() && Auth::user()->role == 5)
