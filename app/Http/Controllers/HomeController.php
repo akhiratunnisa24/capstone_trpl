@@ -352,7 +352,7 @@ class HomeController extends Controller
         $resign = Resign::orderBy('created_at', 'desc')->get();
         $resignjumlah = $resign->count();
 
-        $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->get();
+        $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->where('status',1)->get();
 
 
         //NOTIFIKASI DATA TINDAKAN TERHADAPA KARYAWAN TIDAK MASUK

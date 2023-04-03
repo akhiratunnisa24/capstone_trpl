@@ -375,6 +375,7 @@ Route::get('/export-pdf', [ManagerController::class, 'exportallpdf'])->name('exp
 Route::get('/export-all-excel', [ManagerController::class, 'exportallExcel'])->name('export.allExcel');
 Route::get('/export-to-excel', [ManagerController::class, 'exportToExcel'])->name('export.ToExcel');
 //cuti dan izin
+
 Route::get('/cuti-staff', [ManagerController::class, 'cutiStaff'])->name('cuti.Staff');
 Route::post('/cuti-staff/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
 Route::post('/cuti-reject/{id}', [ManagerController::class, 'cutireject'])->name('cuti.reject');
@@ -550,3 +551,10 @@ Route::get('settingrole', [SettingController::class, 'settingrole'])->name('sett
 Route::post('storerole', [SettingController::class, 'storerole'])->name('storerole');
 Route::put('editrole{id}', [SettingController::class, 'editrole'])->name('editrole');
 Route::get('hapusrole{id}', [SettingController::class, 'hapusrole'])->name('hapusrole');
+
+Route::post('/getsisacuti', [KaryawanController::class, 'getSisacuti'])->name('get.Sisacuti');
+Route::post('storesisacuti', [KaryawanController::class, 'storeSisacuti'])->name('store.sisa');
+
+//Direktur
+Route::get('/cutistaff', [DirekturController::class, 'index'])->name('cuti.Staff');
+

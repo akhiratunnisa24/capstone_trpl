@@ -208,9 +208,33 @@ class Kernel extends ConsoleKernel
                     Mail::to($tujuan)->send(new SisacutiNotification($data));
                 }        
             }
-        })->monthlyOn(30, '01,02,03')->at('15:02');
+        })->monthlyOn(01, '01,02,03')->at('15:02');
         
-    
+        $schedule->call(function () 
+        {
+            $year = Carbon::now()->subYear()->year;
+
+            $jeniscuti = Jeniscuti::find(1);
+            $sisacuti = Sisacuti::leftJoin('karyawan', 'sisacuti.id_pegawai', '=', 'karyawan.id')
+                ->leftJoin('jeniscuti', 'jeniscuti.id', '=', 'sisacuti.id_jeniscuti')
+                ->where('sisacuti.id_jeniscuti', $jeniscuti->id)
+                ->where('sisacuti.sisa_cuti', '>=', 0)
+                ->where('sisacuti.status', '=', 1)
+                ->where('periode','=',$year)
+                ->select('sisacuti.id_pegawai as id', 'karyawan.email as email', 'karyawan.nama as nama', 'sisacuti.id_jeniscuti as jeniscuti', 'jeniscuti.jenis_cuti as kategori', 'sisacuti.sisa_cuti as sisa', 'sisacuti.periode as tahun', 'sisacuti.dari as dari', 'sisacuti.sampai as sampai', 'sisacuti.status')
+                ->get();
+
+            foreach ($sisacuti as $sisa) {
+                $currentDate = Carbon::today();
+                $isInPeriod = $currentDate->between($sisa->dari, $sisa->sampai);
+                if (!$isInPeriod) {
+                    Sisacuti::where('id', '=', $sisa->id)
+                    ->update(['status' => 0]);
+                }
+            }
+
+        })->yearlyOn(04, 03, '10:09');
+        //->yearlyOn(03, 31, '23:59');
     
     }
 

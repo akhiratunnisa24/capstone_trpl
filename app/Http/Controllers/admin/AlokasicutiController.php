@@ -36,8 +36,8 @@ class AlokasicutiController extends Controller
         if ($role == 1) {
 
             //index
-            $alokasicuti = Alokasicuti::where('status', true)->get();
-
+            $alokasicuti = Alokasicuti::where('status', 1)->whereYear('sampai', '=', Carbon::now()->year)->get();
+            
             //create
             $karyawan = Karyawan::all();
             // $jeniscuti = DB::table('settingalokasi')
