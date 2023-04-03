@@ -20,7 +20,7 @@
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Nama Organisasi</label>
                                     <input type="text" name="namaOrganisasi" class="form-control"
-                                        placeholder="Masukkan Nama Perusahaan" autocomplete="off">
+                                        placeholder="Masukkan Nama Organisasi" autocomplete="off">
                                 </div>
                             </div>
 

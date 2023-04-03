@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RekruitmenDiterimaNotification;
 use Illuminate\Http\Request;
 use App\Models\Karyawan;
 use App\Models\Lowongan;
@@ -313,15 +314,34 @@ class RekruitmenController extends Controller
             [
                 'status_lamaran' => $request->post('status_lamaran'),
                 'tanggal_tahapan' => $request->post('tgl_tahapan'),
+                'link' => $request->post('link'),
 
             ]
         );
 
-        $data = Rekruitmen::findOrFail($id);
-        $tujuan = $data->email;
-        $email = new RekruitmenNotification($data);
-        Mail::to($tujuan)->send($email);
+        // Kirim Notif Email
 
+        $data = Rekruitmen::findOrFail($id);
+        // Email Pelamar
+        $tujuan = $data->email;
+        // Isian Email untuk pelamar
+        $email = new RekruitmenNotification($data);
+        // Isian Email untuk pelamar yang Diterima
+        $emaillolos = new RekruitmenDiterimaNotification($data);
+        // Email HRD
+        $hrd1 = 'hrd@gmail.com';
+        $hrd2 = 'hrd2@gmail.com';
+
+        if ($data->status_lamaran !='6'){
+            Mail::to($tujuan)->send($email);
+            Mail::to($hrd1)->send($email);
+            Mail::to($hrd2)->send($email);
+        } else {
+            Mail::to($tujuan)->send($emaillolos);
+            Mail::to($hrd1)->send($emaillolos);
+            Mail::to($hrd2)->send($emaillolos);
+        }
+        
         $rekrutmen = Rekruitmen::find($id);
 
         if ($rekrutmen->status_lamaran == '6') {
@@ -334,17 +354,72 @@ class RekruitmenController extends Controller
 
             // setelah karyawan diterima masuk ke tabel karyawan
 
-            // $karyawan = new Karyawan();
-            // $karyawan->nik = $rekrutmen->nik;
-            // $karyawan->tgllahir = $rekrutmen->tgllahir;
-            // $karyawan->email = $rekrutmen->email;
-            // $karyawan->agama = $rekrutmen->tgllahir;
-            // $karyawan->jenis_kelamin = $rekrutmen->jenis_kelamin;
-            // $karyawan->alamat = $rekrutmen->alamat;
-            // $karyawan->no_hp = $rekrutmen->no_hp;
-            // $karyawan->no_kk = $rekrutmen->no_kk;
-            // $karyawan->jabatan = $lowongan->jabatan;
-            // $karyawan->save();
+            // Tabel Karyawan
+            $karyawan = new Karyawan();
+            $karyawan->nik = $rekrutmen->nik;
+            $karyawan->nama = $rekrutmen->nama;
+            $karyawan->tgllahir = $rekrutmen->tgllahir;
+            $karyawan->tempatlahir = $rekrutmen->tempatlahir;
+            $karyawan->email = $rekrutmen->email;
+            $karyawan->agama = $rekrutmen->agama;
+            $karyawan->gol_darah = $rekrutmen->gol_darah;
+            $karyawan->jenis_kelamin = $rekrutmen->jenis_kelamin;
+            $karyawan->alamat = $rekrutmen->alamat;
+            $karyawan->no_hp = $rekrutmen->no_hp;
+            $karyawan->no_kk = $rekrutmen->no_kk;
+            $karyawan->status_kerja = 'Aktif';
+            $karyawan->no_rek = $rekrutmen->no_rek;
+            $karyawan->no_bpjs_kes = $rekrutmen->no_bpjs_kes;
+            $karyawan->no_bpjs_ket = $rekrutmen->no_bpjs_ket;
+            $karyawan->no_npwp = $rekrutmen->no_npwp;
+            $karyawan->no_akdhk = $rekrutmen->no_akdhk;
+            $karyawan->no_program_pensiun = $rekrutmen->no_program_pensiun;
+            $karyawan->no_program_askes = $rekrutmen->no_program_askes;
+            $karyawan->nama_bank = $rekrutmen->nama_bank;
+            $karyawan->status_pernikahan = $rekrutmen->status_pernikahan;
+            $karyawan->jumlah_anak = $rekrutmen->jumlah_anak;
+            $karyawan->tglmasuk = Carbon::now();
+            $karyawan->save();
+
+            // Tabel Kontak Darurat
+            $kdarurat = Kdarurat::where('id_pelamar', $id)->get();
+            // $kdarurat->id_pegawai = $karyawan->id;
+            // $kdarurat->save();
+            foreach ($kdarurat as $item) {
+                $item->id_pegawai = $karyawan->id;
+                $item->save();
+            }
+            // Tabel Keluarga
+            $keluarga = Keluarga::where('id_pelamar', $id)->get();
+            foreach ($keluarga as $item) {
+                $item->id_pegawai = $karyawan->id;
+                $item->save();
+            }
+            // Tabel Riwayat Organisasi
+            $organisasi = Rorganisasi::where('id_pelamar', $id)->get();
+            foreach ($organisasi as $item) {
+                $item->id_pegawai = $karyawan->id;
+                $item->save();
+            }
+            // Tabel Riwayat Pekerjaan
+            $pekerjaan = Rpekerjaan::where('id_pelamar', $id)->get();
+            foreach ($pekerjaan as $item) {
+                $item->id_pegawai = $karyawan->id;
+                $item->save();
+            }
+            // Tabel Riwayat Pendidikan
+            $pendidikan = Rpendidikan::where('id_pelamar', $id)->get();
+            foreach ($pendidikan as $item) {
+                $item->id_pegawai = $karyawan->id;
+                $item->save();
+            }
+            // Tabel Riwayat Prestasi
+            $prestasi = Rprestasi::where('id_pelamar', $id)->get();
+            foreach ($prestasi as $item) {
+                $item->id_pegawai = $karyawan->id;
+                $item->save();
+            }
+
         }
 
 

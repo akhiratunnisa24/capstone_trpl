@@ -123,8 +123,8 @@
                                                     <label class="form-label">Jenis Kelamin</label>
                                                     <select class="form-control" name="jenis_kelaminPelamar" required>
                                                         <option value="">Pilih Jenis Kelamin</option>
-                                                        <option value="L" @if($pelamar->jenis_kelamin == "L") selected @endif>Laki-Laki</option>
-                                                        <option value="P" @if($pelamar->jenis_kelamin == "P") selected @endif>Perempuan</option>
+                                                        <option value="Laki-Laki" @if($pelamar->jenis_kelamin == "Laki-Laki") selected @endif>Laki-Laki</option>
+                                                        <option value="Perempuan" @if($pelamar->jenis_kelamin == "Perempuan") selected @endif>Perempuan</option>
                                                     </select>
                                                 </div>
                                             </div>

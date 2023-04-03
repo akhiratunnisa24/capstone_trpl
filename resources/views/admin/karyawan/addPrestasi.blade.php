@@ -20,7 +20,7 @@
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Perihal / Keterangan</label>
                                     <input type="text" name="keterangan" class="form-control"
-                                        placeholder="Masukkan Nama Perusahaan" autocomplete="off">
+                                        placeholder="Masukkan Nama Prestasi" autocomplete="off">
                                 </div>
                             </div>
 
@@ -29,7 +29,7 @@
                                     <label for="exampleInputEmail1" class="form-label"> Instansi Pemberi </label>
                                     <input type="text" name="namaInstansi" class="form-control"
                                         id="exampleInputEmail1" aria-describedby="emailHelp"
-                                        placeholder="Masukkan Alamat"autocomplete="off">
+                                        placeholder="Masukkan Instansi"autocomplete="off">
                                 </div>
                             </div>
 
@@ -38,7 +38,7 @@
                                     <label for="exampleInputEmail1" class="form-label"> Alamat Instansi</label>
                                     <input type="text" name="alamatInstansi" class="form-control"
                                         id="exampleInputEmail1" aria-describedby="emailHelp"
-                                        placeholder="Masukkan Jabatan" autocomplete="off">
+                                        placeholder="Masukkan Alamat" autocomplete="off">
                                 </div>
                             </div>
 
@@ -47,7 +47,7 @@
                                     <label for="exampleInputEmail1" class="form-label"> Nomor Surat</label>
                                     <input type="number" name="noSurat" class="form-control"
                                         id="exampleInputEmail1" aria-describedby="emailHelp"
-                                        placeholder="Masukkan Jabatan" autocomplete="off">
+                                        placeholder="Masukkan Nomor Surat" autocomplete="off">
                                 </div>
                             </div>
 

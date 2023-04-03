@@ -106,11 +106,11 @@
                                     <div class="row align-items-end">
                                         <div class="col-md mb-md-0 m-l-15">
                                             <label class="font-size-14 fw-bold">Jenis Kelamin *</label>
-                                            {{-- @if ($pelamar->jenis_kelamin == 'Perempuan')
+                                            @if ($pelamar->jenis_kelamin == 'Perempuan')
                                             <p>Perempuan</p>
                                         @else
                                             <p>Laki-Laki</p>
-                                        @endif --}}
+                                        @endif
                                         </div>
                                     </div>
                                 </div>

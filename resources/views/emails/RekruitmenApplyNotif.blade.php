@@ -81,9 +81,12 @@
     <br>
 
     <p>Anda dapat masuk ke website sebagai HRD untuk melihat detail formulir lamaran pekerjaan dan dokumen pendukung
-        lainnya yang telah dilampirkan oleh pelamar.</p>
+        lainnya yang telah dilampirkan oleh pelamar. atau <a href="/http://localhost:8000/data_rekrutmen">click here!</a> </p>
 
 </body>
+<div class="footer">
+			<p>Email ini dikirimkan secara otomatis. Jangan membalas email ini karena tidak akan terbaca. Hubungi kami di <b><a href="mailto:">info@grm-risk.com</a></b> atau anda bisa menghubungi <a href="#">(+62) 811-140-840-5</a> untuk informasi lebih lanjut.</p>
+		</div>
 
 
 

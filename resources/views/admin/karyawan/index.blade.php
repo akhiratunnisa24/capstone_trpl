@@ -96,7 +96,7 @@
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $k->nama }}</td>
-                                                                    <td>{{ $k->departemen->nama_departemen }}</td>
+                                                                    <td>{{ $k->departemen->nama_departemen ?? '' }}</td>
                                                                     <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}
                                                                     </td>
                                                                     <td>{{ $k->jenis_kelamin }}</td>

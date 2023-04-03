@@ -36,7 +36,7 @@ return new class extends Migration
 
             $table->string('email')->unique();
             $table->string('agama')->nullable();
-            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
             $table->text('alamat')->nullable();
             $table->text('no_hp')->nullable();
             $table->string('no_kk')->nullable();
@@ -44,6 +44,7 @@ return new class extends Migration
             $table->string('cv')->nullable();
             $table->string('status_lamaran')->nullable();
             $table->date('tanggal_tahapan')->nullable();
+            $table->string('link')->nullable();
 
 
             $table->timestamps();

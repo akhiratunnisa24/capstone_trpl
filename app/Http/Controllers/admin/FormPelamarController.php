@@ -583,9 +583,12 @@ class FormPelamarController extends Controller
         $request->session()->forget('prestasi');
 
         $data = Rekruitmen::findOrFail($idKaryawan);
+        // Email HRD
         $tujuan = 'hrd@gmail.com';
+        $tujuan2 = 'hrd2@gmail.com';
         $email = new RekruitmenApplyNotification($data);
         Mail::to($tujuan)->send($email);
+        Mail::to($tujuan2)->send($email);
 
 
         // return redirect('/karyawan');
