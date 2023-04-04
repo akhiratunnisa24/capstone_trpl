@@ -108,7 +108,7 @@
                                                                             {{-- <a href="karyawanshow{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a> --}}
 
                                                                             <a href="showidentitas{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
-
+                                                                            <a href="downloadpdf{{ $k->id }}" class="btn btn-success btn-sm " target="_blank" ><i class="fa fa fa-file-pdf-o"></i></a>
                                                                             <button  onclick="hapus_karyawan({{ $k->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                                                         </div>
                                                                         <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->

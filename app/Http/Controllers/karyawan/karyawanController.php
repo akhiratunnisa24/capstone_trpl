@@ -39,6 +39,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class karyawanController extends Controller
 {
@@ -1867,5 +1868,13 @@ class karyawanController extends Controller
 
             return redirect()->back();
         }
+    }
+    public function downloadpdf(Request $request, $id)
+    {
+            $data = karyawan::findOrFail($id);
+
+            $pdf = PDF::loadview('admin.karyawan.downloadpdf', ['data' => $data])
+            ->setPaper('a4', 'landscape');
+            return $pdf->stream("Data Karyawan "  . $data->nama . ".pdf");
     }
 }

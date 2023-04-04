@@ -87,6 +87,8 @@ Route::get('karyawancreate', [karyawanController::class, 'create'])->name('creat
 Route::get('editPassword{id}', [karyawanController::class, 'editPassword'])->name('editPassword');
 Route::put('updatePassword{id}', [karyawanController::class, 'updatePassword'])->name('updatePassword');
 Route::get('/search', [karyawanController::class, 'index'])->name('search');
+Route::get('downloadpdf{id}', [karyawanController::class, 'downloadpdf'])->name('downloadpdf');
+
 
 
 // Show baru

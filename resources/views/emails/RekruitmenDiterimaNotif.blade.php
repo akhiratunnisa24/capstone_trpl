@@ -11,9 +11,9 @@
     @endif
     <br><br>
     {{-- <p>Anda memiliki notifikasi permintaan <strong>{{$data['id_jeniscuti']}}</strong> dari Saudara/i <strong>{{Auth::user()->id_pegawai}}</strong></p> --}}
-    <p>Kami senang untuk memberitahu Anda bahwa Anda telah diterima sebagai {{ $lowongan->posisi }} di Perusahaan ABC. Kami sangat terkesan dengan pengalaman dan keterampilan yang Anda miliki, serta dengan antusiasme Anda untuk bergabung dengan tim kami.</p>
+    <p>Kami senang untuk memberitahu Anda bahwa Anda telah diterima sebagai {{ $lowongan->posisi }} di Perusahaan Global Risk Management. Kami sangat terkesan dengan pengalaman dan keterampilan yang Anda miliki, serta dengan antusiasme Anda untuk bergabung dengan tim kami.</p>
     <p>Sebagai langkah awal, kami akan meminta Anda untuk mengirimkan salinan dokumen-dokumen yang diperlukan untuk proses pengambilan keputusan, seperti sertifikat pendidikan terakhir, kartu identitas, serta surat keterangan sehat dari dokter. Kami juga akan memberikan informasi mengenai gaji, jadwal kerja, dan manfaat yang akan Anda terima di perusahaan kami.</p>
-    <p>Selamat bergabung dengan tim Perusahaan ABC! Kami berharap untuk bekerja sama dengan Anda dan mencapai kesuksesan bersama-sama.</p>
+    <p>Selamat bergabung dengan tim Perusahaan ! Kami berharap untuk bekerja sama dengan Anda dan mencapai kesuksesan bersama-sama.</p>
     <br>
     
     <p>Salam Hormat,<br><br></p>
