@@ -112,63 +112,51 @@
 	<div class="wrapper">
 		<div class="content">
             <div>
-                <p>Dear <strong>{{$data['nama']}}</strong></p>
+                <p>Kepada <strong>{{$data['namakaryawan']}}</strong></p>
                 <p>Salam sejahtera,</p>
 
                 @if($data['status'] == 'Disetujui')
-                    <strong>Ada Kabar baik nih buat Anda,</strong>
-                    <br><br>
-                    <p>Kami ingin memberitahukan bahwa permintaan <strong>{{$data['jeniscuti']}}</strong> pada tanggal [tanggal mulai] hingga [tanggal selesai] telah <b>DISETUJUI</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong>
-                        Silakan melakukan konfirmasi dengan menghubungi bagian HRD kami jika Anda memerlukan informasi lebih lanjut.</p>
-                    
-                    <label>DETAIL PERMINTAAN IZIN:</label><br>
-                    <div class="modal-body">
-                        <div class="form-group row">
-                            <label for="id" class="col-sm-3 col-form-label">Id Izin</label><label>: {{$data['id']}}</label>
-                        </div>
-                        <div class="form-group row">
-                            <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label><label>: {{$data['nama']}}</label>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="id_jenisizin" class="col-sm-3 col-form-label">Kategori Izin</label><label>: {{$data['jenisizin']}}</label>
-                        </div>
-
-                        <div class="form-group row" id="statuscuti">
-                            <label for="status" class="col-sm-3 col-form-label">Status Izin</label>
-                            @if($data['status'] == 7)
-                                <span class="text-white badge badge-info">DISETUJUI</span>
+                    <p>Ada Kabar baik nih buat Anda,</p>
+                    <br>
+                    <p>Kami dengan senang hati memberitahukan bahwa permintaan cuti dengan rincian sebagai berikut:<br>
+                        <ul>
+                            <li>Nama karyawan  : {{$data['namakaryawan']}}</li>
+                            <li>Kategori cuti  : {{$data['id_jeniscuti']}}</li>
+                            <li>Keperluan      : {{$data['keperluan']}}</li>
+                            @if($data['tgl_selesai'] != NULL)
+                                <li>Tanggal Cuti   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
                             @else
-                                <span class="text-white badge badge-danger">DITOLAK</span>
+                                <li>Tanggal Cuti   : {{$data['tgl_mulai']}}</li>
                             @endif
-                        </div>
-                    </div>
+                            @if($data['jml_cuti'] > 1)
+                                <li>Jumlah Cuti    :  {{$data['jml_cuti']}}</li>
+                            @endif
+                            <li>Status         :  <span class="text-white badge badge-success"><strong>{{$data['status']}}</strong></span></li>
+                        </ul><br>
+                    <p>Telah <b>DISETUJUI</b> oleh kedua atasan Anda yaitu Bapak/Ibu <strong>{{$data['namaatasan1']}}</strong> dan Bapak/Ibu <strong>{{$data['namaatasan2']}}</strong>.</p>
+                    <p>Anda diberikan cuti pada tanggal <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_mulai'] !== NULL) sampai dengan tanggal <strong>{{$data['tgl_selesai']}}</strong> @endif. Silakan pastikan untuk menyelesaikan semua pekerjaan yang perlu dikerjakan sebelum Anda cuti.</p>
+                    <p>Jika Anda memiliki pertanyaan lebih lanjut tentang cuti Anda, jangan ragu untuk menghubungi bagian HRD.</p>
                 @else  
-                    <strong>Mohon Maaf</strong>
-                    <br><br>
-                    <p>Kami ingin memberitahukan bahwa permintaan <strong>Izin {{$data['jenisizin']}}</strong> pada tanggal [tanggal mulai] hingga [tanggal selesai] <b>DISTOLAK</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong></p> 
-                    <label>DETAIL PERMINTAAN IZIN:</label><br>
-                    <div class="modal-body">
-                        <div class="form-group row">
-                            <label for="id" class="col-sm-3 col-form-label">Id Izin</label><label>: {{$data['id']}}</label>
-                        </div>
-                        <div class="form-group row">
-                            <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label><label>: {{$data['nama']}}</label>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="id_jenisizin" class="col-sm-3 col-form-label">Kategori Izin</label><label>: {{$data['jenisizin']}}</label>
-                        </div>
-
-                        <div class="form-group row" id="statuscuti">
-                            <label for="status" class="col-sm-3 col-form-label">Status Izin</label>
-                            @if($data['status'] == 7)
-                                <span class="text-white badge badge-info">DISETUJUI</span>
+                    <strong>Mohon Maaf,</strong>
+                    <br>
+                    <p>Kami dengan berat hati memberitahukan bahwa permintaan cuti dengan rincian sebagai berikut:<br>
+                        <ul>
+                            <li>Nama karyawan  : {{$data['namakaryawan']}}</li>
+                            <li>Kategori cuti  : {{$data['id_jeniscuti']}}</li>
+                            <li>Keperluan      : {{$data['keperluan']}}</li>
+                            @if($data['tgl_selesai'] != NULL)
+                                <li>Tanggal Cuti   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
                             @else
-                                <span class="text-white badge badge-danger">DITOLAK</span>
+                                <li>Tanggal Cuti   : {{$data['tgl_mulai']}}</li>
                             @endif
-                        </div>
-                    </div>
+                            @if($data['jml_cuti'] > 1)
+                                <li>Jumlah Cuti    :  {{$data['jml_cuti']}}</li>
+                            @endif
+                            <li>Status         :  <span class="text-white badge badge-danger"><strong>{{$data['status']}}</strong></span></li>
+                        </ul><br>
+                    <p><b>DITOLAK</b> oleh atasan Anda yaitu Bapak/Ibu <strong>{{$data['namaatasan1']}}</strong> dan Bapak/Ibu <strong>{{$data['namaatasan2']}}</strong>.</p>
+                    <p>Jika Anda memiliki pertanyaan lebih lanjut tentang cuti Anda, jangan ragu untuk menghubungi bagian HRD.</p>
+                    
                 @endif
 
                 <p>Terima kasih</p>
@@ -182,57 +170,4 @@
 		</div>
 	</div>
 </body>
-{{-- <body>
-    @if($data['status'] == 'Disetujui' )
-        <strong>Ada Kabar baik nih buat Anda,</strong>
-        <br><br>
-        <p>permintaan <strong>{{$data['id_jeniscuti']}}</strong> Anda telah <strong>DISETUJUI</strong> oleh <strong>{{Auth::user()->name}}</strong></p>
-    @else  
-        <strong>Mohon Maaf</strong>
-        <br><br>
-        <p>permintaan <strong>{{$data['id_jeniscuti']}}</strong> Anda <strong>DITOLAK</strong> oleh <strong>{{Auth::user()->name}}</strong></p> 
-    @endif
-    
-    <p>Silahkan buka halaman website Anda untuk mengetahui detail lebih lanjut atau <a href="/cuti-staff">click here!</a> </p>
-    <br>
-    <label>DETAIL PERMINTAAN CUTI:</label><br>
-    <div class="modal-body">
-        <div class="form-group row">
-            <label for="id" class="col-sm-3 col-form-label">Id Cuti</label><label>: {{$data['id']}}</label>
-        </div>
-
-        <div class="form-group row">
-            <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label><label>: {{$data['nama']}}</label>
-        </div>
-
-        <div class="form-group row">
-            <label for="id_jeniscuti" class="col-sm-3 col-form-label">Kategori Cuti</label><label>: {{$data['id_jeniscuti']}}</label>
-        </div>
-
-        <div class="form-group row">
-            <label for="id_karyawan" class="col-sm-3 col-form-label">Keperluan</label><label>: {{$data['keperluan']}}</label>
-        </div>
-
-        <div class="form-group row">
-            <label for="tgl_mulai" class="col-sm-3 col-form-label">Tanggal Mulai</label><label>: {{$data['tgl_mulai']}}</label>
-        </div>
-
-        <div class="form-group row">
-            <label for="tgl_selesai" class="col-sm-3 col-form-label">Tanggal Selesai</label><label>: {{$data['tgl_selesai']}}</label>
-        </div>
-        <div class="form-group row">
-            <label for="jml_cuti" class="col-sm-3 col-form-label">Jumlah Cuti</label>
-                <label>: {{$data['jml_cuti']}} hari</label>
-        </div>
-
-        <div class="form-group row" id="statuscuti">
-            <label for="status" class="col-sm-3 col-form-label">Status Cuti</label>
-            @if($data['status'] == 'Disetujui' )
-                <span class="text-white badge badge-info">DISETUJUI</span>
-            @else
-                <span class="text-white badge badge-danger">DITOLAK</span>
-            @endif
-        </div>
-    </div>
-</body> --}}
 </html>

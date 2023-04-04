@@ -125,61 +125,44 @@
                 <p>Salam sejahtera,</p>
 
                 @if($data['status'] == 'Disetujui')
-                    <strong>Ada Kabar baik nih buat Anda,</strong>
-                    <br><br>
-                    <p>Kami ingin memberitahukan bahwa permintaan <strong>Izin {{$data['jenisizin']}}</strong> pada tanggal [tanggal mulai] hingga [tanggal selesai] telah <b>DISETUJUI</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong>
-                        Silakan melakukan konfirmasi dengan menghubungi bagian HRD kami jika Anda memerlukan informasi lebih lanjut.</p>
+                    <p>Ada Kabar baik nih buat Anda,</p>
                     
-                    <label>DETAIL PERMINTAAN IZIN:</label><br>
-                    <div class="modal-body">
-                        <div class="form-group row">
-                            <label for="id" class="col-sm-3 col-form-label">Id Izin</label><label>: {{$data['id']}}</label>
-                        </div>
-                        <div class="form-group row">
-                            <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label><label>: {{$data['nama']}}</label>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="id_jenisizin" class="col-sm-3 col-form-label">Kategori Izin</label><label>: {{$data['jenisizin']}}</label>
-                        </div>
-
-                        <div class="form-group row" id="statuscuti">
-                            <label for="status" class="col-sm-3 col-form-label">Status Izin</label>
-                            @if($data['status'] == 7)
-                                <span class="text-white badge badge-info">DISETUJUI</span>
+                    <p>Kami ingin memberitahukan bahwa permintaan <strong>Izin {{$data['jenisizin']}}</strong> pada tanggal <strong>{{$data['tgl_mulai']}}</strong>  @if($data['tgl_selesai'] !== NULL) hingga <strong>{{$data['tgl_selesai']}}</strong> @endif telah <b>DISETUJUI</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong></p>
+						<ul>
+                            <li>Nama karyawan  : {{$data['namakaryawan']}}</li>
+                            <li>Kategori izin : {{$data['jenisizin']}}</li>
+                            <li>Keperluan      : {{$data['keperluan']}}</li>
+                            @if($data['tgl_selesai'] != NULL)
+                                <li>Tanggal Izin   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
                             @else
-                                <span class="text-white badge badge-danger">DITOLAK</span>
+                                <li>Tanggal Izin   : {{$data['tgl_mulai']}}</li>
                             @endif
-                        </div>
-                    </div>
+                            @if($data['jml_hari'] > 1)
+                                <li>Jumlah Izin    :  {{$data['jml_hari']}} hari</li>
+                            @endif
+                            <li>Status         :  <span class="text-white badge badge-success"><strong>{{$data['status']}}</strong></span></li>
+                        </ul><br>
+					<p>Silakan melakukan konfirmasi dengan menghubungi bagian HRD kami jika Anda memerlukan informasi lebih lanjut.</p>
                 @else  
                     <strong>Mohon Maaf</strong>
-                    <br><br>
-                    <p>Kami ingin memberitahukan bahwa permintaan <strong>Izin {{$data['jenisizin']}}</strong> pada tanggal [tanggal mulai] hingga [tanggal selesai] <b>DISTOLAK</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong></p> 
-                    <label>DETAIL PERMINTAAN IZIN:</label><br>
-                    <div class="modal-body">
-                        <div class="form-group row">
-                            <label for="id" class="col-sm-3 col-form-label">Id Izin</label><label>: {{$data['id']}}</label>
-                        </div>
-                        <div class="form-group row">
-                            <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label><label>: {{$data['nama']}}</label>
-                        </div>
 
-                        <div class="form-group row">
-                            <label for="id_jenisizin" class="col-sm-3 col-form-label">Kategori Izin</label><label>: {{$data['jenisizin']}}</label>
-                        </div>
-
-                        <div class="form-group row" id="statuscuti">
-                            <label for="status" class="col-sm-3 col-form-label">Status Izin</label>
-                            @if($data['status'] == 7)
-                                <span class="text-white badge badge-info">DISETUJUI</span>
-                            @else
-                                <span class="text-white badge badge-danger">DITOLAK</span>
-                            @endif
-                        </div>
-                    </div>
+                    <p>Kami ingin memberitahukan bahwa permintaan <strong>Izin {{$data['jenisizin']}}</strong> pada tanggal <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_selesai'] !== NULL) hingga <strong>{{$data['tgl_selesai']}}</strong> @endif <b>DITOLAK</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong></p> 
+                    <ul>
+						<li>Nama karyawan  : {{$data['namakaryawan']}}</li>
+						<li>Kategori izin : {{$data['jenisizin']}}</li>
+						<li>Keperluan      : {{$data['keperluan']}}</li>
+						@if($data['tgl_selesai'] != NULL)
+							<li>Tanggal Izin   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
+						@else
+							<li>Tanggal Izin   : {{$data['tgl_mulai']}}</li>
+						@endif
+						@if($data['jml_hari'] > 1)
+							<li>Jumlah Izin    :  {{$data['jml_hari']}} hari</li>
+						@endif
+						<li>Status         :  <span class="text-white badge badge-success"><strong>{{$data['status']}}</strong></span></li>
+						</ul><br>
+					<p>Silakan melakukan konfirmasi dengan menghubungi bagian HRD kami jika Anda memerlukan informasi lebih lanjut.</p>
                 @endif
-
                 <p>Terima kasih</p>
             
                 <p>Salam Hormat,<br><br></p>

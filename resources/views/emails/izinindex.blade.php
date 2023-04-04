@@ -117,7 +117,7 @@
         </div>
         <div class="content">
             <div>
-                <p>Perihal : Permohonan Izin Tidak Masuk Kerja<b>Lampiran: -</p><br>
+                <p>Perihal : Permintaan Izin <br>Lampiran: -</p><br>
                 <p>Yth. <strong>{{$data['jabatan']}}</strong><br>
                     PT. Global Risk Management (GRM)<br>
                     Graha GRM Royal Spring Business Park 11,<br>
@@ -126,9 +126,9 @@
                 <p>Dengan hormat,<br>
                    Bersama dengan surat ini,</p>
                 <ul id="ul">
-                    <li>Nama           : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ucwords(strtolower(Auth::user()->name))}}</li>
+                    <li>Nama&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ucwords(strtolower(Auth::user()->name))}}</li>
                     <li>Kategori izin  : {{$data['jenisizin']}}</li>
-                    <li>Keperluan      : &nbsp;&nbsp;&nbsp;{{$data['keperluan']}}</li>
+                    <li>Keperluan&nbsp;&nbsp;:{{$data['keperluan']}}</li>
                     @if($data['tgl_selesai'] != NULL)
                         <li>Tanggal izin   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
                     @else
@@ -142,7 +142,7 @@
                         <li>Jam            : {{$data['jam_mulai']}} s/d {{$data['jam_selesai']}}</li>
                     @endif --}}
                     @if($data['status'] == 1)
-                        <li>Status         : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-white badge badge-info">{{$data['status']}}</span></li>
+                        <li>Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="text-white badge badge-info">{{$data['status']}}</span></li>
                     @endif
                 </ul><br>
                 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Memberitahukan kepada Bapak/Ibu {{$data['jabatan']}}, bahwa saya tidak dapat masuk kerja pada tanggal {{$data['tgl_mulai']}} @if($data['tgl_selesai'] != NULL) sampai {{$data['tgl_selesai']}} @endif.
@@ -157,59 +157,5 @@
 			<p>Email ini dikirimkan secara otomatis. Jangan membalas email ini karena tidak akan terbaca. Hubungi kami di <b><a href="mailto:">info@grm-risk.com</a></b> atau anda bisa menghubungi <a href="#">(+62) 811-140-840-5</a> untuk informasi lebih lanjut.</p>
 		</div>
 	</div>
-</body>
-
-<body>
-    {{-- <strong>Yth. Bapak/Ibu {{$data['nama_atasan']}}</strong> --}}
-    <strong>Yth. {{$data['jabatan']}}</strong>
-    <br><br>
-    <p>Anda memiliki notifikasi permintaan <strong>Izin {{$data['jenisizin']}}</strong> dari Saudara/i <strong>{{Auth::user()->name}}</strong></p>
-    <p>Silahkan buka halaman website Anda untuk melakukan Approval pada permintaan izin tersebut atau <a href="/cuti-staff">click here!</a> </p>
-    <br>
-    <label>DETAIL PERMINTAAN IZIN:</label><br>
-    <div class="modal-body">
-        <div class="form-group row">
-            <label for="id" class="col-sm-3 col-form-label">Id Izin</label><label>: {{$data['id']}}</label>
-        </div>
-
-        <div class="form-group row">
-            <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label><label>: {{Auth::user()->name}}</label>
-        </div>
-
-        <div class="form-group row">
-            <label for="id_jenisizin" class="col-sm-3 col-form-label">Kategori Izin</label><label>: {{$data['jenisizin']}}</label>
-        </div>
-
-        <div class="form-group row">
-            <label for="id_karyawan" class="col-sm-3 col-form-label">Keperluan</label><label>: {{$data['keperluan']}}</label>
-        </div>
-
-        <div class="form-group row">
-            <label for="tgl_mulai" class="col-sm-3 col-form-label">Tanggal Mulai</label><label>: {{$data['tgl_mulai']}}</label>
-        </div>
-
-        {{-- @if($data[''])
-        <div class="form-group row">
-            <label for="tgl_selesai" class="col-sm-3 col-form-label">Tanggal Selesai</label><label>: {{$data['tgl_selesai']}}</label>
-        </div> --}}
-        <div class="form-group row">
-            <label for="jml_hari" class="col-sm-3 col-form-label">Jumlah Hari</label>
-            <label>: {{$data['jml_hari']}} hari</label>
-        </div>
-
-        @if($data['jml_jam'] != NULL)
-            <div class="form-group row">
-                <label for="jml_jam" class="col-sm-3 col-form-label">Jumlah Jam</label>
-                <label>: {{$data['jml_jam']}} jam</label>
-            </div>
-        @endif
-
-        <div class="form-group row" id="statuscuti">
-            <label for="status" class="col-sm-3 col-form-label">Status Izin</label>
-            @if($data['status'] == 1)
-                <span class="text-white badge badge-warning">PENDING</span>
-            @endif
-        </div>
-    </div>
 </body>
 </html>

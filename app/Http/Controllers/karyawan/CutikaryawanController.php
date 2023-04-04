@@ -84,7 +84,9 @@ class CutikaryawanController extends Controller
                 ->join('settingalokasi', 'alokasicuti.id_settingalokasi', '=', 'settingalokasi.id')
                 ->where('alokasicuti.id_jeniscuti','=',$request->id_jeniscuti)
                 ->where('alokasicuti.id_karyawan','=',Auth::user()->id_pegawai)
+                ->whereYear('sampai', '=', Carbon::now()->year)
                 ->first();
+            // return $getDurasi;
 
             if(!$getDurasi) {
                 throw new \Exception('Data not found');
@@ -116,7 +118,7 @@ class CutikaryawanController extends Controller
         $cuti->status      = $status->id;
         $cuti->save();
 
-        $emailkry = DB::table('cuti')->join('karyawan','izin.id_karyawan','=','karyawan.id')
+        $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
             ->where('cuti.id_karyawan','=',$cuti->id_karyawan)
             ->select('karyawan.email')
             ->first();
@@ -144,7 +146,7 @@ class CutikaryawanController extends Controller
         if ($atasan) {
             $tujuan = $atasan->email;
             $data = [
-                'subject' => 'Pemberitahuan Permintaan Cuti '. $cuti->jeniscutis->jenis_cuti,
+                'subject' => 'Pemberitahuan Permintaan '. $cuti->jeniscutis->jenis_cuti,
                 'body' => 'Anda Memiliki 1 Permintaan Cuti yang harus di Approved',
                 'id' => $cuti->id,
                 'karyawan_email' =>  $emailkry->email,
@@ -154,8 +156,8 @@ class CutikaryawanController extends Controller
                 'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
                 'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
                 'jml_cuti' => $cuti->jml_cuti,
-                'status' => $cuti->status,
-                'atasan_depar' => $atasan->jabatan,
+                'status' => $status->name_status,
+                'jabatan' => $atasan->jabatan,
                 'nama_atasan' => $atasan->nama,
                 'role' => $role,
                 ];

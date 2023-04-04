@@ -131,7 +131,7 @@
                     @endif
                     <li>Status         :  <span class="text-white badge badge-info"><strong>{{$data['status']}}</strong></span></li>
                 </ul><br>
-                <p>Mohon Anda untuk segera meninjau permintaan ini dan memberikan persetujuan Anda secepatnya.</p>
+                <p>Mohon Bapak/Ibu untuk segera meninjau permintaan ini dan memberikan persetujuan secepatnya.</p>
                 <p>Terima kasih atas perhatiannya.</p><br>
 
                 <p>Salam Hormat,<br><br></p>

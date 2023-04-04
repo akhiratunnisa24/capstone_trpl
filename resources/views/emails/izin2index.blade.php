@@ -115,16 +115,15 @@
         <div class="content">
             <div>
                 <p>Yth. <strong>{{$data['jabatanatasan']}}</strong></p>
-                <br>
-                <p>Saya ingin memberitahukan bahwa permintaan izin <strong>{{$data['id_jenisizin']}}</strong> dari saudara/i <strong>{{$data['namakaryawan']}}</strong> dengan rincian sebagai berikut telah disetujui oleh atasan pertamanya yaitu Bapak/Ibu <strong>{{Auth::user()->name}}</strong> dan sekarang membutuhkan persetujuan dari Anda:</p>
+                <p>Saya ingin memberitahukan bahwa permintaan izin <strong>{{$data['id_jenisizin']}}</strong> dari saudara/i <strong>{{$data['namakaryawan']}}</strong> dengan rincian sebagai berikut telah disetujui oleh atasan pertamanya yaitu Bapak/Ibu <strong>{{Auth::user()->name}}</strong> dan sekarang membutuhkan persetujuan dari Bapak/Ibu:</p>
                 <ul>
                     <li>Nama karyawan  : {{$data['namakaryawan']}}</li>
                     <li>Kategori izin  : {{$data['id_jenisizin']}}</li>
-                    <li>Keperluan      : {{$data['keperluan']}}</li>
+                    <li>Keperluan      &nbsp;&nbsp;&nbsp;: {{$data['keperluan']}}</li>
                     @if($data['tgl_selesai'] != NULL)
-                        <li>Tanggal izin   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
+                        <li>Tanggal izin   &nbsp;: {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
                     @else
-                        <li>Tanggal izin   : {{$data['tgl_mulai']}}</li>
+                        <li>Tanggal izin   &nbsp;: {{$data['tgl_mulai']}}</li>
                     @endif
                     @if($data['jml_hari'] > 1)
                         <li>Jumlah hari    :  {{$data['jml_hari']}}</li>
@@ -132,13 +131,16 @@
                     @if($data['id_jenisizin'] == "Terlambat" || $data['id_jenisizin'] == "Pulang Lebih Awal")
                         <li>Jam            : {{$data['jam_mulai']}} s/d {{$data['jam_selesai']}}</li>
                     @endif
-                    <li>Status         :  <span class="text-white badge badge-info"><strong>{{$data['status']}}</strong></span></li>
+					@if($data['status'] == "Disetujui Manager")
+                    	<li>Status         :  <span class="text-white badge badge-info"><strong>{{$data['status']}}</strong></span></li>
+					@else
+						<li>Status         :  <span class="text-white badge badge-primary"><strong>{{$data['status']}}</strong></span></li>
+					@endif
                 </ul><br>
-                <p>Mohon Anda untuk segera meninjau permintaan ini dan memberikan persetujuan Anda secepatnya.</p>
-                <p>Terima kasih atas perhatiannya.</p><br>
-
+                <p>Mohon Bapak/Ibu untuk segera meninjau permintaan ini dan memberikan persetujuan secepatnya.</p>
+                <p>Terima kasih atas perhatiannya.</p>
                 <p>Salam Hormat,<br><br></p>
-                <p>[Manager/HR]<br>
+                <p>[Manager/HR]</p>
             </div>
         </div>
         <div class="footer">
