@@ -118,7 +118,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Karyawan</th>
-                                                <th>Departemen</th>
+                                                {{-- <th>Departemen</th> --}}
                                                 <th>Tanggal</th>
                                                 <th>Jam Masuk</th>
                                                 <th>Jam Keluar</th>
@@ -128,11 +128,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                @foreach($absensi as $data)
+                                                @forelse($absensi as $key => $data)
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data->karyawan->nama}}</td>
-                                                        <td>{{$data->departemens->nama_departemen}}
                                                         <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
                                                         <td>{{$data->jam_masuk}}</td>
                                                         <td>{{$data->jam_keluar}}</td>
@@ -140,9 +139,11 @@
                                                         <td>{{$data->terlambat}}</td>
                                                         <td>{{$data->plg_cepat}}</td>
                                                     </tr>
-                                                {{-- @empty
-                                                    <tr>No data available in table</tr> --}}
-                                                @endforeach
+                                                @empty
+                                                    <tr>
+                                                        <td>No data available in table</td>
+                                                    </tr>
+                                                @endforelse
                                         </tbody>
                                     </table>
                                 </div>

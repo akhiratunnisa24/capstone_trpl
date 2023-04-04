@@ -217,7 +217,7 @@ class karyawanController extends Controller
         if ($atasan) {
             $tujuan = $atasan->email;
             $data = [
-                'subject' => 'Pemberitahuan Permintaan Cuti '. $cuti->jeniscutis->jenis_cuti,
+                'subject' => 'Pemberitahuan Permintaan '. $cuti->jeniscutis->jenis_cuti,
                 'body' => 'Anda Memiliki 1 Permintaan Cuti yang harus di Approved',
                 'id' => $cuti->id,
                 'karyawan_email' =>  $emailkry->email,
@@ -286,6 +286,7 @@ class karyawanController extends Controller
                 ->where('status', '=', 1)
                 ->get();
                 // return $alokasicuti;
+            
 
             $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->where('status',1)
             ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
@@ -310,11 +311,11 @@ class karyawanController extends Controller
                 ->get();
             $jpg = $potongtransport->count();
              //data karyawan terlambat
-         $tb = Settingabsensi::where('sanksi_terlambat', '=', 'Teguran Biasa')->select('jumlah_terlambat')->first();
-         $sp1 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Pertama')->select('jumlah_terlambat')->first();
-         $sp2 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Kedua')->select('jumlah_terlambat')->first();
-         $sp3 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Ketiga')->select('jumlah_terlambat')->first();
-         $terlambat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
+            $tb = Settingabsensi::where('sanksi_terlambat', '=', 'Teguran Biasa')->select('jumlah_terlambat')->first();
+            $sp1 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Pertama')->select('jumlah_terlambat')->first();
+            $sp2 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Kedua')->select('jumlah_terlambat')->first();
+            $sp3 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Ketiga')->select('jumlah_terlambat')->first();
+            $terlambat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
              ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
              ->select('absensi.id_karyawan as id_karyawan','setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
              ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "Teguran Biasa" THEN ' . $tb->jumlah_terlambat . ' END')
@@ -341,7 +342,8 @@ class karyawanController extends Controller
 
             $posisi = Lowongan::all()->sortByDesc('created_at');
 
-            if($role == 3 && $row->jabatan == "Manager"){
+            if($role == 3 && $row->jabatan == "Manager")
+            {
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -378,7 +380,7 @@ class karyawanController extends Controller
                     ->get();
                 $izinjumlah = $izin->count();
             }  
-            elseif($row->jabatan == "Supervisor")
+            elseif($role == 3 && $row->jabatan == "Supervisor")
             {
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -415,7 +417,7 @@ class karyawanController extends Controller
                     ->get();
                 $izinjumlah = $izin->count();
             }
-            elseif($role == 2){
+            elseif($role == 2 && $row->jabatan == "Supervisor"){
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -450,7 +452,7 @@ class karyawanController extends Controller
                     ->get();
                 $izinjumlah = $izin->count();
             }
-           else{
+            else{
             $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -593,7 +595,6 @@ class karyawanController extends Controller
         }
     }
 
-
     public function create()
     {
         $role = Auth::user()->role;
@@ -617,8 +618,6 @@ class karyawanController extends Controller
             return redirect()->back();
         }
     }
-
-
 
     public function store_page(Request $request)
     {
@@ -972,7 +971,6 @@ class karyawanController extends Controller
             return redirect()->back();
         }
     }
-
 
     public function update(Request $request, $id)
     {

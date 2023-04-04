@@ -28,9 +28,12 @@
                                     class="dropdown-toggle waves-effect waves-light collapsed">
                                     Permintaan Cuti Karyawan
                                     
-                                    @if($cutijumlah)
+                                    {{-- @if($cutijumlah)
                                         <span class="badge badge badge-danger" style="background-color:red">{{ $cutijumlah }}</span>
                                     @elseif(!$cutijumlah)
+                                    @endif --}}
+                                    @if(isset($cutijumlah))
+                                        <span class="badge badge badge-danger" style="background-color:red">{{$cutijumlah}}</span>
                                     @endif
                                 </a>
                             </h4>

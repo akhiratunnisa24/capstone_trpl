@@ -118,56 +118,36 @@
             {{-- <a class="logo"><img src="assets/images/grm.png" height="135" width="195"></a> --}}
 		</div>
 		<div class="content">
-            <div>
-                @if($data['role'] == 2)
-                <strong>Yth. SUPERVISOR </strong>
-                @else
-                    {{-- @if($role == 1 || $role == 3) --}}
-                        <strong>Yth. Direktur PT...</strong>
-                    {{-- @endif --}}
-                @endif
-                <p>Anda memiliki notifikasi permintaan <strong>{{$data['id_jeniscuti']}}</strong> dari Saudara/i <strong>{{Auth::user()->name}}</strong></p>
-                <p>Silahkan buka halaman website Anda untuk melakukan Approval pada permintaan cuti tersebut atau <a href="/cuti-staff">click here!</a> </p>
+			<div>
+                <p>Perihal : Permintaan {{$data['id_jeniscuti']}}</li><br>Lampiran: -</p><br>
+                <p>Yth. <strong>{{$data['jabatan']}}</strong><br>
+                    PT. Global Risk Management (GRM)<br>
+                    Graha GRM Royal Spring Business Park 11,<br>
+                    Jl. Ragunan Raya No. 29A, Jakarta Selatan</p>
 
-                <label>DETAIL PERMINTAAN CUTI:</label><br>
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <label for="id" class="col-sm-3 col-form-label">Id Cuti</label><label>: {{$data['id']}}</label>
-                    </div>
-            
-                    <div class="form-group row">
-                        <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label><label>: {{Auth::user()->name}}</label>
-                    </div>
-            
-                    <div class="form-group row">
-                        <label for="id_jeniscuti" class="col-sm-3 col-form-label">Kategori Cuti</label><label>: {{$data['id_jeniscuti']}}</label>
-                    </div>
-            
-                    <div class="form-group row">
-                        <label for="id_karyawan" class="col-sm-3 col-form-label">Keperluan</label><label>: {{$data['keperluan']}}</label>
-                    </div>
-            
-                    <div class="form-group row">
-                        <label for="tgl_mulai" class="col-sm-3 col-form-label">Tanggal Mulai</label><label>: {{$data['tgl_mulai']}}</label>
-                    </div>
-            
-                    <div class="form-group row">
-                        <label for="tgl_selesai" class="col-sm-3 col-form-label">Tanggal Selesai</label><label>: {{$data['tgl_selesai']}}</label>
-                    </div>
-                    <div class="form-group row">
-                        <label for="jml_cuti" class="col-sm-3 col-form-label">Jumlah Cuti</label>
-                            <label>: {{$data['jml_cuti']}} hari</label>
-                    </div>
-                    <div class="form-group row" id="statuscuti">
-                        <label for="status" class="col-sm-3 col-form-label">Status Cuti</label>
-                        <span class="text-white badge badge-warning">PENDING</span>
-                    </div>
-                </div>
-                  
-            
+                <p>Dengan hormat,<br>
+                   Bersama dengan surat ini,</p>
+                <ul id="ul">
+                    <li>Nama&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ucwords(strtolower(Auth::user()->name))}}</li>
+                    <li>Kategori Cuti  : {{$data['id_jeniscuti']}}</li>
+                    <li>Keperluan&nbsp;&nbsp;:{{$data['keperluan']}}</li>
+                    @if($data['tgl_selesai'] != NULL)
+                        <li>Tanggal Cuti   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
+                    @else
+                        <li>Tanggal Cuti  : {{$data['tgl_mulai']}}</li>
+                    @endif
+                    @if($data['status'] == 1)
+                        <li>Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="text-white badge badge-warning">{{$data['status']}}</span></li>
+                    @endif
+                </ul><br>
+                <p>Saya, <strong>{{ucwords(strtolower(Auth::user()->name))}}</strong>, dengan hormat mengajukan permohonan cuti mulai dari <strong>{{$data['tgl_mulai']}}</strong> hingga <strong>{{$data['tgl_selesai']}}</strong> dengan total <strong>{{$data['jml_cuti']}}</strong> hari. Saya bermaksud untuk mengambil cuti ini untuk <strong>{{$data['keperluan']}}</strong>.</p>
+                <p>Saya akan memastikan bahwa semua tugas yang saya tangani akan selesai sebelum tanggal yang ditentukan dan akan mempersiapkan diri untuk menyerahkan pekerjaan kepada kolega saya agar proyek-proyek terus berjalan tanpa gangguan.</p>
+				<p>Saya sangat berharap agar permohonan cuti saya ini dapat dipertimbangkan dan disetujui. Saya siap untuk mengikuti prosedur yang ada dalam perusahaan ini dan menyelesaikan semua persyaratan yang diperlukan sebelum meninggalkan kantor.</p>
+				
+				<p>Terima kasih atas perhatian Bapak/Ibu. Saya akan sangat berterima kasih jika Bapak/Ibu dapat memberikan respons secepatnya.</p><br>
                 <p>Salam Hormat,<br><br></p>
-                <p>[Manager/HR]<br>
-			</div>
+                <p>{{Auth::user()->name}}<br>
+            </div>
 		</div>
 		<div class="footer">
 			<p>Email ini dikirimkan secara otomatis. Jangan membalas email ini karena tidak akan terbaca. Hubungi kami di <b><a href="mailto:">info@grm-risk.com</a></b> atau anda bisa menghubungi <a href="#">(+62) 811-140-840-5</a> untuk informasi lebih lanjut.</p>
