@@ -208,6 +208,7 @@ Route::post('/tidakmasuk', [AbsensiController::class, 'storeTidakmasuk'])->name(
 Route::get('/absensi-karyawan', [AbsensiController::class, 'create'])->name('absensi_karyawan');
 Route::get('/history-absensi', [AbsensiKaryawanController::class, 'index'])->name('history.absen');
 Route::get('/cuti-karyawan', [CutikaryawanController::class, 'index'])->name('cuti_karyawan');
+Route::get('/getlibur', [CutikaryawanController::class, 'getLibur'])->name('getlibur');
 Route::post('/getdurasialokasi', [CutikaryawanController::class, 'getDurasi'])->name('get.Durasi');
 Route::post('/cuti_karyawan', [CutikaryawanController::class, 'store'])->name('cuti.store');
 Route::get('/cuti_karyawan/{id}', [JeniscutiController::class, 'show'])->name('cutis_show');

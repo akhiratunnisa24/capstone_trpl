@@ -27,11 +27,9 @@
                         <div class="panel-heading clearfix">
                           <a href="#" class="btn btn-sm btn-dark fa fa-plus pull-right"
                             @if ($status0 == 5 && $status1 == 8)
-                                onclick="alert('Kamu tidak bisa mengajukan resign lagi')"
-                                class="alert-button"
+                                onclick="alert('Kamu tidak bisa mengajukan resign lagi')" class="alert-button"
                             @elseif ($jumlah_resign > 0 && $status0 != 5)
-                                onclick="alert('Kamu tidak bisa mengajukan resign lagi')"
-                                class="alert-button"
+                                onclick="alert('Kamu tidak bisa mengajukan resign lagi')" class="alert-button"
                             @else
                                 data-toggle="modal" data-target="#Modal"
                             @endif>

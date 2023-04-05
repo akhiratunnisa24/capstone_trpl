@@ -28,7 +28,7 @@
                                 class="dropdown-toggle waves-effect waves-light collapsed">
                                 Permintaan Cuti Karyawan
                                 
-                                @if ($cutijumlah)
+                                @if(isset($cutijumlah))
                                     <span class="badge badge badge-danger" style="background-color:red">{{ $cutijumlah }}</span>
                                 @endif
                             </a>
@@ -48,11 +48,11 @@
                                                 <th>Mulai</th>
                                                 <th>Cuti</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($cuti as $data)
+                                            @forelse($cuti as $key => $data)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $data->nama }}</td>
@@ -75,16 +75,20 @@
                                                         <div class="row">
                                                             @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                 <div class="col-sm-3">
-                                                                    <form action="/permintaan_cuti/{{ $data->id }}"
-                                                                        method="POST">
+                                                                    <form action="/permintaan_cuti/{{ $data->id }}" method="POST">
                                                                         @csrf
-                                                                        <input type="hidden" name="status"
-                                                                            value="Disetujui" class="form-control" hidden>
-                                                                        <button type="submit"
-                                                                            class="fa fa-check btn-success btn-sm"></button>
+                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
                                                                     </form>
                                                                 </div>
-                                                                <div class="col-sm-3" style="margin-left:8px">
+                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                    <form action="" method="POST">
+                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cuReject{{ $data->id }}">
+                                                                            <i class="fa fa-times fa-md"></i>
+                                                                        </a>
+                                                                    </form>
+                                                                </div>
+                                                                {{-- <div class="col-sm-3" style="margin-left:8px">
                                                                     <form action="{{ route('cuti.tolak', $data->id) }}"
                                                                         method="POST">
                                                                         @csrf
@@ -94,7 +98,7 @@
                                                                         <button type="submit"
                                                                             class="fa fa-times btn-danger btn-sm"></button>
                                                                     </form>
-                                                                </div>
+                                                                </div> --}}
                                                             @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
                                                                 <div class="col-sm-3">
                                                                     <form action="/permintaan_cuti/{{ $data->id }}"
@@ -106,7 +110,14 @@
                                                                             class="fa fa-check btn-success btn-sm"></button>
                                                                     </form>
                                                                 </div>
-                                                                <div class="col-sm-3" style="margin-left:8px">
+                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                    <form action="" method="POST">
+                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cuReject{{ $data->id }}">
+                                                                            <i class="fa fa-times fa-md"></i>
+                                                                        </a>
+                                                                    </form>
+                                                                </div>
+                                                                {{-- <div class="col-sm-3" style="margin-left:8px">
                                                                     <form action="{{ route('cuti.tolak', $data->id) }}"
                                                                         method="POST">
                                                                         @csrf
@@ -116,7 +127,7 @@
                                                                         <button type="submit"
                                                                             class="fa fa-times btn-danger btn-sm"></button>
                                                                     </form>
-                                                                </div>
+                                                                </div> --}}
                                                             @else
                                                             @endif
 
@@ -134,6 +145,11 @@
                                                 </tr>
                                                 {{-- modal show cuti --}}
                                                 @include('admin.cuti.showcuti')
+                                                @include('admin.cuti.cutiReject')
+                                            @empty
+                                            <tr>
+                                                <td>No data available in table</td>
+                                            </tr>
                                             @endforeach
 
                                         </tbody>
@@ -259,6 +275,7 @@
                                                             {{-- modal show izin --}}
                                                             @include('admin.cuti.showizin')
                                                             @include('admin.cuti.izinReject')
+                                                           
                                                         </div>
                                                     </td>
                                                 </tr>

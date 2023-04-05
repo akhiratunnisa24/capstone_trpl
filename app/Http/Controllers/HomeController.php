@@ -262,7 +262,7 @@ class HomeController extends Controller
             $izinjumlah = $izin->count();
 
         }  
-        elseif($row->jabatan == "Supervisor")
+        elseif($role == 3 && $row->jabatan == "Supervisor" || $role == 2 && $row->jabatan == "Supervisor")
         {
             $cuti = DB::table('cuti')
                 ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -352,7 +352,13 @@ class HomeController extends Controller
         $resign = Resign::orderBy('created_at', 'desc')->get();
         $resignjumlah = $resign->count();
 
-        $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->where('status',1)->get();
+        // $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->where('status',1)->get();
+        $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])
+            ->where('status',1)
+            ->where('sisa_cuti','>',0)
+            ->whereDate('dari', '<=', Carbon::now())
+            ->whereDate('sampai', '>=', Carbon::now())
+            ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
 
 
         //NOTIFIKASI DATA TINDAKAN TERHADAPA KARYAWAN TIDAK MASUK
@@ -485,6 +491,7 @@ class HomeController extends Controller
                 'absenBulanlalu'=> $absenBulanlalu,
                 'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
                 'sisacutis' => $sisacutis,
+                // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
 
@@ -525,6 +532,7 @@ class HomeController extends Controller
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
                 'sisacutis' => $sisacutis,
+                // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }

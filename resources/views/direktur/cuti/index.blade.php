@@ -200,7 +200,7 @@
                                                                     </td>
 
                                                                     <td> 
-                                                                        {{-- <div class="row">
+                                                                        <div class="row">
                                                                             @if($data->status == 1)
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izin.approved',$data->id)}}" method="POST"> 
@@ -224,7 +224,7 @@
                                                                                         <button type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
                                                                                 </div> --}}
-                                                                            {{--@endif
+                                                                            @endif
                 
                                                                             <div class="col-sm-3" style="margin-left:5px">
                                                                                 <form action="" method="POST"> 
@@ -234,9 +234,9 @@
                                                                                 </form> 
                                                                             </div>
                                                                             {{-- modal show izin --}}
-                                                                            {{--@include('manager.staff.showIzin')
+                                                                            @include('manager.staff.showIzin')
                                                                             @include('manager.staff.izinReject')
-                                                                        </div> --}}
+                                                                        </div>
                                                                     </td> 
                                                                 </tr>
                                                             @endforeach

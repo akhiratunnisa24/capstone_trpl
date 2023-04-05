@@ -11,6 +11,7 @@ use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Sisacuti;
 use App\Models\Jeniscuti;
+use App\Models\Departemen;
 use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
 use App\Mail\SisacutiNotification;
@@ -181,16 +182,24 @@ class Kernel extends ConsoleKernel
         {
             $jeniscuti = Jeniscuti::find(1);
             $sisacuti = Sisacuti::leftjoin('karyawan', 'sisacuti.id_pegawai', '=', 'karyawan.id')
-                ->leftjoin('jeniscuti', 'jeniscuti.id', '=', 'sisacuti.id_jeniscuti')
-                ->where('sisacuti.id_jeniscuti', $jeniscuti->id)
+                ->leftjoin('jeniscuti', 'jeniscuti.id', '=', 'sisacuti.jenis_cuti')
+                ->where('sisacuti.jenis_cuti', $jeniscuti->id)
                 ->where('sisacuti.sisa_cuti', '>', 0)
-                ->select('sisacuti.id_pegawai as id', 'karyawan.email as email', 'karyawan.nama as nama', 'sisacuti.id_jeniscuti as jeniscuti', 'jeniscuti.jenis_cuti as kategori', 'sisacuti.sisa_cuti as sisa', 'sisacuti.periode as tahun','sisacuti.dari as dari','sisacuti.sampai as sampai')
+                ->select('sisacuti.id_pegawai as id', 'karyawan.email as email', 'karyawan.nama as nama','karyawan.atasan_pertama', 'karyawan.atasan_kedua','sisacuti.jenis_cuti as jeniscuti', 'jeniscuti.jenis_cuti as kategori', 'sisacuti.sisa_cuti as sisa', 'sisacuti.periode as tahun','sisacuti.dari as dari','sisacuti.sampai as sampai')
                 ->get();
         
             foreach($sisacuti as $sisa) {
                 $currentDate = Carbon::now();
                 $isEligible = $currentDate->month == 1 || $currentDate->month == 2 || $currentDate->month == 3;
                 $isInPeriod = $currentDate->between($sisa->dari, $sisa->sampai);
+
+                $atasan1 = Karyawan::where('id',$sisa->atasan_pertama)->select('nama','email')->first();
+                $atasan2 = Karyawan::where('id',$sisa->atasan_kedua)->select('nama','email')->first();
+                // $divisi = Departemen::find(4);
+                // $hrd     = Karyawan::where('divisi', $divisi->id)
+                //             ->whereIn('jabatan', ['Manager', 'Assistant Manager'])
+                //             ->select('nama', 'email')
+                //             ->get();
         
                 if ($isEligible && $isInPeriod) {
                     $tujuan = $sisa->email;
@@ -200,6 +209,8 @@ class Kernel extends ConsoleKernel
                         'id' => $sisa->id,
                         'kategori' => $sisa->kategori,
                         'nama' => $sisa->nama,
+                        'emailatasan1'=> $atasan1->email,
+                        'emailatasan2'=> $atasan2->email,
                         'tahun' => $sisa->tahun,
                         'sisacuti' => $sisa->sisa,
                         'aktifdari' =>Carbon::parse($sisa->dari)->format('d F Y'),

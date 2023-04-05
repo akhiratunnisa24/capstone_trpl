@@ -209,7 +209,7 @@
 
                                                                     <td> 
                                                                         <div class="row">
-                                                                            @if($data->status == 1)
+                                                                            @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izin.approved',$data->id)}}" method="POST"> 
                                                                                         @csrf
@@ -232,6 +232,43 @@
                                                                                         <button type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                     </form>
                                                                                 </div> --}}
+                                                                            @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('izin.approved', $data->id) }}"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status"
+                                                                                            value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit"
+                                                                                            class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="" method="POST">
+                                                                                        <a class="btn btn-danger btn-sm"
+                                                                                            style="height:26px" data-toggle="modal"
+                                                                                            data-target="#izReject{{ $data->id }}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6)
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('izin.approved', $data->id) }}"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status"  value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit"  class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="" method="POST">
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal"  data-target="#izReject{{ $data->id }}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @else
                                                                             @endif
                 
                                                                             <div class="col-sm-3" style="margin-left:5px">

@@ -181,6 +181,97 @@
             var end_date   = new Date(end);
             var daysOfYear = [];
 
+            //MENDAPATKAN DATA HARI LIBUR
+            $.ajax({
+                url: '/getlibur',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data){
+                    var liburDates = data.map(function(libur) {
+                        return new Date(libur.tanggal).getTime();
+                    });
+
+                     //untuk mendapatkan jumlah hari cuti
+                    for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1)) 
+                    {
+                        //cek workdays
+                        let tanggal = new Date(d);
+                        if (tanggal.getDay() != 0 && tanggal.getDay() != 6 && !liburDates.includes(tanggal.getTime())) {
+                            daysOfYear.push(tanggal);
+                            console.log(tanggal);
+                        } else {
+                            console.log(" Hari Libur " + tanggal.getDay());
+                        }
+                        // if(tanggal.getDay() !=0 && tanggal.getDay() !=6){
+                        //     daysOfYear.push(tanggal);
+                        //     console.log(tanggal);
+                        // } else{
+                        //     console.log(" Hari Libur" + tanggal.getDay());
+                        // }
+
+                        // // Memeriksa apakah tanggal saat ini adalah hari libur
+                        // if (liburDates.includes(tanggal.getTime())) {
+                        //     daysOfYear.pop();
+                        // }else{
+                        //     console.log(" Hari Libur Nasional " + tanggal.getDay());
+                        // }
+                    }
+
+                    //mengambil value tanggal mulai
+                    $('#start_date').on('change', function() {
+                        jumlahcuti();
+                    });
+
+                    //mengambil value tanggal selesai
+                    $('#end_date').on('change', function() {
+                        jumlahcuti();
+                    });
+
+                    // console.info(daysOfYear);
+                    $('#jumlah').val(daysOfYear.length ?? 0);
+
+                    //mengambil value jml_cuti
+                    var jml_cuti = $("#jumlah").val();
+                    var durasi   = $("#durasi").val(); ////ambil value dari input field durasi yang didapat dari ajax request
+            
+                    if(jml_cuti > durasi){
+                        $('#success-message').hide();
+                        $('#error-message').html(' "WARNING !!"<br>Jumlah cuti yang diinput melebihi durasi cuti yang tersedia.<br>Silahkan pilih jumlah cuti yang lebih kecil atau sama dengan durasi');
+                        $('#error-message').show();
+                        $('#submit-button').attr('disabled', true); //nonaktifkan tombol submit
+
+                        setTimeout(function() 
+                        {
+                            $('#error-message').hide();
+                        }, 3000);
+                    }
+                    else if(jml_cuti < durasi && jml_cuti !=0)
+                    {
+                        $('#error-message').hide();
+                        $('#success-message').html('Cuti Tersedia');
+                        $('#success-message').show();
+                        $('#submit-button').attr('disabled', false); //aktifkan tombol submit
+                    }else{
+                        $('#error-message').hide();
+                        $('#submit-button').attr('disabled', false); //aktifkan tombol submit
+                    }
+
+                } 
+            });
+        };
+    </script>
+
+    {{-- SCRIPT JUMLAH CUTI ASLI --}}
+    {{-- <script type="text/javascript">
+        function jumlahcuti()
+        {
+            var start= $('#datepicker-autoclosef').val();
+            var end  = $('#datepicker-autocloseg').val();
+
+            var start_date = new Date(start);
+            var end_date   = new Date(end);
+            var daysOfYear = [];
+
             //untuk mendapatkan jumlah hari cuti
             for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1)) 
             {
@@ -232,7 +323,49 @@
                 $('#submit-button').attr('disabled', false); //aktifkan tombol submit
             }
         };
-    </script>
+    </script> --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {{-- var aktif_dari = $("#aktif_dari").val();
 var sampai = $("#sampai").val();

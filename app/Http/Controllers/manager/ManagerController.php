@@ -234,9 +234,11 @@ class ManagerController extends Controller
                         $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
                     });    
                 })
-                ->select('izin.*','karyawan.nama','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan_izin')
+                ->select('izin.*','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan_izin')
                 ->distinct()
                 ->get();
+
+            // return $izinstaff;
                 
             return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
         }
@@ -324,6 +326,7 @@ class ManagerController extends Controller
                 {
                     // return  Auth::user()->name;
                     $cuti = Cuti::where('id',$id)->first();
+                    $jeniscuti = Jeniscuti::where('id',$cuti->id)->first();
                     $jml_cuti = $cuti->jml_cuti;
                     $status = Status::find(7);
                     Cuti::where('id', $id)->update(
@@ -342,7 +345,6 @@ class ManagerController extends Controller
                     );
     
                     //KIRIM EMAIL NOTIFIKASI
-    
                     //ambil data karyawan
                     $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
                         ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
@@ -365,14 +367,14 @@ class ManagerController extends Controller
                     // $tujuan = 'akhiratunnisahasanah0917@gmail.com';
                     $tujuan = $emailkry['email'];
                     $data = [
-                        'subject'     =>'Notifikasi Cuti Disetujui',
+                        'subject'     =>'Notifikasi Cuti Disetujui ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'id'          =>$cuti->id,
                         'atasan1'     =>$atasan1->email,
                         'atasan2'     =>$atasan2,
                         'namaatasan1' =>$atasan1->nama,
                         'namaatasan2' =>Auth::user()->name,
                         'namakaryawan'=>$emailkry->nama,
-                        'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+                        'id_jeniscuti'=>$jeniscuti->jenis_cuti,
                         'keperluan'   =>$cuti->keperluan,
                         'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
                         'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
@@ -414,14 +416,13 @@ class ManagerController extends Controller
                     //atasan pertama
                     $atasan1 = Auth::user()->email;
     
-                    
                     //ambil data karyawan
                     $tujuan = $atasan->email;
                     // $tujuan = 'akhiratunnisahasanah0917@gmail.com';
                     // dd($idatasan,$atasan->email,$tujuan);
                     
                     $data = [
-                        'subject'     =>'Notifikasi Permintaan ' . $jeniscuti->jenis_cuti,
+                        'subject'     =>'Notifikasi Permintaan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'id'          => $cuti->id,
                         'atasan1'     => $atasan1,
                         'atasan2'     => $atasan->email,
@@ -488,7 +489,7 @@ class ManagerController extends Controller
                         $tujuan = $atasan2->email;
                         
                         $data = [
-                            'subject'     =>'Notifikasi Permintaan Cuti',
+                            'subject'     =>'Notifikasi Permintaan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                             'id'          =>$cuti->id,
                             'atasan1'     => $atasan1,
                             'atasan2'     => $atasan2->email,
@@ -535,6 +536,8 @@ class ManagerController extends Controller
                 {
                     // return  Auth::user()->name;
                     $cuti = Cuti::where('id',$id)->first();
+                    $jeniscuti = Jeniscuti::where('id',$cuti->id)->first();
+
                     $jml_cuti = $cuti->jml_cuti;
                     $status = Status::find(7);
                     Cuti::where('id', $id)->update(
@@ -578,14 +581,14 @@ class ManagerController extends Controller
                     // $tujuan = 'akhiratunnisahasanah0917@gmail.com';
                     $tujuan = $emailkry['email'];
                     $data = [
-                        'subject'     =>'Notifikasi Cuti Disetujui',
+                        'subject'     =>'Notifikasi Cuti Disetujui ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'id'          =>$cuti->id,
                         'atasan1'     =>$atasan1->email,
                         'atasan2'     =>$atasan2,
                         'namaatasan1' =>$atasan1->nama,
                         'namaatasan2' =>Auth::user()->name,
                         'namakaryawan'=>$emailkry->nama,
-                        'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+                        'id_jeniscuti'=>$jeniscuti->jenis_cuti,
                         'keperluan'   =>$cuti->keperluan,
                         'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
                         'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
@@ -633,7 +636,7 @@ class ManagerController extends Controller
                     // dd($idatasan,$atasan->email,$tujuan);
                     
                     $data = [
-                        'subject'     =>'Notifikasi Permintaan ' . $jeniscuti->jenis_cuti,
+                        'subject'     =>'Notifikasi Permintaan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'id'          => $cuti->id,
                         'atasan1'     => $atasan1,
                         'atasan2'     => $atasan->email,
@@ -701,7 +704,7 @@ class ManagerController extends Controller
                     $tujuan = $atasan2->email;
                     
                     $data = [
-                        'subject'     =>'Notifikasi Permintaan ' . $cuti->jenis_cuti,
+                        'subject'     =>'Notifikasi Permintaan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'id'          =>$cuti->id,
                         'atasan1'     => $atasan1,
                         'atasan2'     => $atasan2->email,
@@ -753,28 +756,40 @@ class ManagerController extends Controller
             ->where('cuti.id',$id)
             ->select('cuti.*','jeniscuti.jenis_cuti as jenis_cuti','statuses.name_status')
             ->first();
-
-        //ambil nama dan email karyawan tujuan
-        
+        $alasan = Datareject::where('id_cuti',$cuti->id)->first();
         //sementara tidak digunakan
         $karyawan = DB::table('cuti')
             ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
             ->where('cuti.id',$cuti->id)
-            ->select('karyawan.email as email','karyawan.nama as nama')
+            ->select('karyawan.email as email','karyawan.nama as nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
             ->first(); 
-        // Stujuan = $karyawan->email;
-        $tujuan = 'akhiratunnisahasanah0917@gmail.com';
+        $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
+            ->select('email as email','nama as nama','jabatan')
+            ->first();
+
+        $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+            ->select('email as email','nama as nama','jabatan')
+            ->first();
+        $tujuan = $karyawan->email;
+       
         $data = [
-            'subject'     =>'Notifikasi Cuti Ditolak',
-            'id'          =>$ct->id,
-            'id_jeniscuti'=>$ct->jenis_cuti,
-            'keperluan'   =>$ct->keperluan,
-            'nama'        =>$karyawan->nama,
-            'tgl_mulai'   =>Carbon::parse($ct->tgl_mulai)->format("d M Y"),
-            'tgl_selesai' =>Carbon::parse($ct->tgl_selesai)->format("d M Y"),
-            'jml_cuti'    =>$ct->jml_cuti,
-            'status'      =>$ct->name_status,
+            'subject'     => 'Notifikasi Permintaan Cuti Ditolak, Cuti ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
+            'id'          => $ct->id,
+            'atasan1'     => $atasan1->email,
+            'atasan2'     => $atasan2->email,
+            'namaatasan1' => $atasan1->nama,
+            'namaatasan2' => $atasan2->nama,
+            'karyawan_email'=>$karyawan->email,
+            'id_jeniscuti'=> $ct->jenis_cuti,
+            'keperluan'   => $ct->keperluan,
+            'namakaryawan'=> $karyawan->nama,
+            'tgl_mulai'   => Carbon::parse($ct->tgl_mulai)->format("d M Y"),
+            'tgl_selesai' => Carbon::parse($ct->tgl_selesai)->format("d M Y"),
+            'jml_cuti'    => $ct->jml_cuti,
+            'status'      => $ct->name_status,
+            'alasan'      =>$alasan->alasan,
         ];
+        // return $data;
         Mail::to($tujuan)->send(new CutiApproveNotification($data));
         return redirect()->back()->withInput();
     }
@@ -812,11 +827,7 @@ class ManagerController extends Controller
                 $jenisizin = Jenisizin::where('id',$izinn->id_jenisizin)->first();
 
                 //KIRIM EMAIL NOTIFIKASI
-                $karyawan = DB::table('izin')
-                    ->join('karyawan','izin.id_karyawan','=','karyawan.id')
-                    ->where('izin.id',$izin->id)
-                    ->select('karyawan.email as email','karyawan.nama as nama')
-                    ->first(); 
+                
                 $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                     ->where('izin.id_karyawan','=',$izin->id_karyawan)
                     ->select('karyawan.email','karyawan.nama')
@@ -837,7 +848,7 @@ class ManagerController extends Controller
                 $atasan2 = Auth::user()->email;
 
                 //tujuan email karyawan
-                $tujuan = $karyawan->email;
+                $tujuan = $emailkry->email;
 
                 $data = [
                     'title'       =>$izinn->id,
@@ -847,8 +858,7 @@ class ManagerController extends Controller
                     'id_jenisizin'=>$izinn->jenis_izin,
                     'atasan1'     =>$atasan1->email,
                     'atasan2'     =>$atasan2,
-                    'nama'        =>$karyawan->nama,
-                    'jenisizin'   =>$izinn->jenis_izin,
+                    'jenisizin'   =>$jenisizin->jenis_izin,
                     'keperluan'   =>$izinn->keperluan,
                     'tgl_mulai'   =>Carbon::parse($izinn->tgl_mulai)->format("d M Y"),
                     'tgl_selesai' =>Carbon::parse($izinn->tgl_selesai)->format("d M Y"),
@@ -1006,32 +1016,27 @@ class ManagerController extends Controller
             ->where('izin.id',$id)
             ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
             ->first();
+        $alasan = Datareject::where('id_izin',$izin->id)->first();
         $karyawan = DB::table('izin')
             ->join('karyawan','izin.id_karyawan','=','karyawan.id')
             ->where('izin.id',$izin->id)
-            ->select('karyawan.email as email','karyawan.nama as nama')
+            ->select('karyawan.email as email','karyawan.nama as nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
             ->first(); 
         //$tujuan = 'akhiratunnisahasanah0917@gmail.com';
-        //ambil nama_atasan kedua
-        $idatasan = DB::table('izin')
-            ->join('karyawan','izin.id_karyawan','=','karyawan.id')
-            ->select('karyawan.atasan_kedua as atasan_kedua', 'karyawan.atasan_pertama as atasan_pertama')
-            ->where('izin.id',$izin->id)
-            ->first();
-        $atasan2 = Karyawan::where('id',$idatasan->atasan_kedua)
+        $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
             ->select('email as email','nama as nama','jabatan')
             ->first();
-        $atasan1 = Karyawan::where('id',$idatasan->atasan_pertama)
+        $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
             ->select('email as email','nama as nama','jabatan')
             ->first();
 
         $tujuan = $karyawan->email;
-        dd($atasan1,$atasan2,$tujuan);
+        // dd($atasan1,$atasan2,$tujuan);
         $data = [
-            'title'    =>$izin->id,
             'subject'  =>'Notifikasi Permintaan Izin Ditolak, Izin ' . $izin->jenis_izin . ' #' . $izin->id . ' ' . $karyawan->nama,
             'id'       =>$izin->id,
             'atasan1'     => $atasan1->email,
+            'atasan2'     => $atasan2->email,
             'karyawan_email'=>$karyawan->email,
             'id_jenisizin'=>$izin->jenis_izin,
             'keperluan'   =>$izin->keperluan,
@@ -1042,11 +1047,13 @@ class ManagerController extends Controller
             'status'   =>$status->name_status,
             'jml_hari'    =>$izin->jml_hari,
             'jumlahjam'   =>$izin->jml_jam,
-            'status'      =>$status->name_status,
             'namakaryawan'=> $karyawan->nama,
             'namaatasan2' =>$atasan2->nama,
+            'nama'        =>$karyawan->nama,
+            'jenisizin'   =>$izin->jenis_izin,
+            'alasan'      =>$alasan->alasan,
         ];
-        // Mail::to($tujuan)->send(new IzinApproveNotification($data));
+        Mail::to($tujuan)->send(new IzinApproveNotification($data));
         return redirect()->route('cuti.Staff',['type'=>2])->withInput();
     }
 

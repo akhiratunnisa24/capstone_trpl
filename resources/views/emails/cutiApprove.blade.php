@@ -154,7 +154,7 @@
                             @endif
                             <li>Status         :  <span class="text-white badge badge-danger"><strong>{{$data['status']}}</strong></span></li>
                         </ul><br>
-                    <p><b>DITOLAK</b> oleh atasan Anda yaitu Bapak/Ibu <strong>{{$data['namaatasan1']}}</strong> dan Bapak/Ibu <strong>{{$data['namaatasan2']}}</strong>.</p>
+                    <p><b>DITOLAK</b> oleh atasan Anda yaitu Bapak/Ibu <strong>{{$data['namaatasan1']}}</strong> dengan alasan <strong>{{$data['alasan']}}</strong></p>
                     <p>Jika Anda memiliki pertanyaan lebih lanjut tentang cuti Anda, jangan ragu untuk menghubungi bagian HRD.</p>
                     
                 @endif
