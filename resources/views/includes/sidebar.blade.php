@@ -44,6 +44,7 @@
                                         Absensi</span></a></li>
                             <li><a href="/alokasi-cuti"><i class="mdi mdi-walk"></i><span>Alokasi Cuti</span></a> </li>
                             <li><a href="/cuti-karyawan"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a>
+                            <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
                             </li>
                         </ul>
                     </li>
@@ -98,10 +99,10 @@
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-off"></i><span
                                 class="text-info panel-title">Data Resign</span><span class="pull-right"><i
                                     class="mdi mdi-plus"></i></span></a>
-                        <ul class="list-unstyled">
-                            <li><a href="/resign_admin"><i class="fa fa-server"></i><span>Resign Karyawan</span></a>
-                            </li>
-                        </ul>
+                                <ul class="list-unstyled">
+                                    <li><a href="/resign_admin"><i class="fa fa-server"></i><span>Resign Karyawan</span></a>
+                                    </li>
+                                </ul>
                     </li>
 
                     <li class="has_sub">
@@ -159,21 +160,15 @@
         @if (Auth::check() && (Auth::user()->role == 2 || Auth::user()->role == 4))
             <div id="sidebar-menu">
                 <ul>
-                    <li><a href="/karyawandashboard" class="waves-effect"><i class="ti-home"></i><span
-                                    class="text-info panel-title">Dashboard</span></a></li>
+                    <li><a href="/karyawandashboard" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>
                     <li><a href="kalender"><i class="fa fa-calendar"></i><span>Kalender</span></a></li>
-                    <li><a href="/absensi-karyawan" class="waves-effect"><i
-                                class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
-                    <li><a href="/history-absensi" class="waves-effect"><i
-                                class="fa fa-history"></i><span>History Absensi</span></a></li>
-                    <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan
-                                Cuti &
-                                Izin</span></a></li>
+                    <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
+                    <li><a href="/history-absensi" class="waves-effect"><i class="fa fa-history"></i><span>History Absensi</span></a></li>
+                    <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a></li>
+                    <li><a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
                     @if(Auth::user()->role == 4 && $row->jabatan == "Management")
                         <li class="has_sub">
-                                <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Data
-                                            Cuti
-                                            Staff</span></a>
+                                <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -196,31 +191,23 @@
                                 class="text-info panel-title">Informasi
                                 Pribadi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="/absensi-karyawan" class="waves-effect"><i
-                                        class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
-                            <li><a href="/history-absensi" class="waves-effect"><i
-                                        class="fa fa-history"></i><span>History Absensi</span></a>
+                            <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
+                            <li><a href="/history-absensi" class="waves-effect"><i class="fa fa-history"></i><span>History Absensi</span></a>
                             </li>
-                            <li><a href="/cuti-karyawan" class="waves-effect"><i
-                                        class="mdi mdi-walk"></i><span>Ajukan
-                                        Cuti & Izin</span></a></li>
+                            <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a></li>
+                            <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
                         </ul>
                     </li>
 
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span
-                                class="text-info panel-title">Data Staff</span><span class="pull-right"><i
-                                    class="mdi mdi-plus"></i></span></a>
+                                class="text-info panel-title">Data Staff</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li> <a href="/data-staff" class="waves-effect"><i
                                         class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
                             </li>
-                            <li><a href="/absensi-staff" class="waves-effect"><i
-                                        class="ion-compose"></i><span>Absensi
-                                        Staff</span></a></li>
-                            <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data
-                                        Cuti
-                                        Staff</span></a></li>
+                            <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi Staff</span></a></li>
+                            <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a></li>
                             <li><a href="/resign_manager" class="waves-effect"><i
                                         class="mdi mdi-account-off"></i><span>Data Resign Staff</span></a></li>
                         </ul>
@@ -235,18 +222,11 @@
             <div id="sidebar-menu">
                 <ul>
                     <li>
-                        <a href="#" class="waves-effect"><i class="ti-home"></i><span>
-                                Dashboard</span></a>
-                        <a href="settinguser" class="waves-effect"><i
-                                class="mdi mdi-account-settings-variant"></i><span>
-                                Managemen User</span></a>
-                        <a href="settingrole" class="waves-effect"><i
-                                class="mdi mdi-account-settings-variant"></i><span>
-                                Setting Role Login</span></a>
-                        <a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting
-                            Organisasi</a>
-                        <a href="/setting-kalender"><i class="ti-calendar"></i><span>Setting
-                                Kalender</span></a>
+                        <a href="#" class="waves-effect"><i class="ti-home"></i><span>Dashboard</span></a>
+                        <a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Managemen User</span></a>
+                        <a href="settingrole" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Setting Role Login</span></a>
+                        <a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a>
+                        <a href="/setting-kalender"><i class="ti-calendar"></i><span>Setting Kalender</span></a>
                     </li>
                 </ul>
             </div>

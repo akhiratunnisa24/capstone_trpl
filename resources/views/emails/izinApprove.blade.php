@@ -146,7 +146,7 @@
                 @else  
                     <strong>Mohon Maaf</strong>
 
-                    <p>Kami ingin memberitahukan bahwa permintaan <strong>Izin {{$data['jenisizin']}}</strong> pada tanggal <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_selesai'] !== NULL) hingga <strong>{{$data['tgl_selesai']}}</strong> @endif <b>DITOLAK</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong></p> 
+                    <p>Kami ingin memberitahukan bahwa permintaan <strong>Izin {{$data['jenisizin']}}</strong> pada tanggal <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_selesai'] !== NULL) hingga <strong>{{$data['tgl_selesai']}}</strong> @endif <b>DITOLAK</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong> dengan alasan <strong>{{$data['alasan']}}</strong></p> 
                     <ul>
 						<li>Nama karyawan  : {{$data['namakaryawan']}}</li>
 						<li>Kategori izin : {{$data['jenisizin']}}</li>
@@ -159,7 +159,7 @@
 						@if($data['jml_hari'] > 1)
 							<li>Jumlah Izin    :  {{$data['jml_hari']}} hari</li>
 						@endif
-						<li>Status         :  <span class="text-white badge badge-success"><strong>{{$data['status']}}</strong></span></li>
+						<li>Status         :  <span class="text-white badge badge-danger"><strong>{{$data['status']}}</strong></span></li>
 						</ul><br>
 					<p>Silakan melakukan konfirmasi dengan menghubungi bagian HRD kami jika Anda memerlukan informasi lebih lanjut.</p>
                 @endif

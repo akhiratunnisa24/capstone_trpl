@@ -97,6 +97,7 @@ class DirekturController extends Controller
              // Inisialisasi variable jml_cuti dengan nilai jumlah hari cuti yang diambil
             $jml_cuti = $cutis->jml_cuti;
 
+            // return  $jml_cuti;
             //Update status cuti menjadi 'Disetujui'
             $status= Status::find(7);
             Cuti::where('id', $id)->update(
@@ -107,9 +108,11 @@ class DirekturController extends Controller
             $sisacuti = Sisacuti::where('jenis_cuti', $cuti->id_jeniscuti)
                 ->where('id_pegawai', $cuti->id_karyawan)
                 ->first();
-                
-            $sisacuti_baru = $sisacuti->sisacuti - $jml_cuti;
+            $sisa = $sisacuti->sisa_cuti;
+           
+            $sisacuti_baru = $sisa - $jml_cuti;
     
+            // return  $sisacuti_baru;
             Sisacuti::where('id', $sisacuti->id)
                 ->update(
                     ['sisa_cuti' => $sisacuti_baru]

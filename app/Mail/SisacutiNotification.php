@@ -33,6 +33,9 @@ class SisacutiNotification extends Mailable
     {
         return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
         ->subject($this->data['subject'])
+        ->cc($this->data['emailatasan1'],'Atasan Pertama')
+        ->cc($this->data['emailatasan2'],'Atasan Kedua')
+        ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
         ->view('emails.sisacuti')->with('data',$this->data);
     }
     /**

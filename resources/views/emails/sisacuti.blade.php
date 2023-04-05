@@ -8,8 +8,8 @@
 
     <title>Notifikasi - Sisa Cuti Tahunan</title>
 
-	<style type="text/css">
-		/* Reset CSS */
+	<style>
+        /* Reset CSS */
 		body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, table, tr, td, img {
 			margin: 0;
 			padding: 0;
@@ -98,14 +98,30 @@
 			color: #999999;
 			line-height: 1.2;
 		}
-	</style>
+
+        .badge {
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        .badge-warning {
+            background-color: #dffb07;
+        }
+        .badge-info {
+            background-color: #1acce8; 
+        }
+        .badge-success {
+            background-color: #11e041;
+        }
+        .badge-danger {
+            background-color: #f13012;
+        }
+    </style>
 </head>
 <body>
 	<div class="wrapper">
-		{{-- <div class="header"> --}}
-			{{-- <h1>Promo Terbaru dari Toko Online</h1> --}}
-            {{-- <a class="logo"><img src="assets/images/grm.png" height="135" width="195"></a> --}}
-		{{-- </div> --}}
 		<div class="content">
             <div>
                 <p>Kepada <strong>{{$data['nama']}}</strong></p>
@@ -132,87 +148,3 @@
 	</div>
 </body>
 </html>
-
-{{-- <!DOCTYPE html>
-<html> --}}
-    {{-- <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-                integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <title>Notifikasi - Sisa Cuti Tahunan</title>
-
-        <style>
-            .badge {
-                padding: 5px 10px;
-                font-size: 12px;
-                font-weight: 600;
-                border-radius: 20px;
-                text-transform: uppercase;
-            }
-
-            .wrapper {
-                background-color: #004aad;
-                margin: 0;
-                padding: 0;
-                width: 100%;
-            }
-
-            .container {
-                background-color: #9ab8df;
-                margin: 10px;
-                padding: 10px;
-                width: 100%;
-            }
-            
-        </style>
-    </head> --}}
-    {{-- <body>
-        <table class="wrapper">
-            <tr>
-                <td class="container">
-                    <!-- Message start -->
-                    <table>
-                        <tr>
-                            <td align="center" class="masthead">
-                                <img src="public/images/grm.png" alt="tidak ada logo">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="content">
-                                <p>Kepada <strong>{{$data['nama']}}</strong></p>
-                                <p>Salam sejahtera,</p>
-
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Saya ingin mengingatkan, bahwa Anda masih memiliki sisa <strong>{{$data['kategori']}}</strong> dari <strong>{{$data['tahun']}}</strong> yang belum digunakan hingga
-                                    batas waktu yang sudah ditetapkan oleh manager HRD yaitu <strong>{{$data['aktifdari']}}</strong> sampai dengan <strong>{{$data['sampai']}}</strong>. Kami ingin mengingatkan untuk segera menggunakan sisa cuti tersebut 
-                                    sebelum batas waktu yang sudah ditentukan. Anda masih memiliki <strong>{{$data['kategori']}}</strong> sebanyak  <strong>{{$data['sisacuti']}}</strong> hari.</p>
-
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kami mengingatkan Anda bahwa sisa cuti tahunan yang tidak digunakan hingga batas waktu yang ditentukan akan hilang, dan tidak akan ditransfer ke 
-                                    tahun berikutnya. Oleh karena itu, kami mendorong Anda untuk segera mengambil cuti Anda.</p>
-
-                                <p>Jika Anda tidak yakin apakah Anda memiliki sisa cuti tahunan yang belum digunakan, silakan menghubungi departemen HR untuk mengetahui informasi terkait.</p>
-
-                                <p>Terima kasih atas perhatian dan kerja sama Anda dalam hal ini.</p>
-                            
-                                <p>Salam Hormat,<br><br></p>
-                                <p>[Manager/HR]<br>
-        
-                            </td>
-                        </tr>
-                    </table>
-        
-                </td>
-            </tr>
-            <tr>
-                <td class="container">
-                    <table>
-                        <tr>
-                            <td class="content footer" align="center">
-                                <p>Sent by <a href="#">PT. Global Risk Management</a>, Graha GRM Royal Spring Business Park 11, Jl. Ragunan Raya No. 29A, Jakarta Selatan, 12540</p>
-                                <p><a href="mailto:">info@grm-risk.com</a> | <a href="#">(+62) 811-140-840-5</a></p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </body> --}}
-{{-- </html> --}}

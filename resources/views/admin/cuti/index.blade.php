@@ -217,14 +217,21 @@
                                                                                     <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
                                                                                 </form>
                                                                             </div>
-                                                                            <div class="col-sm-3" style="margin-left:8px">
+                                                                            <div class="col-sm-3" style="margin-left:7px">
+                                                                                <form action="" method="POST">
+                                                                                    <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cuReject{{ $data->id }}">
+                                                                                        <i class="fa fa-times fa-md"></i>
+                                                                                    </a>
+                                                                                </form>
+                                                                            </div>
+                                                                            {{-- <div class="col-sm-3" style="margin-left:8px">
                                                                                 <form action="{{ route('cuti.tolak',$data->id)}}" method="POST"> 
                                                                                     @csrf
                                                                                     @method('POST')
                                                                                     <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
                                                                                     <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                 </form>
-                                                                            </div>
+                                                                            </div> --}}
                                                                         @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
                                                                             <div class="col-sm-3">
                                                                                 <form action="/permintaan_cuti/{{ $data->id }}" method="POST"> 
@@ -233,14 +240,22 @@
                                                                                     <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
                                                                                 </form>
                                                                             </div>
-                                                                            <div class="col-sm-3" style="margin-left:8px">
+                                                                            <div class="col-sm-3" style="margin-left:7px">
+                                                                                <form action="" method="POST">
+                                                                                    <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cuReject{{ $data->id }}">
+                                                                                        <i class="fa fa-times fa-md"></i>
+                                                                                    </a>
+                                                                                </form>
+                                                                            </div>
+
+                                                                            {{-- <div class="col-sm-3" style="margin-left:8px">
                                                                                 <form action="{{ route('cuti.tolak',$data->id)}}" method="POST"> 
                                                                                     @csrf
                                                                                     @method('POST')
                                                                                     <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
                                                                                     <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
                                                                                 </form>
-                                                                            </div>
+                                                                            </div> --}}
                                                                         @else
                                                                         @endif
 

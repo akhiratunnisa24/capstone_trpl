@@ -86,7 +86,7 @@
                                                                         </form>
                                                                     </div>
                                                                     <div class="col-sm-3" style="margin-left:8px">
-                                                                        <form action="{{ route('cuti.tolak', $data->id) }}"
+                                                                        <form action="{{ route('cuti.reject', $data->id) }}"
                                                                             method="POST">
                                                                             @csrf
                                                                             @method('POST')
@@ -108,7 +108,7 @@
                                                                         </form>
                                                                     </div>
                                                                     <div class="col-sm-3" style="margin-left:8px">
-                                                                        <form action="{{ route('cuti.tolak', $data->id) }}"
+                                                                        <form action="{{ route('cuti.reject', $data->id) }}"
                                                                             method="POST">
                                                                             @csrf
                                                                             @method('POST')
@@ -130,7 +130,7 @@
                                                                         </form>
                                                                     </div>
                                                                     <div class="col-sm-3" style="margin-left:8px">
-                                                                        <form action="{{ route('cuti.tolak', $data->id) }}"
+                                                                        <form action="{{ route('cuti.reject', $data->id) }}"
                                                                             method="POST">
                                                                             @csrf
                                                                             @method('POST')
@@ -252,9 +252,7 @@
                                                                     </div>
                                                                     <div class="col-sm-3" style="margin-left:7px">
                                                                         <form action="" method="POST">
-                                                                            <a class="btn btn-danger btn-sm"
-                                                                                style="height:26px" data-toggle="modal"
-                                                                                data-target="#izReject{{ $data->id }}">
+                                                                            <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#izReject{{ $data->id }}">
                                                                                 <i class="fa fa-times fa-md"></i>
                                                                             </a>
                                                                         </form>
@@ -284,17 +282,13 @@
                                                                         <form action="{{ route('izin.approved', $data->id) }}"
                                                                             method="POST">
                                                                             @csrf
-                                                                            <input type="hidden" name="status"
-                                                                                value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit"
-                                                                                class="fa fa-check btn-success btn-sm"></button>
+                                                                            <input type="hidden" name="status"  value="Disetujui" class="form-control" hidden>
+                                                                            <button type="submit"  class="fa fa-check btn-success btn-sm"></button>
                                                                         </form>
                                                                     </div>
                                                                     <div class="col-sm-3" style="margin-left:7px">
                                                                         <form action="" method="POST">
-                                                                            <a class="btn btn-danger btn-sm"
-                                                                                style="height:26px" data-toggle="modal"
-                                                                                data-target="#izReject{{ $data->id }}">
+                                                                            <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal"  data-target="#izReject{{ $data->id }}">
                                                                                 <i class="fa fa-times fa-md"></i>
                                                                             </a>
                                                                         </form>
@@ -490,7 +484,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12">
-                            @if(count($sisacutis) > 0)
+                            @if(count($sisacutis)> 0)
                                 <table class="table table-striped">
                                     <label><b>Sisa Cuti Tahun Lalu</b></label>
                                     <thead>
@@ -512,8 +506,8 @@
                                                     <td>{{ $sisa->jenis_cuti }}</td>
                                                     <td>{{ $sisa->sisa_cuti }} hari</td>
                                                     <td>{{ $sisa->periode}}</td>
-                                                    <td><a href="" class="btn btn-sm btn-danger fa fa-plus pull-right" data-toggle="modal"
-                                                        data-target="#mModal"> Gunakan Cuti</a>
+                                                    <td>
+                                                       <a href="" class="btn btn-sm btn-danger fa fa-plus pull-right" data-toggle="modal" data-target="#mModal"> Ambil Cuti</a>
                                                     </td>
                                                 </tr>
                                             @endif

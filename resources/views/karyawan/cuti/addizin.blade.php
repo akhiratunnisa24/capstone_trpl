@@ -189,7 +189,8 @@
             });
         });
 
-        function jumlahhari(){
+        function jumlahhari()
+        {
             var start= $('#datepicker-autoclosec').val();
             var end  = $('#datepicker-autoclosed').val();
 
@@ -197,30 +198,75 @@
             var enddate  = new Date(end);
             var daysOfYear= [];
 
-            //mendapatkan jumlah hari izin jika sakit
-            for (var d = startdate; d <= enddate; d.setDate(d.getDate() + 1)){
-                //cek workdays
-                let tgl = new Date(d);
-                if(tgl.getDay() !=0 && tgl.getDay() !=6){
-                    daysOfYear.push(tgl);
-                    console.log(tgl);
-                } else{
-                    console.log("hari Libur" + tgl.getDay());
-                };
-            };
+            //MENDAPATKAN DATA HARI LIBUR
+            $.ajax({
+                url: '/getlibur',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data){
+                    var liburDates = data.map(function(libur) {
+                        return new Date(libur.tanggal).getTime();
+                    });
 
-            //mengambil value tanggal mulai
-            $('#startdate').on('change', function(){
-                jumlahhari();
-            });
-            //mengambil value tanggal selesai
-            $('#enddate').on('change', function(){
-                jumlahhari();
-            });
+                    //mendapatkan jumlah hari izin jika sakit
+                    for (var d = startdate; d <= enddate; d.setDate(d.getDate() + 1)){
+                        //cek workdays
+                        let tgl = new Date(d);
+                        if(tgl.getDay() !==0 && tgl.getDay() !==6 && !liburDates.includes(tgl.getTime())){
+                            daysOfYear.push(tgl);
+                            // console.log(tgl);
+                        } else{
+                            console.log("hari Libur" + tgl.getDay());
+                        }
+                    };
 
-            $('#jml').val(daysOfYear.length ?? 0);
-            console.info(daysOfYear.length);
+                    //mengambil value tanggal mulai
+                    $('#startdate').on('change', function(){
+                        jumlahhari();
+                    });
+                    //mengambil value tanggal selesai
+                    $('#enddate').on('change', function(){
+                        jumlahhari();
+                    });
+
+                    $('#jml').val(daysOfYear.length ?? 0);
+                    // console.info(daysOfYear.length);
+                } 
+            });    
         };
+        //FUCNTION JUMLAHHARI ASLI
+        // function jumlahhari(){
+        //     var start= $('#datepicker-autoclosec').val();
+        //     var end  = $('#datepicker-autoclosed').val();
+
+        //     var startdate= new Date(start);
+        //     var enddate  = new Date(end);
+        //     var daysOfYear= [];
+
+        //     //mendapatkan jumlah hari izin jika sakit
+        //     for (var d = startdate; d <= enddate; d.setDate(d.getDate() + 1)){
+        //         //cek workdays
+        //         let tgl = new Date(d);
+        //         if(tgl.getDay() !=0 && tgl.getDay() !=6){
+        //             daysOfYear.push(tgl);
+        //             console.log(tgl);
+        //         } else{
+        //             console.log("hari Libur" + tgl.getDay());
+        //         };
+        //     };
+
+        //     //mengambil value tanggal mulai
+        //     $('#startdate').on('change', function(){
+        //         jumlahhari();
+        //     });
+        //     //mengambil value tanggal selesai
+        //     $('#enddate').on('change', function(){
+        //         jumlahhari();
+        //     });
+
+        //     $('#jml').val(daysOfYear.length ?? 0);
+        //     console.info(daysOfYear.length);
+        // };
 
     </script>
 

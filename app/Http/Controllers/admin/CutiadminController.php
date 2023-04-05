@@ -10,6 +10,7 @@ use App\Models\Status;
 use App\Models\Karyawan;
 use App\Models\Sisacuti;
 use App\Models\Jeniscuti;
+use App\Models\Datareject;
 use App\Exports\CutiExport;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
@@ -455,7 +456,8 @@ class CutiadminController extends Controller
                     Mail::to($tujuan)->send(new CutiApproveNotification($data));
                     return redirect()->back()->withInput();
     
-                }elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
+                }
+                elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
                 {
                     // return $datacuti->atasan_pertama;
                     $status = Status::find(2);
@@ -516,19 +518,65 @@ class CutiadminController extends Controller
                 else{
                     return redirect()->back();
                 }
-            
         }
-
-
     }
 
     public function tolak(Request $request, $id)
     {
-        $cuti = Cuti::where('id',$id)->first();
-        $status = '5';
+        $status = Status::find(5);
         Cuti::where('id',$id)->update([
-            'status' => $status,
+            'status' => $status->id,
         ]);
+        $cuti = Cuti::where('id',$id)->first();
+
+        $datareject          = new Datareject;
+        $datareject->id_cuti = $cuti->id;
+        $datareject->id_izin = NULL;
+        $datareject->alasan  = $request->alasan;
+        $datareject->save(); 
+
+        $cuti = DB::table('cuti')
+            ->join('jeniscuti','cuti.id_jeniscuti','=','jeniscuti.id')
+            ->join('statuses','cuti.status','=','statuses.id')
+            ->where('cuti.id',$id)
+            ->select('cuti.*','jeniscuti.jenis_cuti as jenis_cuti','statuses.name_status')
+            ->first();
+        $alasan = Datareject::where('id_cuti',$cuti->id)->first();
+        $karyawan = DB::table('cuti')
+            ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+            ->where('cuti.id',$cuti->id)
+            ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
+            ->first(); 
+        $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+            ->select('email as email','nama as nama','jabatan')
+            ->first();
+        $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
+            ->select('email as email','nama as nama','jabatan')
+            ->first();
+
+        $tujuan = $karyawan->email;
+
+        $data = [
+            'subject'     =>'Notifikasi Permintaan Cuti Ditolak, ' . $cuti->jenis_cuti . ' #' . $cuti->id . ' ' . $karyawan->nama,
+            'id'          =>$cuti->id,
+            'atasan1'     =>$atasan1->email,
+            'atasan2'     =>$atasan2->email,
+            'namaatasan1' =>$atasan1->nama,
+            'karyawan_email'=>$karyawan->email,
+            'namaatasan2' =>$atasan2->nama,
+            'namakaryawan'=>$karyawan->nama,
+            'id_jeniscuti'=>$cuti->jenis_cuti,
+            'keperluan'   =>$cuti->keperluan,
+            'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+            'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+            'jml_cuti'    =>$cuti->jml_cuti,
+            'status'      =>$cuti->name_status,
+            'alasan'      =>$alasan->alasan,
+        ];
+        // dd($data,$tujuan);
+        Mail::to($tujuan)->send(new CutiApproveNotification($data));
+        return redirect()->back()->withInput();
+
         return redirect()->back()->withInput();
     }
 

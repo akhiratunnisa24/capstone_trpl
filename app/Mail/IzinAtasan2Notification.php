@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class IzinAtasan2Notification extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $data=[];
     /**
      * Create a new message instance.
      *

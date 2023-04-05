@@ -12,6 +12,7 @@ use App\Models\Datareject;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use App\Mail\CutiNotification;
+use App\Models\SettingHarilibur;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -92,6 +93,22 @@ class CutikaryawanController extends Controller
                 throw new \Exception('Data not found');
             }
             return response()->json($getDurasi,200);
+            
+        } catch (\Exception $e){
+            return response()->json([
+                'message' =>$e->getMessage()
+            ], 500);
+        } 
+    }
+
+    public function getLibur()
+    {
+        try {
+            $getLibur = SettingHarilibur::all();
+            if(!$getLibur) {
+                throw new \Exception('Data not found');
+            }
+            return response()->json($getLibur,200);
             
         } catch (\Exception $e){
             return response()->json([

@@ -31,7 +31,7 @@
         //untuk add alokasicuti
         var Year = new Date().getFullYear();
         var minDate = new Date(Year, 0, 1);
-        var maxDate = new Date(Year, 11, 31);
+        var maxDate = new Date(Year, 12, 31);
 
         var day = new Date();
         var today = day.setDate(day.getDate() - 1);
@@ -351,6 +351,63 @@
         // var endDate = new Date(sampai);
         // console.log(startDate);
 
+        // $.ajax({
+        //     url: '/getlibur',
+        //     type: 'GET',
+        //     dataType: 'json',
+        //     success: function(data) {
+        //       var liburDates = data.map(function(libur) {
+        //         return new Date(libur.tanggal).getTime();
+        //       });
+              
+        //       // Tambahkan logika untuk menonaktifkan tanggal pada datepicker
+        //       jQuery("#datepicker-autoclosef").datepicker({
+        //         format: "yyyy-mm-dd",
+        //         autoclose: true,
+        //         minDate: minDate,
+        //         maxDate: maxDate,
+        //         todayHighlight: true,
+        //         beforeShowDay: function(date) {
+        //           var dateMillis = date.getTime();
+        //         //   console.log(dateMillis);
+                
+        //           if (dateMillis < minDate.getTime() || dateMillis > maxDate.getTime()) {
+        //             return { enabled: false };
+        //           }
+        //           else if (liburDates.includes(dateMillis)) {
+        //             return { enabled: true, classes: 'disabled-date' };
+        //           }
+        //           else {
+        //             return { enabled: true };
+        //           }
+        //         },
+        //       });
+          
+        //       jQuery("#datepicker-autocloseg").datepicker({
+        //         format: "yyyy-mm-dd",
+        //         autoclose: true,
+        //         minDate: minDate,
+        //         maxDate: maxDate,
+        //         todayHighlight: true,
+        //         beforeShowDay: function(date) {
+        //           var dateMillis = date.getTime();
+                 
+        //           if (dateMillis < minDate.getTime() || dateMillis > maxDate.getTime()) {
+        //             return { enabled: false };
+        //           }
+        //           else if (liburDates.includes(dateMillis)) {
+        //             return { enabled: true, classes: 'disabled-date' };
+        //           }
+        //           else {
+        //             return { enabled: true };
+        //           }
+        //         },
+        //       });
+        //     },
+        //     error: function(jqXHR, textStatus, errorThrown) {
+        //       console.log(textStatus, errorThrown);
+        //     }
+        // });
         jQuery("#datepicker-autoclosef").datepicker({
             format: "yyyy-mm-dd",
             autoclose: true,

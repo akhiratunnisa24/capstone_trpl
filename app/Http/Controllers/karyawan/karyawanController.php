@@ -289,9 +289,13 @@ class karyawanController extends Controller
                 // return $alokasicuti;
             
 
-            $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->where('status',1)
-            ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
-            // return $sisacutis;
+            $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])
+                ->where('status',1)
+                ->where('sisa_cuti','>',0)
+                ->whereDate('dari', '<=', Carbon::now())
+                ->whereDate('sampai', '>=', Carbon::now())
+                ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
+            
 
             $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Makan')->select('jumlah_tidakmasuk')->first();
             $potonguangmakan = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
@@ -561,9 +565,17 @@ class karyawanController extends Controller
                 ->get();
                 // return $alokasicuti;
 
-            $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->where('status',1)
-            ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
-            // return $sisacutis;
+            // $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])
+            //     ->where('status',1)
+            //     ->where('sisa_cuti','>',0)
+            //     ->orWhere('sampai',Carbon::now())
+            //     ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
+            $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])
+                ->where('status',1)
+                ->where('sisa_cuti','>',0)
+                ->whereDate('dari', '<=', Carbon::now())
+                ->whereDate('sampai', '>=', Carbon::now())
+                ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
           
 
             $posisi = Lowongan::all()->sortByDesc('created_at');
