@@ -1882,8 +1882,23 @@ class karyawanController extends Controller
     public function downloadpdf(Request $request, $id)
     {
             $data = karyawan::findOrFail($id);
+            $pendidikan = Rpendidikan::where('id_pegawai', $id)->get();
+            $pekerjaan = Rpekerjaan::where('id_pegawai', $id)->get();
+            $organisasi = Rorganisasi::where('id_pegawai', $id)->get();
+            $prestasi = Rprestasi::where('id_pegawai', $id)->get();
+            $keluarga = Keluarga::where('id_pegawai', $id)->get();
+            $kontakdarurat = Kdarurat::where('id_pegawai', $id)->get();
 
-            $pdf = PDF::loadview('admin.karyawan.downloadpdf', ['data' => $data])
+            $pdf = PDF::loadview('admin.karyawan.downloadpdf', [
+                'data' => $data,
+                'pendidikan' => $pendidikan,
+                'pekerjaan' => $pekerjaan,
+                'organisasi' => $organisasi,
+                'prestasi' => $prestasi,
+                'keluarga' => $keluarga,
+                'kontakdarurat' => $kontakdarurat,
+                
+                ])
             ->setPaper('a4', 'landscape');
             return $pdf->stream("Data Karyawan "  . $data->nama . ".pdf");
     }
