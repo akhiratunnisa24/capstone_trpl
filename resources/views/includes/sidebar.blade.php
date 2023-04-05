@@ -169,6 +169,8 @@
                     <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan
                                 Cuti &
                                 Izin</span></a></li>
+                    <li><a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan
+                                Resign</span></a></li>           
                     @if(Auth::user()->role == 4 && $row->jabatan == "Management")
                         <li class="has_sub">
                                 <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Data
