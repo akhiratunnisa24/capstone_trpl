@@ -314,7 +314,7 @@
             },
         });
         jQuery("#datepicker-autoclosec").datepicker({
-            format: "yyyy/mm/dd",
+            format: "yyyy-mm-dd",
             autoclose: true,
             todayHighlight: true,
             beforeShowDay: function (date) {
@@ -327,7 +327,7 @@
         });
 
         jQuery("#datepicker-autoclosed").datepicker({
-            format: "yyyy/mm/dd",
+            format: "yyyy-mm-dd",
             autoclose: true,
             todayHighlight: true,
             beforeShowDay: function (date) {

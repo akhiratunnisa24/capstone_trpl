@@ -9,6 +9,7 @@ use App\Models\Karyawan;
 use App\Models\Departemen;
 use Illuminate\Http\Request;
 use App\Mail\IzinNotification;
+use App\Models\SettingHarilibur;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,22 @@ class IzinkaryawanController extends Controller
         $this->middleware('auth');
     }
 
+    public function getLiburdata()
+    {
+        try {
+            $getLibur = SettingHarilibur::all();
+            if(!$getLibur) {
+                throw new \Exception('Data not found');
+            }
+            return response()->json($getLibur,200);
+            
+        } catch (\Exception $e){
+            return response()->json([
+                'message' =>$e->getMessage()
+            ], 500);
+        } 
+    }
+    
     public function store(Request $request)
     {
         $karyawan = Auth::user()->id_pegawai;
@@ -63,33 +80,18 @@ class IzinkaryawanController extends Controller
 
             $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                ->select('karyawan.email')
-                ->first();
-            $idatasan = DB::table('karyawan')
-                ->join('izin','karyawan.id','=','izin.id_karyawan')
-                ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                ->select('karyawan.atasan_pertama as atasan_pertama')
+                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama')
                 ->first();
 
-            $atasan = Karyawan::where('id',$idatasan->atasan_pertama)
+            $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
 
-            $idatasan2 = DB::table('karyawan')
-                ->join('izin','karyawan.id','=','izin.id_karyawan')
-                ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                ->select('karyawan.atasan_kedua as atasan_kedua')
-                ->first();
-            $atasan2 = Karyawan::where('id',$idatasan2->atasan_kedua)
-                ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
-                ->first();
-            // dd(strtoupper($atasan['jabatan']), $atasan['departemen'],$dep['departemen']);
             $tujuan = $atasan['email'];
 
             $data = [
                 'subject'     =>'Pemberitahuan Permintaan Izin '. $izin->jenisizins->jenis_izin,
                 'karyawan_email' =>$emailkry->email,
-                'atasan2'     =>$atasan2->email,
                 'id'          =>$izin->id,
                 'jenisizin'   =>$izin->jenisizins->jenis_izin,
                 'keperluan'   =>$izin->keperluan,
@@ -99,7 +101,7 @@ class IzinkaryawanController extends Controller
                 'jam_mulai'   =>$izin->jam_mulai,
                 'jam_selesai' =>$izin->jam_selesai,
                 'jml_jam'     =>$izin->jml_jam,
-                'status'      =>$izin->status,
+                'status'      =>$status->name_status,
                 'nama_atasan' =>$atasan->nama,
                 'jabatan'     =>strtoupper($atasan['jabatan']),
             ];
@@ -133,43 +135,24 @@ class IzinkaryawanController extends Controller
 
             $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                ->select('karyawan.email')
+                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama')
                 ->first();
-
-            $idatasan = DB::table('karyawan')
-                ->join('izin','karyawan.id','=','izin.id_karyawan')
-                ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                ->select('karyawan.atasan_pertama as atasan_pertama')
-                ->first();
-            $atasan = Karyawan::where('id',$idatasan->atasan_pertama)
+            $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
-
-            $idatasan2 = DB::table('karyawan')
-                ->join('izin','karyawan.id','=','izin.id_karyawan')
-                ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                ->select('karyawan.atasan_kedua as atasan_kedua')
-                ->first();
-            $atasan2 = Karyawan::where('id',$idatasan2->atasan_kedua)
-                ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
-                ->first();
-            // dd($atasan2);
-
             $tujuan = $atasan['email'];
-            // dd($atasan->email,$atasan->nama,$atasan->jabatan);
 
             $data = [
                 'subject'     =>'Pemberitahuan Permintaan Izin '. $izin->jenisizins->jenis_izin,
                 'id'          =>$izin->id,
                 'karyawan_email' =>$emailkry->email,
-                'atasan2'     =>$atasan2->email,
                 'jenisizin'   =>$izin->jenisizins->jenis_izin,
                 'keperluan'   =>$izin->keperluan,
                 'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d M Y"),
                 'tgl_selesai' =>Carbon::parse($izin->tgl_selesai)->format("d M Y"),
                 'jml_hari'    =>$izin->jml_hari,
                 'jml_jam'     => 0,
-                'status'      =>$izin->jenisizins->name_status,
+                'status'      =>$status->name_status,
                 'jam_mulai'   =>$izin->jam_mulai,
                 'jam_selesai' =>$izin->jam_selesai,
                 'nama_atasan' =>$atasan->nama,

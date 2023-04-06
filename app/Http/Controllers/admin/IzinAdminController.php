@@ -69,7 +69,7 @@ class IzinAdminController extends Controller
             $izinn = Izin::where('id',$id)->first();
             $jenisizin = Jenisizin::where('id',$izinn->id_jenisizin)->first();
 
-             //KIRIM EMAIL NOTIFIKASI
+             //KIRIM EMAIL NOTIFIKASI KE KARYAWAN ATASAN 2 TINGKAT DAN HRD
             $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
                 ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
@@ -82,7 +82,7 @@ class IzinAdminController extends Controller
 
             $data = [
                 'title'       =>$izinn->id,
-                'subject'     =>'Notifikasi Disetujui Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
+                'subject'     =>'Notifikasi Izin Disetujui, Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
                 'id'          =>$izinn->id,
                 'karyawan_email'=>$emailkry->email,
                 'id_jenisizin'=>$izinn->jenis_izin,
@@ -113,29 +113,21 @@ class IzinAdminController extends Controller
             $izinn = Izin::where('id',$id)->first();
             $jenisizin = Jenisizin::where('id',$izinn->id_jenisizin)->first();
 
-            //KIRIM NOTIFIKASI EMAIL
+            //KIRIM NOTIFIKASI EMAIL KARYAWAN DAN ATASAN 2
             $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                 ->where('izin.id_karyawan','=',$izinn->id_karyawan)
-                ->select('karyawan.email','karyawan.nama')
-                ->first();
-
-            $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
-                ->where('izin.id_karyawan','=',$izin->id_karyawan)
                 ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
                 ->first();
+
             $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
-
-            //atasan pertama
-            $atasan1 = Auth::user()->email;
 
             //email atasan kedua adalah tujuan utama
             $tujuan = $atasan2->email;
             $data = [
                 'subject'     =>'Notifikasi Approval Pertama Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
                 'id'          =>$izinn->id,
-                'atasan1'     => $atasan1,
                 'karyawan_email'=>$emailkry->email,
                 'id_jenisizin'=> $jenisizin->jenis_izin,
                 'keperluan'   =>$izinn->keperluan,
@@ -171,7 +163,7 @@ class IzinAdminController extends Controller
         $datareject->alasan  = $request->alasan;
         $datareject->save(); 
         
-         //----SEND EMAIL KE KARYAWAN -------
+         //----SEND EMAIL KE KARYAWAN DAN 2 tingkat atasan-------
         //ambil nama jeniscuti
         $izin = DB::table('izin')
             ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')

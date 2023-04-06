@@ -150,7 +150,7 @@
                                             <tr>
                                                 <td>No data available in table</td>
                                             </tr>
-                                            @endforeach
+                                            @endforelse
 
                                         </tbody>
                                     </table>
