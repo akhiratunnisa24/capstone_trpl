@@ -61,7 +61,7 @@
                                     <tbody>
                                         @foreach($pekerjaan as $key => $pek)
                                             <tr>
-                                                <td id="key">{{ $key }}</td>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $pek['nama_perusahaan'] }}</td>
                                                 <td>{{ $pek['alamat'] }}</td>
                                                 <td>{{ $pek['tgl_mulai'] }}</td>
@@ -120,11 +120,11 @@
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range">
                                                                             <input type="text" class="form-control"
-                                                                                name="tglmulai" id="tglmulai"  />
+                                                                                name="tglmulai" id="tglmulai" autocomplete="off" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tglselesai" id="tglselesai"  />
+                                                                                name="tglselesai" id="tglselesai" autocomplete="off" />
                                                                         </div>
                                                                     </div>
                                                                 </div>

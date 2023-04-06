@@ -25,6 +25,7 @@ use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
 use App\Models\Rorganisasi;
 use App\Models\Rpendidikan;
+use App\Models\File;
 use Illuminate\Http\Request;
 use App\Mail\CutiNotification;
 use App\Models\Settingabsensi;
@@ -34,7 +35,7 @@ use App\Events\AbsenKaryawanEvent;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
+// use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
@@ -1011,7 +1012,7 @@ class karyawanController extends Controller
 
             $karyawan->save();
 
-            return redirect()->back();
+            // return redirect()->back();
 
 
             $data = array(
@@ -1328,7 +1329,7 @@ class karyawanController extends Controller
 
             $karyawan->save();
 
-            return redirect()->back();
+            // return redirect()->back();
 
 
             $data = array(
@@ -1901,5 +1902,106 @@ class karyawanController extends Controller
                 ])
             ->setPaper('a4', 'landscape');
             return $pdf->stream("Data Karyawan "  . $data->nama . ".pdf");
+    }
+    public function showfile($id)
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $karyawan = karyawan::findOrFail($id);
+            $file = File::where('id_pegawai', $id)->first();
+
+            $output = [
+                'row' => $row,
+                'karyawan' => $karyawan,
+                'file' => $file,
+            ];
+
+            return view('admin.karyawan.showFile', $output);
+        } else {
+
+            return redirect()->back();
+        }
+    }
+    public function editfile($id)
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $karyawan = Karyawan::findOrFail($id);
+            $file = File::where('id_pegawai', $id)->first();
+
+            $output = [
+                'row' => $row,
+                'karyawan'   => $karyawan,
+                'file'   => $file,
+            ];
+
+            return view('admin.karyawan.editUpload', $output);
+        } else {
+
+            return redirect()->back();
+        }
+    }
+    public function updatefile(Request $request, $id)
+    {
+        $karyawan = Karyawan::find($id);
+        $digital = File::where('id_pegawai', $id)->first();
+
+        $ktpLama = $digital->ktp;
+        if ($file = $request->file('fotoKTP')
+        ){
+            // hapus KTP lama dari storage
+            if($ktpLama !== null){
+                $ktp = public_path('File_KTP/'. $ktpLama);
+                if(file_exists($ktp)){
+                    unlink($ktp);
+                }
+            }
+
+            $namaKtp = 'KTP-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_KTP', $namaKtp );
+            $digital->ktp = $namaKtp;
+            // $digital->save();
+        }
+
+        $kkLama = $digital->kk;
+        if ($file = $request->file('fotoKK')) {
+            // hapus KTP lama dari storage
+            if ($kkLama !== null) {
+                $kk = public_path('File_KK/' . $kkLama);
+                if (file_exists($kk)) {
+                    unlink($kk);
+                }
+            }
+
+            $namaKK = 'KK-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_KK', $namaKK);
+            $digital->kk = $namaKK;
+            // $digital->save();
+        }
+
+        $npwpLama = $digital->npwp;
+        if ($file = $request->file('fotoNPWP')) {
+            // hapus KTP lama dari storage
+            if ($npwpLama !== null) {
+                $npwp = public_path('File_NPWP/' . $npwpLama);
+                if (file_exists($npwp)) {
+                    unlink($npwp);
+                }
+            }
+
+            $namaNPWP = 'NPWP-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_NPWP', $namaNPWP);
+            $digital->npwp = $namaNPWP;
+        }
+        $digital->save();
+        return redirect()->back();
     }
 }

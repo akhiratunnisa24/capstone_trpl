@@ -88,6 +88,9 @@ Route::get('editPassword{id}', [karyawanController::class, 'editPassword'])->nam
 Route::put('updatePassword{id}', [karyawanController::class, 'updatePassword'])->name('updatePassword');
 Route::get('/search', [karyawanController::class, 'index'])->name('search');
 Route::get('downloadpdf{id}', [karyawanController::class, 'downloadpdf'])->name('downloadpdf');
+Route::get('showfile{id}', [karyawanController::class, 'showfile'])->name('showfile');
+Route::get('editfile{id}', [karyawanController::class, 'editfile'])->name('editfile');
+Route::put('updatefile{id}', [karyawanController::class, 'updatefile'])->name('updatefile');
 
 
 

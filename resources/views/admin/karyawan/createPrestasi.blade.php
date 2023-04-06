@@ -62,7 +62,7 @@
                                     <tbody>
                                         @foreach ($prestasi as $key => $pres)
                                             <tr>
-                                                <td id="key">{{ $key }}</td>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $pres['keterangan'] }}</td>
                                                 <td>{{ $pres['nama_instansi'] }}</td>
                                                 <td>{{ $pres['alamat'] }}</td>
@@ -122,7 +122,7 @@
                                                                     <label class="form-label">Instansi Pemberi </label>
                                                                     <input type="text" name="namaInstansi"
                                                                         class="form-control" id="namaInstansi"
-                                                                        placeholder="Masukkan Nama Instansi">
+                                                                        placeholder="Masukkan Nama Instansi" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -140,6 +140,7 @@
 
                                                         {{-- KANAN --}}
                                                         <div class="col-md-6 m-t-10">
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
@@ -149,6 +150,7 @@
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Tanggal Surat</label>
                                                                 <div class="input-group">
@@ -156,6 +158,7 @@
                                                                         name="tgl_surat" autocomplete="off" rows="10" required><br>
                                                                     <span class="input-group-addon bg-custom b-0"><i  class="mdi mdi-calendar text-white"></i></span>
                                                                 </div><!-- input-group -->
+                                                            </div>
                                                             </div>
                                                             
                                                         </div>
@@ -209,7 +212,7 @@
                                                             <label class="form-label">Instansi Pemberi </label>
                                                             <input type="text" name="namaInstansi"
                                                                 class="form-control" id="namainstansi"
-                                                                placeholder="Masukkan Nama Instansi">
+                                                                placeholder="Masukkan Nama Instansi" autocomplete="off">
                                                         </div>
                                                     </div>
 

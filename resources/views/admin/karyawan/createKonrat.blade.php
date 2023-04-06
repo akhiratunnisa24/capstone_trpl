@@ -58,7 +58,7 @@
                                         <tbody>
                                             @foreach($kontakdarurat as  $key => $kd)
                                                 <tr>
-                                                    <td id="key">{{ $key }}</td>
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $kd['nama']}}</td>
                                                     <td>{{ $kd['no_hp']}}</td>
                                                     <td>{{ $kd['alamat']}}</td>

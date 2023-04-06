@@ -47,110 +47,203 @@ class UploadController extends Controller
     {
 
         $fotoKtp = $request->file('fotoKTP');
-        $namaKtp = '' . time() . $fotoKtp->getClientOriginalName();
+        if (isset($fotoKtp)) {
+        $namaKtp = 'KTP-' . time() . $fotoKtp->getClientOriginalName();
         $tujuan_upload = 'File_KTP';
         $fotoKtp->move($tujuan_upload, $namaKtp);
+        } else {
+          
+        }
 
         $fotoKK = $request->file('fotoKK');
-        $namaKK = '' . time() . $fotoKK->getClientOriginalName();
+        if (isset($fotoKK)) {
+        $namaKK = 'KK-' . time() . $fotoKK->getClientOriginalName();
         $tujuan_upload = 'File_KK';
         $fotoKK->move($tujuan_upload, $namaKK);
+        } else {
+
+        }
+
 
         $fotoNPWP = $request->file('fotoNPWP');
-        $namaNPWP = '' . time() . $fotoNPWP->getClientOriginalName();
+        if (isset($fotoNPWP)) {
+        $namaNPWP = 'NPWP-' . time() . $fotoNPWP->getClientOriginalName();
         $tujuan_upload = 'File_NPWP';
         $fotoNPWP->move($tujuan_upload, $namaNPWP);
+        } else {
+
+        }
 
         $fotoBPJSket = $request->file('fotoBPJSket');
-        $namaBPJSket = '' . time() . $fotoBPJSket->getClientOriginalName();
+        if (isset($fotoBPJSket)) {
+        $namaBPJSket = 'BPJSket-' . time() . $fotoBPJSket->getClientOriginalName();
         $tujuan_upload = 'File_BPJSKet';
         $fotoBPJSket->move($tujuan_upload, $namaBPJSket);
+        } else {
+
+        }
 
         $fotoBPJSkes = $request->file('fotoBPJSkes');
-        $namaBPJSkes = '' . time() . $fotoBPJSkes->getClientOriginalName();
+        if (isset($fotoBPJSkes)) {
+        $namaBPJSkes = 'BPJSkes-' . time() . $fotoBPJSkes->getClientOriginalName();
         $tujuan_upload = 'File_BPJSKes';
         $fotoBPJSkes->move($tujuan_upload, $namaBPJSkes);
+        } else {
+
+        }
 
         $fotoAKDHK = $request->file('fotoAKDHK');
-        $namaAKDHK = '' . time() . $fotoAKDHK->getClientOriginalName();
+        if (isset($fotoAKDHK)) {
+        $namaAKDHK = 'AKDHK-' . time() . $fotoAKDHK->getClientOriginalName();
         $tujuan_upload = 'File_AKDHK';
         $fotoAKDHK->move($tujuan_upload, $namaAKDHK);
+        } else {
+
+        }
 
         $fotoTabungan = $request->file('fotoTabungan');
-        $namaTabungan = '' . time() . $fotoTabungan->getClientOriginalName();
+        if (isset($fotoTabungan)) {
+        $namaTabungan = 'Tabungan-' . time() . $fotoTabungan->getClientOriginalName();
         $tujuan_upload = 'File_Tabungan';
         $fotoTabungan->move($tujuan_upload, $namaTabungan);
+        } else {
+
+        }
 
         $fotoSKCK = $request->file('fotoSKCK');
-        $namaSKCK = '' . time() . $fotoSKCK->getClientOriginalName();
+        if (isset($fotoSKCK)) {
+        $namaSKCK = 'SKCK-' . time() . $fotoSKCK->getClientOriginalName();
         $tujuan_upload = 'File_SKCK';
         $fotoSKCK->move($tujuan_upload, $namaSKCK);
+        } else {
+
+        }
 
         $fotoIjazah = $request->file('fotoIjazah');
-        $namaIjazah = '' . time() . $fotoIjazah->getClientOriginalName();
+        if (isset($fotoIjazah)) {
+        $namaIjazah = 'Ijazah-' . time() . $fotoIjazah->getClientOriginalName();
         $tujuan_upload = 'File_Ijazah';
         $fotoIjazah->move($tujuan_upload, $namaIjazah);
+        } else {
+        
+        }
 
         $fotoLamaran = $request->file('fotoLamaran');
-        $namaLamaran = '' . time() . $fotoLamaran->getClientOriginalName();
+        if (isset($fotoLamaran)) {
+        $namaLamaran = 'Lamaran-' . time() . $fotoLamaran->getClientOriginalName();
         $tujuan_upload = 'File_Lamaran';
         $fotoLamaran->move($tujuan_upload, $namaLamaran);
+        } else {
+
+        }
 
         $fotoSuratPengalaman = $request->file('fotoSuratPengalaman');
-        $namaSuratPengalaman = '' . time() . $fotoSuratPengalaman->getClientOriginalName();
+        if (isset($fotoSuratPengalaman)) {
+        $namaSuratPengalaman = 'Pengalaman-' . time() . $fotoSuratPengalaman->getClientOriginalName();
         $tujuan_upload = 'File_Pengalaman';
         $fotoSuratPengalaman->move($tujuan_upload, $namaSuratPengalaman);
+        } else {
+
+        }
 
         $fotoSuratPrestasi = $request->file('fotoSuratPrestasi');
-        $namaSuratPrestasi = '' . time() . $fotoSuratPrestasi->getClientOriginalName();
+        if (isset($fotoSuratPrestasi)) {
+        $namaSuratPrestasi = 'Prestasi-' . time() . $fotoSuratPrestasi->getClientOriginalName();
         $tujuan_upload = 'File_Prestasi';
         $fotoSuratPrestasi->move($tujuan_upload, $namaSuratPrestasi);
+        } else {
+
+        }
 
         $fotoSuratPendidikan = $request->file('fotoSuratPendidikan');
-        $namaSuratPendidikan = '' . time() . $fotoSuratPendidikan->getClientOriginalName();
+        if (isset($fotoSuratPendidikan)) {
+        $namaSuratPendidikan = 'Pendidikan-' . time() . $fotoSuratPendidikan->getClientOriginalName();
         $tujuan_upload = 'File_Pendidikan';
         $fotoSuratPendidikan->move($tujuan_upload, $namaSuratPendidikan);
+        } else {
+
+        }
 
         $fotoPerjanjianKerja = $request->file('fotoPerjanjianKerja');
-        $namaPerjanjianKerja = '' . time() . $fotoPerjanjianKerja->getClientOriginalName();
+        if (isset($fotoPerjanjianKerja)) {
+        $namaPerjanjianKerja = 'PerjanjianKerja-' . time() . $fotoPerjanjianKerja->getClientOriginalName();
         $tujuan_upload = 'File_Perjanjian';
         $fotoPerjanjianKerja->move($tujuan_upload, $namaPerjanjianKerja);
+        } else {
+
+        }
 
         $fotoSuratPengangkatan = $request->file('fotoSuratPengangkatan');
-        $namaPengangkatan = '' . time() . $fotoSuratPengangkatan->getClientOriginalName();
+        if (isset($fotoSuratPengangkatan)) {
+        $namaPengangkatan = 'SuratPengangkatan-' . time() . $fotoSuratPengangkatan->getClientOriginalName();
         $tujuan_upload = 'File_Pengangkatan';
         $fotoSuratPengangkatan->move($tujuan_upload, $namaPengangkatan);
+        } else {
+
+        }
 
         $fotoSuratKeputusan = $request->file('fotoSuratKeputusan');
-        $namaKeputusan = '' . time() . $fotoSuratKeputusan->getClientOriginalName();
+        if (isset($fotoSuratKeputusan)) {
+        $namaKeputusan = 'SuratKeputusan-' . time() . $fotoSuratKeputusan->getClientOriginalName();
         $tujuan_upload = 'File_Keputusan';
         $fotoSuratKeputusan->move($tujuan_upload, $namaKeputusan);
+        } else {
 
-        $file = array(
+        }
 
-            'id_pegawai' => $request->post('karyawan'),
-            
-            'ktp' => $namaKtp,
-            'kk' => $namaKK,
-            'npwp' => $namaNPWP,
-            'bpjs_ket' => $namaBPJSket,
-            'bpjs_kes' => $namaBPJSkes,
-            'as_akdhk' => $namaAKDHK,
-            'buku_tabungan' => $namaTabungan,
-            'skck' => $namaSKCK,
-            'ijazah' => $namaIjazah,
-            'lamaran' => $namaLamaran,
-            'surat_pengalaman_kerja' => $namaSuratPengalaman,
-            'surat_penghargaan' => $namaSuratPrestasi,
-            'surat_pelatihan' => $namaSuratPendidikan,
-            'surat_perjanjian_kerja' => $namaPerjanjianKerja,
-            'surat_pengangkatan_kartap' => $namaPengangkatan,
-            'surat_alih_tugas' => $namaKeputusan,
-
+        $file = array('id_pegawai' => $request->post('karyawan'),
             'created_at' => new \DateTime(),
-            'updated_at' => new \DateTime(),
-
+            'updated_at' => new \DateTime()
         );
+
+        if (isset($namaKtp) && !empty($namaKtp)) {
+            $file['ktp'] = $namaKtp;
+        }
+        if (isset($namaKK) && !empty($namaKK)) {
+            $file['kk'] = $namaKK;
+        }
+        if (isset($namaNPWP) && !empty($namaNPWP)) {
+            $file['npwp'] = $namaNPWP;
+        }
+        if (isset($namaBPJSket) && !empty($namaBPJSket)) {
+            $file['bpjs_ket'] = $namaBPJSket;
+        }
+        if (isset($namaBPJSkes) && !empty($namaBPJSkes)) {
+            $file['bpjs_kes'] = $namaBPJSkes;
+        }
+        if (isset($namaAKDHK) && !empty($namaAKDHK)) {
+            $file['as_akdhk'] = $namaAKDHK;
+        }
+        if (isset($namaTabungan) && !empty($namaTabungan)) {
+            $file['buku_tabungan'] = $namaTabungan;
+        }
+        if (isset($namaSKCK) && !empty($namaSKCK)) {
+            $file['skck'] = $namaSKCK;
+        }
+        if (isset($namaIjazah) && !empty($namaIjazah)) {
+            $file['ijazah'] = $namaIjazah;
+        }
+        if (isset($namaLamaran) && !empty($namaLamaran)) {
+            $file['lamaran'] = $namaLamaran;
+        }
+        if (isset($namaSuratPengalaman) && !empty($namaSuratPengalaman)) {
+            $file['surat_pengalaman_kerja'] = $namaSuratPengalaman;
+        }
+        if (isset($namaSuratPrestasi) && !empty($namaSuratPrestasi)) {
+            $file['surat_penghargaan'] = $namaSuratPrestasi;
+        }
+        if (isset($namaSuratPendidikan) && !empty($namaSuratPendidikan)) {
+            $file['surat_pelatihan'] = $namaSuratPendidikan;
+        }
+        if (isset($namaPerjanjianKerja) && !empty($namaPerjanjianKerja)) {
+            $file['surat_perjanjian_kerja'] = $namaPerjanjianKerja;
+        }
+        if (isset($namaPengangkatan) && !empty($namaPengangkatan)) {
+            $file['surat_pengangkatan_kartap'] = $namaPengangkatan;
+        }
+        if (isset($namaKeputusan) && !empty($namaKeputusan)) {
+            $file['surat_alih_tugas'] = $namaKeputusan;
+        }
 
         File::insert($file);
         return redirect()->back();

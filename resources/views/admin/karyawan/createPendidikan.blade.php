@@ -67,7 +67,7 @@
                                         @foreach($pendidikan as $key => $p)
                                             @if($p['tingkat'] != null)
                                                 <tr>
-                                                    <td id="key">{{ $key }}</td>
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{$p['tingkat'] }}</td>
                                                     <td>{{$p['jurusan'] }}</td>
                                                     <td></td>
@@ -108,7 +108,7 @@
                                         @foreach($pendidikan as $key => $nf)
                                             @if($nf['jenis_pendidikan'] != null)
                                                 <tr>
-                                                    <td id="key">{{ $key }}</td>
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $nf['jenis_pendidikan'] }}</td>
                                                     <td>{{ $nf['kota_pnonformal'] }}</td>
                                                     <td>{{ $nf['tahun_lulus_nonformal'] }}</td>
@@ -168,7 +168,7 @@
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Lembaga Pendidikan</label>
+                                                                    <label for="exampleInputEmail1" class="form-label">Nama Sekolah</label>
                                                                     <input type="text" name="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
                                                                 </div>
                                                             </div>

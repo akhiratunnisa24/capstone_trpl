@@ -63,7 +63,7 @@
                                     <tbody>
                                         @foreach ($organisasi as $key => $pek)
                                             <tr>
-                                                <td id="key">{{ $key }}</td>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $pek['nama_organisasi'] }}</td>
                                                 <td>{{ $pek['alamat'] }}</td>
                                                 <td>{{ $pek['tgl_mulai'] }}</td>
@@ -122,7 +122,7 @@
                                                                     <label class="form-label">Alamat </label>
                                                                     <input type="text" name="alamatOrganisasi"
                                                                         class="form-control" id="alamat"
-                                                                        placeholder="Masukkan Alamat">
+                                                                        placeholder="Masukkan Alamat" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -133,11 +133,11 @@
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range">
                                                                             <input type="text" class="form-control"
-                                                                                name="tglmulai"  />
+                                                                                name="tglmulai" autocomplete="off" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tglselesai"  />
+                                                                                name="tglselesai" autocomplete="off" />
                                                                         </div>
                                                                     </div>
                                                                 </div>

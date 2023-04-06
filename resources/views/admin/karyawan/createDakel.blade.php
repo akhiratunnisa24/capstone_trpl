@@ -63,7 +63,7 @@
                                     <tbody>
                                         @foreach($datakeluarga as $key => $data)
                                             <tr>
-                                                <td id="key">{{ $key }}</td>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{$data['hubungan']}}</td>
                                                 <td>{{$data['nama']}}</td>
                                                 <td>{{$data['jenis_kelamin']}}</td>
@@ -135,7 +135,7 @@
                                                                         <option value="Istri">Istri</option>
                                                                         <option value="Kakak">Kakak</option>
                                                                         <option value="Adik">Adik</option>
-                                                                        <option value="Anak Pertama">Anak Pertama</option>
+                                                                        <option value="Anak Ke-1">Anak Ke-1 </option>
                                                                         <option value="Anak Ke-2">Anak Ke-2</option>
                                                                         <option value="Anak Ke-3">Anak Ke-3</option>
                                                                         <option value="Anak Ke-4">Anak Ke-4</option>

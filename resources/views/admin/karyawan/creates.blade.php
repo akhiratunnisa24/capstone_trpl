@@ -61,16 +61,16 @@
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label  class="form-label">NIK Karyawan</label>
+                                                                        <label  class="form-label">NIP Karyawan</label>
                                                                         <input type="text" name="nipKaryawan" value="{{ $karyawan->nip ?? '' }}" class="form-control"
-                                                                            placeholder="Masukkan NIK Karyawan" required>
+                                                                            placeholder="Masukkan NIP Karyawan" required>
                                                                     </div>
                                                                 </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Nama Lengkap</label>
-                                                                    <input type="text" name="namaKaryawan" class="form-control" value="{{ $karyawan->nama ?? '' }}" placeholder="Masukkan Nama" autocomplete="off" required>
+                                                                    <input type="text" name="namaKaryawan" class="form-control" value="{{ $karyawan->nama ?? '' }}" placeholder="Masukkan Nama Lengkap" autocomplete="off" required>
                                                                 </div>
                                                             </div>
                         
@@ -87,8 +87,8 @@
                         
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Kota Kelahiran</label>
-                                                                    <input type="text" name="tempatlahirKaryawan" class="form-control" value="{{ $karyawan->tempatlahir ?? '' }}" placeholder="Masukkan Kota Kelahiran" autocomplete="off" required>
+                                                                    <label class="form-label">Tempat Lahir</label>
+                                                                    <input type="text" name="tempatlahirKaryawan" class="form-control" value="{{ $karyawan->tempatlahir ?? '' }}" placeholder="Masukkan Tempat Lahir" autocomplete="off" required>
                                                                 </div>
                                                             </div>
                                                             
@@ -153,7 +153,7 @@
                                                             <div class="form-group">
                                                                 <label class="form-label">Status Karyawan</label>
                                                                 <select class="form-control selectpicker" name="statusKaryawan" required>
-                                                                    <option value="">Pilih Jabatan</option>
+                                                                    <option value="">Pilih Status   </option>
                                                                     <option value="Tetap"  {{ $karyawan->status_karyawan ?? '' == 'Tetap' ? 'selected' : '' }}>Tetap</option>
                                                                     <option value="Kontrak" {{ $karyawan->status_karyawan ?? '' == 'Kontrak' ? 'selected' : '' }}>Kontrak</option>
                                                                     <option value="Probation" {{ $karyawan->status_karyawan ?? '' == 'Probation' ? 'selected' : '' }}>Probation</option>
@@ -267,7 +267,7 @@
                                                                     <div class="mb-3">
                                                                         <label class="form-label">No. KTP</label>
                                                                         <input type="number" name="nikKaryawan" class="form-control" value="{{ $karyawan->nik ?? '' }}"
-                                                                            placeholder="Masukkan NIK" required>
+                                                                            placeholder="Masukkan No. KTP / NIK" required>
                                                                     </div>
                                                                 </div>
 
@@ -332,8 +332,27 @@
                                                                     <label class="form-label">Nama Bank</label>
                                                                     <select class="form-control selectpicker" name="nama_bank" required>
                                                                         <option value="">Pilih Bank</option>
-                                                                        <option value="BCA" {{ $karyawan->nama_bank ?? '' == 'BCA' ? 'selected' : '' }}>BCA</option>
-                                                                        <option value="Mandiri" {{ $karyawan->nama_bank ?? '' == 'Mandiri' ? 'selected' : '' }} >Mandiri</option>
+                                                                        <option value="Bank ANZ Indonesia" {{ $karyawan->nama_bank ?? '' == 'Bank ANZ Indonesia' ? 'selected' : '' }}>Bank ANZ Indonesia</option>
+                                                                        <option value="Bank Bukopin" {{ $karyawan->nama_bank ?? '' == 'Bank Bukopin' ? 'selected' : '' }}>Bank Bukopin</option>
+                                                                        <option value="Bank Central Asia (BCA)" {{ $karyawan->nama_bank ?? '' == 'Bank Central Asia (BCA)' ? 'selected' : '' }}>Bank Central Asia (BCA)</option>
+                                                                        <option value="Bank Danamon" {{ $karyawan->nama_bank ?? '' == 'Bank Danamon' ? 'selected' : '' }} >Bank Danamon</option>
+                                                                        <option value="Bank DBS Indonesia" {{ $karyawan->nama_bank ?? '' == 'Bank DBS Indonesia' ? 'selected' : '' }} >Bank DBS Indonesia</option>
+                                                                        <option value="Bank HSBC Indonesia" {{ $karyawan->nama_bank ?? '' == 'Bank HSBC Indonesia' ? 'selected' : '' }} >Bank HSBC Indonesia</option>
+                                                                        <option value="Bank Jabar Banten (BJB)" {{ $karyawan->nama_bank ?? '' == 'Bank Jabar Banten (BJB)' ? 'selected' : '' }} >Bank Jabar Banten (BJB)</option>
+                                                                        <option value="Bank Mandiri" {{ $karyawan->nama_bank ?? '' == 'Bank Mandiri' ? 'selected' : '' }} >Bank Mandiri</option>
+                                                                        <option value="Bank Maybank" {{ $karyawan->nama_bank ?? '' == 'Bank Maybank' ? 'selected' : '' }} >Bank Maybank</option>
+                                                                        <option value="Bank Mega" {{ $karyawan->nama_bank ?? '' == 'Bank Mega' ? 'selected' : '' }} >Bank Mega</option>
+                                                                        <option value="Bank Muamalat" {{ $karyawan->nama_bank ?? '' == 'Bank Muamalat' ? 'selected' : '' }} >Bank Muamalat</option>
+                                                                        <option value="Bank Negara Indonesia (BNI)" {{ $karyawan->nama_bank ?? '' == 'Bank Negara Indonesia (BNI)' ? 'selected' : '' }} >Bank Negara Indonesia (BNI)</option>
+                                                                        <option value="Bank OCBC NISP" {{ $karyawan->nama_bank ?? '' == 'Bank OCBC NISP' ? 'selected' : '' }} >Bank OCBC NISP</option>
+                                                                        <option value="Bank Panin" {{ $karyawan->nama_bank ?? '' == 'Bank Panin' ? 'selected' : '' }} >Bank Panin</option>
+                                                                        <option value="Bank Permata" {{ $karyawan->nama_bank ?? '' == 'Bank Permata' ? 'selected' : '' }} >Bank Permata</option>
+                                                                        <option value="Bank Rakyat Indonesia (BRI)" {{ $karyawan->nama_bank ?? '' == 'Bank Rakyat Indonesia (BRI)' ? 'selected' : '' }} >Bank Rakyat Indonesia (BRI)</option>
+                                                                        <option value="Bank Syariah Mandiri" {{ $karyawan->nama_bank ?? '' == 'Bank Syariah Mandiri' ? 'selected' : '' }} >Bank Syariah Mandiri</option>
+                                                                        <option value="Bank Tabungan Negara (BTN)" {{ $karyawan->nama_bank ?? '' == 'Bank Tabungan Negara (BTN)' ? 'selected' : '' }} >Bank Tabungan Negara (BTN)</option>
+                                                                        <option value="Bank UOB Indonesia" {{ $karyawan->nama_bank ?? '' == 'Bank UOB Indonesia' ? 'selected' : '' }} >Bank UOB Indonesia</option>
+                                                                        <option value="Bank CIMB Niaga" {{ $karyawan->nama_bank ?? '' == 'Bank CIMB Niaga' ? 'selected' : '' }} >Bank CIMB Niaga</option>
+                                                                        {{-- <option value="Mandiri" {{ $karyawan->nama_bank ?? '' == 'Mandiri' ? 'selected' : '' }} >Mandiri</option> --}}
                                                                     </select>
                                                                 </div>
                                                                 </div>
