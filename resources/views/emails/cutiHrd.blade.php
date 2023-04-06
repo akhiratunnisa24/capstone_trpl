@@ -24,6 +24,13 @@
         .badge-danger {
             background-color: #f13012;
         }
+        ul {
+		margin-left: 1cm;
+		}
+
+		li {
+		margin-bottom: 0.5cm;
+		}
     </style>
 </head>
 <body>

@@ -109,6 +109,13 @@
         #ul{
             margin-left: 5px;
         }
+		ul {
+			margin-left: 1cm;
+		}
+
+		li {
+			margin-bottom: 0.5cm;
+		}
 	</style>
 </head>
 <body>
@@ -137,13 +144,7 @@
                     @if($data['jml_hari'] > 1)
                         <li>Jumlah hari    :  {{$data['jml_hari']}}</li>
                     @endif
-                    {{-- @if($data['jam_selesai'] == NULL)
-                    @else
-                        <li>Jam            : {{$data['jam_mulai']}} s/d {{$data['jam_selesai']}}</li>
-                    @endif --}}
-                    @if($data['status'] == 1)
-                        <li>Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="text-white badge badge-info">{{$data['status']}}</span></li>
-                    @endif
+					<li>Status         :  <span class="text-white badge badge-warning"><strong>{{$data['status']}}</strong></span></li>
                 </ul><br>
                 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Memberitahukan kepada Bapak/Ibu {{$data['jabatan']}}, bahwa saya tidak dapat masuk kerja pada tanggal {{$data['tgl_mulai']}} @if($data['tgl_selesai'] != NULL) sampai {{$data['tgl_selesai']}} @endif.
                     sebagaimana mestinya dikarenakan {{$data['keperluan']}}. Oleh sebab itu, dengan tidak mengurangi rasa hormat, saya berharap Bapak/Ibu {{$data['jabatan']}} dengan kebijaksanaannya dapat memberikan izin tidak masuk kerja kepada saya selama beberapa hari. Adapun tugas-tugas yang tertunda selama ketidakhadiran saya akan diselesaikan ketika saya sudah amsuk berkerja lagi dengan kondusif.

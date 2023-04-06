@@ -110,12 +110,19 @@
         .badge-danger {
             background-color: #f13012;
         }
+
+		ul {
+		margin-left: 1cm;
+		}
+
+		li {
+		margin-bottom: 0.5cm;
+		}
 	</style>
 </head>
 <body>
 	<div class="wrapper">
 		<div class="header">
-            {{-- <a class="logo"><img src="assets/images/grm.png" height="135" width="195"></a> --}}
 		</div>
 		<div class="content">
 			<div>
@@ -136,9 +143,7 @@
                     @else
                         <li>Tanggal Cuti  : {{$data['tgl_mulai']}}</li>
                     @endif
-                    @if($data['status'] == 1)
-                        <li>Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="text-white badge badge-warning">{{$data['status']}}</span></li>
-                    @endif
+                    <li>Status         :  <span class="text-white badge badge-warning"><strong>{{$data['status']}}</strong></span></li>
                 </ul><br>
                 <p>Saya, <strong>{{ucwords(strtolower(Auth::user()->name))}}</strong>, dengan hormat mengajukan permohonan cuti mulai dari <strong>{{$data['tgl_mulai']}}</strong> hingga <strong>{{$data['tgl_selesai']}}</strong> dengan total <strong>{{$data['jml_cuti']}}</strong> hari. Saya bermaksud untuk mengambil cuti ini untuk <strong>{{$data['keperluan']}}</strong>.</p>
                 <p>Saya akan memastikan bahwa semua tugas yang saya tangani akan selesai sebelum tanggal yang ditentukan dan akan mempersiapkan diri untuk menyerahkan pekerjaan kepada kolega saya agar proyek-proyek terus berjalan tanpa gangguan.</p>

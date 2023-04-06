@@ -35,9 +35,6 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         
     ];
-
-    
-    
     /**
      * Define the application's command schedule.
      *
@@ -192,34 +189,36 @@ class Kernel extends ConsoleKernel
                 $currentDate = Carbon::now();
                 $isEligible = $currentDate->month == 1 || $currentDate->month == 2 || $currentDate->month == 3;
                 $isInPeriod = $currentDate->between($sisa->dari, $sisa->sampai);
-
-                $atasan1 = Karyawan::where('id',$sisa->atasan_pertama)->select('nama','email')->first();
-                $atasan2 = Karyawan::where('id',$sisa->atasan_kedua)->select('nama','email')->first();
-                // $divisi = Departemen::find(4);
-                // $hrd     = Karyawan::where('divisi', $divisi->id)
-                //             ->whereIn('jabatan', ['Manager', 'Assistant Manager'])
-                //             ->select('nama', 'email')
-                //             ->get();
         
                 if ($isEligible && $isInPeriod) {
                     $tujuan = $sisa->email;
+
+                    $atasan1 = Karyawan::where('id',$sisa->atasan_pertama)->select('nama','email')->first();
+                    $atasan2 = null;
+                    if($sisa->atasan_kedua != NULL){
+                        $atasan2 = Karyawan::where('id',$sisa->atasan_kedua)->select('nama','email')->first();
+                    }
         
                     $data = [
-                        'subject' => 'Notifikasi Sisa Cuti Tahunan '. $sisa->tahun,
+                        'subject' => 'Notifikasi Sisa Cuti Tahunan '. $sisa->tahun . ' ' . $sisa->nama ,
                         'id' => $sisa->id,
                         'kategori' => $sisa->kategori,
                         'nama' => $sisa->nama,
                         'emailatasan1'=> $atasan1->email,
-                        'emailatasan2'=> $atasan2->email,
                         'tahun' => $sisa->tahun,
                         'sisacuti' => $sisa->sisa,
                         'aktifdari' =>Carbon::parse($sisa->dari)->format('d F Y'),
                         'sampai' => Carbon::parse($sisa->sampai)->format('d F Y'),
                     ];
+
+                    if($atasan2 != NULL){
+                        $data['emailatasan2'] = $atasan2->email;
+                    }
+
                     Mail::to($tujuan)->send(new SisacutiNotification($data));
                 }        
             }
-        })->monthlyOn(01, '01,02,03')->at('15:02');
+        })->monthlyOn(01, '01,02,03')->at('11:53');
         
         $schedule->call(function () 
         {
@@ -244,8 +243,9 @@ class Kernel extends ConsoleKernel
                 }
             }
 
-        })->yearlyOn(04, 03, '10:09');
-        //->yearlyOn(03, 31, '23:59');
+        })->yearlyOn(03, 31, '23:59');
+        //->yearlyOn(04, 03, '10:09');
+        
     
     }
 

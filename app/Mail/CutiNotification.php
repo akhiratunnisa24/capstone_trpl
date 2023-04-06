@@ -27,11 +27,9 @@ class CutiNotification extends Mailable
     public function build()
     {
         return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
-        ->subject($this->data['subject'])
-        ->view('emails.cutiindex')->with('data',$this->data)
-        ->cc($this->data['karyawan_email'], 'Karyawan')
-        ->cc($this->data['atasan2'], 'Atasan Kedua')
-        ->cc('akhiratunnisahasanah0917@gmail.com','HRD');
+            ->subject($this->data['subject'])
+            ->cc($this->data['karyawan_email'], 'Karyawan')
+            ->view('emails.cutiindex')->with('data',$this->data);   
     }
 
     /**

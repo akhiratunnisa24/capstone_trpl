@@ -137,29 +137,14 @@ class CutikaryawanController extends Controller
 
         $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
             ->where('cuti.id_karyawan','=',$cuti->id_karyawan)
-            ->select('karyawan.email')
+            ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama')
             ->first();
 
         //atasan pertama
-        $idatasan = DB::table('karyawan')
-            ->join('cuti','karyawan.id','=','cuti.id_karyawan')
-            ->where('cuti.id_karyawan','=',$cuti->id_karyawan)
-            ->select('karyawan.atasan_pertama as atasan_pertama')
-            ->first();
-        $atasan = Karyawan::where('id',$idatasan->atasan_pertama)
+        $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
             ->select('email as email','nama as nama','jabatan as jabatan')
             ->first();
         
-        //atasan kedua
-        $idatasan2 = DB::table('karyawan')
-            ->join('cuti','karyawan.id','=','cuti.id_karyawan')
-            ->where('cuti.id_karyawan','=',$cuti->id_karyawan)
-            ->select('karyawan.atasan_kedua as atasan_kedua')
-            ->first();
-        $atasan2 = Karyawan::where('id',$idatasan2->atasan_kedua)
-            ->select('email as email','nama as nama','jabatan as jabatan')
-            ->first();
-
         if ($atasan) {
             $tujuan = $atasan->email;
             $data = [
@@ -168,7 +153,6 @@ class CutikaryawanController extends Controller
                 'id' => $cuti->id,
                 'karyawan_email' =>  $emailkry->email,
                 'id_jeniscuti' => $cuti->jeniscutis->jenis_cuti,
-                'atasan2'     =>$atasan2->email,
                 'keperluan' => $cuti->keperluan,
                 'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
                 'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
@@ -177,7 +161,8 @@ class CutikaryawanController extends Controller
                 'jabatan' => $atasan->jabatan,
                 'nama_atasan' => $atasan->nama,
                 'role' => $role,
-                ];
+            ];
+
             Mail::to($tujuan)->send(new CutiNotification($data));
         } else {
             // proses jika data atasan tidak ada / email tidak ada

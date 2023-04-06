@@ -166,13 +166,13 @@
                     <li><a href="/history-absensi" class="waves-effect"><i class="fa fa-history"></i><span>History Absensi</span></a></li>
                     <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a></li>
                     <li><a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
-                    @if(Auth::user()->role == 4 && $row->jabatan == "Management")
+                    {{-- @if(Auth::user()->role == 4 && $row->jabatan == "Management")
                         <li class="has_sub">
                                 <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a>
                                 </li>
                             </ul>
                         </li>
-                    @endif
+                    @endif --}}
                 </ul>
             </div>
         @endif
@@ -207,7 +207,12 @@
                                         class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
                             </li>
                             <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi Staff</span></a></li>
-                            <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a></li>
+                            @if($row->jabatan == "Manager" || $row->jabatan == "Supervisor")
+                                <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a></li>
+                            @elseif($row->jabatan == "Management")
+                                <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a></li>
+                            @else
+                            @endif
                             <li><a href="/resign_manager" class="waves-effect"><i
                                         class="mdi mdi-account-off"></i><span>Data Resign Staff</span></a></li>
                         </ul>

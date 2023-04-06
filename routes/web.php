@@ -218,6 +218,8 @@ Route::get('/cuti_karyawan/{id}', [JeniscutiController::class, 'show'])->name('c
 //izin
 Route::post('/izin_karyawan', [IzinkaryawanController::class, 'store'])->name('izinstore');
 Route::get('/izin_karyawan/{id}', [IzinkaryawanController::class, 'show'])->name('izin.show');
+Route::get('/getliburdata', [IzinkaryawanController::class, 'getLiburdata'])->name('getliburdata');
+
 //resign
 Route::get('/resign-karyawan', [ResignController::class, 'index'])->name('resign_karyawan');
 Route::post('/resign_karyawan', [ResignController::class, 'store'])->name('resignkaryawan.store');
@@ -563,4 +565,5 @@ Route::post('storesisacuti', [KaryawanController::class, 'storeSisacuti'])->name
 
 //Direktur
 Route::get('/cutistaff', [DirekturController::class, 'index'])->name('cuti.Staff');
+Route::post('/izinstaff/{id}', [DirekturController::class, 'izinApprove'])->name('izin.approv');
 
