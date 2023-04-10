@@ -179,18 +179,22 @@ class IzinAdminController extends Controller
             ->first(); 
          //$tujuan = 'akhiratunnisahasanah0917@gmail.com';
        
-        $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
-            ->select('email as email','nama as nama','jabatan')
-            ->first();
         $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
             ->select('email as email','nama as nama','jabatan')
             ->first();
+        $atasan2 = NULL;
+
+        if($karyawan->atasan_kedua !== NULL){
+            $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+            ->select('email as email','nama as nama','jabatan')
+            ->first();
+        }
+        
         $tujuan = $karyawan->email;
         $data = [
             'subject'     =>'Notifikasi Permintaan Izin Ditolak, Izin ' . $izin->jenis_izin . ' #' . $izin->id . ' ' . $karyawan->nama,
             'id'          =>$izin->id,
             'atasan1'     => $atasan1->email,
-            'atasan2'     => $atasan2->email,
             'karyawan_email'=>$karyawan->email,
             'id_jenisizin'=>$izin->jenis_izin,
             'keperluan'   =>$izin->keperluan,
@@ -203,12 +207,15 @@ class IzinAdminController extends Controller
             'jumlahjam'   =>$izin->jml_jam,
             'status'      =>$status->name_status,
             'namakaryawan'=> $karyawan->nama,
-            'namaatasan2' =>$atasan2->nama,
             'nama'        =>$karyawan->nama,
             'jenisizin'   =>$izin->jenis_izin,
             'alasan'      =>$alasan->alasan,
         ];
-        // dd($data);
+        if($atasan2 !== NULL)
+        {
+            $data['atasan2'] = $atasan2->email;
+            $data['namaatasan2'] = $atasan2->nama;
+        }
         Mail::to($tujuan)->send(new IzinApproveNotification($data));
         return redirect()->route('permintaancuti.index',['type'=>2])->withInput();
     }

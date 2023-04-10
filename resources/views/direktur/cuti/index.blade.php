@@ -211,7 +211,7 @@
                                                                                 </div>
                                                                                 <div class="col-sm-3" style="margin-left:7px">
                                                                                     <form action="" method="POST"> 
-                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#Reject{{$data->id}}">
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#izinTolak{{$data->id}}">
                                                                                             <i class="fa fa-times fa-md"></i>
                                                                                         </a>
                                                                                     </form>
@@ -234,7 +234,7 @@
                                                                                 </div>
                                                                                 <div class="col-sm-3" style="margin-left:7px">
                                                                                     <form action="" method="POST"> 
-                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#Reject{{$data->id}}">
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#izinTolak{{$data->id}}">
                                                                                             <i class="fa fa-times fa-md"></i>
                                                                                         </a>
                                                                                     </form>

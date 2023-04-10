@@ -326,7 +326,7 @@ class ManagerController extends Controller
                 {
                     // return  Auth::user()->name;
                     $cuti = Cuti::where('id',$id)->first();
-                    $jeniscuti = Jeniscuti::where('id',$cuti->id)->first();
+                    $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
                     
                     $jml_cuti = $cuti->jml_cuti;
                     $status = Status::find(7);
@@ -361,6 +361,8 @@ class ManagerController extends Controller
     
                     // $tujuan = 'akhiratunnisahasanah0917@gmail.com';
                     $tujuan = $emailkry['email'];
+                    $alasan = '';
+                    
                     $data = [
                         'subject'     =>'Notifikasi Cuti Disetujui ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'id'          =>$cuti->id,
@@ -375,6 +377,7 @@ class ManagerController extends Controller
                         'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
                         'jml_cuti'    =>$cuti->jml_cuti,
                         'status'      =>$cuti->name_status,
+                        'alasan'      =>$alasan,
                     ];
                     Mail::to($tujuan)->send(new CutiApproveNotification($data));
                     return redirect()->back()->withInput();
@@ -508,8 +511,7 @@ class ManagerController extends Controller
                 {
                     // return  Auth::user()->name;
                     $cuti = Cuti::where('id',$id)->first();
-                    $jeniscuti = Jeniscuti::where('id',$cuti->id)->first();
-
+                    $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
                     $jml_cuti = $cuti->jml_cuti;
                     $status = Status::find(7);
                     Cuti::where('id', $id)->update(
@@ -545,7 +547,9 @@ class ManagerController extends Controller
                     $atasan2 = Auth::user()->email;
     
                     // $tujuan = 'akhiratunnisahasanah0917@gmail.com';
-                    $tujuan = $emailkry['email'];
+                    $tujuan = $emailkry->email;
+                    $alasan = '';
+
                     $data = [
                         'subject'     =>'Notifikasi Cuti Disetujui ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'id'          =>$cuti->id,
@@ -560,6 +564,7 @@ class ManagerController extends Controller
                         'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
                         'jml_cuti'    =>$cuti->jml_cuti,
                         'status'      =>$cuti->name_status,
+                        'alasan'      =>$alasan,
                     ];
                     Mail::to($tujuan)->send(new CutiApproveNotification($data));
                     return redirect()->back()->withInput();
@@ -710,18 +715,18 @@ class ManagerController extends Controller
         $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
             ->select('email as email','nama as nama','jabatan')
             ->first();
-
-        $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+        $atasan2 = NULL;
+        if($karyawan->atasan_kedua !== NULL){
+            $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
             ->select('email as email','nama as nama','jabatan')
             ->first();
+        }
         $tujuan = $karyawan->email;
         $data = [
             'subject'     => 'Notifikasi Permintaan Cuti Ditolak, Cuti ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
             'id'          => $ct->id,
             'atasan1'     => $atasan1->email,
-            'atasan2'     => $atasan2->email,
             'namaatasan1' => $atasan1->nama,
-            'namaatasan2' => $atasan2->nama,
             'karyawan_email'=>$karyawan->email,
             'id_jeniscuti'=> $ct->jenis_cuti,
             'keperluan'   => $ct->keperluan,
@@ -732,6 +737,10 @@ class ManagerController extends Controller
             'status'      => $ct->name_status,
             'alasan'      =>$alasan->alasan,
         ];
+        if($atasan2 !== NULL){
+            $data['atasan2'] = $atasan2->email;
+            $data['namaatasan2'] = $atasan2->nama;
+        }
         // return $data;
         Mail::to($tujuan)->send(new CutiApproveNotification($data));
         return redirect()->back()->withInput();
