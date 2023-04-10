@@ -58,13 +58,13 @@
                         </span>
                     </div>
                 </div>
-                @if(isset($alasancuti) && $data->id == $alasancuti->id_cuti && $data->status == 5)
-                    <div class="form-group row">
+                @if($data->status == 5)
+                    <div class="row">
                         <label for="alasan" class="col-sm-3 col-form-label">Alasan</label>
                         <div class="col-sm-9">
-                            <label>: {{$alasancuti->alasan_cuti}}</label>
+                            <label>: {{$data->alasan_cuti}}</label>
                         </div>
-                    </div>        
+                    </div>     
                 @endif
 
                 <div class="modal-footer">

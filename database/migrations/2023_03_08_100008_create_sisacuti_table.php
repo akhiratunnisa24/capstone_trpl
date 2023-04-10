@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('id_pegawai');
             $table->integer('id_setting');
+            $table->integer('id_alokasi');
             $table->integer('jenis_cuti');
             $table->integer('jumlah_cuti');
             $table->integer('sisa_cuti')->nullable();

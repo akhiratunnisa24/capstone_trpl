@@ -15,8 +15,13 @@
         </div>
     </div>
 
-    @if (Auth::check() && Auth::user()->role !== 4)
+    {{-- <php
+        use App\Models\Karyawan;
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->select('jabatan')->first();
+            
+    ?> --}}
 
+    @if (Auth::check() && Auth::user()->role !== 4)
         <div class="row">
             <div class="col-lg-6">
                 <div class="panel-group " id="accordion-test-2">
@@ -75,49 +80,83 @@
                                                         <td>
                                                             <div class="row">
                                                                 @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
-                                                                    <div class="col-sm-3">
-                                                                        <form action="{{ route('cuti.approved', $data->id) }}"
-                                                                            method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status"
-                                                                                value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit"
-                                                                                class="fa fa-check btn-success btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="col-sm-3" style="margin-left:8px">
+                                                                    
+                                                                    {{-- <div class="col-sm-3" style="margin-left:8px">
                                                                         <form action="{{ route('cuti.reject', $data->id) }}"
                                                                             method="POST">
                                                                             @csrf
                                                                             @method('POST')
-                                                                            <input type="hidden" name="status" value="Ditolak"
-                                                                                class="form-control" hidden>
-                                                                            <button type="submit"
-                                                                                class="fa fa-times btn-danger btn-sm"></button>
+                                                                            <input type="hidden" name="status" value="Ditolak" class="form-control" hidden>
+                                                                            <button type="submit" class="fa fa-times btn-danger btn-sm"></button>
                                                                         </form>
-                                                                    </div>
+                                                                    </div> --}}
+                                                                    @if($row->jabatan = "Management")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('leave.approved', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="" method="POST">
+                                                                                <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutisTolak{{ $data->id }}">
+                                                                                    <i class="fa fa-times fa-md"></i>
+                                                                                </a>
+                                                                            </form>
+                                                                        </div>
+                                                                        @include('direktur.cuti.cutiReject')
+                                                                    @elseif($row->jabatan = "Supervisor" || $row->jabatan = "Manager")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="" method="POST">
+                                                                                <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutiTolak{{ $data->id }}">
+                                                                                    <i class="fa fa-times fa-md"></i>
+                                                                                </a>
+                                                                            </form>
+                                                                        </div>
+                                                                    @else
+                                                                    @endif
                                                                 @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
-                                                                    <div class="col-sm-3">
-                                                                        <form action="{{ route('cuti.approved', $data->id) }}"
-                                                                            method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status"
-                                                                                value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit"
-                                                                                class="fa fa-check btn-success btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="col-sm-3" style="margin-left:8px">
-                                                                        <form action="{{ route('cuti.reject', $data->id) }}"
-                                                                            method="POST">
-                                                                            @csrf
-                                                                            @method('POST')
-                                                                            <input type="hidden" name="status" value="Ditolak"
-                                                                                class="form-control" hidden>
-                                                                            <button type="submit"
-                                                                                class="fa fa-times btn-danger btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
+                                                                    @if($row->jabatan = "Management")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('leave.approved', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="" method="POST">
+                                                                                <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutisTolak{{ $data->id }}">
+                                                                                    <i class="fa fa-times fa-md"></i>
+                                                                                </a>
+                                                                            </form>
+                                                                        </div>
+                                                                        @include('direktur.cuti.cutiReject')
+                                                                    @elseif($row->jabatan = "Supervisor" || $row->jabatan = "Manager")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="" method="POST">
+                                                                                <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutiTolak{{ $data->id }}">
+                                                                                    <i class="fa fa-times fa-md"></i>
+                                                                                </a>
+                                                                            </form>
+                                                                        </div>
+                                                                    @else
+                                                                    @endif
                                                                 @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6)
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('cuti.approved', $data->id) }}"
@@ -129,15 +168,11 @@
                                                                                 class="fa fa-check btn-success btn-sm"></button>
                                                                         </form>
                                                                     </div>
-                                                                    <div class="col-sm-3" style="margin-left:8px">
-                                                                        <form action="{{ route('cuti.reject', $data->id) }}"
-                                                                            method="POST">
-                                                                            @csrf
-                                                                            @method('POST')
-                                                                            <input type="hidden" name="status" value="Ditolak"
-                                                                                class="form-control" hidden>
-                                                                            <button type="submit"
-                                                                                class="fa fa-times btn-danger btn-sm"></button>
+                                                                    <div class="col-sm-3" style="margin-left:7px">
+                                                                        <form action="" method="POST">
+                                                                            <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutiTolak{{ $data->id }}">
+                                                                                <i class="fa fa-times fa-md"></i>
+                                                                            </a>
                                                                         </form>
                                                                     </div>
                                                                 @else
@@ -157,6 +192,7 @@
                                                     </tr>
                                                     {{-- modal show cuti --}}
                                                     @include('admin.cuti.showcuti')
+                                                    @include('manager.staff.cutiReject')
                                                 @endforeach
 
                                             </tbody>
@@ -472,7 +508,6 @@
                 </div>
             </div>
         </div> <!-- end row -->
-        
     @endif
 
     

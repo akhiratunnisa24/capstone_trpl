@@ -9,7 +9,7 @@ class Settingcuti extends Model
 {
     use HasFactory;
     protected $table= 'setting_cuti';
-    protected $fillable = ['id_pegawai','id_jeniscuti','jumlah_cuti','sisa_cuti','periode'];
+    protected $fillable = ['id_pegawai','id_jeniscuti','id_alokasi','jumlah_cuti','sisa_cuti','periode'];
 
     public function jeniscutis()
     {

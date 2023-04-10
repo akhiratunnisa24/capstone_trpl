@@ -297,6 +297,7 @@ Route::get('/alokasi-cuti', [AlokasicutiController::class, 'alokasicuti'])->name
 //setting cuti
 Route::get('/settingcuti', [SettingcutiController::class, 'index'])->name('settingcuti.index');
 Route::post('/reset-cuti-tahunan', [SettingcutiController::class, 'resetCutiTahunan'])->name('reset.cuti.tahunan');
+Route::post('/reset-cuti-tahun-ini', [SettingcutiController::class, 'resetTahunini'])->name('reset.tahun.ini');
 // Route::put('/settingcuti/update', [SettingcutiController::class, 'update'])->name('settingcuti.update');
 
 
@@ -566,4 +567,6 @@ Route::post('storesisacuti', [KaryawanController::class, 'storeSisacuti'])->name
 //Direktur
 Route::get('/cutistaff', [DirekturController::class, 'index'])->name('cuti.Staff');
 Route::post('/izinstaff/{id}', [DirekturController::class, 'izinApprove'])->name('izin.approv');
+Route::post('/izinstaf/{id}', [DirekturController::class, 'izinRejected'])->name('permission.rejected');
+
 

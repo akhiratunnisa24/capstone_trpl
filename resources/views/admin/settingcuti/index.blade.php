@@ -21,11 +21,25 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
-                        <form action="/reset-cuti-tahunan" method="POST" align="center">
+                        {{-- <form action="/reset-cuti-tahunan" method="POST" align="center">
                             @csrf
                             @method('POST')
                             <button type="submit" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Reset Cuti Tahunan</button>
-                        </form>
+                        </form> --}}
+                        @if(date('m') == 4 && date('d') == 10)
+                            <form action="/reset-cuti-tahun-ini" method="POST" align="center">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Kosongkan Data</button>
+                            </form>
+                        @else
+                            <form action="/reset-cuti-tahunan" method="POST" align="center">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Reset Cuti Tahunan</button>
+                            </form>
+                        @endif
+
                     </div>
                     
                     <div class="panel-body m-b-5">

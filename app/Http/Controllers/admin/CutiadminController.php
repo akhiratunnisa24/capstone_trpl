@@ -289,6 +289,7 @@ class CutiadminController extends Controller
                 //atasan yang login
                 $atasan2 = Auth::user()->email;
                 $tujuan = $emailkry['email'];
+                $alasan = '';
                 $data = [
                     'subject'     => 'Notifikasi Cuti Disetujui ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                     'id'          => $cuti->id,
@@ -304,6 +305,7 @@ class CutiadminController extends Controller
                     'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
                     'jml_cuti'    => $cuti->jml_cuti,
                     'status'      => $status->name_status,
+                    'alasan'      =>$alasan,
                 ];
                 Mail::to($tujuan)->send(new CutiApproveNotification($data));
         
@@ -417,6 +419,7 @@ class CutiadminController extends Controller
     
                     // $tujuan = 'akhiratunnisahasanah0917@gmail.com';
                     $tujuan = $emailkry['email'];
+                    $alasan = '';
                     $data = [
                         'subject'     =>'Notifikasi Cuti Disetujui ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'id'          =>$cuti->id,
@@ -431,6 +434,7 @@ class CutiadminController extends Controller
                         'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
                         'jml_cuti'    =>$cuti->jml_cuti,
                         'status'      =>$cuti->name_status,
+                        'alasan'      =>$alasan,
                     ];
                     Mail::to($tujuan)->send(new CutiApproveNotification($data));
                     return redirect()->back()->withInput();
