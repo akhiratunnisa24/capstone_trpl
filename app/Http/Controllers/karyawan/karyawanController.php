@@ -1973,7 +1973,7 @@ class karyawanController extends Controller
 
         $kkLama = $digital->kk;
         if ($file = $request->file('fotoKK')) {
-            // hapus KTP lama dari storage
+            // hapus KK lama dari storage
             if ($kkLama !== null) {
                 $kk = public_path('File_KK/' . $kkLama);
                 if (file_exists($kk)) {
@@ -1989,7 +1989,7 @@ class karyawanController extends Controller
 
         $npwpLama = $digital->npwp;
         if ($file = $request->file('fotoNPWP')) {
-            // hapus KTP lama dari storage
+            // hapus NPWP lama dari storage
             if ($npwpLama !== null) {
                 $npwp = public_path('File_NPWP/' . $npwpLama);
                 if (file_exists($npwp)) {
@@ -2001,6 +2001,203 @@ class karyawanController extends Controller
             $file->move(public_path() . '\File_NPWP', $namaNPWP);
             $digital->npwp = $namaNPWP;
         }
+
+        $bpjsketlama = $digital->bpjs_ket;
+        if ($file = $request->file('fotoBPJSket')) {
+            // hapus BPJS Ketenagakerjaan lama dari storage
+            if ($bpjsketlama !== null) {
+                $bpjsket = public_path('File_BPJSKet/' . $bpjsketlama);
+                if (file_exists($bpjsket)) {
+                    unlink($bpjsket);
+                }
+            }
+
+            $namaBPJSKET = 'BPJSket-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_BPJSKet', $namaBPJSKET);
+            $digital->bpjs_ket = $namaBPJSKET;
+        }
+
+        $bpjskeslama = $digital->bpjs_kes;
+        if ($file = $request->file('fotoBPJSkes')) {
+            // hapus BPJS Kesehatan lama dari storage
+            if ($bpjskeslama !== null) {
+                $bpjskes = public_path('File_BPJSKes/' . $bpjskeslama);
+                if (file_exists($bpjskes)) {
+                    unlink($bpjskes);
+                }
+            }
+
+            $namaBPJSKES = 'BPJSkes-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_BPJSKes', $namaBPJSKES);
+            $digital->bpjs_kes = $namaBPJSKES;
+        }
+
+        $akdhklama = $digital->as_akdhk;
+        if ($file = $request->file('fotoAKDHK')) {
+            // hapus AKDHK lama dari storage
+            if ($akdhklama !== null) {
+                $akdhk = public_path('File_AKDHK/' . $akdhklama);
+                if (file_exists($akdhk)) {
+                    unlink($akdhk);
+                }
+            }
+
+            $namaAKDHK = 'AKDHK-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_AKDHK', $namaAKDHK);
+            $digital->as_akdhk = $namaAKDHK;
+        }
+
+        $tabunganlama = $digital->buku_tabungan;
+        if ($file = $request->file('fotoTabungan')) {
+            // hapus Tabungan lama dari storage
+            if ($tabunganlama !== null) {
+                $tabungan = public_path('File_Tabungan/' . $tabunganlama);
+                if (file_exists($tabungan)) {
+                    unlink($tabungan);
+                }
+            }
+
+            $namaTabungan = 'Tabungan-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_Tabungan', $namaTabungan);
+            $digital->buku_tabungan = $namaTabungan;
+        }
+
+        $skcklama = $digital->skck;
+        if ($file = $request->file('fotoSKCK')) {
+            // hapus SKCK lama dari storage
+            if ($skcklama !== null) {
+                $skck = public_path('File_SKCK/' . $skcklama);
+                if (file_exists($skck)) {
+                    unlink($skck);
+                }
+            }
+
+            $namaSKCK = 'SKCK-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_SKCK', $namaSKCK);
+            $digital->skck = $namaSKCK;
+        }
+
+        $ijazahlama = $digital->ijazah;
+        if ($file = $request->file('fotoIjazah')) {
+            // hapus Ijazah lama dari storage
+            if ($ijazahlama !== null) {
+                $ijazah = public_path('File_Ijazah/' . $ijazahlama);
+                if (file_exists($ijazah)) {
+                    unlink($ijazah);
+                }
+            }
+
+            $namaIjazah = 'Ijazah-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_Ijazah', $namaIjazah);
+            $digital->ijazah = $namaIjazah;
+        }
+
+        $lamaranlama = $digital->lamaran;
+        if ($file = $request->file('fotoLamaran')) {
+            // hapus Lamaran lama dari storage
+            if ($lamaranlama !== null) {
+                $lamaran = public_path('File_Lamaran/' . $lamaranlama);
+                if (file_exists($lamaran)) {
+                    unlink($lamaran);
+                }
+            }
+
+            $namaLamaran = 'Lamaran-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_Lamaran', $namaLamaran);
+            $digital->lamaran = $namaLamaran;
+        }
+
+        $suratpengalamanLama = $digital->surat_pengalaman_kerja;
+        if ($file = $request->file('fotoSuratPengalaman')) {
+            // hapus Pengalaman Kerja lama dari storage
+            if ($suratpengalamanLama !== null) {
+                $pengalaman = public_path('File_Pengalaman/' . $suratpengalamanLama);
+                if (file_exists($pengalaman)) {
+                    unlink($pengalaman);
+                }
+            }
+
+            $namaPengalaman = 'Pengalaman-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_Pengalaman', $namaPengalaman);
+            $digital->surat_pengalaman_kerja = $namaPengalaman;
+        }
+
+        $suratprestasiLama = $digital->surat_penghargaan;
+        if ($file = $request->file('fotoSuratPrestasi')) {
+            // hapus Penghargaan lama dari storage
+            if ($suratprestasiLama !== null) {
+                $prestasi = public_path('File_Prestasi/' . $suratprestasiLama);
+                if (file_exists($prestasi)) {
+                    unlink($prestasi);
+                }
+            }
+
+            $namaPrestasi = 'Prestasi-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_Prestasi', $namaPrestasi);
+            $digital->surat_penghargaan = $namaPrestasi;
+        }
+
+        $suratpendidikanLama = $digital->surat_pelatihan;
+        if ($file = $request->file('fotoSuratPendidikan')) {
+            // hapus Pendidikan lama dari storage
+            if ($suratpendidikanLama !== null) {
+                $pendidikan = public_path('File_Pendidikan/' . $suratpendidikanLama);
+                if (file_exists($pendidikan)) {
+                    unlink($pendidikan);
+                }
+            }
+
+            $namaPendidikan = 'Pendidikan-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_Pendidikan', $namaPendidikan);
+            $digital->surat_pelatihan = $namaPendidikan;
+        }
+
+        $suratperjanjianLama = $digital->surat_perjanjian_kerja;
+        if ($file = $request->file('fotoPerjanjianKerja')) {
+            // hapus Perjanjian Kerja lama dari storage
+            if ($suratperjanjianLama !== null) {
+                $perjanjian = public_path('File_Perjanjian/' . $suratperjanjianLama);
+                if (file_exists($perjanjian)) {
+                    unlink($perjanjian);
+                }
+            }
+
+            $namaPerjanjian = 'PerjanjianKerja-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_Perjanjian', $namaPerjanjian);
+            $digital->surat_perjanjian_kerja = $namaPerjanjian;
+        }
+
+        $suratpengangkatanLama = $digital->surat_pengangkatan_kartap;
+        if ($file = $request->file('fotoSuratPengangkatan')) {
+            // hapus Perjanjian Kerja lama dari storage
+            if ($suratpengangkatanLama !== null) {
+                $pengangkatan = public_path('File_Pengangkatan/' . $suratpengangkatanLama);
+                if (file_exists($pengangkatan)) {
+                    unlink($pengangkatan);
+                }
+            }
+
+            $namaPengangkatan = 'SuratPengangkatan-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_Pengangkatan', $namaPengangkatan);
+            $digital->surat_pengangkatan_kartap = $namaPengangkatan;
+        }
+
+        $suratalihtugasLama = $digital->surat_alih_tugas;
+        if ($file = $request->file('fotoSuratKeputusan')) {
+            // hapus Surat Alih Tugas lama dari storage
+            if ($suratalihtugasLama !== null) {
+                $alihtugas = public_path('File_Keputusan/' . $suratalihtugasLama);
+                if (file_exists($alihtugas)) {
+                    unlink($alihtugas);
+                }
+            }
+
+            $namaalihTugas = 'SuratKeputusan-' . time() . '-' . $file->getClientOriginalName();
+            $file->move(public_path() . '\File_Keputusan', $namaalihTugas);
+            $digital->surat_alih_tugas = $namaalihTugas;
+        }
+
+        
         $digital->save();
         return redirect()->back();
     }

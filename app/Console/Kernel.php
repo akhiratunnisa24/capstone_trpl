@@ -154,7 +154,7 @@ class Kernel extends ConsoleKernel
                 }
 
         })
-        ->dailyAt('08:42');
+        ->dailyAt('13:01');
 
         $schedule->call(function () 
         {

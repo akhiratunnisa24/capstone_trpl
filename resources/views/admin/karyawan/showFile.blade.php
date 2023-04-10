@@ -281,7 +281,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <a href="karyawan" class="btn btn-sm btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
-                                            <a href="editfile{{ $karyawan->id }}" class="btn btn-sm btn-primary" type="button">Edit Data <i class="fa fa-edit"></i></a>
+                                            <a href="editfile{{ $karyawan->id }}" class="btn btn-sm btn-primary" type="button">Upload / Edit Data <i class="fa fa-edit"></i></a>
                                             {{-- <button type="submit" name="submit" id="simpan" class="btn btn-sm btn-success">Simpan</button>  --}}
                                         </div>
 
