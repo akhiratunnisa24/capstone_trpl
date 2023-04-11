@@ -9,8 +9,11 @@ class Cuti extends Model
 {
     use HasFactory;
     protected $table ='cuti';
-    protected $fillable = ['id_karyawan','id_jeniscuti','id_alokasi','id_settingalokasi','keperluan',
-                            'tgl_mulai','tgl_selesai','jml_cuti','status'
+    protected $fillable = [
+                            'tgl_permohonan','nik','id_karyawan','jabatan','departemen',
+                            'id_jeniscuti','keperluan','id_alokasi','id_settingalokasi',
+                            'tgl_mulai','tgl_selesai','tgldisetujui_a','tgldisetujui_b',
+                            'tglditolak','jml_cuti','status'
                         ];
     
     public function jeniscutis(){
@@ -26,6 +29,11 @@ class Cuti extends Model
         return $this->belongsTo(Status::class, 'status', 'id');
     }
 
+    public function departemens()
+    {
+        return $this->belongsTo(Departemen::class, 'departemen','id');
+    }
+    
     public function alokasi(){
         return $this->belongsTo(Alokasicuti::class,'id_alokasi','id');
     }

@@ -9,6 +9,7 @@ use App\Models\Status;
 use App\Models\Karyawan;
 use App\Models\Jenisizin;
 use App\Models\Datareject;
+use App\Models\Departemen;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use App\Mail\CutiNotification;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Jeniscuti;
 
 class CutikaryawanController extends Controller
 {
@@ -61,6 +63,8 @@ class CutikaryawanController extends Controller
 
         //create cuti
         $karyawan = Auth::user()->id_pegawai;
+        $datakry = Karyawan::where('id', $karyawan)->first();
+        $departemen = Departemen::where('id',$datakry->divisi)->first();
         $jeniscuti = DB::table('alokasicuti')
             ->join('jeniscuti','alokasicuti.id_jeniscuti','=','jeniscuti.id')
             ->join('settingalokasi','alokasicuti.id_settingalokasi','=','settingalokasi.id')
@@ -75,7 +79,7 @@ class CutikaryawanController extends Controller
         $jenisizin = Jenisizin::all();
         $tipe = $request->query('tipe', 1);
         
-        return view('karyawan.cuti.index', compact('row','izin','jenisizin','cuti','jeniscuti','karyawan','tipe'));
+        return view('karyawan.cuti.index', compact('row','izin','jenisizin','cuti','datakry','departemen','jeniscuti','karyawan','tipe'));
     }
 
     public function getDurasi(Request $request)
@@ -124,49 +128,62 @@ class CutikaryawanController extends Controller
         $status = Status::find(1);
 
         $cuti = New Cuti;
-        $cuti->id_karyawan = $karyawan;
-        $cuti->id_jeniscuti= $request->id_jeniscuti;
-        $cuti->id_alokasi  = $request->id_alokasi;
+        $cuti->tgl_permohonan = Carbon::parse($request->tgl_permohonan)->format("Y-m-d");
+        $cuti->nik            = $request->nik;
+        $cuti->id_karyawan    = $karyawan;
+        $cuti->jabatan        = $request->jabatan;
+        $cuti->departemen     = $request->departemen;
+        $cuti->id_jeniscuti   = $request->id_jeniscuti;
+        $cuti->id_alokasi     = $request->id_alokasi;
         $cuti->id_settingalokasi= $request->id_settingalokasi;
-        $cuti->keperluan   = $request->keperluan;
-        $cuti->tgl_mulai   = Carbon::parse($request->tgl_mulai)->format("Y-m-d");
-        $cuti->tgl_selesai = Carbon::parse($request->tgl_selesai)->format("Y-m-d");
-        $cuti->jml_cuti    = $request->jml_cuti;
-        $cuti->status      = $status->id;
+        $cuti->keperluan      = $request->keperluan;
+        $cuti->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
+        $cuti->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
+        $cuti->jml_cuti       = $request->jml_cuti;
+        $cuti->status         = $status->id;
+        // return $cuti;
         $cuti->save();
 
-        $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
-            ->where('cuti.id_karyawan','=',$cuti->id_karyawan)
-            ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama')
-            ->first();
+        // return $cuti;
 
+        $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+            ->join('departemen','cuti.departemen','=','departemen.id')
+            ->where('cuti.id_karyawan','=',$cuti->id_karyawan)
+            ->select('karyawan.email','karyawan.nama','cuti.*','karyawan.atasan_pertama','karyawan.jabatan','departemen.nama_departemen')
+            ->first();
+        $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
+        // return $emailkry;
         //atasan pertama
         $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
             ->select('email as email','nama as nama','jabatan as jabatan')
             ->first();
         
-        if ($atasan) {
-            $tujuan = $atasan->email;
-            $data = [
-                'subject' => 'Pemberitahuan Permintaan '. $cuti->jeniscutis->jenis_cuti,
-                'body' => 'Anda Memiliki 1 Permintaan Cuti yang harus di Approved',
-                'id' => $cuti->id,
-                'karyawan_email' =>  $emailkry->email,
-                'id_jeniscuti' => $cuti->jeniscutis->jenis_cuti,
-                'keperluan' => $cuti->keperluan,
-                'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
-                'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
-                'jml_cuti' => $cuti->jml_cuti,
-                'status' => $status->name_status,
-                'jabatan' => $atasan->jabatan,
-                'nama_atasan' => $atasan->nama,
-                'role' => $role,
-            ];
-
-            Mail::to($tujuan)->send(new CutiNotification($data));
-        } else {
-            // proses jika data atasan tidak ada / email tidak ada
-        }
+        // if ($atasan) {
+        $tujuan = $atasan->email;
+        $data = [
+            'subject' => 'Notifikasi Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#'. $cuti->id. ' ' . ucwords(strtolower($emailkry->nama)) ,
+            'noregistrasi' => $cuti->id,
+            'tgl_permohonan' =>Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
+            'nik' => $emailkry->nik,
+            'namakaryawan' => ucwords(strtolower($emailkry->nama)),
+            'jabatankaryawan' => $emailkry->jabatan,
+            'departemen' => $emailkry->nama_departemen,
+            'karyawan_email' =>  $emailkry->email,
+            'id_jeniscuti' => $jeniscuti->jenis_cuti,
+            'keperluan' => $cuti->keperluan,
+            'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d/m/Y"),
+            'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d/m/Y"),
+            'jml_cuti' => $cuti->jml_cuti,
+            'status' => $status->name_status,
+            'jabatan' => $atasan->jabatan,
+            'nama_atasan' => $atasan->nama,
+            'role' => $role,
+        ];
+        // return $data;
+        Mail::to($tujuan)->send(new CutiNotification($data));
+        // } else {
+        //     // proses jika data atasan tidak ada / email tidak ada
+        // }
 
         return redirect()->back()
             ->with('success','Email Notifikasi Berhasil Dikirim');
