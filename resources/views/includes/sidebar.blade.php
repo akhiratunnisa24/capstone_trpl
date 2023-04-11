@@ -116,7 +116,7 @@
                             <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
                             <li><a href="jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li>
                             <li><a href="/metode_rekrutmen"><i class="fa fa-user-plus"></i><span></span>Rekruitmen</a></li>
-                            <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li>
+                            {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li> --}}
                             {{-- <li><a href="#"><i class="fa fa-institution (alias)"></i><span></span>Setting
                                     Organisasi</a></li> --}}
                             {{-- <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span> Managemen User</span></a></li>      --}}

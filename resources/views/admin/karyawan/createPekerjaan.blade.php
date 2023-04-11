@@ -109,7 +109,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Alamat </label>
-                                                                    <input type="text"  name="alamatPerusahaan" class="form-control" id="alamat" placeholder="Masukkan Alamat">
+                                                                    <input type="text"  name="alamatPerusahaan" class="form-control" id="alamat" placeholder="Masukkan Alamat" autocomplete="off">
                                                                 </div>
                                                             </div>
 

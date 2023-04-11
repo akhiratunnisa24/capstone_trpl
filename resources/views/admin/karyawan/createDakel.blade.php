@@ -203,7 +203,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Pekerjaan</label>
-                                                                    <input type="text" name="pekerjaanPasangan" class="form-control" id="pekerjaanPasangan" aria-describedby="emailHelp" placeholder="Masukkan Pekerjaan" required>
+                                                                    <input type="text" name="pekerjaanPasangan" class="form-control" id="pekerjaanPasangan" aria-describedby="emailHelp" placeholder="Masukkan Pekerjaan" autocomplete="off" required>
                                                                     <div id="emailHelp" class="form-text"></div>
                                                                 </div>
                                                             </div>
@@ -308,7 +308,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Pekerjaan</label>
-                                                                    <input type="text" name="pekerjaanPasangan" class="form-control" id="pekerjaan" aria-describedby="emailHelp" placeholder="Masukkan Pekerjaan" required>
+                                                                    <input type="text" name="pekerjaanPasangan" class="form-control" id="pekerjaan" aria-describedby="emailHelp" placeholder="Masukkan Pekerjaan" autocomplete="off" required>
                                                                     <div id="emailHelp" class="form-text"></div>
                                                                 </div>
                                                             </div>

@@ -448,7 +448,7 @@
                         </div>
                     </div>
                 </div> --}}
-                @if(isset($potongtransport) || isset($potonguangmakan) ||  isset($terlambat) ||  isset($telat) ||  isset($datatelat))
+                    @if(isset($potongtransport) || isset($potonguangmakan) ||  isset($terlambat) ||  isset($telat) ||  isset($datatelat))
                     @php
                         $jumlah = $jpc + $jpg;
                     @endphp
@@ -458,9 +458,13 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#4"
                                     aria-expanded="false" class="collapsed">
                                     Data Tidak Masuk
-                                    @if($potongtransport || $potonguangmakan)
+                                    {{-- @if($potongtransport || $potonguangmakan)
                                         <span class="badge badge badge-danger" style="background-color:red">@php  echo $jumlah; @endphp</span>
-
+                                    @else
+                                    
+                                    @endif --}}
+                                    @if($jumlah)
+                                        <span class="badge badge badge-danger" style="background-color:red">@php  echo $jumlah; @endphp</span>
                                     @else
                                     
                                     @endif
@@ -472,13 +476,18 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <ul class="">
-                                           
-                                            <li class="text-center notifi-title">Notifikasi Tidak Masuk  <span class="badge badge-xs badge-danger">@php  echo $jumlah; @endphp</span></li>
+                                            <li class="text-center notifi-title">Notifikasi Tidak Masuk  
+                                                @if($jumlah)
+                                                <span class="badge badge-xs badge-danger">@php  echo $jumlah; @endphp</span> 
+                                            @else
+                                            @endif
+                                            </li>
                                             <li class="list-group">
                                                 @if($potonguangmakan)
                                                     <a href="/tindakan-tidak-masuk" class="list-group-item">
                                                         <div class="media">
-                                                            <div class="media-heading">Sanksi Pemotongan Uang Makan<span class="badge badge-xs badge-danger">{{ $jpc }}</span></div>
+                                                            <div class="media-heading">Sanksi Pemotongan Uang Makan
+                                                            <span class="badge badge-xs badge-danger">{{ $jpc }}</span></div>
                                                             <p class="m-0">
                                                             <small>Sejumlah karyawan perlu mendapat tindakan</small>
                                                             </p>
@@ -516,7 +525,10 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#7"
                                     aria-expanded="false" class="collapsed">
                                     Notifikasi Terlambat
-                                    @if($terlambat || $telat || $datatelat)
+                                    {{-- @if($terlambat || $telat || $datatelat)
+                                        <span class="badge badge badge-danger" style="background-color:red">@php  echo $jum; @endphp</span>
+                                    @endif --}}
+                                    @if($jum)
                                         <span class="badge badge badge-danger" style="background-color:red">@php  echo $jum; @endphp</span>
                                     @endif
                                 </a>
