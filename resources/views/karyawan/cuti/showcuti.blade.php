@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <label for="id" class="col-sm-3 col-form-label">Id Cuti</label>
+                    <label for="id" class="col-sm-3 col-form-label">Nomor Registrasi</label>
                     <div class="col-sm-9">
                         <label>: {{$data->id}}</label>
                     </div>
@@ -16,7 +16,7 @@
                 <div class="form-group row">
                     <label for="id_karyawan" class="col-sm-3 col-form-label">Nama Karyawan</label>
                     <div class="col-sm-9">
-                        <label>: {{Auth::user()->nama}}</label>
+                        <label>: {{Auth::user()->name}}</label>
                     </div>
                 </div>
                 <div class="form-group row">

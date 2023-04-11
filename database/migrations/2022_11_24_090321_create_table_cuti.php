@@ -15,11 +15,18 @@ return new class extends Migration
     {
         Schema::create('cuti', function (Blueprint $table) {
             $table->id();
+            $table->date('tgl_permohonan')->nullable()->default(null);
+            $table->string('nik');
+            $table->string('jabatan');
+            $table->integer('departemen');
             $table->unsignedBigInteger('id_karyawan');
             $table->unsignedBigInteger('id_jeniscuti');
             $table->unsignedBigInteger('id_alokasi');
             $table->unsignedBigInteger('id_settingalokasi');
             $table->text('keperluan');
+            $table->date('tgldisetujui_a')->nullable()->default(null);
+            $table->date('tgldisetujui_b')->nullable()->default(null);
+            $table->date('tglditolak')->nullable()->default(null);
             $table->date('tgl_mulai');
             $table->date('tgl_selesai');
             $table->integer('jml_cuti');
