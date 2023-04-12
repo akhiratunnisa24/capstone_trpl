@@ -112,7 +112,7 @@
                         <ul class="list-unstyled">
                             <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Departemen</a></li>
                             <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a></li>
-                            {{-- <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>   --}}
+                            <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>  
                             <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
                             <li><a href="jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li>
                             <li><a href="/metode_rekrutmen"><i class="fa fa-user-plus"></i><span></span>Rekruitmen</a></li>

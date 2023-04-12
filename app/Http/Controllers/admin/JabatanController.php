@@ -34,11 +34,9 @@ class JabatanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'level_jabatan' => 'required',
             'nama_jabatan' => 'required',
         ]);
         $jabatan = new Jabatan;
-        $jabatan->level_jabatan = $request->level_jabatan;
         $jabatan->nama_jabatan = $request->nama_jabatan;
         $jabatan->save();
     
@@ -48,7 +46,6 @@ class JabatanController extends Controller
     public function update(Request $request, $id)
     {
         $jabatan = Jabatan::find($id);
-        $jabatan->level_jabatan = $request->level_jabatan;
         $jabatan->nama_jabatan = $request->nama_jabatan;
         $jabatan->update();
     

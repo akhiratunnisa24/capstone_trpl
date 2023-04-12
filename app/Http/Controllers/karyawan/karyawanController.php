@@ -25,6 +25,8 @@ use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
 use App\Models\Rorganisasi;
 use App\Models\Rpendidikan;
+use App\Models\Jabatan;
+use App\Models\LevelJabatan ;
 use App\Models\File;
 use Illuminate\Http\Request;
 use App\Mail\CutiNotification;
@@ -1301,13 +1303,17 @@ class karyawanController extends Controller
             $departemen     = Departemen::all();
             $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager', 'Management'])->get();
             $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Management'])->get();
-
+            $leveljabatan = LevelJabatan::all();
+            $namajabatan = Jabatan::all();
+            
             $output = [
                 'row' => $row,
                 'karyawan' => $karyawan,
                 'departemen' => $departemen,
                 'atasan_pertama' => $atasan_pertama,
                 'atasan_kedua' => $atasan_kedua,
+                'leveljabatan' => $leveljabatan,
+                'namajabatan' => $namajabatan,
             ];
 
             return view('admin.karyawan.showIdentitas', $output);
@@ -1331,6 +1337,8 @@ class karyawanController extends Controller
             $departemen     = Departemen::all();
             $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager', 'Management'])->get();
             $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Management'])->get();
+            $leveljabatan = LevelJabatan::all();
+            $namajabatan = Jabatan::all();
 
             $output = [
                 'row' => $row,
@@ -1338,6 +1346,8 @@ class karyawanController extends Controller
                 'departemen' => $departemen,
                 'atasan_pertama' => $atasan_pertama,
                 'atasan_kedua'  => $atasan_kedua,
+                'leveljabatan' => $leveljabatan,
+                'namajabatan' => $namajabatan,
             ];
 
             return view('admin.karyawan.updateIdentitas', $output);
@@ -1382,6 +1392,7 @@ class karyawanController extends Controller
                 'divisi' => $request->post('divisi'),
                 'atasan_pertama' => $request->post('atasan_pertama'),
                 'atasan_kedua' => $request->post('atasan_kedua'),
+                'nama_jabatan' => $request->post('namaJabatan'),
                 'jabatan' => $request->post('jabatanKaryawan'),
                 'status_karyawan' => $request->post('statusKaryawan'),
                 'gol_darah' => $request->post('gol_darahKaryawan'),
@@ -1422,6 +1433,7 @@ class karyawanController extends Controller
                 'divisi' => $request->post('divisi'),
                 'atasan_pertama' => $request->post('atasan_pertama'),
                 'atasan_kedua' => $request->post('atasan_kedua'),
+                'nama_jabatan' => $request->post('namaJabatan'),
                 'jabatan' => $request->post('jabatanKaryawan'),
                 'status_karyawan' => $request->post('statusKaryawan'),
                 'gol_darah' => $request->post('gol_darahKaryawan'),

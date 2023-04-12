@@ -45,6 +45,7 @@ return new class extends Migration
             $table->string('no_program_askes', )->nullable();
             $table->string('nama_bank')->nullable(); 
             $table->string('kontrak')->nullable();
+            $table->string('nama_jabatan')->nullable();
             $table->string('jabatan')->nullable();
             $table->string('gaji')->nullable();
             $table->string('status_pernikahan')->nullable();

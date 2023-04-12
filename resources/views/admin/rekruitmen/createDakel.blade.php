@@ -123,7 +123,7 @@
                                                                             <option value="Istri">Istri</option>
                                                                             <option value="Kakak">Kakak</option>
                                                                             <option value="Adik">Adik</option>
-                                                                            <option value="Anak Pertama">Anak Pertama
+                                                                            <option value="Anak Pertama">Anak ke-1
                                                                             </option>
                                                                             <option value="Anak Ke-2">Anak Ke-2</option>
                                                                             <option value="Anak Ke-3">Anak Ke-3</option>

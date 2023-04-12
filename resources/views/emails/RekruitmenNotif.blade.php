@@ -27,7 +27,7 @@
     </style>
 </head>
 <body>
-    @if ($data->jenis_kelamin == 'L')
+    @if ($data->jenis_kelamin == 'Laki-Laki')
     <strong>Yth. Bapak {{ $data->nama }}</strong>
     @else
     <strong>Yth. Ibu {{ $data->nama }}</strong>

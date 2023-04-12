@@ -4,7 +4,7 @@
     <title>Penerimaan di Perusahaan Global Risk Management Pemberitahuan - Rekruitmen GRM Posisi {{ $posisi }}</title>
 </head>
 <body>
-    @if ($data->jenis_kelamin == 'L')
+    @if ($data->jenis_kelamin == 'Laki-Laki')
     <strong>Kepada Yth. Bapak {{ $data->nama }}</strong>
     @else
     <strong> Kepada Yth. Ibu {{ $data->nama }}</strong>

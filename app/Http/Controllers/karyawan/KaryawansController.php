@@ -12,6 +12,8 @@ use App\Models\Rpendidikan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Jabatan;
+use App\Models\LevelJabatan;
 use App\Models\Rorganisasi;
 use App\Models\Rprestasi;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +47,8 @@ class KaryawansController extends Controller
             $departemen     = Departemen::all();
             $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager', 'Management'])->get();
             $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Management'])->get();
+            $leveljabatan = LevelJabatan::all();
+            $namajabatan = Jabatan::all();
 
             $karyawan = $request->session()->get('karyawan');
             if (!$karyawan) {
@@ -55,7 +59,9 @@ class KaryawansController extends Controller
                 'departemen' => $departemen,
                 'atasan_pertama' => $atasan_pertama,
                 'atasan_kedua' => $atasan_kedua,
-                'karyawan' => $karyawan
+                'karyawan' => $karyawan,
+                'leveljabatan' => $leveljabatan,
+                'namajabatan' => $namajabatan,
             ];
             return view('admin.karyawan.creates', $output);
         } else {
@@ -94,6 +100,7 @@ class KaryawansController extends Controller
                 $karyawan->nama_bank   = $request->nama_bank;
                 $karyawan->gol_darah     = $request->gol_darahKaryawan;
                 $karyawan->foto          = $namaFile;
+                $karyawan->nama_jabatan       = $request->namaJabatan;
                 $karyawan->jabatan       = $request->jabatanKaryawan;
                 $karyawan->status_karyawan       = $request->statusKaryawan;
                 $karyawan->tglmasuk      = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');
@@ -140,6 +147,7 @@ class KaryawansController extends Controller
                 $karyawan->nama_bank   = $request->nama_bank;
                 $karyawan->gol_darah     = $request->gol_darahKaryawan;
                 $karyawan->foto          = $namaFile;
+                $karyawan->nama_jabatan       = $request->namaJabatan;
                 $karyawan->jabatan       = $request->jabatanKaryawan;
                 $karyawan->status_karyawan       = $request->statusKaryawan;
                 $karyawan->tglmasuk      = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');
@@ -187,6 +195,7 @@ class KaryawansController extends Controller
                 $karyawan->no_rek   = $request->norekKaryawan;
                 $karyawan->nama_bank   = $request->nama_bank;
                 $karyawan->gol_darah    = $request->gol_darahKaryawan;
+                $karyawan->nama_jabatan       = $request->namaJabatan;
                 $karyawan->jabatan      = $request->jabatanKaryawan;
                 $karyawan->status_karyawan       = $request->statusKaryawan;
                 $karyawan->tglmasuk     = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');
@@ -232,6 +241,7 @@ class KaryawansController extends Controller
                 $karyawan->no_rek   = $request->norekKaryawan;
                 $karyawan->nama_bank   = $request->nama_bank;
                 $karyawan->gol_darah     = $request->gol_darahKaryawan;
+                $karyawan->nama_jabatan       = $request->namaJabatan;
                 $karyawan->jabatan       = $request->jabatanKaryawan;
                 $karyawan->status_karyawan       = $request->statusKaryawan;
                 $karyawan->tglmasuk      = \Carbon\Carbon::parse($request->tglmasukKaryawan)->format('Y-m-d');

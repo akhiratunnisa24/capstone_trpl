@@ -119,7 +119,12 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label  class="form-label">Jabatan</label>
+                                                                <label  class="form-label">Nama Jabatan</label>
+                                                                <label class="form-control">{{ $karyawan->nama_jabatan ?? '-' }}</label>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label  class="form-label">Level Jabatan</label>
                                                                 <label class="form-control">{{ $karyawan->jabatan ?? '-' }}</label>
                                                             </div>
 

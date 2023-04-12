@@ -10,15 +10,6 @@
                 <form action="{{ route('jabatan.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
-                    <div class="form-group col-sm">
-                        <label class="form-label">Level Jabatan</label>
-                        <select  class="form-control selecpicker" name="level_jabatan" required>
-                            <option value="">Pilih Level Jabatan</option>
-                            @foreach ($leveljabatan as $level)
-                                <option value="{{ $level->id }}">{{ $level->nama_level }}</option>
-                            @endforeach
-                        </select>
-                    </div>
 
                     <div class="form-group col-sm">
                         <label for="nama_jabatan" class="col-form-label">Nama Jabatan</label>

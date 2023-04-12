@@ -204,11 +204,41 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
+  const inputElement = document.querySelector('input[name="pdfPelamar"]');
+
+  inputElement.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    const fileType = file.type;
+
+    if (fileType !== 'application/pdf') {
+      alert('File yang diunggah harus berupa file PDF.');
+      inputElement.value = '';
+    }
+  });
+</script> --}}
+
+<script>
+  const inputElements = document.querySelectorAll('input[type="file"]');
+
+  inputElements.forEach((inputElement) => {
+    inputElement.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      const fileType = file.type;
+
+      if (fileType !== 'application/pdf') {
+        alert('Semua file yang diunggah harus berupa file PDF.');
+        inputElement.value = '';
+      }
+    });
+  });
+</script>
+
+    {{-- <script>
   function myFunction() {
     alert("Data berhasil disimpan !");
   }
-</script>
+</script> --}}
    
     
 @endsection

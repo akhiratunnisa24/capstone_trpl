@@ -37,7 +37,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Level</th>
+                                        {{-- <th>Level</th> --}}
                                         <th>Nama Jabatan</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -47,7 +47,7 @@
                                     @foreach ($jabatan as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $data->level_jabatan }}</td>
+                                            {{-- <td>{{ $data->level_jabatan }}</td> --}}
                                             <td>{{ $data->nama_jabatan }}</td>
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">

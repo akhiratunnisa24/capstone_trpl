@@ -140,13 +140,23 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="form-label">Jabatan</label>
+                                                                <label class="form-label">Nama Jabatan</label>
+                                                                <select class="form-control selectpicker" name="namaJabatan" required>
+                                                                    <option value="">Pilih Nama Jabatan</option>
+                                                                    @foreach ($namajabatan as $nama)
+                                                                        <option value="{{ $nama->nama_jabatan }}" {{ $karyawan->nama_jabatan == $nama->nama_jabatan ? 'selected' : '' }} > {{ $nama->nama_jabatan ?? '' }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="form-label">Level Jabatan</label>
                                                                 <select class="form-control selectpicker" name="jabatanKaryawan" required>
-                                                                    <option value="">Pilih Jabatan</option>
-                                                                    <option value="Management"  {{ $karyawan->jabatan ?? '' == 'Management' ? 'selected' : '' }}>Management</option>
-                                                                    <option value="Manager" {{ $karyawan->jabatan ?? '' == 'Manager' ? 'selected' : '' }}>Manager</option>
-                                                                    <option value="Supervisor" {{ $karyawan->jabatan ?? '' == 'Supervisor' ? 'selected' : '' }}>Supervisor</option>
-                                                                    <option value="Staff" {{ $karyawan->jabatan ?? '' == 'Staff' ? 'selected' : '' }}>Staff</option>
+                                                                    <option value="">Pilih Level Jabatan</option>
+                                                                    @foreach ($leveljabatan as $level)
+                                                                        <option value="{{ $level->nama_level }}" {{ $karyawan->jabatan == $level->nama_level ? 'selected' : '' }} > {{ $level->nama_level ?? '' }}
+                                                                        </option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
 
