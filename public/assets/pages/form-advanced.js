@@ -314,7 +314,7 @@
             },
         });
         jQuery("#datepicker-autoclosec").datepicker({
-            format: "yyyy-mm-dd",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
             beforeShowDay: function (date) {
@@ -327,7 +327,7 @@
         });
 
         jQuery("#datepicker-autoclosed").datepicker({
-            format: "yyyy-mm-dd",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
             beforeShowDay: function (date) {
@@ -409,7 +409,7 @@
         //     }
         // });
         jQuery("#datepicker-autoclosef").datepicker({
-            format: "yyyy-mm-dd",
+            format: "dd/mm/yyyy",
             autoclose: true,
             minDate: minDate,
             maxDate: maxDate,
@@ -420,7 +420,7 @@
             },
         });
         jQuery("#datepicker-autocloseg").datepicker({
-            format: "yyyy-mm-dd",
+            format: "dd/mm/yyyy",
             autoclose: true,
             minDate: minDate,
             maxDate: maxDate,

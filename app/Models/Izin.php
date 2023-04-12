@@ -10,9 +10,10 @@ class Izin extends Model
     use HasFactory;
     protected $table ='izin';
     protected $fillable = [
-                            'id_karyawan','id_jenisizin','keperluan',
-                            'tgl_mulai','tgl_selesai','jam_mulai','jam_selesai',
-                            'jml_hari','jml_jam','status'
+                            'tgl_permohonan','nik','id_karyawan','jabatan','departemen',
+                            'id_jenisizin','keperluan','tgl_mulai','tgl_selesai','jam_mulai',
+                            'jam_selesai','tgl_setuju_a', 'tgl_setuju_b'
+                            ,'tgl_ditolak','jml_hari','jml_jam','status'
                         ];
     
     public function jenisizins()
@@ -23,6 +24,11 @@ class Izin extends Model
     public function karyawans()
     {
         return $this->belongsTo(Karyawan::class, 'id_karyawan','id');
+    }
+
+    public function departemens()
+    {
+        return $this->belongsTo(Departemen::class, 'departemen','id');
     }
     
     public function karyawan()
