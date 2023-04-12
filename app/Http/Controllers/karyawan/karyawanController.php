@@ -248,11 +248,10 @@ class karyawanController extends Controller
     public function karyawanDashboard()
     {
         $role = Auth::user()->role;
-
+       
         if ($role == 2 or 3) 
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-
             $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
@@ -460,7 +459,7 @@ class karyawanController extends Controller
                     ->get();
                 $izinjumlah = $izin->count();
             }
-            elseif($role == 3 && $row->jabatan == "management"){
+            elseif($role == 3 && $row->jabatan == "Management"){
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -566,7 +565,7 @@ class karyawanController extends Controller
             return view('karyawan.dashboardKaryawan', $output);
 
         }elseif($role == 4){
-            return $role;
+            // return $role;
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)

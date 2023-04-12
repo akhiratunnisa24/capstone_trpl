@@ -307,7 +307,7 @@ class ManagerController extends Controller
             ->where('cuti.id',$cuti->id)
             ->where('sisacuti.id_pegawai',$cuti->id_karyawan)
             ->first();
-        // return $cekSisacuti;
+        return $cekSisacuti;
         if ($cekSisacuti !== null) 
         {
             // Cuti berasal dari sisacuti

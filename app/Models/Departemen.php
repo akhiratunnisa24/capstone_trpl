@@ -18,6 +18,11 @@ class Departemen extends Model
     {
         return $this->hasMany(Absensi::class, 'id_departement','id');
     }
+
+    public function alokasicuti()
+    {
+        return $this->hasMany(Alokasicuti::class, 'departemen','id');
+    }
     
     public function karyawans()
     {

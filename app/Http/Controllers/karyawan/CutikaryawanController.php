@@ -70,7 +70,6 @@ class CutikaryawanController extends Controller
             ->join('settingalokasi','alokasicuti.id_settingalokasi','=','settingalokasi.id')
             ->select('alokasicuti.id','alokasicuti.id_jeniscuti','jeniscuti.jenis_cuti', 'settingalokasi.id as id_settingalokasi', 'alokasicuti.durasi','alokasicuti.aktif_dari','alokasicuti.sampai')
             ->where('alokasicuti.id_karyawan','=', Auth::user()->id_pegawai)
-            ->where('alokasicuti.durasi','>',0)
             ->whereYear('sampai', '=', Carbon::now()->year)
             ->distinct()
             ->get();
