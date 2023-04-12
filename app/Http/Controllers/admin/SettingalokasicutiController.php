@@ -59,13 +59,12 @@ class SettingalokasicutiController extends Controller
         {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
-                'durasi'       => 'required',
                 'mode_karyawan' => 'required',
             ]);
 
             $settingalokasi = new Settingalokasi;
             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
-            $settingalokasi->durasi       = $request->durasi;
+            $settingalokasi->durasi       = 0;
             $mode = implode(',', $request->mode_karyawan);
             $settingalokasi['mode_karyawan']        = $mode;
             $settingalokasi->cuti_bersama_terhutang = null;
@@ -97,7 +96,7 @@ class SettingalokasicutiController extends Controller
                     $query->orWhere('status_pernikahan', 'Janda');
                 }
             })
-            ->select('id', 'jenis_kelamin', 'status_pernikahan')
+            ->select('id', 'jenis_kelamin', 'status_pernikahan','nip','jabatan','divisi')
             ->get();
 
 
@@ -106,11 +105,15 @@ class SettingalokasicutiController extends Controller
                 $check = Alokasicuti::where('id_jeniscuti',$settingalokasi->id_jeniscuti)->where('id_karyawan',$karyawan->id)->exists();
                     if(!$check)
                     {
+                     
                         $alokasicuti = new Alokasicuti;
+                        $alokasicuti->nik              = $karyawan->nip;
                         $alokasicuti->id_karyawan      = $karyawan->id;
+                        $alokasicuti->jabatan          = $karyawan->jabatan;
+                        $alokasicuti->departemen       = $karyawan->divisi;
                         $alokasicuti->id_settingalokasi= $settingalokasi->id;
                         $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
-                        $alokasicuti->durasi           = $request->durasi;
+                        $alokasicuti->durasi           = 0;
                         $alokasicuti->status_durasialokasi = null;
                         $alokasicuti->tgl_masuk        = null;
                         $alokasicuti->tgl_sekarang     = null;
@@ -135,107 +138,177 @@ class SettingalokasicutiController extends Controller
                 'cuti_bersama_terhutang' =>'required',
             ]);
 
-            $settingalokasi = new Settingalokasi;
-            $settingalokasi->id_jeniscuti  = $request->id_jeniscuti;
-            $settingalokasi->durasi        = $request->durasi;
-            $settingalokasi->mode_karyawan = $request->mode_karyawans;
-            $settingalokasi->cuti_bersama_terhutang = $request->cuti_bersama_terhutang;
-            $settingalokasi->periode       = $year;
-            $settingalokasi->status        = 1;
+            // $settingalokasi = new Settingalokasi;
+            // $settingalokasi->id_jeniscuti  = $request->id_jeniscuti;
+            // $settingalokasi->durasi        = $request->durasi;
+            // $settingalokasi->mode_karyawan = $request->mode_karyawans;
+            // $settingalokasi->cuti_bersama_terhutang = $request->cuti_bersama_terhutang;
+            // $settingalokasi->periode       = $year;
+            // $settingalokasi->status        = 1;
 
-            $settingalokasi->save();
+            // $settingalokasi->save();
 
             $datakaryawan = DB::table('karyawan')
                 ->whereRaw("MONTH(NOW()) - MONTH(tglmasuk) >= 12")
                 ->orWhereRaw("MONTH(NOW()) - MONTH(tglmasuk) < 12")
                 ->get();
-            foreach($datakaryawan as $karyawan)
-            {
-                $check = Alokasicuti::where('id_jeniscuti',$settingalokasi->id_jeniscuti)->where('id_karyawan',$karyawan->id)->whereYear('aktif_dari','=',Carbon::now()->year)->exists();
-                if(!$check)
-                {
-                    $alokasicuti = new Alokasicuti;
-                    $alokasicuti->id_karyawan      = $karyawan->id;
-                    $alokasicuti->id_settingalokasi= $settingalokasi->id;
-                    $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
 
-                    $now = Carbon::now();
-                    $diffInMonths = $now->diffInMonths($karyawan->tglmasuk);
+            $dataKaryawan = Karyawan::all();
 
-                    //cek cuti bersama ke daftar hari libur 
-                    $settinglibur = SettingHarilibur::where('tipe','=','Cuti Bersama')
-                        ->whereYear('tanggal', '=', Carbon::now()->year)
-                        ->get();
-                    $jumsetting = $settinglibur->count();
+            $hasil = $dataKaryawan->map(function ($karyawan) {
+                $tglMasuk      = Carbon::parse($karyawan->tglmasuk); // Parse tanggal masuk karyawan menjadi objek Carbon
+                $tglJatuhTempo = $tglMasuk->copy()->addDays(365);
+                $year          = Carbon::now()->year;
+                $tglHakCutiTahunan = Carbon::createFromDate($year, 12, 31);
 
-                    //cek data alokasi cuti yang masih memiliki cuti bersama terhutang
-                    $cutiterhutang = Alokasicuti::where('status_durasialokasi','=','Cuti Bersama Terhutang')
-                        ->WhereYear('aktif_dari', '=', Carbon::now()->subYear()->year)
-                        ->get();
-                    // dd($cutiterhutang);
 
-                    if($diffInMonths >= 12 && !$cutiterhutang){
-                        $durasi = 12;
-                        $alokasicuti->durasi = $durasi - $jumsetting;
-                        $alokasicuti->status_durasialokasi = 'Cuti Tidak Terhutang';
+                $selisih    = $tglJatuhTempo->diffInMonths($tglHakCutiTahunan, false);
+                $keterangan = "";
+                if ($selisih >= 12) {
+                    $selisih    = 12;
+                    $keterangan = "Karyawan Lama";
+                } 
+                elseif($selisih > 0 && $selisih < 12){
+                    $keterangan = "Karyawan Baru (Transisi)";
+                }
+                else{
+                    $keterangan = "Hak Cuti Belum Timbul";
+                }
 
-                        // dd($durasi);
-                    }
-                    elseif($diffInMonths >= 12 && $cutiterhutang)
-                    {
-                        foreach($cutiterhutang as $ch){
-                            $durasi = 12;
-                            $durasia = $durasi - $ch->durasi;
-                            $durasi_baru = $durasia - $jumsetting;
+                //cek cuti bersama ke daftar hari libur 
+                $settinglibur = SettingHarilibur::where('tipe','=','Cuti Bersama')
+                    ->whereYear('tanggal', '=', Carbon::now()->year)
+                    ->get();
 
-                            if($durasi_baru < 0)
-                            {
-                                $alokasicuti->durasi = 0;
-                                $alokasicuti->status_durasialokasi = 'Cuti Bersama Terhutang';
+                $jumsetting = $settinglibur->count();
+                $jum        = -1* abs($jumsetting);
+                $saldo      = $selisih - $jumsetting;
 
-                                // dd($alokasicuti->durasi);
+                //cek data alokasi cuti yang masih memiliki cuti bersama terhutang
+                $cutiminus = Alokasicuti::where('status_durasialokasi','=','Cuti Bersama Terhutang')
+                    ->WhereYear('aktif_dari', '=', Carbon::now()->subYear()->year)
+                    ->where('id_karyawan',$karyawan->id)
+                    ->select('durasi')
+                    ->first();
+                $cutiminus = $cutiminus ? $cutiminus->durasi : 0;
+
+                $cutidimuka = Alokasicuti::where('durasi','<',0)
+                    ->WhereYear('aktif_dari', '=', Carbon::now()->subYear()->year)
+                    ->where('id_karyawan',$karyawan->id)
+                    ->select('durasi')
+                    ->first();
+                
+                $cutidimuka = $cutidimuka ? $cutidimuka->durasi : 0;
+
+                return [
+                        'id' => $karyawan->id,
+                        'nik' => $karyawan->nip,
+                        'nama' => $karyawan->nama,
+                        'tgl_masuk' => $karyawan->tglmasuk,
+                        'jatuhtempo_awal' => $tglJatuhTempo->format('d/m/Y'),
+                        'jatuhtempo_akhir' => '31/12/' . $tglJatuhTempo->year,
+                        'jmlhakcuti' => $selisih,
+                        'jmlcutibersama' => $jum,
+                        'cuti dimuka 2023' => $cutidimuka,
+                        'cuti minus 2023' => $cutiminus,
+                        'saldo/durasi cuti' => $saldo,
+                        'keterangan' => $keterangan,
+                ];
+                
+            });
+
+            return $hasil->toArray();
+
+          
+
+
+            // foreach($datakaryawan as $karyawan)
+            // {
+            //     $check = Alokasicuti::where('id_jeniscuti',$settingalokasi->id_jeniscuti)->where('id_karyawan',$karyawan->id)->whereYear('aktif_dari','=',Carbon::now()->year)->exists();
+            //     if(!$check)
+            //     {
+            //         $alokasicuti = new Alokasicuti;
+            //         $alokasicuti->id_karyawan      = $karyawan->id;
+            //         $alokasicuti->id_settingalokasi= $settingalokasi->id;
+            //         $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
+
+            //         $now = Carbon::now();
+            //         $diffInMonths = $now->diffInMonths($karyawan->tglmasuk);
+
+            //         //cek cuti bersama ke daftar hari libur 
+            //         $settinglibur = SettingHarilibur::where('tipe','=','Cuti Bersama')
+            //             ->whereYear('tanggal', '=', Carbon::now()->year)
+            //             ->get();
+            //         $jumsetting = $settinglibur->count();
+
+            //         //cek data alokasi cuti yang masih memiliki cuti bersama terhutang
+            //         $cutiterhutang = Alokasicuti::where('status_durasialokasi','=','Cuti Bersama Terhutang')
+            //             ->WhereYear('aktif_dari', '=', Carbon::now()->subYear()->year)
+            //             ->get();
+            //         // dd($cutiterhutang);
+
+            //         if($diffInMonths >= 12 && !$cutiterhutang){
+            //             $durasi = 12;
+            //             $alokasicuti->durasi = $durasi - $jumsetting;
+            //             $alokasicuti->status_durasialokasi = 'Cuti Tidak Terhutang';
+
+            //             // dd($durasi);
+            //         }
+            //         elseif($diffInMonths >= 12 && $cutiterhutang)
+            //         {
+            //             foreach($cutiterhutang as $ch){
+            //                 $durasi = 12;
+            //                 $durasia = $durasi - $ch->durasi;
+            //                 $durasi_baru = $durasia - $jumsetting;
+
+            //                 if($durasi_baru < 0)
+            //                 {
+            //                     $alokasicuti->durasi = 0;
+            //                     $alokasicuti->status_durasialokasi = 'Cuti Bersama Terhutang';
+
+            //                     // dd($alokasicuti->durasi);
     
-                               $alokasiterhutang =  Alokasicuti::where('status_durasialokasi','=','Cuti Bersama Terhutang')
-                                    ->where('id',$ch->id)
-                                    ->update([
-                                        'durasi' => abs($durasi_baru),
-                                        'status_durasialokasi' =>'Cuti Bersama Terhutang',
-                                    ]);
-                                // dd($alokasiterhutang->durasi);
-                            }else
-                            {
-                                $alokasicuti->durasi = $durasi_baru;
-                                $alokasicuti->status_durasialokasi = 'Cuti Bersama Terhutang';
+            //                    $alokasiterhutang =  Alokasicuti::where('status_durasialokasi','=','Cuti Bersama Terhutang')
+            //                         ->where('id',$ch->id)
+            //                         ->update([
+            //                             'durasi' => abs($durasi_baru),
+            //                             'status_durasialokasi' =>'Cuti Bersama Terhutang',
+            //                         ]);
+            //                     // dd($alokasiterhutang->durasi);
+            //                 }else
+            //                 {
+            //                     $alokasicuti->durasi = $durasi_baru;
+            //                     $alokasicuti->status_durasialokasi = 'Cuti Bersama Terhutang';
                             
-                                return 'cuti bernilai positif';
+            //                     return 'cuti bernilai positif';
     
-                                $alokasiterhutang =  Alokasicuti::where('status_durasialokasi','=','Cuti Bersama Terhutang')
-                                    ->where('id',$ch->id)
-                                    ->update([
-                                        'durasi' => $durasi_baru,
-                                        'status_durasialokasi' =>'Cuti Bersama Terhutang',
-                                    ]);
-                            }
-                        }
-                    }else{
-                        $alokasicuti->durasi = $jumsetting;
-                        $alokasicuti->status_durasialokasi = 'Cuti Bersama Terhutang';
-                        // dd($alokasicuti->durasi);
-                    }
+            //                     $alokasiterhutang =  Alokasicuti::where('status_durasialokasi','=','Cuti Bersama Terhutang')
+            //                         ->where('id',$ch->id)
+            //                         ->update([
+            //                             'durasi' => $durasi_baru,
+            //                             'status_durasialokasi' =>'Cuti Bersama Terhutang',
+            //                         ]);
+            //                 }
+            //             }
+            //         }else{
+            //             $alokasicuti->durasi = $jumsetting;
+            //             $alokasicuti->status_durasialokasi = 'Cuti Bersama Terhutang';
+            //             // dd($alokasicuti->durasi);
+            //         }
                     
-                    $alokasicuti->tgl_masuk        = $karyawan->tglmasuk;
-                    $alokasicuti->tgl_sekarang     = $now;
-                    $alokasicuti->aktif_dari       = $year.'-01-01';
-                    $alokasicuti->sampai           = $year.'-12-31';
-                    $alokasicuti->status           = 1;
+            //         $alokasicuti->tgl_masuk        = $karyawan->tglmasuk;
+            //         $alokasicuti->tgl_sekarang     = $now;
+            //         $alokasicuti->aktif_dari       = $year.'-01-01';
+            //         $alokasicuti->sampai           = $year.'-12-31';
+            //         $alokasicuti->status           = 1;
 
                   
-                    $alokasicuti->save();
-                }else
-                {
-                Log::info('KARYAWAN DENGAN ID DAN ID_JENISCUTI SUDAH MEMILIKI JATAH CUTI TAHUNAN');
-                }
-            }
+            //         $alokasicuti->save();
+            //     }else
+            //     {
+            //     Log::info('KARYAWAN DENGAN ID DAN ID_JENISCUTI SUDAH MEMILIKI JATAH CUTI TAHUNAN');
+            //     }
+            // }
             return redirect()->back()->withInput();
         }     
     }

@@ -240,6 +240,8 @@
      <script src="assets/pages/form-advanced.js"></script>
 
      <!-- script untuk mengambil data durasi dari tabel alokasi cuti  -->
+     
+
     <script  type="text/javascript">
         var durasi;
         $('#id_jeniscuti').on('change',function(e){
@@ -329,30 +331,30 @@
                     $('#jumlah').val(daysOfYear.length ?? 0);
 
                     //mengambil value jml_cuti
-                    var jml_cuti = $("#jumlah").val();
-                    var durasi   = $("#durasi").val(); ////ambil value dari input field durasi yang didapat dari ajax request
+                    // var jml_cuti = $("#jumlah").val();
+                    // var durasi   = $("#durasi").val(); ////ambil value dari input field durasi yang didapat dari ajax request
             
-                    if(jml_cuti > durasi){
-                        $('#success-message').hide();
-                        $('#error-message').html(' "WARNING !!"<br>Jumlah cuti yang diinput melebihi durasi cuti yang tersedia.<br>Silahkan pilih jumlah cuti yang lebih kecil atau sama dengan durasi');
-                        $('#error-message').show();
-                        $('#submit-button').attr('disabled', true); //nonaktifkan tombol submit
+                    // if(jml_cuti > durasi){
+                    //     $('#success-message').hide();
+                    //     $('#error-message').html(' "WARNING !!"<br>Jumlah cuti yang diinput melebihi durasi cuti yang tersedia.<br>Silahkan pilih jumlah cuti yang lebih kecil atau sama dengan durasi');
+                    //     $('#error-message').show();
+                    //     $('#submit-button').attr('disabled', true); //nonaktifkan tombol submit
 
-                        setTimeout(function() 
-                        {
-                            $('#error-message').hide();
-                        }, 3000);
-                    }
-                    else if(jml_cuti < durasi && jml_cuti !=0)
-                    {
-                        $('#error-message').hide();
-                        $('#success-message').html('Cuti Tersedia');
-                        $('#success-message').show();
-                        $('#submit-button').attr('disabled', false); //aktifkan tombol submit
-                    }else{
-                        $('#error-message').hide();
-                        $('#submit-button').attr('disabled', false); //aktifkan tombol submit
-                    }
+                    //     setTimeout(function() 
+                    //     {
+                    //         $('#error-message').hide();
+                    //     }, 3000);
+                    // }
+                    // else if(jml_cuti < durasi && jml_cuti !=0)
+                    // {
+                    //     $('#error-message').hide();
+                    //     $('#success-message').html('Cuti Tersedia');
+                    //     $('#success-message').show();
+                    //     $('#submit-button').attr('disabled', false); //aktifkan tombol submit
+                    // }else{
+                    //     $('#error-message').hide();
+                    //     $('#submit-button').attr('disabled', false); //aktifkan tombol submit
+                    // }
 
                 } 
             });

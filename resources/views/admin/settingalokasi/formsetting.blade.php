@@ -45,10 +45,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="durasii">
                                 <label for="durasi" class="col-form-label">Durasi (Hari)</label>
-                                <input type="number" class="form-control" autocomplete="off" name="durasi" placeholder="durasi" id="durasi"
-                                    required>
+                                <input type="number" class="form-control" autocomplete="off" name="durasi" placeholder="durasi" id="durasi">
                             </div>
                         {{-- </div>
                         <div class="col-md-6"> --}}
@@ -101,6 +100,7 @@
         $('#mode_employee').prop("hidden", true);
         $('#mode_employees').prop("hidden", true);
         $('#cutibersama').prop("hidden", true);
+        $('#durasii').prop("hidden", true);
 
         //true hilang
         //false muncul
@@ -112,11 +112,13 @@
                 $('#mode_employee').prop("hidden", true);
                 $('#mode_employees').prop("hidden", false);
                 $('#cutibersama').prop("hidden", false);
+                $('#durasii').prop("hidden", false);
 
             } else {
                 $('#mode_employee').prop("hidden", false);
                 $('#mode_employees').prop("hidden", true);
                 $('#cutibersama').prop("hidden", true);
+                $('#durasii').prop("hidden", true);
             }
         });
     });
