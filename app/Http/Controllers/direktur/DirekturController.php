@@ -39,7 +39,7 @@ class DirekturController extends Controller
                     $query->where('karyawan.jabatan', 'Manager','HRD')
                     ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                     ->orWhere(function($query) use ($id_user_login) {
-                    $query->where('karyawan.jabatan', 'Supervisor')
+                    $query->where('karyawan.jabatan', 'Asisten Manajer')
                     ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 });
                 })
@@ -56,7 +56,7 @@ class DirekturController extends Controller
                     $query->where('karyawan.jabatan', 'Manager','HRD')
                     ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                     ->orWhere(function($query) use ($id_user_login) {
-                    $query->where('karyawan.jabatan', 'Supervisor')
+                    $query->where('karyawan.jabatan', 'Asisten Manajer')
                     ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 });
                 })

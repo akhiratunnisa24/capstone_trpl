@@ -6,11 +6,11 @@
     <div class="col-sm-12">
 
         <div class="page-header-title">
-            <h4 class="pull-left page-title">Data Cuti dan Izin</h4>
+            <h4 class="pull-left page-title">Transaksi Cuti dan Izin</h4>
 
             <ol class="breadcrumb pull-right">
                 <li>Human Resources Management System</li>
-                <li class="active">Data Cuti dan Izin</li>
+                <li class="active">Transaksi Cuti dan Izin</li>
             </ol>
 
             <div class="clearfix"></div>
@@ -28,13 +28,13 @@
                 <li class="active">
                     <a id="tab1" href="#cuti" data-toggle="tab" aria-expanded="false">
                         <span class="visible-xs"><i class="fa fa-home"></i></span>
-                        <span class="hidden-xs">Permintaan Cuti</span>
+                        <span class="hidden-xs">Transaksi Cuti</span>
                     </a>
                 </li>
                 <li class="">
                     <a id="tab2" href="#izin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
-                        <span class="hidden-xs">Permintaan Izin</span>
+                        <span class="hidden-xs">Transaksi Izin</span>
                     </a>
                 </li>
                 {{-- <li class="nav-item active">
@@ -203,7 +203,7 @@
                                                                 <td>
                                                                     {{-- {{ $data->status }} --}}
                                                                     <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                        {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}
+                                                                        {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : '')))) }}
                                                                     </span>
                                                                 </td>
 

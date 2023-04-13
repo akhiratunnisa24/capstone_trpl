@@ -53,16 +53,16 @@ class AbsensiKaryawanController extends Controller
         }
         else
             {
-                $absensi = Absensi::with('karyawans','departemens')
-                    ->where('absensi.id_karyawan', $iduser)
-                    ->get();
-                dd($absensi);
+                $request->session()->forget('bulan');
+                $request->session()->forget('tahun');
+                
+                $absensi = Absensi::with('karyawans','departemens')->get();
+                // dd($absensi);
         }
         return view('karyawan.absensi.history_absensi',compact('absensi','row'));
         
         //menghapus filter data
-        $request->session()->forget('bulan');
-        $request->session()->forget('tahun');
+       
     }
 
     public function absensiPeroranganExcel(Request $request)

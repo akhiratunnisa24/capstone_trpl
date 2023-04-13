@@ -93,9 +93,7 @@
                     <div class="panel-body m-b-5">
                         {{-- <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12"> --}}
-                                <table id="datatable-responsive8"
-                                    class="table table-responsive dt-responsive table-striped table-bordered"
-                                    width="100%">
+                                <table id="datatable-responsive8" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
                                     <thead>
                                         <tr>
                                             <th>No</th>

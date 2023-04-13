@@ -24,12 +24,16 @@ return new class extends Migration
             $table->unsignedBigInteger('id_alokasi');
             $table->unsignedBigInteger('id_settingalokasi');
             $table->text('keperluan');
+            $table->date('tgl_mulai');
+            $table->date('tgl_selesai');
+            $table->integer('jmlharikerja');
+            $table->integer('saldohakcuti');
+            $table->integer('jml_cuti');
+            $table->integer('sisacuti');
+            $table->string('keterangan',100);
             $table->date('tgldisetujui_a')->nullable()->default(null);
             $table->date('tgldisetujui_b')->nullable()->default(null);
             $table->date('tglditolak')->nullable()->default(null);
-            $table->date('tgl_mulai');
-            $table->date('tgl_selesai');
-            $table->integer('jml_cuti');
             $table->string('status')->default('Pending');
 
             $table->foreign('id_karyawan')->references('id')->on('karyawan')->onDelete('cascade');

@@ -157,7 +157,7 @@
                                                                         <option value="">Pilih Jabatan</option>
                                                                         <option value="Management">Management</option>
                                                                         <option value="Manager">Manager</option>
-                                                                        <option value="Supervisor">Supervisor</option>
+                                                                        <option value="Asisten Manajer">Asisten Manajer</option>
                                                                         <option value="Staff">Staff</option>
                                                                     </select>
                                                                 </div>

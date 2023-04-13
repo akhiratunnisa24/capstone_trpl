@@ -6,11 +6,11 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-header-title">
-            <h4 class="pull-left page-title">Alokasi Cuti Karyawan</h4>
+            <h4 class="pull-left page-title">Master Alokasi Cuti Karyawan</h4>
             
             <ol class="breadcrumb pull-right">
                 <li>Human Resources Management System</li>
-                <li class="active">Alokasi Cuti</li>
+                <li class="active">Master Alokasi Cuti Karyawan</li>
             </ol>
            
             <div class="clearfix"></div>
@@ -26,9 +26,8 @@
                     <div class="panel-heading clearfix">
                         <a><label></label></a>
                         <a href="" class="btn btn-dark btn-sm fa fa-cloud-download pull-left" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
-                        {{-- <a href="" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Reset Cuti Tahunan</a> --}}
-                        <a href="" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="#newalokasi"> Tambah
-                            Alokasi</a>
+                        {{-- <a href="" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="#newalokasi"> Tambah
+                            Alokasi</a> --}}
                     </div>
                     {{-- modals --}}
                     @include('admin.alokasicuti.addalokasi')
@@ -47,17 +46,24 @@
 
                     <div class="panel-body m-b-5">
                         <div class="row">
-                            <div class="col-md-12">
-                                <table id="datatable-responsive17" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="datatable-responsive24" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Karyawan</th>
-                                            <th>Kategori Cuti</th>
-                                            <th>Durasi (Hari)</th>
-                                            <th>Aktif Dari</th>
-                                            <th>Sampai</th>
-                                            {{-- <th>Status Alokasi</th> --}}
+                                            <th>NIK</th>
+                                            <th>Nama</th>
+                                            <th>Jabatan</th>
+                                            <th>Departemen</th>
+                                            <th>Jenis Cuti</th>
+                                            {{-- <th>Tanggal Mulai Kerja</th>
+                                            <th>Jatuh Tempo Pengambilan Hak Cuti</th>
+                                            <th>Jumlah Hak Cuti 2023</th>
+                                            <th>Cuti Dimuka 2023</th>
+                                            <th>Cuti Minus 2023</th>
+                                            <th>Cuti Bersama 2023</th>
+                                            <th>Saldo Hak Cuti 2023</th>
+                                            <th>Keterangan</th>  --}}
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -66,35 +72,47 @@
                                         @foreach($alokasicuti as $data)
                                         <tr id="aid{{$data->id}}"></tr>
                                         <td>{{$loop->iteration}}</td>
+                                        <td>{{$data->nik}}</td>
                                         <td>{{$data->karyawans->nama}}</td>
+                                        <td>{{$data->jabatan}}</td>
+                                        <td>{{$data->departemens->nama_departemen}}</td>
                                         <td>{{$data->jeniscutis->jenis_cuti}}</td>
-                                        <td>{{$data->durasi}} hari</td>
-                                        <td>{{\Carbon\Carbon::parse($data->aktif_dari)->format('d/m/Y')}}</td>
-                                        <td>{{\Carbon\Carbon::parse($data->sampai)->format('d/m/Y')}}</td>
+                                        {{-- <td>{{$data->tgl_masuk}}</td>
+                                        <td>{{\Carbon\Carbon::parse($data->jatuhtempo_awal)->format('d/m/Y')}} s.d {{\Carbon\Carbon::parse($data->jatuhtempo_akhir)->format('d/m/Y')}}</td>
+                                        <td>{{$data->jmlhakcuti}}</td>
+                                        <td>{{$data->cutidimuka}}</td>
+                                        <td>{{$data->cutiminus}}</td>
+                                        <td>{{$data->jmlcutibersama}}</td>
+                                        <td>{{$data->durasi}}</td>
+                                        <td>{{$data->keterangan}}</td> --}}
+                                        {{-- <td>{{\Carbon\Carbon::parse($data->aktif_dari)->format('d/m/Y')}}</td>
+                                        <td>{{\Carbon\Carbon::parse($data->sampai)->format('d/m/Y')}}</td> --}}
                                         {{-- <td>{{$data->status_durasialokasi}}</td> --}}
                                         <td class="text-center">
                                             <div class="row">
                                                 <a id="bs" class="btn btn-info btn-sm showalokasi" data-toggle="modal"
-                                                    data-target="#showalokasi{{$data->id}}">
-                                                    <i class="fa fa-eye"></i>
+                                                    data-target="#showalokasi{{$data->id}}"><i class="fa fa-eye"></i>
                                                 </a>
                                                 {{-- <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal"
                                                     data-alokasi="{{$data->id}}" data-target="#editalokasi{{$data->id}} ">
                                                     <i class="fa fa-edit"></i>
                                                 </a> --}}
-                                                <button onclick="hapus_alokasi({{$data->id}})"
+                                                {{-- <button onclick="hapus_alokasi({{$data->id}})"
                                                     class="btn btn-danger btn-sm">
                                                     <i class="fa fa-trash"></i>
-                                                </button>
+                                                </button> --}}
                                             </div>
                                         </td>
                                         </tr>
                                         <!-- modals show -->
-                                        @include('admin.alokasicuti.showalokasi')
-                                        @include('admin.alokasicuti.editalokasi')
+                                     
+                                        {{-- @include('admin.alokasicuti.editalokasi') --}}
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @foreach($alokasicuti as $data)
+                                 @include('admin.alokasicuti.showalokasi')
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -106,7 +124,7 @@
 
 <!-- jQuery  -->
 <script src="assets/js/jquery.min.js"></script>
-<script src="assets/pages/datatables.init.js"></script>
+{{-- <script src="assets/pages/datatables.init.js"></script> --}}
 
 {{-- <script src="assets/js/app.js"></script> --}}
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

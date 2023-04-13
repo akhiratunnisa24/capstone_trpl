@@ -29,7 +29,7 @@
                     <div class="panel-body m-b-5">
                         <div class="row">
                             <div class="col-md-12">
-                                <table id="datatable-responsive17" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                                <table id="datatable-responsive23" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>No</th>
