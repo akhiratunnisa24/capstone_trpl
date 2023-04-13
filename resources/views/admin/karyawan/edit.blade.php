@@ -176,7 +176,7 @@
                             <option value="">Pilih Jabatan</option>
                             <option value="Direktur" @if($karyawan->jabatan == "Direktur") selected @endif >Direktur</option>
                             <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager</option>
-                            <option value="Supervisor" @if($karyawan->jabatan == "Supervisor") selected @endif >Supervisor</option>
+                            <option value="Asisten Manajer" @if($karyawan->jabatan == "Asisten Manajer") selected @endif >Asisten Manajer</option>
                             <option value="HRD" @if($karyawan->jabatan == "HRD") selected @endif >HRD</option>
                             <option value="Staff" @if($karyawan->jabatan == "Staff") selected @endif >Staff</option>
                         </select>

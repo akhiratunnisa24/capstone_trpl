@@ -237,8 +237,8 @@
                                                                                     </option>
                                                                                     <option value="Manager">Manager
                                                                                     </option>
-                                                                                    <option value="Supervisor">
-                                                                                        Supervisor
+                                                                                    <option value="Asisten Manajer">
+                                                                                        Asisten Manajer
                                                                                     </option>
                                                                                     <option value="Staff">Staff
                                                                                     </option>

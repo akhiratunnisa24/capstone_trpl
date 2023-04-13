@@ -13,7 +13,7 @@ class Cuti extends Model
                             'tgl_permohonan','nik','id_karyawan','jabatan','departemen',
                             'id_jeniscuti','keperluan','id_alokasi','id_settingalokasi',
                             'tgl_mulai','tgl_selesai','tgldisetujui_a','tgldisetujui_b',
-                            'tglditolak','jml_cuti','status'
+                            'tglditolak','jml_cuti','status','jmlharikerja','saldohakcuti','sisacuti','keterangan'
                         ];
     
     public function jeniscutis(){

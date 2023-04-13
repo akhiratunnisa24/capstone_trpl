@@ -4,10 +4,10 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Data Cuti Staff</h4>
+                <h4 class="pull-left page-title">Transaksi Cuti dan Izin Karyawan</h4>
                 <ol class="breadcrumb pull-right">
                     <li><a href="#">Human Resources Management System</a></li>
-                    <li class="active">Data Cuti</li>
+                    <li class="active">Transaksi Cuti & Izin</li>
                 </ol>
                 <div class="clearfix"></div>
             </div>
@@ -20,13 +20,13 @@
                 <li class="active">
                     <a id="tabs_a" href="#mcuti" data-toggle="tab" aria-expanded="false">
                         <span class="visible-xs"><i class="fa fa-home"></i></span>
-                        <span class="hidden-xs">Permintaan Cuti</span>
+                        <span class="hidden-xs">Transaksi Cuti</span>
                     </a>
                 </li>
                 <li class="">
                     <a id="tabs_b" href="#mizin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
-                        <span class="hidden-xs">Permintaan Izin</span>
+                        <span class="hidden-xs">Transaksi Izin</span>
                     </a>
                 </li>
             </ul>
@@ -45,18 +45,20 @@
                                                     <table id="datatable-responsive22" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
+                                                                @php
+                                                                    use \Carbon\Carbon;
+                                                                    $year = Carbon::now()->year;
+                                                                @endphp
                                                                 <th>No</th>
-                                                                {{-- <th>id</th> --}}
-                                                                <th>Karyawan</th>
-                                                                <th>Kategori</th>
-                                                                {{-- <th>ID Kategori</th> --}}
-                                                                <th>Tgl. Mulai</th>
-                                                                <th>Tgl.Selesai</th>
-                                                                <th>Jml. Cuti</th>
-                                                                {{-- <th>Departemen</th> --}}
-                                                                {{-- @if(Auth::user()->role == 3)
-                                                                    <th>Approval</th>
-                                                                @endif --}}
+                                                                <th>NIK</th>
+                                                                <th>Nama</th>
+                                                                <th>Jabatan</th>
+                                                                <th>Tanggal Cuti</th>
+                                                                <th>Jenis Cuti</th>
+                                                                <th>Jumlah Hari Kerja</th>
+                                                                <th>Saldo Hak Cuti {{$year}}</th>
+                                                                <th>Jumlah Cuti {{$year}}</th>
+                                                                <th>Sisa Cuti {{$year}}</th>
                                                                 <th>Status</th>
                                                                 <th>Aksi</th>        
                                                             </tr>
@@ -65,17 +67,19 @@
                                                              @foreach($cutistaff as $data)
                                                                 <tr>
                                                                     <td>{{$loop->iteration}}</td>
-                                                                    {{-- <td>{{$data->id}}</td> --}}
+                                                                    <td>{{$data->nik}}</td>
                                                                     <td>{{$data->nama}}</td>
-                                                                    <td>{{$data->jenis_cuti}}</td>
-                                                                    {{-- <td>{{$data->id_jeniscuti}}</td> --}}
-                                                                    <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
-                                                                    <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
-                                                                    <td>{{$data->jml_cuti}} Hari</td>
+                                                                    <td>{{$data->jabatan}}</td>
+                                                                    <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s.d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
+                                                                    <td>{{$data->id_jeniscuti}}</td>
+                                                                    <td>{{$data->jmlharikerja}}</td>
+                                                                    <td>{{$data->saldohakcuti}}</td>
+                                                                    <td>{{$data->jml_cuti}}</td>
+                                                                    <td>{{$data->sisacuti}}</td>
                                                     
                                                                     <td>
                                                                         <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}
+                                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : '')))) }}
                                                                         </span>
                                                                     </td>
                                                                     <td id="b" class="text-center" > 
@@ -203,7 +207,7 @@
                                                                     {{-- status --}}
                                                                     <td>
                                                                         <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}
+                                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : '')))) }}
                                                                         </span>
                                                                     </td>
 

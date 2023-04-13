@@ -48,14 +48,25 @@
         $('#datatable-responsive14').DataTable();
         $('#datatable-responsive15').DataTable();
         $('#datatable-responsive16').DataTable();
-        $('#datatable-responsive17').DataTable();
+        $('#datatable-responsive17').DataTable(
+            {
+                ajax: "assets/plugins/datatables/json/scroller-demo.json",
+                deferRender: true,
+                scrollY: 380,
+                scrollCollapse: true,
+                scroller: true,
+                scrollX: true // Menambahkan opsi scrollX untuk scroll horizontal
+            }
+        );
         $('#datatable-responsive18').DataTable();
         $('#datatable-responsive19').DataTable();
         $('#datatable-responsive20').DataTable();
         $('#datatable-responsive21').DataTable();
         $('#datatable-responsive22').DataTable();
+        $('#datatable-responsive23').DataTable();
+        $('#datatable-responsive24').DataTable();
         
-        $('#datatable-scroller').DataTable({
+        $('#datatable-scrollera').DataTable({
             ajax: "assets/plugins/datatables/json/scroller-demo.json",
             deferRender: true,
             scrollY: 380,

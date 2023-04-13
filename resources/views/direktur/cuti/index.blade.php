@@ -67,12 +67,12 @@
                                                                     <td>{{$data->jml_cuti}} Hari</td>
                                                                     <td>
                                                                         <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}
+                                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : '')))) }}
                                                                         </span>
                                                                     </td>
                                                                     <td id="b" class="text-center" > 
                                                                         <div class="row">
-                                                                            @if(($data->jabatan == 'Supervisor' && $data->status == 2))
+                                                                            @if(($data->jabatan == 'Asisten Manajer' && $data->status == 2))
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('leave.approved',$data->id)}}" method="POST"> 
                                                                                         @csrf
@@ -195,13 +195,13 @@
                                                                     {{-- status --}}
                                                                     <td>
                                                                         <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}
+                                                                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : '')))) }}
                                                                         </span>
                                                                     </td>
 
                                                                     <td> 
                                                                         <div class="row">
-                                                                            @if(($data->jabatan == 'Supervisor' && $data->status == 2))
+                                                                            @if(($data->jabatan == 'Asisten Manajer' && $data->status == 2))
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izin.approv',$data->id)}}" method="POST"> 
                                                                                         @csrf

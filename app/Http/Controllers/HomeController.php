@@ -261,7 +261,7 @@ class HomeController extends Controller
                     ->get();
                 $izinjumlah = $izin->count();
             }  
-            elseif($role == 3 && $row->jabatan == "Supervisor")
+            elseif($role == 3 && $row->jabatan == "Asisten Manajer")
             {
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -298,7 +298,7 @@ class HomeController extends Controller
                     ->get();
                 $izinjumlah = $izin->count();
             }
-            elseif($role == 2 && $row->jabatan == "Supervisor"){
+            elseif($role == 2 && $row->jabatan == "Asisten Manajer"){
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -333,7 +333,7 @@ class HomeController extends Controller
                     ->get();
                 $izinjumlah = $izin->count();
             }
-            elseif($role == 3 && $row->jabatan == "management"){
+            elseif($role == 3 && $row->jabatan == "Management"){
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -445,7 +445,7 @@ class HomeController extends Controller
         //     $izinjumlah = $izin->count();
 
         // }  
-        // elseif($role == 3 && $row->jabatan == "Supervisor" || $role == 2 && $row->jabatan == "Supervisor")
+        // elseif($role == 3 && $row->jabatan == "Asisten Manajer" || $role == 2 && $row->jabatan == "Asisten Manajer")
         // {
         //     $cuti = DB::table('cuti')
         //         ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')

@@ -46,14 +46,14 @@ class ManagerController extends Controller
 
             return view('manager.staff.dataStaff', compact('staff','row'));
         }
-        elseif($role == 3 && $row->jabatan = "Supervisor")
+        elseif($role == 3 && $row->jabatan = "Asisten Manajer")
         {
             //mengambil id_departemen 
             $staff= Karyawan::with('departemens')
                 ->where('atasan_pertama','=',Auth::user()->id_pegawai)->get();
 
             return view('manager.staff.dataStaff', compact('staff','row'));
-        }elseif($role == 2 && $row->jabatan = "Supervisor")
+        }elseif($role == 2 && $row->jabatan = "Asisten Manajer")
         {
             $staff= Karyawan::with('departemens')
             ->where('atasan_pertama','=',Auth::user()->id_pegawai)->get();
@@ -71,7 +71,7 @@ class ManagerController extends Controller
         $role = Auth::user()->role;  
 
         //mengambil id_departemen user login
-        $pegawai = Karyawan::where('jabatan','Staff')->orWhere('jabatan','Supervisor')
+        $pegawai = Karyawan::where('jabatan','Staff')->orWhere('jabatan','Asisten Manajer')
             ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai)
             ->select('id as idkaryawan')
@@ -115,7 +115,7 @@ class ManagerController extends Controller
             $request->session()->forget('bulan');
             $request->session()->forget('tahun');
         }
-        elseif($role == 3 && $row->jabatan = "Supervisor")
+        elseif($role == 3 && $row->jabatan = "Asisten Manajer")
         {
             $spv = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
                 ->select('divisi')->first();
@@ -150,7 +150,7 @@ class ManagerController extends Controller
             $request->session()->forget('tahun');
 
         }
-        elseif($role == 2 && $row->jabatan = "Supervisor")
+        elseif($role == 2 && $row->jabatan = "Asisten Manajer")
         {
             $spv = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
             ->select('divisi')->first();
@@ -242,7 +242,7 @@ class ManagerController extends Controller
                 
             return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
         }
-        elseif($role == 3 && $row->jabatan = "Supervisor")
+        elseif($role == 3 && $row->jabatan = "Asisten Manajer")
         {
             $cutistaff = DB::table('cuti')
                 ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
@@ -266,7 +266,7 @@ class ManagerController extends Controller
 
             return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
         }
-        elseif($role == 2 && $row->jabatan = "Supervisor")
+        elseif($role == 2 && $row->jabatan = "Asisten Manajer")
         {
             $cutistaff = DB::table('cuti')
                 ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
@@ -435,7 +435,7 @@ class ManagerController extends Controller
                 }
                    
             }
-            elseif($role == 3 && $row->jabatan = "Supervisor" || $role == 2 && $row->jabatan = "Supervisor")
+            elseif($role == 3 && $row->jabatan = "Asisten Manajer" || $role == 2 && $row->jabatan = "Asisten Manajer")
             {
                 // return ("INI SUPERVISOR");
                 $dacuti = DB::table('cuti')
@@ -616,7 +616,7 @@ class ManagerController extends Controller
                     return redirect()->back();
                 }
             }
-            elseif($role == 3 && $row->jabatan = "Supervisor" ||  $role == 2 && $row->jabatan = "Supervisor")
+            elseif($role == 3 && $row->jabatan = "Asisten Manajer" ||  $role == 2 && $row->jabatan = "Asisten Manajer")
             {
                 $dacuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
@@ -868,7 +868,7 @@ class ManagerController extends Controller
                 return redirect()->back();
             }
         }
-        elseif($role == 3 && $row->jabatan = "Supervisor" || $role == 2 && $row->jabatan = "Supervisor")
+        elseif($role == 3 && $row->jabatan = "Asisten Manajer" || $role == 2 && $row->jabatan = "Asisten Manajer")
         {
             if($izin && $izin->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -1038,7 +1038,7 @@ class ManagerController extends Controller
                 "REKAP ABSENSI DEPARTEMEN ".$departemen->nama_departemen.".xlsx");
             };
         }
-        elseif ($role == 3 && $row->jabatan = "Supervisor") 
+        elseif ($role == 3 && $row->jabatan = "Asisten Manajer") 
             {
                 if(isset($idkaryawan) && isset($bulan) && isset($tahun))
                 {
@@ -1054,7 +1054,7 @@ class ManagerController extends Controller
                     return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), 
                     "REKAP ABSENSI BULAN ".$nbulan." ".$data->first()->karyawans->nama." DEPARTEMEN ".$departemen->nama_departemen.".xlsx");
                 }else{
-                    $pegawai = Karyawan::where('jabatan','Staff')->orWhere('jabatan','Supervisor')
+                    $pegawai = Karyawan::where('jabatan','Staff')->orWhere('jabatan','Asisten Manajer')
                         ->select('id as idkaryawan')
                         ->get();
 
@@ -1119,7 +1119,7 @@ class ManagerController extends Controller
             ->setPaper('A4','landscape');
             return $pdf->stream("REKAP ABSENSI BULAN ".$nbulan." "." DEPARTEMEN ".$departemen->nama_departemen.".pdf");
         }
-        elseif($role == 3 && $row->jabatan = "Supervisor")
+        elseif($role == 3 && $row->jabatan = "Asisten Manajer")
             {
                 if(isset($idkaryawan) && isset($bulan) && isset($tahun))
                 {
@@ -1138,7 +1138,7 @@ class ManagerController extends Controller
                 
                 }else
                 {
-                    $pegawai = Karyawan::where('jabatan','Staff')->orWhere('jabatan','Supervisor')
+                    $pegawai = Karyawan::where('jabatan','Staff')->orWhere('jabatan','Asisten Manajer')
                         ->select('id as idkaryawan')
                         ->get();
                     $data = Absensi::where('id_departement', $middep->id_departement)
@@ -1283,7 +1283,7 @@ class ManagerController extends Controller
 //             return redirect()->back();
 //         }
 //     }
-//     elseif($role == 3 && $row->jabatan = "Supervisor")
+//     elseif($role == 3 && $row->jabatan = "Asisten Manajer")
 //     {
 //         dd($atasanpertama->atasan_pertama);
 //         if($atasanpertama &&  $atasanpertama->atasan_pertama  == Auth::user()->id_pegawai)

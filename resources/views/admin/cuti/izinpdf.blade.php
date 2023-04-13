@@ -101,7 +101,7 @@
                 <td>
                     <span
                         class="badge badge-{{ $d->status == 1 ? 'warning' : ($d->status == 2 ? 'info' : ($d->status == 5 ? 'danger' : ($d->status == 6 ? 'secondary' : ($d->status == 7 ? 'success' : '')))) }}">
-                        {{ $d->status == 1 ? 'Pending' : ($d->status == 2 ? 'Disetujui Manager' : ($d->status == 5 ? 'Ditolak' : ($d->status == 6 ? 'Disetujui Supervisor' : ($d->status == 7 ? 'Disetujui' : '')))) }}
+                        {{ $d->status == 1 ? 'Pending' : ($d->status == 2 ? 'Disetujui Manager' : ($d->status == 5 ? 'Ditolak' : ($d->status == 6 ? 'Disetujui Asisten Manajer' : ($d->status == 7 ? 'Disetujui' : '')))) }}
                     </span>
                 </td>
             </tr>

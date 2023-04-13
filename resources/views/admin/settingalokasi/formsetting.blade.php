@@ -55,12 +55,13 @@
                                 <label for="mode_karyawan" class="col-form-label">Tipe Alokasi</label>
                                 <select class="form-control" id="mode_employee" name="mode_karyawan[]" multiple style="width:507px;height:120px">
                                     {{-- <option value="Semua Karyawan">Semua Karyawan</option> --}}
+                                    <option value="Semua Karyawan">Semua Karyawan</option>
                                     <option value="Laki-Laki">Laki-Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                     <option value="Sudah Menikah">Sudah Menikah</option>
                                     <option value="Belum Menikah">Belum Menikah</option>
-                                    <option value="Janda">Janda</option>
-                                    <option value="Duda">Duda</option>
+                                    {{-- <option value="Janda">Janda</option>
+                                    <option value="Duda">Duda</option> --}}
                                 </select>
                             </div>
                             <div class="form-group col-sm" id="mode_employees">

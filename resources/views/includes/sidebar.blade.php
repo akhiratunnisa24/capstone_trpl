@@ -64,13 +64,13 @@
                                 class="text-info panel-title">Cuti & Izin</span><span class="pull-right"><i
                                     class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a>
+                            <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Transaksi Cuti & Izin</span></a>
                             </li>
                             <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti &
                                         Izin</span></a></li>
                             <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a>
                             </li>
-                            <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc"></i><span>Alokasi Cuti</span></a>
+                            <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc"></i><span>Master Alokasi Cuti</span></a>
                             </li>
                             <li><a href="/settingcuti"><i class="fa fa-gear (alias)"></i><span>Setting Cuti Tahunan</span></a>
                             </li>
@@ -206,15 +206,15 @@
                             <li> <a href="/data-staff" class="waves-effect"><i
                                         class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
                             </li>
-                            <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi Staff</span></a></li>
+                            <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi</span></a></li>
                             @if($row->jabatan == "Manager" || $row->jabatan == "Supervisor")
-                                <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a></li>
+                                <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Transaksi Cuti</span></a></li>
                             @elseif($row->jabatan == "Management")
-                                <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a></li>
+                                <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Transaksi Cuti</span></a></li>
                             @else
                             @endif
                             <li><a href="/resign_manager" class="waves-effect"><i
-                                        class="mdi mdi-account-off"></i><span>Data Resign Staff</span></a></li>
+                                        class="mdi mdi-account-off"></i><span>Data Resign</span></a></li>
                         </ul>
                     </li>
                 </ul>

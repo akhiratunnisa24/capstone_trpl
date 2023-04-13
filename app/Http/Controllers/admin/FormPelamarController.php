@@ -643,7 +643,7 @@ class FormPelamarController extends Controller
 
         // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $departemen     = Departemen::all();
-        $atasan_pertama = Karyawan::whereIn('jabatan', ['Supervisor', 'Manager', 'Direktur'])->get();
+        $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manager', 'Direktur'])->get();
         $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Direktur'])->get();
         $user = Karyawan::max('id');
         $datakeluarga = Keluarga::where('id_pegawai', $user)->get();

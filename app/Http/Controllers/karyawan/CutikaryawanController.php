@@ -126,8 +126,10 @@ class CutikaryawanController extends Controller
         $role = Auth::user()->role;
         $status = Status::find(1);
 
+        $jeniscuti = Jeniscuti::where('id',$request->id_jeniscuti)->first();
+
         $cuti = New Cuti;
-        $cuti->tgl_permohonan = Carbon::parse($request->tgl_permohonan)->format("Y-m-d");
+        $cuti->tgl_permohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_permohonan)->format("Y-m-d");
         $cuti->nik            = $request->nik;
         $cuti->id_karyawan    = $karyawan;
         $cuti->jabatan        = $request->jabatan;
@@ -136,9 +138,37 @@ class CutikaryawanController extends Controller
         $cuti->id_alokasi     = $request->id_alokasi;
         $cuti->id_settingalokasi= $request->id_settingalokasi;
         $cuti->keperluan      = $request->keperluan;
+        $cuti->jmlharikerja   = $request->jml_cuti;
+        if($request->id_jeniscuti == 1)
+        {
+            $cuti->saldohakcuti   = $request->durasi;
+            $cuti->jml_cuti       = $request->jml_cuti;
+            $sisa                 = $cuti->saldohakcuti -  $cuti->jml_cuti;  
+            $cuti->sisacuti       = $sisa;
+            $cuti->keterangan     = "-";
+            // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti, $sisa,$cuti->sisacuti);
+        }
+        elseif($request->id_jeniscuti == 2)
+        {
+            $cuti->jml_cuti       = null;
+            $cuti->saldohakcuti   = null;
+            $cuti->sisacuti       = null;
+            $cuti->keterangan     = $jeniscuti->jenis_cuti;
+            dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
+        }
+        elseif($request->id_jeniscuti == 3)
+        {
+            $cuti->jml_cuti       = null;
+            $cuti->saldohakcuti   = null;
+            $cuti->sisacuti       = null;
+            $cuti->keterangan     = $jeniscuti->jenis_cuti;
+            dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
+        }else{
+
+        }
         $cuti->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
         $cuti->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
-        $cuti->jml_cuti       = $request->jml_cuti;
+      
         $cuti->status         = $status->id;
         // return $cuti;
         $cuti->save();

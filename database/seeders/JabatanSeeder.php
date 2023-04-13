@@ -24,7 +24,7 @@ class JabatanSeeder extends Seeder
             
         ]);
         Jabatan::insert([
-            'nama_jabatan' => 'Supervisor',
+            'nama_jabatan' => 'Asisten Manajer',
             
         ]);
         Jabatan::insert([
