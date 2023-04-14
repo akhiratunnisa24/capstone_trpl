@@ -96,7 +96,7 @@
                                                                         </form>
                                                                     </div>
                                                                 
-                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Asisten manajer")
+                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Asisten Manajer")
                                                                 
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('cuti.approved', $data->id) }}" method="POST">

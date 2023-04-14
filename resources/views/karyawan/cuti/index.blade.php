@@ -80,9 +80,18 @@
                                                                         <td>{{ $data->jml_cuti }} Hari</td>
                                                                         <!-- data for status -->
                                                                         <td>
-                                                                            <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                                {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : '')))) }}
-                                                                            </span>
+                                                                            @if($data->tgldisetujui_b == NULL)
+                                                                                Disetujui Atasan {{\Carbon\Carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i:s')}} WIB
+                                                                                <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
+                                                                                    {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui Pimpinan' : '')))) }}
+                                                                                </span>
+                                                                            @elseif($data->tgldisetujui_b != NULL)
+                                                                                Disetujui Atasan {{\Carbon\Carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i:s')}} WIB
+                                                                                Disetujui Pimpinan {{\Carbon\Carbon::parse($data->tgldisetujui_b)->format('d/m/Y H:i:s')}} WIB
+                                                                                <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
+                                                                                    {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui Pimpinan' : '')))) }}
+                                                                                </span>
+                                                                            @endif
                                                                         </td>        
                                                                         <td class="text-center">
                                                                             <form action="" method="POST">
