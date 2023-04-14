@@ -3,8 +3,7 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
             integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>Pemberitahuan - Permintaan Izin Karyawan</title>
-
+    <title>Notifikasi - Permohonan Absensi Ditolak</title>
     <style type="text/css">
 		/* Reset CSS */
 		body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, table, tr, td, img {
@@ -139,10 +138,12 @@
 	</style>
 </head>
 <body>
-	<div class="wrapper">
-		<div class="content">
+    <div class="wrapper">
+        <div class="header">
+		</div>
+        <div class="content">
             <div>
-				<h4><b>NOTIFIKASI PERSETUJUAN PERMOHONAN IZIN KARYAWAN</b><br></h4>
+				<h4><b>NOTIFIKASI PERSETUJUAN PERMOHONAN CUTI KARYAWAN</b><br></h4>
 
 				<p class="title">Nomor Registrasi</p><label class="value">: <strong>{{$data['noregistrasi']}}</strong></label>
 				<p class="title">Tanggal Permohonan</p><label class="value">: <strong>{{$data['tgl_permohonan']}}</strong></label>
@@ -151,70 +152,23 @@
 				<p class="title">Jabatan</p><label class="value">: <strong>{{$data['jabatankaryawan']}}</strong></label><br>
 				<p class="title">Departemen/Divisi</p><label class="value">: <strong>{{$data['departemen']}}</strong></label><br>
 				<p class="title">Tanggal Pelaksanaan</p><label class="value">: <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_selesai'] != NULL) s/d <strong>{{$data['tgl_selesai']}}</strong> @endif</label><br>
-				<p class="title">Status Ketidakhadiran</p><label class="value">: <strong>{{$data['id_jenisizin']}}</strong></label><br>
+				<p class="title">Status Ketidakhadiran</p><label class="value">: <strong>{{$data['kategori']}}</strong></label><br>
 				<p class="title">Keterangan</p><label class="value">: <strong>{{$data['keperluan']}}</strong></label><br>
 				<p class="title">Tanggal Persetujuan</p><label class="value">:</label>
 				<ul>
-					<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuiatasan']}} WIB</label></li>
-					<li><label class="value">Pimpinan Unit Kerja : {{$data['tgldisetujuipimpinan']}} WIB</label></li>
-					<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuipimpinan']}} WIB</label></li>
+                    @if($data['status'] == "Pending Atasan")
+                        <li><label class="value">Permohonan Ditolak: {{$data['tglditolak']}} WIB</label></li>
+                        <li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tglditolak']}} WIB</label></li>
+                    @elseif($data['status'] == "Pending Pimpinan")
+                        <li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuiatasan']}} WIB</label></li>
+                        <li><label class="value">Permohonan Ditolak: {{$data['tglditolak']}} WIB</label></li>
+                        <li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tglditolak']}} WIB</label></li>
+                    @else
+                    @endif
 				</ul>
-			</div>
-		</div>
+            </div>
+        </div>
 		<div class="footer">
 			<p><em>Email ini dikirim secara otomatis kepada yang berkepentingan. Email ini tidak perlu dibalas (no-reply) dan apabila ada kendala harap hubungi administrator-HRMS melalui email ke Departemen HR.</em></p>
 		</div>
-	</div>
-</body>
-<body>
-</html>
-{{-- <div class="content">
-	<div>
-		<p>Kepada <strong>{{$data['nama']}}</strong></p>
-		<p>Salam sejahtera,</p>
-
-		@if($data['status'] == 'Disetujui')
-			<p>Ada Kabar baik nih buat Anda,</p>
-			
-			<p>Kami ingin memberitahukan bahwa permintaan <strong>Izin {{$data['jenisizin']}}</strong> pada tanggal <strong>{{$data['tgl_mulai']}}</strong>  @if($data['tgl_selesai'] !== NULL) hingga <strong>{{$data['tgl_selesai']}}</strong> @endif telah <b>DISETUJUI</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong></p>
-				<ul>
-					<li>Nama karyawan  : {{$data['namakaryawan']}}</li>
-					<li>Kategori izin : {{$data['jenisizin']}}</li>
-					<li>Keperluan      : {{$data['keperluan']}}</li>
-					@if($data['tgl_selesai'] != NULL)
-						<li>Tanggal Izin   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
-					@else
-						<li>Tanggal Izin   : {{$data['tgl_mulai']}}</li>
-					@endif
-					@if($data['jml_hari'] > 1)
-						<li>Jumlah Izin    :  {{$data['jml_hari']}} hari</li>
-					@endif
-					<li>Status         :  <span class="text-white badge badge-success"><strong>{{$data['status']}}</strong></span></li>
-				</ul><br>
-			<p>Silakan melakukan konfirmasi dengan menghubungi bagian HRD kami jika Anda memerlukan informasi lebih lanjut.</p>
-		@else  
-			<strong>Mohon Maaf</strong>
-
-			<p>Kami ingin memberitahukan bahwa permintaan <strong>Izin {{$data['jenisizin']}}</strong> pada tanggal <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_selesai'] !== NULL) hingga <strong>{{$data['tgl_selesai']}}</strong> @endif <b>DITOLAK</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong> dengan alasan <strong>{{$data['alasan']}}</strong></p> 
-			<ul>
-				<li>Nama karyawan  : {{$data['namakaryawan']}}</li>
-				<li>Kategori izin : {{$data['jenisizin']}}</li>
-				<li>Keperluan      : {{$data['keperluan']}}</li>
-				@if($data['tgl_selesai'] != NULL)
-					<li>Tanggal Izin   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
-				@else
-					<li>Tanggal Izin   : {{$data['tgl_mulai']}}</li>
-				@endif
-				@if($data['jml_hari'] > 1)
-					<li>Jumlah Izin    :  {{$data['jml_hari']}} hari</li>
-				@endif
-				<li>Status         :  <span class="text-white badge badge-danger"><strong>{{$data['status']}}</strong></span></li>
-				</ul><br>
-			<p>Silakan melakukan konfirmasi dengan menghubungi bagian HRD kami jika Anda memerlukan informasi lebih lanjut.</p>
-		@endif
-		<p>Terima kasih</p>
-	
-		<p>Salam Hormat,<br><br></p>
-		<p>[Manager/HR]<br>
-	</div>
-</div> --}}
+    </div>

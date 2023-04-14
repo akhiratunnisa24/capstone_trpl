@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
             integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>Pemberitahuan - Permintaan Cuti Karyawan</title>
-    <style type="text/css">
+	<style type="text/css">
 		/* Reset CSS */
 		body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, table, tr, td, img {
 			margin: 0;
@@ -106,12 +106,34 @@
         .badge-danger {
             background-color: #f13012;
         }
+
 		ul {
-			margin-left: 1cm;
+			margin-left: 3.5cm;
 		}
 
 		li {
 			margin-bottom: 0.5cm;
+		}
+
+		.title {
+            display: inline-block;
+            width: 150px; /* Sesuaikan lebar sesuai kebutuhan */
+        }
+
+        .value {
+            display: inline-block;
+            margin-left: 5px; /* Sesuaikan jarak kiri sesuai kebutuhan */
+			width: 350px;
+        }
+		.subtitle {
+			display: inline-block;
+			width: 250px; /* Sesuaikan lebar judul (title) sesuai kebutuhan */
+		}
+
+		h4 {
+			text-align: center;
+			margin-bottom: 20px;
+			font-weight: bold;
 		}
 	</style>
 </head>
@@ -119,61 +141,31 @@
 	<div class="wrapper">
 		<div class="content">
             <div>
-                <p>Kepada <strong>{{$data['namakaryawan']}}</strong></p>
-                <p>Salam sejahtera,</p>
-
-                @if($data['status'] == 'Disetujui')
-                    <p>Ada Kabar baik nih buat Anda,</p>
-                    <br>
-                    <p>Kami dengan senang hati memberitahukan bahwa permintaan cuti dengan rincian sebagai berikut:<br>
-                        <ul>
-                            <li>Nama karyawan  : {{$data['namakaryawan']}}</li>
-                            <li>Kategori cuti  : {{$data['id_jeniscuti']}}</li>
-                            <li>Keperluan      : {{$data['keperluan']}}</li>
-                            @if($data['tgl_selesai'] != NULL)
-                                <li>Tanggal Cuti   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
-                            @else
-                                <li>Tanggal Cuti   : {{$data['tgl_mulai']}}</li>
-                            @endif
-                            @if($data['jml_cuti'] > 1)
-                                <li>Jumlah Cuti    :  {{$data['jml_cuti']}}</li>
-                            @endif
-                            <li>Status         :  <span class="text-white badge badge-success"><strong>{{$data['status']}}</strong></span></li>
-                        </ul><br>
-                    <p>Telah <b>DISETUJUI</b> oleh kedua atasan Anda yaitu Bapak/Ibu <strong>{{$data['namaatasan1']}}</strong> dan Bapak/Ibu <strong>{{$data['namaatasan2']}}</strong>.</p>
-                    <p>Anda diberikan cuti pada tanggal <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_mulai'] !== NULL) sampai dengan tanggal <strong>{{$data['tgl_selesai']}}</strong> @endif. Silakan pastikan untuk menyelesaikan semua pekerjaan yang perlu dikerjakan sebelum Anda cuti.</p>
-                    <p>Jika Anda memiliki pertanyaan lebih lanjut tentang cuti Anda, jangan ragu untuk menghubungi bagian HRD.</p>
-                @else  
-                    <strong>Mohon Maaf,</strong>
-                    <br>
-                    <p>Kami dengan berat hati memberitahukan bahwa permintaan cuti dengan rincian sebagai berikut:<br>
-                        <ul>
-                            <li>Nama karyawan  : {{$data['namakaryawan']}}</li>
-                            <li>Kategori cuti  : {{$data['id_jeniscuti']}}</li>
-                            <li>Keperluan      : {{$data['keperluan']}}</li>
-                            @if($data['tgl_selesai'] != NULL)
-                                <li>Tanggal Cuti   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
-                            @else
-                                <li>Tanggal Cuti   : {{$data['tgl_mulai']}}</li>
-                            @endif
-                            @if($data['jml_cuti'] > 1)
-                                <li>Jumlah Cuti    :  {{$data['jml_cuti']}}</li>
-                            @endif
-                            <li>Status         :  <span class="text-white badge badge-danger"><strong>{{$data['status']}}</strong></span></li>
-                        </ul><br>
-                    <p><b>DITOLAK</b> oleh atasan Anda yaitu Bapak/Ibu <strong>{{Auth::user()->name}}</strong> dengan alasan <strong>{{$data['alasan']}}</strong></p>
-                    <p>Jika Anda memiliki pertanyaan lebih lanjut tentang cuti Anda, jangan ragu untuk menghubungi bagian HRD.</p>
-                    
-                @endif
-
-                <p>Terima kasih</p>
-            
-                <p>Salam Hormat,<br><br></p>
-                <p>[Manager/HR]<br>
+                {{-- @if($data['status'] == 'Disetujui') --}}
+					<div>
+						<h4><b>NOTIFIKASI PERSETUJUAN PERMOHONAN CUTI KARYAWAN</b><br></h4>
+		
+						<p class="title">Nomor Registrasi</p><label class="value">: <strong>{{$data['noregistrasi']}}</strong></label>
+						<p class="title">Tanggal Permohonan</p><label class="value">: <strong>{{$data['tgl_permohonan']}}</strong></label>
+						<p class="title">Nomor Induk Karyawan</p><label class="value">: <strong>{{$data['nik']}}</strong></label>
+						<p class="title">Nama Karyawan</p><label class="value">: <strong>{{$data['namakaryawan']}}</strong></label>
+						<p class="title">Jabatan</p><label class="value">: <strong>{{$data['jabatankaryawan']}}</strong></label><br>
+						<p class="title">Departemen/Divisi</p><label class="value">: <strong>{{$data['departemen']}}</strong></label><br>
+						<p class="title">Tanggal Pelaksanaan</p><label class="value">: <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_selesai'] != NULL) s/d <strong>{{$data['tgl_selesai']}}</strong> @endif</label><br>
+						<p class="title">Status Ketidakhadiran</p><label class="value">: <strong>{{$data['id_jeniscuti']}}</strong></label><br>
+						<p class="title">Keterangan</p><label class="value">: <strong>{{$data['keperluan']}}</strong></label><br>
+						<p class="title">Tanggal Persetujuan</p><label class="value">:</label>
+						<ul>
+							<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuiatasan']}} WIB</label></li>
+							<li><label class="value">Pimpinan Unit Kerja : {{$data['tgldisetujuipimpinan']}} WIB</label></li>
+							<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuipimpinan']}} WIB</label></li>
+						</ul>
+					</div>
+                {{-- @endif --}}
 			</div>
 		</div>
 		<div class="footer">
-			<p>Email ini dikirimkan secara otomatis. Jangan membalas email ini karena tidak akan terbaca. Hubungi kami di <b><a href="mailto:">info@grm-risk.com</a></b> atau anda bisa menghubungi <a href="#">(+62) 811-140-840-5</a> untuk informasi lebih lanjut.</p>
+			<p><em>Email ini dikirim secara otomatis kepada yang berkepentingan. Email ini tidak perlu dibalas (no-reply) dan apabila ada kendala harap hubungi administrator-HRMS melalui email ke Departemen HR.</em></p>
 		</div>
 	</div>
 </body>

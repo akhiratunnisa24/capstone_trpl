@@ -177,33 +177,42 @@
                                                     <table  id="datatable-responsive18" class="table dt-responsive table-striped table-bordered" width="100%">
                                                         <thead>
                                                             <tr>
+                                                                @php
+                                                                    use \Carbon\Carbon;
+                                                                    $year = Carbon::now()->year;
+                                                                @endphp
                                                                 <th>No</th>
-                                                                <th>Karyawan</th>
+                                                                <th>Tgl Permohonan</th>
+                                                                <th>NIK</th>
+                                                                <th>Nama</th>
+                                                                <th>Jabatan</th>
+                                                                <th>Tanggal Cuti</th>
                                                                 <th>Kategori Cuti</th>
-                                                                <th>Keperluan</th>
-                                                                <th>Tanggal Mulai</th>
-                                                                <th>Tanggal Selesai</th>
-                                                                <th>Jumlah Cuti</th>
-                                                                <th>Status</th>
-                                                                <th>Aksi</th>
+                                                                <th>Jumlah Hari Kerja</th>
+                                                                <th>Saldo Hak Cuti {{$year}}</th>
+                                                                <th>Jumlah Cuti {{$year}}</th>
+                                                                <th>Sisa Cuti {{$year}}</th>
+                                                                <th>Status Persetujuan</th>
+                                                                <th>Aksi</th>   
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach($cuti as $data)
                                                             <tr>
                                                                 <td>{{$loop->iteration}}</td>
+                                                                <td>{{\Carbon\Carbon::parse($data->tgl_permohonan)->format("d/m/Y")}}</td>
+                                                                <td>{{$data->nik}}</td>
                                                                 <td>{{$data->nama}}</td>
-                                                                {{-- <td>{{$data->karyawans->nama}}</td> --}}
-                                                                {{-- <td>{{$data->jeniscutis->jenis_cuti}}</td> --}}
+                                                                <td>{{$data->jabatan}}</td>
+                                                                <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s.d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                                 <td>{{$data->jenis_cuti}}</td>
-                                                                <td>{{$data->keperluan}}</td>
-                                                                <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}</td>
-                                                                <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
-                                                                <td>{{$data->jml_cuti}} Hari</td>
+                                                                <td>{{$data->jmlharikerja}}</td>
+                                                                <td>{{$data->saldohakcuti}}</td>
+                                                                <td>{{$data->jml_cuti}}</td>
+                                                                <td>{{$data->sisacuti}}</td>
                                                                 <td>
-                                                                    {{-- {{ $data->status }} --}}
-                                                                    <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                        {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : '')))) }}
+                                                                    <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' :'')))))) }}">
+                                                                        {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : ($data->status == 9 ? 'Pending Atasan' : ($data->status == 10 ? 'Pending Pimpinan' :'')))))) }}
                                                                     </span>
                                                                 </td>
 

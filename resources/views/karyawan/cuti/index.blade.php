@@ -55,13 +55,12 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                {{-- <th>Karyawan</th> --}}
+                                                                <th>Tgl Permohonan</th>
+                                                                <th>Nama</th>
+                                                                <th>Jabatan</th>
+                                                                <th>Tanggal Cuti</th>
                                                                 <th>Kategori Cuti</th>
-                                                                <th>Keperluan</th>
-                                                                <th>Tanggal Mulai</th>
-                                                                <th>Tanggal Selesai</th>
-                                                                <th>Jumlah Cuti</th>
-                                                                <th>Status</th>
+                                                                <th>Status Persetujuan</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
@@ -70,28 +69,16 @@
                                                                 @if ($data->id_karyawan == Auth::user()->id_pegawai)
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
-                                                                        {{-- <td>{{ $data->karyawans->nama }}</td> --}}
-                                                                        <td>{{ $data->jenis_cuti }}</td>
-                                                                        <td>{{ $data->keperluan }}</td>
-                                                                        <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
-                                                                        </td>
-                                                                        <td>{{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }}
-                                                                        </td>
-                                                                        <td>{{ $data->jml_cuti }} Hari</td>
-                                                                        <!-- data for status -->
+                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_permohonan)->format("d/m/Y")}}</td>
+                                                                        <td>{{Auth::user()->name}}</td>
+                                                                        <td>{{$data->jabatan}}</td>
+                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s.d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
+                                                                        <td>{{$data->jenis_cuti}}</td>
                                                                         <td>
-                                                                            @if($data->tgldisetujui_b == NULL)
-                                                                                Disetujui Atasan {{\Carbon\Carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i:s')}} WIB
-                                                                                <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                                    {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui Pimpinan' : '')))) }}
-                                                                                </span>
-                                                                            @elseif($data->tgldisetujui_b != NULL)
-                                                                                Disetujui Atasan {{\Carbon\Carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i:s')}} WIB
-                                                                                Disetujui Pimpinan {{\Carbon\Carbon::parse($data->tgldisetujui_b)->format('d/m/Y H:i:s')}} WIB
-                                                                                <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                                    {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui Pimpinan' : '')))) }}
-                                                                                </span>
-                                                                            @endif
+                                                                            <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' :'')))))) }}">
+                                                                                {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : ($data->status == 9 ? 'Pending Atasan' : ($data->status == 10 ? 'Pending Pimpinan' :'')))))) }}
+                                                                            </span>
+                                                                           
                                                                         </td>        
                                                                         <td class="text-center">
                                                                             <form action="" method="POST">
@@ -204,8 +191,8 @@
                                                                         @endif
 
                                                                         <td>
-                                                                            <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 5 ? 'danger' : ($data->status == 7 ? 'success' : '')) }}">
-                                                                                {{ $data->status == 1 ? 'Pending' : ($data->status == 5 ? 'Ditolak' : ($data->status == 7 ? 'Disetujui' : '')) }}
+                                                                            <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' :'')))))) }}">
+                                                                                {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : ($data->status == 9 ? 'Pending Atasan' : ($data->status == 10 ? 'Pending Pimpinan' :'')))))) }}
                                                                             </span>
                                                                         </td>
 

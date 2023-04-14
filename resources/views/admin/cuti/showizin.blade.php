@@ -79,14 +79,32 @@
                 <div class="row">
                     <label for="status" class="col-sm-3 col-form-label">Status Izin</label>
                     <div class="col-sm-9">
-                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 5 ? 'danger' : ($data->status == 7 ? 'success' : '')) }}">
-                            {{ $data->status == 1 ? 'Pending' : ($data->status == 5 ? 'Ditolak' : ($data->status == 7 ? 'Disetujui' : '')) }}
+                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' :'')))))) }}">
+                            {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : ($data->status == 9 ? 'Pending Atasan' : ($data->status == 10 ? 'Pending Pimpinan' :'')))))) }}
                         </span>
                     </div>
                 </div>
-                @if($data->status == 5)
+                <div class="form-group row">
+                    <label for="keperluan" class="col-sm-5 col-form-label">Tanggal Persetujuan</label>
+                    <div class="col-sm-7">
+                        @if($data->tgl_setuju_a !== NULL && $data->tgl_setuju_b == NULL && $data->tgl_ditolak == NULL)
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgl_setuju_a)->format('d/m/Y H:i')}} WIB</label><br>
+                        @elseif($data->tgl_setuju_a !== NULL && $data->tgl_setuju_b !== NULL && $data->tgl_ditolak == NULL)
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgl_setuju_a)->format('d/m/Y H:i')}} WIB</label><br>
+                            <label>&nbsp;&nbsp;Persetujuan Pimpinan: {{\Carbon\carbon::parse($data->tgl_setuju_b)->format('d/m/Y H:i')}} WIB</label>
+                        @elseif($data->tgl_setuju_a == NULL && $data->tgl_setuju_b == NULL && $data->tgl_ditolak !== NULL)
+                            <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgl_ditolak)->format('d/m/Y H:i')}} WIB</label><br>
+                        @elseif($data->tgl_setuju_a !== NULL && $data->tgl_setuju_b == NULL && $data->tgl_ditolak !== NULL)
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgl_setuju_a)->format('d/m/Y H:i')}} WIB</label><br>
+                            <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgl_ditolak)->format('d/m/Y H:i')}} WIB</label><br>
+                            @else
+                            <label>: -</label>
+                        @endif
+                    </div>
+                </div>
+                @if($data->status == 9 || $data->status == 10)
                     <div class="form-group row">
-                        <label for="alasan" class="col-sm-3 col-form-label">Alasan</label>
+                        <label for="alasan" class="col-sm-3 col-form-label">Alasan Penolakan</label>
                         <div class="col-sm-9">
                             <label>: {{$data->alasan}}</label>
                         </div>
