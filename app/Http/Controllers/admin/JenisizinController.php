@@ -23,6 +23,7 @@ class JenisizinController extends Controller
     {
         $request->validate([
             'jenis_izin' => 'required',
+            'code' => 'required',
         ]);
         $jenisizin = Jenisizin::create($request->all());
         
@@ -41,6 +42,7 @@ class JenisizinController extends Controller
         $jenisizin = Jenisizin::find($id);
 
         $jenisizin->jenis_izin = $request->jenis_izin;
+        $jenisizin->code = $request->code;
         $jenisizin->save(); 
 
         return redirect()->route('kategori.index', ['type'=>2]);

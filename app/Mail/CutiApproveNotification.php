@@ -31,15 +31,15 @@ class CutiApproveNotification extends Mailable
      */
     public function build()
     {
-        if($this->data['status'] = "Ditolak"){
-           $email =  $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
-                ->subject($this->data['subject'])
-                ->cc($this->data['atasan1'], 'Atasan Pertama')
-                ->view('emails.cutiApprove')->with('data',$this->data);
-            if (isset($this->data['atasan2']) && $this->data['atasan2'] !== null) {
-                $email->cc($this->data['atasan2'], 'Atasan Kedua');
-            }
-        }else{
+        // if($this->data['status'] = "Ditolak"){
+        //    $email =  $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+        //         ->subject($this->data['subject'])
+        //         ->cc($this->data['atasan1'], 'Atasan Pertama')
+        //         ->view('emails.cutiApprove')->with('data',$this->data);
+        //     if (isset($this->data['atasan2']) && $this->data['atasan2'] !== null) {
+        //         $email->cc($this->data['atasan2'], 'Atasan Kedua');
+        //     }
+        // }else{
             $email = $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['atasan1'], 'Atasan Pertama')
@@ -49,7 +49,7 @@ class CutiApproveNotification extends Mailable
             if (isset($this->data['atasan2']) && $this->data['atasan2'] !== null) {
                 $email->cc($this->data['atasan2'], 'Atasan Kedua');
             }
-        }
+        // }
     }
     /**
      * Get the attachments for the message.

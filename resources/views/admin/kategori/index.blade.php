@@ -122,6 +122,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
+                                                        <th>Kode Kategori</th>
                                                         <th>Kategori Izin</th>
                                                         <th>Aksi</th>
                                                     </tr>
@@ -130,6 +131,7 @@
                                                     @foreach($jenisizin as $data)
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
+                                                        <td>{{$data->code}}</td>
                                                         <td>{{$data->jenis_izin}}</td>
                                                         <td class="text-center">
                                                             <div class="d-grid gap-2 " role="group" aria-label="Basic example">

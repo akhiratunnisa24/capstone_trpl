@@ -47,7 +47,8 @@ class CutikaryawanController extends Controller
             ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
             ->leftjoin('statuses','cuti.status','=','statuses.id')
             ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
-            ->select('cuti.*', 'jeniscuti.jenis_cuti','statuses.name_status','datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
+            ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+            ->select('cuti.*', 'departemen.nama_departemen','jeniscuti.jenis_cuti','statuses.name_status','datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
             ->distinct()
             ->orderBy('created_at','DESC')
             ->get();
@@ -56,7 +57,8 @@ class CutikaryawanController extends Controller
         $izin = Izin::leftjoin('statuses','izin.status','=','statuses.id')
             ->leftjoin('datareject','datareject.id_izin','=','izin.id')
             ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
-            ->select('izin.*','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan','datareject.id_izin as id_izin')
+            ->leftjoin('departemen','izin.departemen','=','departemen.id')
+            ->select('izin.*','jenisizin.jenis_izin','departemen.nama_departemen','statuses.name_status','datareject.alasan as alasan','datareject.id_izin as id_izin')
             ->distinct()
             ->orderBy('created_at','DESC')
             ->get();
