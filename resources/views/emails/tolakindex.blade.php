@@ -143,8 +143,8 @@
 		</div>
         <div class="content">
             <div>
-				<h4><b>NOTIFIKASI PERSETUJUAN PERMOHONAN CUTI KARYAWAN</b><br></h4>
-
+				<h4><b>{{$data['title']}}</b></h4>
+				<h4><b>{{$data['subtitle']}}</b><br></h4>
 				<p class="title">Nomor Registrasi</p><label class="value">: <strong>{{$data['noregistrasi']}}</strong></label>
 				<p class="title">Tanggal Permohonan</p><label class="value">: <strong>{{$data['tgl_permohonan']}}</strong></label>
 				<p class="title">Nomor Induk Karyawan</p><label class="value">: <strong>{{$data['nik']}}</strong></label>
@@ -162,7 +162,7 @@
                     @elseif($data['status'] == "Pending Pimpinan")
                         <li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuiatasan']}} WIB</label></li>
                         <li><label class="value">Permohonan Ditolak: {{$data['tglditolak']}} WIB</label></li>
-                        <li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tglditolak']}} WIB</label></li>
+                        <li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;: {{$data['tglditolak']}} WIB</label></li>
                     @else
                     @endif
 				</ul>

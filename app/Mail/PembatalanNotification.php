@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CutiNotification extends Mailable
+class PembatalanNotification extends Mailable
 {
     use Queueable, SerializesModels;
     public $data=[];
@@ -31,7 +31,7 @@ class CutiNotification extends Mailable
             ->cc($this->data['karyawan_email'], 'Karyawan')
             ->cc($this->data['atasan2'], 'Pimpinan Unit Kerja')
             ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
-            ->view('emails.cutiindex')->with('data',$this->data);   
+            ->view('emails.cutibatal')->with('data',$this->data);   
 
             // ->cc('hrd-global@grm-risk.com','HRD GRM')
             // ->cc('pandu@grm-risk.com','HRD Staff')

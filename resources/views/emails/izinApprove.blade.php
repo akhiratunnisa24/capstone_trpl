@@ -142,7 +142,8 @@
 	<div class="wrapper">
 		<div class="content">
             <div>
-				<h4><b>NOTIFIKASI PERSETUJUAN PERMOHONAN IZIN KARYAWAN</b><br></h4>
+				<h4><b>{{$data['title']}}</b></h4>
+				<h4><b>{{$data['subtitle']}}</b><br></h4>
 
 				<p class="title">Nomor Registrasi</p><label class="value">: <strong>{{$data['noregistrasi']}}</strong></label>
 				<p class="title">Tanggal Permohonan</p><label class="value">: <strong>{{$data['tgl_permohonan']}}</strong></label>

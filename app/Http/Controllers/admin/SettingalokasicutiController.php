@@ -167,7 +167,13 @@ class SettingalokasicutiController extends Controller
                 $year          = Carbon::now()->year;
                 $tglHakCutiTahunan = Carbon::createFromDate($year, 12, 31);
 
-                $selisih    = $tglJatuhTempo->diffInMonths($tglHakCutiTahunan, false);
+                $selisih    = $tglJatuhTempo->diffInMonths($tglHakCutiTahunan,false);
+                if($tglMasuk->format('m-d') == '01-01')
+                {
+                    $tglHakCutiTahunan = Carbon::createFromDate($year + 1, 1, 1);
+                    $selisih    = $tglJatuhTempo->diffInMonths($tglHakCutiTahunan,true);
+                }
+
                 $keterangan = "";
                 $cutidimuka = 0;
 
@@ -177,7 +183,8 @@ class SettingalokasicutiController extends Controller
                  ->get();
 
                 $jumsetting = $settinglibur->count();
-                $jum        = -1* abs($jumsetting);
+                // $jum        = -1* abs($jumsetting);
+                $jum = 0;
 
                 $cutiminus = Alokasicuti::where('durasi','<',0)
                     ->whereYear('aktif_dari', '=', Carbon::now()->subMonth()->year)
@@ -190,24 +197,24 @@ class SettingalokasicutiController extends Controller
                 if ($selisih >= 12) {
                     $selisih    = 12;
                     $keterangan = "Karyawan Lama";
-                    $cutidimuka = 0;
-                    $jum = $jum;
+                    // $cutidimuka = 0;
+                    // $jum = $jum;
                     $cutmin = $cutmin;
                     // $saldo   = $selisih - abs($cutmin) - abs($jum);
                 } 
                 elseif($selisih > 0 && $selisih < 12){
                     $selisih = $selisih;
                     $keterangan = "Karyawan Baru (Transisi)";
-                    $cutidimuka = -1*abs(12);
-                    $jum = $jum;
+                    // $cutidimuka = -1*abs(12);
+                    // $jum = $jum;
                     $cutmin = 0;
                     // $saldo   = $selisih - abs($cutidimuka) - abs($cutmin) - abs($jum);
                 }
                 else{
                     $selisih   = 0;
                     $keterangan = "Hak Cuti Belum Timbul";
-                    $cutidimuka = 0;
-                    $jum = 0;
+                    // $cutidimuka = 0;
+                    // $jum = 0;
                     $cutmin = 0;
                     // $saldo   = 0;
                     // return $saldo;

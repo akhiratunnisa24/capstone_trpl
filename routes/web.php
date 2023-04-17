@@ -212,8 +212,12 @@ Route::get('/absensi-karyawan', [AbsensiController::class, 'create'])->name('abs
 Route::get('/history-absensi', [AbsensiKaryawanController::class, 'index'])->name('history.absen');
 Route::get('/cuti-karyawan', [CutikaryawanController::class, 'index'])->name('cuti_karyawan');
 Route::get('/getlibur', [CutikaryawanController::class, 'getLibur'])->name('getlibur');
+Route::get('/getliburs', [CutikaryawanController::class, 'getLibur'])->name('getliburs');
 Route::post('/getdurasialokasi', [CutikaryawanController::class, 'getDurasi'])->name('get.Durasi');
+Route::post('/getdurasi', [CutikaryawanController::class, 'getDurasi'])->name('getDurasi');
 Route::post('/cuti_karyawan', [CutikaryawanController::class, 'store'])->name('cuti.store');
+Route::put('/pembatalan-cuti/{id}', [CutikaryawanController::class, 'batal'])->name('cuti.batal');
+Route::put('/update-cuti/{id}', [CutikaryawanController::class, 'update'])->name('cuti.update');
 Route::get('/cuti_karyawan/{id}', [JeniscutiController::class, 'show'])->name('cutis_show');
 //izin
 Route::post('/izin_karyawan', [IzinkaryawanController::class, 'store'])->name('izinstore');

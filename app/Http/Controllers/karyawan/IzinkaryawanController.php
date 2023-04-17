@@ -96,6 +96,8 @@ class IzinkaryawanController extends Controller
             $data = [
                 'subject' => 'Notifikasi Permohonan ' . $jenisizin->jenis_izin . ' ' . '#'. $izin->id. ' ' . ucwords(strtolower($emailkry->nama)) ,
                 'noregistrasi' => $izin->id,
+                'title'  => 'NOTIFIKASI PERSETUJUAN PERMOHONAN CUTI KARYAWAN',
+                'subtitle' => '',
                 'tgl_permohonan' =>Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
                 'nik' => $emailkry->nik,
                 'namakaryawan' => ucwords(strtolower($emailkry->nama)),
@@ -182,6 +184,11 @@ class IzinkaryawanController extends Controller
             // dd($data);
             return redirect()->back()->withInput();
         }  
+
+    }
+
+    public function update(Request $request)
+    {
 
     }
 }
