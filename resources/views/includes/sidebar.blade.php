@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        {{-- Role HRD Manager --}}
+        {{-- Role HRD Manajer --}}
         @if (Auth::check() && Auth::user()->role == 1)
             <div id="sidebar-menu">
                 <ul>
@@ -177,7 +177,7 @@
             </div>
         @endif
 
-        <!--- Role Manager / Asisten Manajer / yang mempunyai bawahan  -->
+        <!--- Role Manajer / Asisten Manajer / yang mempunyai bawahan  -->
         @if (Auth::check() && Auth::user()->role == 3)
             <div id="sidebar-menu">
                 <ul>
@@ -207,7 +207,7 @@
                                         class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
                             </li>
                             <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi</span></a></li>
-                            @if($row->jabatan == "Manager" || $row->jabatan == "Asisten Manajer")
+                            @if($row->jabatan == "Manajer" || $row->jabatan == "Asisten Manajer")
                                 <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Transaksi Cuti</span></a></li>
                             @elseif($row->jabatan == "Management")
                                 <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Transaksi Cuti</span></a></li>

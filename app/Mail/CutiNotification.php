@@ -35,7 +35,7 @@ class CutiNotification extends Mailable
 
             // ->cc('hrd-global@grm-risk.com','HRD GRM')
             // ->cc('pandu@grm-risk.com','HRD Staff')
-            // ->cc('ariswan@grm-risk.com','HRD Manager')
+            // ->cc('ariswan@grm-risk.com','HRD Manajer')
     }
 
     /**

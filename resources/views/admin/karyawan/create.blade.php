@@ -118,7 +118,7 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1" class="form-label">Atasan Langsung
-                                                        (SPV/Manager/Direktur)</label>
+                                                        (Asisten Manajer/Manajer/Direktur)</label>
                                                     <select class="form-control selectpicker" name="atasan_pertama"
                                                         data-live-search="true">
                                                         <option value="">Pilih Atasan Langsung</option>
@@ -131,7 +131,7 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1" class="form-label">Atasan
-                                                        (Manager/Direktur)</label>
+                                                        (Manajer/Direktur)</label>
                                                     <select class="form-control selectpicker" name="atasan_kedua"
                                                         data-live-search="true">
                                                         <option value="">Pilih Atasan</option>
@@ -148,7 +148,7 @@
                                                         required>
                                                         <option value="">Pilih Jabatan</option>
                                                         <option value="Management">Management</option>
-                                                        <option value="Manager">Manager</option>
+                                                        <option value="Manajer">Manajer</option>
                                                         <option value="Asisten Manajer">Asisten Manajer</option>
                                                         <option value="Staff">Staff</option>
                                                     </select>

@@ -141,7 +141,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="form-label">Atasan Langsung (SPV/Manager/Direktur)</label>
+                        <label for="exampleInputEmail1" class="form-label">Atasan Langsung (SPV/Manajer/Direktur)</label>
                         <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
                             <option value="">Pilih Atasan Langsung</option>
                             @foreach ($atasan_pertama as $atasan)
@@ -156,7 +156,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="form-label">Atasan (Manager/Direktur)</label>
+                        <label for="exampleInputEmail1" class="form-label">Atasan (Manajer/Direktur)</label>
                         <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
                             <option value="">Pilih Atasan</option>
                             @foreach ($atasan_kedua as $atasan)
@@ -175,7 +175,7 @@
                            <select type="text" class="form-control selectpicker" name="jabatanKaryawan" required>
                             <option value="">Pilih Jabatan</option>
                             <option value="Direktur" @if($karyawan->jabatan == "Direktur") selected @endif >Direktur</option>
-                            <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager</option>
+                            <option value="Manajer" @if($karyawan->jabatan == "Manajer") selected @endif >Manajer</option>
                             <option value="Asisten Manajer" @if($karyawan->jabatan == "Asisten Manajer") selected @endif >Asisten Manajer</option>
                             <option value="HRD" @if($karyawan->jabatan == "HRD") selected @endif >HRD</option>
                             <option value="Staff" @if($karyawan->jabatan == "Staff") selected @endif >Staff</option>

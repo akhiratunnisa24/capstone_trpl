@@ -130,7 +130,7 @@
                                                                 </div>
                             
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputEmail1" class="form-label">Atasan Langsung (SPV/Manager/Direktur)</label>
+                                                                    <label for="exampleInputEmail1" class="form-label">Atasan Langsung (SPV/Manajer/Direktur)</label>
                                                                     <select class="form-control selectpicker" value="{{ old('atasan_pertama') }}" name="atasan_pertama" data-live-search="true">
                                                                         <option value="">Pilih Atasan Langsung</option>
                                                                         @foreach ($atasan_pertama as $atasan)
@@ -141,7 +141,7 @@
                                                                 </div>
                             
                                                                 <div class="form-group">
-                                                                    <label for="exampleInputEmail1" class="form-label">Atasan (Manager/Direktur)</label>
+                                                                    <label for="exampleInputEmail1" class="form-label">Atasan (Manajer/Direktur)</label>
                                                                     <select class="form-control selectpicker" value="{{ old('atasan_kedua') }}" name="atasan_kedua"  data-live-search="true">
                                                                         <option value="">Pilih Atasan</option>
                                                                         @foreach ($atasan_kedua as $atasan)
@@ -156,7 +156,7 @@
                                                                     <select class="form-control selectpicker" value="{{ old('jabatanKaryawan') }}" name="jabatanKaryawan" required>
                                                                         <option value="">Pilih Jabatan</option>
                                                                         <option value="Management">Management</option>
-                                                                        <option value="Manager">Manager</option>
+                                                                        <option value="Manajer">Manajer</option>
                                                                         <option value="Asisten Manajer">Asisten Manajer</option>
                                                                         <option value="Staff">Staff</option>
                                                                     </select>

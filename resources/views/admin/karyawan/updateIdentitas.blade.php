@@ -146,7 +146,7 @@
 
                                                         <div class="form-group">
                                                             <label class="form-label">Atasan Langsung
-                                                                (SPV/Manager/Direktur)</label>
+                                                                (SPV/Manajer/Direktur)</label>
                                                             <select class="form-control" name="atasan_pertama"
                                                                 data-live-search="true">
                                                                 <option value="">Pilih Atasan Langsung</option>
@@ -160,7 +160,7 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="form-label">Atasan (Manager/Direktur)</label>
+                                                            <label class="form-label">Atasan (Manajer/Direktur)</label>
                                                             <select class="form-control" name="atasan_kedua"
                                                                 data-live-search="true">
                                                                 <option value="">Pilih Atasan</option>

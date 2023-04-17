@@ -235,7 +235,7 @@ class CutikaryawanController extends Controller
         $status = Status::find(11);
         Cuti::where('id',$id)->update(
             [
-                'status' => $status->id,
+                'catatan' => $status->name_status,
             ]
         );
 

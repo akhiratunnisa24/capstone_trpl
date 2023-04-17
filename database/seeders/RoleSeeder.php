@@ -17,7 +17,7 @@ class RoleSeeder extends Seeder
     {
         // id 1
         DB::table('role')->insert([
-            'role' => 'HRD Manager',
+            'role' => 'HRD Manajer',
             'status' => '1',
         ]);
         // id 2
@@ -27,7 +27,7 @@ class RoleSeeder extends Seeder
         ]);
         // id 3
         DB::table('role')->insert([
-            'role' => 'Manager',
+            'role' => 'Manajer',
             'status' => '1',
         ]);
         // id 4

@@ -21,7 +21,7 @@
                                 name="role" required autocomplete="role" autofocus placeholder="Role">
                                 <option value="">Pilih Role</option>
                                 <option value="4">Management</option>
-                                <option value="3">Manager</option>
+                                <option value="3">Manajer</option>
                                 <option value="5">Supervisor</option>
                                 <option value="1">HRD</option>
                                 <option value="2">Karyawan</option>

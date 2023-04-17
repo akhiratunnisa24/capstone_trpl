@@ -230,7 +230,7 @@
 
                                                     <td>
                                                         <div class="row">
-                                                            {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
+                                                            {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manajer') --}}
                                                             @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('izinapproved', $data->id) }}"

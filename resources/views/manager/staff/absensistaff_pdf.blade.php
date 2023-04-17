@@ -104,7 +104,7 @@
     <div class="row-sm-3">
         <p id="ttd">Depok, {{ date("d F Y") }}</p>
         {{-- <p id="t">Hormat Kami,</p> --}}
-        <p id="tt">(Departemen Manager)</p>
+        <p id="tt">(Departemen Manajer)</p>
     </div>
 </body>
 </html>
