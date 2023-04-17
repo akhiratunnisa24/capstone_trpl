@@ -375,6 +375,8 @@ class ManagerController extends Controller
                     $data = [
                         'subject'     =>'Notifikasi Approval Pertama Permohonan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'noregistrasi'=>$cuti->id,
+                        'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR CUTI KARYAWAN',
+                        'subtitle' => '[PERSETUJUAN ATASAN]',
                         'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
                         'nik'         => $cuti->nik,
                         'jabatankaryawan' => $cuti->jabatan,
@@ -443,6 +445,8 @@ class ManagerController extends Controller
                     $data = [
                         'subject'     =>'Notifikasi Cuti Disetujui ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'noregistrasi'=>$cuti->id,
+                        'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
+                        'subtitle' => '',
                         'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
                         'nik'         => $cuti->nik,
                         'jabatankaryawan' => $cuti->jabatan,
@@ -509,6 +513,8 @@ class ManagerController extends Controller
                         $data = [
                             'subject'     =>'Notifikasi Approval Pertama Permohonan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                             'noregistrasi'=>$cuti->id,
+                            'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR CUTI KARYAWAN',
+                            'subtitle' => '[PERSETUJUAN ATASAN]',
                             'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
                             'nik'         => $cuti->nik,
                             'jabatankaryawan' => $cuti->jabatan,
@@ -584,6 +590,8 @@ class ManagerController extends Controller
                         $data = [
                             'subject'     =>'Notifikasi Approval Pertama Permohonan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                             'noregistrasi'=>$cuti->id,
+                            'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR CUTI KARYAWAN',
+                            'subtitle' => '[PERSETUJUAN ATASAN]',
                             'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
                             'nik'         => $cuti->nik,
                             'jabatankaryawan' => $cuti->jabatan,
@@ -610,7 +618,9 @@ class ManagerController extends Controller
                     // dd(Auth::user()->name);
                     $cuti = Cuti::where('id',$id)->first();
                     $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
-                    $jml_cuti = $cuti->jml_cuti;
+                    $jml_cuti = $cuti->sisacuti;
+                    // return $jml_cuti;
+
                     $status = Status::find(7);
                     Cuti::where('id', $id)->update(
                         ['status' => $status->id,
@@ -624,11 +634,11 @@ class ManagerController extends Controller
                         ->where('id_settingalokasi', $cuti->id_settingalokasi)
                         ->first();
     
-                    $durasi_baru = $alokasicuti->durasi - $jml_cuti;
+                    // $durasi_baru = $alokasicuti->durasi - $jml_cuti;
     
                     Alokasicuti::where('id', $alokasicuti->id)
                     ->update(
-                        ['durasi' => $durasi_baru]
+                        ['durasi' => $jml_cuti]
                     );
     
                     //KIRIM EMAIL NOTIFIKASI DIKIRIM KE SEMUA ATASAN, HRD dan KARYAWAN
@@ -653,6 +663,8 @@ class ManagerController extends Controller
                     $data = [
                         'subject'     =>'Notifikasi Cuti Disetujui ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'noregistrasi'=>$cuti->id,
+                        'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
+                        'subtitle' => '',
                         'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
                         'nik'         => $cuti->nik,
                         'jabatankaryawan' => $cuti->jabatan,
@@ -675,7 +687,7 @@ class ManagerController extends Controller
                 //    return $data;
                     Mail::to($tujuan)->send(new CutiApproveNotification($data));
                     // dd($data);
-                    return redirect()->back()->withInput();
+                    return redirect()->back()->with('pesan', 'Notifikasi Berhasil Dikirim');
     
                 }
                 else{
@@ -724,6 +736,8 @@ class ManagerController extends Controller
                     $data = [
                         'subject'     =>'Notifikasi Approval Pertama Permohonan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'noregistrasi'=>$cuti->id,
+                        'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR CUTI KARYAWAN',
+                        'subtitle' => '[PERSETUJUAN ATASAN]',
                         'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
                         'nik'         => $cuti->nik,
                         'jabatankaryawan' => $cuti->jabatan,
@@ -819,6 +833,8 @@ class ManagerController extends Controller
                 $data = [
                     'subject'     => 'Notifikasi Permohonan Cuti Ditolak, Cuti ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$cuti->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
+                    'subtitle' => '[ PENDING ATASAN ]',
                     'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
                     'nik'         => $cuti->nik,
                     'jabatankaryawan' => $cuti->jabatan,
@@ -829,8 +845,8 @@ class ManagerController extends Controller
                     'kategori'=> $ct->jenis_cuti,
                     'keperluan'   => $ct->keperluan,
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
-                    'tgl_mulai'   => Carbon::parse($ct->tgl_mulai)->format("d M Y"),
-                    'tgl_selesai' => Carbon::parse($ct->tgl_selesai)->format("d M Y"),
+                    'tgl_mulai'   => Carbon::parse($ct->tgl_mulai)->format("d/m/Y"),
+                    'tgl_selesai' => Carbon::parse($ct->tgl_selesai)->format("d/m/Y"),
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      =>$alasan->alasan,
@@ -895,6 +911,8 @@ class ManagerController extends Controller
                 $data = [
                     'subject'     => 'Notifikasi Permohonan Cuti Ditolak, Cuti ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$cuti->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
+                    'subtitle' => '[ PENDING PIMPINAN ]',
                     'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
                     'nik'         => $cuti->nik,
                     'jabatankaryawan' => $cuti->jabatan,
@@ -967,6 +985,8 @@ class ManagerController extends Controller
                 $data = [
                     'subject'     => 'Notifikasi Permohonan Cuti Ditolak, Cuti ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$cuti->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
+                    'subtitle' => '[ PENDING ATASAN ]',
                     'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
                     'nik'         => $cuti->nik,
                     'jabatankaryawan' => $cuti->jabatan,
@@ -977,8 +997,8 @@ class ManagerController extends Controller
                     'kategori'=> $ct->jenis_cuti,
                     'keperluan'   => $ct->keperluan,
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
-                    'tgl_mulai'   => Carbon::parse($ct->tgl_mulai)->format("d M Y"),
-                    'tgl_selesai' => Carbon::parse($ct->tgl_selesai)->format("d M Y"),
+                    'tgl_mulai'   => Carbon::parse($ct->tgl_mulai)->format("d/m/Y"),
+                    'tgl_selesai' => Carbon::parse($ct->tgl_selesai)->format("d/m/Y"),
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      =>$alasan->alasan,

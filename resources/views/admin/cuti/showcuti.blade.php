@@ -65,15 +65,18 @@
                 <div class="form-group row">
                     <label for="status" class="col-sm-5 col-form-label">Status Cuti</label>
                     <div class="col-sm-7">
-                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' :'')))))) }}">
+                        {{-- <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' :'')))))) }}">
                             {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : ($data->status == 9 ? 'Pending Atasan' : ($data->status == 10 ? 'Pending Pimpinan' :'')))))) }}
+                        </span> --}}
+                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : ($data->status == 14 ? 'warning' :($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
+                            {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status :  ($data->status == 14 ?  $data->name_status :  ($data->status == 15 ?  $data->name_status :  ($data->status == 16 ?  $data->name_status : '')))))))))))) }}
                         </span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="keperluan" class="col-sm-5 col-form-label">Tanggal Persetujuan</label>
                     <div class="col-sm-7">
-                        @if($data->tgldisetujui_a !== NULL && $data->tgldisetujui_b == NULL && $data->tglditolak == NULL)
+                        {{-- @if($data->tgldisetujui_a !== NULL && $data->tgldisetujui_b == NULL && $data->tglditolak == NULL)
                         <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
                         @elseif($data->tgldisetujui_a !== NULL && $data->tgldisetujui_b !== NULL && $data->tglditolak == NULL)
                             <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
@@ -85,6 +88,30 @@
                             <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tglditolak)->format('d/m/Y H:i')}} WIB</label><br>
                             @else
                             <label>: -</label>
+                        @endif --}}
+                        @if($data->status == 1)
+                            <label>: -</label>
+                        @elseif($data->status == 2 || $data->status == 6)
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
+                        @elseif($data->status == 6)
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
+                        @elseif($data->status == 7)
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
+                            <label>&nbsp;&nbsp;Persetujuan Pimpinan: {{\Carbon\carbon::parse($data->tgldisetujui_b)->format('d/m/Y H:i')}} WIB</label>
+                        @elseif($data->status == 9)
+                            <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tglditolak)->format('d/m/Y H:i')}} WIB</label><br>
+                        @elseif($data->status == 10)
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
+                            <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tglditolak)->format('d/m/Y H:i')}} WIB</label><br>
+                        @elseif($data->status == 11)
+                            <label>: -</label>
+                        @elseif($data->status == 12)
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->batal_atasan)->format('d/m/Y H:i')}} WIB</label><br>
+                        @elseif($data->status == 13)
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->batal_atasan)->format('d/m/Y H:i')}} WIB</label><br>
+                            <label>&nbsp;&nbsp;Persetujuan Pimpinan: {{\Carbon\carbon::parse($data->batal_pimpinan)->format('d/m/Y H:i')}} WIB</label>
+                        @else
+                            <label>: -</label>
                         @endif
                     </div>
                 </div>
@@ -92,7 +119,7 @@
                     <div class="form-group row">
                         <label for="alasan" class="col-sm-5 col-form-label">Alasan Penolakan</label>
                         <div class="col-sm-7">
-                            <label>: {{$data->alasan}}</label>
+                            <label>: {{$data->alasan_cuti}}</label>
                         </div>
                     </div>        
                 @endif

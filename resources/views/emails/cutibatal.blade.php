@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-            integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>Pemberitahuan - Permintaan Cuti Karyawan</title>
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Notifikasi - Sisa Cuti Tahunan</title>
+
 	<style type="text/css">
 		/* Reset CSS */
 		body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, table, tr, td, img {
@@ -139,31 +143,34 @@
 </head>
 <body>
 	<div class="wrapper">
+		<div class="header">
+		</div>
 		<div class="content">
-            <div>
-                {{-- @if($data['status'] == 'Disetujui') --}}
-					<div>
-						<h4><b>{{$data['title']}}</b></h4>
-						<h4><b>{{$data['subtitle']}}</b><br></h4>
-		
-						<p class="title">Nomor Registrasi</p><label class="value">: <strong>{{$data['noregistrasi']}}</strong></label>
-						<p class="title">Tanggal Permohonan</p><label class="value">: <strong>{{$data['tgl_permohonan']}}</strong></label>
-						<p class="title">Nomor Induk Karyawan</p><label class="value">: <strong>{{$data['nik']}}</strong></label>
-						<p class="title">Nama Karyawan</p><label class="value">: <strong>{{$data['namakaryawan']}}</strong></label>
-						<p class="title">Jabatan</p><label class="value">: <strong>{{$data['jabatankaryawan']}}</strong></label><br>
-						<p class="title">Departemen/Divisi</p><label class="value">: <strong>{{$data['departemen']}}</strong></label><br>
-						<p class="title">Tanggal Pelaksanaan</p><label class="value">: <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_selesai'] != NULL) s/d <strong>{{$data['tgl_selesai']}}</strong> @endif</label><br>
-						<p class="title">Status Ketidakhadiran</p><label class="value">: <strong>{{$data['id_jeniscuti']}}</strong></label><br>
-						<p class="title">Keterangan</p><label class="value">: <strong>{{$data['keperluan']}}</strong></label><br>
-						<p class="title">Tanggal Persetujuan</p><label class="value">:</label>
-						<ul>
-							<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuiatasan']}} WIB</label></li>
-							<li><label class="value">Pimpinan Unit Kerja : {{$data['tgldisetujuipimpinan']}} WIB</label></li>
-							<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuipimpinan']}} WIB</label></li>
-						</ul>
-					</div>
-                {{-- @endif --}}
-			</div>
+			<div>
+
+                <h4><b>{{$data['title']}}</b></h4>
+                <h4><b>{{$data['subtitle']}}</b><br></h4>
+
+					<p class="title">Nomor Registrasi</p><label class="value">: <strong>{{$data['noregistrasi']}}</strong></label>
+					<p class="title">Tanggal Permohonan</p><label class="value">: <strong>{{$data['tgl_permohonan']}}</strong></label>
+					<p class="title">Nomor Induk Karyawan</p><label class="value">: <strong>{{$data['nik']}}</strong></label>
+					<p class="title">Nama Karyawan</p><label class="value">: <strong>{{$data['namakaryawan']}}</strong></label>
+					<p class="title">Jabatan</p><label class="value">: <strong>{{$data['jabatankaryawan']}}</strong></label><br>
+					<p class="title">Departemen/Divisi</p><label class="value">: <strong>{{$data['departemen']}}</strong></label><br>
+					<p class="title">Tanggal Pelaksanaan</p><label class="value">: <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_selesai'] != NULL) s/d <strong>{{$data['tgl_selesai']}}</strong> @endif</label><br>
+					<p class="title">Status Ketidakhadiran</p><label class="value">: <strong>{{$data['id_jeniscuti']}}</strong></label><br>
+					<p class="title">Keterangan</p><label class="value">: <strong>{{$data['keperluan']}}</strong></label><br>
+					<p class="title">Tanggal Persetujuan</p><label class="value">:</label>
+					<ul>
+						<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: -</label></li>
+						<li><label class="value">Pimpinan Unit Kerja : -</label></li>
+					</ul>
+
+				<p>Karyawan Pemohon,<br>
+				<p>Ttd.<br><br></p>
+				<p><strong><u>{{$data['namakaryawan']}}</u></strong><br>
+					{{$data['jabatankaryawan']}}</p>
+            </div>
 		</div>
 		<div class="footer">
 			<p><em>Email ini dikirim secara otomatis kepada yang berkepentingan. Email ini tidak perlu dibalas (no-reply) dan apabila ada kendala harap hubungi administrator-HRMS melalui email ke Departemen HR.</em></p>

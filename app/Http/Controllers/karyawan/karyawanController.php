@@ -367,6 +367,8 @@ class karyawanController extends Controller
                     })
                     ->where('cuti.status', '=', '1')
                     ->orWhere('cuti.status','=','6')
+                    ->orWhere('cuti.status','=','11')
+                    ->orWhere('cuti.status','=','12')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 $cutijumlah = $cuti->count();
@@ -385,6 +387,8 @@ class karyawanController extends Controller
                     })
                     ->where('izin.status', '=', '1')
                     ->orWhere('izin.status','=','6')
+                    ->orWhere('izin.status','=','11')
+                    ->orWhere('izin.status','=','12')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 $izinjumlah = $izin->count();
@@ -406,6 +410,7 @@ class karyawanController extends Controller
                             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     })
                     ->where('cuti.status', '=', '1')
+                    ->orWhere('cuti.status', '=', '11')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 // return $cuti;
@@ -424,6 +429,7 @@ class karyawanController extends Controller
                             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     })
                     ->where('izin.status', '=', '1')
+                    ->orWhere('izin.status', '=', '11')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 $izinjumlah = $izin->count();
@@ -444,6 +450,7 @@ class karyawanController extends Controller
                             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     })
                     ->where('cuti.status', '=', '1')
+                    ->orWhere('cuti.status','=','11')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 $cutijumlah = $cuti->count();
@@ -461,6 +468,7 @@ class karyawanController extends Controller
                             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     })
                     ->where('izin.status', '=', '1')
+                    ->orWhere('izin.status','=','11')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 $izinjumlah = $izin->count();
@@ -482,6 +490,8 @@ class karyawanController extends Controller
                     })
                     ->where('cuti.status', '=', '1')
                     ->orWhere('cuti.status', '=', '2')
+                    ->orWhere('cuti.status','=','11')
+                    ->orWhere('cuti.status','=','12')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 $cutijumlah = $cuti->count();
@@ -500,6 +510,8 @@ class karyawanController extends Controller
                     })
                     ->where('izin.status', '=', '1')
                     ->orWhere('izin.status', '=', '2')
+                    ->orWhere('izin.status','=','11')
+                    ->orWhere('izin.status','=','12')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 $izinjumlah = $izin->count();
@@ -521,6 +533,8 @@ class karyawanController extends Controller
                         })
                         ->where('cuti.status', '=', '1')
                         ->orWhere('cuti.status', '=', '2')
+                        ->orWhere('cuti.status','=','11')
+                        ->orWhere('cuti.status','=','12')
                         ->orderBy('created_at', 'DESC')
                         ->get();
                 $cutijumlah = $cuti->count();
@@ -538,6 +552,8 @@ class karyawanController extends Controller
                     })
                     ->where('izin.status', '=', '1')
                     ->orWhere('izin.status', '=', '2')
+                    ->orWhere('izin.status','=','11')
+                    ->orWhere('izin.status','=','12')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 $izinjumlah = $izin->count();
