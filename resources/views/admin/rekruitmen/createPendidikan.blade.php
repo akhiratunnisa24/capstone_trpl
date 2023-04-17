@@ -144,7 +144,10 @@
                                                                     <option value="SD">SD</option>
                                                                     <option value="SMP">SMP</option>
                                                                     <option value="SMA/K">SMA/K</option>
-                                                                    <option value="Perguruan Tinggi">Perguruan Tinggi</option>
+                                                                    <option value="D-3">D-3</option>
+                                                                    <option value="S-1">S-1</option>
+                                                                    <option value="S-2">S-2</option>
+                                                                    <option value="S-3">S-3</option>
 
                                                                 </select>
                                                             </div>
@@ -152,7 +155,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Nama Sekolah</label>
-                                                                    <input type="text" name="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
+                                                                    <input type="text" name="nama_sekolah" class="form-control" placeholder="Masukkan Nama Sekolah" autocomplete="off">
                                                                 </div>
                                                             </div>
 

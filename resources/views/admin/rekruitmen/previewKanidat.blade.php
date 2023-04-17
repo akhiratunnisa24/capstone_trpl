@@ -549,7 +549,7 @@
             </div>
 
             <div class="modal-footer">
-                <a href="/data_rekrutmen" class="btn btn-sm btn-danger"><i class="fa fa-backward"></i> Kembali</a>
+                <a href="/show_rekrutmen{{ $pelamar->id_lowongan }}" class="btn btn-sm btn-danger"><i class="fa fa-backward"></i> Kembali</a>
                 {{-- <button onclick="history.back()" class="btn btn-sm btn-danger"><i class="fa fa-backward"></i> Kembali rtes  </button> --}}
                 {{-- <button type="submit" name="submit" class="btn btn-sm btn-success"><strong><i
                             class="fa fa-paper-plane"></i></strong> Kirim Data</button> --}}

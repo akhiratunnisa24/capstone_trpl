@@ -82,7 +82,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">NO. KTP</label>
                                                     <input type="number" name="nikPelamar" class="form-control"
-                                                        placeholder="Masukkan NIK" value="{{ $pelamar->nik ?? '' }}" required>
+                                                        placeholder="Masukkan No. KTP   " value="{{ $pelamar->nik ?? '' }}" required>
                                                 </div>
                                             </div>
 
@@ -90,7 +90,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Nama Lengkap</label>
                                                     <input type="text" name="namaPelamar" class="form-control"
-                                                        placeholder="Masukkan Nama" autocomplete="off" value="{{ $pelamar->nama ?? '' }}" required>
+                                                        placeholder="Masukkan Nama Lengkap" autocomplete="off" value="{{ $pelamar->nama ?? '' }}" required>
                                                     <div id="emailHelp" class="form-text"></div>
                                                 </div>
                                             </div>
@@ -111,9 +111,9 @@
 
                                             <div class="form-group">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Kota Kelahiran</label>
+                                                    <label class="form-label">Tempat Lahir</label>
                                                     <input type="text" name="tempatlahirPelamar" class="form-control"
-                                                        placeholder="Masukkan Kota Kelahiran" autocomplete="off" value="{{ $pelamar->tempatlahir ?? '' }}">
+                                                        placeholder="Masukkan Tempat Lahir" autocomplete="off" value="{{ $pelamar->tempatlahir ?? '' }}">
                                                     <div id="emailHelp" class="form-text"></div>
                                                 </div>
                                             </div>
@@ -286,8 +286,6 @@
                                                         <select class="form-control selectpicker" name="nama_bank"
                                                             required>
                                                             <option value="">Pilih Bank</option>
-                                                            <option value="BCA" @if($pelamar->nama_bank == "BCA") selected @endif >BCA</option>
-                                                            <option value="Mandiri" @if($pelamar->nama_bank == "Mandiri") selected @endif>Mandiri</option>
                                                             <option value="Bank ANZ Indonesia" {{ $karyawan->nama_bank ?? '' == 'Bank ANZ Indonesia' ? 'selected' : '' }}>Bank ANZ Indonesia</option>
                                                                         <option value="Bank Bukopin" {{ $karyawan->nama_bank ?? '' == 'Bank Bukopin' ? 'selected' : '' }}>Bank Bukopin</option>
                                                                         <option value="Bank Central Asia (BCA)" {{ $karyawan->nama_bank ?? '' == 'Bank Central Asia (BCA)' ? 'selected' : '' }}>Bank Central Asia (BCA)</option>

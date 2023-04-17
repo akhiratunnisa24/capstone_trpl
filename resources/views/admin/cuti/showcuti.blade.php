@@ -40,7 +40,7 @@
                 <div class="form-group row">
                     <label for="" name="id" class="col-sm-5 col-form-label">Divisi/Departemen</label>
                     <div class="col-sm-7">
-                        <label>: {{$data->nama_departemen}}</label>
+                        <label>: {{$data->nama_departemen ?? ''}}</label>
                     </div>
                 </div>
                 <div class="form-group row">

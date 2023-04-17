@@ -131,6 +131,12 @@
                                                                             <option value="Anak"
                                                                                 {{ $kontakdarurat->jhubungan ?? 'Anak' == '' ? 'selected' : '' }}>
                                                                                 Anak</option>
+                                                                                <option value="Saudara"
+                                                                                {{ $kontakdarurat->jhubungan ?? 'Saudara' == '' ? 'selected' : '' }}>
+                                                                                Saudara</option>
+                                                                                <option value="Teman"
+                                                                                {{ $kontakdarurat->jhubungan ?? 'Teman' == '' ? 'selected' : '' }}>
+                                                                                Teman</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
