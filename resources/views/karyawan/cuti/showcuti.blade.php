@@ -76,42 +76,8 @@
                 <div class="form-group row">
                     <label for="keperluan" class="col-sm-5 col-form-label">Tanggal Persetujuan</label>
                     <div class="col-sm-7">
-                        {{-- @if($data->tgldisetujui_a !== NULL && $data->tgldisetujui_b == NULL && $data->tglditolak == NULL)
-                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
 
-                        @elseif($data->tgldisetujui_a !== NULL && $data->tgldisetujui_b !== NULL && $data->tglditolak == NULL)
-                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
-                            <label>&nbsp;&nbsp;Persetujuan Pimpinan: {{\Carbon\carbon::parse($data->tgldisetujui_b)->format('d/m/Y H:i')}} WIB</label>
-                            
-                        @elseif($data->tgldisetujui_a == NULL && $data->tgldisetujui_b == NULL && $data->tglditolak !== NULL)
-                            <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tglditolak)->format('d/m/Y H:i')}} WIB</label><br>
-
-                        @elseif($data->tgldisetujui_a !== NULL && $data->tgldisetujui_b == NULL && $data->tglditolak !== NULL)
-                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
-                            <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tglditolak)->format('d/m/Y H:i')}} WIB</label><br>
-
-                        @elseif($data->batal_atasan !== NULL && $data->batal_pimpinan == NULL && $data->batalditolak == NULL)
-                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
-                            
-                        @elseif($data->batal_atasan !== NULL && $data->batal_pimpinan !== NULL && $data->batalditolak == NULL)
-                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
-                            <label>&nbsp;&nbsp;Persetujuan Pimpinan: {{\Carbon\carbon::parse($data->tgldisetujui_b)->format('d/m/Y H:i')}} WIB</label>
-
-                        @elseif($data->batal_atasan == NULL && $data->batal_pimpinan == NULL && $data->batalditolak !== NULL)
-                            <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tglditolak)->format('d/m/Y H:i')}} WIB</label><br>
-
-                        @elseif($data->batal_atasan !== NULL && $data->batal_pimpinan == NULL && $data->batalditolak !== NULL)
-                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
-                            <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tglditolak)->format('d/m/Y H:i')}} WIB</label><br>
-                        
-                        @elseif($data->batal_atasan == NULL && $data->batal_pimpinan == NULL && $data->batalditolak == NULL)
-                            <label>: -</label>
-                            
-                        @else
-                            <label>: -</label>
-                        @endif --}}
-
-                        @if($data->status == 1)
+                        @if($data->status == 1 && $data->catatan == NULL)
                             <label>: -</label>
                         @elseif($data->status == 2 || $data->status == 6)
                             <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
@@ -125,15 +91,25 @@
                         @elseif($data->status == 10)
                             <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
                             <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tglditolak)->format('d/m/Y H:i')}} WIB</label><br>
-                        @elseif($data->status == 11)
+                        @elseif($data->catatan == "Pending Atasan")
+                            <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tglditolak)->format('d/m/Y H:i')}} WIB</label><br>
+                        @elseif($data->catatan == "Pending Pimpinan")
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tgldisetujui_a)->format('d/m/Y H:i')}} WIB</label><br>
+                            <label>: Permintaan Ditolak&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->tglditolak)->format('d/m/Y H:i')}} WIB</label><br>
+                        @elseif($data->catatan = "Mengajukan Pembatalan")
                             <label>: -</label>
-                        @elseif($data->status == 12)
+                        @elseif($data->catatan == "Pembatalan Disetujui Atasan")
                             <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->batal_atasan)->format('d/m/Y H:i')}} WIB</label><br>
-                        @elseif($data->status == 13)
+                        @elseif($data->catatan == "Transaksi Dibatalkan")
                             <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->batal_atasan)->format('d/m/Y H:i')}} WIB</label><br>
                             <label>&nbsp;&nbsp;Persetujuan Pimpinan: {{\Carbon\carbon::parse($data->batal_pimpinan)->format('d/m/Y H:i')}} WIB</label>
-                        @else
+                        @elseif($data->catatan = "Mengajukan Perubahan")
                             <label>: -</label>
+                        @elseif($data->catatan == "Perubahan Disetujui Atasan")
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->ubah_atasan)->format('d/m/Y H:i')}} WIB</label><br>
+                        @elseif($data->catatan == "Perubahan Disetujui")
+                            <label>: Persetujuan Atasan&nbsp;&nbsp;&nbsp;&nbsp;: {{\Carbon\carbon::parse($data->ubah_atasan)->format('d/m/Y H:i')}} WIB</label><br>
+                            <label>&nbsp;&nbsp;Persetujuan Pimpinan: {{\Carbon\carbon::parse($data->ubah_pimpinan)->format('d/m/Y H:i')}} WIB</label>
                         @endif
 
                     </div>

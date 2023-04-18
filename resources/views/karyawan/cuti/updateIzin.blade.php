@@ -97,8 +97,8 @@
                                         </div> --}}
                                         <div class="col-sm-12 col-xs-12">
                                             <div class="form-group col-sm">
-                                                <label for="jml_cuti" class="col-form-label">Jumlah Cuti</label>
-                                                <input type="text" class="form-control"  value="{{$data->jml_cuti}}" name="jml_cuti" id="jumla" readonly>
+                                                <label for="jml_cuti" class="col-form-label">Jumlah Izin</label>
+                                                <input type="text" class="form-control"  value="{{$data->jml_hari}}" name="jml_cuti" id="jumla" readonly>
                                             </div>
                                         </div>
                                     </div>

@@ -161,14 +161,13 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                {{-- <th>Karyawan</th> --}}
-                                                                <th>K. Izin</th>
-                                                                <th>Keperluan</th>
-                                                                <th>Tanggal</th>
-                                                                <th>Jml</th>
-                                                                <th>Jam M-S</th>
-                                                                <th>Jml. Jam</th>
-                                                                <th>Status</th>
+                                                                <th>Tgl Permohonan</th>
+                                                                <th>Nama</th>
+                                                                {{-- <th>Jabatan</th> --}}
+                                                                <th>Tanggal Izin</th>
+                                                                <th>Kategori Izin</th>
+                                                                <th>Persetujuan</th>
+                                                                <th>Catatan</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
@@ -177,57 +176,20 @@
                                                                 @if ($data->id_karyawan == Auth::user()->id_pegawai)
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
-                                                                        {{-- <td>{{ $data->karyawans->nama }}</td> --}}
-                                                                        <td>{{ $data->jenis_izin }}</td>
-                                                                        <td>{{ $data->keperluan }}</td>
-
-                                                                        <!-- tanggal mulai & tanggal selesai -->
-                                                                        @if ($data->tgl_selesai != null)
-                                                                            <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
-                                                                                s/d
-                                                                                {{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }}
-                                                                            </td>
-                                                                        @else
-                                                                            <td>
-                                                                                {{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
-                                                                            </td>
-                                                                        @endif
-
-                                                                        <!-- Jumlah hari izin -->
-                                                                        @if ($data->jml_hari != null)
-                                                                            <td>{{ $data->jml_hari }} Hari</td>
-                                                                        @else
-                                                                            <td></td>
-                                                                        @endif
-
-                                                                        <!-- jam mulai & jam selesai -->
-                                                                        @if ($data->jam_mulai != null && $data->jam_mulai != null)
-                                                                            <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }}
-                                                                                s/d
-                                                                                {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }}
-                                                                            </td>
-                                                                        @else
-                                                                            <td></td>
-                                                                        @endif
-
-                                                                        <!-- Jumlah jam -->
-                                                                        @if ($data->jml_jam != null)
-                                                                            <td>
-                                                                                {{ \Carbon\Carbon::parse($data->jml_jam)->format('H:i') }}
-                                                                            </td>
-                                                                        @else
-                                                                            <td></td>
-                                                                        @endif
-
+                                                                        <td>{{ $data->tgl_permohonan }}</td>
+                                                                        <td>{{ Auth::user()->name }}</td>
                                                                         <td>
-                                                                            {{-- <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' :'')))))) }}">
-                                                                                {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manajer' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : ($data->status == 9 ? 'Pending Atasan' : ($data->status == 10 ? 'Pending Pimpinan' :'')))))) }}
-                                                                            </span> --}}
+                                                                            {{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }} @if($data->tgl_selesai !== NULL) s/d 
+                                                                            {{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }} @endif
+                                                                        </td>
+                                                                        <td>{{ $data->jenis_izin }}</td>
+                                                                        <td>
                                                                             <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : ($data->status == 14 ? 'warning' :($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
                                                                                 {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status :  ($data->status == 14 ?  $data->name_status :  ($data->status == 15 ?  $data->name_status :  ($data->status == 16 ?  $data->name_status : '')))))))))))) }}
                                                                             </span>
+                                                             
                                                                         </td>
-
+                                                                        <td>{{ $data->catatan }}</td>
                                                                         <td class="text-center">
                                                                             <form action="" method="POST">
                                                                                 <a class="btn btn-info btn-sm"
