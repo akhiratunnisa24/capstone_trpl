@@ -158,7 +158,7 @@ class CutikaryawanController extends Controller
             $cuti->saldohakcuti   = null;
             $cuti->sisacuti       = null;
             $cuti->keterangan     = $jeniscuti->jenis_cuti;
-            dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
+            // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
         }
         elseif($request->id_jeniscuti == 3)
         {
@@ -200,7 +200,7 @@ class CutikaryawanController extends Controller
         $data = [
             'subject' => 'Notifikasi Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#'. $cuti->id. ' ' . ucwords(strtolower($emailkry->nama)) ,
             'noregistrasi' => $cuti->id,
-            'title'  => 'NOTIFIKASI PERSETUJUAN PERMOHONAN CUTI KARYAWAN',
+            'title'  => 'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
             'subtitle' => '',
             'tgl_permohonan' =>Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
             'nik' => $emailkry->nik,
@@ -292,28 +292,29 @@ class CutikaryawanController extends Controller
         // }
 
         return redirect()->back()
-            ->with('success','Email Notifikasi Pembatalan Permohonan Cuti Berhasil Dikirim');
+            ->with('pesan','Email Notifikasi Pembatalan Permohonan Cuti Berhasil Dikirim');
     }
 
     public function update(Request $request, $id)
     {
         $role = Auth::user()->role;
         $karyawan = Auth::user()->id_pegawai;
-        $status = Status::find(11);
+        $status = Status::find(14);
         $cuti = Cuti::find($id);
-        // return $cuti->id;
+    
         $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
 
-        $cuti->tgl_permohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_permohonan)->format("Y-m-d");
-        $cuti->nik            = $request->nik;
+        $cuti->tgl_permohonan = $cuti->tgl_permohonan;
+        $cuti->nik            = $cuti->nik;
         $cuti->id_karyawan    = $karyawan;
-        $cuti->jabatan        = $request->jabatan;
-        $cuti->departemen     = $request->departemen;
+        $cuti->jabatan        = $cuti->jabatan;
+        $cuti->departemen     = $cuti->departemen;
         $cuti->id_jeniscuti   = $cuti->id_jeniscuti;
-        $cuti->id_alokasi     = $request->id_alokasi;
-        $cuti->id_settingalokasi= $request->id_settingalokasi;
+        $cuti->id_alokasi     = $cuti->id_alokasi;
+        $cuti->id_settingalokasi= $cuti->id_settingalokasi;
         $cuti->keperluan      = $request->keperluan;
         $cuti->jmlharikerja   = $request->jml_cuti;
+        $cuti->catatan        = $status->name_status;
         if($request->id_jeniscuti == 1)
         {
             $cuti->saldohakcuti   = $request->durasi;
@@ -321,6 +322,7 @@ class CutikaryawanController extends Controller
             $sisa                 = $cuti->saldohakcuti -  $cuti->jml_cuti;  
             $cuti->sisacuti       = $sisa;
             $cuti->keterangan     = "-";
+
             // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti, $sisa,$cuti->sisacuti);
         }
         elseif($request->id_jeniscuti == 2)
@@ -329,7 +331,7 @@ class CutikaryawanController extends Controller
             $cuti->saldohakcuti   = null;
             $cuti->sisacuti       = null;
             $cuti->keterangan     = $jeniscuti->jenis_cuti;
-            dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
+            // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
         }
         elseif($request->id_jeniscuti == 3)
         {
@@ -337,7 +339,7 @@ class CutikaryawanController extends Controller
             $cuti->saldohakcuti   = null;
             $cuti->sisacuti       = null;
             $cuti->keterangan     = $jeniscuti->jenis_cuti;
-            dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
+            // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
         }else{
             return redirect()->back();
         }
@@ -345,7 +347,7 @@ class CutikaryawanController extends Controller
         $cuti->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
         $cuti->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
       
-        $cuti->status         = $status->id;
+        $cuti->status         = $cuti->status;
         // dd($cuti,$request->all());
         $cuti->update();
 

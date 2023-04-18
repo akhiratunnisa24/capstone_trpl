@@ -51,9 +51,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group col-sm">
                                         <label for="id_jeniscuti" class="col-form-label">Status Ketidakhadiran / Kategori Cuti</label>
-                                        @foreach ($jeniscuti as $item)
-                                            <textarea class="form-control" style="height: 39px;" name="keperluan" value="{{$item->id}}" @if($item->id == $data->id_jeniscuti) selected @endif autocomplete="off" rows="1" readonly>{{$item->jenis_cuti}}</textarea>
-                                        @endforeach
+                                        <input type="text" class="form-control" id="id_jeniscuti" value="{{$data->jenis_cuti}}" readonly>
+                                        <input type="hidden" class="form-control" name="id_jeniscuti" id="id_jeniscuti" value="{{$data->id_jeniscuti}}" hidden>
+                                            {{-- <textarea class="form-control" style="height: 39px;" name="keperluan" value="{{$data->id_jeniscuti}}" @if($data->id == $data->id_jeniscuti) selected @endif autocomplete="off" rows="1" readonly>{{$data->jenis_cuti}}</textarea> --}}
                                     </div>
                                     
                                     <div class="row">
