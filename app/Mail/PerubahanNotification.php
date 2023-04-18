@@ -12,48 +12,67 @@ use Illuminate\Queue\SerializesModels;
 class PerubahanNotification extends Mailable
 {
     use Queueable, SerializesModels;
+    public $data=[];
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
-    /**
-     * Get the message envelope.
-     *
-     * @return \Illuminate\Mail\Mailables\Envelope
-     */
-    public function envelope()
+    public function build()
     {
-        return new Envelope(
-            subject: 'Perubahan Notification',
-        );
+       if($this->data['status'] == "Mengajukan Perubahan")
+       {
+            return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+                ->subject($this->data['subject'])
+                ->cc($this->data['atasan2'], 'Pimpinan Unit Kerja')
+                ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
+                ->view('emails.cutibatal')->with('data',$this->data);   
+       }
+       elseif($this->data['status'] == "Perubahan Disetujui Atasan")
+       {
+            return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+                ->subject($this->data['subject'])
+                ->cc($this->data['karyawan_email'], 'Karyawan')
+                ->view('emails.cutibatal')->with('data',$this->data);  
+       }
+       elseif($this->data['status'] == "Perubahan Disetujui")
+       {
+            return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+                ->subject($this->data['subject'])
+                ->cc($this->data['atasan2'], 'Pimpinan Unit Kerja')
+                ->cc($this->data['atasan1'], 'Atasan')
+                ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
+                ->view('emails.cutibatal')->with('data',$this->data);  
+       }
+       elseif($this->data['status'] == "Pending Atasan")
+       {
+            return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+                ->subject($this->data['subject'])
+                ->cc($this->data['atasan1'], 'Atasan')
+                ->cc($this->data['atasan2'], 'Pimpinan Unit Kerja')
+                ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
+                ->view('emails.cutibatal')->with('data',$this->data);  
+       }
+       else
+       {
+            return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+                ->subject($this->data['subject'])
+                ->cc($this->data['atasan2'], 'Pimpinan Unit Kerja')
+                ->cc($this->data['atasan1'], 'Atasan')
+                ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
+                ->view('emails.cutibatal')->with('data',$this->data); 
+       }
+      
+
+            // ->cc('hrd-global@grm-risk.com','HRD GRM')
+            // ->cc('pandu@grm-risk.com','HRD Staff')
+            // ->cc('ariswan@grm-risk.com','HRD Manager')
     }
 
-    /**
-     * Get the message content definition.
-     *
-     * @return \Illuminate\Mail\Mailables\Content
-     */
-    public function content()
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array
-     */
-    public function attachments()
-    {
-        return [];
-    }
 }

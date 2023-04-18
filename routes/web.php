@@ -49,6 +49,7 @@ use App\Http\Controllers\admin\SettingorganisasiController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
 use App\Http\Controllers\karyawan\AbsensiKaryawanController;
 use App\Http\Controllers\admin\NotifMailRekruitmenController;
+use App\Http\Controllers\manager\PembatalanPerubahanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -392,8 +393,18 @@ Route::get('/export-to-excel', [ManagerController::class, 'exportToExcel'])->nam
 Route::get('/cuti-staff', [ManagerController::class, 'cutiStaff'])->name('cuti.Staff');
 Route::post('/cuti-staff/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
 Route::post('/cuti-reject/{id}', [ManagerController::class, 'cutireject'])->name('cuti.reject');
+Route::post('/batal-cuti-staff/{id}', [PembatalanPerubahanController::class, 'batalApprove'])->name('batal.approved');
+Route::post('/batal-reject-cuti-staff/{id}', [PembatalanPerubahanController::class, 'batalRejected'])->name('batal.rejected');
+Route::post('/update-cuti-staff/{id}', [PembatalanPerubahanController::class, 'ubahApprove'])->name('ubah.approved');
+Route::post('/update-reject-cuti-staff/{id}', [PembatalanPerubahanController::class, 'ubahRejected'])->name('ubah.rejected');
+
 Route::post('/izin-staff/{id}', [ManagerController::class, 'izinApproved'])->name('izin.approved');
 Route::post('/izin-reject/{id}', [ManagerController::class, 'izinReject'])->name('izin.reject');
+Route::post('/batal-izin-staff/{id}', [PembatalaIzinController::class, 'batalApprove'])->name('batal.setuju');
+Route::post('/batal-reject-izin-staff/{id}', [PembatalaIzinController::class, 'batalRejected'])->name('batal.tolak');
+Route::post('/update-izin-staff/{id}', [PembatalaIzinController::class, 'ubahApprove'])->name('ubah.setuju');
+Route::post('/update-reject-izin-staff/{id}', [PembatalaIzinController::class, 'ubahRejected'])->name('ubah.ditolak');
+
 
 Route::get('/resign_manager', [ManagerController::class, 'resignStaff'])->name('resignstaff');
 Route::get('/resignmanager/{id}', [ResignAdminController::class, 'show'])->name('resign.show');

@@ -14,7 +14,7 @@ class Cuti extends Model
                             'id_jeniscuti','keperluan','id_alokasi','id_settingalokasi',
                             'tgl_mulai','tgl_selesai','tgldisetujui_a','tgldisetujui_b',
                             'tglditolak','jml_cuti','status','jmlharikerja','saldohakcuti','sisacuti','keterangan',
-                            'batal_atasan','batal_pimpinan','batalditolak','catatan'
+                            'batal_atasan','batal_pimpinan','batalditolak','catatan','ubah_atasan','ubah_pimpinan','ubahditolak'
                         ];
     
     public function jeniscutis(){

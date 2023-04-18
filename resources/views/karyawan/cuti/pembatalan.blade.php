@@ -53,9 +53,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group col-sm">
                                         <label for="id_jeniscuti" class="col-form-label">Status Ketidakhadiran / Kategori Cuti</label>
-                                        @foreach ($jeniscuti as $item)
-                                            <textarea class="form-control" style="height: 39px;" name="keperluan" value="{{$item->id}}" @if($item->id == $data->id_jeniscuti) selected @endif autocomplete="off" rows="1" readonly>{{$item->jenis_cuti}}</textarea>
-                                        @endforeach
+                                        <input type="text" class="form-control" id="id_jeniscuti" value="{{$data->jenis_cuti}}" readonly>
+                                        <input type="hidden" class="form-control" name="id_jeniscuti" id="id_jeniscuti" value="{{$data->id_jeniscuti}}" hidden>
+                                        
                                     </div>
                                     
                                     <div class="row">
@@ -90,12 +90,7 @@
                                         {{-- <input type="text" class="form-control" name="keperluan" id="keperluan" placeholder="Masukkan keterangan" autocomplete="off" required> --}}
                                     </div>
                                     <div class="row">
-                                        {{-- <div class="col-sm-6 col-xs-12">
-                                            <div class="form-group col-sm">
-                                                <label for="" class="col-form-label">Durasi Tersedia</label>
-                                                <input type="text" class="form-control" name="durasi" id="durasii" readonly>
-                                            </div>
-                                        </div> --}}
+                                    
                                         <div class="col-sm-12 col-xs-12">
                                             <div class="form-group col-sm">
                                                 <label for="jml_cuti" class="col-form-label">Jumlah Cuti</label>
