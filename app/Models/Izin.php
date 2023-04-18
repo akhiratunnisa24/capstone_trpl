@@ -13,7 +13,9 @@ class Izin extends Model
                             'tgl_permohonan','nik','id_karyawan','jabatan','departemen',
                             'id_jenisizin','keperluan','tgl_mulai','tgl_selesai','jam_mulai',
                             'jam_selesai','tgl_setuju_a', 'tgl_setuju_b'
-                            ,'tgl_ditolak','jml_hari','jml_jam','status','codeizin'
+                            ,'tgl_ditolak','jml_hari','jml_jam','status','codeizin',
+                            'batal_atasan','batal_pimpinan','batalditolak','catatan',
+                            'ubah_atasan','ubah_pimpinan','ubahditolak'
                         ];
     
     public function jenisizins()
