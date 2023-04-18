@@ -1163,7 +1163,7 @@ class ManagerController extends Controller
         {
             if($izin && $izin->atasan_pertama == Auth::user()->id_pegawai)
             {
-                dd($izin->atasan_pertama, Auth::user()->id_pegawai);
+                // dd($izin->atasan_pertama, Auth::user()->id_pegawai);
                 $status = Status::find(6);
             
                 Izin::where('id',$id)->update([
@@ -1176,7 +1176,7 @@ class ManagerController extends Controller
                     
                 //KIRIM NOTIFIKASI EMAIL KE ATASAN 2 dan karyawan
                 $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
-                    ->join('departemen','cuti.departemen','=','departemen.id')
+                    ->join('departemen','izin.departemen','=','departemen.id')
                     ->where('izin.id_karyawan','=',$izinn->id_karyawan)
                     ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','departemen.nama_departemen')
                     ->first();
@@ -1193,6 +1193,8 @@ class ManagerController extends Controller
                 $data = [
                     'subject'     =>'Notifikasi Approval Pertama Permohonan Izin ' . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
                     'noregistrasi'=>$izinn->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR IZIN KARYAWAN',
+                    'subtitle' => '[PERSETUJUAN ATASAN]',
                     'tgl_permohonan' =>Carbon::parse($izinn->tgl_permohonan)->format("d/m/Y"),
                     'nik'         => $izinn->nik,
                     'jabatankaryawan' => $izinn->jabatan,
