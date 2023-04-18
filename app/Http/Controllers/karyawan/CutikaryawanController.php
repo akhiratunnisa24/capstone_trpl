@@ -158,7 +158,7 @@ class CutikaryawanController extends Controller
             $cuti->saldohakcuti   = null;
             $cuti->sisacuti       = null;
             $cuti->keterangan     = $jeniscuti->jenis_cuti;
-            dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
+            // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
         }
         elseif($request->id_jeniscuti == 3)
         {
@@ -166,7 +166,7 @@ class CutikaryawanController extends Controller
             $cuti->saldohakcuti   = null;
             $cuti->sisacuti       = null;
             $cuti->keterangan     = $jeniscuti->jenis_cuti;
-            dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
+            // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
         }else{
 
         }

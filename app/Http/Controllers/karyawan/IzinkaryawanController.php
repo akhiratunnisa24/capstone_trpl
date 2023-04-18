@@ -59,14 +59,14 @@ class IzinkaryawanController extends Controller
             ]);
             // dd($validate);
             $izin = New Izin;
-            $izin->tgl_permohonan = Carbon::parse($request->tglpermohonan)->format("Y-m-d");
+            $izin->tgl_permohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tglpermohonan)->format("Y-m-d");
             $izin->nik            = $request->nik;
             $izin->id_karyawan    = $karyawan;
             $izin->jabatan        = $request->jabatan;
             $izin->departemen     = $request->departemen;
             $izin->id_jenisizin   = $request->id_jenisizin;
             $izin->keperluan      = $request->keperluan;
-            $izin->tgl_mulai      = Carbon::parse($request->tgl_mulai)->format("Y-m-d");
+            $izin->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
             $izin->tgl_selesai    = NULL;
             $izin->jam_mulai      = $request->jam_mulai;
             $izin->jam_selesai    = $request->jam_selesai;
@@ -85,7 +85,7 @@ class IzinkaryawanController extends Controller
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
                 ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','izin.*','karyawan.jabatan','departemen.nama_departemen')
                 ->first();
-            $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
+            $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->get();
 
             $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
@@ -96,7 +96,7 @@ class IzinkaryawanController extends Controller
             $data = [
                 'subject' => 'Notifikasi Permohonan ' . $jenisizin->jenis_izin . ' ' . '#'. $izin->id. ' ' . ucwords(strtolower($emailkry->nama)) ,
                 'noregistrasi' => $izin->id,
-                'title'  => 'NOTIFIKASI PERSETUJUAN PERMOHONAN CUTI KARYAWAN',
+                'title'  => 'NOTIFIKASI PERSETUJUAN PERMOHONAN IZIN KARYAWAN',
                 'subtitle' => '',
                 'tgl_permohonan' =>Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
                 'nik' => $emailkry->nik,
@@ -104,10 +104,10 @@ class IzinkaryawanController extends Controller
                 'jabatankaryawan' => $emailkry->jabatan,
                 'departemen' => $emailkry->nama_departemen,
                 'karyawan_email' =>$emailkry->email,
-                'jenisizin'   =>$jenisizin->jenis_izin,
+                'id_jenisizin'   =>$jenisizin->jenis_izin,
                 'keperluan'   =>$izin->keperluan,
                 'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d/m/Y"),
-                'tgl_selesai'   =>Carbon::parse($izin->tgl_mulai)->format("d/m/Y"),
+                'tgl_selesai'   =>Carbon::parse($izin->tgl_selesai)->format("d/m/Y"),
                 'jml_hari'    =>0,
                 'jam_mulai'   =>$izin->jam_mulai,
                 'jam_selesai' =>$izin->jam_selesai,
@@ -130,15 +130,15 @@ class IzinkaryawanController extends Controller
             //  dd($validate);
     
             $izin = New Izin;
-            $izin->tgl_permohonan = Carbon::parse($request->tglpermohonan)->format("Y-m-d");
+            $izin->tgl_permohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tglpermohonan)->format("Y-m-d");
             $izin->nik            = $request->nik;
             $izin->id_karyawan    = $karyawan;
             $izin->jabatan        = $request->jabatan;
             $izin->departemen     = $request->departemen;
             $izin->id_jenisizin   = $request->id_jenisizin;
             $izin->keperluan      = $request->keperluan;
-            $izin->tgl_mulai      = Carbon::parse($request->tgl_mulai)->format("Y-m-d");
-            $izin->tgl_selesai    = Carbon::parse($request->tgl_selesai)->format("Y-m-d");
+            $izin->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
+            $izin->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
             $izin->jam_mulai      = $request->jam_mulai ?? NULL;
             $izin->jam_selesai    = NULL;
             $izin->jml_hari       = $request->jml_hari;
@@ -161,6 +161,8 @@ class IzinkaryawanController extends Controller
 
             $data = [
                 'subject' => 'Notifikasi Permohonan ' . $jenisizin->jenis_izin . ' ' . '#'. $izin->id. ' ' . ucwords(strtolower($emailkry->nama)) ,
+                'title'  => 'NOTIFIKASI PERSETUJUAN PERMOHONAN IZIN KARYAWAN',
+                'subtitle' => '',
                 'noregistrasi' => $izin->id,
                 'tgl_permohonan' =>Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
                 'nik' => $emailkry->nik,
@@ -168,10 +170,10 @@ class IzinkaryawanController extends Controller
                 'jabatankaryawan' => $emailkry->jabatan,
                 'departemen' => $emailkry->nama_departemen,
                 'karyawan_email' =>$emailkry->email,
-                'jenisizin'   =>$jenisizin->jenis_izin,
+                'id_jenisizin'   =>$jenisizin->jenis_izin,
                 'keperluan'   =>$izin->keperluan,
-                'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d M Y"),
-                'tgl_selesai' =>Carbon::parse($izin->tgl_selesai)->format("d M Y"),
+                'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d/m/Y"),
+                'tgl_selesai' =>Carbon::parse($izin->tgl_selesai)->format("d/m/Y"),
                 'jml_hari'    =>$izin->jml_hari,
                 'jml_jam'     => 0,
                 'status'      =>$status->name_status,

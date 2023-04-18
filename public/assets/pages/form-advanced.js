@@ -441,7 +441,29 @@
                 return;
             },
         });
+        jQuery("#datepicker-autoclose44").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
         jQuery("#datepicker-autocloset").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+        jQuery("#datepicker-autoclose45").datepicker({
             format: "dd/mm/yyyy",
             autoclose: true,
             minDate: minDate,

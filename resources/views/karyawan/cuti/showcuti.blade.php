@@ -142,7 +142,7 @@
                 <div class="form-group row">
                     <label for="status" class="col-sm-5 col-form-label">Catatan</label>
                     <div class="col-sm-7">
-                        <label>: {{$data->catatan}}</label>
+                        <label>: {{$data->catatan ?? ''}}</label>
                     </div>
                 </div>
                 @if($data->status == 9 || $data->status == 10)
