@@ -20,7 +20,7 @@ class StatusSeeder extends Seeder
             
         ]);
         Status::insert([
-            'name_status' => 'Disetujui Manager',
+            'name_status' => 'Disetujui Manajer',
             
         ]);
         Status::insert([
@@ -40,7 +40,7 @@ class StatusSeeder extends Seeder
             'name_status' => 'Disetujui',
         ]);
         Status::insert([
-            'name_status' => 'Pending Manager',
+            'name_status' => 'Pending Manajer',
         ]);
     }
 }

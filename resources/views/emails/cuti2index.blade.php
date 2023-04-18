@@ -188,7 +188,7 @@
 		<p>Terima kasih atas perhatiannya.</p><br>
 
 		<p>Salam Hormat,<br><br></p>
-		<p>[Manager/HR]<br>
+		<p>[Manajer/HR]<br>
 	</div> --}}
 
 {{-- <body>

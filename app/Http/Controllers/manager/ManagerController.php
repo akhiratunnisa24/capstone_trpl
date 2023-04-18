@@ -37,7 +37,7 @@ class ManagerController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
-        if ($role == 3 && $row->jabatan = "Manager") 
+        if ($role == 3 && $row->jabatan = "Manajer") 
         {
             $staff = Karyawan::with('departemens')
                 ->where('atasan_pertama',Auth::user()->id_pegawai)
@@ -79,7 +79,7 @@ class ManagerController extends Controller
             ->get();
         // return $pegawai;
         // return $role;
-        if($role == 3 && $row->jabatan = "Manager") 
+        if($role == 3 && $row->jabatan = "Manajer") 
         {
             $manager_iddep = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
                 ->select('divisi')->first();
@@ -203,7 +203,7 @@ class ManagerController extends Controller
 
         $tp = $request->query('tp',1);
 
-        if($role == 3 && $row->jabatan = "Manager" || $role == 3 && $row->jabatan = "Management")
+        if($role == 3 && $row->jabatan = "Manajer" || $role == 3 && $row->jabatan = "Management")
         {
             $cutistaff = DB::table('cuti')
                 ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
@@ -331,7 +331,7 @@ class ManagerController extends Controller
         if ($cekSisacuti != null) 
         {
             // Cuti berasal dari sisacuti
-            if($row->jabatan == "Manager" && $role == 3)
+            if($row->jabatan == "Manajer" && $role == 3)
             {
                 $datacuti = DB::table('cuti')
                     ->leftjoin('settingalokasi', 'cuti.id_settingalokasi', '=', 'settingalokasi.id')
@@ -343,7 +343,7 @@ class ManagerController extends Controller
                     ->first();
 
                return $datacuti;
-                if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai  && $row->jabatan = "Manager")
+                if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai  && $row->jabatan = "Manajer")
                 {
                     // return $datacuti->atasan_pertama;
                     $status = Status::find(2);
@@ -547,7 +547,7 @@ class ManagerController extends Controller
         {
             $cutis = Cuti::where('id',$id)->first();
             // return $cutis;
-            if($cutis && $row->jabatan == "Manager" && $role == 3)
+            if($cutis && $row->jabatan == "Manajer" && $role == 3)
             {
                 // return $cutis->id;
                 $datacuti = DB::table('cuti')
@@ -561,7 +561,7 @@ class ManagerController extends Controller
                     ->select('cuti.*','alokasicuti.id as id_alokasi','karyawan.atasan_pertama','karyawan.atasan_kedua')
                     ->first();
                     // return $datacuti->id;
-                    if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai && $row->jabatan = "Manager")
+                    if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai && $row->jabatan = "Manajer")
                     {
                         return $datacuti->atasan_pertama;
                         $status = Status::find(2);
@@ -865,7 +865,7 @@ class ManagerController extends Controller
                 return redirect()->back();
             // }
         }
-        else if($datacuti && $role == 3 && $row->jabatan == "Manager")
+        else if($datacuti && $role == 3 && $row->jabatan == "Manajer")
         {
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -959,7 +959,7 @@ class ManagerController extends Controller
                 //ambil nama jeniscuti
                 $ct = DB::table('cuti')
                 ->join('jeniscuti','cuti.id_jeniscuti','=','jeniscuti.id')
-                ->join('statuses','izin.status','=','statuses.id')
+                ->join('statuses','cuti.status','=','statuses.id')
                 ->where('cuti.id',$id)
                 ->select('cuti.*','jeniscuti.jenis_cuti as jenis_cuti','statuses.name_status')
                 ->first();
@@ -1041,9 +1041,9 @@ class ManagerController extends Controller
         ->select('izin.*', 'karyawan.nama', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua')
         ->first();
 
-        if($row->jabatan == "Manager" && $role == 3)
+        if($row->jabatan == "Manajer" && $role == 3)
         {
-            if($izin && $izin->atasan_pertama == Auth::user()->id_pegawai && $row->jabatan = "Manager")
+            if($izin && $izin->atasan_pertama == Auth::user()->id_pegawai && $row->jabatan = "Manajer")
             {
                 // return Auth::user()->role;
                 $status = Status::find(2);
@@ -1097,7 +1097,7 @@ class ManagerController extends Controller
                 Mail::to($tujuan)->send(new IzinAtasan2Notification($data));
                 return redirect()->back()->withInput();
             } 
-            elseif($izin && $izin->atasan_kedua == Auth::user()->id_pegawai && $row->jabatan = "Manager")
+            elseif($izin && $izin->atasan_kedua == Auth::user()->id_pegawai && $row->jabatan = "Manajer")
             {
                 // return Auth::user()->name;
                 $status = Status::find(7);
@@ -1308,7 +1308,7 @@ class ManagerController extends Controller
             return redirect()->route('cuti.Staff',['type'=>2])->withInput();
             
         }
-        else if($dataizin && $role == 3 && $row->jabatan == "Manager")
+        else if($dataizin && $role == 3 && $row->jabatan == "Manajer")
         {
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -1480,7 +1480,7 @@ class ManagerController extends Controller
         $bulan      = $request->session()->get('bulan');
         $tahun      = $request->session()->get('tahun');
 
-        if ($role == 3 && $row->jabatan = "Manager") 
+        if ($role == 3 && $row->jabatan = "Manajer") 
         {
             if(isset($idkaryawan) && isset($bulan) && isset($tahun))
             {
@@ -1559,7 +1559,7 @@ class ManagerController extends Controller
         $bulan      = $request->session()->get('bulan');
         $tahun      = $request->session()->get('tahun',);
 
-        if($role == 3 && $row->jabatan = "Manager")
+        if($role == 3 && $row->jabatan = "Manajer")
         {
             if(isset($idkaryawan) && isset($bulan) && isset($tahun))
             {
@@ -1667,7 +1667,7 @@ class ManagerController extends Controller
 //         ->where('karyawan.atasan_kedua', '=', Auth::user()->id_pegawai)
 //         ->first();
     
-//     if($role == 3 && $row->jabatan = "Manager")
+//     if($role == 3 && $row->jabatan = "Manajer")
 //     {
       
 //         return Auth::user()->nama;
@@ -1876,7 +1876,7 @@ class ManagerController extends Controller
              //ambil data dengan id_departemen sama dengan manager
             // $staff= Karyawan::with('departemens')
             //     ->where('divisi',$manager_iddep->divisi)
-            //     ->where('jabatan','!=','Manager')->get();
+            //     ->where('jabatan','!=','Manajer')->get();
 
 
 

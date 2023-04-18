@@ -189,7 +189,7 @@
 			@if($data['id_jenisizin'] == "Terlambat" || $data['id_jenisizin'] == "Pulang Lebih Awal")
 				<li>Jam            : {{$data['jam_mulai']}} s/d {{$data['jam_selesai']}}</li>
 			@endif
-			@if($data['status'] == "Disetujui Manager")
+			@if($data['status'] == "Disetujui Manajer")
 				<li>Status         :  <span class="text-white badge badge-info"><strong>{{$data['status']}}</strong></span></li>
 			@else
 				<li>Status         :  <span class="text-white badge badge-primary"><strong>{{$data['status']}}</strong></span></li>
@@ -198,6 +198,6 @@
 		<p>Mohon Bapak/Ibu untuk segera meninjau permintaan ini dan memberikan persetujuan secepatnya.</p>
 		<p>Terima kasih atas perhatiannya.</p>
 		<p>Salam Hormat,<br><br></p>
-		<p>[Manager/HR]</p>
+		<p>[Manajer/HR]</p>
 	</div>
 </div> --}}

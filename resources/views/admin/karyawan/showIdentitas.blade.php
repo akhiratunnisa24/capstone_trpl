@@ -109,12 +109,12 @@
                                                             </div>
                         
                                                             <div class="form-group">
-                                                                <label  class="form-label">Atasan Langsung (SPV/Manager/Direktur)</label>
+                                                                <label  class="form-label">Atasan Langsung (SPV/Manajer/Direktur)</label>
                                                                 <label class="form-control">{{ $karyawan->atasan_pertamaa->nama ?? '-' }}</label>
                                                             </div>
                                                             
                                                             <div class="form-group">
-                                                                <label  class="form-label">Atasan (Manager/Direktur)</label>
+                                                                <label  class="form-label">Atasan (Manajer/Direktur)</label>
                                                                 <label class="form-control">{{ $karyawan->atasan_keduab->nama ?? '-' }}</label>
                                                             </div>
 

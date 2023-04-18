@@ -162,8 +162,22 @@
 					<p class="title">Keterangan</p><label class="value">: <strong>{{$data['keperluan']}}</strong></label><br>
 					<p class="title">Tanggal Persetujuan</p><label class="value">:</label>
 					<ul>
-						<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: -</label></li>
-						<li><label class="value">Pimpinan Unit Kerja : -</label></li>
+						@if($data['status'] == "Pembatalan Disetujui Atasan")
+							<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuiatasan']}} WIB</label></li>
+							<li><label class="value">Pimpinan Unit Kerja: -</label></li>
+                    	@elseif($data['status'] == "Transaksi Dibatalkan")
+							<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuiatasan']}} WIB</label></li>
+							<li><label class="value">Permohonan Ditolak: {{$data['tglditolak']}} WIB</label></li>
+							<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;: {{$data['tglditolak']}} WIB</label></li>
+						@elseif($data['status'] == "Pending Atasan")
+							<li><label class="value">Permohonan Ditolak: {{$data['tglditolak']}} WIB</label></li>
+							<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tglditolak']}} WIB</label></li>
+						@elseif($data['status'] == "Pending Pimpinan")
+							<li><label class="value">Permohonan Disetujui: {{$data['tgldisetujuiatasan']}} WIB</label></li>
+							<li><label class="value">Permohonan Ditolak&nbsp;&nbsp;: {{$data['tglditolak']}} WIB</label></li>
+							<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tglditolak']}} WIB</label></li>
+						@else
+						@endif
 					</ul>
 
 				<p>Karyawan Pemohon,<br>

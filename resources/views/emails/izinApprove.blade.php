@@ -216,6 +216,6 @@
 		<p>Terima kasih</p>
 	
 		<p>Salam Hormat,<br><br></p>
-		<p>[Manager/HR]<br>
+		<p>[Manajer/HR]<br>
 	</div>
 </div> --}}

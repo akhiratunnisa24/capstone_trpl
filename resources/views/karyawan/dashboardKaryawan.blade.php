@@ -79,7 +79,7 @@
                                                         <td>
                                                             <div class="row">
                                                                 
-                                                                @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Manager")
+                                                                @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Manajer")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
                                                                             @csrf
@@ -148,7 +148,7 @@
                                                                         </form>
                                                                     </div>
                                                                 
-                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Manager")
+                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Manajer")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
                                                                             @csrf
@@ -293,7 +293,7 @@
                                                         @endif --}}
                                                         <td>
                                                             {{-- <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : '')))) }}
+                                                                {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manajer' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : '')))) }}
                                                             </span> --}}
                                                             <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : 'secondary' ))))))))) }}">
                                                                 {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status : ''))))))))) }}
@@ -302,7 +302,7 @@
 
                                                         <td>
                                                             <div class="row">
-                                                                {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
+                                                                {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manajer') --}}
                                                                 @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approved', $data->id) }}"

@@ -36,7 +36,7 @@ class DirekturController extends Controller
                 ->leftjoin('settingalokasi','cuti.id_jeniscuti','settingalokasi.id_jeniscuti')
                 ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
                 ->where(function($query) use ($id_user_login) {
-                    $query->where('karyawan.jabatan', 'Manager','HRD')
+                    $query->where('karyawan.jabatan', 'Manajer','HRD')
                     ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                     ->orWhere(function($query) use ($id_user_login) {
                     $query->where('karyawan.jabatan', 'Asisten Manajer')
@@ -53,7 +53,7 @@ class DirekturController extends Controller
                 ->leftjoin('statuses','izin.status','=','statuses.id')
                 ->leftjoin('datareject','datareject.id_izin','=','izin.id')
                 ->where(function($query) use ($id_user_login) {
-                    $query->where('karyawan.jabatan', 'Manager','HRD')
+                    $query->where('karyawan.jabatan', 'Manajer','HRD')
                     ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                     ->orWhere(function($query) use ($id_user_login) {
                     $query->where('karyawan.jabatan', 'Asisten Manajer')

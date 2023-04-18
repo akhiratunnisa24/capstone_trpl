@@ -349,7 +349,7 @@ class karyawanController extends Controller
 
             $posisi = Lowongan::all()->sortByDesc('created_at');
 
-            if($role == 3 && $row->jabatan == "Manager")
+            if($role == 3 && $row->jabatan == "Manajer")
             {
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -367,8 +367,8 @@ class karyawanController extends Controller
                     })
                     ->where('cuti.status', '=', '1')
                     ->orWhere('cuti.status','=','6')
-                    ->orWhere('cuti.status','=','11')
-                    ->orWhere('cuti.status','=','12')
+                    ->orWhere('cuti.catatan','=','11')
+                    ->orWhere('cuti.catatan','=','12')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 $cutijumlah = $cuti->count();
@@ -410,7 +410,7 @@ class karyawanController extends Controller
                             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     })
                     ->where('cuti.status', '=', '1')
-                    ->orWhere('cuti.status', '=', '11')
+                    ->orWhere('cuti.catatan', '=', '11')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 // return $cuti;
@@ -450,7 +450,7 @@ class karyawanController extends Controller
                             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     })
                     ->where('cuti.status', '=', '1')
-                    ->orWhere('cuti.status','=','11')
+                    ->orWhere('cuti.catatan','=','11')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 $cutijumlah = $cuti->count();
@@ -490,8 +490,8 @@ class karyawanController extends Controller
                     })
                     ->where('cuti.status', '=', '1')
                     ->orWhere('cuti.status', '=', '2')
-                    ->orWhere('cuti.status','=','11')
-                    ->orWhere('cuti.status','=','12')
+                    ->orWhere('cuti.catatan','=','11')
+                    ->orWhere('cuti.catatan','=','12')
                     ->orderBy('created_at', 'DESC')
                     ->get();
                 $cutijumlah = $cuti->count();
@@ -533,8 +533,8 @@ class karyawanController extends Controller
                         })
                         ->where('cuti.status', '=', '1')
                         ->orWhere('cuti.status', '=', '2')
-                        ->orWhere('cuti.status','=','11')
-                        ->orWhere('cuti.status','=','12')
+                        ->orWhere('cuti.catatan','=','11')
+                        ->orWhere('cuti.catatan','=','12')
                         ->orderBy('created_at', 'DESC')
                         ->get();
                 $cutijumlah = $cuti->count();
@@ -683,8 +683,8 @@ class karyawanController extends Controller
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manager','Managemen'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Managemen'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer','Managemen'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer','Managemen'])->get();
 
             $output = [
                 'row' => $row,
@@ -1028,8 +1028,8 @@ class karyawanController extends Controller
             $rpekerjaan     = Rpekerjaan::where('id_pegawai', $id)->first();
             $row            = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manager','Management'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Management'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer','Management'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer','Management'])->get();
 
             $output = [
                 'row' => $row
@@ -1290,8 +1290,8 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manager','Management'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Management'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer','Management'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer','Management'])->get();
 
             $output = [
                 'row' => $row
@@ -1326,8 +1326,8 @@ class karyawanController extends Controller
 
             $karyawan = karyawan::findOrFail($id);
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manager', 'Management'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Management'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer', 'Management'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer', 'Management'])->get();
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::all();
             
@@ -1360,8 +1360,8 @@ class karyawanController extends Controller
 
             $karyawan       = Karyawan::findOrFail($id);
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manager', 'Management'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Management'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer', 'Management'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer', 'Management'])->get();
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::all();
 
