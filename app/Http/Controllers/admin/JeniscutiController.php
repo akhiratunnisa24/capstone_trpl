@@ -26,13 +26,13 @@ class JeniscutiController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
-        if ($role == 1) {
+        if ($role == 1 || $role == 2 && $row->jabatan == "Asisten Manajer") {
 
         $type = $request->query('type', 1);
         
         $jeniscuti = Jeniscuti::all();
         $jenisizin = Jenisizin::all();
-        return view('admin.kategori.index', compact('jeniscuti','jenisizin','type','row'));
+        return view('admin.kategori.index', compact('jeniscuti','jenisizin','type','row','role'));
 
         } else {
             

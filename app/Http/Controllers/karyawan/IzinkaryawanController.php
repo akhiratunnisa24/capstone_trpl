@@ -85,15 +85,18 @@ class IzinkaryawanController extends Controller
             $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                 ->join('departemen','izin.departemen','=','departemen.id')
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','izin.*','karyawan.jabatan','departemen.nama_departemen')
+                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','izin.*','karyawan.jabatan','departemen.nama_departemen')
                 ->first();
-            $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->get();
+            $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
 
             $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
+            $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
+                ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                ->first();
 
-            $tujuan = $atasan['email'];
+            $tujuan = $atasan->email;
 
             $data = [
                 'subject' => 'Notifikasi Permohonan ' . $jenisizin->jenis_izin . ' ' . '#'. $izin->id. ' ' . ucwords(strtolower($emailkry->nama)) ,
@@ -117,9 +120,11 @@ class IzinkaryawanController extends Controller
                 'status'      =>$status->name_status,
                 'nama_atasan' =>$atasan->nama,
                 'jabatan'     =>strtoupper($atasan['jabatan']),
+                'atasan2'     =>$atasan2->email,
             ];
             Mail::to($tujuan)->send(new IzinNotification($data));
-            return redirect()->back()->withInput();
+            
+            return redirect()->back()->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
 
         }else{
             $validate = $request->validate([
@@ -152,15 +157,18 @@ class IzinkaryawanController extends Controller
             $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                 ->join('departemen','izin.departemen','=','departemen.id')
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','izin.*','karyawan.jabatan','departemen.nama_departemen')
+                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','izin.*','karyawan.jabatan','departemen.nama_departemen')
                 ->first();
             $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
 
             $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
+            $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
+                ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                ->first();
+            
             $tujuan = $atasan->email;
-
             $data = [
                 'subject' => 'Notifikasi Permohonan ' . $jenisizin->jenis_izin . ' ' . '#'. $izin->id. ' ' . ucwords(strtolower($emailkry->nama)) ,
                 'title'  => 'NOTIFIKASI PERSETUJUAN PERMOHONAN IZIN KARYAWAN',
@@ -183,10 +191,11 @@ class IzinkaryawanController extends Controller
                 'jam_selesai' =>$izin->jam_selesai,
                 'nama_atasan' =>$atasan->nama,
                 'jabatan'     =>strtoupper($atasan->jabatan),
+                'atasan2'     =>$atasan2->email,
             ];
             Mail::to($tujuan)->send(new IzinNotification($data));
             // dd($data);
-            return redirect()->back()->withInput();
+            return redirect()->back()->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
         }  
 
     }
@@ -211,7 +220,7 @@ class IzinkaryawanController extends Controller
             ->select('karyawan.email','karyawan.nama','izin.*','karyawan.atasan_pertama','karyawan.atasan_kedua','karyawan.jabatan','departemen.nama_departemen')
             ->first();
         
-        $jenisizin = Jenisizin::where('id',$izin->id_jeniscuti)->first();
+        $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
         //atasan pertama
         $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
             ->select('email as email','nama as nama','jabatan as jabatan')
@@ -268,11 +277,6 @@ class IzinkaryawanController extends Controller
         $jenisizin = Jenisizin::where('id',$izin->id_jeniscuti)->first();
 
         $izin->tgl_permohonan = $izin->tgl_permohonan;
-        $izin->nik            = $izin->nik;
-        $izin->id_karyawan    = $karyawan;
-        $izin->jabatan        = $izin->jabatan;
-        $izin->departemen     = $izin->departemen;
-        $izin->id_jenisizin   = $izin->id_jenisizin;
         $izin->keperluan      = $request->keperluan;
         $izin->catatan        = $status->name_status;
         if($request->id_jenisizin == 1)
@@ -355,6 +359,7 @@ class IzinkaryawanController extends Controller
             'atasan2' => $atasan2->email,
         ];
         // return $data;
+        // return $tujuan;
         Mail::to($tujuan)->send(new PerubahanNotification($data));
         // return $data;
         // } else {

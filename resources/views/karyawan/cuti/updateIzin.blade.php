@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form action="/update-cuti/{{$data->id}}" method="POST" enctype="multipart/form-data">
+                    <form action="/update-izin/{{$data->id}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row">
@@ -63,7 +63,7 @@
                                                 <div class="form-group">
                                                     <label for="tgl_mulai" class="form-label">Tanggal Pelaksanaan</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" onchange=(jumlahcutis()) value="{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}" placeholder="dd/mm/yyyy" id="datepicker-autoclose44" name="tgl_mulai"  autocomplete="off" rows="10">
+                                                        <input type="text" class="form-control" onchange=(jumlahizins()) value="{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}" placeholder="dd/mm/yyyy" id="datepicker-autoclose44" name="tgl_mulai"  autocomplete="off" rows="10">
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
@@ -75,7 +75,7 @@
                                                 <div class="form-group">
                                                     <label for="tgl_selesai" class="form-label">Sampai</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" onchange=(jumlahcutis()) placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}" id="datepicker-autoclose45" name="tgl_selesai"  autocomplete="off" rows="10">
+                                                        <input type="text" class="form-control" onchange=(jumlahizins()) placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}" id="datepicker-autoclose45" name="tgl_selesai"  autocomplete="off" rows="10">
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
@@ -102,11 +102,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-sm">
-                                        <input type="hidden" class="form-control" value="{{$data->id_alokasi}}" name="id_alokasi" id="idalokasi">
-                                        <input type="hidden" class="form-control" value="{{$data->id_settingalokasi}}" name="id_settingalokasi" id="idsettingalokasi">
-                                    </div>
-            
+                        
                                     <div class="form-group col-sm">
                                         <input type="hidden" class="form-control" name="status" id="status" value="Pending">
                                     </div>
@@ -171,10 +167,10 @@
     </script>
 
     <script type="text/javascript">
-        function jumlahcutis()
+        function jumlahizins()
         {
-            var start= $('#datepicker-autocloses').val();
-            var end  = $('#datepicker-autocloset').val();
+            var start= $('#datepicker-autocloseu').val();
+            var end  = $('#datepicker-autoclosev').val();
             console.log(start,end);
 
             // Mengubah format tanggal pada variabel start

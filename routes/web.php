@@ -45,6 +45,7 @@ use App\Http\Controllers\admin\SettingabsensiController;
 use App\Http\Controllers\karyawan\KpikaryawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
+use App\Http\Controllers\manager\PembatalanIzinController;
 use App\Http\Controllers\admin\SettingorganisasiController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
 use App\Http\Controllers\karyawan\AbsensiKaryawanController;
@@ -223,6 +224,8 @@ Route::get('/cuti_karyawan/{id}', [JeniscutiController::class, 'show'])->name('c
 //izin
 Route::post('/izin_karyawan', [IzinkaryawanController::class, 'store'])->name('izinstore');
 Route::get('/izin_karyawan/{id}', [IzinkaryawanController::class, 'show'])->name('izin.show');
+Route::put('/pembatalan-izin/{id}', [IzinkaryawanController::class, 'batal'])->name('izin.batal');
+Route::put('/update-izin/{id}', [IzinkaryawanController::class, 'update'])->name('izin.update');
 Route::get('/getliburdata', [IzinkaryawanController::class, 'getLiburdata'])->name('getliburdata');
 
 //resign
@@ -400,10 +403,10 @@ Route::post('/update-reject-cuti-staff/{id}', [PembatalanPerubahanController::cl
 
 Route::post('/izin-staff/{id}', [ManagerController::class, 'izinApproved'])->name('izin.approved');
 Route::post('/izin-reject/{id}', [ManagerController::class, 'izinReject'])->name('izin.reject');
-Route::post('/batal-izin-staff/{id}', [PembatalaIzinController::class, 'batalApprove'])->name('batal.setuju');
-Route::post('/batal-reject-izin-staff/{id}', [PembatalaIzinController::class, 'batalRejected'])->name('batal.tolak');
-Route::post('/update-izin-staff/{id}', [PembatalaIzinController::class, 'ubahApprove'])->name('ubah.setuju');
-Route::post('/update-reject-izin-staff/{id}', [PembatalaIzinController::class, 'ubahRejected'])->name('ubah.ditolak');
+Route::post('/batal-izin-staff/{id}', [PembatalanIzinController::class, 'batalApprove'])->name('batal.setuju');
+Route::post('/batal-reject-izin-staff/{id}', [PembatalanIzinController::class, 'batalRejected'])->name('batal.tolak');
+Route::post('/update-izin-staff/{id}', [PembatalanIzinController::class, 'ubahApprove'])->name('ubah.setuju');
+Route::post('/update-reject-izin-staff/{id}', [PembatalanIzinController::class, 'ubahRejected'])->name('ubah.tolak');
 
 
 Route::get('/resign_manager', [ManagerController::class, 'resignStaff'])->name('resignstaff');

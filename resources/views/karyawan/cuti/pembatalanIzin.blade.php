@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form action="/pembatalan-cuti/{{$data->id}}" method="POST" enctype="multipart/form-data">
+                    <form action="/pembatalan-izin/{{$data->id}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row">

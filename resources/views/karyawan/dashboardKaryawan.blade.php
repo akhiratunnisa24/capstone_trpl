@@ -22,21 +22,17 @@
     ?> --}}
 
     @if (Auth::check() && Auth::user()->role !== 4)
+        {{-- @php dd($row->jabatan, Auth::user()->role) @endphp --}}
         <div class="row">
             <div class="col-lg-6">
                 <div class="panel-group " id="accordion-test-2">
                     <div class="panel panel-default ">
-                        {{-- <span class="badge badge-xs badge-danger text-right">{{ $cutijumlah }}</span> --}}
                         <div class="panel-heading ">
                             <h4 class="panel-title ">
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#1" aria-expanded="false"
                                     class="dropdown-toggle waves-effect waves-light collapsed">
                                     Permintaan Cuti Karyawan
                                     
-                                    {{-- @if($cutijumlah)
-                                        <span class="badge badge badge-danger" style="background-color:red">{{ $cutijumlah }}</span>
-                                    @elseif(!$cutijumlah)
-                                    @endif --}}
                                     @if($cutijumlah)
                                         <span class="badge badge badge-danger" style="background-color:red">{{$cutijumlah}}</span>
                                     @endif
@@ -238,10 +234,6 @@
                                     class="dropdown-toggle waves-effect waves-light collapsed">
                                     Pembatalan dan Perubahan Cuti Karyawan
                                     
-                                    {{-- @if($cutijumlah)
-                                        <span class="badge badge badge-danger" style="background-color:red">{{ $cutijumlah }}</span>
-                                    @elseif(!$cutijumlah)
-                                    @endif --}}
                                     @if($jumct)
                                         <span class="badge badge badge-danger" style="background-color:red">{{$jumct}}</span>
                                     @endif
@@ -259,7 +251,7 @@
                                                     <th>No</th>
                                                     <th>Karyawan</th>
                                                     <th>Cuti</th>
-                                                    <th>Mulai</th>
+                                                    <th>Tanggal</th>
                                                     <th>Catatan</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -544,23 +536,9 @@
                                                             </td>
                                                         @endif
 
-                                                        {{-- @if ($data->jml_hari != null)
-                                                            <td>{{ $data->jml_hari }} Hari</td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
-                                                        @if ($data->jam_mulai != null && $data->jam_mulai != null)
-                                                            <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }}
-                                                                s/d
-                                                                {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }}
-                                                            </td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif --}}
+                                                    
                                                         <td>
-                                                            {{-- <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manajer' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : '')))) }}
-                                                            </span> --}}
+                                                           
                                                             <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : 'secondary' ))))))))) }}">
                                                                 {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status : ''))))))))) }}
                                                             </span>
@@ -568,8 +546,42 @@
 
                                                         <td>
                                                             <div class="row">
-                                                                {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manajer') --}}
-                                                                @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
+                                                                @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Manajer")
+                                                                    <div class="col-sm-3">
+                                                                        <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                            <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-3" style="margin-left:7px">
+                                                                        <form action="" method="POST">
+                                                                            <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutiTolak{{ $data->id }}">
+                                                                                <i class="fa fa-times fa-md"></i>
+                                                                            </a>
+                                                                        </form>
+                                                                    </div>
+                                                                    @include('admin.cuti.izinReject')
+                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Asisten Manajer")
+                                                            
+                                                                    <div class="col-sm-3">
+                                                                        <form action="{{ route('izin.approved', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                            <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-3" style="margin-left:7px">
+                                                                        <form action="" method="POST">
+                                                                            <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#Reject{{ $data->id }}">
+                                                                                <i class="fa fa-times fa-md"></i>
+                                                                            </a>
+                                                                        </form>
+                                                                    </div>
+                                                                    @include('manager.staff.izinReject')
+                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Management")
+                                                            
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approved', $data->id) }}"
                                                                             method="POST">
@@ -582,32 +594,67 @@
                                                                     </div>
                                                                     <div class="col-sm-3" style="margin-left:7px">
                                                                         <form action="" method="POST">
-                                                                            <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#izReject{{ $data->id }}">
+                                                                            <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#Reject{{ $data->id }}">
                                                                                 <i class="fa fa-times fa-md"></i>
                                                                             </a>
                                                                         </form>
                                                                     </div>
-                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
+                                                            
+                                                                    @include('manager.staff.izinReject')
+                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Asisten Manajer")
+                                                                
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approved', $data->id) }}"
                                                                             method="POST">
                                                                             @csrf
-                                                                            <input type="hidden" name="status"
-                                                                                value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit"
-                                                                                class="fa fa-check btn-success btn-sm"></button>
+                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                            <button type="submit" class="fa fa-check btn-success btn-sm"></button>
                                                                         </form>
                                                                     </div>
                                                                     <div class="col-sm-3" style="margin-left:7px">
                                                                         <form action="" method="POST">
-                                                                            <a class="btn btn-danger btn-sm"
-                                                                                style="height:26px" data-toggle="modal"
-                                                                                data-target="#izReject{{ $data->id }}">
+                                                                            <a class="btn btn-danger btn-sm"  style="height:26px" data-toggle="modal" data-target="#Reject{{ $data->id }}">
                                                                                 <i class="fa fa-times fa-md"></i>
                                                                             </a>
                                                                         </form>
                                                                     </div>
-                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6)
+                                                                    @include('manager.staff.izinReject')
+                                                            
+                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Manajer")
+                                                                    <div class="col-sm-3">
+                                                                        <form action="{{ route('izin.approved', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                            <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-3" style="margin-left:7px">
+                                                                        <form action="" method="POST">
+                                                                            <a class="btn btn-danger btn-sm"  style="height:26px" data-toggle="modal" data-target="#Reject{{ $data->id }}">
+                                                                                <i class="fa fa-times fa-md"></i>
+                                                                            </a>
+                                                                        </form>
+                                                                    </div>
+                                                                    @include('manager.staff.izinReject')
+                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2  && $row->jabatan == "Management")
+                                                                    <div class="col-sm-3">
+                                                                        <form action="{{ route('izin.approved', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                            <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-3" style="margin-left:7px">
+                                                                        <form action="" method="POST">
+                                                                            <a class="btn btn-danger btn-sm"  style="height:26px" data-toggle="modal" data-target="#Reject{{ $data->id }}">
+                                                                                <i class="fa fa-times fa-md"></i>
+                                                                            </a>
+                                                                        </form>
+                                                                    </div>
+
+                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6 )
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approved', $data->id) }}"
                                                                             method="POST">
@@ -623,6 +670,7 @@
                                                                             </a>
                                                                         </form>
                                                                     </div>
+                                                                    @include('admin.cuti.izinReject')
                                                                 @else
                                                                 @endif
 
@@ -637,7 +685,7 @@
                                                                 </div>
                                                                 {{-- modal show izin --}}
                                                                 @include('admin.cuti.showizin')
-                                                                @include('admin.cuti.izinReject')
+                
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -655,7 +703,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion-test-2" href="#2" class="collapsed"
+                                <a data-toggle="collapse" data-parent="#accordion-test-2" href="#8" class="collapsed"
                                     aria-expanded="false">
                                     Pembatalan dan Perubahan Izin Karyawan
                                     
@@ -666,7 +714,7 @@
 
                             </h4>
                         </div>
-                        <div id="2" class="panel-collapse collapse">
+                        <div id="8" class="panel-collapse collapse">
 
                             <div class="panel-body">
                                 <div class="row">
@@ -697,20 +745,7 @@
                                                             <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/M/Y') }}
                                                             </td>
                                                         @endif
-
-                                                        {{-- @if ($data->jml_hari != null)
-                                                            <td>{{ $data->jml_hari }} Hari</td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
-                                                        @if ($data->jam_mulai != null && $data->jam_mulai != null)
-                                                            <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }}
-                                                                s/d
-                                                                {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }}
-                                                            </td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif --}}
+                                                        
                                                         <td>{{$data->catatan}}</td>
 
                                                         <td>
@@ -812,15 +847,7 @@
                                                                         </div>
                                                                     @endif
                                                                     
-                                                                    <div class="col-sm-3" style="margin-left:6px">
-                                                                        <form action="" method="POST">
-                                                                            <a class="btn btn-info btn-sm" style="height:26px"
-                                                                                data-toggle="modal"
-                                                                                data-target="#Showcuti{{ $data->id }}">
-                                                                                <i class="fa fa-eye"></i>
-                                                                            </a>
-                                                                        </form>
-                                                                    </div>
+                                    
                                                                 </div>
                                                                 <div class="col-sm-3" style="margin-left:5px">
                                                                     <form action="" method="POST">

@@ -290,7 +290,6 @@ class CutikaryawanController extends Controller
         // } else {
         //     // proses jika data atasan tidak ada / email tidak ada
         // }
-
         return redirect()->back()
             ->with('pesan','Email Notifikasi Pembatalan Permohonan Cuti Berhasil Dikirim');
     }

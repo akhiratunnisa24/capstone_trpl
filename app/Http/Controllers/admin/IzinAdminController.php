@@ -60,19 +60,22 @@ class IzinAdminController extends Controller
             })
             ->select('izin.*', 'karyawan.nama', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua')
             ->first();
+        // return $izin;
         if($role == 1 && $izin && $izin->atasan_kedua == Auth::user()->id_pegawai)
         {
             $status = Status::find(7);
             Izin::where('id',$id)->update([
                 'status' => $status->id,
+                'tgl_setuju_b' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
             $izinn = Izin::where('id',$id)->first();
             $jenisizin = Jenisizin::where('id',$izinn->id_jenisizin)->first();
 
              //KIRIM EMAIL NOTIFIKASI KE KARYAWAN ATASAN 2 TINGKAT DAN HRD
             $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                ->join('departemen','izin.departemen','=','departemen.id')
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                ->select('karyawan.email','karyawan.nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
                 ->first();
             $atasan1 = Karyawan::where('id',$emailkry->atasan_pertama)
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
@@ -84,6 +87,13 @@ class IzinAdminController extends Controller
                 'title'       =>$izinn->id,
                 'subject'     =>'Notifikasi Izin Disetujui, Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
                 'id'          =>$izinn->id,
+                'noregistrasi'=>$izinn->id,
+                'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
+                'subtitle' => '',
+                'tgl_permohonan' =>Carbon::parse($izinn->tgl_permohonan)->format("d/m/Y"),
+                'nik'         => $izinn->nik,
+                'jabatankaryawan' => $izinn->jabatan,
+                'departemen' => $emailkry->nama_departemen,
                 'karyawan_email'=>$emailkry->email,
                 'id_jenisizin'=>$izinn->jenis_izin,
                 'atasan1'     =>$atasan1->email,
@@ -95,11 +105,14 @@ class IzinAdminController extends Controller
                 'jam_mulai'   =>Carbon::parse($izinn->jam_mulai)->format("H:i"),
                 'jam_selesai' =>Carbon::parse($izinn->jam_selesai)->format("H:i"),
                 'jml_hari'    =>$izinn->jml_hari,
+                'tgldisetujuiatasan' =>Carbon::parse($izinn->tgl_setuju_b)->format("d/m/Y H:i"),
+                'tgldisetujuipimpinan' => Carbon::now()->format('d/m/Y H:i'),
                 'jumlahjam'   =>$izinn->jml_jam,
                 'status'      =>$status->name_status,
                 'namakaryawan'=>$emailkry->nama,
                 'namaatasan2' =>Auth::user()->name,
             ];
+            // return $data;
             Mail::to($tujuan)->send(new IzinApproveNotification($data));
             return redirect()->route('cuti.Staff',['tp'=>2]);
         }
@@ -108,6 +121,7 @@ class IzinAdminController extends Controller
             $status = Status::find(2);
             Izin::where('id',$id)->update([
                 'status' => $status->id,
+                'tgl_setuju_a' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
 
             $izinn = Izin::where('id',$id)->first();
@@ -115,8 +129,9 @@ class IzinAdminController extends Controller
 
             //KIRIM NOTIFIKASI EMAIL KARYAWAN DAN ATASAN 2
             $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                ->join('departemen','izin.departemen','=','departemen.id')
                 ->where('izin.id_karyawan','=',$izinn->id_karyawan)
-                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                ->select('karyawan.email','karyawan.nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
                 ->first();
 
             $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
@@ -126,8 +141,15 @@ class IzinAdminController extends Controller
             //email atasan kedua adalah tujuan utama
             $tujuan = $atasan2->email;
             $data = [
-                'subject'     =>'Notifikasi Approval Pertama Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
+                'subject'     =>'Notifikasi Approval Pertama Permohonan Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
                 'id'          =>$izinn->id,
+                'noregistrasi'=>$izinn->id,
+                'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR CUTI KARYAWAN',
+                'subtitle' => '[PERSETUJUAN ATASAN]',
+                'tgl_permohonan' =>Carbon::parse($izinn->tgl_permohonan)->format("d/m/Y"),
+                'nik'         => $izinn->nik,
+                'jabatankaryawan' => $izinn->jabatan,
+                'departemen' => $emailkry->nama_departemen,
                 'karyawan_email'=>$emailkry->email,
                 'id_jenisizin'=> $jenisizin->jenis_izin,
                 'keperluan'   =>$izinn->keperluan,
@@ -138,7 +160,8 @@ class IzinAdminController extends Controller
                 'jml_hari'    =>$izinn->jml_hari,
                 'jumlahjam'   =>$izinn->jml_jam,
                 'status'      =>$status->name_status,
-                'namakaryawan'=> $emailkry->nama,
+                'namakaryawan'=>ucwords(strtolower($emailkry->nama)),
+                'tgldisetujuiatasan' => Carbon::now()->format('d/m/Y H:i'),
                 'namaatasan2' =>$atasan2->nama,
                 'jabatanatasan'=>$atasan2->jabatan,
             ];
@@ -152,9 +175,10 @@ class IzinAdminController extends Controller
 
     public function reject(Request $request, $id)
     {
-        $status = Status::find(5);
+        $status = Status::find(10);
         Izin::where('id',$id)->update([
             'status' => $status->id,
+            'tgl_ditolak' =>Carbon::now()->format('Y-m-d'),
         ]);
         $izin = Izin::where('id',$id)->first();
         $datareject          = new Datareject;
@@ -174,8 +198,9 @@ class IzinAdminController extends Controller
         $alasan = Datareject::where('id_izin',$izin->id)->first();
         $karyawan = DB::table('izin')
             ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+            ->join('departemen','izin.departemen','=','departemen.id')
             ->where('izin.id',$izin->id)
-            ->select('karyawan.email as email','karyawan.nama as nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
+            ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
             ->first(); 
          //$tujuan = 'akhiratunnisahasanah0917@gmail.com';
        
@@ -194,12 +219,19 @@ class IzinAdminController extends Controller
         $data = [
             'subject'     =>'Notifikasi Permintaan Izin Ditolak, Izin ' . $izin->jenis_izin . ' #' . $izin->id . ' ' . $karyawan->nama,
             'id'          =>$izin->id,
+            'noregistrasi'=>$izin->id,
+            'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR IZIN KARYAWAN',
+            'subtitle' => '[ PENDING PIMPINAN ]',
+            'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
+            'nik'         => $izin->nik,
+            'jabatankaryawan' => $izin->jabatan,
+            'departemen' => $karyawan->nama_departemen,
             'atasan1'     => $atasan1->email,
             'karyawan_email'=>$karyawan->email,
             'id_jenisizin'=>$izin->jenis_izin,
             'keperluan'   =>$izin->keperluan,
-            'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d M Y"),
-            'tgl_selesai' =>Carbon::parse($izin->tgl_selesai)->format("d M Y"),
+            'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d/m/Y"),
+            'tgl_selesai' =>Carbon::parse($izin->tgl_selesai)->format("d/m/Y"),
             'jam_mulai'   =>Carbon::parse($izin->jam_mulai)->format("H:i"),
             'jam_selesai' =>Carbon::parse($izin->jam_selesai)->format("H:i"),
             'status'      =>$status->name_status,
@@ -210,14 +242,18 @@ class IzinAdminController extends Controller
             'nama'        =>$karyawan->nama,
             'jenisizin'   =>$izin->jenis_izin,
             'alasan'      =>$alasan->alasan,
+            'tgldisetujuiatasan' => Carbon::parse($izin->tgl_setuju_a)->format("d/m/Y"),
+            'tgldisetujuipimpinan' =>' ',
+            'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
         ];
         if($atasan2 !== NULL)
         {
             $data['atasan2'] = $atasan2->email;
             $data['namaatasan2'] = $atasan2->nama;
         }
+        // return $data;
         Mail::to($tujuan)->send(new IzinApproveNotification($data));
-        return redirect()->route('permintaancuti.index',['type'=>2])->withInput();
+        return redirect()->back();
     }
 
     public function rekapizinExcel(Request $request)
