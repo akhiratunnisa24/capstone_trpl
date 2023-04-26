@@ -269,7 +269,7 @@ class AlokasicutiController extends Controller
         $alokasicuti = Alokasicuti::find($id);
         $alokasicuti->delete();
 
-        return redirect('/alokasicuti');
+        return redirect()->back();
     }
 
     public function importexcel(Request $request)

@@ -49,12 +49,7 @@ class User extends Authenticatable
 
     public function karyawan()
     {
-        return $this->belongsTo(Karyawan::class, 
-        'id_pegawai',
-        'id',
-        'role',
-        'name',
-        'email', );
+        return $this->belongsTo(Karyawan::class, 'id_pegawai', 'id');
     }
 
     //hrms_git
@@ -66,5 +61,6 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class,'role','id');
     }
+    
 }
 

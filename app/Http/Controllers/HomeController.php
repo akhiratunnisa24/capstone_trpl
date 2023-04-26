@@ -57,7 +57,8 @@ class HomeController extends Controller
 
     public function index()
     {
-        $role = Auth::user()->role;
+        // $role = Auth::user()->role;
+        $role = Auth::user();
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
         // Absen Terlambat Karyawan
@@ -223,7 +224,7 @@ class HomeController extends Controller
 
         $posisi = Lowongan::all()->where('status', '=', 'Aktif');
 
-        if($role == 3 && $row->jabatan == "Manajer")
+        if($role->role == 3 && $row->jabatan == "Manajer")
             {
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -304,7 +305,7 @@ class HomeController extends Controller
                 $jumizin = $ijin->count();
 
             }  
-            elseif($role == 3 && $row->jabatan == "Asisten Manajer")
+            elseif($role->role == 3 && $row->jabatan == "Asisten Manajer")
             {
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -379,7 +380,7 @@ class HomeController extends Controller
                     ->get();
                  $jumizin = $ijin->count();
             }
-            elseif($role == 2 && $row->jabatan == "Asisten Manajer"){
+            elseif($role->role == 2 && $row->jabatan == "Asisten Manajer"){
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -452,7 +453,7 @@ class HomeController extends Controller
                     ->get();
                 $jumizin = $ijin->count();
             }
-            elseif($role == 3 && $row->jabatan == "Management"){
+            elseif($role->role == 3 && $row->jabatan == "Management"){
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -527,7 +528,7 @@ class HomeController extends Controller
                     ->get();
                 $jumizin = $ijin->count();
             }
-            elseif($role == 1)
+            elseif($role->role == 1)
             {
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -884,7 +885,7 @@ class HomeController extends Controller
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-        if ($role == 5) {
+        if ($role->role == 5) {
 
             $output = [
                 'row' => $row,
@@ -892,7 +893,7 @@ class HomeController extends Controller
             ];
             return view('admin.datamaster.user.dashboardAdmin', $output);
 
-        } elseif ($role == 1){
+        } elseif ($role->role == 1){
             
             $output = [
                 'row' => $row,
@@ -947,7 +948,7 @@ class HomeController extends Controller
             ];
             return view('admin.karyawan.dashboardhrd', $output);
 
-        } elseif ($role == 2 && $row->jabatan == "Asisten Manajer") {
+        } elseif ($role->role == 2 && $row->jabatan == "Asisten Manajer") {
 
             $output = [
                 'row' => $row,
@@ -976,7 +977,7 @@ class HomeController extends Controller
             ];
             return view('karyawan.dashboardKaryawan', $output);
         
-        } elseif ($role == 2 && $row->jabatan == "Staff") {
+        } elseif ($role->role == 2 && $row->jabatan == "Staff") {
 
             $output = [
                 'row' => $row,
@@ -990,6 +991,21 @@ class HomeController extends Controller
                 'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
                 'sisacutis' => $sisacutis,
                 'role' => $role,
+                'cutijumlah' => $cutijumlah,
+                'cuti' => $cuti,
+                'jumct' => $jumct,
+                'cutis' => $cutis,
+                'resignjumlah' => $resignjumlah,
+                'resign' => $resign,
+                'izinjumlah' => $izinjumlah,
+                'izin' => $izin,
+                'jumizin' => $jumizin,
+                'ijin' => $ijin,
+                'posisi' => $posisi,
+
+
+
+
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
