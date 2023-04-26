@@ -1,5 +1,5 @@
 {{-- MODALS EDIT DATA CUTI --}}
-<div class="modal fade" id="Showcuti{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="Showcuti" aria-hidden="true">
+<div class="modal fade" id="Showizin{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="Showcuti" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -124,7 +124,7 @@
                     <div class="form-group row">
                         <label for="alasan" class="col-sm-5 col-form-label">Alasan Penolakan</label>
                         <div class="col-sm-7">
-                            <label>: {{$data->alasan_cuti}}</label>
+                            <label>: {{$data->alasan}}</label>
                         </div>
                     </div>        
                 @endif

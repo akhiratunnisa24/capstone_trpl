@@ -670,7 +670,7 @@
                                                                             </a>
                                                                         </form>
                                                                     </div>
-                                                                    @include('admin.cuti.izinReject')
+                                                    
                                                                 @else
                                                                 @endif
 
@@ -685,7 +685,7 @@
                                                                 </div>
                                                                 {{-- modal show izin --}}
                                                                 @include('admin.cuti.showizin')
-                
+                                                                @include('admin.cuti.izinReject')
                                                             </div>
                                                         </td>
                                                     </tr>

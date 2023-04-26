@@ -106,10 +106,10 @@ class SettingalokasicutiController extends Controller
                     $query->orWhere('status_pernikahan', 'Janda');
                 }
             })
-            ->select('id', 'jenis_kelamin', 'status_pernikahan','nip','jabatan','divisi')
+            ->select('id', 'jenis_kelamin', 'status_pernikahan','nip','nama_jabatan','divisi')
             ->get();
 
-
+            // return $karyawan;
             foreach($karyawan as $karyawan)
             {
                 $check = Alokasicuti::where('id_jeniscuti',$settingalokasi->id_jeniscuti)->where('id_karyawan',$karyawan->id)->exists();
@@ -119,7 +119,7 @@ class SettingalokasicutiController extends Controller
                         $alokasicuti = new Alokasicuti;
                         $alokasicuti->nik              = $karyawan->nip;
                         $alokasicuti->id_karyawan      = $karyawan->id;
-                        $alokasicuti->jabatan          = $karyawan->jabatan;
+                        $alokasicuti->jabatan          = $karyawan->nama_jabatan;
                         $alokasicuti->departemen       = $karyawan->divisi;
                         $alokasicuti->id_settingalokasi= $settingalokasi->id;
                         $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
@@ -225,7 +225,7 @@ class SettingalokasicutiController extends Controller
                 $alokasicuti                    = New Alokasicuti();
                 $alokasicuti->nik               = $karyawan->nip;
                 $alokasicuti->id_karyawan       = $karyawan->id;
-                $alokasicuti->jabatan           = $karyawan->jabatan;
+                $alokasicuti->jabatan           = $karyawan->nama_jabatan;
                 $alokasicuti->departemen        = $karyawan->divisi;
                 $alokasicuti->id_settingalokasi = $settingalokasi->id;
                 $alokasicuti->id_jeniscuti      = $settingalokasi->id_jeniscuti;

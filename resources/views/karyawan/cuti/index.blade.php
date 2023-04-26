@@ -173,7 +173,7 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($izin as $data)
-                                                                @if ($data->id_karyawan == Auth::user()->id_pegawai)
+                                                                {{-- @if ($data->id_karyawan == Auth::user()->id_pegawai) --}}
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
                                                                         <td>{{ $data->tgl_permohonan }}</td>
@@ -217,7 +217,7 @@
                                                                         </td>
                                                                     </tr>
                                                                     {{-- modal show izin --}}
-                                                                @endif
+                                                                {{-- @endif --}}
                                                                 @include('karyawan.cuti.showizin')
                                                                 @include('karyawan.cuti.pembatalanIzin')
                                                                 @include('karyawan.cuti.updateIzin')

@@ -271,16 +271,21 @@ class IzinkaryawanController extends Controller
     {
         $role = Auth::user()->role;
         $karyawan = Auth::user()->id_pegawai;
+
         $status = Status::find(14);
         $izin = Izin::find($id);
     
         $jenisizin = Jenisizin::where('id',$izin->id_jeniscuti)->first();
 
-        $izin->tgl_permohonan = $izin->tgl_permohonan;
         $izin->keperluan      = $request->keperluan;
         $izin->catatan        = $status->name_status;
         if($request->id_jenisizin == 1)
         {
+            $izin->jam_mulai = null;
+            $izin->jam_selesai= null;
+            $izin->jml_jam    = null;
+            $izin->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
+            $izin->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
             // $izin->saldohakcuti   = $request->durasi;
             // $izin->jml_hari       = $request->jml_hari;
             // $sisa                 = $izin->saldohakcuti -  $izin->jml_hari;  
@@ -291,6 +296,11 @@ class IzinkaryawanController extends Controller
         }
         elseif($request->id_jenisizin == 2)
         {
+            $izin->jam_mulai = null;
+            $izin->jam_selesai= null;
+            $izin->jml_jam    = null;
+            $izin->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
+            $izin->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
             // $izin->jml_hari       = null;
             // $izin->saldohakcuti   = null;
             // $izin->sisacuti       = null;
@@ -299,20 +309,52 @@ class IzinkaryawanController extends Controller
         }
         elseif($request->id_jenisizin == 3)
         {
+            $izin->jam_mulai = null;
+            $izin->jam_selesai= null;
+            $izin->jml_jam    = null;
+            $izin->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
+            $izin->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
             // $izin->jml_hari       = null;
             // $izin->saldohakcuti   = null;
             // $izin->sisacuti       = null;
             // $izin->keterangan     = $jenisizin->jenis_izin;
             // dd($izin->jmlharikerja, $izin->jml_hari, $izin->saldohakcuti,$izin->sisacuti);
-        }else{
+        }
+        elseif($request->id_jenisizin == 4)
+        {
+            $izin->jam_mulai = null;
+            $izin->jam_selesai= null;
+            $izin->jml_jam    = null;
+            $izin->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
+            $izin->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
+            // $izin->jml_hari       = null;
+            // $izin->saldohakcuti   = null;
+            // $izin->sisacuti       = null;
+            // $izin->keterangan     = $jenisizin->jenis_izin;
+            // dd($izin->jmlharikerja, $izin->jml_hari, $izin->saldohakcuti,$izin->sisacuti);
+        }
+        elseif($request->id_jenisizin == 5)
+        {
+
+            $izin->jam_mulai = $request->jam_mulai;
+            $izin->jam_selesai= $request->jam_selesai;
+
+            $jammulai  = Carbon::parse($request->jam_mulai);
+            $jamselesai= Carbon::parse($request->jam_selesai);
+            $time_range= $jamselesai->diff($jammulai)->format("%H:%I");
+
+            $izin->jml_jam     = $time_range;
+            $izin->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
+            $izin->tgl_selesai    = null;
+            // return $izin->jml_jam;
+        }
+        else{
             return redirect()->back();
         }
-        // return $izin->id;
-        $izin->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
-        $izin->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
 
         // dd($izin,$request->all());
         $izin->update();
+        // dd($izin);
 
         // return $izin;
         

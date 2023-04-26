@@ -57,15 +57,11 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $data->nama }}</td>
-                                                    {{-- <td>{{$data->karyawans->nama}}</td> --}}
-                                                    {{-- <td>{{$data->jeniscutis->jenis_cuti}}</td> --}}
                                                     <td>{{ $data->jenis_cuti }}</td>
-                                                    {{-- <td>{{$data->keperluan}}</td> --}}
                                                     <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}</td>
-                                                    {{-- <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td> --}}
-                                                    <td>{{ $data->jml_cuti }} Hari</td>
+                                                     <td>{{ $data->jml_cuti }} Hari</td>
                                                     <td>
-                                                        {{-- {{ $data->status }} --}}
+                                                      
                                                         <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : ($data->status == 14 ? 'warning' :($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
                                                             {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status :  ($data->status == 14 ?  $data->name_status :  ($data->status == 15 ?  $data->name_status :  ($data->status == 16 ?  $data->name_status : '')))))))))))) }}
                                                         </span>
@@ -608,28 +604,19 @@
                                                                         </div>
                                                                     @endif
                                                                     
-                                                                    <div class="col-sm-3" style="margin-left:6px">
-                                                                        <form action="" method="POST">
-                                                                            <a class="btn btn-info btn-sm" style="height:26px"
-                                                                                data-toggle="modal"
-                                                                                data-target="#Showcuti{{ $data->id }}">
-                                                                                <i class="fa fa-eye"></i>
-                                                                            </a>
-                                                                        </form>
-                                                                    </div>
                                                                 </div>
                                                                 <div class="col-sm-3" style="margin-left:5px">
                                                                     <form action="" method="POST">
                                                                         <a class="btn btn-info btn-sm" style="height:26px"
                                                                             data-toggle="modal"
-                                                                            data-target="#Showizinadmin{{ $data->id }}">
+                                                                            data-target="#Showizinm{{ $data->id }}">
                                                                             <i class="fa fa-eye fa-md"></i>
                                                                         </a>
                                                                     </form>
                                                                 </div>
                                                                 {{-- modal show izin --}}
-                                                                @include('admin.cuti.showizin')
-                                                                @include('admin.cuti.izinReject')
+                                                                @include('manager.staff.showizin')
+                                                                @include('manager.staff.izinReject')
                                                             </div>
                                                         </td>
                                                     </tr>
