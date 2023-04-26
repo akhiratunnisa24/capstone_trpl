@@ -42,7 +42,7 @@ class CutiadminController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
-        if ($role == 1) 
+        if ($role == 1 || $role == 2 && $row->jabatan == "Asisten Manajer") 
         {
             $type = $request->query('type', 1);
 
@@ -150,7 +150,7 @@ class CutiadminController extends Controller
                     ->get();
             };
 
-        return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai'));
+        return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai','role'));
         } else 
         {
             return redirect()->back(); 
@@ -159,7 +159,7 @@ class CutiadminController extends Controller
 
     public function getAlokasiCuti(Request $request)
     {
-        dd($request->id_karyawan);
+        // dd($request->id_karyawan);
         try {
             $getAlokasiCuti = Alokasicuti::select('alokasicuti.*','jeniscuti.jenis_cuti')
                 ->join('jeniscuti','alokasicuti.id_jeniscuti','=','jeniscuti.id')
@@ -259,16 +259,20 @@ class CutiadminController extends Controller
                 ->orWhere('karyawan.atasan_kedua',Auth::user()->id_pegawai)
                 ->select('cuti.*','karyawan.atasan_pertama','karyawan.atasan_kedua')
                 ->first();
-            $jeniscuti = Jeniscuti::where('id',$datacuti->id)->first();
+
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
                
                 // Inisialisasi variable jml_cuti dengan nilai jumlah hari cuti yang diambil
                 $jml_cuti = $cuti->jml_cuti;
+                $jeniscuti = Jeniscuti::where('id',$datacuti->id_jeniscuti)->first();
                 //Update status cuti menjadi 'Disetujui'
                 $status = Status::find(7);
                 Cuti::where('id', $id)->update(
-                    ['status' => $status->id,]
+                    ['status' => $status->id,
+                    'tgldisetujui_b' => Carbon::now()->format('Y-m-d H:i:s'),
+                    ]
+
                 );
 
                 $sisacuti = Sisacuti::where('jenis_cuti', $cuti->id_jeniscuti)
@@ -282,9 +286,10 @@ class CutiadminController extends Controller
                 );
                 //ambil data karyawan
                 $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
-                    ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
-                    ->select('karyawan.email','nama as nama','karyawan.atasan_pertama')
-                    ->first();
+                        ->join('departemen','cuti.departemen','=','departemen.id')
+                        ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
+                        ->select('karyawan.email','karyawan.nama as nama','karyawan.atasan_kedua','karyawan.atasan_kedua','departemen.nama_departemen')
+                        ->first();
 
                 $atasan1 = Karyawan::where('id',$emailkry->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
@@ -292,11 +297,17 @@ class CutiadminController extends Controller
                 
                 //atasan yang login
                 $atasan2 = Auth::user()->email;
-                $tujuan = $emailkry['email'];
+                $tujuan = $emailkry->email;
                 $alasan = '';
                 $data = [
                     'subject'     => 'Notifikasi Cuti Disetujui ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
-                    'id'          => $cuti->id,
+                    'noregistrasi'=>$cuti->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
+                    'subtitle' => '',
+                    'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
+                    'nik'         => $cuti->nik,
+                    'jabatankaryawan' => $cuti->jabatan,
+                    'departemen' => $emailkry->nama_departemen,
                     'atasan1'     =>$atasan1->email,
                     'atasan2'     =>$atasan2,
                     'namaatasan1' =>$atasan1->nama,
@@ -307,6 +318,8 @@ class CutiadminController extends Controller
                     'keperluan'   => $cuti->keperluan,
                     'tgl_mulai'   => Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
                     'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+                    'tgldisetujuiatasan' =>Carbon::parse($cuti->tgldisetujui_b)->format("d/m/Y H:i"),
+                    'tgldisetujuipimpinan' => Carbon::now()->format('d/m/Y H:i'),
                     'jml_cuti'    => $cuti->jml_cuti,
                     'status'      => $status->name_status,
                     'alasan'      =>$alasan,
@@ -317,17 +330,20 @@ class CutiadminController extends Controller
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
-                $status = Status::find(2);
+                $status = Status::find(6);
                 Cuti::where('id',$id)->update([
                     'status' => $status->id,
+                    'tgldisetujui_a' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
 
+                $jeniscuti = Jeniscuti::where('id',$datacuti->id_jeniscuti)->first();
                 //KIRIM NOTIFIKASI EMAIL
                 //ambil data karyawan
                 $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
-                    ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
-                    ->select('karyawan.email','karyawan.nama as nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first();
+                        ->join('departemen','cuti.departemen','=','departemen.id')
+                        ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
+                        ->select('karyawan.email','karyawan.nama as nama','karyawan.atasan_kedua','departemen.nama_departemen')
+                        ->first();
     
                 //atasan kedua
                 $atasan = Karyawan::where('id',$emailkry->atasan_kedua)
@@ -341,8 +357,15 @@ class CutiadminController extends Controller
                 $tujuan = $atasan->email;
                  
                 $data = [
-                    'subject'     =>'Notifikasi Approval Pertama Permintaan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
-                    'id'          => $cuti->id,
+                    'subject'     =>'Notifikasi Approval Pertama Permohonan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
+                    'noregistrasi'=>$cuti->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR CUTI KARYAWAN',
+                    'subtitle' => '[PERSETUJUAN ATASAN]',
+                    'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
+                    'nik'         => $cuti->nik,
+                    'jabatankaryawan' => $cuti->jabatan,
+                    'departemen' => $emailkry->nama_departemen,
+                    'namakaryawan'=>ucwords(strtolower($emailkry->nama)),
                     'atasan2'     => $atasan->email,
                     'namaatasan2' => $atasan->nama,
                     'jeniscuti'   => $jeniscuti->jenis_cuti,
@@ -354,8 +377,9 @@ class CutiadminController extends Controller
                     'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
                     'jml_cuti'    =>$cuti->jml_cuti,
                     'status'      =>$status->name_status,
-                    'jabatanatasan' => $atasan->jabatan
- 
+                    'jabatanatasan' => $atasan->jabatan,
+                    'tgldisetujuiatasan' => Carbon::now()->format('d/m/Y H:i'),
+                    
                 ];
                 Mail::to($tujuan)->send(new CutiAtasan2Notification($data));
                 return redirect()->back()->withInput();
@@ -380,32 +404,37 @@ class CutiadminController extends Controller
                 {
                     // return  Auth::user()->name;
                     $cuti = Cuti::where('id',$id)->first();
-                    $jeniscuti = Jeniscuti::where('id',$cuti->id)->first();
+                    // return $cuti;
+                    $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
                     $jml_cuti = $cuti->jml_cuti;
                     $status = Status::find(7);
                     Cuti::where('id', $id)->update(
-                        ['status' => $status->id,]
+                        ['status' => $status->id,
+                        'tgldisetujui_b' => Carbon::now()->format('Y-m-d H:i:s'),
+                        ]
+                        
                     );
             
-                    $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
-                        ->where('id_karyawan', $cuti->id_karyawan)
-                        ->where('id_jeniscuti', $cuti->id_jeniscuti)
-                        ->where('id_settingalokasi', $cuti->id_settingalokasi)
-                        ->first();
+                    // $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    //     ->where('id_karyawan', $cuti->id_karyawan)
+                    //     ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    //     ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    //     ->first();
     
-                    $durasi_baru = $alokasicuti->durasi - $jml_cuti;
+                    // $durasi_baru = $alokasicuti->durasi - $jml_cuti;
     
-                    Alokasicuti::where('id', $alokasicuti->id)
-                    ->update(
-                        ['durasi' => $durasi_baru]
-                    );
+                    // Alokasicuti::where('id', $alokasicuti->id)
+                    // ->update(
+                    //     ['durasi' => $durasi_baru]
+                    // );
     
                     //KIRIM EMAIL NOTIFIKASI KE KARYAWAN,2  atasan dan hrd
     
                     //ambil data karyawan
                     $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+                        ->join('departemen','cuti.departemen','=','departemen.id')
                         ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
-                        ->select('karyawan.email','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                        ->select('karyawan.email','karyawan.nama as nama','karyawan.atasan_pertama','karyawan.atasan_kedua','departemen.nama_departemen')
                         ->first();
                     //atasan pertama
                     $idatasan1 = DB::table('karyawan')
@@ -422,34 +451,44 @@ class CutiadminController extends Controller
                     $atasan2 = Auth::user()->email;
     
                     // $tujuan = 'akhiratunnisahasanah0917@gmail.com';
-                    $tujuan = $emailkry['email'];
+                    $tujuan = $emailkry->email;
                     $alasan = '';
                     $data = [
                         'subject'     =>'Notifikasi Cuti Disetujui ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
-                        'id'          =>$cuti->id,
+                        'noregistrasi'=>$cuti->id,
+                        'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
+                        'subtitle' => '',
+                        'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
+                        'nik'         => $cuti->nik,
+                        'jabatankaryawan' => $cuti->jabatan,
+                        'departemen' => $emailkry->nama_departemen,
                         'atasan1'     =>$atasan1->email,
                         'atasan2'     =>$atasan2,
                         'namaatasan1' =>$atasan1->nama,
                         'namaatasan2' =>Auth::user()->name,
-                        'namakaryawan'=>$emailkry->nama,
+                        'namakaryawan'=>ucwords(strtolower($emailkry->nama)),
                         'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
                         'keperluan'   =>$cuti->keperluan,
                         'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
                         'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+                        'tgldisetujuiatasan' =>Carbon::parse($cuti->tgldisetujui_b)->format("d/m/Y H:i"),
+                        'tgldisetujuipimpinan' => Carbon::now()->format('d/m/Y H:i'),
                         'jml_cuti'    =>$cuti->jml_cuti,
                         'status'      =>$cuti->name_status,
                         'alasan'      =>$alasan,
                     ];
+                    // return $data;
                     Mail::to($tujuan)->send(new CutiApproveNotification($data));
                     return redirect()->back()->withInput();
     
                 }
                 elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
                 {
-                    // return $datacuti->atasan_pertama;
-                    $status = Status::find(2);
+                    return $datacuti->atasan_pertama;
+                    $status = Status::find(6);
                     Cuti::where('id',$id)->update([
                         'status' => $status->id,
+                        'tgldisetujui_a' => Carbon::now()->format('Y-m-d H:i:s'),
                     ]);
                     $cuti = Cuti::where('id',$id)->first();
                     $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
@@ -458,8 +497,9 @@ class CutiadminController extends Controller
     
                     //ambil data karyawan
                     $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+                        ->join('departemen','cuti.departemen','=','departemen.id')
                         ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
-                        ->select('karyawan.email','karyawan.nama as nama','karyawan.atasan_kedua')
+                        ->select('karyawan.email','karyawan.nama as nama','karyawan.atasan_kedua','departemen.nama_departemen')
                         ->first();
 
                     $atasan = Karyawan::where('id',$emailkry->atasan_kedua)
@@ -469,8 +509,14 @@ class CutiadminController extends Controller
                     //ambil data karyawan
                     $tujuan = $atasan->email;
                     $data = [
-                        'subject'     =>'Notifikasi Approval Pertama Permintaan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
-                        'id'          => $cuti->id,
+                        'subject'     =>'Notifikasi Approval Pertama Permohonan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
+                        'noregistrasi'=>$cuti->id,
+                        'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR CUTI KARYAWAN',
+                        'subtitle' => '[PERSETUJUAN ATASAN]',
+                        'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
+                        'nik'         => $cuti->nik,
+                        'jabatankaryawan' => $cuti->jabatan,
+                        'departemen' => $emailkry->nama_departemen,
                         'atasan2'     => $atasan->email,
                         'namaatasan2' => $atasan->nama,
                         'jeniscuti'   => $jeniscuti->jenis_cuti,
@@ -482,8 +528,10 @@ class CutiadminController extends Controller
                         'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
                         'jml_cuti'    =>$cuti->jml_cuti,
                         'status'      =>$status->name_status,
-                        'jabatanatasan' => $atasan->jabatan
-    
+                        'jabatanatasan' => $atasan->jabatan,
+                        'noregistrasi'=>$cuti->id,
+                        'tgldisetujuiatasan' => Carbon::now()->format('d/m/Y H:i'),
+                            
                     ];
                     Mail::to($tujuan)->send(new CutiAtasan2Notification($data));
                     return redirect()->back()->withInput();
@@ -530,7 +578,7 @@ class CutiadminController extends Controller
         $tujuan = $karyawan->email;
 
         $data = [
-            'subject'     =>'Notifikasi Permintaan Cuti Ditolak, ' . $cuti->jenis_cuti . ' #' . $cuti->id . ' ' . $karyawan->nama,
+            'subject'     =>'Notifikasi Permohonan Cuti Ditolak, ' . $cuti->jenis_cuti . ' #' . $cuti->id . ' ' . $karyawan->nama,
             'id'          =>$cuti->id,
             'atasan1'     =>$atasan1->email,
             'atasan2'     =>$atasan2->email,

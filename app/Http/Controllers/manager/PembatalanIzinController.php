@@ -15,7 +15,7 @@ use App\Mail\PembatalanNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
-class PembatalanPerubahanController extends Controller
+class PembatalanIzinController extends Controller
 {
     public function batalApprove(Request $request, $id)
     {
@@ -29,7 +29,7 @@ class PembatalanPerubahanController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         // return $row->jabatan;
-        if($dataizin && $row->jabatan == "Asisten Manajer" && $role == 3 || $dataizin && $role == 2 && $row->jabatan == "Asisten Manajer")
+        if($dataizin && $row->jabatan == "Asisten Manajer" && $role == 3)
         {
                 $status = Status::find(12);
                 // return $status->name_status;
@@ -62,6 +62,7 @@ class PembatalanPerubahanController extends Controller
                     ->first();
                 }
                 $tujuan = $atasan2->email;
+                // return $tujuan;
                 $data = [
                     'subject'     => 'Notifikasi Approval Pertama Formulir Pembatalan ' . $iz->jenis_izin . ' #' . $iz->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$izin->id,
@@ -79,7 +80,7 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format('d/m/Y H:i'),
@@ -97,7 +98,76 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        else if($dataizin && $role == 3 && $row->jabatan == "Manajer")
+        elseif($dataizin && $role == 2 && $row->jabatan == "Asisten Manajer")
+        {
+                $status = Status::find(12);
+                return $status->name_status;
+                Izin::where('id',$id)->update([
+                    'catatan' => $status->name_status,
+                    'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+                $izin = Izin::where('id',$id)->first();
+                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
+                $iz = DB::table('izin')
+                    ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                    ->join('statuses','izin.catatan','=','statuses.name_status')
+                    ->where('izin.id',$id)
+                    ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
+                    ->first();
+                $karyawan = DB::table('izin')
+                    ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                    ->join('departemen','izin.departemen','=','departemen.id')
+                    ->where('izin.id',$izin->id)
+                    ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                    ->first(); 
+                $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+                $atasan2 = NULL;
+
+                if($karyawan->atasan_kedua !== NULL){
+                    $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+                }
+                $tujuan = $atasan2->email;
+                // return $tujuan;
+                $data = [
+                    'subject'     => 'Notifikasi Approval Pertama Formulir Pembatalan ' . $iz->jenis_izin . ' #' . $iz->id . ' ' . $karyawan->nama,
+                    'noregistrasi'=>$izin->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR IZIN KARYAWAN',
+                    'subtitle' => '[ PERSETUJUAN PEMBATALAN ]',
+                    'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
+                    'nik'         => $izin->nik,
+                    'jabatankaryawan' => $izin->jabatan,
+                    'departemen' => $karyawan->nama_departemen,
+                    'atasan1'     => $atasan1->email,
+                    'namaatasan1' => $atasan1->nama,
+                    'karyawan_email'=>$karyawan->email,
+                    'id_jeniscuti'=> $iz->jenis_izin,
+                    'keperluan'   => $iz->keperluan,
+                    'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
+                    'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
+                    'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
+                    'jml_cuti'    => $iz->jml_hari,
+                    'status'      => $iz->name_status,
+                    'alasan'      =>null,
+                    'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format('d/m/Y H:i'),
+                    'tgldisetujuipimpinan' => '',
+                    'tglditolak' => '',
+                ];
+                if($atasan2 !== NULL){
+                    $data['atasan2'] = $atasan2->email;
+                    $data['namaatasan2'] = $atasan2->nama;
+                }
+                // dd($data);
+                Mail::to($tujuan)->send(new PembatalanNotification($data));
+                // return $data;
+            // }else{
+                return redirect()->back();
+            // }
+        }
+        elseif($dataizin && $role == 3 && $row->jabatan == "Manajer")
         {
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -150,7 +220,7 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format("d/m/Y H:i"),
@@ -220,7 +290,150 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
+                    'status'      => $iz->name_status,
+                    'alasan'      =>null,
+                    'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format('d/m/Y H:i'),
+                    'tgldisetujuipimpinan' => '',
+                    'tglditolak' => '',
+                ];
+                if($atasan2 !== NULL){
+                    $data['atasan2'] = $atasan2->email;
+                    $data['namaatasan2'] = $atasan2->nama;
+                }
+                // return $data;
+                Mail::to($tujuan)->send(new PembatalanNotification($data));
+                return redirect()->back();
+                // return $data;
+            }
+            else{
+                return redirect()->back();
+            }
+        }
+        elseif($dataizin && $role == 1 && $row->jabatan == "Manajer")
+        {
+            if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
+            {
+                $status = Status::find(13);
+                Izin::where('id',$id)->update([
+                    'catatan' => $status->name_status,
+                    'batal_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+                $izin = Izin::where('id',$id)->first();
+        
+                //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
+                //ambil nama jenisizin
+                $iz = DB::table('izin')
+                    ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                    ->join('statuses','izin.catatan','=','statuses.name_status')
+                    ->where('izin.id',$id)
+                    ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
+                    ->first();
+
+                $karyawan = DB::table('izin')
+                    ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                    ->join('departemen','izin.departemen','=','departemen.id')
+                    ->where('izin.id',$izin->id)
+                    ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                    ->first(); 
+                $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+                $atasan2 = NULL;
+                if($karyawan->atasan_kedua !== NULL){
+                    $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+                }
+                $tujuan = $karyawan->email;
+                $data = [
+                    'subject'     => 'Notifikasi Persetujuan Formulir Pembatalan ' . $iz->jenis_izin . ' #' . $iz->id . ' ' . $karyawan->nama,
+                    'noregistrasi'=>$izin->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR IZIN KARYAWAN',
+                    'subtitle' => '[ PERSETUJUAN PEMBATALAN ]',
+                    'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
+                    'nik'         => $izin->nik,
+                    'jabatankaryawan' => $izin->jabatan,
+                    'departemen' => $karyawan->nama_departemen,
+                    'atasan1'     => $atasan1->email,
+                    'namaatasan1' => $atasan1->nama,
+                    'karyawan_email'=>$karyawan->email,
+                    'id_jeniscuti'=> $iz->jenis_izin,
+                    'keperluan'   => $iz->keperluan,
+                    'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
+                    'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
+                    'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
+                    'jml_cuti'    => $iz->jml_hari,
+                    'status'      => $iz->name_status,
+                    'alasan'      =>null,
+                    'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format("d/m/Y H:i"),
+                    'tgldisetujuipimpinan' => Carbon::parse($iz->batal_pimpinan)->format("d/m/Y H:i"),
+                    'tglditolak' =>'',
+                ];
+                if($atasan2 !== NULL){
+                    $data['atasan2'] = $atasan2->email;
+                    $data['namaatasan2'] = $atasan2->nama;
+                }
+                return $data;
+                Mail::to($tujuan)->send(new PembatalanNotification($data));
+                return redirect()->back();
+            }
+            elseif($dataizin && $dataizin->atasan_pertama == Auth::user()->id_pegawai)
+            {
+                // return $dataizin;
+                $status = Status::find(12);
+                return $status->id;
+                Izin::where('id',$id)->update([
+                    'catatan' => $status->name_status,
+                    'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+                $izin = Izin::where('id',$id)->first();
+
+                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
+                //ambil nama jenisizin
+                $iz = DB::table('izin')
+                ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                ->join('statuses','izin.catatan','=','statuses.name_status')
+                ->where('izin.id',$id)
+                ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
+                ->first();
+                $alasan = Datareject::where('id_cuti',$izin->id)->first();
+                //sementara tidak digunakan
+                $karyawan = DB::table('izin')
+                    ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                    ->join('departemen','izin.departemen','=','departemen.id')
+                    ->where('izin.id',$izin->id)
+                    ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                    ->first(); 
+                $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+                $atasan2 = NULL;
+
+                if($karyawan->atasan_kedua !== NULL){
+                    $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+                }
+                $tujuan = $atasan2->email;
+                $data = [
+                    'subject'     => 'Notifikasi Approval Pertama Formulir Pembatalan ' . $iz->jenis_izin . ' #' . $iz->id . ' ' . $karyawan->nama,
+                    'noregistrasi'=>$izin->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR IZIN KARYAWAN',
+                    'subtitle' => '[ PERSETUJUAN PEMBATALAN ]',
+                    'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
+                    'nik'         => $izin->nik,
+                    'jabatankaryawan' => $izin->jabatan,
+                    'departemen' => $karyawan->nama_departemen,
+                    'atasan1'     => $atasan1->email,
+                    'namaatasan1' => $atasan1->nama,
+                    'karyawan_email'=>$karyawan->email,
+                    'id_jeniscuti'=> $iz->jenis_izin,
+                    'keperluan'   => $iz->keperluan,
+                    'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
+                    'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
+                    'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format('d/m/Y H:i'),
@@ -257,7 +470,7 @@ class PembatalanPerubahanController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         // return $row->jabatan;
-        if($dataizin && $row->jabatan == "Asisten Manajer" && $role == 3 || $dataizin && $role == 2 && $row->jabatan == "Asisten Manajer")
+        if($dataizin && $row->jabatan == "Asisten Manajer" && $role == 3)
         {
                 $status = Status::find(9);
                 // return $status->name_status;
@@ -308,7 +521,7 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>'',
@@ -326,7 +539,76 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        else if($dataizin && $role == 3 && $row->jabatan == "Manajer")
+        elseif($dataizin && $role == 2 && $row->jabatan == "Asisten Manajer")
+        {
+            $status = Status::find(9);
+            return $status->name_status;
+            Izin::where('id',$id)->update([
+                'catatan' => $status->name_status,
+                'batalditolak' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+            $izin = Izin::where('id',$id)->first();
+             //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
+            $iz = DB::table('izin')
+                ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                ->join('statuses','izin.catatan','=','statuses.name_status')
+                ->where('izin.id',$id)
+                ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
+                ->first();
+            $alasan = Datareject::where('id_cuti',$izin->id)->first();
+            $karyawan = DB::table('izin')
+                ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                ->join('departemen','izin.departemen','=','departemen.id')
+                ->where('izin.id',$izin->id)
+                ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                ->first(); 
+            $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
+                ->select('email as email','nama as nama','jabatan')
+                ->first();
+            $atasan2 = NULL;
+
+            if($karyawan->atasan_kedua !== NULL){
+                $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+                ->select('email as email','nama as nama','jabatan')
+                ->first();
+            }
+            $tujuan = $atasan2->email;
+            $data = [
+                'subject'     => 'Notifikasi Pembatalan Permohonan Ditolak ' . $iz->jenis_izin . ' #' . $iz->id . ' ' . $karyawan->nama,
+                'noregistrasi'=>$izin->id,
+                'title' =>  'NOTIFIKASI PERSETUJUAN PEMBATALAN FORMULIR IZIN KARYAWAN',
+                'subtitle' => '[ PENDING ATASAN ]',
+                'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
+                'nik'         => $izin->nik,
+                'jabatankaryawan' => $izin->jabatan,
+                'departemen' => $karyawan->nama_departemen,
+                'atasan1'     => $atasan1->email,
+                'namaatasan1' => $atasan1->nama,
+                'karyawan_email'=>$karyawan->email,
+                'id_jeniscuti'=> $iz->jenis_izin,
+                'keperluan'   => $iz->keperluan,
+                'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
+                'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
+                'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
+                'jml_cuti'    => $iz->jml_hari,
+                'status'      => $iz->name_status,
+                'alasan'      => $status->name_status,
+                'tgldisetujuiatasan' =>'',
+                'tgldisetujuipimpinan' => '',
+                'tglditolak' => Carbon::parse($iz->batalditolak)->format("d/m/Y"),
+            ];
+            if($atasan2 !== NULL){
+                $data['atasan2'] = $atasan2->email;
+                $data['namaatasan2'] = $atasan2->nama;
+            }
+            // dd($data);
+            Mail::to($tujuan)->send(new PembatalanNotification($data));
+            // return $data;
+        // }else{
+            return redirect()->back();
+        // }
+        }
+        elseif($dataizin && $role == 3 && $row->jabatan == "Manajer")
         {
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -380,7 +662,7 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format("d/m/Y H:i"),
@@ -450,7 +732,151 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
+                    'status'      => $iz->name_status,
+                    'alasan'      => $status->name_status,
+                    'tgldisetujuiatasan' =>'',
+                    'tgldisetujuipimpinan' => '',
+                    'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
+                ];
+                if($atasan2 !== NULL){
+                    $data['atasan2'] = $atasan2->email;
+                    $data['namaatasan2'] = $atasan2->nama;
+                }
+                // return $data;
+                Mail::to($tujuan)->send(new PembatalanNotification($data));
+                return redirect()->back();
+                // return $data;
+            }
+            else{
+                return redirect()->back();
+            }
+        }
+        elseif($dataizin && $role == 1 && $row->jabatan == "Manajer")
+        {
+            if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
+            {
+                $status = Status::find(10);
+                Izin::where('id',$id)->update([
+                    'catatan' => $status->name_status,
+                    'batalditolak' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+                $izin = Izin::where('id',$id)->first();
+
+                //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
+                //ambil nama jenisizin
+                $iz = DB::table('izin')
+                    ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                    ->join('statuses','izin.catatan','=','statuses.name_status')
+                    ->where('izin.id',$id)
+                    ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
+                    ->first();
+                $alasan = Datareject::where('id_cuti',$izin->id)->first();
+                //sementara tidak digunakan
+                $karyawan = DB::table('izin')
+                    ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                    ->join('departemen','izin.departemen','=','departemen.id')
+                    ->where('izin.id',$izin->id)
+                    ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                    ->first(); 
+                $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+                $atasan2 = NULL;
+                if($karyawan->atasan_kedua !== NULL){
+                    $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+                }
+                $tujuan = $karyawan->email;
+                $data = [
+                    'subject'     => 'Notifikasi Pembatalan Permohonan Ditolak ' . $iz->jenis_izin . ' #' . $iz->id . ' ' . $karyawan->nama,
+                    'noregistrasi'=>$izin->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN PEMBATALAN FORMULIR IZIN KARYAWAN',
+                    'subtitle' => '[ PENDING PIMPINAN UNIT KERJA ]',
+                    'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
+                    'nik'         => $izin->nik,
+                    'jabatankaryawan' => $izin->jabatan,
+                    'departemen' => $karyawan->nama_departemen,
+                    'atasan1'     => $atasan1->email,
+                    'namaatasan1' => $atasan1->nama,
+                    'karyawan_email'=>$karyawan->email,
+                    'id_jeniscuti'=> $iz->jenis_izin,
+                    'keperluan'   => $iz->keperluan,
+                    'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
+                    'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
+                    'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
+                    'jml_cuti'    => $iz->jml_hari,
+                    'status'      => $iz->name_status,
+                    'alasan'      => $status->name_status,
+                    'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format("d/m/Y H:i"),
+                    'tgldisetujuipimpinan' =>'',
+                    'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
+                ];
+                if($atasan2 !== NULL){
+                    $data['atasan2'] = $atasan2->email;
+                    $data['namaatasan2'] = $atasan2->nama;
+                }
+                return $data;
+                Mail::to($tujuan)->send(new PembatalanNotification($data));
+                return redirect()->back();
+            }
+            elseif($dataizin && $dataizin->atasan_pertama == Auth::user()->id_pegawai)
+            {
+                // return $dataizin;
+                $status = Status::find(9);
+                return $status->id;
+                Izin::where('id',$id)->update([
+                    'catatan' => $status->name_status,
+                    'batalditolak' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+                $izin = Izin::where('id',$id)->first();
+
+                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
+                //ambil nama jenisizin
+                $iz = DB::table('izin')
+                ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                ->join('statuses','izin.catatan','=','statuses.name_status')
+                ->where('izin.id',$id)
+                ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
+                ->first();
+                $alasan = Datareject::where('id_cuti',$izin->id)->first();
+                //sementara tidak digunakan
+                $karyawan = DB::table('izin')
+                    ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                    ->join('departemen','izin.departemen','=','departemen.id')
+                    ->where('izin.id',$izin->id)
+                    ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                    ->first(); 
+                $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+                $atasan2 = NULL;
+
+                if($karyawan->atasan_kedua !== NULL){
+                    $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+                }
+                $tujuan = $atasan2->email;
+                $data = [
+                    'subject'     => 'Notifikasi Pembatalan Permohonan Ditolak ' . $iz->jenis_izin . ' #' . $iz->id . ' ' . $karyawan->nama,
+                    'noregistrasi'=>$izin->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR IZIN KARYAWAN',
+                    'subtitle' => '[ PERSETUJUAN PEMBATALAN ]',
+                    'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
+                    'nik'         => $izin->nik,
+                    'jabatankaryawan' => $izin->jabatan,
+                    'departemen' => $karyawan->nama_departemen,
+                    'atasan1'     => $atasan1->email,
+                    'namaatasan1' => $atasan1->nama,
+                    'karyawan_email'=>$karyawan->email,
+                    'id_jeniscuti'=> $iz->jenis_izin,
+                    'keperluan'   => $iz->keperluan,
+                    'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
+                    'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
+                    'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>'',
@@ -537,7 +963,7 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::now()->format('d/m/Y H:i'),
@@ -606,7 +1032,7 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>Carbon::parse($iz->ubah_atasan)->format("d/m/Y H:i"),
@@ -681,7 +1107,7 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->ubah_atasan)->format("d/m/Y"),
@@ -734,7 +1160,6 @@ class PembatalanPerubahanController extends Controller
                     ->where('izin.id',$id)
                     ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
                     ->first();
-                $alasan = Datareject::where('id_cuti',$izin->id)->first();
                 $karyawan = DB::table('izin')
                     ->join('karyawan','izin.id_karyawan','=','karyawan.id')
                     ->join('departemen','izin.departemen','=','departemen.id')
@@ -751,7 +1176,8 @@ class PembatalanPerubahanController extends Controller
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
                 }
-                $tujuan = $atasan2->email;
+                $tujuan = $karyawan->email;
+                // return $tujuan;
                 $data = [
                     'subject'     => 'Notifikasi Perubahan Permohonan Ditolak ' . $iz->jenis_izin . ' #' . $iz->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$izin->id,
@@ -769,7 +1195,7 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>'',
@@ -840,7 +1266,7 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->ubah_atasan)->format("d/m/Y H:i"),
@@ -910,7 +1336,7 @@ class PembatalanPerubahanController extends Controller
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
                     'tgl_mulai'   => Carbon::parse($iz->tgl_mulai)->format("d/m/Y"),
                     'tgl_selesai' => Carbon::parse($iz->tgl_selesai)->format("d/m/Y"),
-                    'jml_cuti'    => $iz->jml_cuti,
+                    'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>'',

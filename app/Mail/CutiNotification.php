@@ -37,14 +37,4 @@ class CutiNotification extends Mailable
             // ->cc('pandu@grm-risk.com','HRD Staff')
             // ->cc('ariswan@grm-risk.com','HRD Manajer')
     }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array
-     */
-    public function attachments()
-    {
-        return [];
-    }
 }

@@ -37,8 +37,7 @@
                                 class="text-info panel-title">Informasi Pribadi</span><span class="pull-right"><i
                                     class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="/absensi-karyawan"><i
-                                        class="mdi mdi-account-check"></i><span>Absensi</span></a>
+                            <li><a href="/absensi-karyawan"><i class="mdi mdi-account-check"></i><span>Absensi</span></a>
                             </li>
                             <li><a href="/history-absensi"><i class="fa fa-history"></i><span>History
                                         Absensi</span></a></li>
@@ -145,10 +144,8 @@
                             {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Setting Role</a></li> --}}
                             {{-- <li><a href="settinguser"><i class="fa fa-group (alias)"></i><span></span>Managemen
                                     User</a></li> --}}
-                            <li><a href="/setting-organisasi"><i
-                                        class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
-                            <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Setting
-                                        Kalender</span></a></li>
+                            <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
+                            <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>SettingKalender</span></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -166,13 +163,30 @@
                     <li><a href="/history-absensi" class="waves-effect"><i class="fa fa-history"></i><span>History Absensi</span></a></li>
                     <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a></li>
                     <li><a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
-                    {{-- @if(Auth::user()->role == 4 && $row->jabatan == "Management")
+                    @if(Auth::user()->role == 2 && $row->jabatan == "Asisten Manajer")
                         <li class="has_sub">
-                                <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti Staff</span></a>
-                                </li>
-                            </ul>
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span class="text-info panel-title">Absensi Karyawan</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
+                                    <li><a href="/absensi-tidak-masuk"><i class="mdi mdi-calendar-remove"></i><span>Data Tidak Masuk</span></a></li>
+                                
+                                </ul>
+                            </li>
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-walk"></i><span
+                                        class="text-info panel-title">Cuti & Izin</span><span class="pull-right"><i
+                                            class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Transaksi Cuti & Izin</span></a>
+                                    </li>
+                                    <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
+                                    <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc"></i><span>Master Alokasi Cuti</span></a>
+                                    </li>
+                                </ul>
+                            </li>
                         </li>
-                    @endif --}}
+                    @endif
                 </ul>
             </div>
         @endif

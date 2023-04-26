@@ -26,9 +26,9 @@ class TidakMasukController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         
-        if ($role == 1) {
-            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        if ($role == 1 || $role == 2 && $row->jabatan = "Asisten Manajer") {
             $karyawan = Karyawan::all();
             $idkaryawan = $request->id_karyawan;
 
@@ -53,7 +53,7 @@ class TidakMasukController extends Controller
                 ->get();
             }
 
-            return view('admin.tidakmasuk.index',compact('tidakmasuk','karyawan','row'));
+            return view('admin.tidakmasuk.index',compact('tidakmasuk','karyawan','row','role'));
             
             //menghapus filter data
             $request->session()->forget('id_karyawan');

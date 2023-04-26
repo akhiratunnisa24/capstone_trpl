@@ -328,7 +328,7 @@ class ManagerController extends Controller
             ->exists();
         // return $cekSisacuti;
         // return $cekSisacuti;
-        if ($cekSisacuti != null) 
+        if ($cekSisacuti !== null) 
         {
             // Cuti berasal dari sisacuti
             if($row->jabatan == "Manajer" && $role == 3)
@@ -342,7 +342,7 @@ class ManagerController extends Controller
                     ->select('cuti.*','karyawan.atasan_pertama','karyawan.atasan_kedua')
                     ->first();
 
-               return $datacuti;
+              //    return $datacuti;
                 if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai  && $row->jabatan = "Manajer")
                 {
                     // return $datacuti->atasan_pertama;
@@ -467,7 +467,7 @@ class ManagerController extends Controller
                         'alasan'      =>$alasan,
                     ];
                     Mail::to($tujuan)->send(new CutiApproveNotification($data));
-                    dd($data);
+                    // dd($data);
                     return redirect()->back()->withInput();
     
                 }
@@ -476,7 +476,7 @@ class ManagerController extends Controller
                 }
                    
             }
-            elseif($role == 3 && $row->jabatan = "Asisten Manajer" || $role == 2 && $row->jabatan = "Asisten Manajer")
+            elseif($role == 3 && $row->jabatan = "Asisten Manajer")
             {
                 // return ("INI SUPERVISOR");
                 $dacuti = DB::table('cuti')
@@ -509,7 +509,68 @@ class ManagerController extends Controller
                             ->first();
         
                         $tujuan = $atasan2->email;
-                        
+                        $data = [
+                            'subject'     =>'Notifikasi Approval Pertama Permohonan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
+                            'noregistrasi'=>$cuti->id,
+                            'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR CUTI KARYAWAN',
+                            'subtitle' => '[PERSETUJUAN ATASAN]',
+                            'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
+                            'nik'         => $cuti->nik,
+                            'jabatankaryawan' => $cuti->jabatan,
+                            'departemen' => $emailkry->nama_departemen,
+                            'atasan2'     => $atasan2->email,
+                            'namaatasan2' => $atasan2->nama,
+                            'jeniscuti'   => $jeniscuti->jenis_cuti,
+                            'karyawan_email' =>$emailkry->email,
+                            'namakaryawan'=>ucwords(strtolower($emailkry->nama)),
+                            'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+                            'keperluan'   =>$cuti->keperluan,
+                            'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d M Y"),
+                            'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d M Y"),
+                            'tgldisetujuiatasan' => Carbon::now()->format('d/m/Y H:i'),
+                            'jml_cuti'    =>$cuti->jml_cuti,
+                            'status'      =>$status->name_status,
+                            'jabatanatasan' => $atasan2->jabatan
+                        ];
+                        Mail::to($tujuan)->send(new CutiAtasan2Notification($data));
+                        return redirect()->back();
+                    }else{
+                        return redirect()->back();
+                    }
+            }
+            elseif($role == 2 && $row->jabatan = "Asisten Manajer")
+            {
+                // return ("INI SUPERVISOR");
+                $dacuti = DB::table('cuti')
+                    ->leftjoin('settingalokasi', 'cuti.id_settingalokasi', '=', 'settingalokasi.id')
+                    ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+                    ->where('cuti.id',$cuti->id)
+                    ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    ->select('cuti.*','karyawan.atasan_pertama')
+                    ->first();
+                    if($dacuti)
+                    {
+                        // dd($dacuti);
+                        $status = Status::find(6);
+                        Cuti::where('id',$id)->update([
+                            'status' => $status->id,
+                            'tgldisetujui_a' => Carbon::now()->format('Y-m-d H:i:s'),
+                        ]);
+                        $cuti = Cuti::where('id',$id)->first();
+                        $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
+        
+                        //email karyawan
+                        $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+                            ->join('departemen','cuti.departemen','=','departemen.id')
+                            ->where('cuti.id_karyawan','=',$dacuti->id_karyawan)
+                            ->select('karyawan.email','karyawan.nama','karyawan.atasan_kedua','departemen.nama_departemen')
+                            ->first();
+        
+                        $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
+                            ->select('email as email','nama as nama','jabatan as jabatan')
+                            ->first();
+        
+                        $tujuan = $atasan2->email;
                         $data = [
                             'subject'     =>'Notifikasi Approval Pertama Permohonan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                             'noregistrasi'=>$cuti->id,
@@ -628,18 +689,18 @@ class ManagerController extends Controller
                         ]
                     );
             
-                    $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
-                        ->where('id_karyawan', $cuti->id_karyawan)
-                        ->where('id_jeniscuti', $cuti->id_jeniscuti)
-                        ->where('id_settingalokasi', $cuti->id_settingalokasi)
-                        ->first();
+                    // $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    //     ->where('id_karyawan', $cuti->id_karyawan)
+                    //     ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    //     ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    //     ->first();
     
-                    // $durasi_baru = $alokasicuti->durasi - $jml_cuti;
+                    // // $durasi_baru = $alokasicuti->durasi - $jml_cuti;
     
-                    Alokasicuti::where('id', $alokasicuti->id)
-                    ->update(
-                        ['durasi' => $jml_cuti]
-                    );
+                    // Alokasicuti::where('id', $alokasicuti->id)
+                    // ->update(
+                    //     ['durasi' => $jml_cuti]
+                    // );
     
                     //KIRIM EMAIL NOTIFIKASI DIKIRIM KE SEMUA ATASAN, HRD dan KARYAWAN
     
@@ -694,7 +755,78 @@ class ManagerController extends Controller
                     return redirect()->back();
                 }
             }
-            elseif($role == 3 && $row->jabatan = "Asisten Manajer" ||  $role == 2 && $row->jabatan = "Asisten Manajer")
+            elseif($role == 3 && $row->jabatan = "Asisten Manajer")
+            {
+                $dacuti = DB::table('cuti')
+                    ->leftjoin('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
+                    ->leftjoin('settingalokasi', 'cuti.id_settingalokasi', '=', 'settingalokasi.id')
+                    ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+                    ->where('cuti.id',$cuti->id)
+                    ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    ->select('cuti.*','karyawan.atasan_pertama')
+                    ->first();
+    
+                // dd($dacuti);
+                if($dacuti)
+                {
+                    // dd($dacuti);
+                    $status = Status::find(6);
+                    Cuti::where('id',$id)->update([
+                        'tgldisetujui_a' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'status' => $status->id,
+                    ]);
+                    $cuti = Cuti::where('id',$id)->first();
+                    $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
+    
+                    //email karyawan
+                    $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
+                        ->join('departemen','cuti.departemen','=','departemen.id')
+                        ->where('cuti.id_karyawan','=',$dacuti->id_karyawan)
+                        ->select('karyawan.email','karyawan.nama','karyawan.atasan_kedua','departemen.nama_departemen')
+                        ->first();
+    
+                    $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
+                        ->select('email as email','nama as nama','jabatan as jabatan')
+                        ->first();
+                    
+                    //ambil email atasan pertama 
+                    $atasan1 = Auth::user()->email;
+    
+                    $tujuan = $atasan2->email;
+                    
+                    $data = [
+                        'subject'     =>'Notifikasi Approval Pertama Permohonan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
+                        'noregistrasi'=>$cuti->id,
+                        'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR CUTI KARYAWAN',
+                        'subtitle' => '[PERSETUJUAN ATASAN]',
+                        'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
+                        'nik'         => $cuti->nik,
+                        'jabatankaryawan' => $cuti->jabatan,
+                        'departemen' => $emailkry->nama_departemen,
+                        'atasan2'     => $atasan2->email,
+                        'namaatasan2' => $atasan2->nama,
+                        'id_jeniscuti'   => $jeniscuti->jenis_cuti,
+                        'karyawan_email' =>$emailkry->email,
+                        'namakaryawan'=>ucwords(strtolower($emailkry->nama)),
+                        'id_jeniscuti'=>$cuti->jeniscutis->jenis_cuti,
+                        'keperluan'   =>$cuti->keperluan,
+                        'tgl_mulai'   =>Carbon::parse($cuti->tgl_mulai)->format("d/m/Y"),
+                        'tgl_selesai' =>Carbon::parse($cuti->tgl_selesai)->format("d/m/Y"),
+                        'tgldisetujuiatasan' => Carbon::now()->format('d/m/Y H:i'),
+                        'jml_cuti'    =>$cuti->jml_cuti,
+                        'status'      =>$status->name_status,
+                        'jabatanatasan' => $atasan2->jabatan
+                    ];
+                
+                    // dd($data);
+                    Mail::to($tujuan)->send(new CutiAtasan2Notification($data));
+                    // dd($data,$tujuan);
+                    return redirect()->back();
+                }else{
+                    return redirect()->back();
+                }
+            }
+            elseif($role == 2 && $row->jabatan = "Asisten Manajer")
             {
                 $dacuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
@@ -1029,18 +1161,27 @@ class ManagerController extends Controller
         $role = Auth::user()->role;
         $izn = Izin::where('id',$id)->first();
         // return $izn;
+        // $izin = Izin::leftJoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+        // ->where(function($query) use ($izn) {
+        //     $query->where('izin.id_jenisizin', '=', $izn->id_jenisizin)
+        //         ->where('izin.id_karyawan', '=', $izn->id_karyawan)
+        //         ->where('izin.id', $izn->id);
+        // })
+        // ->where(function($query) use ($row) {
+        //     $query->where('karyawan.atasan_pertama', '=', $row->id)
+        //         ->orWhere('karyawan.atasan_kedua', '=', $row->id);
+        // })
+        // ->select('izin.*', 'karyawan.nama', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua')
+        // ->first();
         $izin = Izin::leftJoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
-        ->where(function($query) use ($izn) {
-            $query->where('izin.id_jenisizin', '=', $izn->id_jenisizin)
-                ->where('izin.id_karyawan', '=', $izn->id_karyawan);
-        })
-        ->where(function($query) use ($row) {
-            $query->where('karyawan.atasan_pertama', '=', $row->id)
-                ->orWhere('karyawan.atasan_kedua', '=', $row->id);
-        })
-        ->select('izin.*', 'karyawan.nama', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua')
-        ->first();
+                ->where('izin.id_karyawan', '=', $izn->id_karyawan)
+                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                ->orWhere('karyawan.atasan_kedua',Auth::user()->id_pegawai)
+                ->where('izin.id',$id)
+                ->select('izin.*', 'karyawan.nama', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua')
+                ->first();
 
+        // return $izin;
         if($row->jabatan == "Manajer" && $role == 3)
         {
             if($izin && $izin->atasan_pertama == Auth::user()->id_pegawai && $row->jabatan = "Manajer")
@@ -1115,7 +1256,7 @@ class ManagerController extends Controller
                 $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                    ->select('karyawan.email','karyawan.nama','departemen.nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                    ->select('karyawan.email','karyawan.nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
                     ->first();
 
                 $atasan1 = Karyawan::where('id',$emailkry->atasan_pertama)
@@ -1159,7 +1300,72 @@ class ManagerController extends Controller
                 return redirect()->back();
             }
         }
-        elseif($role == 3 && $row->jabatan = "Asisten Manajer" || $role == 2 && $row->jabatan = "Asisten Manajer")
+        elseif($role == 3 && $row->jabatan = "Asisten Manajer")
+        {
+            if($izin && $izin->atasan_pertama == Auth::user()->id_pegawai)
+            {
+                dd($izin->atasan_pertama, Auth::user()->id_pegawai);
+                $status = Status::find(6);
+            
+                Izin::where('id',$id)->update([
+                    'status' => $status->id,
+                    'tgl_setuju_a' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+
+                $izinn = Izin::where('id',$id)->first();
+                $jenisizin = Jenisizin::where('id',$izinn->id_jenisizin)->first();
+                    
+                //KIRIM NOTIFIKASI EMAIL KE ATASAN 2 dan karyawan
+                $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                    ->join('departemen','izin.departemen','=','departemen.id')
+                    ->where('izin.id_karyawan','=',$izinn->id_karyawan)
+                    ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','departemen.nama_departemen')
+                    ->first();
+
+                $atasan = Karyawan::where('id',$emailkry->atasan_kedua)
+                    ->select('email as email','nama as nama','jabatan')
+                    ->first();
+
+                //atasan pertama
+                $atasan1 = Auth::user()->email;
+                $tujuan = $atasan->email;
+                
+                
+                $data = [
+                    'subject'     =>'Notifikasi Approval Pertama Permohonan Izin ' . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
+                    'noregistrasi'=>$izinn->id,
+                    'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR IZIN KARYAWAN',
+                    'subtitle' => '[PERSETUJUAN ATASAN]',
+                    'tgl_permohonan' =>Carbon::parse($izinn->tgl_permohonan)->format("d/m/Y"),
+                    'nik'         => $izinn->nik,
+                    'jabatankaryawan' => $izinn->jabatan,
+                    'departemen' => $emailkry->nama_departemen,
+                    'atasan1'     => $atasan1,
+                    'karyawan_email'=>$emailkry->email,
+                    'id_jenisizin'=> $jenisizin->jenis_izin,
+                    'keperluan'   =>$izinn->keperluan,
+                    'tgl_mulai'   =>Carbon::parse($izinn->tgl_mulai)->format("d/m/Y"),
+                    'tgl_selesai' =>Carbon::parse($izinn->tgl_selesai)->format("d/m/Y"),
+                    'jam_mulai'   =>Carbon::parse($izinn->jam_mulai)->format("H:i"),
+                    'jam_selesai' =>Carbon::parse($izinn->jam_selesai)->format("H:i"),
+                    'tgldisetujuiatasan' => Carbon::now()->format('d/m/Y H:i'),
+                    'jml_hari'    =>$izinn->jml_hari,
+                    'jumlahjam'   =>$izinn->jml_jam,
+                    'status'      =>$status->name_status,
+                    'namakaryawan'=> $emailkry->nama,
+                    'namaatasan2' =>$atasan->nama,
+                    'jabatanatasan'=>$atasan->jabatan,
+                ];
+                dd($data);
+                Mail::to($tujuan)->send(new IzinAtasan2Notification($data));
+                return redirect()->back()->withInput();
+            }
+            else
+            {
+                return redirect()->back();
+            }
+        }
+        elseif($role == 2 && $row->jabatan = "Asisten Manajer")
         {
             if($izin && $izin->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -1180,7 +1386,7 @@ class ManagerController extends Controller
                     ->where('izin.id_karyawan','=',$izinn->id_karyawan)
                     ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','departemen.nama_departemen')
                     ->first();
-
+                // return $emailkry;
                 $atasan = Karyawan::where('id',$emailkry->atasan_kedua)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1215,7 +1421,9 @@ class ManagerController extends Controller
                     'namaatasan2' =>$atasan->nama,
                     'jabatanatasan'=>$atasan->jabatan,
                 ];
+                // return $data;
                 Mail::to($tujuan)->send(new IzinAtasan2Notification($data));
+                // return $data;
                 return redirect()->back()->withInput();
             }
             else
@@ -1239,8 +1447,9 @@ class ManagerController extends Controller
             ->first();
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
+        return $role;
 
-        if($dataizin && $row->jabatan == "Asisten Manajer" && $role == 3 || $dataizin && $role == 2 && $row->jabatan == "Asisten Manajer")
+        if($dataizin && $row->jabatan == "Asisten Manajer" && $role == 3)
         {
             $status = Status::find(9);
             Izin::where('id',$id)->update([
@@ -1281,6 +1490,8 @@ class ManagerController extends Controller
             $data = [
                 'subject'  =>'Notifikasi Permohonan Izin Ditolak, Izin ' . $izin->jenis_izin . ' #' . $izin->id . ' ' . $karyawan->nama,
                 'noregistrasi'=>$izin->id,
+                'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR IZIN KARYAWAN',
+                'subtitle' => '[ PENDING ATASAN ]',
                 'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
                 'nik'         => $izin->nik,
                 'jabatankaryawan' => $izin->jabatan,
@@ -1310,7 +1521,80 @@ class ManagerController extends Controller
             return redirect()->route('cuti.Staff',['type'=>2])->withInput();
             
         }
-        else if($dataizin && $role == 3 && $row->jabatan == "Manajer")
+        elseif($dataizin && $role == 2 && $row->jabatan == "Asisten Manajer")
+        {
+            $status = Status::find(9);
+            Izin::where('id',$id)->update([
+                'status' => $status->id,
+                'tgl_ditolak' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+            $izz = Izin::where('id',$id)->first();
+            dd($izz);
+
+            $datareject          = new Datareject;
+            $datareject->id_cuti = NULL;
+            $datareject->id_izin = $izz->id;
+            $datareject->alasan  = $request->alasan;
+            $datareject->save();   
+    
+            $izin = DB::table('izin')
+                ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                ->join('statuses','izin.status','=','statuses.id')
+                ->where('izin.id',$id)
+                ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
+                ->first();
+            $alasan = Datareject::where('id_izin',$izin->id)->first();
+    
+            //KIRIM EMAIL KE KARAYWAN> 2 tingkat atasan
+            $karyawan = DB::table('izin')
+                ->join('departemen','izin.departemen','=','departemen.id')
+                ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                ->where('izin.id',$izin->id)
+                ->select('karyawan.email as email','departemen.nama_departemen','karyawan.nama as nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                ->first(); 
+            $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+                ->select('email as email','nama as nama','jabatan')
+                ->first();
+            $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
+                ->select('email as email','nama as nama','jabatan')
+                ->first();
+    
+            $tujuan = $karyawan->email;
+            $data = [
+                'subject'  =>'Notifikasi Permohonan Izin Ditolak, Izin ' . $izin->jenis_izin . ' #' . $izin->id . ' ' . $karyawan->nama,
+                'noregistrasi'=>$izin->id,
+                'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR IZIN KARYAWAN',
+                'subtitle' => '[ PENDING ATASAN ]',
+                'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
+                'nik'         => $izin->nik,
+                'jabatankaryawan' => $izin->jabatan,
+                'departemen' => $karyawan->nama_departemen,
+                'atasan1'     => $atasan1->email,
+                'atasan2'     => $atasan2->email,
+                'karyawan_email'=>$karyawan->email,
+                'id_jenisizin'=>$izin->jenis_izin,
+                'keperluan'   =>$izin->keperluan,
+                'tgl_mulai'   =>Carbon::parse($izin->tgl_mulai)->format("d M Y"),
+                'tgl_selesai' =>Carbon::parse($izin->tgl_selesai)->format("d M Y"),
+                'jam_mulai'   =>Carbon::parse($izin->jam_mulai)->format("H:i"),
+                'jam_selesai' =>Carbon::parse($izin->jam_selesai)->format("H:i"),
+                'status'   =>$status->name_status,
+                'jml_hari'    =>$izin->jml_hari,
+                'jumlahjam'   =>$izin->jml_jam,
+                'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
+                'namaatasan2' =>$atasan2->nama,
+                'nama'        =>$karyawan->nama,
+                'kategori'   =>$izin->jenis_izin,
+                'alasan'      =>$alasan->alasan,
+                'tgldisetujuiatasan' => '',
+                'tgldisetujuipimpinan' => '',
+                'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
+            ];
+            Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
+            return redirect()->route('cuti.Staff',['type'=>2])->withInput();
+            
+        }
+        elseif($dataizin && $role == 3 && $row->jabatan == "Manajer")
         {
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -1353,6 +1637,8 @@ class ManagerController extends Controller
                     'subject'  =>'Notifikasi Permohonan Izin Ditolak, Izin ' . $izin->jenis_izin . ' #' . $izin->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$izin->id,
                     'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR IZIN KARYAWAN',
+                    'subtitle' => '[ PENDING PIMPINAN ]',
                     'nik'         => $izin->nik,
                     'jabatankaryawan' => $izin->jabatan,
                     'departemen' => $karyawan->nama_departemen,
@@ -1422,6 +1708,8 @@ class ManagerController extends Controller
                     'subject'  =>'Notifikasi Permohonan Izin Ditolak, Izin ' . $izin->jenis_izin . ' #' . $izin->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$izin->id,
                     'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR IZIN KARYAWAN',
+                    'subtitle' => '[ PENDING ATASAN ]',
                     'nik'         => $izin->nik,
                     'jabatankaryawan' => $izin->jabatan,
                     'departemen' => $karyawan->nama_departemen,

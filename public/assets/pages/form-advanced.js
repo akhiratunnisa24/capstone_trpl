@@ -338,6 +338,33 @@
                 }
             },
         });
+
+        jQuery("#datepicker-autocloseu").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < today || date > next) {
+                    return { enabled: false };
+                } else {
+                    return {};
+                }
+            },
+        });
+
+        jQuery("#datepicker-autoclosev").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < today || date > next) {
+                    return { enabled: false };
+                } else {
+                    return {};
+                }
+            },
+        });
+
         jQuery("#datepicker-autoclosee").datepicker({
             format: "yyyy/mm/dd",
             autoclose: true,

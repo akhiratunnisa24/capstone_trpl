@@ -46,9 +46,11 @@
                         <div class="row">
                             <div class="col-md-20">
                                 <div class="panel panel-primary">
-                                    <div class="panel-heading clearfix">
-                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#Modal"> Tambah Kategori Cuti</a>
-                                    </div>
+                                        <div class="panel-heading clearfix">
+                                            @if($role == 1)
+                                                <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#Modal"> Tambah Kategori Cuti</a>
+                                            @endif
+                                        </div>
                                     {{-- MODALS TAMBAH KATEGORI CUTI --}}
                                     @include('admin.kategori.addcuti')
                                     <div class="panel-body m-b-5">
@@ -77,8 +79,10 @@
                                                                     <a id="bs" class="btn btn-success btn-sm Modaleditcuti" data-toggle="modal" data-target="#Modaleditcuti{{$data->id}}">
                                                                         <i class="fa fa-edit"></i>
                                                                     </a>
-                                                                    <button onclick="cuti({{$data->id}})" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i> </button>
-                                                                </div>
+                                                                    @if($role == 1)
+                                                                        <button onclick="cuti({{$data->id}})" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i> </button>
+                                                                    @endif
+                                                                    </div>
                                                             </td>
                                                         </tr>
                                                         {{-- modals show cuti --}}
@@ -107,11 +111,14 @@
                         <div class="row">
                             <div class="col-md-20">
                                 <div class="panel panel-primary">
+                                    
                                     <div class="panel-heading clearfix">
                                         {{-- <strong>Kategori Izin</strong> --}}
+                                        @if($role == 1)
                                         <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#smallModal"> Tambah Kategori Izin</a>
-                                        {{--
-                                    </div> --}}
+                                        @endif
+                                        
+                                    </div>
                                 </div>
                                 {{-- MODALS TAMBAH KATEGORI IZIN --}}
                                 @include('admin.kategori.addizin')

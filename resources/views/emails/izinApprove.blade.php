@@ -156,9 +156,21 @@
 				<p class="title">Keterangan</p><label class="value">: <strong>{{$data['keperluan']}}</strong></label><br>
 				<p class="title">Tanggal Persetujuan</p><label class="value">:</label>
 				<ul>
-					<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuiatasan']}} WIB</label></li>
-					<li><label class="value">Pimpinan Unit Kerja : {{$data['tgldisetujuipimpinan']}} WIB</label></li>
-					<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuipimpinan']}} WIB</label></li>
+					@if($data['status'] == "Pending Atasan")
+							<li><label class="value">Permohonan Ditolak:  <strong>{{$data['tglditolak']}}</strong> WIB</label></li>
+							<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>{{$data['tglditolak']}}</strong> WIB</label></li>
+						@elseif($data['status'] == "Pending Pimpinan")
+							<li><label class="value">Permohonan Disetujui:  <strong>{{$data['tgldisetujuiatasan']}}</strong> WIB</label></li>
+							<li><label class="value">Permohonan Ditolak&nbsp;&nbsp;:  <strong>{{$data['tglditolak']}}</strong> WIB</label></li>
+							<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>{{$data['tglditolak']}}</strong> WIB</label></li>
+						@elseif($data['status'] == "Disetujui")
+						<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuiatasan']}} WIB</label></li>
+							<li><label class="value">Pimpinan Unit Kerja : {{$data['tgldisetujuipimpinan']}} WIB</label></li>
+							<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuipimpinan']}} WIB</label></li>
+						@else
+							<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: -</label></li>
+							<li><label class="value">Pimpinan Unit Kerja : -</label></li>
+						@endif
 				</ul>
 			</div>
 		</div>

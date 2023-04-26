@@ -69,14 +69,47 @@ class AbsensiController extends Controller
                 ->orderBy('tanggal','desc')
                 ->get();
             }
-            return view('admin.absensi.index',compact('absensi','karyawan','row'));
+            return view('admin.absensi.index',compact('absensi','karyawan','row','role'));
         
             //menghapus filter data
             $request->session()->forget('id_karyawan');
             $request->session()->forget('bulan');
             $request->session()->forget('tahun');
 
-        } else {
+        }elseif($role == 2 && $row->jabatan == "Asisten Manajer")
+        {
+            $karyawan = Karyawan::all();
+
+            $idkaryawan = $request->id_karyawan;
+            $bulan = $request->query('bulan',Carbon::now()->format('m'));
+            $tahun = $request->query('tahun',Carbon::now()->format('Y'));
+
+            // simpan session
+            $request->session()->put('idkaryawan', $request->id_karyawan);
+            $request->session()->put('bulan', $bulan);
+            $request->session()->put('tahun', $tahun);
+    
+            if(isset($idkaryawan) && isset($bulan) && isset($tahun))
+            {
+                $absensi = Absensi::with('karyawans','departemens')->where('id_karyawan', $idkaryawan)
+                ->whereMonth('tanggal', $bulan)
+                ->whereYear('tanggal',$tahun)
+                ->get();
+            }else
+            {
+                $absensi = Absensi::with('karyawans','departemens')
+                ->orderBy('tanggal','desc')
+                ->get();
+            }
+            return view('admin.absensi.index',compact('absensi','karyawan','row','role'));
+        
+            //menghapus filter data
+            $request->session()->forget('id_karyawan');
+            $request->session()->forget('bulan');
+            $request->session()->forget('tahun');
+        }
+        else
+         {
         
             return redirect()->back(); 
         }

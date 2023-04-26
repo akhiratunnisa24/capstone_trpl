@@ -368,7 +368,6 @@ class karyawanController extends Controller
                     ->where('cuti.status', '=', '1')
                     ->orWhere('cuti.status','=','6')
                     ->where('cuti.catatan','=',NULL)
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $cutijumlah = $cuti->count();
 
@@ -390,7 +389,6 @@ class karyawanController extends Controller
                     ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
                     ->orWhere('cuti.catatan','=','Pembatalan Disetujui Atasan')
                     ->orWhere('cuti.catatan','=','Perubahan Disetujui Atasan')
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $jumct = $cutis->count();
 
@@ -409,7 +407,6 @@ class karyawanController extends Controller
                     ->where('izin.status', '=', '1')
                     ->orWhere('izin.status','=','6')
                     ->where('izin.catatan', null)
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $izinjumlah = $izin->count();
 
@@ -429,10 +426,90 @@ class karyawanController extends Controller
                     ->orWhere('izin.catatan','=','Mengajukan Perubahan')
                     ->orWhere('izin.catatan','=','Pembatalan Disetujui Atasan')
                     ->orWhere('izin.catatan','=','Perubahan Disetujui Atasan')
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $jumizin = $ijin->count();
-            }  
+            } 
+            elseif($role == 1)
+            {
+                $cuti = DB::table('cuti')
+                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                    ->select('cuti.*', 'jeniscuti.jenis_cuti','departemen.nama_departemen', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
+                    ->distinct()
+                    ->where(function ($query) {
+                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                    })
+                    ->where('cuti.status', '=', '1')
+                    ->where('cuti.catatan','=',null)
+                    ->orWhere('cuti.status','=','6')
+                    ->get();
+                $cutijumlah = $cuti->count();
+                // return $cuti;
+                $cutis = DB::table('cuti')
+                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
+                    ->distinct()
+                    ->where(function ($query) {
+                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                    })
+                    ->where('cuti.catatan','=','Mengajukan Pembatalan')
+                    ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
+                    ->orWhere('cuti.catatan','=','Pembatalan Disetujui Atasan')
+                    ->orWhere('cuti.catatan','=','Perubahan Disetujui Atasan')
+                    ->get();
+                $jumct = $cutis->count();
+
+                $izin = DB::table('izin')
+                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                    ->select('izin.*', 'statuses.name_status','departemen.nama_departemen', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                    ->distinct()
+                    ->where(function ($query) {
+                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                    })
+                    ->where('izin.status', '=', '1')
+                    ->orWhere('izin.status','=','6')
+                    ->where('izin.catatan',null)
+                    ->get();
+                $izinjumlah = $izin->count();
+
+                $ijin =DB::table('izin')
+                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                    ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                    ->distinct()
+                    ->where(function ($query) {
+                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                    })
+                    ->where('izin.catatan','=','Mengajukan Pembatalan')
+                    ->orWhere('izin.catatan','=','Mengajukan Perubahan')
+                    ->orWhere('izin.catatan','=','Pembatalan Disetujui Atasan')
+                    ->orWhere('izin.catatan','=','Perubahan Disetujui Atasan')
+                    ->get();
+                $jumizin = $ijin->count();
+
+            }   
             elseif($role == 3 && $row->jabatan == "Asisten Manajer")
             {
                 $cuti = DB::table('cuti')
@@ -451,7 +528,6 @@ class karyawanController extends Controller
                     })
                     ->where('cuti.status', '=', '1')
                     ->where('cuti.catatan','=',NULL)
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                
                 $cutijumlah = $cuti->count();
@@ -472,7 +548,6 @@ class karyawanController extends Controller
                     })
                     ->where('cuti.catatan','=','Mengajukan Pembatalan')
                     ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
-                    ->orderBy('created_at', 'DESC')
                     ->get();
 
                 $jumct = $cutis->count();
@@ -491,7 +566,6 @@ class karyawanController extends Controller
                     })
                     ->where('izin.status', '=', '1')
                     ->where('izin.catatan',null)
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $izinjumlah = $izin->count();
 
@@ -509,7 +583,6 @@ class karyawanController extends Controller
                     })
                     ->where('izin.catatan','=','Mengajukan Pembatalan')
                     ->orWhere('izin.catatan','=','Mengajukan Perubahan')
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $jumizin = $ijin->count();
             }
@@ -522,7 +595,7 @@ class karyawanController extends Controller
                     ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
                     ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
                     ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','departemen.nam_departemen', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
+                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','departemen.nama_departemen', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->where(function ($query) {
                         $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
@@ -530,7 +603,6 @@ class karyawanController extends Controller
                     })
                     ->where('cuti.status', '=', '1')
                     ->where('cuti.catatan','=',NULL)
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $cutijumlah = $cuti->count();
                 $cutis = DB::table('cuti')
@@ -549,7 +621,6 @@ class karyawanController extends Controller
                         })
                         ->where('cuti.catatan','=','Mengajukan Pembatalan')
                         ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
-                        ->orderBy('created_at', 'DESC')
                         ->get();
                 $jumct = $cutis->count();
 
@@ -567,7 +638,6 @@ class karyawanController extends Controller
                     })
                     ->where('izin.status', '=', '1')
                     ->where('izin.catatan',null)
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $izinjumlah = $izin->count();
                 $ijin =DB::table('izin')
@@ -584,7 +654,6 @@ class karyawanController extends Controller
                     })
                     ->where('izin.catatan','=','Mengajukan Pembatalan')
                     ->orWhere('izin.catatan','=','Mengajukan Perubahan')
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $jumizin = $ijin->count();
             }
@@ -606,7 +675,6 @@ class karyawanController extends Controller
                     ->where('cuti.status', '=', '1')
                     ->orWhere('cuti.status', '=', '2')
                     ->where('cuti.catatan','=',NULL)
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $cutijumlah = $cuti->count();
 
@@ -628,7 +696,6 @@ class karyawanController extends Controller
                     ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
                     ->orWhere('cuti.catatan','=','Pembatalan Disetujui Atasan')
                     ->orWhere('cuti.catatan','=','Perubahan Disetujui Atasan')
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $jumct = $cutis->count();
 
@@ -647,7 +714,6 @@ class karyawanController extends Controller
                     ->where('izin.status', '=', '1')
                     ->orWhere('izin.status', '=', '2')
                     ->where('izin.catatan',null)
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $izinjumlah = $izin->count();
                 $ijin =DB::table('izin')
@@ -664,7 +730,6 @@ class karyawanController extends Controller
                     })
                     ->where('izin.catatan','=','Mengajukan Pembatalan')
                     ->orWhere('izin.catatan','=','Mengajukan Perubahan')
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $jumizin = $ijin->count();
             }
@@ -686,7 +751,6 @@ class karyawanController extends Controller
                         ->where('cuti.status', '=', '1')
                         ->orWhere('cuti.status', '=', '2')
                         ->where('cuti.catatan','=',NULL)
-                        ->orderBy('created_at', 'DESC')
                         ->get();
                 // $cutijumlah = $cuti->count();
                 $cutijumlah = $cuti->count();
@@ -707,7 +771,6 @@ class karyawanController extends Controller
                     })
                     ->where('cuti.catatan','=','Mengajukan Pembatalan')
                     ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $jumct = $cutis->count();
                 
@@ -725,7 +788,6 @@ class karyawanController extends Controller
                     })
                     ->where('izin.status', '=', '1')
                     ->orWhere('izin.status', '=', '2')
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $izinjumlah = $izin->count();
                 $ijin =DB::table('izin')
@@ -742,7 +804,6 @@ class karyawanController extends Controller
                     })
                     ->where('izin.catatan','=','Mengajukan Pembatalan')
                     ->orWhere('izin.catatan','=','Mengajukan Perubahan')
-                    ->orderBy('created_at', 'DESC')
                     ->get();
                 $jumizin = $ijin->count();
            }
