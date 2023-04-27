@@ -1,5 +1,4 @@
 @extends('layouts.default')
-
 @section('content')
     <!-- Page-Title -->
     <div class="row">
