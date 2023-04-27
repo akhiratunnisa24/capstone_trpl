@@ -225,8 +225,370 @@ class HomeController extends Controller
         $posisi = Lowongan::all()->where('status', '=', 'Aktif');
 
         if($role->role == 3 && $row->jabatan == "Manajer")
-            {
-                $cuti = DB::table('cuti')
+        {
+            $cuti = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('cuti.status', [1, 6])
+                ->where('cuti.catatan', '=', NULL)
+                ->get();
+            $cutijumlah = $cuti->count();
+
+            $cutis = DB::table('cuti')
+                ->leftJoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftJoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftJoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftJoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftJoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftJoin('departemen', 'cuti.departemen', '=', 'departemen.id')
+                ->leftJoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                ->distinct()
+                ->get();
+
+            $jumct = $cutis->count();
+            // return $jumct;
+
+            $izin = DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('izin.status', [1, 6])
+                ->where('izin.catatan', '=', NULL)
+                ->get();
+            $izinjumlah = $izin->count();
+
+            $ijin =DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                ->get();
+            $jumizin = $ijin->count();
+        } 
+        elseif($role->role == 1 && $row->jabatan == "Manajer")
+        {
+            $cuti = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti','departemen.nama_departemen', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('cuti.status', [1, 6])
+                ->where('cuti.catatan', '=', NULL)
+                ->get();
+            $cutijumlah = $cuti->count();
+            // return $cuti;
+            $cutis = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                ->get();
+            $jumct = $cutis->count();
+
+            $izin = DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status','departemen.nama_departemen', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('izin.status', [1, 6])
+                ->where('izin.catatan', '=', NULL)
+                ->get();
+            $izinjumlah = $izin->count();
+
+            $ijin =DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                ->get();
+            $jumizin = $ijin->count();
+
+        }   
+        elseif($role->role == 3 && $row->jabatan == "Asisten Manajer")
+        {
+            $cuti = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->where('cuti.status', '=', '1')
+                ->where('cuti.catatan','=',NULL)
+                ->get();
+           
+            $cutijumlah = $cuti->count();
+            
+            $cutis = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                ->get();
+
+            $jumct = $cutis->count();
+
+            $izin = DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->select('izin.*', 'statuses.name_status','departemen.nama_departemen', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->where('izin.status', '=', '1')
+                ->where('izin.catatan',null)
+                ->get();
+            $izinjumlah = $izin->count();
+
+            $ijin =DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('izin.catatan',['Mengajukan Pembatalan','Mengajukan Perubahan'])
+                ->get();
+            $jumizin = $ijin->count();
+        }
+        elseif($role->role == 1 && $row->jabatan == "Asisten Manajer")
+        {
+            $cuti = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','departemen.nama_departemen', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->where('cuti.status', '=', '1')
+                ->where('cuti.catatan','=',NULL)
+                ->get();
+            $cutijumlah = $cuti->count();
+            $cutis = DB::table('cuti')
+                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                    ->distinct()
+                    ->where(function ($query) {
+                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                    })
+                    ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                    ->get();
+            $jumct = $cutis->count();
+
+            $izin = DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->where('izin.status', '=', '1')
+                ->where('izin.catatan',null)
+                ->get();
+            $izinjumlah = $izin->count();
+            $ijin =DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                ->get();
+            $jumizin = $ijin->count();
+        }
+        elseif($role->role == 3 && $row->jabatan == "Management")
+        {
+            $cuti = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('cuti.status', [1, 2])
+                ->where('cuti.catatan','=',NULL)
+                ->get();
+            $cutijumlah = $cuti->count();
+
+            $cutis = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                ->get();
+            $jumct = $cutis->count();
+
+            $izin = DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin','departemen.nama_departemen', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('izin.status', [1, 2])
+                ->where('izin.catatan',null)
+                ->get();
+            $izinjumlah = $izin->count();
+            $ijin =DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                ->get();
+            $jumizin = $ijin->count();
+        }
+        else
+        {
+            $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
                     ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
@@ -234,585 +596,67 @@ class HomeController extends Controller
                     ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
                     ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
                     ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti','departemen.nama_departemen', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
+                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','departemen.nama_departemen', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->where(function ($query) {
                         $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     })
-                    ->where('cuti.status', '=', '1')
-                    ->where('cuti.catatan','=',null)
-                    ->orWhere('cuti.status','=','6')
-                    ->get();
-                $cutijumlah = $cuti->count();
-                // return $cuti;
-                $cutis = DB::table('cuti')
-                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('cuti.catatan','=','Mengajukan Pembatalan')
-                    ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
-                    ->orWhere('cuti.catatan','=','Pembatalan Disetujui Atasan')
-                    ->orWhere('cuti.catatan','=','Perubahan Disetujui Atasan')
-                    ->get();
-                $jumct = $cutis->count();
-
-                $izin = DB::table('izin')
-                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status','departemen.nama_departemen', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('izin.status', '=', '1')
-                    ->orWhere('izin.status','=','6')
-                    ->where('izin.catatan',null)
-                    ->get();
-                $izinjumlah = $izin->count();
-
-                $ijin =DB::table('izin')
-                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('izin.catatan','=','Mengajukan Pembatalan')
-                    ->orWhere('izin.catatan','=','Mengajukan Perubahan')
-                    ->orWhere('izin.catatan','=','Pembatalan Disetujui Atasan')
-                    ->orWhere('izin.catatan','=','Perubahan Disetujui Atasan')
-                    ->get();
-                $jumizin = $ijin->count();
-
-            }  
-            elseif($role->role == 3 && $row->jabatan == "Asisten Manajer")
-            {
-                $cuti = DB::table('cuti')
-                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti','departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('cuti.status', '=', '1')
+                    ->whereIn('cuti.status',['1','2'])
                     ->where('cuti.catatan','=',NULL)
                     ->get();
-                // return $cuti;
-                $cutijumlah = $cuti->count();
-                $cutis = DB::table('cuti')
-                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('cuti.catatan','=','Mengajukan Pembatalan')
-                    ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
-                    ->get();
+            // $cutijumlah = $cuti->count();
+            $cutijumlah = $cuti->count();
 
-                $jumct = $cutis->count();
-
-                $izin = DB::table('izin')
-                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin','departemen.nama_departemen', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('izin.status', '=', '1')
-                    ->where('izin.catatan',null)
-                    ->get();
-                $izinjumlah = $izin->count();
-
-                $ijin =DB::table('izin')
-                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('izin.catatan','=','Mengajukan Pembatalan')
-                    ->orWhere('izin.catatan','=','Mengajukan Perubahan')
-                    ->get();
-                 $jumizin = $ijin->count();
-            }
-            elseif($role->role == 2 && $row->jabatan == "Asisten Manajer"){
-                $cuti = DB::table('cuti')
-                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','departemen.nama_departemen', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('cuti.status', '=', '1')
-                    ->where('cuti.catatan','=',NULL)
-                    ->get();
-                $cutijumlah = $cuti->count();
-
-                $cutis = DB::table('cuti')
-                        ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-                        ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-                        ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-                        ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-                        ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-                        ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                        ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                        ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-                        ->distinct()
-                        ->where(function ($query) {
-                            $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                                ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                        })
-                        ->where('cuti.catatan','=','Mengajukan Pembatalan')
-                        ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
-                        ->get();
-                $jumct = $cutis->count();
-
-
-                $izin = DB::table('izin')
-                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('izin.status', '=', '1')
-                    ->where('izin.catatan',null)
-                    ->get();
-                $izinjumlah = $izin->count();
-                $ijin =DB::table('izin')
-                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('izin.catatan','=','Mengajukan Pembatalan')
-                    ->orWhere('izin.catatan','=','Mengajukan Perubahan')
-                    ->get();
-                $jumizin = $ijin->count();
-            }
-            elseif($role->role == 3 && $row->jabatan == "Management"){
-                $cuti = DB::table('cuti')
-                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','departemen.nama_departemen', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('cuti.status', '=', '1')
-                    ->orWhere('cuti.status', '=', '2')
-                    ->where('cuti.catatan','=',NULL)
-                    ->get();
-                $cutijumlah = $cuti->count();
-                $cutis = DB::table('cuti')
-                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('cuti.catatan','=','Mengajukan Pembatalan')
-                    ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
-                    ->orWhere('cuti.catatan','=','Pembatalan Disetujui Atasan')
-                    ->orWhere('cuti.catatan','=','Perubahan Disetujui Atasan')
-                    ->get();
-                 $jumct = $cutis->count();
-
-                 $izin = DB::table('izin')
-                 ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin','departemen.nama_departemen', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('izin.status', '=', '1')
-                    ->orWhere('izin.status', '=', '2')
-                    ->where('izin.catatan',null)
-                    ->get();
-                $izinjumlah = $izin->count();
-                $ijin =DB::table('izin')
-                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('izin.catatan','=','Mengajukan Pembatalan')
-                    ->orWhere('izin.catatan','=','Mengajukan Perubahan')
-                    ->get();
-                $jumizin = $ijin->count();
-            }
-            elseif($role->role == 1)
-            {
-                $cuti = DB::table('cuti')
-                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti','departemen.nama_departemen', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('cuti.status', '=', '1')
-                    ->where('cuti.catatan','=',null)
-                    ->orWhere('cuti.status','=','6')
-                    ->get();
-                $cutijumlah = $cuti->count();
-                // return $cuti;
-                $cutis = DB::table('cuti')
-                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('cuti.catatan','=','Mengajukan Pembatalan')
-                    ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
-                    ->orWhere('cuti.catatan','=','Pembatalan Disetujui Atasan')
-                    ->orWhere('cuti.catatan','=','Perubahan Disetujui Atasan')
-                    ->get();
-                $jumct = $cutis->count();
-
-                $izin = DB::table('izin')
-                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status','departemen.nama_departemen', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where(function ($query) {
-                        $query->where('izin.status', '=', '1')
-                            ->orWhere('izin.status','=','6')->where('izin.catatan',null);
-                    })
-                    ->get();
-                    // return $izin;
-                $izinjumlah = $izin->count();
-
-                $ijin =DB::table('izin')
-                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where(function ($query) {
-                        $query->where('izin.catatan','=','Mengajukan Pembatalan')
-                            ->orWhere('izin.catatan','=','Mengajukan Perubahan')
-                            ->orWhere('izin.catatan','=','Pembatalan Disetujui Atasan')
-                            ->orWhere('izin.catatan','=','Perubahan Disetujui Atasan');
-                    })
-                    ->get();
-                $jumizin = $ijin->count();
-
-            }  
-            else{
-                $cuti = DB::table('cuti')
-                        ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-                        ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-                        ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-                        ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-                        ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-                        ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                        ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                        ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','departemen.nama_departemen', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-                        ->distinct()
-                        ->where(function ($query) {
-                            $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                                ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                        })
-                        ->where('cuti.status', '=', '1')
-                        ->orWhere('cuti.status', '=', '2')
-                        ->orWhere('cuti.catatan','=',NULL)
-                        ->get();
-                $cutijumlah = $cuti->count();
-
-                $cutis = DB::table('cuti')
-                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('cuti.catatan','=','Mengajukan Pembatalan')
-                    ->orWhere('cuti.catatan','=','Mengajukan Perubahan')
-                    ->get();
-                $jumct = $cutis->count();
-
-                $izin = DB::table('izin')
-                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status','departemen.nama_departemen', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('izin.status', '=', '1')
-                    ->orWhere('izin.status', '=', '2')
-                    ->where('izin.catatan',null)
-                    ->get();
-
-                $izinjumlah = $izin->count();
-                $ijin =DB::table('izin')
-                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                    ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-                    ->distinct()
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->where('izin.catatan','=','Mengajukan Pembatalan')
-                    ->orWhere('izin.catatan','=','Mengajukan Perubahan')
-                    ->get();
-                $jumizin = $ijin->count();
-           }
-
-        // if($role == 3 && $row->jabatan == "Manajer"){
-        //     $cuti = DB::table('cuti')
-        //         ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-        //         ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-        //         ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-        //         ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-        //         ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-        //         ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-        //         ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-        //         ->distinct()
-        //         ->where(function ($query) {
-        //             $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-        //                 ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-        //         })
-        //         ->where('cuti.status', '=', '1')
-        //         ->orWhere('cuti.status','=','6')
-        //         ->orderBy('created_at', 'DESC')
-        //         ->get();
-        //     $cutijumlah = $cuti->count();
-
-        //     $izin = DB::table('izin')
-        //             ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-        //             ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-        //             ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-        //             ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-        //             ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-        //             ->distinct()
-        //             ->where(function ($query) {
-        //                 $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-        //                     ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-        //             })
-        //             ->where('izin.status', '=', '1')
-        //             ->orWhere('izin.status','=','6')
-        //             ->orderBy('created_at', 'DESC')
-        //             ->get();
-        //     $izinjumlah = $izin->count();
-
-        // }  
-        // elseif($role == 3 && $row->jabatan == "Asisten Manajer" || $role == 2 && $row->jabatan == "Asisten Manajer")
-        // {
-        //     $cuti = DB::table('cuti')
-        //         ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-        //         ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-        //         ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-        //         ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-        //         ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-        //         ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-        //         ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-        //         ->distinct()
-        //         ->where(function ($query) {
-        //             $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-        //                 ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-        //         })
-        //         ->where('cuti.status', '=', '1')
-        //         ->orderBy('created_at', 'DESC')
-        //         ->get();
-        //     // return $cuti;
-        //     $cutijumlah = $cuti->count();
-
-        //     $izin = DB::table('izin')
-        //         ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-        //         ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-        //         ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-        //         ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-        //         ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-        //         ->distinct()
-        //         ->where(function ($query) {
-        //             $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-        //                 ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-        //         })
-        //         ->where('izin.status', '=', '1')
-        //         ->orderBy('created_at', 'DESC')
-        //         ->get();
-        //     $izinjumlah = $izin->count();
-
-        // }else{
-        //     $cuti = DB::table('cuti')
-        //         ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
-        //         ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
-        //         ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-        //         ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
-        //         ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-        //         ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-        //         ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
-        //         ->distinct()
-        //         ->where(function ($query) {
-        //             $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-        //                 ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-        //         })
-        //         ->where('cuti.status', '=', '1')
-        //         ->orderBy('created_at', 'DESC')
-        //         ->get();
-        //     // return $cuti;
-        //     $cutijumlah = $cuti->count();
-
-        //     $izin = DB::table('izin')
-        //         ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-        //         ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-        //         ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-        //         ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-        //         ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
-        //         ->distinct()
-        //         ->where(function ($query) {
-        //             $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-        //                 ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-        //         })
-        //         ->where('izin.status', '=', '1')
-        //         ->orderBy('created_at', 'DESC')
-        //         ->get();
-        // $izinjumlah = $izin->count();
-        // }
-        
-        // return $row->jabatan;
-        // $izin = DB::table('izin')->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-        //     ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-        //     ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
-        //     ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
-        //     ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.nama')
-        //     ->distinct()
-        //     ->orderBy('created_at', 'DESC')
-        //     ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-        //     ->get();
-        // $izinjumlah = $izin->count();
-        // dd($cutijumlah);
+            $cutis = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                ->get();
+            $jumct = $cutis->count();
+            
+            $izin = DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status','departemen.nama_departemen', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('izin.status',['1','2'])
+                ->get();
+            $izinjumlah = $izin->count();
+            $ijin =DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->whereIn('izin.catatan',['Mengajukan Pembatalan','Mengajukan Perubahan'])
+                ->get();
+            $jumizin = $ijin->count();
+        }
 
         $resign = Resign::orderBy('created_at', 'desc')->get();
         $resignjumlah = $resign->count();
@@ -893,7 +737,9 @@ class HomeController extends Controller
             ];
             return view('admin.datamaster.user.dashboardAdmin', $output);
 
-        } elseif ($role->role == 1){
+        } 
+        elseif ($role->role == 1)
+        {
             
             $output = [
                 'row' => $row,
@@ -948,7 +794,7 @@ class HomeController extends Controller
             ];
             return view('admin.karyawan.dashboardhrd', $output);
 
-        } elseif ($role->role == 2 && $row->jabatan == "Asisten Manajer") {
+        } elseif ($role->role == 3 && $row->jabatan == "Asisten Manajer") {
 
             $output = [
                 'row' => $row,
@@ -977,7 +823,7 @@ class HomeController extends Controller
             ];
             return view('karyawan.dashboardKaryawan', $output);
         
-        } elseif ($role->role == 2 && $row->jabatan == "Staff") {
+        } elseif ($role->role == 2) {
 
             $output = [
                 'row' => $row,
@@ -991,25 +837,23 @@ class HomeController extends Controller
                 'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
                 'sisacutis' => $sisacutis,
                 'role' => $role,
-                'cutijumlah' => $cutijumlah,
-                'cuti' => $cuti,
-                'jumct' => $jumct,
-                'cutis' => $cutis,
-                'resignjumlah' => $resignjumlah,
-                'resign' => $resign,
-                'izinjumlah' => $izinjumlah,
-                'izin' => $izin,
-                'jumizin' => $jumizin,
-                'ijin' => $ijin,
+                // 'cutijumlah' => $cutijumlah,
+                // 'cuti' => $cuti,
+                // 'jumct' => $jumct,
+                // 'cutis' => $cutis,
+                // 'resignjumlah' => $resignjumlah,
+                // 'resign' => $resign,
+                // 'izinjumlah' => $izinjumlah,
+                // 'izin' => $izin,
+                // 'jumizin' => $jumizin,
+                // 'ijin' => $ijin,
                 'posisi' => $posisi,
-
-
-
-
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
-        }else {
+        }
+        elseif($role->role == 3 && $row->jabatan == "Manajer")
+        {
 
             $output = [
                 'row' => $row,
@@ -1048,6 +892,45 @@ class HomeController extends Controller
                 'izinjumlah' => $izinjumlah,
                 'ijin' => $ijin,
                 'jumizin' => $jumizin,
+                'resign' => $resign,
+                'resignjumlah' => $resignjumlah,
+                'sisacutis' => $sisacutis,
+                // 'cekSisacuti' => $cekSisacuti,
+            ];
+            return view('karyawan.dashboardKaryawan', $output);
+        }
+        else 
+        {
+
+            $output = [
+                'row' => $row,
+                'role' => $role,
+                'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
+                'absenKaryawan' => $absenKaryawan,
+                'absenTidakmasuk' => $absenTidakmasuk,
+                'alokasicuti' => $alokasicuti,
+                'sisacuti' => $sisacuti,
+                'absenBulanini' => $absenBulanini,
+                'absenBulanlalu'=> $absenBulanlalu,
+                'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
+                'data' => $data,
+                'labelBulan' => $labelBulan,
+                'absenTerlambatHariIni' => $absenTerlambatHariIni,
+                'dataIzinHariini' => $dataIzinHariini,
+                'cutidanizin' => $cutidanizin,
+                'dataIzinPerbulan' => $dataIzinPerbulan,
+                'cutidanizinPerbulan' => $cutidanizinPerbulan,
+                'dataIzinbulanlalu' => $dataIzinbulanlalu,
+                'cutibulanlalu' => $cutibulanlalu,
+                'cutidanizibulanlalu' => $cutidanizibulanlalu,
+                'tahun' => $tahun,
+                'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,
+                'tidakMasukBulanIni' => $tidakMasukBulanIni,
+                'tidakMasukHariIni' => $tidakMasukHariIni,
+                'alokasicuti' => $alokasicuti,
+                'absenKaryawan' => $absenKaryawan,
+                'alokasicuti2' => $alokasicuti2,
+                'posisi' => $posisi,
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
                 'sisacutis' => $sisacutis,

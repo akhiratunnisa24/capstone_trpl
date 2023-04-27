@@ -43,7 +43,7 @@ class DirekturController extends Controller
                     ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 });
                 })
-                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.jabatan','karyawan.atasan_pertama','karyawan.atasan_kedua','datareject.alasan as alasan_cuti')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.jabatan','karyawan.atasan_pertama','karyawan.atasan_kedua','datareject.alasan as alasan')
                 ->distinct()
                 ->get();
 
@@ -156,7 +156,7 @@ class DirekturController extends Controller
                     ->first();
 
                 $atasan1 = Karyawan::where('id',$idatasan1->atasan_pertama)
-                    ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                    ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                     ->first();
                 $atasan2 = Auth::user()->email;
                 //$epegawai = Karyawan::select('email as email','nama as nama')->where('id','=',$cuti->id_karyawan)->first();
@@ -221,7 +221,7 @@ class DirekturController extends Controller
                     ->first();
 
                 $atasan1 = Karyawan::where('id',$idatasan1->atasan_pertama)
-                    ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                    ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                     ->first();
                 $atasan2 = Auth::user()->email;
                 $alasan = '';
@@ -360,14 +360,14 @@ class DirekturController extends Controller
                     ->first();
     
                 $atasan1 = Karyawan::where('id',$emailkry->atasan_pertama)
-                    ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                    ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                     ->first();
      
                 $atasan2 = NULL;
 
                 if($emailkry->atasan_kedua !== NULL){
                     $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
-                    ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                    ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                     ->first();  
                 }
                     

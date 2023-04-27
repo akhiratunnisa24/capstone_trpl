@@ -91,7 +91,7 @@
                                                                     <td>{{$data->catatan}}</td>
                                                                     <td id="b" class="text-center" > 
                                                                         <div class="row">
-                                                                            @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
+                                                                            @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Manajer" && $data->catatan == null)
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('cuti.approved',$data->id)}}" method="POST"> 
                                                                                         @csrf
@@ -106,15 +106,24 @@
                                                                                         </a>
                                                                                     </form>
                                                                                 </div>
-                                                                                {{-- <div class="col-sm-3" style="margin-left:8px">
-                                                                                    <form action="{{ route('cuti.reject',$data->id)}}" method="POST"> 
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Asisten Manajer" && $data->catatan == null)
+                                                                    
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
                                                                                         @csrf
-                                                                                        @method('POST')
-                                                                                        <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
-                                                                                        <button  type="submit" class="fa fa-times btn-danger btn-sm"></button> 
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
                                                                                     </form>
-                                                                                </div> --}}
-                                                                            @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6)
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="" method="POST">
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutiTolak{{ $data->id }}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                             
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6 && $data->catatan == null)
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('cuti.approved',$data->id)}}" method="POST"> 
                                                                                         @csrf
@@ -129,6 +138,170 @@
                                                                                         </a>
                                                                                     </form>
                                                                                 </div>
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manajer")
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('batal.approved', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('batal.rejected', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Perubahan Disetujui Atasan" && $row->jabatan == "Manajer")
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('ubah.rejected', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Manajer")
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('batal.approved', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('batal.rejected', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Manajer")
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('ubah.rejected', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asisten Manajer")
+                                                                            
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('batal.approved', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('batal.rejected', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asisten Manajer")
+                                                                            
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('ubah.rejected', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                        
+                                                                        
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Management" && $data->catatan == null)
+                                                                        
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('leave.approved', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="" method="POST">
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutisTolak{{ $data->id }}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                                @include('direktur.cuti.cutiReject')
+                                                                        
+                                                                    
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Asisten Manajer" && $data->catatan == null)
+                                                                            
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="" method="POST">
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutiTolak{{ $data->id }}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                        
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Manajer" && $data->catatan == null)
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="" method="POST">
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutiTolak{{ $data->id }}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2  && $row->jabatan == "Management" && $data->catatan == null)
+                                                                                
+                                                                                        <div class="col-sm-3">
+                                                                                            <form action="{{ route('leave.approved', $data->id) }}" method="POST">
+                                                                                                @csrf
+                                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                            </form>
+                                                                                        </div>
+                                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                                            <form action="" method="POST">
+                                                                                                <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutisTolak{{ $data->id }}">
+                                                                                                    <i class="fa fa-times fa-md"></i>
+                                                                                                </a>
+                                                                                            </form>
+                                                                                        </div>
+                                                                                        @include('direktur.cuti.cutiReject')
+    
+                                                                
                                                                             @else
                                                                             @endif
                 
@@ -223,30 +396,41 @@
 
                                                                     <td> 
                                                                         <div class="row">
-                                                                            @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
+                                                                            @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Manajer" && $data->catatan == null)
                                                                                 <div class="col-sm-3">
-                                                                                    <form action="{{ route('izin.approved',$data->id)}}" method="POST"> 
+                                                                                    <form action="{{ route('izin.approved', $data->id) }}" method="POST">
                                                                                         @csrf
-                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden> 
-                                                                                        <button  type="submit" class="fa fa-check btn-success btn-sm"></button> 
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
                                                                                     </form>
                                                                                 </div>
                                                                                 <div class="col-sm-3" style="margin-left:7px">
-                                                                                    <form action="" method="POST"> 
-                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#Reject{{$data->id}}">
+                                                                                    <form action="" method="POST">
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cutiTolak{{ $data->id }}">
                                                                                             <i class="fa fa-times fa-md"></i>
                                                                                         </a>
                                                                                     </form>
                                                                                 </div>
-                                                                                {{-- <div class="col-sm-3" style="margin-left:7px">
-                                                                                    <form action="{{ route('izin.reject',$data->id)}}" method="POST"> 
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Asisten Manajer"  && $data->catatan == null)
+                                                                        
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('izin.approved', $data->id) }}"
+                                                                                        method="POST">
                                                                                         @csrf
-                                                                                        @method('POST')
-                                                                                        <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
-                                                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"></button> 
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
                                                                                     </form>
-                                                                                </div> --}}
-                                                                            @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2)
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="" method="POST">
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#Reject{{ $data->id }}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                                @include('manager.staff.izinReject')
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Management"  && $data->catatan == null)
+                                                                        
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izin.approved', $data->id) }}"
                                                                                         method="POST">
@@ -259,14 +443,67 @@
                                                                                 </div>
                                                                                 <div class="col-sm-3" style="margin-left:7px">
                                                                                     <form action="" method="POST">
-                                                                                        <a class="btn btn-danger btn-sm"
-                                                                                            style="height:26px" data-toggle="modal"
-                                                                                            data-target="#izReject{{ $data->id }}">
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#Reject{{ $data->id }}">
                                                                                             <i class="fa fa-times fa-md"></i>
                                                                                         </a>
                                                                                     </form>
                                                                                 </div>
-                                                                            @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6)
+                                                                        
+                                                                                @include('manager.staff.izinReject')
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Asisten Manajer"  && $data->catatan == null)
+                                                                            
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('izin.approved', $data->id) }}"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="" method="POST">
+                                                                                        <a class="btn btn-danger btn-sm"  style="height:26px" data-toggle="modal" data-target="#Reject{{ $data->id }}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                                @include('manager.staff.izinReject')
+                                                                        
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Manajer"  && $data->catatan == null)
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('izin.approved', $data->id) }}"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="" method="POST">
+                                                                                        <a class="btn btn-danger btn-sm"  style="height:26px" data-toggle="modal" data-target="#Reject{{ $data->id }}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                                @include('manager.staff.izinReject')
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2  && $row->jabatan == "Management"  && $data->catatan == null)
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('izin.approved', $data->id) }}"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="" method="POST">
+                                                                                        <a class="btn btn-danger btn-sm"  style="height:26px" data-toggle="modal" data-target="#Reject{{ $data->id }}">
+                                                                                            <i class="fa fa-times fa-md"></i>
+                                                                                        </a>
+                                                                                    </form>
+                                                                                </div>
+
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6 && $row->jabatan == "Manajer"  && $data->catatan == null)
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izin.approved', $data->id) }}"
                                                                                         method="POST">
@@ -277,9 +514,103 @@
                                                                                 </div>
                                                                                 <div class="col-sm-3" style="margin-left:7px">
                                                                                     <form action="" method="POST">
-                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal"  data-target="#izReject{{ $data->id }}">
+                                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal"  data-target="#Reject{{ $data->id }}">
                                                                                             <i class="fa fa-times fa-md"></i>
                                                                                         </a>
+                                                                                    </form>
+                                                                                </div>
+                                                                                @include('manager.staff.izinReject')    
+                                                                            
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manajer")
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('batal.tolak', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Perubahan Disetujui Atasan" && $row->jabatan == "Manajer")
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('ubah.tolak', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Manajer")
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('batal.tolak', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Manajer")
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('ubah.tolak', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asisten Manajer")
+                                                                            
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('batal.tolak', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asisten Manajer")
+                                                                            
+                                                                                <div class="col-sm-3">
+                                                                                    <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                                    <form action="{{ route('ubah.tolak', $data->id) }}" method="POST">
+                                                                                        @csrf
+                                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                        <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                                     </form>
                                                                                 </div>
                                                                             @else
@@ -294,7 +625,7 @@
                                                                             </div>
                                                                             {{-- modal show izin --}}
                                                                             @include('manager.staff.showIzin')
-                                                                            @include('manager.staff.izinReject')
+                                                                           
                                                                         </div>
                                                                     </td> 
                                                                 </tr>

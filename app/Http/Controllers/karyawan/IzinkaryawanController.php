@@ -85,7 +85,7 @@ class IzinkaryawanController extends Controller
             $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                 ->join('departemen','izin.departemen','=','departemen.id')
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','izin.*','karyawan.jabatan','departemen.nama_departemen')
+                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','izin.*','karyawan.nama_jabatan','departemen.nama_departemen')
                 ->first();
             $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
 
@@ -93,7 +93,7 @@ class IzinkaryawanController extends Controller
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
             $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
-                ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                 ->first();
 
             $tujuan = $atasan->email;
@@ -106,7 +106,7 @@ class IzinkaryawanController extends Controller
                 'tgl_permohonan' =>Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
                 'nik' => $emailkry->nik,
                 'namakaryawan' => ucwords(strtolower($emailkry->nama)),
-                'jabatankaryawan' => $emailkry->jabatan,
+                'jabatankaryawan' => $emailkry->nama_jabatan,
                 'departemen' => $emailkry->nama_departemen,
                 'karyawan_email' =>$emailkry->email,
                 'id_jenisizin'   =>$jenisizin->jenis_izin,
@@ -157,15 +157,15 @@ class IzinkaryawanController extends Controller
             $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                 ->join('departemen','izin.departemen','=','departemen.id')
                 ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','izin.*','karyawan.jabatan','departemen.nama_departemen')
+                ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','izin.*','karyawan.nama_jabatan','departemen.nama_departemen')
                 ->first();
             $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
 
             $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
-                ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                 ->first();
             $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
-                ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
+                ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                 ->first();
             
             $tujuan = $atasan->email;
@@ -177,7 +177,7 @@ class IzinkaryawanController extends Controller
                 'tgl_permohonan' =>Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
                 'nik' => $emailkry->nik,
                 'namakaryawan' => ucwords(strtolower($emailkry->nama)),
-                'jabatankaryawan' => $emailkry->jabatan,
+                'jabatankaryawan' => $emailkry->nama_jabatan,
                 'departemen' => $emailkry->nama_departemen,
                 'karyawan_email' =>$emailkry->email,
                 'id_jenisizin'   =>$jenisizin->jenis_izin,
@@ -217,16 +217,16 @@ class IzinkaryawanController extends Controller
         $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
             ->join('departemen','izin.departemen','=','departemen.id')
             ->where('izin.id_karyawan','=',$izin->id_karyawan)
-            ->select('karyawan.email','karyawan.nama','izin.*','karyawan.atasan_pertama','karyawan.atasan_kedua','karyawan.jabatan','departemen.nama_departemen')
+            ->select('karyawan.email','karyawan.nama','izin.*','karyawan.atasan_pertama','karyawan.atasan_kedua','karyawan.nama_jabatan','departemen.nama_departemen')
             ->first();
         
         $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
         //atasan pertama
         $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
-            ->select('email as email','nama as nama','jabatan as jabatan')
+            ->select('email as email','nama as nama','nama_jabatan as jabatan')
             ->first();
         $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
-            ->select('email as email','nama as nama','jabatan as jabatan')
+            ->select('email as email','nama as nama','nama_jabatan as jabatan')
             ->first();
     
         $tujuan = $atasan->email;
@@ -238,7 +238,7 @@ class IzinkaryawanController extends Controller
             'tgl_permohonan' =>Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
             'nik' => $emailkry->nik,
             'namakaryawan' => ucwords(strtolower($emailkry->nama)),
-            'jabatankaryawan' => $emailkry->jabatan,
+            'jabatankaryawan' => $emailkry->nama_jabatan,
             'departemen' => $emailkry->nama_departemen,
             'karyawan_email' =>  $emailkry->email,
             'id_jeniscuti' => $jenisizin->jenis_izin,
@@ -361,16 +361,16 @@ class IzinkaryawanController extends Controller
         $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
             ->join('departemen','izin.departemen','=','departemen.id')
             ->where('izin.id_karyawan','=',$izin->id_karyawan)
-            ->select('karyawan.email','karyawan.nama','izin.*','karyawan.atasan_pertama','karyawan.atasan_kedua','karyawan.jabatan','departemen.nama_departemen')
+            ->select('karyawan.email','karyawan.nama','izin.*','karyawan.atasan_pertama','karyawan.atasan_kedua','karyawan.nama_jabatan','departemen.nama_departemen')
             ->first();
         
         $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
         //atasan pertama
         $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
-            ->select('email as email','nama as nama','jabatan as jabatan')
+            ->select('email as email','nama as nama','nama_jabatan as jabatan')
             ->first();
         $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
-            ->select('email as email','nama as nama','jabatan as jabatan')
+            ->select('email as email','nama as nama','nama_jabatan as jabatan')
             ->first();
     
         $tujuan = $atasan->email;
@@ -382,7 +382,7 @@ class IzinkaryawanController extends Controller
             'tgl_permohonan' =>Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
             'nik' => $emailkry->nik,
             'namakaryawan' => ucwords(strtolower($emailkry->nama)),
-            'jabatankaryawan' => $emailkry->jabatan,
+            'jabatankaryawan' => $emailkry->nama_jabatan,
             'departemen' => $emailkry->nama_departemen,
             'karyawan_email' =>  $emailkry->email,
             'id_jeniscuti' => $jenisizin->jenis_izin,
@@ -408,7 +408,6 @@ class IzinkaryawanController extends Controller
         //     // proses jika data atasan tidak ada / email tidak ada
         // }
 
-        return redirect()->back()
-            ->with('success','Email Notifikasi Perubahan Data Permohonan Izin Berhasil Dikirim');
+        return redirect()->back()->with('success','Email Notifikasi Perubahan Data Permohonan Izin Berhasil Dikirim');
     }
 }

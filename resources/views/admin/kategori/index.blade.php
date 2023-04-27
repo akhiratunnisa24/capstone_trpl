@@ -61,7 +61,7 @@
                                                         <tr>
                                                             <th>No</th>
                                                             <th>Kategori Cuti</th>
-                                                            <th>Aksi</th>
+                                                            {{-- <th>Aksi</th> --}}
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -69,21 +69,16 @@
                                                         <tr>
                                                             <td>{{$loop->iteration}}</td>
                                                             <td>{{$data->jenis_cuti}}</td>
-                                                            <td class="text-center">
+                                                            {{-- <td class="text-center">
                                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                                    {{-- <a id="bs" class="btn btn-info btn-sm Modalshowcuti"
-                                                                        data-toggle="modal"
-                                                                        data-target="#Modalshowcuti{{$data->id}}">
-                                                                        <i class="fa fa-eye"></i>
-                                                                    </a> --}}
                                                                     <a id="bs" class="btn btn-success btn-sm Modaleditcuti" data-toggle="modal" data-target="#Modaleditcuti{{$data->id}}">
                                                                         <i class="fa fa-edit"></i>
                                                                     </a>
-                                                                    @if($role == 1)
+                                                                    {{-- @if($role == 1)
                                                                         <button onclick="cuti({{$data->id}})" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i> </button>
-                                                                    @endif
-                                                                    </div>
-                                                            </td>
+                                                                    @endif --}}
+                                                                {{-- </div>
+                                                            </td> --}}
                                                         </tr>
                                                         {{-- modals show cuti --}}
                                                         @include('admin.kategori.showcuti')
@@ -131,7 +126,7 @@
                                                         <th>No</th>
                                                         <th>Kode Kategori</th>
                                                         <th>Kategori Izin</th>
-                                                        <th>Aksi</th>
+                                                        {{-- <th>Aksi</th> --}}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -140,7 +135,7 @@
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data->code}}</td>
                                                         <td>{{$data->jenis_izin}}</td>
-                                                        <td class="text-center">
+                                                        {{-- <td class="text-center">
                                                             <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                                 <a id="bs" class="btn btn-sm btn-success Modaleditizin"  data-toggle="modal"  data-target="#Modaleditizin{{$data->id}}">
                                                                     <i class="fa fa-edit"></i></a>
@@ -149,8 +144,8 @@
                                                                 {{-- <button onclick="izin({{$data->id}})" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i></button> --}}
                                                                 {{-- <button id="bs" type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                                     <i class="fa fa-trash"></i> </button> --}}
-                                                            </div>
-                                                        </td>
+                                                            {{-- </div>
+                                                        </td> --}}
                                                     </tr>
                                                     {{-- modals show izin --}}
                                                     @include('admin.kategori.showizin')

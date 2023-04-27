@@ -30,6 +30,7 @@ class PerubahanNotification extends Mailable
        {
             return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
                 ->subject($this->data['subject'])
+                ->cc($this->data['karyawan_email'], 'Karyawan')
                 ->cc($this->data['atasan2'], 'Pimpinan Unit Kerja')
                 ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
                 ->view('emails.cutibatal')->with('data',$this->data);   

@@ -108,36 +108,6 @@ class SettingalokasicutiController extends Controller
             ->get();
 
             // return $karyawan;
-            foreach($karyawan as $karyawan)
-            {
-                $check = Alokasicuti::where('id_jeniscuti',$settingalokasi->id_jeniscuti)->where('id_karyawan',$karyawan->id)->exists();
-                    if(!$check)
-                    {
-                     
-                        $alokasicuti = new Alokasicuti;
-                        $alokasicuti->nik              = $karyawan->nip;
-                        $alokasicuti->id_karyawan      = $karyawan->id;
-                        $alokasicuti->jabatan          = $karyawan->nama_jabatan;
-                        $alokasicuti->departemen       = $karyawan->divisi;
-                        $alokasicuti->id_settingalokasi= $settingalokasi->id;
-                        $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
-                        $alokasicuti->durasi           = 0;
-                        $alokasicuti->status_durasialokasi = null;
-                        $alokasicuti->tgl_masuk        = null;
-                        $alokasicuti->tgl_sekarang     = null;
-                        $alokasicuti->aktif_dari       = $year.'-01-01';
-                        $alokasicuti->sampai           = $year.'-12-31';
-                        $alokasicuti->status           = 1;
-                        $alokasicuti->save();
-                    }
-                    if (in_array("Janda", $mode_karyawan_array)) {
-                        $query->orWhere('status_pernikahan', 'Janda');
-                    }
-                })
-                ->select('id', 'jenis_kelamin', 'status_pernikahan', 'nip', 'nama_jabatan', 'divisi')
-                ->get();
-
-
             foreach ($karyawan as $karyawan) {
                 $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)->where('id_karyawan', $karyawan->id)->exists();
                 if (!$check) {
