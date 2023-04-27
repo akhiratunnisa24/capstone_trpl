@@ -397,7 +397,7 @@
                                         </div>
                                     </form>
                                     <div class="panel panel-primary">
-                                        <div class="panel-heading">
+                                        <div class="panel-heading clearfix">
                                             {{-- /rekapizinExcel --}}
                                             <a href="/rekapizinExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
                                             <a href="/rekapizinpdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
@@ -494,19 +494,19 @@
                                                                             @else
                                                                             @endif
                 
-                                                                            <div class="col-sm-3" style="margin-left:5px">
+                                                                            <div class="col-sm-3" style="margin-left:6px">
                                                                                 <form action="" method="POST"> 
                                                                                     <a class="btn btn-info btn-sm" style="height:26px" data-toggle="modal" data-target="#Showizinadmin{{$data->id}}">
                                                                                         <i class="fa fa-eye fa-md"></i>
                                                                                     </a>
                                                                                 </form> 
                                                                             </div>
-                                                                            {{-- modal show izin --}}
-                                                                            @include('admin.cuti.showizin')
-                                                                            @include('admin.cuti.izinReject')
                                                                         </div>
                                                                     </td> 
                                                                 </tr>
+                                                                {{-- modal show izin --}}
+                                                                @include('admin.cuti.showizin')
+                                                                @include('admin.cuti.izinReject')
                                                             @endforeach
                                                         </tbody>
                                                     </table>

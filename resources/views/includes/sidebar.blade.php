@@ -153,7 +153,6 @@
         @endif
 
         <!--- Role HRD Staff dan Role Karyawan  -->
-        {{-- @if (Auth::check() && Auth::user()->role == 2) --}}
         {{-- @if (Auth::check() && (Auth::user()->role == 2 || Auth::user()->role == 4)) --}}
         @if (Auth::check() && Auth::user()->role == 4)
             <div id="sidebar-menu">
