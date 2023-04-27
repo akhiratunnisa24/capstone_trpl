@@ -294,7 +294,7 @@ class KaryawansController extends Controller
         $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
 
         $datakeluargaBaru = [
-            'status_pernikahan' => $request->status_pernikahan,
+            // 'status_pernikahan' => $request->status_pernikahan,
             'nama' => $request->namaPasangan,
             'jenis_kelamin' => $request->jenis_kelaminKeluarga,
             'tgllahir' => \Carbon\Carbon::parse($request->tgllahirPasangan)->format('Y-m-d'),
@@ -317,7 +317,7 @@ class KaryawansController extends Controller
 
         $index = $request->nomor_index;
         // dd($datakeluarga,$index);
-        $datakeluarga[$index]['status_pernikahan'] = $request->status_pernikahan;
+        // $datakeluarga[$index]['status_pernikahan'] = $request->status_pernikahan;
         // $datakeluarga[$index]['jumlah_anak'] = $request->jumlahAnak;
         $datakeluarga[$index]['nama'] = $request->namaPasangan;
         $datakeluarga[$index]['jenis_kelamin'] = $request->jenis_kelaminKeluarga;
@@ -694,6 +694,11 @@ class KaryawansController extends Controller
             $karyawan->save();
             $idKaryawan = $karyawan->id;
 
+            
+        }
+
+        if ($request->session()->has('datakeluarga')) {
+
             $datakeluarga = json_decode($request->session()->get('datakeluarga', []), true);
             $datakeluargaMerged = array_map(function ($item) use ($idKaryawan) {
                 $item['id_pegawai'] = $idKaryawan;
@@ -701,7 +706,7 @@ class KaryawansController extends Controller
             }, $datakeluarga);
             $datakeluargaModel = Keluarga::insert($datakeluargaMerged);
         }
-
+        
         if ($request->session()->has('kontakdarurat')) {
 
             $kontakdarurat = json_decode($request->session()->get('kontakdarurat', []), true);
@@ -964,9 +969,9 @@ class KaryawansController extends Controller
 
             $pegawai->update();
 
-            Keluarga::where('id_pegawai', '=', $id)->update([
-                'status_pernikahan' => $request->status_pernikahan,
-            ]);
+            // Keluarga::where('id_pegawai', '=', $id)->update([
+            //     'status_pernikahan' => $request->status_pernikahan,
+            // ]);
             return redirect()->back();
         } else {
             $pegawai = Karyawan::find($id);
@@ -997,9 +1002,9 @@ class KaryawansController extends Controller
 
             $pegawai->update();
 
-            Keluarga::where('id_pegawai', '=', $id)->update([
-                'status_pernikahan' => $request->status_pernikahan,
-            ]);
+            // Keluarga::where('id_pegawai', '=', $id)->update([
+            //     'status_pernikahan' => $request->status_pernikahan,
+            // ]);
 
             return redirect()->back();
         }
