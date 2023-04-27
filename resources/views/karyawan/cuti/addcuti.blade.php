@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="form-group col-sm">
                                         <label for="jabatan" class="col-form-label">Jabatan</label>
-                                        <input type="text" class="form-control" name="jabatan" id="jabatan" value="{{$datakry->jabatan}}" readonly>
+                                        <input type="text" class="form-control" name="jabatan" id="jabatan" value="{{$datakry->nama_jabatan}}" readonly>
                                     </div> 
                                     <div class="form-group col-sm">
                                         <label for="departemen" class="col-form-label">Departemen/Divisi</label>

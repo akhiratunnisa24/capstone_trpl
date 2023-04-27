@@ -65,7 +65,7 @@
                     <div class="row">
                         <label for="alasan" class="col-sm-3 col-form-label">Alasan</label>
                         <div class="col-sm-9">
-                            <label>: {{$data->alasan_cuti}}</label>
+                            <label>: {{$data->alasan}}</label>
                         </div>
                     </div>     
                 @endif

@@ -1,4 +1,6 @@
 <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css">
+<link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
     <div class="modal modal fade" id="Editizin{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -69,25 +71,55 @@
                                                 </div>
                                             </div>
                                         </div>
-                                       
-                                        <div class="col-sm-6 col-xs-12">
-                                            <div>
-                                                <div class="form-group">
-                                                    <label for="tgl_selesai" class="form-label">Sampai</label>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" onchange=(jumlahizins()) placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}" id="datepicker-autoclose45" name="tgl_selesai"  autocomplete="off" rows="10">
-                                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                       @if($data->tgl_selesai !== NULL)
+                                            <div class="col-sm-6 col-xs-12">
+                                                <div>
+                                                    <div class="form-group">
+                                                        <label for="tgl_selesai" class="form-label">Sampai</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" onchange=(jumlahizins()) placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}" id="datepicker-autoclose45" name="tgl_selesai"  autocomplete="off" rows="10">
+                                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     </div>
             
                                     <div class="form-group col-sm">
                                         <label for="keperluan" class="col-form-label">Keterangan</label>
                                         <textarea class="form-control" name="keperluan" id="keperluan" rows="5" placeholder="Masukkan keterangan" autocomplete="off">{{$data->keperluan}}</textarea>
-                                        {{-- <input type="text" class="form-control" name="keperluan" id="keperluan" placeholder="Masukkan keterangan" autocomplete="off" required> --}}
+                                       
                                     </div>
+                                    @if($data->jam_mulai !== NULL || $data->jam_selesai !== NULL)
+                                        <div class="row">
+                                                <div class="col-lg-6" id="jmulai">  
+                                                    <div class="">
+                                                        <label for="jam_mulai">Dari Jam</label>
+                                                        <div class="input-group clockpicker pull-center" data-placement="top" data-align="top" data-autoclose="true">
+                                                            <input type="text" class="form-control" autocomplete="off" value="{{$data->jam_mulai}}" name="jam_mulai" id="mulai">
+                                                            <span class="input-group-addon">
+                                                                <span class="fa fa-clock-o"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            {{-- @elseif($data->jam_selesai !== NULL) --}}
+                                                <div class="col-lg-6" id="jselesai">
+                                                    <div class="">
+                                                        <label for="jam_selesai">Sampai Jam</label>
+                                                        <div class="input-group clockpicker pull-center" data-placement="top" data-align="top"  data-autoclose="true">
+                                                            <input type="text" class="form-control" name="jam_selesai" value="{{$data->jam_selesai}}" id="selesai" autocomplete="off">
+                                                            <span class="input-group-addon">
+                                                                <span class="fa fa-clock-o"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {{-- @else
+                                            @endif --}}
+                                        </div>
+                                    @endif
                                     <div class="row">
                                         {{-- <div class="col-sm-6 col-xs-12">
                                             <div class="form-group col-sm">
@@ -95,12 +127,14 @@
                                                 <input type="text" class="form-control" name="durasi" id="durasii" readonly>
                                             </div>
                                         </div> --}}
-                                        <div class="col-sm-12 col-xs-12">
-                                            <div class="form-group col-sm">
-                                                <label for="jml_cuti" class="col-form-label">Jumlah Izin</label>
-                                                <input type="text" class="form-control"  value="{{$data->jml_hari}}" name="jml_cuti" id="jumla" readonly>
+                                        @if($data->jml_hari !== 0)
+                                            <div class="col-sm-12 col-xs-12">
+                                                <div class="form-group col-sm">
+                                                    <label for="jml_cuti" class="col-form-label">Jumlah Izin</label>
+                                                    <input type="text" class="form-control"  value="{{$data->jml_hari}}" name="jml_hari" id="jumla" readonly>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     </div>
                         
                                     <div class="form-group col-sm">
@@ -128,6 +162,7 @@
      {{-- plugin js --}}
      <script src="assets/plugins/timepicker/bootstrap-timepicker.js"></script>
      <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
    
      <!-- Datatable init js -->
      <script src="assets/pages/datatables.init.js"></script>

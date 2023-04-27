@@ -26,13 +26,20 @@ return new class extends Migration
             $table->date('tgl_selesai')->nullable()->default(null);
             $table->time('jam_mulai')->nullable()->default(null);
             $table->time('jam_selesai')->nullable()->default(null);
-            $table->date('tgl_setuju_a')->nullable()->default(null);
-            $table->date('tgl_setuju_b')->nullable()->default(null);
-            $table->date('tgl_ditolak')->nullable()->default(null);
+            $table->datetime('tgl_setuju_a')->nullable()->default(null);
+            $table->datetime('tgl_setuju_b')->nullable()->default(null);
+            $table->datetime('tgl_ditolak')->nullable()->default(null);
             $table->integer('jml_hari')->nullable()->default('0');
             $table->time('jml_jam')->nullable()->default(null);
             $table->string('status');
+            $table->string('catatan',50)->nullable()->default(null);
             $table->string('codeizin',10)->nullable()->default(null);
+            $table->datetime('batal_atasan')->nullable()->default(null);
+            $table->datetime('batal_pimpinan')->nullable()->default(null);
+            $table->datetime('batalditolak')->nullable()->default(null);
+            $table->datetime('ubah_atasan')->nullable()->default(null);
+            $table->datetime('ubah_pimpinan')->nullable()->default(null);
+            $table->datetime('ubahditolak')->nullable()->default(null);
     
             $table->foreign('id_karyawan')->references('id')->on('karyawan')->onDelete('cascade');
             $table->foreign('id_jenisizin')->references('id')->on('jenisizin')->onDelete('cascade');

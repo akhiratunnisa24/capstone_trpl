@@ -110,7 +110,7 @@
                     <div class="form-group row">
                         <label for="alasan" class="col-sm-5 col-form-label">Alasan Penolakan</label>
                         <div class="col-sm-7">
-                            <label>: {{$data->alasan_cuti}}</label>
+                            <label>: {{$data->alasan}}</label>
                         </div>
                     </div>        
                 @endif

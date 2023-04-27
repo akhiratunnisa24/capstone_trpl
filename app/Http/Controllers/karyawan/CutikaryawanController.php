@@ -46,23 +46,25 @@ class CutikaryawanController extends Controller
 
         //index cuti
         $cuti = DB::table('cuti')
-            ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
-            ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
-            ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
-            ->leftjoin('departemen', 'cuti.departemen', '=', 'departemen.id')
-            ->select('cuti.*', 'departemen.nama_departemen', 'jeniscuti.jenis_cuti', 'statuses.name_status', 'datareject.alasan as alasan_cuti', 'datareject.id_cuti as id_cuti')
+            ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+            ->leftjoin('statuses','cuti.status','=','statuses.id')
+            ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
+            ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+            ->select('cuti.*', 'departemen.nama_departemen','jeniscuti.jenis_cuti','statuses.name_status','datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
+            ->where('cuti.id_karyawan', Auth::user()->id_pegawai)
             ->distinct()
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('id','DESC')
             ->get();
 
         //index izin
-        $izin = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-            ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
-            ->leftjoin('jenisizin', 'izin.id_jenisizin', 'jenisizin.id')
-            ->leftjoin('departemen', 'izin.departemen', '=', 'departemen.id')
-            ->select('izin.*', 'jenisizin.jenis_izin', 'departemen.nama_departemen', 'statuses.name_status', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin')
+        $izin = Izin::leftjoin('statuses','izin.status','=','statuses.id')
+            ->leftjoin('datareject','izin.id','=','datareject.id_izin')
+            ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
+            ->leftjoin('departemen','izin.departemen','=','departemen.id')
+            ->select('izin.*','jenisizin.jenis_izin','departemen.nama_departemen','statuses.name_status','datareject.alasan as alasan','datareject.id_izin as id_izin')
+            ->where('izin.id_karyawan', Auth::user()->id_pegawai)
             ->distinct()
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('id','DESC')
             ->get();
 
         //create cuti
@@ -307,7 +309,9 @@ class CutikaryawanController extends Controller
         $cuti->keperluan      = $request->keperluan;
         $cuti->jmlharikerja   = $request->jml_cuti;
         $cuti->catatan        = $status->name_status;
-        if ($request->id_jeniscuti == 1) {
+        
+        if($request->id_jeniscuti == 1)
+        {
             $cuti->saldohakcuti   = $request->durasi;
             $cuti->jml_cuti       = $request->jml_cuti;
             $sisa                 = $cuti->saldohakcuti -  $cuti->jml_cuti;
@@ -327,8 +331,11 @@ class CutikaryawanController extends Controller
             $cuti->sisacuti       = null;
             $cuti->keterangan     = $jeniscuti->jenis_cuti;
             // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
-        } else {
-            return redirect()->back();
+        }else{
+            $cuti->jml_cuti       = null;
+            $cuti->saldohakcuti   = null;
+            $cuti->sisacuti       = null;
+            $cuti->keterangan     = $jeniscuti->jenis_cuti;
         }
         // return $cuti->id;
         $cuti->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
@@ -390,7 +397,7 @@ class CutikaryawanController extends Controller
         // }
 
         return redirect()->back()
-            ->with('success', 'Email Notifikasi Perubahan Data Permohonan Cuti Berhasil Dikirim');
+            ->with('pesan','Email Notifikasi Perubahan Data Permohonan Cuti Berhasil Dikirim');
     }
 }
  // $tujuan = 'andiny700@gmail.com';
