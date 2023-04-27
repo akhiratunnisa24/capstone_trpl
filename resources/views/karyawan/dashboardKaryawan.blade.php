@@ -21,7 +21,7 @@
             
     ?> --}}
 
-    @if (Auth::check() && Auth::user()->role !== 4)
+    @if (Auth::check() && Auth::user()->role !== 2)
         {{-- @php dd($row->jabatan, Auth::user()->role) @endphp --}}
         <div class="row">
             <div class="col-lg-6">
@@ -36,6 +36,7 @@
                                     @if($cutijumlah)
                                         <span class="badge badge badge-danger" style="background-color:red">{{$cutijumlah}}</span>
                                     @endif
+
                                 </a>
                             </h4>
                         </div>

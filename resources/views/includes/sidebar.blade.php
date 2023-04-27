@@ -27,7 +27,7 @@
         </div>
 
         {{-- Role HRD Manajer --}}
-        @if (Auth::check() && Auth::user()->role == 1)
+        @if (Auth::check() && Auth::user()->role == 1 or 2 )
             <div id="sidebar-menu">
                 <ul>
                     <li><a href="/" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>
@@ -154,7 +154,8 @@
 
         <!--- Role HRD Staff dan Role Karyawan  -->
         {{-- @if (Auth::check() && Auth::user()->role == 2) --}}
-        @if (Auth::check() && (Auth::user()->role == 2 || Auth::user()->role == 4))
+        {{-- @if (Auth::check() && (Auth::user()->role == 2 || Auth::user()->role == 4)) --}}
+        @if (Auth::check() && (Auth::user()->role == 4))
             <div id="sidebar-menu">
                 <ul>
                     <li><a href="/karyawandashboard" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>

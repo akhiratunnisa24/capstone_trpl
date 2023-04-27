@@ -41,7 +41,7 @@ class SettingalokasicutiController extends Controller
             $setal = Settingalokasi::find($id);
             $jeniscuti = Jeniscuti::all();
             $departemen = Departemen::all();
-    
+
             return view('admin.settingalokasi.setting_index', compact('settingalokasi', 'jeniscuti', 'setal', 'departemen', 'row'));
         } else {
 
@@ -55,8 +55,7 @@ class SettingalokasicutiController extends Controller
         // dd($request->id_jeniscuti);
         $year = date('Y');
 
-        if($request->id_jeniscuti != 1)
-        {
+        if ($request->id_jeniscuti != 1) {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
                 'mode_karyawan' => 'required',
@@ -76,14 +75,13 @@ class SettingalokasicutiController extends Controller
             $mode_karyawan_array = $settingalokasi->getModeKaryawanArrayAttribute();
 
             $karyawan = DB::table('karyawan')
-            ->where(function ($query) use ($request, $mode_karyawan_array)
-            {
-                if(in_array("Perempuan", $mode_karyawan_array) && in_array("Sudah Menikah", $mode_karyawan_array)){
-                    $query->orWhere(function($q) {
-                        $q->where('jenis_kelamin', 'Perempuan')
-                          ->where('status_pernikahan', 'Sudah Menikah');
-                    });
-                }
+                ->where(function ($query) use ($request, $mode_karyawan_array) {
+                    if (in_array("Perempuan", $mode_karyawan_array) && in_array("Sudah Menikah", $mode_karyawan_array)) {
+                        $query->orWhere(function ($q) {
+                            $q->where('jenis_kelamin', 'Perempuan')
+                                ->where('status_pernikahan', 'Sudah Menikah');
+                        });
+                    }
 
                 if (in_array("Semua Karyawan", $mode_karyawan_array)) {
                     $query->orWhere(function($q) {
@@ -132,20 +130,44 @@ class SettingalokasicutiController extends Controller
                         $alokasicuti->status           = 1;
                         $alokasicuti->save();
                     }
-                    else
-                    {
-                        Log::info('data alokasi cuti sudah ada');
+                    if (in_array("Janda", $mode_karyawan_array)) {
+                        $query->orWhere('status_pernikahan', 'Janda');
                     }
+                })
+                ->select('id', 'jenis_kelamin', 'status_pernikahan', 'nip', 'nama_jabatan', 'divisi')
+                ->get();
+
+
+            foreach ($karyawan as $karyawan) {
+                $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)->where('id_karyawan', $karyawan->id)->exists();
+                if (!$check) {
+
+                    $alokasicuti = new Alokasicuti;
+                    $alokasicuti->nik              = $karyawan->nip;
+                    $alokasicuti->id_karyawan      = $karyawan->id;
+                    $alokasicuti->jabatan          = $karyawan->nama_jabatan;
+                    $alokasicuti->departemen       = $karyawan->divisi;
+                    $alokasicuti->id_settingalokasi = $settingalokasi->id;
+                    $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
+                    $alokasicuti->durasi           = 0;
+                    $alokasicuti->status_durasialokasi = null;
+                    $alokasicuti->tgl_masuk        = null;
+                    $alokasicuti->tgl_sekarang     = null;
+                    $alokasicuti->aktif_dari       = $year . '-01-01';
+                    $alokasicuti->sampai           = $year . '-12-31';
+                    $alokasicuti->status           = 1;
+                    $alokasicuti->save();
+                } else {
+                    Log::info('data alokasi cuti sudah ada');
+                }
             }
             return redirect()->back()->withInput();
-
-        }else
-        {
+        } else {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
                 'durasi'       => 'required',
                 'mode_karyawans' => 'required',
-                'cuti_bersama_terhutang' =>'required',
+                'cuti_bersama_terhutang' => 'required',
             ]);
 
             $settingalokasi = new Settingalokasi;
@@ -161,34 +183,33 @@ class SettingalokasicutiController extends Controller
             $dataKaryawan = Karyawan::all();
 
             $hasil = $dataKaryawan->map(function ($karyawan) use ($settingalokasi) {
-                
+
                 $tglMasuk      = Carbon::parse($karyawan->tglmasuk); // Parse tanggal masuk karyawan menjadi objek Carbon
                 $tglJatuhTempo = $tglMasuk->copy()->addDays(365);
                 $year          = Carbon::now()->year;
                 $tglHakCutiTahunan = Carbon::createFromDate($year, 12, 31);
 
-                $selisih    = $tglJatuhTempo->diffInMonths($tglHakCutiTahunan,false);
-                if($tglMasuk->format('m-d') == '01-01')
-                {
+                $selisih    = $tglJatuhTempo->diffInMonths($tglHakCutiTahunan, false);
+                if ($tglMasuk->format('m-d') == '01-01') {
                     $tglHakCutiTahunan = Carbon::createFromDate($year + 1, 1, 1);
-                    $selisih    = $tglJatuhTempo->diffInMonths($tglHakCutiTahunan,true);
+                    $selisih    = $tglJatuhTempo->diffInMonths($tglHakCutiTahunan, true);
                 }
 
                 $keterangan = "";
                 $cutidimuka = 0;
 
-                 //cek cuti bersama ke daftar hari libur 
-                 $settinglibur = SettingHarilibur::where('tipe','=','Cuti Bersama')
-                 ->whereYear('tanggal', '=', Carbon::now()->year)
-                 ->get();
+                //cek cuti bersama ke daftar hari libur 
+                $settinglibur = SettingHarilibur::where('tipe', '=', 'Cuti Bersama')
+                    ->whereYear('tanggal', '=', Carbon::now()->year)
+                    ->get();
 
                 $jumsetting = $settinglibur->count();
                 // $jum        = -1* abs($jumsetting);
                 $jum = 0;
 
-                $cutiminus = Alokasicuti::where('durasi','<',0)
+                $cutiminus = Alokasicuti::where('durasi', '<', 0)
                     ->whereYear('aktif_dari', '=', Carbon::now()->subMonth()->year)
-                    ->where('id_karyawan','=', $karyawan->id)
+                    ->where('id_karyawan', '=', $karyawan->id)
                     ->select('durasi')
                     ->get();
 
@@ -201,16 +222,14 @@ class SettingalokasicutiController extends Controller
                     // $jum = $jum;
                     $cutmin = $cutmin;
                     // $saldo   = $selisih - abs($cutmin) - abs($jum);
-                } 
-                elseif($selisih > 0 && $selisih < 12){
+                } elseif ($selisih > 0 && $selisih < 12) {
                     $selisih = $selisih;
                     $keterangan = "Karyawan Baru (Transisi)";
                     // $cutidimuka = -1*abs(12);
                     // $jum = $jum;
                     $cutmin = 0;
                     // $saldo   = $selisih - abs($cutidimuka) - abs($cutmin) - abs($jum);
-                }
-                else{
+                } else {
                     $selisih   = 0;
                     $keterangan = "Hak Cuti Belum Timbul";
                     // $cutidimuka = 0;
@@ -220,9 +239,9 @@ class SettingalokasicutiController extends Controller
                     // return $saldo;
                 }
                 $saldo   = $selisih - abs($cutidimuka) - abs($cutmin) - abs($jum);
-                
+
                 // Menambahkan data ke dalam tabel alokasicuti
-                $alokasicuti                    = New Alokasicuti();
+                $alokasicuti                    = new Alokasicuti();
                 $alokasicuti->nik               = $karyawan->nip;
                 $alokasicuti->id_karyawan       = $karyawan->id;
                 $alokasicuti->jabatan           = $karyawan->nama_jabatan;
@@ -230,26 +249,25 @@ class SettingalokasicutiController extends Controller
                 $alokasicuti->id_settingalokasi = $settingalokasi->id;
                 $alokasicuti->id_jeniscuti      = $settingalokasi->id_jeniscuti;
                 $alokasicuti->tgl_masuk          = $karyawan->tglmasuk;
-                $alokasicuti->tgl_sekarang      = $year.'-01-01';
+                $alokasicuti->tgl_sekarang      = $year . '-01-01';
                 $alokasicuti->jatuhtempo_awal   = $tglJatuhTempo->format('Y-m-d');
-                $alokasicuti->jatuhtempo_akhir  = $tglJatuhTempo->year. '-12-31';
+                $alokasicuti->jatuhtempo_akhir  = $tglJatuhTempo->year . '-12-31';
                 $alokasicuti->jmlhakcuti        = $selisih;
                 $alokasicuti->cutidimuka        = $cutidimuka;
                 $alokasicuti->cutiminus         = $cutmin;
                 $alokasicuti->jmlcutibersama    = $jum;
                 $alokasicuti->durasi            = $saldo;
                 $alokasicuti->keterangan        = $keterangan;
-                $alokasicuti->aktif_dari        = $year.'-01-01';
-                $alokasicuti->sampai            = $year.'-12-31';
+                $alokasicuti->aktif_dari        = $year . '-01-01';
+                $alokasicuti->sampai            = $year . '-12-31';
                 $alokasicuti->status            = 1;
 
                 $alokasicuti->save();
-                
             });
-            
+
             // return $hasil;
             return redirect()->back()->withInput();
-        }     
+        }
     }
 
     public function show($id)
@@ -271,7 +289,7 @@ class SettingalokasicutiController extends Controller
             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
             $settingalokasi->durasi       = $request->durasi;
             $settingalokasi->tipe_alokasi = $request->tipe_alokasi;
-           
+
             $settingalokasi->update();
             // dd($settingalokasi);
 
@@ -287,7 +305,7 @@ class SettingalokasicutiController extends Controller
             $settingalokasi['mode_karyawan'] = $mode;
             $settingalokasi->update();
         }
-        return redirect('/settingalokasi');
+        return redirect()->back();
     }
 
     public function destroy($id)
@@ -295,7 +313,7 @@ class SettingalokasicutiController extends Controller
         $settingalokasi = Settingalokasi::find($id);
         $settingalokasi->delete();
 
-        return redirect('/settingalokasi');
+        return redirect()->back();
     }
 }
 
@@ -490,6 +508,3 @@ class SettingalokasicutiController extends Controller
 
     //     }
     // }
-
-
-    
