@@ -28,7 +28,7 @@ class TidakMasukController extends Controller
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         
-        if ($role == 1 || $role == 2 && $row->jabatan = "Asisten Manajer") {
+        if ($role == 1 || $role == 2) {
             $karyawan = Karyawan::all();
             $idkaryawan = $request->id_karyawan;
 
@@ -70,7 +70,7 @@ class TidakMasukController extends Controller
     {
         $role = Auth::user()->role;
         
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
               // $nottidakmasuk = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
             //                 ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')

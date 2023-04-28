@@ -76,7 +76,7 @@ class AbsensiController extends Controller
             $request->session()->forget('bulan');
             $request->session()->forget('tahun');
 
-        }elseif($role == 1 && $row->jabatan == "Asisten Manajer")
+        }elseif(($role == 1 && $row->jabatan == "Asisten Manajer") || $role == 2)
         {
             $karyawan = Karyawan::all();
 
