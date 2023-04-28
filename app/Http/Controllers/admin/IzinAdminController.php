@@ -119,7 +119,7 @@ class IzinAdminController extends Controller
         }
         elseif($role == 1 && $izin && $izin->atasan_pertama == Auth::user()->id_pegawai)
         {
-            $status = Status::find(2);
+            $status = Status::find(6);
             Izin::where('id',$id)->update([
                 'status' => $status->id,
                 'tgl_setuju_a' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -211,8 +211,9 @@ class IzinAdminController extends Controller
                 //KIRIM EMAIL KE KARAYWAN> 2 tingkat atasan
                 $karyawan = DB::table('izin')
                     ->join('karyawan','izin.id_karyawan','=','karyawan.id')
+                    ->join('departemen','izin.departemen','=','departemen.id')
                     ->where('izin.id',$izin->id)
-                    ->select('karyawan.email as email','karyawan.nama as nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                    ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
                     ->first(); 
                 $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
                     ->select('email as email','nama as nama','jabatan')
@@ -248,12 +249,13 @@ class IzinAdminController extends Controller
                     'nama'        =>$karyawan->nama,
                     'kategori'   =>$izin->jenis_izin,
                     'alasan'      =>$alasan->alasan,
-                    'tgldisetujuiatasan' => '',
+                    'tgldisetujuiatasan' => Carbon::parse($izin->tgl_setuju_a)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => '',
-                    'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
+                    'tglditolak' => Carbon::parse($izin->tgl_ditolak)->format("d/m/Y H:i"),
                 ];
+                // dd($data);
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->route('cuti.Staff',['type'=>2])->withInput();
+                return redirect()->back()->withInput();
                 
             }elseif($dataizin && $dataizin->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -322,7 +324,7 @@ class IzinAdminController extends Controller
                     'alasan'      =>$alasan->alasan,
                     'tgldisetujuiatasan' => '',
                     'tgldisetujuipimpinan' => '',
-                    'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
+                    'tglditolak' => Carbon::parse($izin->tgl_ditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL)
                 {

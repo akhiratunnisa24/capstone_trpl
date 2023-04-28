@@ -6,7 +6,9 @@ use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Status;
 use App\Models\Karyawan;
+use App\Models\Sisacuti;
 use App\Models\Datareject;
+use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Mail\PerubahanNotification;
@@ -175,7 +177,41 @@ class PembatalanPerubahanController extends Controller
                     'batal_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
-        
+                $jml_cuti = $cuti->sisacuti;
+
+                $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    ->where('id_karyawan', $cuti->id_karyawan)
+                    ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    ->first();
+
+                Alokasicuti::where('id', $alokasicuti->id)
+                    ->update(
+                        ['durasi' => $jml_cuti]
+                    );
+
+                $cekSisacuti = Sisacuti::join('cuti', 'cuti.id_jeniscuti', 'sisacuti.jenis_cuti')
+                    ->join('alokasicuti', 'sisacuti.id_alokasi', 'alokasicuti.id')
+                    ->where('cuti.id',$cuti->id)
+                    ->where('cuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_pegawai',$cuti->id_karyawan)
+                    ->exists();
+                 
+                if($cekSisacuti)
+                {
+                    $sisacuti = Sisacuti::where('jenis_cuti', $cuti->id_jeniscuti)
+                        ->where('id_pegawai', $cuti->id_karyawan)
+                        ->first();
+    
+                    $sisacuti_baru = $sisacuti->sisacuti - $jml_cuti;
+    
+                    Sisacuti::where('id', $sisacuti->id)
+                    ->update(
+                            ['sisa_cuti' => $sisacuti_baru]
+                    );
+
+                }
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
                 $ct = DB::table('cuti')
@@ -318,7 +354,44 @@ class PembatalanPerubahanController extends Controller
                     'batal_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
-        
+
+                $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    ->where('id_karyawan', $cuti->id_karyawan)
+                    ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    ->first();
+
+                $durasibaru = $cuti->saldohakcuti;
+    
+                Alokasicuti::where('id', $alokasicuti->id)
+                ->update(
+                    ['durasi' => $durasibaru]
+                );
+
+                $cekSisacuti = Sisacuti::join('cuti', 'cuti.id_jeniscuti', 'sisacuti.jenis_cuti')
+                    ->join('alokasicuti', 'sisacuti.id_alokasi', 'alokasicuti.id')
+                    ->where('cuti.id',$cuti->id)
+                    ->where('cuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_pegawai',$cuti->id_karyawan)
+                    ->exists();
+
+                if($cekSisacuti)
+                {
+                    $sisacuti = Sisacuti::where('jenis_cuti', $cuti->id_jeniscuti)
+                        ->where('id_pegawai', $cuti->id_karyawan)
+                        ->first();
+
+                    $jml_cuti = $cuti->sisacuti;
+                    $sisacuti_baru = $sisacuti->sisacuti - $jml_cuti;
+
+                    Sisacuti::where('id', $sisacuti->id)
+                    ->update(
+                        ['sisa_cuti' => $sisacuti_baru]
+                    );
+
+                }
+                
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
                 $ct = DB::table('cuti')
@@ -1052,12 +1125,50 @@ class PembatalanPerubahanController extends Controller
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
                 $status = Status::find(16);
+
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'ubah_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
+                $jml_cuti = $cuti->sisacuti;
+
+                $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    ->where('id_karyawan', $cuti->id_karyawan)
+                    ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    ->first();
         
+                Alokasicuti::where('id', $alokasicuti->id)
+                    ->update(
+                        ['durasi' => $jml_cuti]
+                    );
+
+                $cekSisacuti = Sisacuti::join('cuti', 'cuti.id_jeniscuti', 'sisacuti.jenis_cuti')
+                    ->join('alokasicuti', 'sisacuti.id_alokasi', 'alokasicuti.id')
+                    ->where('cuti.id',$cuti->id)
+                    ->where('cuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_pegawai',$cuti->id_karyawan)
+                    ->exists();
+
+                if($cekSisacuti)
+                {
+                    $sisacuti = Sisacuti::where('jenis_cuti', $cuti->id_jeniscuti)
+                        ->where('id_pegawai', $cuti->id_karyawan)
+                        ->first();
+
+                    $sisacuti_baru = $sisacuti->sisacuti - $jml_cuti;
+
+                    Sisacuti::where('id', $sisacuti->id)
+                    ->update(
+                        ['sisa_cuti' => $sisacuti_baru]
+                    );
+
+                    // dd($sisacuti);
+                }
+        
+                // dd($alokasicuti,$jml_cuti,$al->durasi);
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
                 $ct = DB::table('cuti')
@@ -1207,6 +1318,44 @@ class PembatalanPerubahanController extends Controller
                     'ubah_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
+                $jml_cuti = $cuti->sisacuti;
+
+                $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    ->where('id_karyawan', $cuti->id_karyawan)
+                    ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    ->first();
+        
+                Alokasicuti::where('id', $alokasicuti->id)
+                    ->update(
+                        ['durasi' => $jml_cuti]
+                    );
+
+                $cekSisacuti = Sisacuti::join('cuti', 'cuti.id_jeniscuti', 'sisacuti.jenis_cuti')
+                    ->join('alokasicuti', 'sisacuti.id_alokasi', 'alokasicuti.id')
+                    ->where('cuti.id',$cuti->id)
+                    ->where('cuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_pegawai',$cuti->id_karyawan)
+                    ->exists();
+
+                if($cekSisacuti)
+                {
+                    $sisacuti = Sisacuti::where('jenis_cuti', $cuti->id_jeniscuti)
+                        ->where('id_pegawai', $cuti->id_karyawan)
+                        ->first();
+
+                    $sisacuti_baru = $sisacuti->sisacuti - $jml_cuti;
+
+                    Sisacuti::where('id', $sisacuti->id)
+                    ->update(
+                        ['sisa_cuti' => $sisacuti_baru]
+                    );
+
+                    // dd($sisacuti);
+                }
+        
+                // dd($alokasicuti,$jml_cuti);
 
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti

@@ -547,7 +547,7 @@ class CutiadminController extends Controller
                     elseif(Auth::user()->id_pegawai == $datacuti->atasan_kedua)
                     {
                         $cuti = Cuti::where('id',$id)->first();
-                        dd($datacuti->atasan_kedua);
+                        // dd($datacuti->atasan_kedua);
                         $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
                         $jml_cuti = $cuti->sisacuti;
                         $status = Status::find(7);
@@ -619,7 +619,7 @@ class CutiadminController extends Controller
                             'status'      =>$cuti->name_status,
                             'alasan'      =>$alasan,
                         ];
-                        return $data;
+                        // return $data;
                         Mail::to($tujuan)->send(new CutiApproveNotification($data));
                         return redirect()->back()->withInput();
         

@@ -295,6 +295,12 @@ class CutikaryawanController extends Controller
         $karyawan = Auth::user()->id_pegawai;
         $status = Status::find(14);
         $cuti = Cuti::find($id);
+        
+        // $saldo = $cuti->saldohakcuti;
+        // $jmlcuti = $request->jml_cuti;
+        // $selisih = $saldo - $jmlcuti;
+
+        // dd($cuti, $saldo,$jmlcuti,$request->all(),$selisih);
 
         $jeniscuti = Jeniscuti::where('id', $cuti->id_jeniscuti)->first();
 
@@ -307,16 +313,18 @@ class CutikaryawanController extends Controller
         $cuti->id_alokasi     = $cuti->id_alokasi;
         $cuti->id_settingalokasi = $cuti->id_settingalokasi;
         $cuti->keperluan      = $request->keperluan;
-        $cuti->jmlharikerja   = $request->jml_cuti;
         $cuti->catatan        = $status->name_status;
+        $cuti->jmlharikerja   = $request->jml_cuti;
         
         if($request->id_jeniscuti == 1)
-        {
-            $cuti->saldohakcuti   = $request->durasi;
+        {  
+            $cuti->saldohakcuti   = $cuti->saldohakcuti;
             $cuti->jml_cuti       = $request->jml_cuti;
             $sisa                 = $cuti->saldohakcuti -  $cuti->jml_cuti;
             $cuti->sisacuti       = $sisa;
             $cuti->keterangan     = "-";
+           
+            // dd($cuti->saldohakcuti, $cuti->jml_cuti, $cuti->sisacuti);
 
             // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti, $sisa,$cuti->sisacuti);
         } elseif ($request->id_jeniscuti == 2) {

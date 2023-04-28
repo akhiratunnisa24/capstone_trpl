@@ -677,23 +677,21 @@ class ManagerController extends Controller
         else
         {
             $cutis = Cuti::where('id',$id)->first();
-            // return $cutis;
-            if($cutis && $row->jabatan == "Manajer" && $role == 3)
+            $datacuti = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
+                ->leftjoin('karyawan','cuti.id_karyawan','=','karyawan.id')
+                ->select('cuti.*','alokasicuti.id as id_alokasi','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                ->where('cuti.id',$cutis->id)
+                ->where('cuti.id_karyawan', $cutis->id_karyawan)
+                ->where('alokasicuti.id_karyawan',  $cutis->id_karyawan)
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+            ->first();
+            // dd($datacuti);
+            if($datacuti && $row->jabatan == "Manajer" && $role == 3)
             {
-                // return $cutis->id;
-                $datacuti = DB::table('cuti')
-                    ->leftjoin('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
-                    ->leftjoin('karyawan','cuti.id_karyawan','=','karyawan.id')
-                    ->select('cuti.*','alokasicuti.id as id_alokasi','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->where('cuti.id',$cutis->id)
-                    ->where('cuti.id_karyawan', $cutis->id_karyawan)
-                    ->where('alokasicuti.id_karyawan',  $cutis->id_karyawan)
-                    ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                              ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
-                    })
-                    ->first();
-                    // return $datacuti->id;
                     if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai && $row->jabatan = "Manajer")
                     {
                         // return $datacuti->atasan_pertama;
@@ -703,6 +701,7 @@ class ManagerController extends Controller
                             'tgldisetujui_a' => Carbon::now()->format('Y-m-d H:i:s'),
                         ]);
                         $cuti = Cuti::where('id',$id)->first();
+                       
                         $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
         
                          //KIRIM NOTIFIKASI EMAIL KE KARYAWAN DAN ATASAN 2
@@ -748,7 +747,7 @@ class ManagerController extends Controller
                     }  
                     elseif($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
                     {
-                    // dd(Auth::user()->name);
+                        // dd($datacuti);
                         $cuti = Cuti::where('id',$id)->first();
                         $jeniscuti = Jeniscuti::where('id',$cuti->id_jeniscuti)->first();
                         $jml_cuti = $cuti->sisacuti;
@@ -824,21 +823,10 @@ class ManagerController extends Controller
                         return redirect()->back();
                     }
             }
-            elseif($cutis && $role == 3 && $row->jabatan = "Asisten Manajer")
+            elseif($datacuti && $role == 3 && $row->jabatan = "Asisten Manajer")
             {
-                $dacuti = DB::table('cuti')
-                    ->leftjoin('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
-                    ->leftjoin('settingalokasi', 'cuti.id_settingalokasi', '=', 'settingalokasi.id')
-                    ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
-                    ->where('cuti.id',$cuti->id)
-                    ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                    ->select('cuti.*','karyawan.atasan_pertama')
-                    ->first();
-    
-                // dd($dacuti);
-                if($dacuti)
+                if($datacuti->atasan_pertama == Auth::user()->id_pegawai)
                 {
-                    // dd($dacuti);
                     $status = Status::find(6);
                     Cuti::where('id',$id)->update([
                         'tgldisetujui_a' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -850,7 +838,7 @@ class ManagerController extends Controller
                     //email karyawan
                     $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
                         ->join('departemen','cuti.departemen','=','departemen.id')
-                        ->where('cuti.id_karyawan','=',$dacuti->id_karyawan)
+                        ->where('cuti.id_karyawan','=',$cuti->id_karyawan)
                         ->select('karyawan.email','karyawan.nama','karyawan.atasan_kedua','departemen.nama_departemen')
                         ->first();
     
@@ -892,15 +880,15 @@ class ManagerController extends Controller
                    
                     // dd($data);
                     return redirect()->back();
-                }else{
+                }
+                else{
                     return redirect()->back();
                 }
-            }
-            else{
+                    
+            }else{
                 return redirect()->back();
-            } 
-
-        }  
+            }
+        }
     }
 
     public function cutireject(Request $request, $id)
