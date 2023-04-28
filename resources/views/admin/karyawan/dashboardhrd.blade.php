@@ -498,7 +498,7 @@
                                                                 {{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }}
                                                             </td>
                                                         @else
-                                                            <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/M/Y') }}
+                                                            <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
                                                             </td>
                                                         @endif
                                                         

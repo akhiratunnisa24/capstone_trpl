@@ -182,13 +182,10 @@
 
                                                                     @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6 )
                                                                         <div class="col-sm-3">
-                                                                            <form action="{{ route('cuti.approved', $data->id) }}"
-                                                                                method="POST">
+                                                                            <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
                                                                                 @csrf
-                                                                                <input type="hidden" name="status"
-                                                                                    value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit"
-                                                                                    class="fa fa-check btn-success btn-sm"></button>
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
                                                                             </form>
                                                                         </div>
                                                                         <div class="col-sm-3" style="margin-left:7px">
