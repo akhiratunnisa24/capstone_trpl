@@ -26,13 +26,14 @@ class JeniscutiController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
-        if ($role == 1 || $role == 2 && $row->jabatan == "Asisten Manajer") {
+        if ($role == 1) 
+        {
 
-        $type = $request->query('type', 1);
-        
-        $jeniscuti = Jeniscuti::all();
-        $jenisizin = Jenisizin::all();
-        return view('admin.kategori.index', compact('jeniscuti','jenisizin','type','row','role'));
+            $type = $request->query('type', 1);
+            
+            $jeniscuti = Jeniscuti::all();
+            $jenisizin = Jenisizin::all();
+            return view('admin.kategori.index', compact('jeniscuti','jenisizin','type','row','role'));
 
         } else {
             
@@ -48,7 +49,7 @@ class JeniscutiController extends Controller
         $jeniscuti = Jeniscuti::create($request->all());
         
         // dd($jeniscuti);
-        return redirect('/kategori_cuti')->with('pesan','Data berhasil disimpan !');
+        return redirect()->back()->with('pesan','Data berhasil disimpan !');
 
     }
 
@@ -63,7 +64,7 @@ class JeniscutiController extends Controller
         $jeniscuti = Jeniscuti::find($id);
         $jeniscuti->update($request->all());
 
-        return redirect('/kategori_cuti');
+        return redirect()->back();
         
     }
 
@@ -72,6 +73,6 @@ class JeniscutiController extends Controller
         $jeniscuti = Jeniscuti::find($id);
         $jeniscuti->delete();
 
-        return redirect('/kategori_cuti');
+        return redirect()->back();
     }
 }

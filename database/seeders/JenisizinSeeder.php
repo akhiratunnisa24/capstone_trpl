@@ -16,13 +16,24 @@ class JenisizinSeeder extends Seeder
     public function run()
     {
         Jenisizin::insert([
-            'jenis_izin' => "Terlambat",
+            'jenis_izin' => "Sakit Dengan Surat Dokter",
+            'code'       => "S"
         ]);
         Jenisizin::insert([
-            'jenis_izin' => "Pulang Cepat",
+            'jenis_izin' => "Izin (Tidak Masuk Kerja/Haid/Tanpa Surat Keterangan Dokter)",
+            'code'       => "I"
         ]);
         Jenisizin::insert([
-            'jenis_izin' => "Sakit",
+            'jenis_izin' => "Tugas Luar Kantor",
+            'code'       => "TL"
+        ]);
+        Jenisizin::insert([
+            'jenis_izin' => "Dinas Luar Kota",
+            'code'       => "DL"
+        ]);
+        Jenisizin::insert([
+            'jenis_izin' => "Keperluan Lainnya",
+            'code'       => "L"
         ]);
     }
 }

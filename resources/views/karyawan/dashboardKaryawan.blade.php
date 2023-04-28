@@ -21,7 +21,7 @@
             
     ?> --}}
 
-    @if (Auth::check() && Auth::user()->role !== 4 && Auth::user()->role !== 2 )
+    @if (Auth::check() && Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 3)
         {{-- @php dd($row->jabatan, Auth::user()->role) @endphp --}}
         <div class="row">
             <div class="col-lg-6">
@@ -182,13 +182,10 @@
 
                                                                     @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6 )
                                                                         <div class="col-sm-3">
-                                                                            <form action="{{ route('cuti.approved', $data->id) }}"
-                                                                                method="POST">
+                                                                            <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
                                                                                 @csrf
-                                                                                <input type="hidden" name="status"
-                                                                                    value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit"
-                                                                                    class="fa fa-check btn-success btn-sm"></button>
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
                                                                             </form>
                                                                         </div>
                                                                         <div class="col-sm-3" style="margin-left:7px">
@@ -265,8 +262,7 @@
                                                             <td>{{ $data->nama }}</td>
                                                             <td>{{ $data->jenis_cuti }}</td>
                                                             <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}</td>
-                                                            {{-- <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td> --}}
-                                                            {{-- <td>{{ $data->jml_cuti }} Hari</td> --}}
+                                            
                                                             <td> {{$data->catatan}}</td>
 
                                                             <td>
@@ -549,7 +545,7 @@
                                                             <div class="row">
                                                                 @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Manajer")
                                                                     <div class="col-sm-3">
-                                                                        <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
+                                                                        <form action="{{ route('izin.approved', $data->id) }}" method="POST">
                                                                             @csrf
                                                                             <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
                                                                             <button type="submit" class="fa fa-check btn-success btn-sm"></button>
@@ -655,7 +651,7 @@
                                                                         </form>
                                                                     </div>
 
-                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6 )
+                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6 && $row->jabatan == "Manajer")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approved', $data->id) }}"
                                                                             method="POST">
@@ -666,12 +662,12 @@
                                                                     </div>
                                                                     <div class="col-sm-3" style="margin-left:7px">
                                                                         <form action="" method="POST">
-                                                                            <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal"  data-target="#izReject{{ $data->id }}">
+                                                                            <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal"  data-target="#Reject{{ $data->id }}">
                                                                                 <i class="fa fa-times fa-md"></i>
                                                                             </a>
                                                                         </form>
                                                                     </div>
-                                                    
+                                                                    @include('manager.staff.izinReject')    
                                                                 @else
                                                                 @endif
 
@@ -686,7 +682,7 @@
                                                                 </div>
                                                                 {{-- modal show izin --}}
                                                                 @include('admin.cuti.showizin')
-                                                                @include('admin.cuti.izinReject')
+                                                                {{-- @include('admin.cuti.izinReject') --}}
                                                             </div>
                                                         </td>
                                                     </tr>

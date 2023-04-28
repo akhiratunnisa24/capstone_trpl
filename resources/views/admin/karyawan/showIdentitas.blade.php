@@ -194,7 +194,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label  class="form-label">Tanggal Masuk</label>
-                                                                        <label class="form-control">{{ $karyawan->tglmasuk ?? '-' }}</label>
+                                                                        <label class="form-control">{{ \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') ?? '-' }}</label>
                                                                     </div>
                                                                 </div>
                         

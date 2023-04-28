@@ -44,7 +44,7 @@ class AbsensiController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         
-        if ($role == 1) {
+        if ($role == 1 && $row->jabatan == "Manajer") {
             //filter data
             $karyawan = Karyawan::all();
 
@@ -76,7 +76,7 @@ class AbsensiController extends Controller
             $request->session()->forget('bulan');
             $request->session()->forget('tahun');
 
-        }elseif($role == 2 && $row->jabatan == "Asisten Manajer")
+        }elseif($role == 1 && $row->jabatan == "Asisten Manajer")
         {
             $karyawan = Karyawan::all();
 
@@ -342,9 +342,6 @@ class AbsensiController extends Controller
         $depart = DB::table('karyawan')->join('departemen', 'karyawan.divisi','=','departemen.id')
                   ->where('karyawan.id','=',Auth::user()->id_pegawai)->first();
  
-        
-                  
-    
         $tidakmasuk = array(
             'id_pegawai' => $karyawan->id,
             'nama' => $karyawan->nama,

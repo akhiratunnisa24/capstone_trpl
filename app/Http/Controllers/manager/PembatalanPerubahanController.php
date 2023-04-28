@@ -6,7 +6,9 @@ use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Status;
 use App\Models\Karyawan;
+use App\Models\Sisacuti;
 use App\Models\Datareject;
+use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Mail\PerubahanNotification;
@@ -97,7 +99,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($datacuti && $role == 2 && $row->jabatan == "Asisten Manajer")
+        elseif($datacuti && $role == 1 && $row->jabatan == "Asisten Manajer")
         {
                 $status = Status::find(12);
                 // return $status->name_status;
@@ -175,7 +177,41 @@ class PembatalanPerubahanController extends Controller
                     'batal_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
-        
+                $jml_cuti = $cuti->sisacuti;
+
+                $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    ->where('id_karyawan', $cuti->id_karyawan)
+                    ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    ->first();
+
+                Alokasicuti::where('id', $alokasicuti->id)
+                    ->update(
+                        ['durasi' => $jml_cuti]
+                    );
+
+                $cekSisacuti = Sisacuti::join('cuti', 'cuti.id_jeniscuti', 'sisacuti.jenis_cuti')
+                    ->join('alokasicuti', 'sisacuti.id_alokasi', 'alokasicuti.id')
+                    ->where('cuti.id',$cuti->id)
+                    ->where('cuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_pegawai',$cuti->id_karyawan)
+                    ->exists();
+                 
+                if($cekSisacuti)
+                {
+                    $sisacuti = Sisacuti::where('jenis_cuti', $cuti->id_jeniscuti)
+                        ->where('id_pegawai', $cuti->id_karyawan)
+                        ->first();
+    
+                    $sisacuti_baru = $sisacuti->sisacuti - $jml_cuti;
+    
+                    Sisacuti::where('id', $sisacuti->id)
+                    ->update(
+                            ['sisa_cuti' => $sisacuti_baru]
+                    );
+
+                }
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
                 $ct = DB::table('cuti')
@@ -237,7 +273,7 @@ class PembatalanPerubahanController extends Controller
             {
                 // return $datacuti;
                 $status = Status::find(12);
-                return $status->id;
+                // return $status->id;
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -318,7 +354,44 @@ class PembatalanPerubahanController extends Controller
                     'batal_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
-        
+
+                $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    ->where('id_karyawan', $cuti->id_karyawan)
+                    ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    ->first();
+
+                $durasibaru = $cuti->saldohakcuti;
+    
+                Alokasicuti::where('id', $alokasicuti->id)
+                ->update(
+                    ['durasi' => $durasibaru]
+                );
+
+                $cekSisacuti = Sisacuti::join('cuti', 'cuti.id_jeniscuti', 'sisacuti.jenis_cuti')
+                    ->join('alokasicuti', 'sisacuti.id_alokasi', 'alokasicuti.id')
+                    ->where('cuti.id',$cuti->id)
+                    ->where('cuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_pegawai',$cuti->id_karyawan)
+                    ->exists();
+
+                if($cekSisacuti)
+                {
+                    $sisacuti = Sisacuti::where('jenis_cuti', $cuti->id_jeniscuti)
+                        ->where('id_pegawai', $cuti->id_karyawan)
+                        ->first();
+
+                    $jml_cuti = $cuti->sisacuti;
+                    $sisacuti_baru = $sisacuti->sisacuti - $jml_cuti;
+
+                    Sisacuti::where('id', $sisacuti->id)
+                    ->update(
+                        ['sisa_cuti' => $sisacuti_baru]
+                    );
+
+                }
+                
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
                 $ct = DB::table('cuti')
@@ -380,7 +453,7 @@ class PembatalanPerubahanController extends Controller
             {
                 // return $datacuti;
                 $status = Status::find(12);
-                return $status->id;
+                // return $status->id;
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -524,7 +597,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>'',
                     'tgldisetujuipimpinan' => '',
-                    'tglditolak' => Carbon::parse($ct->batalditolak)->format("d/m/Y"),
+                    'tglditolak' => Carbon::parse($ct->batalditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -537,7 +610,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($datacuti && $role == 2 && $row->jabatan == "Asisten Manajer")
+        elseif($datacuti && $role == 1 && $row->jabatan == "Asisten Manajer")
         {
                 $status = Status::find(9);
                 // return $status->name_status;
@@ -593,7 +666,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>'',
                     'tgldisetujuipimpinan' => '',
-                    'tglditolak' => Carbon::parse($ct->batalditolak)->format("d/m/Y"),
+                    'tglditolak' => Carbon::parse($ct->batalditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -665,7 +738,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' =>'',
-                    'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
+                    'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -679,7 +752,7 @@ class PembatalanPerubahanController extends Controller
             {
                 // return $datacuti;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batalditolak' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -735,7 +808,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>'',
                     'tgldisetujuipimpinan' => '',
-                    'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
+                    'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -809,7 +882,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' =>'',
-                    'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
+                    'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -823,7 +896,7 @@ class PembatalanPerubahanController extends Controller
             {
                 // return $datacuti;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batalditolak' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -879,7 +952,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>'',
                     'tgldisetujuipimpinan' => '',
-                    'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
+                    'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -966,7 +1039,7 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' => Carbon::now()->format('d/m/Y H:i'),
+                    'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format('d/m/Y H:i'),
                     'tgldisetujuipimpinan' => '',
                     'tglditolak' => '',
                     'atasan2' =>$atasan2->email,
@@ -979,7 +1052,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($datacuti && $role == 2 && $row->jabatan == "Asisten Manajer")
+        elseif($datacuti && $role == 1 && $row->jabatan == "Asisten Manajer")
         {
                 $status = Status::find(15);
                 // return $status->name_status;
@@ -1034,7 +1107,7 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' => Carbon::now()->format('d/m/Y H:i'),
+                    'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format('d/m/Y H:i'),
                     'tgldisetujuipimpinan' => '',
                     'tglditolak' => '',
                     'atasan2' =>$atasan2->email,
@@ -1052,12 +1125,50 @@ class PembatalanPerubahanController extends Controller
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
                 $status = Status::find(16);
+
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'ubah_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
+                $jml_cuti = $cuti->sisacuti;
+
+                $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    ->where('id_karyawan', $cuti->id_karyawan)
+                    ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    ->first();
         
+                Alokasicuti::where('id', $alokasicuti->id)
+                    ->update(
+                        ['durasi' => $jml_cuti]
+                    );
+
+                $cekSisacuti = Sisacuti::join('cuti', 'cuti.id_jeniscuti', 'sisacuti.jenis_cuti')
+                    ->join('alokasicuti', 'sisacuti.id_alokasi', 'alokasicuti.id')
+                    ->where('cuti.id',$cuti->id)
+                    ->where('cuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_pegawai',$cuti->id_karyawan)
+                    ->exists();
+
+                if($cekSisacuti)
+                {
+                    $sisacuti = Sisacuti::where('jenis_cuti', $cuti->id_jeniscuti)
+                        ->where('id_pegawai', $cuti->id_karyawan)
+                        ->first();
+
+                    $sisacuti_baru = $sisacuti->sisacuti - $jml_cuti;
+
+                    Sisacuti::where('id', $sisacuti->id)
+                    ->update(
+                        ['sisa_cuti' => $sisacuti_baru]
+                    );
+
+                    // dd($sisacuti);
+                }
+        
+                // dd($alokasicuti,$jml_cuti,$al->durasi);
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
                 $ct = DB::table('cuti')
@@ -1179,7 +1290,7 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format("d/m/Y"),
+                    'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => '',
                     'tglditolak' => '',
                 ];
@@ -1201,11 +1312,50 @@ class PembatalanPerubahanController extends Controller
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
                 $status = Status::find(16);
+               
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'ubah_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
+                $jml_cuti = $cuti->sisacuti;
+
+                $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
+                    ->where('id_karyawan', $cuti->id_karyawan)
+                    ->where('id_jeniscuti', $cuti->id_jeniscuti)
+                    ->where('id_settingalokasi', $cuti->id_settingalokasi)
+                    ->first();
+        
+                Alokasicuti::where('id', $alokasicuti->id)
+                    ->update(
+                        ['durasi' => $jml_cuti]
+                    );
+
+                $cekSisacuti = Sisacuti::join('cuti', 'cuti.id_jeniscuti', 'sisacuti.jenis_cuti')
+                    ->join('alokasicuti', 'sisacuti.id_alokasi', 'alokasicuti.id')
+                    ->where('cuti.id',$cuti->id)
+                    ->where('cuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_alokasi',$cuti->id_alokasi)
+                    ->where('sisacuti.id_pegawai',$cuti->id_karyawan)
+                    ->exists();
+
+                if($cekSisacuti)
+                {
+                    $sisacuti = Sisacuti::where('jenis_cuti', $cuti->id_jeniscuti)
+                        ->where('id_pegawai', $cuti->id_karyawan)
+                        ->first();
+
+                    $sisacuti_baru = $sisacuti->sisacuti - $jml_cuti;
+
+                    Sisacuti::where('id', $sisacuti->id)
+                    ->update(
+                        ['sisa_cuti' => $sisacuti_baru]
+                    );
+
+                    // dd($sisacuti);
+                }
+        
+                // dd($alokasicuti,$jml_cuti);
 
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
@@ -1269,7 +1419,7 @@ class PembatalanPerubahanController extends Controller
             {
                 // return $datacuti;
                 $status = Status::find(15);
-                return $status->id;
+                // return $status->id;
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -1323,7 +1473,7 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format("d/m/Y"),
+                    'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => '',
                     'tglditolak' => '',
                 ];
@@ -1426,7 +1576,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        else if($datacuti && $role == 2 && $row->jabatan == "Asisten Manajer")
+        else if($datacuti && $role == 1 && $row->jabatan == "Asisten Manajer")
         {
                 $status = Status::find(9);
                 // return $status->name_status;
@@ -1567,7 +1717,7 @@ class PembatalanPerubahanController extends Controller
             {
                 // return $datacuti;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'ubahditolak' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -1623,7 +1773,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>'',
                     'tgldisetujuipimpinan' => '',
-                    'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
+                    'tglditolak' => Carbon::parse($ct->ubahditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1710,7 +1860,7 @@ class PembatalanPerubahanController extends Controller
             {
                 // return $datacuti;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'ubahditolak' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -1766,7 +1916,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>'',
                     'tgldisetujuipimpinan' => '',
-                    'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
+                    'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;

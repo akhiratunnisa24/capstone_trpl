@@ -108,8 +108,6 @@ class SettingalokasicutiController extends Controller
             ->get();
 
             // return $karyawan;
-
-
             foreach ($karyawan as $karyawan) {
                 $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)->where('id_karyawan', $karyawan->id)->exists();
                 if (!$check) {

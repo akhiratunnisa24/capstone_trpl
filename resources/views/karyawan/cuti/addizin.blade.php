@@ -211,6 +211,8 @@
             var endFormatted = endArray[1] + '/' + endArray[0] + '/' + endArray[2];
             var enddate = new Date(endFormatted);
 
+            console.log(start,end,startdate,enddate);
+
             // var startdate= new Date(start);
             // var enddate  = new Date(end);
             var daysOfYear= [];

@@ -27,7 +27,7 @@
         </div>
 
         {{-- Role HRD Manajer --}}
-        @if (Auth::check() && Auth::user()->role == 1 || Auth::user()->role == 2 ) 
+        @if (Auth::check() && Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 2)
             <div id="sidebar-menu">
                 <ul>
                     <li><a href="/" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>
@@ -154,7 +154,7 @@
 
         <!--- Role HRD Staff dan Role Karyawan  -->
         {{-- @if (Auth::check() && (Auth::user()->role == 2 || Auth::user()->role == 4)) --}}
-        @if (Auth::check() && (Auth::user()->role == 4))
+        @if (Auth::check() && Auth::user()->role == 4)
             <div id="sidebar-menu">
                 <ul>
                     <li><a href="/karyawandashboard" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>
@@ -163,30 +163,6 @@
                     <li><a href="/history-absensi" class="waves-effect"><i class="fa fa-history"></i><span>History Absensi</span></a></li>
                     <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Izin</span></a></li>
                     <li><a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
-                    @if(Auth::user()->role == 2 && $row->jabatan == "Asisten Manajer")
-                        <li class="has_sub">
-                            <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span class="text-info panel-title">Absensi Karyawan</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
-                                <ul class="list-unstyled">
-                                    <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
-                                    <li><a href="/absensi-tidak-masuk"><i class="mdi mdi-calendar-remove"></i><span>Data Tidak Masuk</span></a></li>
-                                
-                                </ul>
-                            </li>
-                            <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-walk"></i><span
-                                        class="text-info panel-title">Cuti & Izin</span><span class="pull-right"><i
-                                            class="mdi mdi-plus"></i></span></a>
-                                <ul class="list-unstyled">
-                                    <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Transaksi Cuti & Izin</span></a>
-                                    </li>
-                                    <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti & Izin</span></a></li>
-                                    <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc"></i><span>Master Alokasi Cuti</span></a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </li>
-                    @endif
                 </ul>
             </div>
         @endif

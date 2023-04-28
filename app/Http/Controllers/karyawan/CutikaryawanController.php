@@ -50,7 +50,7 @@ class CutikaryawanController extends Controller
             ->leftjoin('statuses','cuti.status','=','statuses.id')
             ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
             ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-            ->select('cuti.*', 'departemen.nama_departemen','jeniscuti.jenis_cuti','statuses.name_status','datareject.alasan as alasan_cuti','datareject.id_cuti as id_cuti')
+            ->select('cuti.*', 'departemen.nama_departemen','jeniscuti.jenis_cuti','statuses.name_status','datareject.alasan as alasan','datareject.id_cuti as id_cuti')
             ->where('cuti.id_karyawan', Auth::user()->id_pegawai)
             ->distinct()
             ->orderBy('id','DESC')
@@ -177,17 +177,17 @@ class CutikaryawanController extends Controller
         $emailkry = DB::table('cuti')->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
             ->join('departemen', 'cuti.departemen', '=', 'departemen.id')
             ->where('cuti.id_karyawan', '=', $cuti->id_karyawan)
-            ->select('karyawan.email', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.jabatan', 'departemen.nama_departemen')
+            ->select('karyawan.email', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
             ->first();
         $jeniscuti = Jeniscuti::where('id', $cuti->id_jeniscuti)->first();
         // return $emailkry;
         //atasan pertama
         $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
-            ->select('email as email', 'nama as nama', 'jabatan as jabatan')
+            ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
             ->first();
 
         $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
-            ->select('email as email', 'nama as nama', 'jabatan as jabatan')
+            ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
             ->first();
 
         // if ($atasan) {
@@ -200,7 +200,7 @@ class CutikaryawanController extends Controller
             'tgl_permohonan' => Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
             'nik' => $emailkry->nik,
             'namakaryawan' => ucwords(strtolower($emailkry->nama)),
-            'jabatankaryawan' => $emailkry->jabatan,
+            'jabatankaryawan' => $emailkry->nama_jabatan,
             'departemen' => $emailkry->nama_departemen,
             'karyawan_email' =>  $emailkry->email,
             'id_jeniscuti' => $jeniscuti->jenis_cuti,
@@ -240,16 +240,16 @@ class CutikaryawanController extends Controller
         $emailkry = DB::table('cuti')->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
             ->join('departemen', 'cuti.departemen', '=', 'departemen.id')
             ->where('cuti.id_karyawan', '=', $cuti->id_karyawan)
-            ->select('karyawan.email', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.jabatan', 'departemen.nama_departemen')
+            ->select('karyawan.email', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
             ->first();
 
         $jeniscuti = Jeniscuti::where('id', $cuti->id_jeniscuti)->first();
         //atasan pertama
         $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
-            ->select('email as email', 'nama as nama', 'jabatan as jabatan')
+            ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
             ->first();
         $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
-            ->select('email as email', 'nama as nama', 'jabatan as jabatan')
+            ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
             ->first();
 
         $tujuan = $atasan->email;
@@ -261,7 +261,7 @@ class CutikaryawanController extends Controller
             'tgl_permohonan' => Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
             'nik' => $emailkry->nik,
             'namakaryawan' => ucwords(strtolower($emailkry->nama)),
-            'jabatankaryawan' => $emailkry->jabatan,
+            'jabatankaryawan' => $emailkry->nama_jabatan,
             'departemen' => $emailkry->nama_departemen,
             'karyawan_email' =>  $emailkry->email,
             'id_jeniscuti' => $jeniscuti->jenis_cuti,
@@ -295,6 +295,12 @@ class CutikaryawanController extends Controller
         $karyawan = Auth::user()->id_pegawai;
         $status = Status::find(14);
         $cuti = Cuti::find($id);
+        
+        // $saldo = $cuti->saldohakcuti;
+        // $jmlcuti = $request->jml_cuti;
+        // $selisih = $saldo - $jmlcuti;
+
+        // dd($cuti, $saldo,$jmlcuti,$request->all(),$selisih);
 
         $jeniscuti = Jeniscuti::where('id', $cuti->id_jeniscuti)->first();
 
@@ -307,16 +313,18 @@ class CutikaryawanController extends Controller
         $cuti->id_alokasi     = $cuti->id_alokasi;
         $cuti->id_settingalokasi = $cuti->id_settingalokasi;
         $cuti->keperluan      = $request->keperluan;
-        $cuti->jmlharikerja   = $request->jml_cuti;
         $cuti->catatan        = $status->name_status;
+        $cuti->jmlharikerja   = $request->jml_cuti;
         
         if($request->id_jeniscuti == 1)
-        {
-            $cuti->saldohakcuti   = $request->durasi;
+        {  
+            $cuti->saldohakcuti   = $cuti->saldohakcuti;
             $cuti->jml_cuti       = $request->jml_cuti;
             $sisa                 = $cuti->saldohakcuti -  $cuti->jml_cuti;
             $cuti->sisacuti       = $sisa;
             $cuti->keterangan     = "-";
+           
+            // dd($cuti->saldohakcuti, $cuti->jml_cuti, $cuti->sisacuti);
 
             // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti, $sisa,$cuti->sisacuti);
         } elseif ($request->id_jeniscuti == 2) {
@@ -350,16 +358,16 @@ class CutikaryawanController extends Controller
         $emailkry = DB::table('cuti')->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
             ->join('departemen', 'cuti.departemen', '=', 'departemen.id')
             ->where('cuti.id_karyawan', '=', $cuti->id_karyawan)
-            ->select('karyawan.email', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.jabatan', 'departemen.nama_departemen')
+            ->select('karyawan.email', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
             ->first();
 
         $jeniscuti = Jeniscuti::where('id', $cuti->id_jeniscuti)->first();
         //atasan pertama
         $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
-            ->select('email as email', 'nama as nama', 'jabatan as jabatan')
+            ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
             ->first();
         $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
-            ->select('email as email', 'nama as nama', 'jabatan as jabatan')
+            ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
             ->first();
 
         $tujuan = $atasan->email;
@@ -371,7 +379,7 @@ class CutikaryawanController extends Controller
             'tgl_permohonan' => Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
             'nik' => $emailkry->nik,
             'namakaryawan' => ucwords(strtolower($emailkry->nama)),
-            'jabatankaryawan' => $emailkry->jabatan,
+            'jabatankaryawan' => $emailkry->nama_jabatan,
             'departemen' => $emailkry->nama_departemen,
             'karyawan_email' =>  $emailkry->email,
             'id_jeniscuti' => $jeniscuti->jenis_cuti,

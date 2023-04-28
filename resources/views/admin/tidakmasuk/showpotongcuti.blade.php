@@ -40,7 +40,7 @@
                                             <tr>
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$tm->nama}}</td>
-                                                <td>{{$tm->tanggal}}</td>
+                                                <td>{{\Carbon\Carbon::parse($tm->tanggal)->format('d/m/Y')}}</td>
                                                 <td>{{$tm->status}}</td>
                                             </tr>
                                         @endforeach

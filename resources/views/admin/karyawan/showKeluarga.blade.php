@@ -80,7 +80,7 @@
                                                                     <td>{{ $kel->hubungan }}</td>
                                                                     <td>{{ $kel->jenis_kelamin }}</td>
                                                                     <td>{{ $kel->tempatlahir }}</td>
-                                                                    <td>{{ $kel->tgllahir }}</td>
+                                                                    <td>{{ \Carbon\carbon::parse($kel->tgllahir)->format('d/m/Y') }}</td>
                                                                     <td>{{ $kel->pendidikan_terakhir }}</td>
                                                                     <td>{{ $kel->pekerjaan }}</td>
                                                                     <td class="">

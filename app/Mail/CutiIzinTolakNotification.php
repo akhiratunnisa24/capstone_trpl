@@ -28,8 +28,9 @@ class CutiIzinTolakNotification extends Mailable
         return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
             ->subject($this->data['subject'])
             ->cc($this->data['karyawan_email'], 'Karyawan')
-            ->cc($this->data['atasan1'], 'Atasan Pertama')
-            ->cc($this->data['atasan2'], 'Atasan Kedua')
+            ->cc($this->data['atasan1'], 'Atasan Karyawan')
+            ->cc($this->data['atasan2'], 'Pimpinan Unit Kerja')
+            ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
             ->view('emails.tolakindex')->with('data',$this->data);
     }
     /**
