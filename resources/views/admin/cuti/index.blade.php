@@ -20,7 +20,6 @@
 </div>
 <!-- Close Header -->
 
-<!-- Start right Content here -->
 <!-- Start content -->
     <div class="row">
         <div class="col-lg-12">
@@ -37,18 +36,6 @@
                         <span class="hidden-xs">Transaksi Izin</span>
                     </a>
                 </li>
-                {{-- <li class="nav-item active">
-                    <a class="nav-link {{ $activeTab === 'cuti' ? 'active' : '' }}" href="{{ route('permintaancuti.index', ['active_tab' => 'cuti']) }}?active_tab=cuti"  id="tab1" data-toggle="tab" aria-expanded="false">
-                        <span class="visible-xs"><i class="fa fa-home"></i></span>
-                        <span class="hidden-xs">Permintaan Cuti</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ $activeTab === 'izin' ? 'active' : '' }}" href="{{ route('permintaancuti.index', ['active_tab' => 'izin']) }}?active_tab=izin" id="tab2" data-toggle="tab" aria-expanded="true">
-                        <span class="visible-xs"><i class="fa fa-user"></i></span>
-                        <span class="hidden-xs">Permintaan Izin</span>
-                    </a>
-                </li> --}}
             </ul>
             <div class="tab-content">
                 {{-- LIST CUTI --}}
@@ -121,15 +108,6 @@
                                                         <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" data-live-search="true" required>
                                                             <option value="" required>-- Pilih Tahun --</option>
                                                             {{-- {{ ('01' === request()->bulan) ? 'selected' : '' }} --}}
-                                                            <option value="2011" {{ ('2011' === request()->tahun) ? 'selected' : '' }}>2011</option>
-                                                            <option value="2012" {{ ('2012' === request()->tahun) ? 'selected' : '' }}>2012</option>
-                                                            <option value="2013" {{ ('2013' === request()->tahun) ? 'selected' : '' }}>2013</option>
-                                                            <option value="2014" {{ ('2014' === request()->tahun) ? 'selected' : '' }}>2014</option>
-                                                            <option value="2015" {{ ('2015' === request()->tahun) ? 'selected' : '' }}>2015</option>
-                                                            <option value="2016" {{ ('2016' === request()->tahun) ? 'selected' : '' }}>2016</option>
-                                                            <option value="2017" {{ ('2017' === request()->tahun) ? 'selected' : '' }}>2017</option>
-                                                            <option value="2018" {{ ('2018' === request()->tahun) ? 'selected' : '' }}>2018</option>
-                                                            <option value="2019" {{ ('2019' === request()->tahun) ? 'selected' : '' }}>2019</option>
                                                             <option value="2020" {{ ('2020' === request()->tahun) ? 'selected' : '' }}>2020</option>
                                                             <option value="2021" {{ ('2021' === request()->tahun) ? 'selected' : '' }}>2021</option>
                                                             <option value="2022" {{ ('2022' === request()->tahun) ? 'selected' : '' }}>2022</option>
@@ -141,6 +119,15 @@
                                                             <option value="2028" {{ ('2028' === request()->tahun) ? 'selected' : '' }}>2028</option>
                                                             <option value="2029" {{ ('2029' === request()->tahun) ? 'selected' : '' }}>2029</option>
                                                             <option value="2030" {{ ('2030' === request()->tahun) ? 'selected' : '' }}>2030</option>
+                                                            <option value="2011" {{ ('2011' === request()->tahun) ? 'selected' : '' }}>2031</option>
+                                                            <option value="2012" {{ ('2012' === request()->tahun) ? 'selected' : '' }}>2032</option>
+                                                            <option value="2013" {{ ('2013' === request()->tahun) ? 'selected' : '' }}>2033</option>
+                                                            <option value="2014" {{ ('2014' === request()->tahun) ? 'selected' : '' }}>2034</option>
+                                                            <option value="2015" {{ ('2015' === request()->tahun) ? 'selected' : '' }}>2035</option>
+                                                            <option value="2016" {{ ('2016' === request()->tahun) ? 'selected' : '' }}>2036</option>
+                                                            <option value="2017" {{ ('2017' === request()->tahun) ? 'selected' : '' }}>2037</option>
+                                                            <option value="2018" {{ ('2018' === request()->tahun) ? 'selected' : '' }}>2038</option>
+                                                            <option value="2019" {{ ('2019' === request()->tahun) ? 'selected' : '' }}>2039</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -211,9 +198,6 @@
                                                                 <td>{{$data->jml_cuti}}</td>
                                                                 <td>{{$data->sisacuti}}</td>
                                                                 <td>
-                                                                    {{-- <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' :'')))))) }}">
-                                                                        {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Asisten Manajer' : ($data->status == 7 ? 'Disetujui' : ($data->status == 9 ? 'Pending Atasan' : ($data->status == 10 ? 'Pending Pimpinan' :'')))))) }}
-                                                                    </span> --}}
                                                                     <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : ($data->status == 14 ? 'warning' :($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
                                                                         {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status :  ($data->status == 14 ?  $data->name_status :  ($data->status == 15 ?  $data->name_status :  ($data->status == 16 ?  $data->name_status : '')))))))))))) }}
                                                                     </span>
@@ -223,8 +207,9 @@
                                                                     <div class="row">
                                                                         @if($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                             <div class="col-sm-3">
-                                                                                <form action="/permintaan_cuti/{{ $data->id }}" method="POST"> 
+                                                                                <form action="/permintaan_cuti/{{ $data->id }}" method="GET"> 
                                                                                     @csrf
+                                                                                    @method('POST')
                                                                                     <input type="hidden" name="status" value="Disetujui" class="form-control" hidden> 
                                                                                     <button type="submit" class="fa fa-check btn-success btn-sm"></button> 
                                                                                 </form>
@@ -302,12 +287,13 @@
 
                 <!-- LIST IZIN -->
                 <div class="tab-pane" id="izin">
-                    <!-- Start content -->
                     <div class="content">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-20">
+                                    {{-- /permintaan_izin --}}
                                     <form class="" action="">
+                                        {{-- @csrf --}}
                                         <div class="row">
                                             {{-- <div class="col-sm-1"></div> --}}
                                             <div class="col-sm-3 col-xs-12">
@@ -359,26 +345,26 @@
                                                         <select name="year" id="year" class="col-md-3 form-control selectpicker" data-live-search="true" required>
                                                             <option value="" required>-- Pilih Tahun --</option>
                                                             {{-- {{ ('01' === request()->bulan) ? 'selected' : '' }} --}}
-                                                            <option value="2011" {{ ('2011' === request()->year) ? 'selected' : '' }}>2011</option>
-                                                            <option value="2012" {{ ('2012' === request()->year) ? 'selected' : '' }}>2012</option>
-                                                            <option value="2013" {{ ('2013' === request()->year) ? 'selected' : '' }}>2013</option>
-                                                            <option value="2014" {{ ('2014' === request()->year) ? 'selected' : '' }}>2014</option>
-                                                            <option value="2015" {{ ('2015' === request()->year) ? 'selected' : '' }}>2015</option>
-                                                            <option value="2016" {{ ('2016' === request()->year) ? 'selected' : '' }}>2016</option>
-                                                            <option value="2017" {{ ('2017' === request()->year) ? 'selected' : '' }}>2017</option>
-                                                            <option value="2018" {{ ('2018' === request()->year) ? 'selected' : '' }}>2018</option>
-                                                            <option value="2019" {{ ('2019' === request()->year) ? 'selected' : '' }}>2019</option>
-                                                            <option value="2020" {{ ('2020' === request()->year) ? 'selected' : '' }}>2020</option>
-                                                            <option value="2021" {{ ('2021' === request()->year) ? 'selected' : '' }}>2021</option>
-                                                            <option value="2022" {{ ('2022' === request()->year) ? 'selected' : '' }}>2022</option>
-                                                            <option value="2023" {{ ('2023' === request()->year) ? 'selected' : '' }}>2023</option>
-                                                            <option value="2024" {{ ('2024' === request()->year) ? 'selected' : '' }}>2024</option>
-                                                            <option value="2025" {{ ('2025' === request()->year) ? 'selected' : '' }}>2025</option>
-                                                            <option value="2026" {{ ('2026' === request()->year) ? 'selected' : '' }}>2026</option>
-                                                            <option value="2027" {{ ('2027' === request()->year) ? 'selected' : '' }}>2027</option>
-                                                            <option value="2028" {{ ('2028' === request()->year) ? 'selected' : '' }}>2028</option>
-                                                            <option value="2029" {{ ('2029' === request()->year) ? 'selected' : '' }}>2029</option>
-                                                            <option value="2030" {{ ('2030' === request()->year) ? 'selected' : '' }}>2030</option>
+                                                            <option value="2020" {{ ('2020' === request()->tahun) ? 'selected' : '' }}>2020</option>
+                                                            <option value="2021" {{ ('2021' === request()->tahun) ? 'selected' : '' }}>2021</option>
+                                                            <option value="2022" {{ ('2022' === request()->tahun) ? 'selected' : '' }}>2022</option>
+                                                            <option value="2023" {{ ('2023' === request()->tahun) ? 'selected' : '' }}>2023</option>
+                                                            <option value="2024" {{ ('2024' === request()->tahun) ? 'selected' : '' }}>2024</option>
+                                                            <option value="2025" {{ ('2025' === request()->tahun) ? 'selected' : '' }}>2025</option>
+                                                            <option value="2026" {{ ('2026' === request()->tahun) ? 'selected' : '' }}>2026</option>
+                                                            <option value="2027" {{ ('2027' === request()->tahun) ? 'selected' : '' }}>2027</option>
+                                                            <option value="2028" {{ ('2028' === request()->tahun) ? 'selected' : '' }}>2028</option>
+                                                            <option value="2029" {{ ('2029' === request()->tahun) ? 'selected' : '' }}>2029</option>
+                                                            <option value="2030" {{ ('2030' === request()->tahun) ? 'selected' : '' }}>2030</option>
+                                                            <option value="2011" {{ ('2011' === request()->tahun) ? 'selected' : '' }}>2031</option>
+                                                            <option value="2012" {{ ('2012' === request()->tahun) ? 'selected' : '' }}>2032</option>
+                                                            <option value="2013" {{ ('2013' === request()->tahun) ? 'selected' : '' }}>2033</option>
+                                                            <option value="2014" {{ ('2014' === request()->tahun) ? 'selected' : '' }}>2034</option>
+                                                            <option value="2015" {{ ('2015' === request()->tahun) ? 'selected' : '' }}>2035</option>
+                                                            <option value="2016" {{ ('2016' === request()->tahun) ? 'selected' : '' }}>2036</option>
+                                                            <option value="2017" {{ ('2017' === request()->tahun) ? 'selected' : '' }}>2037</option>
+                                                            <option value="2018" {{ ('2018' === request()->tahun) ? 'selected' : '' }}>2038</option>
+                                                            <option value="2019" {{ ('2019' === request()->tahun) ? 'selected' : '' }}>2039</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -388,7 +374,7 @@
                                                     <div class="form-group">
                                                         <label></label>
                                                         <div>
-                                                            <button type="submit" id="search" class="btn btn-md btn-success fa fa-filter"> Filter</button>
+                                                            <button type="submit" id="searchs" class="btn btn-md btn-success fa fa-filter"> Filter</button>
                                                             <a href="/permintaan_cuti" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
                                                         </div>
                                                     </div>
