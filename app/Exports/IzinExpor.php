@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class IzinExport implements FromView, ShouldAutoSize
+class IzinExpor implements FromView, ShouldAutoSize
 {
 
     //UNTUK DATA ABSENSI BERDASARKAN FILTER
@@ -33,6 +33,6 @@ class IzinExport implements FromView, ShouldAutoSize
         $izin = $this->data;
         $idkaryawan = $this->idpegawai;
 
-        return view('admin/cuti/izinExcel', ['izin' => $izin]);
+        return view('manager/staff/izinExcel', ['izin' => $izin]);
     }
 }

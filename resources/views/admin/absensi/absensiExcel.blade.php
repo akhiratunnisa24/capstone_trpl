@@ -5,6 +5,11 @@
     use Illuminate\Support\Facades\DB;
 ?>
 <table>
+    <style>
+        .th {
+            font-weight: bold;
+        }
+    </style>
     <thead>
         <tr>
             <th>Emp No.</th>

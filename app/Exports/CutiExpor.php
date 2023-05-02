@@ -3,22 +3,21 @@
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
-use App\Models\Izin;
+use App\Models\Cuti;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class IzinExport implements FromView, ShouldAutoSize
+class CutiExpor implements FromView, ShouldAutoSize
 {
-
     //UNTUK DATA ABSENSI BERDASARKAN FILTER
-    protected $idpegawai;
+    protected $idkaryawan;
     protected $data;
 
-    function __construct($data, $idpegawai)
+    function __construct($data, $idkaryawan)
     {
         $this->data = $data;
-        $this->idpegawai = $idpegawai;
+        $this->idkaryawan = $idkaryawan;
 
         // dd($data,$idkaryawan);
     }
@@ -30,9 +29,9 @@ class IzinExport implements FromView, ShouldAutoSize
     {
         // $cuti = Cuti::with('karyawans')->get();
 
-        $izin = $this->data;
-        $idkaryawan = $this->idpegawai;
+        $cuti = $this->data;
+        $idkaryawan = $this->idkaryawan;
 
-        return view('admin/cuti/izinExcel', ['izin' => $izin]);
+        return view('manager/staff/cutiExcel', ['cuti' => $cuti]);
     }
 }

@@ -35,6 +35,80 @@ class IzinAdminController extends Controller
     {
         $this->middleware('auth');
     }
+
+     public function index(Request $request)
+    {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $role = Auth::user()->role; 
+        if ($role == 1) 
+        {
+            $type = $request->query('type', 1);
+
+            $karyawan = Karyawan::where('id','!=',Auth::user()->id_pegawai)->get();
+
+            // Filter Data Cuti
+            $karyawann = Karyawan::all();
+            $pegawais = Karyawan::all();
+
+            $karyawan = Karyawan::all();
+            $pegawai = Karyawan::all();
+
+             // Filter Data Izin
+             $idpegawai = $request->id_karyawan;
+             $month = $request->query('month', Carbon::now()->format('m'));
+             $year = $request->query('year', Carbon::now()->format('Y'));
+ 
+             // simpan session
+             $request->session()->put('idpegawai', $request->id_karyawan);
+             $request->session()->put('month', $month);
+             $request->session()->put('year', $year);
+ 
+            if(isset($idpegawai) && isset($month) && isset($year)) 
+            {
+                $izin = DB::table('izin')->leftjoin('statuses','izin.status','=','statuses.id')
+                    ->leftjoin('datareject','datareject.id_izin','=','izin.id')
+                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                    ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                    ->where('izin.id_karyawan', $idpegawai)
+                    ->whereMonth('izin.tgl_mulai', $month)
+                    ->whereYear('izin.tgl_mulai', $year)
+                    ->select('izin.*','statuses.name_status','departemen.nama_departemen','jenisizin.jenis_izin','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
+                    ->distinct()
+                    ->orderBy('created_at','DESC')
+                    ->get();
+            }
+            else
+            {
+                $izin =DB::table('izin')->leftjoin('statuses','izin.status','=','statuses.id')
+                    ->leftjoin('datareject','datareject.id_izin','=','izin.id')
+                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                    ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                    ->select('izin.*','statuses.name_status','jenisizin.jenis_izin','departemen.nama_departemen','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
+                    ->distinct()
+                    ->orderBy('created_at','DESC')
+                    ->get();
+            };
+
+            $cuti = DB::table('cuti')
+                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen', 'karyawan.nama','statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                    ->distinct()
+                    ->orderBy('created_at', 'DESC')
+                    ->get();
+        return view('admin.cuti.index', compact('izin','cuti','type','row','karyawann','karyawan','pegawais','role'));
+        } else 
+        {
+            return redirect()->back(); 
+        }
+    }
     
     public function show($id)
     {
@@ -346,56 +420,72 @@ class IzinAdminController extends Controller
 
     public function rekapizinExcel(Request $request)
     {
-        $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
+        $nbulan = $request->query('month', Carbon::now()->format('M Y'));
 
-        $idkaryawan = $request->id_karyawan;
-        $bulan      = $request->query('bulan', Carbon::now()->format('m'));
-        $tahun      = $request->query('tahun', Carbon::now()->format('Y'));
+        $idpegawai = $request->idpegawai;
+        $month     = $request->query('month', Carbon::now()->format('m'));
+        $year      = $request->query('year', Carbon::now()->format('Y'));
 
         // simpan session
-        $idkaryawan = $request->session()->get('idkaryawan');
-        $bulan      = $request->session()->get('bulan');
-        $tahun      = $request->session()->get('tahun',);
+        $idpegawai = $request->session()->get('idpegawai');
+        $month     = $request->session()->get('month');
+        $year      = $request->session()->get('year');
 
-        if (isset($idkaryawan) && isset($bulan) && isset($tahun)) {
-            $data = Izin::with('karyawans')
-            ->where('id_karyawan', $idkaryawan)
-                ->whereMonth('tgl_mulai', $bulan)
-                ->whereYear('tgl_mulai', $tahun)
-                ->get();
-            // dd($data);
+        if (isset($idpegawai) && isset($month) && isset($year))
+        {
+            $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                ->where('izin.id_karyawan', $idpegawai)
+                ->whereMonth('izin.tgl_mulai', $month)
+                ->whereYear('izin.tgl_mulai', $year)
+                ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
+               
+                return Excel::download(new IzinExport($data, $idpegawai), "Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".xlsx");
         } else {
-            $data = Izin::with('karyawans')
-            ->get();
+            $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
+            
+            return Excel::download(new IzinExport($data, $idpegawai), "Rekap Izin Karyawan.xlsx");
         }
-        return Excel::download(new IzinExport($data, $idkaryawan), "Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".xlsx");
+       
     }
 
     public function rekapizinpdf(Request $request)
     {
         $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
 
-        $idkaryawan = $request->id_karyawan;
-        $bulan      = $request->query('bulan', Carbon::now()->format('m'));
-        $tahun      = $request->query('tahun', Carbon::now()->format('Y'));
+        $idpegawai = $request->idpegawai;
+        $month     = $request->query('month', Carbon::now()->format('m'));
+        $year      = $request->query('year', Carbon::now()->format('Y'));
 
         // simpan session
-        $idkaryawan = $request->session()->get('idkaryawan');
-        $bulan      = $request->session()->get('bulan');
-        $tahun      = $request->session()->get('tahun',);
+        $idpegawai = $request->session()->get('idpegawai');
+        $month     = $request->session()->get('month');
+        $year      = $request->session()->get('year');
 
         // dd($idkaryawan,$bulan,$tahun );
 
-        if (isset($idkaryawan) && isset($bulan) && isset($tahun)) {
-            $data = Izin::where('id_karyawan', $idkaryawan)
-                ->whereMonth('tgl_mulai', $bulan)
-                ->whereYear('tgl_mulai', $tahun)
-                ->get();
+        if (isset($idpegawai) && isset($month) && isset($year)) {
+            $data = Izin::join('statuses', 'izin.status', '=', 'statuses.id')
+                ->join('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+                ->join('departemen','izin.departemen','=','departemen.id')
+                ->where('izin.id_karyawan', $idpegawai)
+                ->whereMonth('izin.tgl_mulai', $month)
+                ->whereYear('izin.tgl_mulai', $year)
+                ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
         } else {
-            $data = Izin::all();
+            $data = Izin::join('statuses', 'izin.status', '=', 'statuses.id')
+                ->join('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+                ->join('departemen','izin.departemen','=','departemen.id')
+                ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
         }
 
-        $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idkaryawan' => $idkaryawan])
+        $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai])
             ->setPaper('a4', 'landscape');
         return $pdf->stream("Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf");
     }

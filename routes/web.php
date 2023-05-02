@@ -31,6 +31,7 @@ use App\Http\Controllers\admin\DepartemenController;
 use App\Http\Controllers\admin\OrganisasiController;
 use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\TidakMasukController;
+use App\Http\Controllers\manager\CutiizinController;
 use App\Http\Controllers\admin\AlokasicutiController;
 use App\Http\Controllers\admin\FormPelamarController;
 use App\Http\Controllers\admin\JadwalkerjaController;
@@ -268,6 +269,7 @@ Route::post('/permintaan_cutis', [CutiadminController::class, 'storeCuti'])->nam
 Route::get('/rekapcutiExcel', [CutiadminController::class, 'rekapcutiExcel'])->name('rekapcutiExcel');
 Route::get('/rekapcutipdf', [CutiadminController::class, 'rekapcutipdf'])->name('rekapcutipdf');
 //izin 
+Route::get('/permintaan_izin', [IzinadminController::class, 'index'])->name('permintaanizin.index');
 Route::post('/permintaanizin/{id}', [IzinAdminController::class, 'approved'])->name('izinapproved');
 Route::post('/permintaanizinreject/{id}', [IzinAdminController::class, 'reject'])->name('izinreject');
 Route::get('/rekapizinExcel', [IzinAdminController::class, 'rekapizinExcel'])->name('rekapizinExcel');
@@ -400,6 +402,8 @@ Route::post('/batal-cuti-staff/{id}', [PembatalanPerubahanController::class, 'ba
 Route::post('/batal-reject-cuti-staff/{id}', [PembatalanPerubahanController::class, 'batalRejected'])->name('batal.rejected');
 Route::post('/update-cuti-staff/{id}', [PembatalanPerubahanController::class, 'ubahApprove'])->name('ubah.approved');
 Route::post('/update-reject-cuti-staff/{id}', [PembatalanPerubahanController::class, 'ubahRejected'])->name('ubah.rejected');
+Route::get('/rekapcutiexcel', [CutiizinController::class, 'rekapcutiExcel'])->name('rekapcuti.excel');
+Route::get('/rekapcutiPdf', [CutiizinController::class, 'rekapcutipdf'])->name('rekapcuti.pdf');
 
 Route::post('/izin-staff/{id}', [ManagerController::class, 'izinApproved'])->name('izin.approved');
 Route::post('/izin-reject/{id}', [ManagerController::class, 'izinReject'])->name('izin.reject');
@@ -407,7 +411,8 @@ Route::post('/batal-izin-staff/{id}', [PembatalanIzinController::class, 'batalAp
 Route::post('/batal-reject-izin-staff/{id}', [PembatalanIzinController::class, 'batalRejected'])->name('batal.tolak');
 Route::post('/update-izin-staff/{id}', [PembatalanIzinController::class, 'ubahApprove'])->name('ubah.setuju');
 Route::post('/update-reject-izin-staff/{id}', [PembatalanIzinController::class, 'ubahRejected'])->name('ubah.tolak');
-
+Route::get('/rekapizinexcel', [CutiizinController::class, 'rekapizinExcel'])->name('rekapizin.Excel');
+Route::get('/rekapizinPdf', [CutiizinController::class, 'rekapizinpdf'])->name('rekapizin.pdf');
 
 Route::get('/resign_manager', [ManagerController::class, 'resignStaff'])->name('resignstaff');
 Route::get('/resignmanager/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
