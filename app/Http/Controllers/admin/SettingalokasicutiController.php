@@ -32,7 +32,7 @@ class SettingalokasicutiController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $id = Settingalokasi::find('id');
             $settingalokasi = Settingalokasi::where('status', true)->get();

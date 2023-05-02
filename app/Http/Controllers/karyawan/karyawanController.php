@@ -66,7 +66,7 @@ class karyawanController extends Controller
     public function index(Request $request)
     {   
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan = karyawan::all()->sortByDesc('created_at');

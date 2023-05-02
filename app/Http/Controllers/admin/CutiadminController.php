@@ -44,7 +44,7 @@ class CutiadminController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role; 
         // if ($role == 1 || $role == 1 && $row->jabatan == "Asisten Manajer")        
-        if ($role == 1) 
+        if ($role == 1 || $role == 2) 
         {
             $type = $request->query('type', 1);
 

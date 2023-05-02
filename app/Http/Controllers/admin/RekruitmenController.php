@@ -45,7 +45,7 @@ class RekruitmenController extends Controller
     public function index()
     {
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $posisi = Lowongan::all()->sortByDesc('created_at');
@@ -138,7 +138,7 @@ class RekruitmenController extends Controller
         $metode = NamaTahap::with('mrekruitmen')
             ->where('id_lowongan', $id)->get();
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $lowongan = lowongan::findOrFail($id);
 
@@ -260,7 +260,7 @@ class RekruitmenController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $pelamar = Rekruitmen::findOrFail($id);
@@ -549,7 +549,7 @@ class RekruitmenController extends Controller
     public function show_kanidat($id)
     {
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $lowongan = Rekruitmen::findOrFail($id);
             // dd($karyawan);
@@ -563,7 +563,7 @@ class RekruitmenController extends Controller
     public function create_metode()
     {
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $metode = MetodeRekruitmen::all();

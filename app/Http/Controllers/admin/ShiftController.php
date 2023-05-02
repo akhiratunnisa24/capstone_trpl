@@ -19,7 +19,7 @@ class ShiftController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1) 
+        if ($role == 1 || $role == 2) 
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $shift = DB::table('shift')->get();

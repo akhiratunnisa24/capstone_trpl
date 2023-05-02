@@ -35,7 +35,7 @@ class SettingController extends Controller
     public function settinguser(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 5 || $role == 1) {
+        if ($role == 5 || $role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $user = User::all();
