@@ -53,7 +53,7 @@ class CutiadminController extends Controller
             $karyawan = Karyawan::where('id','!=',Auth::user()->id_pegawai)->get();
             if($request->id_karyawan)
             {
-              
+                $type = $request->query('type', 1);
                 // Filter Data Cuti
                 $idkaryawan = $request->id_karyawan;
                 $bulan = $request->query('bulan', Carbon::now()->format('m'));
@@ -66,6 +66,7 @@ class CutiadminController extends Controller
 
                 if (isset($idkaryawan) && isset($bulan) && isset($tahun)) 
                 {
+                    $type = $request->query('type', 1);
                     $cuti = DB::table('cuti')
                         ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                         ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -90,8 +91,10 @@ class CutiadminController extends Controller
                         ->distinct()
                         ->orderBy('created_at','DESC')
                         ->get();
+                    return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai','role'));
                 } else 
                 {
+                    $type = $request->query('type', 1);
                     $cuti = DB::table('cuti')
                         ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                         ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -114,8 +117,8 @@ class CutiadminController extends Controller
                         ->distinct()
                         ->orderBy('created_at','DESC')
                         ->get();
+                    return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai','role'));
                 }  
-                 return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai','role'));
             }
             else
             {
@@ -131,6 +134,7 @@ class CutiadminController extends Controller
     
                 if(isset($idpegawai) && isset($month) && isset($year)) 
                 {
+                    $type = $request->query('type', 2);
                     $izin = DB::table('izin')->leftjoin('statuses','izin.status','=','statuses.id')
                         ->leftjoin('datareject','datareject.id_izin','=','izin.id')
                         ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
@@ -156,7 +160,8 @@ class CutiadminController extends Controller
                         ->distinct()
                         ->orderBy('created_at', 'DESC')
                         ->get();
-                        
+                    // return $type;
+                    return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai','role'));   
                 }
                 else
                 {
@@ -182,8 +187,8 @@ class CutiadminController extends Controller
                         ->orderBy('created_at', 'DESC')
                         ->get();
                         
+                    return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai','role'));
                 };
-                return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai','role'));
            
             }
                 //menghapus filter data

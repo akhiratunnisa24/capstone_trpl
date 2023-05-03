@@ -110,7 +110,7 @@
                                                                             </form>
                                                                         </div>
                                                                     
-                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Management")
+                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Direksi")
                                                                 
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('leave.approved', $data->id) }}" method="POST">
@@ -161,7 +161,7 @@
                                                                                 </a>
                                                                             </form>
                                                                         </div>
-                                                                    @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2  && $row->jabatan == "Management")
+                                                                    @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2  && $row->jabatan == "Direksi")
                                                                         
                                                                             
                                                                                 <div class="col-sm-3">
@@ -577,7 +577,7 @@
                                                                         </form>
                                                                     </div>
                                                                     @include('manager.staff.izinReject')
-                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Management")
+                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Direksi")
                                                             
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approved', $data->id) }}"
@@ -634,7 +634,7 @@
                                                                         </form>
                                                                     </div>
                                                                     @include('manager.staff.izinReject')
-                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2  && $row->jabatan == "Management")
+                                                                @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2  && $row->jabatan == "Direksi")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approved', $data->id) }}"
                                                                             method="POST">

@@ -31,7 +31,7 @@ class PembatalanNotification extends Mailable
        {
             return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
                 ->subject($this->data['subject'])
-                ->cc($this->data['atasan2'], 'Pimpinan Unit Kerja')
+                ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '', 'Pimpinan')
                 ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
                 ->view('emails.cutibatal')->with('data',$this->data);   
        }
@@ -46,8 +46,8 @@ class PembatalanNotification extends Mailable
        {
             return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
                 ->subject($this->data['subject'])
-                ->cc($this->data['atasan2'], 'Pimpinan Unit Kerja')
                 ->cc($this->data['atasan1'], 'Atasan')
+                ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '', 'Pimpinan')
                 ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
                 ->view('emails.cutibatal')->with('data',$this->data);  
        }
@@ -56,7 +56,7 @@ class PembatalanNotification extends Mailable
             return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['atasan1'], 'Atasan')
-                ->cc($this->data['atasan2'], 'Pimpinan Unit Kerja')
+                ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '', 'Pimpinan')
                 ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
                 ->view('emails.cutibatal')->with('data',$this->data);  
        }
@@ -64,8 +64,8 @@ class PembatalanNotification extends Mailable
        {
             return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
                 ->subject($this->data['subject'])
-                ->cc($this->data['atasan2'], 'Pimpinan Unit Kerja')
                 ->cc($this->data['atasan1'], 'Atasan')
+                ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '', 'Pimpinan')
                 ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
                 ->view('emails.cutibatal')->with('data',$this->data); 
        }

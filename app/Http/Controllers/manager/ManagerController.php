@@ -210,8 +210,10 @@ class ManagerController extends Controller
 
         if($role == 3 && $row->jabatan = "Manajer")
         {
-           
+            if($request->id_karyawan)
+            {
                 // Filter Data Cuti
+                $tp = $request->query('tp',1);
                 $idkaryawan = $request->id_karyawan;
                 $bulan = $request->query('bulan', Carbon::now()->format('m'));
                 $tahun = $request->query('tahun', Carbon::now()->format('Y'));
@@ -221,19 +223,9 @@ class ManagerController extends Controller
                 $request->session()->put('bulan', $bulan);
                 $request->session()->put('tahun', $tahun);
 
-
-                // Filter Data Izin
-                $idpegawai = $request->idpegawai;
-                $month = $request->query('month', Carbon::now()->format('m'));
-                $year = $request->query('year', Carbon::now()->format('Y'));
-  
-                // simpan session
-                $request->session()->put('idpegawai', $idpegawai);
-                $request->session()->put('month', $month);
-                $request->session()->put('year', $year);
-
                 if (isset($idkaryawan) && isset($bulan) && isset($tahun)) 
                 {
+                    $tp = $request->query('tp',1);
                     $cutistaff = DB::table('cuti')
                         ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
                         ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
@@ -271,28 +263,10 @@ class ManagerController extends Controller
                         ->select('izin.*','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan','departemen.nama_departemen')
                         ->distinct()
                         ->get();
-                }
-                elseif(isset($idpegawai) && isset($month) && isset($year)) 
+                    return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','karyawan','pegawai'));
+                } else
                 {
-                    // return $cutistaff;
-                    $izinstaff = DB::table('izin')
-                        ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
-                        ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
-                        ->leftjoin('statuses','izin.status','=','statuses.id')
-                        ->leftjoin('datareject','datareject.id_izin','=','izin.id')
-                        ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                        ->where(function($query) use ($row){
-                            $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
-                            ->orWhere(function($query) use ($row){
-                                $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
-                            });    
-                        })
-                        ->where('izin.id_karyawan', $idpegawai)
-                        ->whereMonth('izin.tgl_mulai', $month)
-                        ->whereYear('izin.tgl_mulai', $year)
-                        ->select('izin.*','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan','departemen.nama_departemen')
-                        ->distinct()
-                        ->get();
+                    $tp = $request->query('tp',1);
                     $cutistaff = DB::table('cuti')
                         ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                         ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -311,6 +285,79 @@ class ManagerController extends Controller
                         ->distinct()
                         ->orderBy('cuti.id', 'DESC')
                         ->get();
+
+                    $izinstaff = DB::table('izin')
+                        ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
+                        ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
+                        ->leftjoin('statuses','izin.status','=','statuses.id')
+                        ->leftjoin('datareject','datareject.id_izin','=','izin.id')
+                        ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                        ->where(function($query) use ($row){
+                            $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                            ->orWhere(function($query) use ($row){
+                                $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
+                            });    
+                        })
+                        ->select('izin.*','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan','departemen.nama_departemen')
+                        ->distinct()
+                        ->get();
+                    return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','karyawan','pegawai'));
+                }
+
+            }else
+            {
+
+                 // Filter Data Izin
+                $idpegawai = $request->idpegawai;
+                $month = $request->query('month', Carbon::now()->format('m'));
+                $year = $request->query('year', Carbon::now()->format('Y'));
+   
+                 // simpan session
+                $request->session()->put('idpegawai', $idpegawai);
+                $request->session()->put('month', $month);
+                $request->session()->put('year', $year);
+
+                if(isset($idpegawai) && isset($month) && isset($year)) 
+                {
+                    $tp = $request->query('tp',2);
+                    $izinstaff = DB::table('izin')
+                        ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
+                        ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
+                        ->leftjoin('statuses','izin.status','=','statuses.id')
+                        ->leftjoin('datareject','datareject.id_izin','=','izin.id')
+                        ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                        ->where(function($query) use ($row){
+                            $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                            ->orWhere(function($query) use ($row){
+                                $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
+                            });    
+                        })
+                        ->where('izin.id_karyawan', $idpegawai)
+                        ->whereMonth('izin.tgl_mulai', $month)
+                        ->whereYear('izin.tgl_mulai', $year)
+                        ->select('izin.*','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan','departemen.nama_departemen')
+                        ->distinct()
+                        ->get();
+
+                    $cutistaff = DB::table('cuti')
+                        ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                        ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                        ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                        ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                        ->leftjoin('statuses', 'cuti.status', 'statuses.id')
+                        ->leftjoin('datareject', 'datareject.id_cuti','cuti.id')
+                        ->leftjoin('departemen','cuti.departemen','departemen.id')
+                        ->where(function($query) use ($row){
+                            $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                            ->orWhere(function($query) use ($row){
+                                $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
+                            });    
+                        })
+                        ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen', 'karyawan.nama','statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                        ->distinct()
+                        ->orderBy('cuti.id', 'DESC')
+                        ->get();
+                    return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','karyawan','pegawai'));
                 }
                 else
                 {
@@ -348,8 +395,8 @@ class ManagerController extends Controller
                         ->select('izin.*','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan','departemen.nama_departemen')
                         ->distinct()
                         ->get();
+                    return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','karyawan','pegawai'));
                 }
-                return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','karyawan','pegawai'));
                 //menghapus filter data
                 $request->session()->forget('id_karyawan');
                 $request->session()->forget('bulan');
@@ -359,10 +406,15 @@ class ManagerController extends Controller
                 $request->session()->forget('month');
                 $request->session()->forget('year');
 
+            }
         }
         elseif($role == 3 && $row->jabatan = "Direksi")
         {
+            $tp = $request->query('tp',1);
+            if($request->id_karyawan)
+            {
                 // Filter Data Cuti
+                $tp = $request->query('tp',1);
                 $idkaryawan = $request->id_karyawan;
                 $bulan = $request->query('bulan', Carbon::now()->format('m'));
                 $tahun = $request->query('tahun', Carbon::now()->format('Y'));
@@ -372,18 +424,9 @@ class ManagerController extends Controller
                 $request->session()->put('bulan', $bulan);
                 $request->session()->put('tahun', $tahun);
 
-                // Filter Data Izin
-                $idpegawai = $request->idpegawai;
-                $month = $request->query('month', Carbon::now()->format('m'));
-                $year = $request->query('year', Carbon::now()->format('Y'));
-  
-                // simpan session
-                $request->session()->put('idpegawai', $idpegawai);
-                $request->session()->put('month', $month);
-                $request->session()->put('year', $year);
-
                 if (isset($idkaryawan) && isset($bulan) && isset($tahun)) 
                 {
+                    $tp = $request->query('tp',1);
                     $cutistaff = DB::table('cuti')
                         ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
                         ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
@@ -420,50 +463,11 @@ class ManagerController extends Controller
                         ->select('izin.*','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan_izin','departemen.nama_departemen')
                         ->distinct()
                         ->get();
-                }
-                elseif(isset($idpegawai) && isset($month) && isset($year)) 
-                {
-                        // return $cutistaff;
-                        $izinstaff = DB::table('izin')
-                            ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
-                            ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
-                            ->leftjoin('statuses','izin.status','=','statuses.id')
-                            ->leftjoin('datareject','datareject.id_izin','=','izin.id')
-                            ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                            ->where(function($query) use ($row){
-                                $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
-                                ->orWhere(function($query) use ($row){
-                                    $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
-                                });    
-                            })
-                            ->where('izin.id_karyawan', $idpegawai)
-                            ->whereMonth('izin.tgl_mulai', $month)
-                            ->whereYear('izin.tgl_mulai', $year)
-                            ->select('izin.*','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan_izin','departemen.nama_departemen')
-                            ->distinct()
-                            ->get();
-    
-                        $cutistaff = DB::table('cuti')
-                            ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
-                            ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
-                            ->leftjoin('alokasicuti','cuti.id_alokasi','alokasicuti.id')
-                            ->leftjoin('settingalokasi','cuti.id_settingalokasi','settingalokasi.id')
-                            ->leftjoin('statuses','cuti.status','=','statuses.id')
-                            ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
-                            ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                            ->where(function($query) use ($row){
-                                $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
-                                ->orWhere(function($query) use ($row){
-                                    $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
-                                });    
-                            })
-                            ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','statuses.name_status','datareject.alasan','departemen.nama_departemen')
-                            ->distinct()
-                            ->orderBy('cuti.id', 'desc')
-                            ->get();
+                    return view('direktur.staff.index', compact('cutistaff','row','tp','izinstaff'));
                 }
                 else
                 {
+                        $tp = $request->query('tp',1);
                         $izinstaff = DB::table('izin')
                             ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
                             ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
@@ -498,41 +502,127 @@ class ManagerController extends Controller
                             ->distinct()
                             ->orderBy('cuti.id', 'desc')
                             ->get();
+                        return view('direktur.staff.index', compact('cutistaff','row','tp','izinstaff'));
                 }
-            return view('direktur.staff.index', compact('cutistaff','row','tp','izinstaff'));
-            //menghapus filter data
-            $request->session()->forget('id_karyawan');
-            $request->session()->forget('bulan');
-            $request->session()->forget('tahun');
-      
-            //menghapus filter data
-            $request->session()->forget('idpegawai');
-            $request->session()->forget('month');
-            $request->session()->forget('year'); 
+       
+                //menghapus filter data
+                $request->session()->forget('id_karyawan');
+                $request->session()->forget('bulan');
+                $request->session()->forget('tahun');
+            }
+            else{
+                // Filter Data Izin
+                $idpegawai = $request->idpegawai;
+                $month = $request->query('month', Carbon::now()->format('m'));
+                $year = $request->query('year', Carbon::now()->format('Y'));
+  
+                // simpan session
+                $request->session()->put('idpegawai', $idpegawai);
+                $request->session()->put('month', $month);
+                $request->session()->put('year', $year);
+
+                if(isset($idpegawai) && isset($month) && isset($year)) 
+                {
+                    $tp = $request->query('tp',2);
+                    $izinstaff = DB::table('izin')
+                        ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
+                        ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
+                        ->leftjoin('statuses','izin.status','=','statuses.id')
+                        ->leftjoin('datareject','datareject.id_izin','=','izin.id')
+                        ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                        ->where(function($query) use ($row){
+                            $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                            ->orWhere(function($query) use ($row){
+                                $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
+                            });    
+                        })
+                        ->where('izin.id_karyawan', $idpegawai)
+                        ->whereMonth('izin.tgl_mulai', $month)
+                        ->whereYear('izin.tgl_mulai', $year)
+                        ->select('izin.*','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan_izin','departemen.nama_departemen')
+                        ->distinct()
+                        ->get();
+    
+                    $cutistaff = DB::table('cuti')
+                        ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+                        ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+                        ->leftjoin('alokasicuti','cuti.id_alokasi','alokasicuti.id')
+                        ->leftjoin('settingalokasi','cuti.id_settingalokasi','settingalokasi.id')
+                        ->leftjoin('statuses','cuti.status','=','statuses.id')
+                        ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
+                        ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                        ->where(function($query) use ($row){
+                            $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                            ->orWhere(function($query) use ($row){
+                                $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
+                            });    
+                        })
+                        ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','statuses.name_status','datareject.alasan','departemen.nama_departemen')
+                        ->distinct()
+                        ->orderBy('cuti.id', 'desc')
+                        ->get();
+                    return view('direktur.staff.index', compact('cutistaff','row','tp','izinstaff'));
+                }
+                else
+                {
+                    $izinstaff = DB::table('izin')
+                        ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
+                        ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
+                        ->leftjoin('statuses','izin.status','=','statuses.id')
+                        ->leftjoin('datareject','datareject.id_izin','=','izin.id')
+                        ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                        ->where(function($query) use ($row){
+                            $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                            ->orWhere(function($query) use ($row){
+                                $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
+                            });    
+                        })
+                        ->select('izin.*','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan_izin','departemen.nama_departemen')
+                        ->distinct()
+                        ->get();
+    
+                    $cutistaff = DB::table('cuti')
+                        ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+                        ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+                        ->leftjoin('alokasicuti','cuti.id_alokasi','alokasicuti.id')
+                        ->leftjoin('settingalokasi','cuti.id_settingalokasi','settingalokasi.id')
+                        ->leftjoin('statuses','cuti.status','=','statuses.id')
+                        ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
+                        ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                        ->where(function($query) use ($row){
+                            $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                            ->orWhere(function($query) use ($row){
+                                $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
+                            });    
+                        })
+                        ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','statuses.name_status','datareject.alasan','departemen.nama_departemen')
+                        ->distinct()
+                        ->orderBy('cuti.id', 'desc')
+                        ->get();
+                    return view('direktur.staff.index', compact('cutistaff','row','tp','izinstaff'));
+                }
+
+                //menghapus filter data
+                $request->session()->forget('idpegawai');
+                $request->session()->forget('month');
+                $request->session()->forget('year'); 
+            }
         }
         elseif($role == 3 && $row->jabatan = "Asisten Manajer")
         {
-          
-                // Filter Data Cuti
-                $idkaryawan = $request->id_karyawan;
-                $bulan = $request->query('bulan', Carbon::now()->format('m'));
+            $tp = $request->query('tp',1);
+            // Filter Data Cuti
+            $idkaryawan = $request->id_karyawan;
+            $bulan = $request->query('bulan', Carbon::now()->format('m'));
                 $tahun = $request->query('tahun', Carbon::now()->format('Y'));
 
                 // simpan session
                 $request->session()->put('idkaryawan', $request->id_karyawan);
                 $request->session()->put('bulan', $bulan);
                 $request->session()->put('tahun', $tahun);
-
-                 // Filter Data Izin
-                 $idpegawai = $request->idpegawai;
-                 $month = $request->query('month', Carbon::now()->format('m'));
-                 $year = $request->query('year', Carbon::now()->format('Y'));
- 
-                 // simpan session
-                 $request->session()->put('idpegawai', $idpegawai);
-                 $request->session()->put('month', $month);
-                 $request->session()->put('year', $year);
-
+            if($request->id_karyawan)
+            {
+                $tp = $request->query('tp',1);
                 if (isset($idkaryawan) && isset($bulan) && isset($tahun)) 
                 {
                     $cutistaff = DB::table('cuti')
@@ -559,9 +649,54 @@ class ManagerController extends Controller
                         ->select('izin.*','karyawan.nama','jenisizin.jenis_izin','statuses.name_status','departemen.nama_departemen')
                         ->distinct()
                         ->get();
+                    return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
                 }
-                elseif(isset($idpegawai) && isset($month) && isset($year)) 
+                else
                 {
+                    $tp = $request->query('tp',1);
+                    $cutistaff = DB::table('cuti')
+                        ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+                        ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+                        ->leftjoin('statuses','cuti.status','=','statuses.id')
+                        ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                        ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
+                        ->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                        ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','statuses.name_status','departemen.nama_departemen')
+                        ->distinct()
+                        ->orderBy('cuti.id', 'desc')
+                        ->get();
+                    $izinstaff = DB::table('izin')
+                        ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
+                        ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
+                        ->leftjoin('statuses','izin.status','=','statuses.id')
+                        ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                        ->leftjoin('datareject','datareject.id_cuti','=','cuti.id')
+                        ->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                        ->select('izin.*','karyawan.nama','jenisizin.jenis_izin','statuses.name_status','departemen.nama_departemen')
+                        ->distinct()
+                        ->get();
+                    return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
+                }
+                //menghapus filter data
+                $request->session()->forget('id_karyawan');
+                $request->session()->forget('bulan');
+                $request->session()->forget('tahun');
+            }
+            else
+            {
+                // Filter Data Izin
+                $idpegawai = $request->idpegawai;
+                $month = $request->query('month', Carbon::now()->format('m'));
+                $year = $request->query('year', Carbon::now()->format('Y'));
+
+                // simpan session
+                $request->session()->put('idpegawai', $idpegawai);
+                $request->session()->put('month', $month);
+                $request->session()->put('year', $year);
+
+                if(isset($idpegawai) && isset($month) && isset($year)) 
+                {
+                    $tp = $request->query('tp',2);
                     $izinstaff = DB::table('izin')
                         ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
                         ->leftjoin('jenisizin','izin.id_jenisizin','jenisizin.id')
@@ -583,6 +718,7 @@ class ManagerController extends Controller
                         ->distinct()
                         ->orderBy('cuti.id', 'desc')
                         ->get();
+                    return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
         
                 }
                 else
@@ -608,14 +744,10 @@ class ManagerController extends Controller
                         ->select('izin.*','karyawan.nama','jenisizin.jenis_izin','statuses.name_status','departemen.nama_departemen')
                         ->distinct()
                         ->get();
+                    return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
                 }
 
-            return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff'));
-            //menghapus filter data
-            $request->session()->forget('id_karyawan');
-            $request->session()->forget('bulan');
-            $request->session()->forget('tahun');
-      
+            }
             //menghapus filter data
             $request->session()->forget('idpegawai');
             $request->session()->forget('month');

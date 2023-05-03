@@ -16,7 +16,7 @@ class JabatanSeeder extends Seeder
     public function run()
     {
         Jabatan::insert([
-            'nama_jabatan' => 'Management',
+            'nama_jabatan' => 'Direksi',
             
         ]);
         Jabatan::insert([

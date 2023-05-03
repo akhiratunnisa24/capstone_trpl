@@ -1231,26 +1231,21 @@ class PembatalanPerubahanController extends Controller
             {
                 // return $datacuti;
                 $status = Status::find(15);
-                return $status->id;
+                // dd($status->id);
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
 
-                $datareject          = new Datareject;
-                $datareject->id_cuti = $cuti->id;
-                $datareject->id_izin = NULL;
-                $datareject->alasan  = $request->alasan;
-                $datareject->save();  
                  //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
                 $ct = DB::table('cuti')
-                ->join('jeniscuti','cuti.id_jeniscuti','=','jeniscuti.id')
-                ->join('statuses','cuti.catatan','statuses.name_status')
-                ->where('cuti.id',$id)
-                ->select('cuti.*','jeniscuti.jenis_cuti as jenis_cuti','statuses.name_status')
-                ->first();
+                    ->join('jeniscuti','cuti.id_jeniscuti','=','jeniscuti.id')
+                    ->join('statuses','cuti.catatan','statuses.name_status')
+                    ->where('cuti.id',$id)
+                    ->select('cuti.*','jeniscuti.jenis_cuti as jenis_cuti','statuses.name_status')
+                    ->first();
                 $alasan = Datareject::where('id_cuti',$cuti->id)->first();
                 //sementara tidak digunakan
                 $karyawan = DB::table('cuti')
@@ -1270,6 +1265,7 @@ class PembatalanPerubahanController extends Controller
                     ->first();
                 }
                 $tujuan = $atasan2->email;
+              
                 $data = [
                     'subject'     => 'Notifikasi Approval Pertama Formulir Perubahan ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$cuti->id,

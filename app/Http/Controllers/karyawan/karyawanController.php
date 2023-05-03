@@ -351,6 +351,42 @@ class karyawanController extends Controller
 
             if($role == 3 && $row->jabatan == "Manajer")
             {
+                // $cuti = DB::table('cuti')
+                    // ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                    // ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                    // ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                    // ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                    // ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                    // ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                    // ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                    // ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                    // ->distinct()
+                    // ->where(function ($query) {
+                    //     $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    //         ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                    // })
+                    // ->whereIn('cuti.status', [1, 6])
+                    // ->where('cuti.catatan', '=', NULL)
+                    // ->get();
+
+                
+                // $cutis = DB::table('cuti')
+                //     ->leftJoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                //     ->leftJoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                //     ->leftJoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                //     ->leftJoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                //     ->leftJoin('statuses', 'cuti.status', '=', 'statuses.id')
+                //     ->leftJoin('departemen', 'cuti.departemen', '=', 'departemen.id')
+                //     ->leftJoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                //     ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                //     ->where(function ($query) {
+                //         $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                //             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                //     })
+                //     ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                //     ->distinct()
+                //     ->get();
+    
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -362,13 +398,20 @@ class karyawanController extends Controller
                     ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->where('cuti.status', 1)
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                                ->where('cuti.catatan', '=', NULL);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('cuti.status', [1, 6])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                                ->where('cuti.catatan', '=', NULL);
+                        });
                     })
-                    ->whereIn('cuti.status', [1, 6])
-                    ->where('cuti.catatan', '=', NULL)
                     ->get();
                 $cutijumlah = $cuti->count();
+
 
                 $cutis = DB::table('cuti')
                     ->leftJoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -381,10 +424,15 @@ class karyawanController extends Controller
                     ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        });
                     })
-                    ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
                     ->get();
 
                 $jumct = $cutis->count();
@@ -398,11 +446,17 @@ class karyawanController extends Controller
                     ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->where('izin.status', 1)
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                                ->where('izin.catatan', '=', NULL);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('izin.status', [1, 6])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                                ->where('izin.catatan', '=', NULL);
+                        });
                     })
-                    ->whereIn('izin.status', [1, 6])
-                    ->where('izin.catatan', '=', NULL)
                     ->get();
                 $izinjumlah = $izin->count();
 
@@ -415,10 +469,15 @@ class karyawanController extends Controller
                     ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        });
                     })
-                    ->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
                     ->get();
                 $jumizin = $ijin->count();
             } 
@@ -435,11 +494,17 @@ class karyawanController extends Controller
                     ->select('cuti.*', 'jeniscuti.jenis_cuti','departemen.nama_departemen', 'karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->where('cuti.status', 1)
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                                ->where('cuti.catatan', '=', NULL);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('cuti.status', [1, 6])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                                ->where('cuti.catatan', '=', NULL);
+                        });
                     })
-                    ->whereIn('cuti.status', [1, 6])
-                    ->where('cuti.catatan', '=', NULL)
                     ->get();
                 $cutijumlah = $cuti->count();
                 // return $cuti;
@@ -454,8 +519,14 @@ class karyawanController extends Controller
                     ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        });
                     })
                     ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
                     ->get();
@@ -470,11 +541,17 @@ class karyawanController extends Controller
                     ->select('izin.*', 'statuses.name_status','departemen.nama_departemen', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->where('izin.status', 1)
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                                ->where('izin.catatan', '=', NULL);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('izin.status', [1, 6])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                                ->where('izin.catatan', '=', NULL);
+                        });
                     })
-                    ->whereIn('izin.status', [1, 6])
-                    ->where('izin.catatan', '=', NULL)
                     ->get();
                 $izinjumlah = $izin->count();
 
@@ -487,10 +564,15 @@ class karyawanController extends Controller
                     ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        });
                     })
-                    ->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
                     ->get();
                 $jumizin = $ijin->count();
 
@@ -639,7 +721,7 @@ class karyawanController extends Controller
                     ->get();
                 $jumizin = $ijin->count();
             }
-            elseif($role == 3 && $row->jabatan == "Management")
+            elseif($role == 3 && $row->jabatan == "Direksi")
             {
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -652,11 +734,17 @@ class karyawanController extends Controller
                     ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->where('cuti.status', 1)
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                                ->where('cuti.catatan', '=', NULL);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('cuti.status', [1, 6])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                                ->where('cuti.catatan', '=', NULL);
+                        });
                     })
-                    ->whereIn('cuti.status', [1, 2])
-                    ->where('cuti.catatan','=',NULL)
                     ->get();
                 $cutijumlah = $cuti->count();
 
@@ -671,10 +759,15 @@ class karyawanController extends Controller
                     ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        });
                     })
-                    ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
                     ->get();
                 $jumct = $cutis->count();
 
@@ -687,11 +780,17 @@ class karyawanController extends Controller
                     ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin','departemen.nama_departemen', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->where('izin.status', 1)
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                                ->where('izin.catatan', '=', NULL);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('izin.status', [1, 6])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                                ->where('izin.catatan', '=', NULL);
+                        });
                     })
-                    ->whereIn('izin.status', [1, 2])
-                    ->where('izin.catatan',null)
                     ->get();
                 $izinjumlah = $izin->count();
                 $ijin =DB::table('izin')
@@ -703,10 +802,15 @@ class karyawanController extends Controller
                     ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        $query->where(function ($q) {
+                            $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        });
                     })
-                    ->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
                     ->get();
                 $jumizin = $ijin->count();
             }
@@ -1255,8 +1359,8 @@ class karyawanController extends Controller
             $rpekerjaan     = Rpekerjaan::where('id_pegawai', $id)->first();
             $row            = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer','Management'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer','Management'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer','Direksi'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer','Direksi'])->get();
 
             $output = [
                 'row' => $row
@@ -1517,8 +1621,8 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer','Management'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer','Management'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer','Direksi'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer','Direksi'])->get();
 
             $output = [
                 'row' => $row
@@ -1553,8 +1657,8 @@ class karyawanController extends Controller
 
             $karyawan = karyawan::findOrFail($id);
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer', 'Management'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer', 'Management'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer', 'Direksi'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer', 'Direksi'])->get();
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::all();
             
@@ -1587,8 +1691,8 @@ class karyawanController extends Controller
 
             $karyawan       = Karyawan::findOrFail($id);
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer', 'Management'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer', 'Management'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer', 'Direksi'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer', 'Direksi'])->get();
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::all();
 
