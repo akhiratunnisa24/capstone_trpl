@@ -34,11 +34,11 @@
                             <select type="text" class="form-control selecpicker @error('role') is-invalid @enderror"
                                 name="role" required autocomplete="role" autofocus placeholder="Role">
                                 <option value="">Pilih Role</option>
-                                <option value="4" {{ $data->role == '4' ? 'selected' : '' }}>Management</option>
-                                <option value="3" {{ $data->role == '3' ? 'selected' : '' }}>Manajer</option>
-                                <option value="5" {{ $data->role == '5' ? 'selected' : '' }}>Asisten Manajer</option>
-                                <option value="1" {{ $data->role == '1' ? 'selected' : '' }}>HRD</option>
-                                <option value="2" {{ $data->role == '2' ? 'selected' : '' }}>Karyawan</option>
+                                <option value="1" {{ $data->role == '1' ? 'selected' : '' }}>HRD Manager</option>
+                                <option value="2" {{ $data->role == '2' ? 'selected' : '' }}>HRD Staff</option>
+                                <option value="3" {{ $data->role == '3' ? 'selected' : '' }}>Manager / Supervisor</option>
+                                <option value="4" {{ $data->role == '4' ? 'selected' : '' }}>Staff</option>
+                                <option value="5" {{ $data->role == '5' ? 'selected' : '' }}>Admin (Full Access)</option>
                             </select>
 
                             @error('role')

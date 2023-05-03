@@ -1010,7 +1010,7 @@ class CutiadminController extends Controller
                 ->whereYear('cuti.tgl_mulai', $tahun)
                 ->get(['cuti.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','alokasicuti.tgl_masuk','alokasicuti.jatuhtempo_awal','alokasicuti.jatuhtempo_akhir']);
             // dd($data);
-            return Excel::download(new CutiExport($data, $idkaryawan), "Rekap Cuti Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".xlsx");
+            return Excel::download(new CutiExport($data, $idkaryawan), "Rekap Cuti Bulan " . $nbulan . " " . $data->first()->nama . ".xlsx");
         } else {
             $data = Cuti::join('statuses', 'cuti.status', '=', 'statuses.id')
                 ->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
