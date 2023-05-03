@@ -95,17 +95,24 @@ class JadwalkerjaController extends Controller
 
                 foreach($tanggal_kerja as $tanggal)
                 {
-                    $jadwal = new Jadwal();
-                    // $jadwal->tipe_jadwal = $request->tipe_jadwal;
-                    $jadwal->id_pegawai = $data->id;
-                    $jadwal->id_shift = $request->id_shift;
-                    $jadwal->jadwal_masuk = $request->jadwal_masuk;
-                    $jadwal->jadwal_pulang = $request->jadwal_pulang;
-                    $jadwal->tanggal = $tanggal;
-                    $jadwal->save();
+
+                    $jadwal = Jadwal::firstOrCreate([
+                        'id_pegawai' => $data->id,
+                        'tanggal' => $tanggal,
+                        'id_shift' => $request->id_shift,
+                    ], [
+                        'jadwal_masuk' => $request->jadwal_masuk,
+                        'jadwal_pulang' => $request->jadwal_pulang
+                    ]);
+
+                    if ($jadwal->wasRecentlyCreated) {
+                        $pesan = 'Data berhasil disimpan !';
+                    } else {
+                        $pesan = 'Mohon maaf, Data sudah Ada!';
+                    }
                 }  
             }
-            return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');
+            return redirect('/jadwal')->with('pesan',$pesan);
             
         }else{
             $request->validate([
@@ -113,16 +120,25 @@ class JadwalkerjaController extends Controller
                 'id_shift'     => 'required',
                 'tanggal'      => 'required',
             ]);
-    
-            $jadwal = new Jadwal;
-            $jadwal->id_pegawai   = $request->id_pegawai;
-            $jadwal->id_shift     = $request->id_shift;
-            $jadwal->tanggal      = $request->tanggal;
-            $jadwal->jadwal_masuk = $request->jadwal_masuk;
-            $jadwal->jadwal_pulang= $request->jadwal_pulang;
-            $jadwal->save();
 
-            return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');
+            $jadwal = Jadwal::updateOrCreate(
+                [
+                    'id_pegawai' => $request->id_pegawai, 
+                    'tanggal' => $request->tanggal,
+                    'id_shift'      => $request->id_shift,
+                ],
+                [
+                    'jadwal_masuk'  => $request->jadwal_masuk,
+                    'jadwal_pulang' => $request->jadwal_pulang
+                ]
+            );
+            
+            if ($jadwal->wasRecentlyCreated) {
+                return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');
+            } else {
+                return redirect('/jadwal')->with('pesa','Data sudah ada !');
+            }
+
         }  
     }
     

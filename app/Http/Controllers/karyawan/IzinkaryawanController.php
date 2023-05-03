@@ -92,10 +92,15 @@ class IzinkaryawanController extends Controller
             $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
                 ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                 ->first();
-            $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
+
+            $atasan2 = NULL;
+            if($emailkry->atasan_kedua != NULL)
+            {
+                $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
                 ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                 ->first();
-
+            }
+           
             $tujuan = $atasan->email;
 
             $data = [
@@ -120,8 +125,10 @@ class IzinkaryawanController extends Controller
                 'status'      =>$status->name_status,
                 'nama_atasan' =>$atasan->nama,
                 'jabatan'     =>strtoupper($atasan['jabatan']),
-                'atasan2'     =>$atasan2->email,
             ];
+            if($atasan2 !== NULL){
+                $data['atasan2'] = $atasan2->email;
+            }
             Mail::to($tujuan)->send(new IzinNotification($data));
             
             return redirect()->back()->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
@@ -164,9 +171,13 @@ class IzinkaryawanController extends Controller
             $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
                 ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                 ->first();
-            $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
+            $atasan2 = NULL;
+            if($emailkry->atasan_kedua != NULL)
+            {
+                $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
                 ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                 ->first();
+            }
             
             $tujuan = $atasan->email;
             $data = [
@@ -191,8 +202,10 @@ class IzinkaryawanController extends Controller
                 'jam_selesai' =>$izin->jam_selesai,
                 'nama_atasan' =>$atasan->nama,
                 'jabatan'     =>strtoupper($atasan->jabatan),
-                'atasan2'     =>$atasan2->email,
             ];
+            if($atasan2 !== NULL){
+                $data['atasan2'] = $atasan2->email;
+            }
             Mail::to($tujuan)->send(new IzinNotification($data));
             // dd($data);
             return redirect()->back()->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');

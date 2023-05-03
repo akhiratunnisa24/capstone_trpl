@@ -69,7 +69,7 @@ Auth::routes();
 
 // Dashboard
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
-Route::post('/registrasi', [App\Http\Controllers\HomeController::class, 'registrasi'])->name('registrasi');
+Route::post('/registrasi', [HomeController::class, 'registrasi'])->name('registrasi');
 
 // Role HRD
 

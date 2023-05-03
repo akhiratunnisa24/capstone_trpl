@@ -133,7 +133,7 @@ class CutiizinController extends Controller
                 ->whereYear('izin.tgl_mulai', $year)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
                
-                return Excel::download(new IzinExpor($data, $idpegawai), "Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".xlsx");
+                return Excel::download(new IzinExpor($data, $idpegawai), "Rekap Izin Bulan " . $nbulan . " " . $data->first()->nama . ".xlsx");
         } else {
             $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
                 ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')

@@ -98,6 +98,15 @@
         </script>
     @endif
 
+    @if(Session::has('pesa'))
+    <script>
+        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'danger', {
+            button:true,
+            button:"OK",
+        });
+    </script>
+@endif
+
     <script>
         function hapusjadwal(id) {
             swal.fire({
