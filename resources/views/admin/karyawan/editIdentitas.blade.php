@@ -141,8 +141,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Atasan Langsungss
-                                        (SPV/Manager/Management)</label>
+                                    <label for="exampleInputEmail1" class="form-label">Atasan Langsung
+                                        (Asisten Manajer/Manajer/Direksi)</label>
                                     <select class="form-control" name="atasan_pertama">
                                         <option value="">Pilih Atasan Langsung</option>
                                         @foreach ($atasan_pertama as $atasan)
@@ -154,8 +154,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Atasan
-                                        (Manager/Management)</label>
+                                    <label for="exampleInputEmail1" class="form-label">Atasan/Pimpinan Unit Kerja
+                                        (Manajer/Direksi)</label>
                                     <select class="form-control" name="atasan_kedua">
                                         <option value="">Pilih Atasan</option>
                                         @foreach ($atasan_kedua as $atasan)

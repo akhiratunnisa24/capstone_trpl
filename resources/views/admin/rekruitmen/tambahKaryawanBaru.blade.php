@@ -225,15 +225,15 @@
 
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1"
-                                                                                    class="form-label">Jabatan</label>
+                                                                                    class="form-label"> Level Jabatan</label>
                                                                                 <select
                                                                                     class="form-control selectpicker"
                                                                                     name="jabatanKaryawan" required>
                                                                                     <option value="">Pilih
                                                                                         Jabatan
                                                                                     </option>
-                                                                                    <option value="Management">
-                                                                                        Management
+                                                                                    <option value="Direksi">
+                                                                                        Direksi
                                                                                     </option>
                                                                                     <option value="Manajer">Manajer
                                                                                     </option>
@@ -241,6 +241,8 @@
                                                                                         Asisten Manajer
                                                                                     </option>
                                                                                     <option value="Staff">Staff
+                                                                                    </option>
+                                                                                    <option value="Staff">Pelaksana
                                                                                     </option>
                                                                                 </select>
                                                                             </div>

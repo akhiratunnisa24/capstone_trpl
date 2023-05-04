@@ -6,7 +6,7 @@
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Transaksi Cuti dan Izin Karyawan</h4>
                 <ol class="breadcrumb pull-right">
-                    <li><a href="#">Human Resources Management System</a></li>
+                    <li><a href="#">Human Resources Direksi System</a></li>
                     <li class="active">Transaksi Cuti & Izin</li>
                 </ol>
                 <div class="clearfix"></div>
@@ -17,13 +17,13 @@
     <div class="row">
         <div class="col-lg-12">
             <ul class="nav nav-tabs navtab-bg">
-                <li class="active">
+                <li class="active" id="aa">
                     <a id="tabs_a" href="#mcuti" data-toggle="tab" aria-expanded="false">
                         <span class="visible-xs"><i class="fa fa-home"></i></span>
                         <span class="hidden-xs">Transaksi Cuti</span>
                     </a>
                 </li>
-                <li class="">
+                <li class="" id="bb">
                     <a id="tabs_b" href="#mizin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
                         <span class="hidden-xs">Transaksi Izin</span>
@@ -320,7 +320,7 @@
                                                                                         </div>
                                                                                 
                                                                                 
-                                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Management" && $data->catatan == null)
+                                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Direksi" && $data->catatan == null)
                                                                                 
                                                                                         <div class="col-sm-3">
                                                                                             <form action="{{ route('leave.approved', $data->id) }}" method="POST">
@@ -371,7 +371,7 @@
                                                                                                 </a>
                                                                                             </form>
                                                                                         </div>
-                                                                                    @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2  && $row->jabatan == "Management" && $data->catatan == null)
+                                                                                    @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2  && $row->jabatan == "Direksi" && $data->catatan == null)
                                                                                         
                                                                                                 <div class="col-sm-3">
                                                                                                     <form action="{{ route('leave.approved', $data->id) }}" method="POST">
@@ -611,7 +611,7 @@
                                                                                     </form>
                                                                                 </div>
                                                                                 @include('manager.staff.izinReject')
-                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Management"  && $data->catatan == null)
+                                                                            @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Direksi"  && $data->catatan == null)
                                                                         
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izin.approved', $data->id) }}"
@@ -668,7 +668,7 @@
                                                                                     </form>
                                                                                 </div>
                                                                                 @include('manager.staff.izinReject')
-                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2  && $row->jabatan == "Management"  && $data->catatan == null)
+                                                                            @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2  && $row->jabatan == "Direksi"  && $data->catatan == null)
                                                                                 <div class="col-sm-3">
                                                                                     <form action="{{ route('izin.approved', $data->id) }}"
                                                                                         method="POST">
@@ -836,8 +836,20 @@
         if(t == 1) 
         {
             $('#tabs_a').click();
+            $('#tab_1').addClass('active');
+            $('#tab_2').removeClass('active');
+            $('#mcuti').addClass('active');
+            $('#mizin').removeClass('active');
+            $('#aa').addClass('active');
+            $('#bb').removeClass('active');
         }else{
             $('#tabs_b').click();
+            $('#tab_1').removeClass('active');
+            $('#tab_2').addClass('active');
+            $('#mcuti').removeClass('active');
+            $('#mizin').addClass('active');
+            $('#aa').removeClass('active');
+            $('#bb').addClass('active');
         }
     </script>    
 @endsection

@@ -26,7 +26,7 @@ class DirekturController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
 
-        if($row->jabatan == "Management" && $role == 3)
+        if($row->jabatan == "Direksi" && $role == 3)
         {
         // return $row->jabatan;
             $id_user_login = Auth::user()->id_pegawai;
@@ -84,7 +84,7 @@ class DirekturController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
 
-        if($role == 3 && $row->jabatan = "Management")
+        if($role == 3 && $row->jabatan = "Direksi")
         {
             $cutis = Cuti::where('id', $id)->first();
             $lyear = Carbon::now()->subYear()->year;
@@ -340,7 +340,7 @@ class DirekturController extends Controller
         ->select('izin.*', 'karyawan.nama', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua')
         ->first();
 
-        if($row->jabatan == "Management" && $role == 3)
+        if($row->jabatan == "Direksi" && $role == 3)
         {
                 // dd($row->jabatan, $role);
                 $status = Status::find(7);

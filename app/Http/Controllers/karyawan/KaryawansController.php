@@ -45,8 +45,8 @@ class KaryawansController extends Controller
         if ($role == 1) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer', 'Management'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer', 'Management'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer', 'Direksi'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manajer', 'Direksi'])->get();
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::all();
 

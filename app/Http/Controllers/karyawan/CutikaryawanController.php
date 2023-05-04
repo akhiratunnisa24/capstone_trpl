@@ -186,11 +186,13 @@ class CutikaryawanController extends Controller
             ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
             ->first();
 
-        $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
-            ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
-            ->first();
-
-        // if ($atasan) {
+        $atasan2 = NULL;
+        if($emailkry->atasan_kedua != NULL)
+        {
+            $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
+                ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
+                ->first();
+        }
         $tujuan = $atasan->email;
         $data = [
             'subject' => 'Notifikasi Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#' . $cuti->id . ' ' . ucwords(strtolower($emailkry->nama)),
@@ -205,7 +207,6 @@ class CutikaryawanController extends Controller
             'karyawan_email' =>  $emailkry->email,
             'id_jeniscuti' => $jeniscuti->jenis_cuti,
             'keperluan' => $cuti->keperluan,
-            'atasan2' => $atasan2->email,
             'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d/m/Y"),
             'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d/m/Y"),
             'jml_cuti' => $cuti->jml_cuti,
@@ -214,11 +215,10 @@ class CutikaryawanController extends Controller
             'nama_atasan' => $atasan->nama,
             'role' => $role,
         ];
-        // return $data;
+        if($atasan2 !== NULL){
+            $data['atasan2'] = $atasan2->email;
+        }
         Mail::to($tujuan)->send(new CutiNotification($data));
-        // } else {
-        //     // proses jika data atasan tidak ada / email tidak ada
-        // }
 
         return redirect()->back()->with('pesan', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
     }
@@ -248,10 +248,13 @@ class CutikaryawanController extends Controller
         $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
             ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
             ->first();
-        $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
-            ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
-            ->first();
-
+        $atasan2 = NULL;
+        if($emailkry->atasan_kedua != NULL)
+        {
+            $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
+                ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
+                ->first();
+        }
         $tujuan = $atasan->email;
         $data = [
             'subject' => 'Notifikasi Pembatalan Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#' . $cuti->id . ' ' . ucwords(strtolower($emailkry->nama)),
@@ -277,9 +280,10 @@ class CutikaryawanController extends Controller
             'jabatan' => $atasan->jabatan,
             'nama_atasan' => $atasan->nama,
             'role' => $role,
-            'atasan2' => $atasan2->email,
         ];
-        // return $data;
+         if($atasan2 !== NULL){
+            $data['atasan2'] = $atasan2->email;
+        }
         Mail::to($tujuan)->send(new PembatalanNotification($data));
         // return $data;
         // } else {
@@ -366,10 +370,14 @@ class CutikaryawanController extends Controller
         $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
             ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
             ->first();
-        $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
-            ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
-            ->first();
-
+        
+        $atasan2 = NULL;
+        if($emailkry->atasan_kedua != NULL)
+        {
+            $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
+                ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
+                ->first();
+        }
         $tujuan = $atasan->email;
         $data = [
             'subject' => 'Notifikasi Perubahan Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#' . $cuti->id . ' ' . ucwords(strtolower($emailkry->nama)),
@@ -395,14 +403,11 @@ class CutikaryawanController extends Controller
             'jabatan' => $atasan->jabatan,
             'nama_atasan' => $atasan->nama,
             'role' => $role,
-            'atasan2' => $atasan2->email,
         ];
-        // return $data;
+        if($atasan2 !== NULL){
+            $data['atasan2'] = $atasan2->email;
+        }
         Mail::to($tujuan)->send(new PerubahanNotification($data));
-        // return $data;
-        // } else {
-        //     // proses jika data atasan tidak ada / email tidak ada
-        // }
 
         return redirect()->back()
             ->with('pesan','Email Notifikasi Perubahan Data Permohonan Cuti Berhasil Dikirim');
