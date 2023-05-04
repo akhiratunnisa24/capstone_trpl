@@ -979,7 +979,7 @@
                                         <th>Nama Karyawan</th>
                                         <th>Kategori Cuti</th>
                                         <th>Durasi Cuti</th>
-                                        <th>Aktif Dari</th>
+                                        <th>Durasi Aktif</th>
                                         <th>Berakhir</th>
                                     </tr>
                                 </thead>

@@ -953,7 +953,7 @@
                                                 <th>Lowongan</th>
                                                 {{-- <th>Pelamar</th> --}}
                                                 <th>Dibutuhkan</th>
-                                                <th>Aktif Dari</th>
+                                                <th>Durasi Aktif</th>
                                                 <th>Berakhir</th>
                                             </tr>
                                         </thead>
