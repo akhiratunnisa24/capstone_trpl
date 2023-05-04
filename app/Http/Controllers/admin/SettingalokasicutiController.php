@@ -39,7 +39,7 @@ class SettingalokasicutiController extends Controller
 
             //untuk edit
             $setal = Settingalokasi::find($id);
-            $jeniscuti = Jeniscuti::all();
+            $jeniscuti = Jeniscuti::where('status', true)->get();
             $departemen = Departemen::all();
 
             return view('admin.settingalokasi.setting_index', compact('settingalokasi', 'jeniscuti', 'setal', 'departemen', 'row'));
@@ -191,6 +191,8 @@ class SettingalokasicutiController extends Controller
                     // $cutidimuka = 0;
                     // $jum = $jum;
                     $cutmin = $cutmin;
+                    $aktifdari = $year . '-01-01';
+                    $sampai    = $year . '-12-31';
                     // $saldo   = $selisih - abs($cutmin) - abs($jum);
                 } elseif ($selisih > 0 && $selisih < 12) {
                     $selisih = $selisih;
@@ -198,6 +200,12 @@ class SettingalokasicutiController extends Controller
                     // $cutidimuka = -1*abs(12);
                     // $jum = $jum;
                     $cutmin = 0;
+
+                    // $jatuhtempo = $tglJatuhTempo->addDays();
+                    // $tgljatuhtempo =  $jatuhtempo->format('-m-d');
+                    $tgljatuhtempo = $tglJatuhTempo->format('-m-d');
+                    $aktifdari = $year . $tgljatuhtempo;
+                    $sampai    = $year . '-12-31';
                     // $saldo   = $selisih - abs($cutidimuka) - abs($cutmin) - abs($jum);
                 } else {
                     $selisih   = 0;
@@ -207,6 +215,8 @@ class SettingalokasicutiController extends Controller
                     $cutmin = 0;
                     // $saldo   = 0;
                     // return $saldo;
+                    $aktifdari = null;
+                    $sampai = null;
                 }
                 $saldo   = $selisih - abs($cutidimuka) - abs($cutmin) - abs($jum);
 
@@ -228,8 +238,8 @@ class SettingalokasicutiController extends Controller
                 $alokasicuti->jmlcutibersama    = $jum;
                 $alokasicuti->durasi            = $saldo;
                 $alokasicuti->keterangan        = $keterangan;
-                $alokasicuti->aktif_dari        = $year . '-01-01';
-                $alokasicuti->sampai            = $year . '-12-31';
+                $alokasicuti->aktif_dari        = $aktifdari;
+                $alokasicuti->sampai            = $sampai;
                 $alokasicuti->status            = 1;
 
                 $alokasicuti->save();

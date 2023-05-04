@@ -132,95 +132,107 @@ class CutikaryawanController extends Controller
 
         $jeniscuti = Jeniscuti::where('id', $request->id_jeniscuti)->first();
 
-        $cuti = new Cuti;
-        $cuti->tgl_permohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_permohonan)->format("Y-m-d");
-        $cuti->nik            = $request->nik;
-        $cuti->id_karyawan    = $karyawan;
-        $cuti->jabatan        = $request->jabatan;
-        $cuti->departemen     = $request->departemen;
-        $cuti->id_jeniscuti   = $request->id_jeniscuti;
-        $cuti->id_alokasi     = $request->id_alokasi;
-        $cuti->id_settingalokasi = $request->id_settingalokasi;
-        $cuti->keperluan      = $request->keperluan;
-        $cuti->jmlharikerja   = $request->jml_cuti;
-        $cuti->catatan   = null;
-        if ($request->id_jeniscuti == 1) {
-            $cuti->saldohakcuti   = $request->durasi;
-            $cuti->jml_cuti       = $request->jml_cuti;
-            $sisa                 = $cuti->saldohakcuti -  $cuti->jml_cuti;
-            $cuti->sisacuti       = $sisa;
-            $cuti->keterangan     = "-";
-            // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti, $sisa,$cuti->sisacuti);
-        } elseif ($request->id_jeniscuti == 2) {
-            $cuti->jml_cuti       = null;
-            $cuti->saldohakcuti   = null;
-            $cuti->sisacuti       = null;
-            $cuti->keterangan     = $jeniscuti->jenis_cuti;
-            // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
-        } elseif ($request->id_jeniscuti == 3) {
-            $cuti->jml_cuti       = null;
-            $cuti->saldohakcuti   = null;
-            $cuti->sisacuti       = null;
-            $cuti->keterangan     = $jeniscuti->jenis_cuti;
-            // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
-        } else {
-        }
-        $cuti->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
-        $cuti->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
+        $today = \Carbon\Carbon::today();
+        $existingCuti = Cuti::where('id_karyawan', $karyawan)
+                        ->whereDate('tgl_permohonan', $today)
+                        ->first();
 
-        $cuti->status         = $status->id;
-        // return $cuti;
-        $cuti->save();
-
-        // return $cuti;
-
-        $emailkry = DB::table('cuti')->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
-            ->join('departemen', 'cuti.departemen', '=', 'departemen.id')
-            ->where('cuti.id_karyawan', '=', $cuti->id_karyawan)
-            ->select('karyawan.email', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
-            ->first();
-        $jeniscuti = Jeniscuti::where('id', $cuti->id_jeniscuti)->first();
-        // return $emailkry;
-        //atasan pertama
-        $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
-            ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
-            ->first();
-
-        $atasan2 = NULL;
-        if($emailkry->atasan_kedua != NULL)
+        if (!$existingCuti) 
         {
-            $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
+            $cuti = new Cuti;
+            $cuti->tgl_permohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_permohonan)->format("Y-m-d");
+            $cuti->nik            = $request->nik;
+            $cuti->id_karyawan    = $karyawan;
+            $cuti->jabatan        = $request->jabatan;
+            $cuti->departemen     = $request->departemen;
+            $cuti->id_jeniscuti   = $request->id_jeniscuti;
+            $cuti->id_alokasi     = $request->id_alokasi;
+            $cuti->id_settingalokasi = $request->id_settingalokasi;
+            $cuti->keperluan      = $request->keperluan;
+            $cuti->jmlharikerja   = $request->jml_cuti;
+            $cuti->catatan   = null;
+
+            if ($request->id_jeniscuti == 1) {
+                $cuti->saldohakcuti   = $request->durasi;
+                $cuti->jml_cuti       = $request->jml_cuti;
+                $sisa                 = $cuti->saldohakcuti -  $cuti->jml_cuti;
+                $cuti->sisacuti       = $sisa;
+                $cuti->keterangan     = "-";
+                // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti, $sisa,$cuti->sisacuti);
+            } elseif ($request->id_jeniscuti == 2) {
+                $cuti->jml_cuti       = null;
+                $cuti->saldohakcuti   = null;
+                $cuti->sisacuti       = null;
+                $cuti->keterangan     = $jeniscuti->jenis_cuti;
+                // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
+            } elseif ($request->id_jeniscuti == 3) {
+                $cuti->jml_cuti       = null;
+                $cuti->saldohakcuti   = null;
+                $cuti->sisacuti       = null;
+                $cuti->keterangan     = $jeniscuti->jenis_cuti;
+                // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
+            } else {
+            }
+
+            $cuti->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
+            $cuti->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
+    
+            $cuti->status         = $status->id;
+            $cuti->save();
+
+            $emailkry = DB::table('cuti')->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
+                ->join('departemen', 'cuti.departemen', '=', 'departemen.id')
+                ->where('cuti.id_karyawan', '=', $cuti->id_karyawan)
+                ->select('karyawan.email', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
+                ->first();
+
+            $jeniscuti = Jeniscuti::where('id', $cuti->id_jeniscuti)->first();
+        
+            $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
                 ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
                 ->first();
-        }
-        $tujuan = $atasan->email;
-        $data = [
-            'subject' => 'Notifikasi Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#' . $cuti->id . ' ' . ucwords(strtolower($emailkry->nama)),
-            'noregistrasi' => $cuti->id,
-            'title'  => 'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
-            'subtitle' => '',
-            'tgl_permohonan' => Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
-            'nik' => $emailkry->nik,
-            'namakaryawan' => ucwords(strtolower($emailkry->nama)),
-            'jabatankaryawan' => $emailkry->nama_jabatan,
-            'departemen' => $emailkry->nama_departemen,
-            'karyawan_email' =>  $emailkry->email,
-            'id_jeniscuti' => $jeniscuti->jenis_cuti,
-            'keperluan' => $cuti->keperluan,
-            'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d/m/Y"),
-            'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d/m/Y"),
-            'jml_cuti' => $cuti->jml_cuti,
-            'status' => $status->name_status,
-            'jabatan' => $atasan->jabatan,
-            'nama_atasan' => $atasan->nama,
-            'role' => $role,
-        ];
-        if($atasan2 !== NULL){
-            $data['atasan2'] = $atasan2->email;
-        }
-        Mail::to($tujuan)->send(new CutiNotification($data));
 
-        return redirect()->back()->with('pesan', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
+            $atasan2 = NULL;
+            if($emailkry->atasan_kedua != NULL)
+            {
+                $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
+                    ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
+                    ->first();
+            }
+            $tujuan = $atasan->email;
+
+     
+            $data = [
+                'subject' => 'Notifikasi Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#' . $cuti->id . ' ' . ucwords(strtolower($emailkry->nama)),
+                'noregistrasi' => $cuti->id,
+                'title'  => 'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
+                'subtitle' => '',
+                'tgl_permohonan' => Carbon::parse($emailkry->tgl_permohonan)->format("d/m/Y"),
+                'nik' => $emailkry->nik,
+                'namakaryawan' => ucwords(strtolower($emailkry->nama)),
+                'jabatankaryawan' => $emailkry->nama_jabatan,
+                'departemen' => $emailkry->nama_departemen,
+                'karyawan_email' =>  $emailkry->email,
+                'id_jeniscuti' => $jeniscuti->jenis_cuti,
+                'keperluan' => $cuti->keperluan,
+                'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d/m/Y"),
+                'tgl_selesai' => Carbon::parse($cuti->tgl_selesai)->format("d/m/Y"),
+                'jml_cuti' => $cuti->jml_cuti,
+                'status' => $status->name_status,
+                'jabatan' => $atasan->jabatan,
+                'nama_atasan' => $atasan->nama,
+                'role' => $role,
+            ];
+            if($atasan2 !== NULL){
+                $data['atasan2'] = $atasan2->email;
+            }
+            Mail::to($tujuan)->send(new CutiNotification($data));
+    
+            return redirect()->back()->with('pesan', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
+
+        }else{
+            return redirect()->back()->with('pesa', 'Anda sudah mengajukan cuti pada hari ini!');
+        }
     }
 
     public function batal(Request $request, $id)

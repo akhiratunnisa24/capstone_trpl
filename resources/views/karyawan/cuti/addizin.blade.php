@@ -44,7 +44,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group col-sm" id="jenisizin">
-                                        <label for="id_jenisizin" class="col-form-label">Status Ketidakhadiran / Kategori Izin</label>
+                                        <label for="id_jenisizin" class="col-form-label">Status Ketidakhadiran Kerja</label>
                                         <select name="id_jenisizin" id="id_jenisizin" class="form-control selectpicker" data-live-search="true" required>
                                             <option>-- Pilih Status --</option>
                                             @foreach ($jenisizin as $data)

@@ -45,7 +45,7 @@
                                         <td scope="row">Kategori Cuti</td>
                                         <td id="a">{{$data->jeniscutis->jenis_cuti}}</td>
                                     </tr>
-                                    @if($data->id_jeniscuti == 1)
+                                
                                         <tr>
                                             <td scope="row">Tanggal Mulai Kerja</td>
                                             <td id="a">{{ \Carbon\Carbon::parse($data->tgl_masuk)->format('d/m/Y') }}</td>
@@ -78,7 +78,7 @@
                                             <td scope="row">Keterangan</td>
                                             <td id="a">{{$data->keterangan}}</td>
                                         </tr>
-                                    @else
+                                    @if($data->id_jeniscuti == 1)
                                         <tr>
                                             <td scope="row">Saldo Cuti Tahun {{$year}}</td>
                                             <td id="a">{{$data->durasi}}</td>

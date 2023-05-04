@@ -53,7 +53,7 @@
                                 <div class="col-md-6">
 
                                     <div class="form-group col-sm">
-                                        <label for="id_jeniscuti" class="col-form-label">Status Ketidakhadiran / Kategori Izin</label>
+                                        <label for="id_jeniscuti" class="col-form-label">Status Ketidakhadiran Kerja</label>
                                         <input type="text" class="form-control" id="id_jenisizin" value="{{$data->jenis_izin}}" readonly>
                                         <input type="hidden" class="form-control" name="id_jenisizin" id="id_jenisizin" value="{{$data->id_jenisizin}}" hidden>
                                             {{-- <textarea class="form-control" style="height: 39px;" name="keperluan" value="{{$data->id_jeniscuti}}" @if($data->id == $data->id_jeniscuti) selected @endif autocomplete="off" rows="1" readonly>{{$data->jenis_cuti}}</textarea> --}}

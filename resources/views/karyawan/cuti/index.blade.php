@@ -43,7 +43,7 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
                                                 <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                                    data-target="#Modal"> Ajukan Cuti</a>
+                                                    data-target="#Modal"> Pengajuan Cuti</a>
                                         </div>
                                         <!-- modals tambah data cuti -->
                                         @include('karyawan.cuti.addcuti')
@@ -141,7 +141,7 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
                                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                                data-target="#smallModal"> Ajukan Izin</a>
+                                                data-target="#smallModal"> Pengajuan Sakit/Ijin</a>
                                         </div>
                                         {{-- modals tambah data izin --}}
                                         @include('karyawan.cuti.addizin')
@@ -158,7 +158,7 @@
                                                                 <th>Tgl Permohonan</th>
                                                                 <th>Nama</th>
                                                                 {{-- <th>Jabatan</th> --}}
-                                                                <th>Tanggal Izin</th>
+                                                                <th>Tanggal Pelaksanaan</th>
                                                                 <th>Kategori Izin</th>
                                                                 <th>Persetujuan</th>
                                                                 <th>Catatan</th>
@@ -246,6 +246,15 @@
 @if(Session::has('pesan'))
     <script>
         swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            button:true,
+            button:"OK",
+        });
+    </script>
+@endif
+
+@if(Session::has('pesa'))
+    <script>
+        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'danger', {
             button:true,
             button:"OK",
         });
