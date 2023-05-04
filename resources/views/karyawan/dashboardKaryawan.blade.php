@@ -872,6 +872,7 @@
                         </div>
                     </div>
 
+                @if (Auth::check() && Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 2)
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -916,7 +917,7 @@
                             </div>
                         </div>
                     </div>
-
+                @endif
                     
                 </div>
             </div>
