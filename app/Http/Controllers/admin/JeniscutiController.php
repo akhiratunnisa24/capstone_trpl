@@ -31,7 +31,7 @@ class JeniscutiController extends Controller
 
             $type = $request->query('type', 1);
             
-            $jeniscuti = Jeniscuti::all();
+            $jeniscuti = Jeniscuti::where('status','=',1)->get();
             $jenisizin = Jenisizin::all();
             return view('admin.kategori.index', compact('jeniscuti','jenisizin','type','row','role'));
 

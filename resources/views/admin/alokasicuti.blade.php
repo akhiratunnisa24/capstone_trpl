@@ -31,7 +31,7 @@
                                         <th>Durasi Cuti</th>
                                         {{-- <th>Id Alokasi</th>
                                         <th>Id Settingalokasi</th> --}}
-                                        <th>Aktif Dari</th>
+                                        <th>Durasi Aktif</th>
                                         <th>Berakhir</th>
                                     </tr>
                                 </thead>

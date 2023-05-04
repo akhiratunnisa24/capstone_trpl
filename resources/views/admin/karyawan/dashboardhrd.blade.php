@@ -828,7 +828,7 @@
                                                             <div class="media-heading">Sanksi Pemotongan Uang Makan
                                                             <span class="badge badge-xs badge-danger">{{ $jpc }}</span></div>
                                                             <p class="m-0">
-                                                            <small>Sejumlah karyawan perlu mendapat tindakan</small>
+                                                            <small>Karyawan yang tidak masuk kerja tanpa keterangan yang dapat dipertanggungjawabkan akan mendapatkan sanksi dari Perusahaan</small>
                                                             </p>
                                                         </div>
                                                     </a>
@@ -839,7 +839,7 @@
                                                         <div class="media-body clearfix">
                                                             <div class="media-heading">Sanksi Pemotongan Uang Transportasi<span class="badge badge-xs badge-danger">{{ $jpg }}</span></div>
                                                             <p class="m-0">
-                                                            <small>Sejumlah karyawan perlu mendapat tindakan</small>
+                                                                <small>Karyawan yang tidak masuk kerja tanpa keterangan yang dapat dipertanggungjawabkan akan mendapatkan sanksi dari Perusahaan</small>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -887,7 +887,7 @@
                                                             <div class="media-body clearfix">
                                                                 <div class="media-heading">Sanksi Teguran Biasa  <span class="badge badge-xs badge-danger">{{ $jumter }}</span></div>
                                                                 <p class="m-0">
-                                                                <small>Sejumlah karyawan perlu mendapatkan teguran </small>
+                                                                    <small>Karyawan yang datang terlambat yang melebihi dari ketentuan yang ditetapkan akan mendapatkan sanksi sesuai ketentuan dari Perusahaan</small>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -899,7 +899,7 @@
                                                             <div class="media-body clearfix">
                                                                 <div class="media-heading">Sanksi SP 1<span class="badge badge-xs badge-danger">{{ $jumtel }}</span></div>
                                                                 <p class="m-0">
-                                                                <small>Sejumlah karyawan perlu mendapatkan surat peringatan pertama </small>
+                                                                    <small>Karyawan yang datang terlambat yang melebihi dari ketentuan yang ditetapkan akan mendapatkan sanksi sesuai ketentuan dari Perusahaan</small>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -912,7 +912,7 @@
                                                         <div class="media-body clearfix">
                                                             <div class="media-heading">Sanksi SP 2<span class="badge badge-xs badge-danger">{{ $jumdat }}</span></div>
                                                             <p class="m-0">
-                                                            <small>Sejumlah karyawan perlu mendapatkan surat peringatan kedua </small>
+                                                                <small>Karyawan yang datang terlambat yang melebihi dari ketentuan yang ditetapkan akan mendapatkan sanksi sesuai ketentuan dari Perusahaan</small>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -953,7 +953,7 @@
                                                 <th>Lowongan</th>
                                                 {{-- <th>Pelamar</th> --}}
                                                 <th>Dibutuhkan</th>
-                                                <th>Aktif Dari</th>
+                                                <th>Durasi Aktif</th>
                                                 <th>Berakhir</th>
                                             </tr>
                                         </thead>

@@ -54,7 +54,7 @@
                                             <th>NIK</th>
                                             <th>Nama</th>
                                             <th>Jabatan</th>
-                                            <th>Departemen</th>
+                                            {{-- <th>Departemen</th> --}}
                                             <th>Jenis Cuti</th>
                                             {{-- <th>Tanggal Mulai Kerja</th>
                                             <th>Jatuh Tempo Pengambilan Hak Cuti</th>
@@ -75,7 +75,7 @@
                                         <td>{{$data->nik}}</td>
                                         <td>{{$data->karyawans->nama}}</td>
                                         <td>{{$data->jabatan}}</td>
-                                        <td>{{$data->departemens->nama_departemen}}</td>
+                                        {{-- <td>{{$data->departemens->nama_departemen}}</td> --}}
                                         <td>{{$data->jeniscutis->jenis_cuti}}</td>
                                         {{-- <td>{{$data->tgl_masuk}}</td>
                                         <td>{{\Carbon\Carbon::parse($data->jatuhtempo_awal)->format('d/m/Y')}} s.d {{\Carbon\Carbon::parse($data->jatuhtempo_akhir)->format('d/m/Y')}}</td>

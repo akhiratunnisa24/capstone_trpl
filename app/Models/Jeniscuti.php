@@ -10,7 +10,7 @@ class Jeniscuti extends Model
     use HasFactory;
     protected $table ='jeniscuti';
     protected $fillable = [
-                            'jenis_cuti',
+                            'jenis_cuti','status'
                         ];
 
     public function cuti()
