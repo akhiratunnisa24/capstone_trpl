@@ -55,7 +55,8 @@ class SettingalokasicutiController extends Controller
         // dd($request->id_jeniscuti);
         $year = date('Y');
 
-        if ($request->id_jeniscuti != 1) {
+        if ($request->id_jeniscuti != 1) 
+        {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
                 'mode_karyawan' => 'required',

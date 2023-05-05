@@ -335,15 +335,14 @@ class HomeController extends Controller
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->where('cuti.status', 1)
-                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
-                            ->where('cuti.catatan', '=', NULL);
+                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('cuti.status', [1, 6])
-                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
-                            ->where('cuti.catatan', '=', NULL);
+                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     });
                 })
+                ->where('cuti.catatan', '=', NULL)
                 ->get();
             $cutijumlah = $cuti->count();
             // return $cuti;

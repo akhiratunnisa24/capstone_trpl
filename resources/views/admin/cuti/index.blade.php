@@ -471,14 +471,7 @@
                                                                                         </a>
                                                                                     </form>
                                                                                 </div>
-                                                                                {{-- <div class="col-sm-3" style="margin-left:7px">
-                                                                                    <form action="{{ route('izinreject',$data->id)}}" method="POST"> 
-                                                                                        @csrf
-                                                                                        @method('POST')
-                                                                                        <input type="hidden" name="status" value="Ditolak" class="form-control" hidden> 
-                                                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"></button> 
-                                                                                    </form>
-                                                                                </div> --}}
+                                                                
                                                                             @else
                                                                             @endif
                 
