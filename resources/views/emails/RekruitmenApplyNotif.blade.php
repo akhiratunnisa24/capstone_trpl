@@ -81,7 +81,7 @@
     <br>
 
     <p>Anda dapat masuk ke website sebagai HRD untuk melihat detail formulir lamaran pekerjaan dan dokumen pendukung
-        lainnya yang telah dilampirkan oleh pelamar. atau <a href="/http://localhost:8000/data_rekrutmen">click here!</a> </p>
+        lainnya yang telah dilampirkan oleh pelamar. atau <a href="dev.rynest-technology./data_rekrutmen">click here!</a> </p>
 
 </body>
 <div class="footer">

@@ -104,7 +104,7 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/hapususer' ?>' + id;
+                    location.href = '<?= '/hapususer' ?>' + id;
                 }
             })
         }

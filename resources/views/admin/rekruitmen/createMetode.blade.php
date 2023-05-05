@@ -117,7 +117,7 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/metode_rekrutmen_destroy' ?>' + id;
+                    location.href = '<?= 'metode_rekrutmen_destroy' ?>' + id;
                 }
             })
         }
