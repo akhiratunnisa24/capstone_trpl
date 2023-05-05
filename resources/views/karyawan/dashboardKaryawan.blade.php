@@ -981,7 +981,7 @@
                                         <th>Kategori Cuti</th>
                                         <th>Durasi Cuti</th>
                                         <th>Durasi Aktif</th>
-                                        <th>Berakhir</th>
+                                        {{-- <th>Berakhir</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -991,8 +991,8 @@
                                             <td>{{ $alokasi->karyawans->nama }}</td>
                                             <td>{{ $alokasi->jeniscutis->jenis_cuti }}</td>
                                             <td>{{ $alokasi->durasi }} hari</td>
-                                            <td>{{ \Carbon\Carbon::parse($alokasi->aktif_dari)->format('d/m/Y') }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($alokasi->sampai)->format('d/m/Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($alokasi->aktif_dari)->format('d/m/Y') }}  - {{ \Carbon\Carbon::parse($alokasi->sampai)->format('d/m/Y') }}</td>
+                                            {{-- <td>{{ \Carbon\Carbon::parse($alokasi->sampai)->format('d/m/Y') }}</td> --}}
                                         </tr>
                                     @endforeach
     

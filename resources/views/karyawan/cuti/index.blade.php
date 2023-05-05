@@ -28,7 +28,7 @@
                 <li class="">
                     <a id="tab2" href="#izin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
-                        <span class="hidden-xs">Izin</span>
+                        <span class="hidden-xs">Sakit/Ijin</span>
                     </a>
                 </li>
             </ul>

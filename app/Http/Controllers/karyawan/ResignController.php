@@ -137,7 +137,7 @@ class ResignController extends Controller
         $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
         $resign->tipe_resign = $request->tipe_resign;
         $resign->alasan      = $request->alasan;
-        $resign->status      = $status->id;
+        $resign->status      = 1;
         $resign->filepdf     = $filename; // menyimpan nama file di kolom filepdf
 
         $resign->save();

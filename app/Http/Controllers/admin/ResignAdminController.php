@@ -115,7 +115,7 @@ class ResignAdminController extends Controller
         $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
         $resign->tipe_resign = $request->tipe_resign;
         $resign->alasan      = $request->alasan;          
-        $resign->status      = $status->id;
+        $resign->status      = 1;
         $resign->filepdf     = $filename; // menyimpan nama file di kolom filepdf
 
         $resign->save();
@@ -130,39 +130,36 @@ class ResignAdminController extends Controller
         return view('admin.resign.index',compact('resign','karyawan'));
     }
 
-    public function approved(Request $request, $id)
+    public function approved( $id)
     {
         $resign = Resign::where('id',$id)->first();
-        $status = 3;
         Resign::where('id',$id)->update([
-            'status' => $status,
+            'status' => 6,
         ]);
  
         $sk = Karyawan::where('id',$resign->id_karyawan);
         $resign1 = Resign::where('id',$id)->first();
-    // dd($resign1);
-        if ($resign1->tgl_resign <= Carbon::now()) {
-            $sk->status_kerja = 'Non-Aktif';
-        }
-        return redirect()->route('resignkaryawan');
+        // dd($resign1);
+        // if ($resign1->tgl_resign <= Carbon::now()) {
+        //     $sk->status_kerja = 'Non-Aktif';
+        // }
+        return redirect()->back();
     }
 
-    public function approvedmanager(Request $request, $id)
+    public function approvedmanager( $id)
     {
         $resign = Resign::where('id',$id)->first();
-        $status = 2;
         Resign::where('id',$id)->update([
-            'status' => $status,
+            'status' => 7,
         ]);
         return redirect()->back();
     }
 
-    public function reject(Request $request, $id)
+    public function reject( $id)
     {
         $resign = Resign::where('id',$id)->first();
-        $status = 5;
         Resign::where('id',$id)->update([
-            'status' => $status,
+            'status' => 5,
         ]);
         return redirect()->back()->withInput();
     }
