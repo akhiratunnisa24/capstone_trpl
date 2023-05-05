@@ -109,7 +109,8 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/jabatan/delete' ?>' + id;
+                    location.href = '<?= '/jabatan/delete' ?>' + id;
+                    //location.href = '<?= 'http://localhost:8000/jabatan/delete' ?>' + id;
                 }
             })
         }

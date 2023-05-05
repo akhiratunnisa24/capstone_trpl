@@ -112,7 +112,8 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/departemen/delete' ?>' + id;
+                    location.href = '<?= '/departemen/delete' ?>' + id;
+                    // location.href = '<?= 'http://localhost:8000/departemen/delete' ?>' + id;
                 }
             })
         }

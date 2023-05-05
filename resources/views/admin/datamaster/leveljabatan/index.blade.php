@@ -107,7 +107,9 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/level-jabatan/delete/' ?>' + id;
+                    location.href = '<?= '/level-jabatan/delete/' ?>' + id;
+                    //location.href = '<?= 'http://localhost:8000/level-jabatan/delete/' ?>' + id;
+                    //location.href = '<?= 'https://dev.rynest-technology.com//level-jabatan/delete/' ?>' + id;
                 }
             })
         }
