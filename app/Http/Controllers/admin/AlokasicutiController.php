@@ -39,7 +39,8 @@ class AlokasicutiController extends Controller
             $alokasicuti = Alokasicuti::join('settingalokasi', 'alokasicuti.id_settingalokasi', '=', 'settingalokasi.id')
                 ->join('jeniscuti', 'alokasicuti.id_jeniscuti', '=', 'jeniscuti.id')
                 ->join('departemen', 'alokasicuti.departemen', '=', 'departemen.id')
-                ->where('alokasicuti.status', 1)->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)
+                ->where('alokasicuti.status', 1)
+                ->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)
                 ->select('alokasicuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen')
                 ->get();
 

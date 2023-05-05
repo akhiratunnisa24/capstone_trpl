@@ -196,8 +196,8 @@
                             <li> <a href="/data-staff" class="waves-effect"><i
                                         class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
                             </li>
-                            <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi</span></a></li>
                             @if($row->jabatan == "Manajer" || $row->jabatan == "Asisten Manajer")
+                                <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi</span></a></li>
                                 <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Transaksi Cuti</span></a></li>
                             @elseif($row->jabatan == "Direksi")
                                 <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Transaksi Cuti</span></a></li>

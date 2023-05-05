@@ -966,6 +966,53 @@ class HomeController extends Controller
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }
+        elseif($role->role == 3 && $row->jabatan == "Direksi")
+        {
+
+            $output = [
+                'row' => $row,
+                'role' => $role,
+                'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
+                'absenKaryawan' => $absenKaryawan,
+                'absenTidakmasuk' => $absenTidakmasuk,
+                'alokasicuti' => $alokasicuti,
+                'sisacuti' => $sisacuti,
+                'absenBulanini' => $absenBulanini,
+                'absenBulanlalu'=> $absenBulanlalu,
+                'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
+                'data' => $data,
+                'labelBulan' => $labelBulan,
+                'absenTerlambatHariIni' => $absenTerlambatHariIni,
+                'dataIzinHariini' => $dataIzinHariini,
+                'cutidanizin' => $cutidanizin,
+                'dataIzinPerbulan' => $dataIzinPerbulan,
+                'cutidanizinPerbulan' => $cutidanizinPerbulan,
+                'dataIzinbulanlalu' => $dataIzinbulanlalu,
+                'cutibulanlalu' => $cutibulanlalu,
+                'cutidanizibulanlalu' => $cutidanizibulanlalu,
+                'tahun' => $tahun,
+                'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,
+                'tidakMasukBulanIni' => $tidakMasukBulanIni,
+                'tidakMasukHariIni' => $tidakMasukHariIni,
+                'alokasicuti' => $alokasicuti,
+                'absenKaryawan' => $absenKaryawan,
+                'alokasicuti2' => $alokasicuti2,
+                'posisi' => $posisi,
+                'cuti' => $cuti,
+                'cutijumlah' => $cutijumlah,
+                'cutis' => $cutis,
+                'jumct' => $jumct,
+                'izin' => $izin,
+                'izinjumlah' => $izinjumlah,
+                'ijin' => $ijin,
+                'jumizin' => $jumizin,
+                'resign' => $resign,
+                'resignjumlah' => $resignjumlah,
+                'sisacutis' => $sisacutis,
+                // 'cekSisacuti' => $cekSisacuti,
+            ];
+            return view('karyawan.dashboardKaryawan', $output);
+        }
         else 
         {
 

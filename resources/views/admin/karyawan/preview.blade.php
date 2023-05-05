@@ -262,7 +262,7 @@
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
                                         <label class="font-size-14 fw-bold">Jabatan *</label>
-                                        <p>{{ $karyawan->jabatan }}</p>
+                                        <p>{{ $karyawan->nama_jabatan }}</p>
                                     </div>
                                 </div>
                             </div>
