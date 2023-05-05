@@ -194,8 +194,7 @@
                                                                             </form>
                                                                             <form action="" method="POST">
                                                                                     <a class="btn btn-success btn-sm"
-                                                                                        data-toggle="modal"
-                                                                                        data-target="#Editizin{{ $data->id }}">
+                                                                                        data-toggle="modal"data-target="#Editizin{{ $data->id }}">
                                                                                         <i class="fa fa-edit"></i>
                                                                                     </a>
                                                                                 </form>
@@ -203,8 +202,7 @@
                                                                               
                                                                                 <form action="" method="POST">
                                                                                     <a class="btn btn-warning btn-sm"
-                                                                                        data-toggle="modal"
-                                                                                        data-target="#Batalizin{{ $data->id }}">
+                                                                                        data-toggle="modal" data-target="#Batalizin{{ $data->id }}">
                                                                                         <i class="fa fa-undo"></i>
                                                                                     </a>
                                                                                 </form>

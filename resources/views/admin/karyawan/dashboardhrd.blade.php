@@ -614,7 +614,7 @@
                                                                     </form>
                                                                 </div>
                                                                 {{-- modal show izin --}}
-                                                                @include('manager.staff.showizin')
+                                                                @include('manager.staff.showIzin')
                                                                 @include('manager.staff.izinReject')
                                                             </div>
                                                         </td>
