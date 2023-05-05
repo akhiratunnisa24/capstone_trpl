@@ -74,7 +74,7 @@ class ManagerController extends Controller
         $role = Auth::user()->role;  
 
         //mengambil id_departemen user login
-        $pegawai = Karyawan::where('jabatan','Staff')->orWhere('jabatan','Asisten Manajer')
+        $pegawai = Karyawan::where('jabatan','Staff')->orWhere('jabatan','Asisten Manajer')->orWhere('jabatan','Pelaksana')
             ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai)
             ->select('id as idkaryawan')

@@ -122,6 +122,7 @@
 
                                     <div class="form-group col-sm">
                                         <input type="hidden" class="form-control" name="status" id="status" value="Pending" hidden>
+                                        <input type="hidden" class="form-control" name="catatan" id="catatan" value="" hidden>
                                     </div>
                                 </div>
                             </div>

@@ -87,7 +87,7 @@ class IzinkaryawanController extends Controller
     
                 $izin->jml_jam     = $time_range;
                 $izin->status      = $status->id;
-                $izin->catatan     = NULL;
+                $izin->catatan     = $request->catatan ?? NULL;
                 $izin->save();
     
                 $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
@@ -178,7 +178,7 @@ class IzinkaryawanController extends Controller
                 $izin->jml_hari       = $request->jml_hari;
                 $izin->jml_jam        = $request->jml_jam ?? NULL;
                 $izin->status         = $status->id;
-                $izin->catatan        = NULL;
+                $izin->catatan        = $request->catatan ?? NULL;
                 // dd($izin);
                 $izin->save();
 

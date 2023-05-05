@@ -163,6 +163,8 @@ class SettingalokasicutiController extends Controller
                 if ($tglMasuk->format('m-d') == '01-01') {
                     $tglHakCutiTahunan = Carbon::createFromDate($year + 1, 1, 1);
                     $selisih    = $tglJatuhTempo->diffInMonths($tglHakCutiTahunan, true);
+                }else{
+                    $selisih = $selisih;
                 }
 
                 $keterangan = "";
@@ -195,7 +197,44 @@ class SettingalokasicutiController extends Controller
                     $sampai    = $year . '-12-31';
                     // $saldo   = $selisih - abs($cutmin) - abs($jum);
                 } elseif ($selisih > 0 && $selisih < 12) {
-                    $selisih = $selisih;
+
+                    if($tglMasuk->format('m-d') == '02-01'){
+                        $selisih = 11 ;
+                    }
+                    elseif($tglMasuk->format('m-d') == '03-01'){
+                        $selisih = 10 ;
+                       
+                    }
+                    elseif($tglMasuk->format('m-d') == '04-01'){
+                        $selisih = 9 ;
+                    }
+                    elseif($tglMasuk->format('m-d') == '05-01'){
+                        $selisih = 8 ;
+                    }
+                    elseif($tglMasuk->format('m-d') == '06-01'){
+                        $selisih = 7 ;
+                    }
+                    elseif($tglMasuk->format('m-d') == '07-01'){
+                        $selisih = 6 ;
+                    }
+                    elseif($tglMasuk->format('m-d') == '08-01'){
+                        $selisih = 5 ;
+                    }
+                    elseif($tglMasuk->format('m-d') == '09-01'){
+                        $selisih = 4 ;
+                    }
+                    elseif($tglMasuk->format('m-d') == '10-01'){
+                        $selisih = 3 ;
+                    }
+                    elseif($tglMasuk->format('m-d') == '11-01'){
+                        $selisih = 2 ;
+                    }
+                    elseif($tglMasuk->format('m-d') == '12-01'){
+                        $selisih = 1 ;
+                    }else{
+                        $selisih = $selisih;
+                    }
+                   
                     $keterangan = "Karyawan Baru (Transisi)";
                     // $cutidimuka = -1*abs(12);
                     // $jum = $jum;
@@ -206,6 +245,7 @@ class SettingalokasicutiController extends Controller
                     $tgljatuhtempo = $tglJatuhTempo->format('-m-d');
                     $aktifdari = $year . $tgljatuhtempo;
                     $sampai    = $year . '-12-31';
+                    // dd($selisih);
                     // $saldo   = $selisih - abs($cutidimuka) - abs($cutmin) - abs($jum);
                 } else {
                     $selisih   = 0;

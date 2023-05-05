@@ -408,16 +408,21 @@ class CutiadminController extends Controller
                             ->first();
         
                     //atasan kedua
-                    $atasan = Karyawan::where('id',$emailkry->atasan_kedua)
+
+                    $atasan = NULL;
+                    if($emailkry->atasan_kedua != NULL)
+                    {
+                        $atasan = Karyawan::where('id',$emailkry->atasan_kedua)
                         ->select('email as email','nama as nama','nama_jabatan as jabatan')
                         ->first();
-        
+                    }
+
                     //atasan pertama
                     $atasan1 = Auth::user()->email;
 
                     //ambil data karyawan
-                    $tujuan = $atasan->email;
-                    
+                    // $tujuan = $atasan->email;
+                    $tujuan =$atasan->email ?? null;
                     $data = [
                         'subject'     =>'Notifikasi Approval Pertama Permohonan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                         'noregistrasi'=>$cuti->id,
@@ -428,8 +433,6 @@ class CutiadminController extends Controller
                         'jabatankaryawan' => $cuti->jabatan,
                         'departemen' => $emailkry->nama_departemen,
                         'namakaryawan'=>ucwords(strtolower($emailkry->nama)),
-                        'atasan2'     => $atasan->email,
-                        'namaatasan2' => $atasan->nama,
                         'jeniscuti'   => $jeniscuti->jenis_cuti,
                         'karyawan_email' =>$emailkry->email,
                         'namakaryawan'=>$emailkry->nama,
@@ -443,6 +446,10 @@ class CutiadminController extends Controller
                         'tgldisetujuiatasan' => Carbon::now()->format('d/m/Y H:i'),
                         
                     ];
+                    if($atasan !== NULL){
+                        $data['namaatasan2'] = $atasan->nama;
+                        $data['atasan2']     = $atasan->email;
+                    }
                     Mail::to($tujuan)->send(new CutiAtasan2Notification($data));
                     return redirect()->back()->withInput();
                 }else
@@ -831,7 +838,7 @@ class CutiadminController extends Controller
             {
                 // return $datacuti;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Cuti::where('id',$id)->update([
                     'status' => $status->id,
                     'tglditolak' => Carbon::now()->format('Y-m-d H:i:s'),

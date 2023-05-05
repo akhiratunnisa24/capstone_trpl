@@ -209,12 +209,18 @@ class IzinAdminController extends Controller
                 ->select('karyawan.email','karyawan.nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
                 ->first();
 
-            $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
-                ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
-                ->first();
+            $atasan2 = NULL;
+            if($emailkry->atasan_kedua != NULL)
+            {
+                $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
+                    ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
+                    ->first();
+            }
+            
+            $tujuan =$atasan2->email ?? null;
 
             //email atasan kedua adalah tujuan utama
-            $tujuan = $atasan2->email;
+            
             $data = [
                 'subject'     =>'Notifikasi Approval Pertama Permohonan Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
                 'id'          =>$izinn->id,
@@ -237,9 +243,11 @@ class IzinAdminController extends Controller
                 'status'      =>$status->name_status,
                 'namakaryawan'=>ucwords(strtolower($emailkry->nama)),
                 'tgldisetujuiatasan' =>  Carbon::parse($izinn->tgl_setuju_a)->format("d/m/Y H:i"),
-                'namaatasan2' =>$atasan2->nama,
                 'jabatanatasan'=>$atasan2->jabatan,
             ];
+            if($atasan2 !== NULL){
+                $data['namaatasan2'] = $atasan2->nama;
+            }
             Mail::to($tujuan)->send(new IzinAtasan2Notification($data));
             return redirect()->back()->withInput();
         }
