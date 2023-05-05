@@ -1651,7 +1651,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -1685,7 +1685,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -1729,7 +1729,7 @@ class karyawanController extends Controller
             }
 
             $filename = '' . time() . $file->getClientOriginalName();
-            $file->move(public_path() . '\Foto_Profile', $filename);
+            $file->move(public_path() . '/Foto_Profile', $filename);
             $karyawan->foto = $filename;
 
             $karyawan->save();
@@ -1825,7 +1825,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $no = 1;
@@ -1900,7 +1900,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -1924,7 +1924,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -1948,7 +1948,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -1972,7 +1972,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -1996,7 +1996,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -2122,7 +2122,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -2172,7 +2172,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -2207,7 +2207,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -2247,8 +2247,8 @@ class karyawanController extends Controller
         //ambil id_karyawan yang udah absen
         
 
-        if ($role == 1) {
-
+        if ($role == 1 || $role == 2) {
+ 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             // $karyawanSudahAbsen = DB::table('absensi')->pluck('id_karyawan');
@@ -2314,7 +2314,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -2337,7 +2337,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 

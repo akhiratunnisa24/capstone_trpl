@@ -121,8 +121,9 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/hapuslowongan' ?>' + id;
+                    // location.href = '<?= 'http://localhost:8000/hapuslowongan' ?>' + id;
                     // location.href = '<?= 'http://dev.rynest-technology.com/hapuslowongan' ?>' + id;
+			location.href = '<?= '/hapuslowongan' ?>' + id;
 
                 }
             })
