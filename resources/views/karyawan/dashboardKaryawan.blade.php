@@ -730,7 +730,7 @@
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#8" class="collapsed"
                                     aria-expanded="false">
-                                    Pembatalan dan Perubahan Izin Karyawan
+                                    Pembatalan/Perubahan Sakit/Ijin 
                                     
                                     @if ($jumizin)
                                         <span class="badge badge badge-danger" style="background-color:red">{{ $jumizin }}</span>
