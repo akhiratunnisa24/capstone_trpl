@@ -243,10 +243,10 @@ class IzinAdminController extends Controller
                 'status'      =>$status->name_status,
                 'namakaryawan'=>ucwords(strtolower($emailkry->nama)),
                 'tgldisetujuiatasan' =>  Carbon::parse($izinn->tgl_setuju_a)->format("d/m/Y H:i"),
-                'jabatanatasan'=>$atasan2->jabatan,
             ];
             if($atasan2 !== NULL){
                 $data['namaatasan2'] = $atasan2->nama;
+                $data['jabatanatasan'] =$atasan2->jabatan;
             }
             Mail::to($tujuan)->send(new IzinAtasan2Notification($data));
             return redirect()->back()->withInput();
@@ -297,12 +297,18 @@ class IzinAdminController extends Controller
                     ->where('izin.id',$izin->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
                     ->first(); 
-                $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
-                    ->select('email as email','nama as nama','jabatan')
-                    ->first();
+               
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
+
+                $atasan2 = NULL;
+                if($karyawan->atasan_kedua !== NULL)
+                {
+                    $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+                        ->select('email as email','nama as nama','jabatan')
+                        ->first();
+                }
         
                 $tujuan = $karyawan->email;
                 $data = [
@@ -315,7 +321,6 @@ class IzinAdminController extends Controller
                     'jabatankaryawan' => $izin->jabatan,
                     'departemen' => $karyawan->nama_departemen,
                     'atasan1'     => $atasan1->email,
-                    'atasan2'     => $atasan2->email,
                     'karyawan_email'=>$karyawan->email,
                     'id_jenisizin'=>$izin->jenis_izin,
                     'keperluan'   =>$izin->keperluan,
@@ -327,7 +332,6 @@ class IzinAdminController extends Controller
                     'jml_hari'    =>$izin->jml_hari,
                     'jumlahjam'   =>$izin->jml_jam,
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
-                    'namaatasan2' =>$atasan2->nama,
                     'nama'        =>$karyawan->nama,
                     'kategori'   =>$izin->jenis_izin,
                     'alasan'      =>$alasan->alasan,
@@ -335,6 +339,11 @@ class IzinAdminController extends Controller
                     'tgldisetujuipimpinan' => '',
                     'tglditolak' => Carbon::parse($izin->tgl_ditolak)->format("d/m/Y H:i"),
                 ];
+                if($atasan2 !== NULL)
+                {
+                    $data['atasan2'] = $atasan2->email;
+                    $data['namaatasan2'] = $atasan2->nama;
+                }
                 // dd($data);
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
                 return redirect()->back()->withInput();

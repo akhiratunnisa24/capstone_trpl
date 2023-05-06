@@ -176,7 +176,7 @@
 		<p>Saya ingin memberitahukan bahwa permintaan izin <strong>{{$data['id_jenisizin']}}</strong> dari saudara/i <strong>{{$data['namakaryawan']}}</strong> dengan rincian sebagai berikut telah disetujui oleh atasan pertamanya yaitu Bapak/Ibu <strong>{{Auth::user()->name}}</strong> dan sekarang membutuhkan persetujuan dari Bapak/Ibu:</p>
 		<ul>
 			<li>Nama karyawan  : {{$data['namakaryawan']}}</li>
-			<li>Kategori izin  : {{$data['id_jenisizin']}}</li>
+			<li>Kategori  : {{$data['id_jenisizin']}}</li>
 			<li>Keperluan      &nbsp;&nbsp;&nbsp;: {{$data['keperluan']}}</li>
 			@if($data['tgl_selesai'] != NULL)
 				<li>Tanggal izin   &nbsp;: {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>

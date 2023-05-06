@@ -1692,7 +1692,7 @@ class ManagerController extends Controller
                 $tujuan = $atasan->email ?? null;
                 $data = [
                     'subject'     =>'Notifikasi Approval Pertama Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
-                    'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR KETIDAKHADIRAN KARYAWAN',
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR KETIDAKHADIRAN KARYAWAN',
                     'subtitle' => '[PERSETUJUAN ATASAN]',
                     'noregistrasi'=>$izinn->id,
                     'tgl_permohonan' =>Carbon::parse($izinn->tgl_permohonan)->format("d/m/Y"),
@@ -1815,7 +1815,7 @@ class ManagerController extends Controller
                 $tujuan = $atasan->email;
                 $data = [
                     'subject'     =>'Notifikasi Approval Pertama Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
-                    'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR KETIDAKHADIRAN KARYAWAN',
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR KETIDAKHADIRAN KARYAWAN',
                     'subtitle' => '[PERSETUJUAN ATASAN]',
                     'noregistrasi'=>$izinn->id,
                     'tgl_permohonan' =>Carbon::parse($izinn->tgl_permohonan)->format("d/m/Y"),
@@ -1880,7 +1880,7 @@ class ManagerController extends Controller
                 $data = [
                     'subject'     =>'Notifikasi Approval Pertama Permohonan Izin ' . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
                     'noregistrasi'=>$izinn->id,
-                    'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR KETIDAKHADIRAN KARYAWAN',
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR KETIDAKHADIRAN KARYAWAN',
                     'subtitle' => '[PERSETUJUAN ATASAN]',
                     'tgl_permohonan' =>Carbon::parse($izinn->tgl_permohonan)->format("d/m/Y"),
                     'nik'         => $izinn->nik,

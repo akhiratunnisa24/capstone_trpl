@@ -141,7 +141,7 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
                                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                                data-target="#smallModal"> Pengajuan Sakit/Ijin</a>
+                                                data-target="#smallModal"> Sakit/Ijin/Alpa/Lain-lain</a>
                                         </div>
                                         {{-- modals tambah data izin --}}
                                         @include('karyawan.cuti.addizin')
@@ -159,7 +159,7 @@
                                                                 <th>Nama</th>
                                                                 {{-- <th>Jabatan</th> --}}
                                                                 <th>Tanggal Pelaksanaan</th>
-                                                                <th>Kategori Izin</th>
+                                                                <th>Kategori</th>
                                                                 <th>Persetujuan</th>
                                                                 <th>Catatan</th>
                                                                 <th>Aksi</th>

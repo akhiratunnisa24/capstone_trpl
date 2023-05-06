@@ -528,7 +528,7 @@
                                                             <tr>
                                                                 <th>No</th>
                                                                 <th>Karyawan</th>
-                                                                <th>Kategori Izin</th>
+                                                                <th>Kategori</th>
                                                                 <th>Keperluan</th>
                                                                 <th>Tanggal</th>
                                                                 <th>Jml</th>

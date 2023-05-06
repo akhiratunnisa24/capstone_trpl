@@ -185,7 +185,7 @@
                    Bersama dengan surat ini,</p>
                 <ul id="ul">
                     <li>Nama&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ucwords(strtolower(Auth::user()->name))}}</li>
-                    <li>Kategori izin  : {{$data['jenisizin']}}</li>
+                    <li>Kategori : {{$data['jenisizin']}}</li>
                     <li>Keperluan&nbsp;&nbsp;:{{$data['keperluan']}}</li>
                     @if($data['tgl_selesai'] != NULL)
                         <li>Tanggal izin   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>

@@ -42,11 +42,6 @@
                                     <label>Tahun</label>
                                     <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" data-live-search="true" required>
                                         <option value="">-- Pilih Tahun --</option>
-                                        <option value="2015" {{ ('2015' === request()->tahun) ? 'selected' : '' }}>2015</option>
-                                        <option value="2016" {{ ('2016' === request()->tahun) ? 'selected' : '' }}>2016</option>
-                                        <option value="2017" {{ ('2017' === request()->tahun) ? 'selected' : '' }}>2017</option>
-                                        <option value="2018" {{ ('2018' === request()->tahun) ? 'selected' : '' }}>2018</option>
-                                        <option value="2019" {{ ('2019' === request()->tahun) ? 'selected' : '' }}>2019</option>
                                         <option value="2020" {{ ('2020' === request()->tahun) ? 'selected' : '' }}>2020</option>
                                         <option value="2021" {{ ('2021' === request()->tahun) ? 'selected' : '' }}>2021</option>
                                         <option value="2022" {{ ('2022' === request()->tahun) ? 'selected' : '' }}>2022</option>

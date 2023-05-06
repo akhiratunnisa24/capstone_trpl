@@ -374,9 +374,7 @@ class CutiadminController extends Controller
                         'jabatankaryawan' => $cuti->jabatan,
                         'departemen' => $emailkry->nama_departemen,
                         'atasan1'     =>$atasan1->email,
-                        'atasan2'     =>$atasan2,
                         'namaatasan1' =>$atasan1->nama,
-                        'namaatasan2' =>Auth::user()->name,
                         'namakaryawan'=>$emailkry->nama,
                         'id_jeniscuti' => $cuti->jeniscutis->jenis_cuti,
                         'nama'      => $cuti->karyawans->nama,
@@ -423,7 +421,7 @@ class CutiadminController extends Controller
                         $atasan = Karyawan::where('id',$emailkry->atasan_kedua)
                             ->select('email as email','nama as nama','nama_jabatan as jabatan')
                             ->first();
-                        }
+                    }
 
                     //atasan pertama
                     $atasan1 = Auth::user()->email;
@@ -594,8 +592,6 @@ class CutiadminController extends Controller
                             'nik'         => $cuti->nik,
                             'jabatankaryawan' => $cuti->jabatan,
                             'departemen' => $emailkry->nama_departemen,
-                            'atasan2'     => $atasan->email,
-                            'namaatasan2' => $atasan->nama,
                             'jeniscuti'   => $jeniscuti->jenis_cuti,
                             'karyawan_email' =>$emailkry->email,
                             'namakaryawan'=>$emailkry->nama,
@@ -741,8 +737,6 @@ class CutiadminController extends Controller
                             'nik'         => $cuti->nik,
                             'jabatankaryawan' => $cuti->jabatan,
                             'departemen' => $emailkry->nama_departemen,
-                            'atasan2'     => $atasan->email,
-                            'namaatasan2' => $atasan->nama,
                             'jeniscuti'   => $jeniscuti->jenis_cuti,
                             'karyawan_email' =>$emailkry->email,
                             'namakaryawan'=>$emailkry->nama,
