@@ -42,7 +42,7 @@ class KaryawansController extends Controller
     public function create(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
             $atasan_pertama = Karyawan::whereIn('jabatan', ['Asisten Manajer', 'Manajer', 'Direksi'])->get();
@@ -273,7 +273,7 @@ class KaryawansController extends Controller
     public function createdakel(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $karyawan    = $request->session()->get('karyawan');
@@ -347,7 +347,7 @@ class KaryawansController extends Controller
     public function createkonrat(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $karyawan     = $request->session()->get('karyawan');
@@ -398,7 +398,7 @@ class KaryawansController extends Controller
     public function creatependidikan(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $karyawan     = $request->session()->get('karyawan');
@@ -463,7 +463,7 @@ class KaryawansController extends Controller
     public function createpekerjaan(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $karyawan     = $request->session()->get('karyawan');
@@ -537,7 +537,7 @@ class KaryawansController extends Controller
     public function createorganisasi(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
@@ -603,7 +603,7 @@ class KaryawansController extends Controller
     public function createprestasi(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1) {
+        if ($role == 1|| $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
