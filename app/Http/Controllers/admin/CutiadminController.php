@@ -832,7 +832,7 @@ class CutiadminController extends Controller
                     'subject'     => 'Notifikasi Permohonan Cuti Ditolak, Cuti ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$cuti->id,
                     'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
-                    'subtitle' => '[ PENDING PIMPINAN ]',
+                    'subtitle' => '[ PENDING PIMPINAN UNIT KERJA ]',
                     'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
                     'nik'         => $cuti->nik,
                     'jabatankaryawan' => $cuti->jabatan,

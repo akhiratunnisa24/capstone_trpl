@@ -228,6 +228,7 @@ Route::get('/izin_karyawan/{id}', [IzinkaryawanController::class, 'show'])->name
 Route::put('/pembatalan-izin/{id}', [IzinkaryawanController::class, 'batal'])->name('izin.batal');
 Route::put('/update-izin/{id}', [IzinkaryawanController::class, 'update'])->name('izin.update');
 Route::get('/getliburdata', [IzinkaryawanController::class, 'getLiburdata'])->name('getliburdata');
+Route::get('/getlibursdata', [IzinkaryawanController::class, 'getLiburdata'])->name('getlibursdata');
 
 //resign
 Route::get('/resign-karyawan', [ResignController::class, 'index'])->name('resign_karyawan');

@@ -131,7 +131,7 @@
                                             <div class="col-sm-12 col-xs-12">
                                                 <div class="form-group col-sm">
                                                     <label for="jml_cuti" class="col-form-label">Jumlah Izin</label>
-                                                    <input type="text" class="form-control"  value="{{$data->jml_hari}}" name="jml_hari" id="jumla" readonly>
+                                                    <input type="text" class="form-control"  value="{{$data->jml_hari}}" name="jml_hari" id="jumlahhh" readonly>
                                                 </div>
                                             </div>
                                         @endif
@@ -204,7 +204,7 @@
     <script type="text/javascript">
         function jumlahizins()
         {
-            var start= $('#datepicker-autocloseu').val();
+            var starts= $('#datepicker-autocloseu').val();
             var end  = $('#datepicker-autoclosev').val();
             console.log(start,end);
 
@@ -225,7 +225,7 @@
 
             //MENDAPATKAN DATA HARI LIBUR
             $.ajax({
-                url: '/getliburs',
+                url: '/getlibursdata',
                 type: 'GET',
                 dataType: 'json',
                 success: function(data){
@@ -249,21 +249,21 @@
                         }
 
                         console.info(daysOfYear.length);
-                        $('#jumla').val(daysOfYear.length ?? 0);
+                        $('#jumlahhh').val(daysOfYear.length ?? 0);
                     }
 
                     // Menjalankan fungsi jumlahcutis saat input tanggal mulai atau tanggal selesai berubah
                     $('#start_date, #end_date').on('change', function() {
-                        jumlahcutis();
+                        jumlahizins();
                     });
 
                     // Menjalankan fungsi jumlahcutis saat halaman selesai dimuat, jika ada value pada jml_cuti
                     $(document).ready(function() {
-                        var jml_cuti = parseInt("{{$data->jml_cuti}}") || 0;
-                        $('#jumla').val(jml_cuti);
+                        var jml_hari = parseInt("{{$data->jml_hari}}") || 0;
+                        $('#jumlahhh').val(jml_hari);
                     });
 
-                    $('#jumla').val(daysOfYear.length ?? 0);
+                    $('#jumlahhh').val(daysOfYear.length ?? 0);
                     // //mengambil value tanggal mulai
                     // $('#start_date').on('change', function() {
                     //     jumlahcutis();

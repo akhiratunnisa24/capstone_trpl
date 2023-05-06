@@ -668,7 +668,7 @@ class KaryawansController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $karyawan = $request->session()->get('karyawan');
-        $atasan_pertama_nama = $karyawan->atasan_pertamaa->nama;
+        $atasan_pertama_nama = $karyawan->atasan_pertamaa->nama ?? null;
         $atasan_kedua_nama = $karyawan->atasan_kedua;
         if (!$atasan_kedua_nama) {
             $atasan_kedua_nama = "-";

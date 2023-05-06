@@ -170,7 +170,7 @@
                                                                 {{-- @if ($data->id_karyawan == Auth::user()->id_pegawai) --}}
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
-                                                                        <td>{{ $data->tgl_permohonan }}</td>
+                                                                        <td>{{ \Carbon\Carbon::parse($data->tgl_permohonan)->format('d/m/Y') }}</td>
                                                                         <td>{{ Auth::user()->name }}</td>
                                                                         <td>
                                                                             {{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }} @if($data->tgl_selesai !== NULL) s/d 
