@@ -339,6 +339,19 @@
             },
         });
 
+        jQuery("#datepicker-autoclosex").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < today || date > next) {
+                    return { enabled: false };
+                } else {
+                    return {};
+                }
+            },
+        });
+
         jQuery("#datepicker-autocloseu").datepicker({
             format: "dd/mm/yyyy",
             autoclose: true,
@@ -446,6 +459,18 @@
                 return;
             },
         });
+        jQuery("#datepicker-autoclosew").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+       
         jQuery("#datepicker-autocloseg").datepicker({
             format: "dd/mm/yyyy",
             autoclose: true,

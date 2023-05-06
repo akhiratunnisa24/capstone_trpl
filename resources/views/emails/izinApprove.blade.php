@@ -192,7 +192,7 @@
 			<p>Kami ingin memberitahukan bahwa permintaan <strong>Izin {{$data['jenisizin']}}</strong> pada tanggal <strong>{{$data['tgl_mulai']}}</strong>  @if($data['tgl_selesai'] !== NULL) hingga <strong>{{$data['tgl_selesai']}}</strong> @endif telah <b>DISETUJUI</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong></p>
 				<ul>
 					<li>Nama karyawan  : {{$data['namakaryawan']}}</li>
-					<li>Kategori izin : {{$data['jenisizin']}}</li>
+					<li>Kategori : {{$data['jenisizin']}}</li>
 					<li>Keperluan      : {{$data['keperluan']}}</li>
 					@if($data['tgl_selesai'] != NULL)
 						<li>Tanggal Izin   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>
@@ -211,7 +211,7 @@
 			<p>Kami ingin memberitahukan bahwa permintaan <strong>Izin {{$data['jenisizin']}}</strong> pada tanggal <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_selesai'] !== NULL) hingga <strong>{{$data['tgl_selesai']}}</strong> @endif <b>DITOLAK</b> oleh atasan Anda <strong>{{Auth::user()->name}}</strong> dengan alasan <strong>{{$data['alasan']}}</strong></p> 
 			<ul>
 				<li>Nama karyawan  : {{$data['namakaryawan']}}</li>
-				<li>Kategori izin : {{$data['jenisizin']}}</li>
+				<li>Kategori : {{$data['jenisizin']}}</li>
 				<li>Keperluan      : {{$data['keperluan']}}</li>
 				@if($data['tgl_selesai'] != NULL)
 					<li>Tanggal Izin   : {{$data['tgl_mulai']}} s/d {{$data['tgl_selesai']}}</li>

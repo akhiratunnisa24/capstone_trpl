@@ -299,7 +299,7 @@ class DirekturController extends Controller
         
                         $atasan = NULL;
 
-                        if($emailkry->atasan_kedua != NULL)
+                        if($emailkry->atasan_kedua !== NULL)
                         {
                             $atasan = Karyawan::where('id',$emailkry->atasan_kedua)
                             ->select('email as email','nama as nama','nama_jabatan as jabatan')
@@ -309,7 +309,7 @@ class DirekturController extends Controller
                         $atasan1 = Auth::user()->email;
         
                         //ambil data karyawan
-                        $tujuan = $atasan->email;
+                        $tujuan = $atasan->email ?? null;
                         $data = [
                             'subject'     =>'Notifikasi Approval Pertama Permohonan ' . $jeniscuti->jenis_cuti . ' #' . $cuti->id . ' ' . $emailkry->nama,
                             'noregistrasi'=>$cuti->id,
@@ -826,7 +826,7 @@ class DirekturController extends Controller
                 $tujuan = $atasan->email ?? null;
                 $data = [
                     'subject'     =>'Notifikasi Approval Pertama Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
-                    'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR KETIDAKHADIRAN KARYAWAN',
+                    'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR KETIDAKHADIRAN KARYAWAN',
                     'subtitle' => '[PERSETUJUAN ATASAN]',
                     'noregistrasi'=>$izinn->id,
                     'tgl_permohonan' =>Carbon::parse($izinn->tgl_permohonan)->format("d/m/Y"),
@@ -909,7 +909,6 @@ class DirekturController extends Controller
                     'jumlahjam'   =>$izinn->jml_jam,
                     'status'      =>$status->name_status,
                     'namakaryawan'=>ucwords(strtolower($emailkry->nama)),
-                    'namaatasan2' =>$atasan1->nama,
                     'jabatanatasan'=>$atasan1->jabatan,
                 ];
                 // return $data;
@@ -971,9 +970,13 @@ class DirekturController extends Controller
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
                     ->first(); 
                     
-                $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
-                    ->select('email as email','nama as nama','jabatan')
-                    ->first();
+                $atasan2 = null;
+                if($karyawan->atasan_kedua !== NULL)
+                {
+                    $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
+                        ->select('email as email','nama as nama','jabatan')
+                        ->first();
+                }
 
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
@@ -990,7 +993,6 @@ class DirekturController extends Controller
                     'jabatankaryawan' => $izin->jabatan,
                     'departemen' => $karyawan->nama_departemen,
                     'atasan1'     => $atasan1->email,
-                    'atasan2'     => $atasan2->email,
                     'karyawan_email'=>$karyawan->email,
                     'id_jenisizin'=>$izin->jenis_izin,
                     'keperluan'   =>$izin->keperluan,
@@ -1002,7 +1004,6 @@ class DirekturController extends Controller
                     'jml_hari'    =>$izin->jml_hari,
                     'jumlahjam'   =>$izin->jml_jam,
                     'namakaryawan'=> ucwords(strtolower($karyawan->nama)),
-                    'namaatasan2' =>$atasan2->nama,
                     'nama'        =>$karyawan->nama,
                     'kategori'   =>$izin->jenis_izin,
                     'alasan'      =>$alasan->alasan,
@@ -1010,6 +1011,10 @@ class DirekturController extends Controller
                     'tgldisetujuipimpinan' => '',
                     'tglditolak' => Carbon::parse($izin->tgl_ditolak)->format("d/m/Y H:i"),
                 ];
+                if($atasan2 !== NULL){
+                    $data['atasan2']= $atasan2->email;
+                    $data['namaatasan2'] =$atasan2->nama;
+                }
                 // dd($data);
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
                 return redirect()->back();

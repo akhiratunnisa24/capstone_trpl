@@ -42,7 +42,7 @@
                             <li><a href="/history-absensi"><i class="fa fa-history"></i><span>History
                                         Absensi</span></a></li>
                             <li><a href="/alokasi-cuti"><i class="mdi mdi-walk"></i><span>Alokasi Cuti</span></a> </li>
-                            <li><a href="/cuti-karyawan"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Sakit/Ijin</span></a>
+                            <li><a href="/cuti-karyawan"><i class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a>
                             <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
                             </li>
                         </ul>
@@ -161,7 +161,7 @@
                     <li><a href="kalender"><i class="fa fa-calendar"></i><span>Kalender</span></a></li>
                     <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
                     <li><a href="/history-absensi" class="waves-effect"><i class="fa fa-history"></i><span>History Absensi</span></a></li>
-                    <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Sakit/Ijin</span></a></li>
+                    <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a></li>
                     <li><a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
                 </ul>
             </div>
@@ -184,7 +184,7 @@
                             <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
                             <li><a href="/history-absensi" class="waves-effect"><i class="fa fa-history"></i><span>History Absensi</span></a>
                             </li>
-                            <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Ajukan Cuti & Sakit/Ijin</span></a></li>
+                            <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a></li>
                             <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
                         </ul>
                     </li>

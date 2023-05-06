@@ -19,7 +19,7 @@ use Carbon\Carbon;
             <th>Jabatan</th>
             <th>Divisi/Departemen</th>
             <th>Tanggal Permohonan</th>
-            <th>Kategori Izin</th>
+            <th>Kategori</th>
             <th>Tanggal Ketidakhadiran</th>
             <th>Jam Izin</th>
             <th>Jumlah Jam</th>

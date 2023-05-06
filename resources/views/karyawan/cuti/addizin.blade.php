@@ -18,10 +18,17 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-6">
-                                    <div class="form-group col-sm">
+                                    {{-- <div class="form-group col-sm">
                                         <label for="tgl_permohonan" class="col-form-label">Tanggal Permohonan</label>
                                         <input type="text" class="form-control" name="tglpermohonan" id="tgl_permohonan" value="{{ date('d/m/Y') }}" readonly>
-                                    </div>
+                                    </div> --}}
+                                    <div class="form-group col-sm">
+                                        <label for="tglpermohonan" class="form-label">Tanggal Permohonan</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosex" name="tglpermohonan"  autocomplete="off" rows="10" required>
+                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                                        </div>
+                                    </div>  
                                     <div class="form-group col-sm">
                                         <label for="nik" class="col-form-label">Nomor Induk Karyawan</label>
                                         <input type="text" class="form-control" name="nik" id="nik" value="{{$datakry->nip}}" readonly>

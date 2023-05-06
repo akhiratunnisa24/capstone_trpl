@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Alokasi Cuti HRD</h4>
+                <h4 class="pull-left page-title">Hak Cuti Karyawan</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>

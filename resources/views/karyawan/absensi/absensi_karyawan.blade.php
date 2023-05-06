@@ -30,42 +30,51 @@
                             <h1 align="center" style="color: blue"><span id="waktu"></span></h1>
 
                             <div>
-                                @if (!isset($absensi->jam_masuk))
-                                    <form action="{{ route('absensi.action') }}" method="POST" align="center">
-                                        @csrf
-                                        @method('POST')
-                                        <div align="center">
-                                            <h4>Shift : <label>{{ $jadwalkaryawan->nama_shift }}</label>  Jadwal:<label>{{ $jadwalkaryawan->jadwal_masuk }}</label> </h4>
+                                @php
+                                    $isWeekend = (date('N') == 6 || date('N') == 7); // cek apakah hari ini Sabtu atau Minggu
+                                @endphp
+                                @if (!$isWeekend)
+                                    @if (!isset($absensi->jam_masuk))
+                                        <form action="{{ route('absensi.action') }}" method="POST" align="center">
+                                            @csrf
+                                            @method('POST')
+                                            <div align="center">
+                                                <h4>Shift : <label>{{ $jadwalkaryawan->nama_shift }}</label>  Jadwal:<label>{{ $jadwalkaryawan->jadwal_masuk }}</label> </h4>
+                                            </div>
+                                            <button type="submit" class="btn btn-info btn-lg"> <i class="fa fa-sign-in fa-3x"></i></button>
+                                        </form>
+                                        <div>
+                                            <h3 align="center">Absensi Masuk</h3>
                                         </div>
-                                        <button type="submit" class="btn btn-info btn-lg"> <i class="fa fa-sign-in fa-3x"></i></button>
-                                    </form>
-                                    <div>
-                                        <h3 align="center">Absensi Masuk</h3>
-                                    </div>
 
-                                @elseif(!isset($absensi->jam_keluar))
-                                    <form action="{{ route('absen_pulang', $absensi->id) }}" method="POST" align="center">
-                                        @csrf
-                                        <div align="center">
-                                            <h4>Shift : <label>{{ $jadwalkaryawan->nama_shift }}</label>  Jadwal:<label>{{ $jadwalkaryawan->jadwal_pulang }}</label> </h4>
+                                    @elseif(!isset($absensi->jam_keluar))
+                                        <form action="{{ route('absen_pulang', $absensi->id) }}" method="POST" align="center">
+                                            @csrf
+                                            <div align="center">
+                                                <h4>Shift : <label>{{ $jadwalkaryawan->nama_shift }}</label>  Jadwal:<label>{{ $jadwalkaryawan->jadwal_pulang }}</label> </h4>
+                                            </div>
+                                            <button type="submit" class="btn btn-warning btn-lg m-10">
+                                                <i class="fa fa-sign-out fa-3x"></i>
+                                            </button>
+                                        </form>
+                                        <div>
+                                            <h3 align="center">Absensi Pulang</h3>
                                         </div>
-                                        <button type="submit" class="btn btn-warning btn-lg m-10">
-                                            <i class="fa fa-sign-out fa-3x"></i>
-                                        </button>
-                                    </form>
-                                    <div>
-                                        <h3 align="center">Absensi Pulang</h3>
-                                    </div>
-                                    @elseif(isset($absensi->jam_keluar))
-                                    <div>
-                                        <h3 align="center">Terima kasih</h3>
-                                    </div>
+                                        @elseif(isset($absensi->jam_keluar))
+                                        <div>
+                                            <h3 align="center">Terima kasih</h3>
+                                        </div>
+                                    @else
+                                        <div>
+                                            <h3 align="center">Anda {{ $status->status }} Hari Ini </h3>
+                                        </div>
+                                    @endif
+                                    @include('karyawan.absensi.tidakMasukModal')
                                 @else
                                     <div>
-                                        <h3 align="center">Anda {{ $status->status }} Hari Ini </h3>
+                                        <h3 align="center">Tidak Ada Jadwal Hari Ini</h3>
                                     </div>
                                 @endif
-                                @include('karyawan.absensi.tidakMasukModal')
 
 
                         </h3>
