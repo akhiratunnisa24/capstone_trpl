@@ -133,7 +133,8 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/deletesetting/' ?>' + id;
+                    location.href = '<?= '/deletesetting/' ?>' + id;
+                    //location.href = '<?= 'http://localhost:8000/deletesetting/' ?>' + id;
                     // location.href = '<?= 'http://dev.rynest-technology.com/deletesetting/' ?>' + id;
                 }
             })

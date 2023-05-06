@@ -126,7 +126,7 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/jadwal/delete/' ?>' + id;
+                    location.href = '<?= '/jadwal/delete/' ?>' + id;
                 }
             })
         }

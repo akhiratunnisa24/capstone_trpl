@@ -310,7 +310,7 @@ class IzinAdminController extends Controller
                     'noregistrasi'=>$izin->id,
                     'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
                     'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR IZIN KARYAWAN',
-                    'subtitle' => '[ PENDING PIMPINAN ]',
+                    'subtitle' => '[ PENDING PIMPINAN]',
                     'nik'         => $izin->nik,
                     'jabatankaryawan' => $izin->jabatan,
                     'departemen' => $karyawan->nama_departemen,

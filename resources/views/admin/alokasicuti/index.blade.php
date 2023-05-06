@@ -160,7 +160,7 @@
                        icon: "success",
                        confirmButtonColor: '#3085d6',
                    })
-                   location.href = '<?= "http://localhost:8000/deletealokasi" ?>'+id;
+                   location.href = '<?='/deletealokasi' ?>'+id;
                }
            })
        }

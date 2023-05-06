@@ -106,7 +106,7 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/job/delete' ?>' + id;
+                    location.href = '<?= '/job/delete' ?>' + id;
                 }
             })
         }

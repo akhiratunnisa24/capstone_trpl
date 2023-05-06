@@ -374,8 +374,69 @@
                                                                                 <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                             </form>
                                                                         </div>
+                                                                   
+                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Direksi")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('batal.approved', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="{{ route('batal.rejected', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Direksi")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="{{ route('ubah.rejected', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                    @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Direksi")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('batal.approved', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="{{ route('batal.rejected', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                    @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Perubahan Disetujui Atasan" && $row->jabatan == "Direksi")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="{{ route('ubah.rejected', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                    @else
                                                                     @endif
-                                                                    
                                                                     <div class="col-sm-3" style="margin-left:6px">
                                                                         <form action="" method="POST">
                                                                             <a class="btn btn-info btn-sm" style="height:26px"
@@ -730,7 +791,7 @@
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#8" class="collapsed"
                                     aria-expanded="false">
-                                    Pembatalan dan Perubahan Izin Karyawan
+                                    Pembatalan/Perubahan Sakit/Ijin 
                                     
                                     @if ($jumizin)
                                         <span class="badge badge badge-danger" style="background-color:red">{{ $jumizin }}</span>
@@ -824,6 +885,66 @@
                                                                             </form>
                                                                         </div>
                                                                     @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Manajer")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="{{ route('ubah.tolak', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                    @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Direksi")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="{{ route('batal.tolak', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                    @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Perubahan Disetujui Atasan" && $row->jabatan == "Direksi")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="{{ route('ubah.tolak', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Direksi")
+                                                                        <div class="col-sm-3">
+                                                                            <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm-3" style="margin-left:7px">
+                                                                            <form action="{{ route('batal.tolak', $data->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
+                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Direksi")
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
                                                                                 @csrf
