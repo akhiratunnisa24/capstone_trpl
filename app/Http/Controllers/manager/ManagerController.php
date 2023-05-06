@@ -1520,7 +1520,7 @@ class ManagerController extends Controller
                     'subject'     => 'Notifikasi Permohonan Cuti Ditolak, Cuti ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$cuti->id,
                     'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR CUTI KARYAWAN',
-                    'subtitle' => '[ PENDING PIMPINAN ]',
+                    'subtitle' => '[PENDING PIMPINAN UNIT KERJA ]',
                     'tgl_permohonan' =>Carbon::parse($cuti->tgl_permohonan)->format("d/m/Y"),
                     'nik'         => $cuti->nik,
                     'jabatankaryawan' => $cuti->jabatan,
@@ -1681,13 +1681,15 @@ class ManagerController extends Controller
                     ->select('karyawan.email','karyawan.nama','karyawan.atasan_kedua','departemen.nama_departemen')
                     ->first();
 
-                $atasan = Karyawan::where('id', $emailkry->atasan_kedua)
-                    ->select('email as email','nama as nama','jabatan')
-                    ->first();
-
-                //atasan pertama
+                $atasan = null;
+                if($emailkry->atasan_kedua !== NULL)
+                {
+                    $atasan = Karyawan::where('id', $emailkry->atasan_kedua)
+                        ->select('email as email','nama as nama','jabatan')
+                        ->first();
+                }
                 $atasan1 = Auth::user()->email;
-                $tujuan = $atasan->email;
+                $tujuan = $atasan->email ?? null;
                 $data = [
                     'subject'     =>'Notifikasi Approval Pertama Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
                     'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR KETIDAKHADIRAN KARYAWAN',
@@ -1710,9 +1712,11 @@ class ManagerController extends Controller
                     'jumlahjam'   =>$izinn->jml_jam,
                     'status'      =>$status->name_status,
                     'namakaryawan'=> $emailkry->nama,
-                    'namaatasan2' =>$atasan->nama,
-                    'jabatanatasan'=>$atasan->jabatan,
                 ];
+                if($atasan !==NULL){
+                    $data['namaatasan2'] = $atasan->nama;
+                    $data['jabatanatasan'] = $atasan->jabatan;
+                }
                 Mail::to($tujuan)->send(new IzinAtasan2Notification($data));
                 return redirect()->back()->withInput();
             } 
@@ -2116,7 +2120,7 @@ class ManagerController extends Controller
                     'noregistrasi'=>$izin->id,
                     'tgl_permohonan' =>Carbon::parse($izin->tgl_permohonan)->format("d/m/Y"),
                     'title' =>  'NOTIFIKASI PERSETUJUAN FORMULIR IZIN KARYAWAN',
-                    'subtitle' => '[ PENDING PIMPINAN ]',
+                    'subtitle' => '[ PENDING PIMPINAN UNIT KERJA ]',
                     'nik'         => $izin->nik,
                     'jabatankaryawan' => $izin->jabatan,
                     'departemen' => $karyawan->nama_departemen,
