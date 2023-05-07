@@ -186,7 +186,7 @@
             var endFormatted = endArray[1] + '/' + endArray[0] + '/' + endArray[2];
             var end_date = new Date(endFormatted);
 
-            console.log(start_date,end_date);
+            // console.log(start_date,end_date);
             // var start_date = new Date(start);
             // var end_date   = new Date(end);
             var daysOfYear = [];
@@ -211,7 +211,7 @@
                         let tanggal = new Date(d);
                         if (tanggal.getDay() != 0 && tanggal.getDay() != 6 && !liburDates.includes(tanggal.getTime())) {
                             daysOfYear.push(tanggal);
-                            console.log(tanggal);
+                            // console.log(tanggal);
                         } else {
                             console.log(" Hari Libur " + tanggal.getDay());
                         }

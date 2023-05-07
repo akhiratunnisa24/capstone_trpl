@@ -133,7 +133,8 @@ class SettingalokasicutiController extends Controller
                 }
             }
             return redirect()->back()->withInput();
-        } else {
+        } else 
+        {
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
                 'durasi'       => 'required',

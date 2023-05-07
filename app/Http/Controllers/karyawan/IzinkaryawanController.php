@@ -60,13 +60,14 @@ class IzinkaryawanController extends Controller
                 'jam_mulai'     => 'required',
             ]);
             // dd($validate);
-            // $today = \Carbon\Carbon::today();
-            // $existingIzin = Izin::where('id_karyawan', $karyawan)
-            //                 ->whereDate('tgl_permohonan', $today)
-            //                 ->first();
+            $today = \Carbon\Carbon::today();
+            $existingIzin = Izin::where('id_karyawan', $karyawan)
+                            ->where('id_jenisizin', $request->id_jenisizin) 
+                            ->whereDate('tgl_permohonan', $today)
+                            ->first();
             
-            // if(!$existingIzin)
-            // {
+            if(!$existingIzin)
+            {
                 $izin = New Izin;
                 $izin->tgl_permohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tglpermohonan)->format("Y-m-d");
                 $izin->nik            = $request->nik;
@@ -140,11 +141,11 @@ class IzinkaryawanController extends Controller
                 Mail::to($tujuan)->send(new IzinNotification($data));
                 
                 return redirect()->back()->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
-            // }
-            // else
-            // {
-            //     return redirect()->back()->with('pesa', 'Anda sudah mengajukan izin pada hari ini!');
-            // }
+            }
+            else
+            {
+                return redirect()->back()->with('pesa', 'Anda sudah mengajukan izin pada hari ini!');
+            }
         }
         else
         {
@@ -156,13 +157,14 @@ class IzinkaryawanController extends Controller
                 'jml_hari'      => 'required',
             ]);
 
-            // $today = \Carbon\Carbon::today();
-            // $existingIzin = Izin::where('id_karyawan', $karyawan)
-            //                 ->whereDate('tgl_permohonan', $today)
-            //                 ->first();
+            $today = \Carbon\Carbon::today();
+            $existingIzin = Izin::where('id_karyawan', $karyawan)
+                            ->where('id_jenisizin', $request->id_jenisizin)
+                            ->whereDate('tgl_permohonan', $today)
+                            ->first();
             
-            // if(!$existingIzin)
-            // {
+            if(!$existingIzin)
+            {
                 // dd($request->all());
                 $izin = New Izin;
                 $izin->tgl_permohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tglpermohonan)->format("Y-m-d");
@@ -232,11 +234,11 @@ class IzinkaryawanController extends Controller
                 // dd($data);
                 return redirect()->back()->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
 
-            // }
-            // else
-            // {
-            //     return redirect()->back()->with('pesa', 'Anda sudah mengajukan izin pada hari ini!');
-            // } 
+            }
+            else
+            {
+                return redirect()->back()->with('pesa', 'Anda sudah mengajukan izin dengan kategori yang sama pada hari ini!');
+            } 
         }  
 
     }

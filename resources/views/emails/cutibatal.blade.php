@@ -162,10 +162,17 @@
 					<p class="title">Keterangan</p><label class="value">: <strong>{{$data['keperluan']}}</strong></label><br>
 					<p class="title">Tanggal Persetujuan</p><label class="value">:</label>
 					<ul>
-						@if($data['status'] == "Pembatalan Disetujui Atasan" || $data['status'] == "Perubahan Disetujui Atasan")
+						@if($data['status'] == "Pembatalan Disetujui Atasan")
 							<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>{{$data['tgldisetujuiatasan']}}</strong> WIB</label></li>
 							<li><label class="value">Pimpinan Unit Kerja: -</label></li>
-                    	@elseif($data['status'] == "Transaksi Dibatalkan" || $data['status'] == "Perubahan Disetujui")
+						@elseif($data['status'] == "Perubahan Disetujui Atasan")
+							<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>{{$data['tgldisetujuiatasan']}}</strong> WIB</label></li>
+							<li><label class="value">Pimpinan Unit Kerja: -</label></li>
+                    	@elseif($data['status'] == "Transaksi Dibatalkan")
+							<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;: <strong>{{$data['tgldisetujuiatasan']}}</strong> WIB</label></li>
+							<li><label class="value">Pimpinan Unit Kerja:  <strong>{{$data['tgldisetujuipimpinan']}}</strong> WIB</label></li>
+							<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;:  <strong>{{$data['tgldisetujuipimpinan']}}</strong> WIB</label></li>
+						@elseif($data['status'] == "Perubahan Disetujui")
 							<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;: <strong>{{$data['tgldisetujuiatasan']}}</strong> WIB</label></li>
 							<li><label class="value">Pimpinan Unit Kerja:  <strong>{{$data['tgldisetujuipimpinan']}}</strong> WIB</label></li>
 							<li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;:  <strong>{{$data['tgldisetujuipimpinan']}}</strong> WIB</label></li>

@@ -1378,8 +1378,8 @@ class ManagerController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      =>$alasan->alasan,
-                    'tgldisetujuiatasan' => '',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' => '-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -1458,8 +1458,8 @@ class ManagerController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      =>$alasan->alasan,
-                    'tgldisetujuiatasan' => '',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' => '-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -1610,7 +1610,7 @@ class ManagerController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      =>$alasan->alasan,
-                    'tgldisetujuiatasan' => '',
+                    'tgldisetujuiatasan' => '-',
                     'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -1993,8 +1993,8 @@ class ManagerController extends Controller
                 'nama'        =>$karyawan->nama,
                 'kategori'   =>$izin->jenis_izin,
                 'alasan'      =>$alasan->alasan,
-                'tgldisetujuiatasan' => '',
-                'tgldisetujuipimpinan' => '',
+                'tgldisetujuiatasan' => '-',
+                'tgldisetujuipimpinan' => '-',
                 'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
             ];
             Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
@@ -2009,7 +2009,7 @@ class ManagerController extends Controller
                 'tgl_ditolak' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
             $izz = Izin::where('id',$id)->first();
-            dd($izz);
+            // dd($izz);
 
             $datareject          = new Datareject;
             $datareject->id_cuti = NULL;
@@ -2066,8 +2066,8 @@ class ManagerController extends Controller
                 'nama'        =>$karyawan->nama,
                 'kategori'   =>$izin->jenis_izin,
                 'alasan'      =>$alasan->alasan,
-                'tgldisetujuiatasan' => '',
-                'tgldisetujuipimpinan' => '',
+                'tgldisetujuiatasan' => '-',
+                'tgldisetujuipimpinan' => '-',
                 'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
             ];
             Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
@@ -2142,7 +2142,7 @@ class ManagerController extends Controller
                     'kategori'   =>$izin->jenis_izin,
                     'alasan'      =>$alasan->alasan,
                     'tgldisetujuiatasan' => Carbon::parse($izin->tgl_setuju_a)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($izin->tgl_ditolak)->format("d/m/Y H:i"),
                 ];
                 // dd($data);
@@ -2214,8 +2214,8 @@ class ManagerController extends Controller
                     'nama'        =>$karyawan->nama,
                     'kategori'   =>$izin->jenis_izin,
                     'alasan'      =>$alasan->alasan,
-                    'tgldisetujuiatasan' => '',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' => '-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL)

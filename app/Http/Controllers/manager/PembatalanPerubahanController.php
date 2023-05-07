@@ -85,8 +85,8 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -153,8 +153,8 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -259,7 +259,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($ct->batal_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -328,8 +328,8 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -439,7 +439,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($ct->batal_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -508,8 +508,8 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -526,23 +526,26 @@ class PembatalanPerubahanController extends Controller
         }
         elseif($datacuti && $role == 3 && $row->jabatan == "Direksi")
         {
-            dd("hai direktur ini pembatalan dan perubahan cuti");
+            // dd("hai direktur ini pembatalan dan perubahan cuti");
+            // dd($datacuti);
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
+                // dd($datacuti);
                 $status = Status::find(13);
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batal_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
+                // dd($cuti);
 
                 $alokasicuti = Alokasicuti::where('id', $cuti->id_alokasi)
-                    ->where('id_karyawan', $cuti->id_karyawan)
                     ->where('id_jeniscuti', $cuti->id_jeniscuti)
                     ->where('id_settingalokasi', $cuti->id_settingalokasi)
                     ->first();
 
                 $durasibaru = $cuti->saldohakcuti;
+                // dd($cuti,$alokasicuti);
     
                 Alokasicuti::where('id', $alokasicuti->id)
                 ->update(
@@ -620,7 +623,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($ct->batal_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -689,8 +692,8 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -776,8 +779,8 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($ct->batalditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -845,8 +848,8 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($ct->batalditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -918,7 +921,7 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -987,8 +990,8 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -1006,7 +1009,7 @@ class PembatalanPerubahanController extends Controller
         }
         else if($datacuti && $role == 3 && $row->jabatan == "Direksi")
         {
-            dd("hai");
+            // dd("hai");
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
                 $status = Status::find(10);
@@ -1063,7 +1066,7 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -1132,8 +1135,8 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -1207,7 +1210,7 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->batal_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -1276,8 +1279,8 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -1366,8 +1369,8 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                     'atasan2' =>$atasan2->email,
                     'namaatasan2' => $atasan2->nama,
                 ];
@@ -1434,8 +1437,8 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                     'atasan2' =>$atasan2->email,
                     'namaatasan2' => $atasan2->nama,
                 ];
@@ -1543,7 +1546,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>Carbon::parse($ct->ubah_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($ct->ubah_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1613,8 +1616,8 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1726,7 +1729,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>Carbon::parse($ct->ubah_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($ct->ubah_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1796,8 +1799,8 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1910,7 +1913,7 @@ class PembatalanPerubahanController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>Carbon::parse($ct->ubah_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($ct->ubah_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1979,8 +1982,8 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -2066,8 +2069,8 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($ct->ubahditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -2135,8 +2138,8 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($ct->ubahditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -2207,7 +2210,7 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' => Carbon::parse($ct->ubahditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -2276,8 +2279,8 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($ct->ubahditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -2295,7 +2298,7 @@ class PembatalanPerubahanController extends Controller
         }
         else if($datacuti && $role == 3 && $row->jabatan == "Direksi")
         {
-            dd("hai direksi");
+            // dd("hai direksi");
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
                 $status = Status::find(10);
@@ -2351,7 +2354,7 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' => Carbon::parse($ct->ubahditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -2420,8 +2423,8 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($ct->ubahditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -2494,7 +2497,7 @@ class PembatalanPerubahanController extends Controller
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($ct->ubah_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' => Carbon::parse($ct->ubahditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -2563,8 +2566,8 @@ class PembatalanPerubahanController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($ct->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){

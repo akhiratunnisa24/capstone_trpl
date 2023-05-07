@@ -164,6 +164,7 @@
                                                                 <label class="form-label">Status Karyawan</label>
                                                                 <select class="form-control selectpicker" name="statusKaryawan" required>
                                                                     <option value="">Pilih Status   </option>
+                                                                    <option value="Pengurus"  {{ $karyawan->status_karyawan ?? '' == 'Pengurus' ? 'selected' : '' }}>Pengurus</option>
                                                                     <option value="Tetap"  {{ $karyawan->status_karyawan ?? '' == 'Tetap' ? 'selected' : '' }}>Tetap</option>
                                                                     <option value="Kontrak" {{ $karyawan->status_karyawan ?? '' == 'Kontrak' ? 'selected' : '' }}>Kontrak</option>
                                                                     <option value="Probation" {{ $karyawan->status_karyawan ?? '' == 'Probation' ? 'selected' : '' }}>Probation</option>

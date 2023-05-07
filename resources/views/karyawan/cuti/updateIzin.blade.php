@@ -192,8 +192,8 @@
                     $('#idalokasi').val(data.id);
                     $('#idsettingalokasi').val(data.id_settingalokasi);
                     $('#durasii').val(data.durasi);
-                    $('#datepicker-autocloses').val(data.aktif_dari);
-                    $('#datepicker-autocloset').val(data.sampai);
+                    $('#datepicker-autoclose44').val(data.aktif_dari);
+                    $('#datepicker-autoclose45').val(data.sampai);
                     // console.log(data?.durasi)
                     durasi     = data.durasi;
                 }
@@ -204,21 +204,19 @@
     <script type="text/javascript">
         function jumlahizins()
         {
-            var starts= $('#datepicker-autocloseu').val();
-            var end  = $('#datepicker-autoclosev').val();
-            console.log(start,end);
+            var starts= $('#datepicker-autoclose44').val();
+            var ends  = $('#datepicker-autoclose45').val();
 
             // Mengubah format tanggal pada variabel start
-            var startArray = start.split('/');
+            var startArray = starts.split('/');
             var startFormatted = startArray[1] + '/' + startArray[0] + '/' + startArray[2];
-            var start_date = new Date(startFormatted);
+            var start_dates = new Date(startFormatted);
 
             // Mengubah format tanggal pada variabel end
-            var endArray = end.split('/');
+            var endArray = ends.split('/');
             var endFormatted = endArray[1] + '/' + endArray[0] + '/' + endArray[2];
-            var end_date = new Date(endFormatted);
+            var end_dates = new Date(endFormatted);
 
-            console.log(start_date,end_date);
             // var start_date = new Date(start);
             // var end_date   = new Date(end);
             var daysOfYear = [];
@@ -237,23 +235,23 @@
                     });
 
                      //untuk mendapatkan jumlahh hari cuti
-                    for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1)) 
+                    for (var d = start_dates; d <= end_dates; d.setDate(d.getDate() + 1)) 
                     {
                         //cek workdays
                         let tanggal = new Date(d);
                         if (tanggal.getDay() != 0 && tanggal.getDay() != 6 && !liburDates.includes(tanggal.getTime())) {
                             daysOfYear.push(tanggal);
-                            console.log(tanggal);
+                            // console.log(tanggal);
                         } else {
-                            console.log(" Hari Libur " + tanggal.getDay());
+                            // console.log(" Hari Libur " + tanggal.getDay());
                         }
 
-                        console.info(daysOfYear.length);
+                        // console.info(daysOfYear.length);
                         $('#jumlahhh').val(daysOfYear.length ?? 0);
                     }
 
                     // Menjalankan fungsi jumlahcutis saat input tanggal mulai atau tanggal selesai berubah
-                    $('#start_date, #end_date').on('change', function() {
+                    $('#start_dates, #end_dates').on('change', function() {
                         jumlahizins();
                     });
 
@@ -264,17 +262,6 @@
                     });
 
                     $('#jumlahhh').val(daysOfYear.length ?? 0);
-                    // //mengambil value tanggal mulai
-                    // $('#start_date').on('change', function() {
-                    //     jumlahcutis();
-                    // });
-
-                    // //mengambil value tanggal selesai
-                    // $('#end_date').on('change', function() {
-                    //     jumlahcutis();
-                    // });
-
-                   
                 } 
             });
         };

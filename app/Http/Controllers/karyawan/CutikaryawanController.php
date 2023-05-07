@@ -132,13 +132,14 @@ class CutikaryawanController extends Controller
 
         $jeniscuti = Jeniscuti::where('id', $request->id_jeniscuti)->first();
 
-        // $today = \Carbon\Carbon::today();
-        // $existingCuti = Cuti::where('id_karyawan', $karyawan)
-        //                 ->whereDate('tgl_permohonan', $today)
-        //                 ->first();
+        $today = \Carbon\Carbon::today();
+        $existingCuti = Cuti::where('id_karyawan', $karyawan)
+                        ->where('id_jeniscuti', $request->id_jeniscuti)
+                        ->whereDate('tgl_permohonan', $today)
+                        ->first();
 
-        // if (!$existingCuti) 
-        // {
+        if (!$existingCuti) 
+        {
             $cuti = new Cuti;
             $cuti->tgl_permohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_permohonan)->format("Y-m-d");
             $cuti->nik            = $request->nik;
@@ -230,9 +231,9 @@ class CutikaryawanController extends Controller
     
             return redirect()->back()->with('pesan', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
 
-        // }else{
-        //     return redirect()->back()->with('pesa', 'Anda sudah mengajukan cuti pada hari ini!');
-        // }
+        }else{
+            return redirect()->back()->with('pesa', 'Anda sudah mengajukan cuti pada hari ini!');
+        }
     }
 
     public function batal(Request $request, $id)
