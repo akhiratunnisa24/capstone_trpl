@@ -83,8 +83,8 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -152,8 +152,8 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -224,7 +224,7 @@ class PembatalanIzinController extends Controller
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($iz->batal_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -238,7 +238,7 @@ class PembatalanIzinController extends Controller
             {
                 // return $dataizin;
                 $status = Status::find(12);
-                return $status->id;
+                // return $status->id;
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -293,8 +293,8 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -368,7 +368,7 @@ class PembatalanIzinController extends Controller
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($iz->batal_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -382,7 +382,7 @@ class PembatalanIzinController extends Controller
             {
                 // return $dataizin;
                 $status = Status::find(12);
-                return $status->id;
+                // return $status->id;
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -437,8 +437,8 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -455,8 +455,8 @@ class PembatalanIzinController extends Controller
         }
         elseif($dataizin && $role == 3 && $row->jabatan == "Direksi")
         {
-            dd("hai direksi");
-            if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
+            // dd("hai direksi");
+            if( $dataizin->atasan_kedua == Auth::user()->id_pegawai && $dataizin)
             {
                 $status = Status::find(13);
                 Izin::where('id',$id)->update([
@@ -512,7 +512,7 @@ class PembatalanIzinController extends Controller
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($iz->batal_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -526,7 +526,8 @@ class PembatalanIzinController extends Controller
             {
                 // return $dataizin;
                 $status = Status::find(12);
-                return $status->id;
+                // return $status->id;
+                // dd($dataizin, Auth::user()->name);
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -581,8 +582,8 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      =>null,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -669,8 +670,8 @@ class PembatalanIzinController extends Controller
                     'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($iz->batalditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -687,7 +688,7 @@ class PembatalanIzinController extends Controller
         elseif($dataizin && $role == 1 && $row->jabatan == "Asisten Manajer")
         {
             $status = Status::find(9);
-            return $status->name_status;
+            // return $status->name_status;
             Izin::where('id',$id)->update([
                 'catatan' => $status->name_status,
                 'batalditolak' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -738,8 +739,8 @@ class PembatalanIzinController extends Controller
                 'jml_cuti'    => $iz->jml_hari,
                 'status'      => $iz->name_status,
                 'alasan'      => $status->name_status,
-                'tgldisetujuiatasan' =>'',
-                'tgldisetujuipimpinan' => '',
+                'tgldisetujuiatasan' =>'-',
+                'tgldisetujuipimpinan' => '-',
                 'tglditolak' => Carbon::parse($iz->batalditolak)->format("d/m/Y H:i"),
             ];
             if($atasan2 !== NULL){
@@ -811,7 +812,7 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' =>  Carbon::parse($iz->batalditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -826,7 +827,7 @@ class PembatalanIzinController extends Controller
             {
                 // return $dataizin;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batalditolak' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -880,8 +881,8 @@ class PembatalanIzinController extends Controller
                     'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($iz->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -955,14 +956,14 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' => Carbon::parse($iz->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
                     $data['namaatasan2'] = $atasan2->nama;
                 }
-                return $data;
+                // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
                 return redirect()->back();
             }
@@ -970,7 +971,7 @@ class PembatalanIzinController extends Controller
             {
                 // return $dataizin;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batalditolak' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -1024,8 +1025,8 @@ class PembatalanIzinController extends Controller
                     'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($iz->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -1043,7 +1044,7 @@ class PembatalanIzinController extends Controller
         }
         elseif($dataizin && $role == 3 && $row->jabatan == "Direksi")
         {
-            return "Hai Direksi";
+            // return "Hai Direksi";
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
                 $status = Status::find(10);
@@ -1100,7 +1101,7 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->batal_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' =>  Carbon::parse($iz->batalditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -1115,7 +1116,7 @@ class PembatalanIzinController extends Controller
             {
                 // return $dataizin;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batalditolak' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -1169,8 +1170,8 @@ class PembatalanIzinController extends Controller
                     'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($iz->batalditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -1258,8 +1259,8 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->ubah_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1325,8 +1326,8 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>  Carbon::parse($iz->ubah_atasan)->format('d/m/Y H:i'),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                     'atasan2' =>$atasan2->email,
                     'namaatasan2' => $atasan2->nama,
                 ];
@@ -1395,7 +1396,7 @@ class PembatalanIzinController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>Carbon::parse($iz->ubah_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($iz->ubah_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1412,7 +1413,7 @@ class PembatalanIzinController extends Controller
                 // return $status->id;
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
-                    'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'ubah_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $izin = Izin::where('id',$id)->first();
 
@@ -1464,8 +1465,8 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->ubah_atasan)->format("d/m/Y"),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1538,7 +1539,7 @@ class PembatalanIzinController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>Carbon::parse($iz->ubah_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($iz->ubah_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1552,7 +1553,7 @@ class PembatalanIzinController extends Controller
             {
                 // return $dataizin;
                 $status = Status::find(15);
-                return $status->id;
+                // return $status->id;
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -1607,8 +1608,8 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->ubah_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1682,7 +1683,7 @@ class PembatalanIzinController extends Controller
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' =>Carbon::parse($iz->ubah_atasan)->format("d/m/Y H:i"),
                     'tgldisetujuipimpinan' => Carbon::parse($iz->ubah_pimpinan)->format("d/m/Y H:i"),
-                    'tglditolak' =>'',
+                    'tglditolak' =>'-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1696,10 +1697,10 @@ class PembatalanIzinController extends Controller
             {
                 // return $dataizin;
                 $status = Status::find(15);
-                return $status->id;
+                // return $status->id;
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
-                    'batal_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'ubah_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $izin = Izin::where('id',$id)->first();
 
@@ -1751,8 +1752,8 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->ubah_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' => '',
-                    'tglditolak' => '',
+                    'tgldisetujuipimpinan' => '-',
+                    'tglditolak' => '-',
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
@@ -1838,8 +1839,8 @@ class PembatalanIzinController extends Controller
                     'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($iz->ubahditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -1907,8 +1908,8 @@ class PembatalanIzinController extends Controller
                     'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($iz->ubahditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -1979,7 +1980,7 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->ubah_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' => Carbon::parse($iz->ubahditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -1994,7 +1995,7 @@ class PembatalanIzinController extends Controller
             {
                 // return $dataizin;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'ubahditolak' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -2048,8 +2049,8 @@ class PembatalanIzinController extends Controller
                     'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($iz->ubahditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -2067,7 +2068,7 @@ class PembatalanIzinController extends Controller
         }
         else if($dataizin && $role == 3 && $row->jabatan == "Direksi")
         {
-            dd("hai direksi");
+            // dd("hai direksi");
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
                 $status = Status::find(10);
@@ -2123,7 +2124,7 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->ubah_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' => Carbon::parse($iz->ubahditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -2138,7 +2139,7 @@ class PembatalanIzinController extends Controller
             {
                 // return $dataizin;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'ubahditolak' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -2192,8 +2193,8 @@ class PembatalanIzinController extends Controller
                     'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($iz->ubahditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -2266,7 +2267,7 @@ class PembatalanIzinController extends Controller
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
                     'tgldisetujuiatasan' => Carbon::parse($iz->ubah_atasan)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' =>'',
+                    'tgldisetujuipimpinan' =>'-',
                     'tglditolak' => Carbon::parse($iz->ubahditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL){
@@ -2281,7 +2282,7 @@ class PembatalanIzinController extends Controller
             {
                 // return $dataizin;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Izin::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'ubahditolak' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -2335,8 +2336,8 @@ class PembatalanIzinController extends Controller
                     'jml_cuti'    => $iz->jml_hari,
                     'status'      => $iz->name_status,
                     'alasan'      => $status->name_status,
-                    'tgldisetujuiatasan' =>'',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' =>'-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($iz->ubahditolak)->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){

@@ -336,7 +336,7 @@ class IzinAdminController extends Controller
                     'kategori'   =>$izin->jenis_izin,
                     'alasan'      =>$alasan->alasan,
                     'tgldisetujuiatasan' => Carbon::parse($izin->tgl_setuju_a)->format("d/m/Y H:i"),
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($izin->tgl_ditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL)
@@ -413,8 +413,8 @@ class IzinAdminController extends Controller
                     'nama'        =>$karyawan->nama,
                     'kategori'   =>$izin->jenis_izin,
                     'alasan'      =>$alasan->alasan,
-                    'tgldisetujuiatasan' => '',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' => '-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::parse($izin->tgl_ditolak)->format("d/m/Y H:i"),
                 ];
                 if($atasan2 !== NULL)

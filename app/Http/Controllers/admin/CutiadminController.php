@@ -404,7 +404,7 @@ class CutiadminController extends Controller
                     ]);
                     $cutis = Cuti::where('id',$id)->first();
                     $jeniscuti = Jeniscuti::where('id',$datacuti->id_jeniscuti)->first();
-                    dd($jeniscuti);
+                    // dd($jeniscuti);
                     //KIRIM NOTIFIKASI EMAIL
                     //ambil data karyawan
                     $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
@@ -468,7 +468,7 @@ class CutiadminController extends Controller
                 if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
                 {
                     $status = Status::find(6);
-                    dd($status);
+                    // dd($status);
                     Cuti::where('id',$id)->update([
                         'status' => $status->id,
                         'tgldisetujui_a' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -916,7 +916,7 @@ class CutiadminController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      =>$alasan->alasan,
-                    'tgldisetujuiatasan' => '',
+                    'tgldisetujuiatasan' => '-',
                     'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
@@ -997,8 +997,8 @@ class CutiadminController extends Controller
                     'jml_cuti'    => $ct->jml_cuti,
                     'status'      => $ct->name_status,
                     'alasan'      =>$alasan->alasan,
-                    'tgldisetujuiatasan' => '',
-                    'tgldisetujuipimpinan' => '',
+                    'tgldisetujuiatasan' => '-',
+                    'tgldisetujuipimpinan' => '-',
                     'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
                 ];
                 if($atasan2 !== NULL){
