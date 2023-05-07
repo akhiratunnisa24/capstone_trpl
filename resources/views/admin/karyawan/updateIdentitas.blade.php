@@ -146,7 +146,7 @@
 
                                                         <div class="form-group">
                                                             <label class="form-label">Atasan Langsung
-                                                                (SPV/Manajer/Direktur)</label>
+                                                                (Asisten Manajer/Manajer/Direktur)</label>
                                                             <select class="form-control" name="atasan_pertama"
                                                                 data-live-search="true">
                                                                 <option value="">Pilih Atasan Langsung</option>
@@ -203,15 +203,10 @@
                                                             <label class="form-label">Status Karyawan</label>
                                                             <select class="form-control" name="statusKaryawan">
                                                                 <option value="">Pilih Status Karyawan</option>
-                                                                <option value="Tetap"
-                                                                    @if ($karyawan->status_karyawan == 'Tetap') selected @endif>Tetap
-                                                                </option>
-                                                                <option value="Kontrak"
-                                                                    @if ($karyawan->status_karyawan == 'Kontrak') selected @endif>
-                                                                    Kontrak</option>
-                                                                <option value="Probation"
-                                                                    @if ($karyawan->status_karyawan == 'Probation') selected @endif>
-                                                                    Probation</option>
+                                                                <option value="Pengurus"@if ($karyawan->status_karyawan == 'Pengurus') selected @endif>Pengurus</option>
+                                                                <option value="Tetap" @if ($karyawan->status_karyawan == 'Tetap') selected @endif>Tetap</option>
+                                                                <option value="Kontrak" @if ($karyawan->status_karyawan == 'Kontrak') selected @endif>Kontrak</option>
+                                                                <option value="Probation" @if ($karyawan->status_karyawan == 'Probation') selected @endif> Probation</option>
                                                             </select>
                                                         </div>
 

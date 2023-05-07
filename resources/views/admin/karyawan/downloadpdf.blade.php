@@ -440,7 +440,7 @@
 
     {{-- <br>
     <div class="row-sm-3">
-        <p id="ttd">Depok, {{ date('d F Y') }}</p>
+        <p id="ttd">Jakarta Selatan, {{ date('d F Y') }}</p>
         <br>
         <br>
         <p id="tt">(HR Development)</p>

@@ -297,7 +297,7 @@
                             <div class="form-group mb-3">
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
-                                        <label class="font-size-14 fw-bold">Atasan (SPV/Manajer/Management)</label>
+                                        <label class="font-size-14 fw-bold">Atasan (Asisten Manajer/Manajer/Direktur)</label>
                                         @if (!empty($atasan_kedua_nama))
                                             <p>{{ $atasan_kedua_nama }}</p>
                                         @else

@@ -188,7 +188,7 @@
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1"
                                                                                     class="form-label">Atasan Langsung
-                                                                                    (SPV/Manajer/Direktur)</label>
+                                                                                    (Asisten Manajer/Manajer/Direktur)</label>
                                                                                 <select
                                                                                     class="form-control selectpicker"
                                                                                     name="atasan_pertama"
