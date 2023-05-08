@@ -29,41 +29,70 @@ class AbsensiKaryawanController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    
     public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-         //$absensi = Absensi::latest()->where('id_karyawan',Auth::user()->id_pegawai)->orderBy('tanggal')->get();
         $iduser = Auth::user()->id_pegawai;
 
-        $bulan = $request->query('bulan',Carbon::now()->format('m'));
-        $tahun = $request->query('tahun',Carbon::now()->format('Y'));
+        $absensi = Absensi::with('karyawans', 'departemens')
+            ->where('id_karyawan', $iduser);
+
+
+        $bulan = $request->query('bulan');
+        $tahun = $request->query('tahun');
+
+        if($bulan && $tahun)
+        {
+            $absensi = $absensi->whereMonth('tanggal', $bulan)
+                ->whereYear('tanggal', $tahun);
+        }
+
+        $absensi = $absensi->get();
+
+        // dd($absensi);
 
         // simpan session
-        $request->session()->put('bulan', $bulan);
-        $request->session()->put('tahun', $tahun);
-
-        if(isset($bulan) && isset($tahun))
-        {
-            $absensi = Absensi::with('karyawans','departemens')
-                ->where('id_karyawan', $iduser)
-                ->whereMonth('tanggal', $bulan)
-                ->whereYear('tanggal',$tahun)
-                ->get();
-        }
-        else
-            {
-                $request->session()->forget('bulan');
-                $request->session()->forget('tahun');
-                
-                $absensi = Absensi::with('karyawans','departemens')->get();
-                // dd($absensi);
-        }
+        $request->session()->put('bulan', $bulan ?? Carbon::now()->format('m'));
+        $request->session()->put('tahun', $tahun ?? Carbon::now()->format('Y'));
+        // dd($absensi);
         return view('karyawan.absensi.history_absensi',compact('absensi','row'));
-        
+       
+        $request->session()->forget('bulan');
+        $request->session()->forget('tahun');
         //menghapus filter data
        
     }
+
+    
+    // public function index(Request $request)
+    // {
+    //     $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+    //      //$absensi = Absensi::latest()->where('id_karyawan',Auth::user()->id_pegawai)->orderBy('tanggal')->get();
+    //     $iduser = Auth::user()->id_pegawai;
+
+    //     $bulan = $request->query('bulan',Carbon::now()->format('m'));
+    //     $tahun = $request->query('tahun',Carbon::now()->format('Y'));
+
+    //     // simpan session
+    //     $request->session()->put('bulan', $bulan);
+    //     $request->session()->put('tahun', $tahun);
+
+    //     $absensi = Absensi::where('id_karyawan', $iduser)->get();
+    //     dd($absensi);
+    //     if(isset($bulan) && isset($tahun))
+    //     {
+    //         $absensi = Absensi::with('karyawans','departemens')
+    //             ->where('id_karyawan', $iduser)
+    //             ->whereMonth('tanggal', $bulan)
+    //             ->whereYear('tanggal',$tahun)
+    //             ->get();
+    //     }
+    //     return view('karyawan.absensi.history_absensi',compact('absensi','row'));
+        
+    //     //menghapus filter data
+    //     $request->session()->forget('bulan');
+    //     $request->session()->forget('tahun');
+    // }
 
     public function absensiPeroranganExcel(Request $request)
     {

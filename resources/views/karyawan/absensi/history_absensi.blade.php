@@ -74,8 +74,7 @@
         </div>
     </div>
 </div>
-<!-- Close Header -->
-<!-- Start content -->
+
 <div class="content">
     <div class="container">
         <div class="row">
@@ -86,8 +85,8 @@
                         <a href="/export-absensi-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Export PDF</a>
                     </div>
                     <div class="panel-body m-b-5">
-                        {{-- <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12"> --}}
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
                                 <table id="datatable-responsive8" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
                                     <thead>
                                         <tr>
@@ -103,28 +102,24 @@
                                     </thead>
                                     <tbody>
                                         @foreach($absensi as $data)
-                                            {{-- @if($data->id_karyawan == Auth::user()->id_pegawai) --}}
-                                                <tr>
-                                                    <td>{{$loop->iteration}}</td>
-                                                    <td>{{$data->karyawans->nama}}</td>
-                                                    <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
-                                                    <td>{{$data->jam_masuk}}</td>
-                                                    <td>{{$data->jam_keluar}}</td>
-                                                    @if(isset($data->jam_kerja))
-                                                    {
-                                                        <td>{{$data->jam_kerja}}</td>
-                                                    }
-                                                    @endif
-                                                    <td>{{$data->terlambat}}</td>
-                                                    <td>{{$data->plg_cepat}}</td>
-                                                </tr>
-                                            {{-- @endif --}}
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$data->karyawans->nama}}</td>
+                                                <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
+                                                <td>{{$data->jam_masuk}}</td>
+                                                <td>{{$data->jam_keluar}}</td>
+                                                {{-- @if(isset($data->jam_kerja)) --}}
+                                                    <td>{{$data->jam_kerja}}</td>
+                                                {{-- @endif --}}
+                                                <td>{{$data->terlambat}}</td>
+                                                <td>{{$data->plg_cepat}}</td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{--
+                                
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>

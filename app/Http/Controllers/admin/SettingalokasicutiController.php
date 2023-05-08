@@ -110,7 +110,10 @@ class SettingalokasicutiController extends Controller
 
             // return $karyawan;
             foreach ($karyawan as $karyawan) {
-                $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)->where('id_karyawan', $karyawan->id)->exists();
+                $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)
+                    ->where('id_karyawan', $karyawan->id)
+                    ->whereYear('aktif_dari', '=', $year)
+                    ->exists();
                 if (!$check) {
 
                     $alokasicuti = new Alokasicuti;
@@ -263,28 +266,39 @@ class SettingalokasicutiController extends Controller
                 $saldo   = $selisih - abs($cutidimuka) - abs($cutmin) - abs($jum);
 
                 // Menambahkan data ke dalam tabel alokasicuti
-                $alokasicuti                    = new Alokasicuti();
-                $alokasicuti->nik               = $karyawan->nip;
-                $alokasicuti->id_karyawan       = $karyawan->id;
-                $alokasicuti->jabatan           = $karyawan->nama_jabatan;
-                $alokasicuti->departemen        = $karyawan->divisi;
-                $alokasicuti->id_settingalokasi = $settingalokasi->id;
-                $alokasicuti->id_jeniscuti      = $settingalokasi->id_jeniscuti;
-                $alokasicuti->tgl_masuk          = $karyawan->tglmasuk;
-                $alokasicuti->tgl_sekarang      = $year . '-01-01';
-                $alokasicuti->jatuhtempo_awal   = $tglJatuhTempo->format('Y-m-d');
-                $alokasicuti->jatuhtempo_akhir  = $tglJatuhTempo->year . '-12-31';
-                $alokasicuti->jmlhakcuti        = $selisih;
-                $alokasicuti->cutidimuka        = $cutidimuka;
-                $alokasicuti->cutiminus         = $cutmin;
-                $alokasicuti->jmlcutibersama    = $jum;
-                $alokasicuti->durasi            = $saldo;
-                $alokasicuti->keterangan        = $keterangan;
-                $alokasicuti->aktif_dari        = $aktifdari;
-                $alokasicuti->sampai            = $sampai;
-                $alokasicuti->status            = 1;
+                $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)
+                    ->where('id_karyawan', $karyawan->id)
+                    ->whereYear('aktif_dari', '=', $year)
+                    ->exists();
 
-                $alokasicuti->save();
+                if(!$check) 
+                {
+                    $alokasicuti                    = new Alokasicuti();
+                    $alokasicuti->nik               = $karyawan->nip;
+                    $alokasicuti->id_karyawan       = $karyawan->id;
+                    $alokasicuti->jabatan           = $karyawan->nama_jabatan;
+                    $alokasicuti->departemen        = $karyawan->divisi;
+                    $alokasicuti->id_settingalokasi = $settingalokasi->id;
+                    $alokasicuti->id_jeniscuti      = $settingalokasi->id_jeniscuti;
+                    $alokasicuti->tgl_masuk          = $karyawan->tglmasuk;
+                    $alokasicuti->tgl_sekarang      = $year . '-01-01';
+                    $alokasicuti->jatuhtempo_awal   = $tglJatuhTempo->format('Y-m-d');
+                    $alokasicuti->jatuhtempo_akhir  = $tglJatuhTempo->year . '-12-31';
+                    $alokasicuti->jmlhakcuti        = $selisih;
+                    $alokasicuti->cutidimuka        = $cutidimuka;
+                    $alokasicuti->cutiminus         = $cutmin;
+                    $alokasicuti->jmlcutibersama    = $jum;
+                    $alokasicuti->durasi            = $saldo;
+                    $alokasicuti->keterangan        = $keterangan;
+                    $alokasicuti->aktif_dari        = $aktifdari;
+                    $alokasicuti->sampai            = $sampai;
+                    $alokasicuti->status            = 1;
+
+                    $alokasicuti->save();
+
+                }else{
+                    Log::info('data alokasi cuti keguguran /bersalin sudah ada');
+                }
             });
 
             // return $hasil;
