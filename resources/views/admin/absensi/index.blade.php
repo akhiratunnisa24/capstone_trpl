@@ -33,28 +33,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="col-sm-3 col-xs-12">
-                                <div class="m-t-20">
-                                    <div class="form-group">
-                                        <label>Departemen</label>
-
-                                        <select name="id_departemen" id="id_departemen" class="form-control">
-                                            <option>-- Pilih Departemen --</option>
-                                            <option value="KONVENSIONAL" {{ ('KONVENSIONAL' === request()->departemen) ? 'selected' : '' }}>
-                                                KONVENSIONAL
-                                            </option>
-                                            {{-- @foreach ($departemen as $data) --}}
-                                                {{-- <option value="{{ $data->id}}" --}}
-                                                    {{-- @if ($data->id ==request()->id_departemen)
-                                                    selected
-                                                    @endif --}}
-                                                    {{-- >{{ $data->departemen }}
-                                                </option> --}}
-                                            {{-- @endforeach --}}
-                                        {{-- </select>                                                  
-                                    </div>
-                                </div>
-                            </div>   --}}
                             <div class="col-sm-3 col-xs-12">
                                 <div class="m-t-20">
                                     <div class="form-group">
@@ -116,16 +94,12 @@
             </div>
         </div>
     </div>
-    <!-- Close Header -->
-    <!-- Start content -->
     <div class="content">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 m-b-10">
-                            {{-- <a href="/exportexcel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export All to Excel</a>
-                            <a href="/exportpdf" class="btn btn-dark btn-sm fa fa-file-pdf-o"> Export All to PDF</a> --}}
                             <a href="/rekapabsensiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
                             <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
                             @if($role == 1)

@@ -88,6 +88,7 @@
             </div>
         </div>
     </div> <!-- content -->
+</div>
     {{-- form setting --}}
     @include('admin.settingalokasi.formsetting')
 

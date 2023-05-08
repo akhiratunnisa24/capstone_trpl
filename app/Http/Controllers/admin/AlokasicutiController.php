@@ -36,29 +36,16 @@ class AlokasicutiController extends Controller
         if ($role == 1  || $role == 2) {
 
             //index
-            $alokasicuti = Alokasicuti::join('settingalokasi', 'alokasicuti.id_settingalokasi', '=', 'settingalokasi.id')
-                ->join('jeniscuti', 'alokasicuti.id_jeniscuti', '=', 'jeniscuti.id')
-                ->join('departemen', 'alokasicuti.departemen', '=', 'departemen.id')
-                ->where('alokasicuti.status', 1)
-                ->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)
-                ->select('alokasicuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen')
-                ->get();
-
-            //create
-            $karyawan = Karyawan::all();
-            // $jeniscuti = DB::table('settingalokasi')
-            // ->join('jeniscuti', 'settingalokasi.id_jeniscuti', '=', 'jeniscuti.id')
-            // ->get();
-            $jeniscuti = DB::table('settingalokasi')
-                ->join('jeniscuti', 'settingalokasi.id_jeniscuti', '=', 'jeniscuti.id')
-                ->select('jeniscuti.*')
-                ->distinct()
-                ->get();
-            //$karyawan = Karyawan::join('departemen','karyawan.divisi', '=', 'departemen.id')
-            //->select('karyawan.*' , 'departemen.nama_departemen')
-            //->get();
-
-            return view('admin.alokasicuti.index', compact('jeniscuti', 'karyawan', 'alokasicuti', 'row'));
+            // $alokasicuti = Alokasicuti::join('settingalokasi', 'alokasicuti.id_settingalokasi', '=', 'settingalokasi.id')
+            //     ->join('jeniscuti', 'alokasicuti.id_jeniscuti', '=', 'jeniscuti.id')
+            //     ->join('departemen', 'alokasicuti.departemen', '=', 'departemen.id')
+            //     ->where('alokasicuti.status', 1)
+            //     ->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)
+            //     ->select('alokasicuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen')
+            //     ->get();
+            $alokasicuti = Alokasicuti::where('alokasicuti.status',1)->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)->get();
+            
+            return view('admin.alokasicuti.index', compact('alokasicuti','row'));
         } else {
 
             return redirect()->back();
