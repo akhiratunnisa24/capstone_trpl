@@ -41,5 +41,10 @@ class Izin extends Model
     public function datareject()
     {
         return $this->hasMany(Datareject::class,'id');
-    }    
+    }   
+    
+    public function statuses()
+    {
+        return $this->belongsTo(Status::class, 'status', 'id');
+    }
 }

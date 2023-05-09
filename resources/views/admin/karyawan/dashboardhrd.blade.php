@@ -818,11 +818,6 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#4"
                                     aria-expanded="false" class="collapsed">
                                     Data Tidak Masuk
-                                    {{-- @if($potongtransport || $potonguangmakan)
-                                        <span class="badge badge badge-danger" style="background-color:red">@php  echo $jumlah; @endphp</span>
-                                    @else
-                                    
-                                    @endif --}}
                                     @if($jumlah)
                                         <span class="badge badge badge-danger" style="background-color:red">@php  echo $jumlah; @endphp</span>
                                     @else
@@ -843,7 +838,7 @@
                                             @endif
                                             </li>
                                             <li class="list-group">
-                                                @if($potonguangmakan)
+                                                @if(isset($potonguangmakan) && $jpc > 0)
                                                     <a href="/tindakan-tidak-masuk" class="list-group-item">
                                                         <div class="media">
                                                             <div class="media-heading">Sanksi Pemotongan Uang Makan
@@ -854,7 +849,7 @@
                                                         </div>
                                                     </a>
                                                 @endif
-                                                @if($potongtransport)
+                                                @if(isset($potongtransport) && $jpg > 0)
                                                     <a href="/tindakan-tidak-masuk" class="list-group-item">
                                                     <div class="media">
                                                         <div class="media-body clearfix">
@@ -902,7 +897,7 @@
                                            
                                             <li class="text-center notifi-title">Notifikasi Terlambat <span class="badge badge-xs badge-danger">@php  echo $jum; @endphp</span></li>
                                             <li class="list-group">
-                                                @if($terlambat)
+                                                @if($terlambat && $jumter > 0)
                                                     <a href="/tindakan-terlambat" class="list-group-item">
                                                         <div class="media">
                                                             <div class="media-body clearfix">
@@ -912,9 +907,9 @@
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                    </a>
+                                                    </a>         
                                                 @endif
-                                                @if($telat)
+                                                @if(isset($telat) && $jumtel > 0)
                                                     <a href="/tindakan-terlambat" class="list-group-item">
                                                         <div class="media">
                                                             <div class="media-body clearfix">
@@ -924,23 +919,20 @@
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                    </a>
-                                                @else
+                                                    </a>    
                                                 @endif
-                                                @if(isset($datatelat))
+                                                @if(isset($datatelat) && $jumdat > 0)
                                                     <a href="/tindakan-terlambat" class="list-group-item">
-                                                    <div class="media">
-                                                        <div class="media-body clearfix">
-                                                            <div class="media-heading">Sanksi SP 2<span class="badge badge-xs badge-danger">{{ $jumdat }}</span></div>
-                                                            <p class="m-0">
-                                                                <small>Karyawan yang datang terlambat yang melebihi dari ketentuan yang ditetapkan akan mendapatkan sanksi sesuai ketentuan dari Perusahaan</small>
-                                                            </p>
+                                                        <div class="media">
+                                                            <div class="media-body clearfix">
+                                                                <div class="media-heading">Sanksi SP 1<span class="badge badge-xs badge-danger">{{ $jumdat }}</span></div>
+                                                                <p class="m-0">
+                                                                    <small>Karyawan yang datang terlambat yang melebihi dari ketentuan yang ditetapkan akan mendapatkan sanksi sesuai ketentuan dari Perusahaan</small>
+                                                                </p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    </a>
-                                                @else
+                                                    </a>   
                                                 @endif
-
                                             </li>
                                         </ul>
                                     </li>

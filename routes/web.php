@@ -378,6 +378,7 @@ Route::get('/absensi-tidak-masuk-excel', [TidakMasukController::class, 'tidakMas
 Route::get('/tindakan-tidak-masuk', [TidakMasukController::class, 'tampil'])->name('tidakmasuk.tampil');
 Route::get('/show-detail{id}', [TidakMasukController::class, 'show'])->name('tidakmasuk.show');
 Route::get('/tindakan-terlambat', [TidakMasukController::class, 'tampilTerlambat'])->name('terlambat.tampil');
+Route::get('/terlambat-detail{id}', [TidakMasukController::class, 'showTerlambat'])->name('terlambat.show');
 
 
 //KPI

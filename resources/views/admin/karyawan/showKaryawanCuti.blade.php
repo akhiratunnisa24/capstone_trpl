@@ -35,7 +35,7 @@
 
                     </div>
                     <div class="panel-body" >
-                        <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                        <table id="datatable-responsive33" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                             <thead >
                                 <tr>
@@ -80,7 +80,7 @@
 
                     </div>
                     <div class="panel-body" >
-                        <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                        <table id="datatable-responsive34" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                             <thead >
                                 <tr>
@@ -122,36 +122,43 @@
 
                     </div>
                     <div class="panel-body" >
-                        <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                        <table id="datatable-responsive35" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                             <thead >
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
-                                    <th>Keperluan</th>
-                                    <th>Tanggal Mulai</th>
-                                    <th>Tanggal Selesai</th>
-                                    <th>Jam Mulai</th>
-                                    <th>Jam Selesai</th>
-                                    <th>Jumlah Hari</th>
+                                    <th>Kategori</th>
+                                    <th>Tanggal Pelaksanaan</th>
+                                    @foreach ($izinBulanIni as $k)
+                                        @if($k->jam_mulai !== NULL)
+                                            <th>Jam Mulai/Selesai</th>
+                                        @endif
+                                    @endforeach
+                                    {{-- <th>Keperluan</th> --}}
                                     <th>Status</th>
                                 </tr>
                             </thead>
-
-
                             <tbody>
                                 @foreach ($izinBulanIni as $k)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$k->karyawan->nama}}</td>
-                                        <td>{{$k->keperluan}}</td>
-                                        <td>{{\Carbon\Carbon::parse($k->tgl_mulai)->format('d/m/Y')}}</td>
-                                        <td>{{\Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y')}}</td>
-                                        <td>{{$k->jml_hari}}</td>
-                                        <td>{{$k->jam_mulai}}</td>
-                                        <td>{{$k->jam_selesai}}</td>
-                                        <td>{{$k->status}}</td>              
-                                    
+                                        <td>{{$k->jenisizins->jenis_izin}}</td>
+                                        <td>{{\Carbon\Carbon::parse($k->tgl_mulai)->format('d/m/Y')}} @if($k->tgl_selesai !== NULL) s.d {{\Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y')}} @endif</td>
+                                        @if($k->jam_mulai != NULL)
+                                            <td>
+                                                {{$k->jam_mulai}} @if($k->jam_selesai != NULL) s.d {{$k->jam_selesai}} @endif
+                                            </td>
+                                        @endif
+                                        {{-- <td>{{$k->keperluan}}</td> --}}
+                                        <td>
+                                            @if($k->status == $k->statuses->id) 
+                                                <span class="badge badge-{{ $k->status == 1 ? 'warning' : ($k->status == 2 ? 'info' : ($k->status == 5 ? 'danger' : ($k->status == 6 ? 'secondary' : ($k->status == 7 ? 'success' : ($k->status == 9 ? 'danger' : ($k->status == 10 ? 'danger' : ($k->status == 11 ? 'warning' : ($k->status == 12 ? 'secondary' : ($k->status == 13 ? 'success' : ($k->status == 14 ? 'warning' :($k->status == 15 ? 'primary' : ($k->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
+                                                    {{ $k->status == 1 ? $k->statuses->name_status : ($k->status == 2 ?  $k->statuses->name_status : ($k->status == 5 ?  $k->statuses->name_status : ($k->status == 6 ?  $k->statuses->name_status : ($k->status == 7 ?  $k->statuses->name_status : ($k->status == 9 ?  $k->statuses->name_status : ($k->status == 10 ?  $k->statuses->name_status : ($k->status == 11 ?  $k->statuses->name_status : ($k->status == 12 ?  $k->statuses->name_status : ($k->status == 13 ?  $k->statuses->name_status :  ($k->status == 14 ?  $k->statuses->name_status :  ($k->status == 15 ?  $k->statuses->name_status :  ($k->status == 16 ?  $k->statuses->name_status : '')))))))))))) }}
+                                                </span>
+                                            @endif
+                                        </td>       
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -167,7 +174,7 @@
 
                     </div>
                     <div class="panel-body" >
-                        <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                        <table id="datatable-responsive36" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                             <thead >
                                 <tr>
@@ -208,7 +215,7 @@
 
                     </div>
                     <div class="panel-body" >
-                        <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                        <table id="datatable-responsive37" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                             <thead >
                                 <tr>
@@ -253,7 +260,7 @@
 
                     </div>
                     <div class="panel-body" >
-                        <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                        <table id="datatable-responsive38" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                             <thead >
                                 <tr>

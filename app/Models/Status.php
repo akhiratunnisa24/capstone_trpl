@@ -24,4 +24,9 @@ class Status extends Model
     {
         return $this->hasMany(Cuti::class, 'status', 'id');
     }
+
+    public function izin()
+    {
+        return $this->hasMany(Izin::class, 'status', 'id');
+    }
 }

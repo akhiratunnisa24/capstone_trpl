@@ -2138,7 +2138,7 @@ class karyawanController extends Controller
                 ->whereDay('tgl_mulai', '=', Carbon::now())
                 ->get();
 
-            $izinBulanIni = Izin::with('karyawan',)
+            $izinBulanIni = Izin::with('karyawan','statuses')
                 ->whereYear('tgl_mulai', '=', Carbon::now()->year)
                 ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
                 ->get();
@@ -2272,10 +2272,11 @@ class karyawanController extends Controller
                 ->get();
             // dd($tidakMasukBulanIni);
 
-            $tidakMasukBulanLalu = Tidakmasuk::with('departemen', 'karyawan2')
+            $tidakMasukBulanLalu = Tidakmasuk::with('karyawan2')
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
                 ->get();
+            
             // dd($tidakMasukBulanLalu);
 
             $output = [

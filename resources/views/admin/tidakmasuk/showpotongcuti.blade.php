@@ -17,6 +17,7 @@
         </div>
     </div>
     <!-- Header -->
+    @if(isset($tidakmasuk))
         <div class="content">
             <div class="container">
                 <div class="row">
@@ -55,6 +56,7 @@
                 </div>
             </div>
         </div>
+    @elseif(isset($absensi))
         <div class="content">
             <div class="container">
                 <div class="row">
@@ -90,7 +92,9 @@
                 </div>
             </div>
         </div>
-        <a href="/" class="btn btn-sm btn-danger pull-right" style="margin-right:15px">Kembali</a>
+    @else
+    @endif
+    <a href="/" class="btn btn-sm btn-danger pull-right" style="margin-right:15px">Kembali</a>
 
     {{-- @endif --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>   
