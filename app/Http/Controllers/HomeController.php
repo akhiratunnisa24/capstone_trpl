@@ -724,7 +724,9 @@ class HomeController extends Controller
             $jumizin = $ijin->count();
         }
 
-        $resign = Resign::orderBy('created_at', 'desc')->get();
+        $resign = Resign::where('status', '!=', '7')
+            ->where('status', '!=', '5')
+            ->get();
         $resignjumlah = $resign->count();
 
         // $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->where('status',1)->get();

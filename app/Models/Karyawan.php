@@ -73,12 +73,7 @@ class Karyawan extends Model
     //dipakai untuk mengambil data nama_departemen <---
     public function departemens()
     {
-        return $this->belongsTo(
-            Departemen::class,
-            'divisi',
-            'id',
-            'nama_departemen',
-        );
+        return $this->belongsTo(Departemen::class,'divisi','id');
     }
     
     public function keluarga()

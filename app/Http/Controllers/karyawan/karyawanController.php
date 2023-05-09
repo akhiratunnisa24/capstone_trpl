@@ -2259,21 +2259,18 @@ class karyawanController extends Controller
             // ->whereNotIn('id', $karyawanSudahAbsen)
             // ->get();
 
-            $tidakMasuk = Tidakmasuk::with('departemen', 'karyawan2')
-                ->whereYear('tanggal', '=', Carbon::now()->year)
+            $tidakMasuk = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->whereDay('tanggal', '=', Carbon::now())
                 ->get();
             // dd($tidakMasuk);
 
-            $tidakMasukBulanIni = Tidakmasuk::with('departemen', 'karyawan2')
-                ->whereYear('tanggal', '=', Carbon::now()->year)
+            $tidakMasukBulanIni = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->get();
             // dd($tidakMasukBulanIni);
 
-            $tidakMasukBulanLalu = Tidakmasuk::with('departemen', 'karyawan2')
-                ->whereYear('tanggal', '=', Carbon::now()->year)
+            $tidakMasukBulanLalu = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
                 ->get();
             // dd($tidakMasukBulanLalu);
