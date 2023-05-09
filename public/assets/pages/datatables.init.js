@@ -65,7 +65,21 @@
         $('#datatable-responsive22').DataTable();
         $('#datatable-responsive23').DataTable();
         $('#datatable-responsive24').DataTable();
-        
+        $('#datatable-responsive25').DataTable();
+        $('#datatable-responsive26').DataTable();
+        $('#datatable-responsive27').DataTable();
+        $('#datatable-responsive28').DataTable();
+        $('#datatable-responsive29').DataTable();
+        $('#datatable-responsive30').DataTable();
+        $('#datatable-responsive31').DataTable();
+        $('#datatable-responsive32').DataTable();
+        $('#datatable-responsive33').DataTable();
+        $('#datatable-responsive34').DataTable();
+        $('#datatable-responsive35').DataTable();
+        $('#datatable-responsive36').DataTable();
+        $('#datatable-responsive37').DataTable();
+        $('#datatable-responsive38').DataTable();
+
         $('#datatable-scrollera').DataTable({
             ajax: "assets/plugins/datatables/json/scroller-demo.json",
             deferRender: true,

@@ -35,7 +35,7 @@
 
                     </div>
                     <div class="panel-body" >
-                        <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                        <table id="datatable-responsive30" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                             <thead >
                                 <tr>
@@ -76,7 +76,7 @@
 
                     </div>
                     <div class="panel-body" >
-                        <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                        <table id="datatable-responsive31" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                             <thead >
                                 <tr>
@@ -118,7 +118,7 @@
 
                     </div>
                     <div class="panel-body" >
-                        <table id="datatable-responsive6" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                        <table id="datatable-responsive32" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                             <thead >
                                 <tr>

@@ -3,10 +3,10 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Tindak Lanjut Ketidakhadiran Karyawan</h4>
+                <h4 class="pull-left page-title">Tindak Lanjut Keterlambatan Karyawan</h4>
                     <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Tindak Lanjut Ketidakhadiran Karyawan</li>
+                    <li class="active">Tindak Lanjut Keterlambatan Karyawan</li>
                 </ol>
 
                 <div class="clearfix">
@@ -44,7 +44,7 @@
                                                 <td>{{$t->jumlah}} kali</td>
                                                 <td>{{$t->sanksi}}</td>
                                                 <td class="text-center">
-                                                    <a href="/show-detail{{$t->id_karyawan}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                                    <a href="/terlambat-detail{{$t->id_karyawan}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -86,7 +86,7 @@
                                                 <td>{{$te->jumlah}} kali</td>
                                                 <td>{{$te->sanksi}}</td>
                                                 <td class="text-center">
-                                                    <a href="/show-detail{{$te->id_karyawan}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                                    <a href="/terlambat-detail{{$te->id_karyawan}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -100,47 +100,47 @@
         </div>
     @endif
     @if(isset($datatelat))
-    <div class="content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading  col-sm-15">
-                        <h5>Sanksi SP 2</h5>
-                        </div>
-                        <div class="panel-body" >
-                            <table id="datatable-responsive21" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Karyawan</th>
-                                        <th>Jumlah Terlambat</th>
-                                        <th>Sanksi</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                            
-                                <tbody>
-                                    @foreach($datatelat as $tel)
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading  col-sm-15">
+                            <h5>Sanksi SP 2</h5>
+                            </div>
+                            <div class="panel-body" >
+                                <table id="datatable-responsive21" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
+                                    <thead>
                                         <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$tel->nama}}</td>
-                                            <td>{{$tel->jumlah}} kali</td>
-                                            <td>{{$tel->sanksi}}</td>
-                                            <td class="text-center">
-                                                <a href="/show-detail{{$tel->id_karyawan}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
-                                            </td>
+                                            <th>No</th>
+                                            <th>Karyawan</th>
+                                            <th>Jumlah Terlambat</th>
+                                            <th>Sanksi</th>
+                                            <th>Aksi</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                
+                                    <tbody>
+                                        @foreach($datatelat as $tel)
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$tel->nama}}</td>
+                                                <td>{{$tel->jumlah}} kali</td>
+                                                <td>{{$tel->sanksi}}</td>
+                                                <td class="text-center">
+                                                    <a href="/terlambat-detail{{$tel->id_karyawan}}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endif
+    @endif
     <a href="/" class="btn btn-sm btn-danger pull-right" style="margin-right:15px;">Kembali</a>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>   
     

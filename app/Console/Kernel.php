@@ -154,8 +154,9 @@ class Kernel extends ConsoleKernel
                 }
 
         })
-        ->dailyAt('13:01');
+        ->dailyAt('10:23');
 
+        //schedule untuk mengubah status alokasi cuti tahun lalu menjadi tidak aktif
         $schedule->call(function () 
         {
             $year = Carbon::now()->year;
@@ -175,6 +176,7 @@ class Kernel extends ConsoleKernel
         //->yearlyOn(03, 29, '10:27'); 
 
 
+        //scheduler untuk notifikasi sisacuti tahunan karyawan
         $schedule->call(function () 
         {
             $jeniscuti = Jeniscuti::find(1);
@@ -220,6 +222,7 @@ class Kernel extends ConsoleKernel
             }
         })->monthlyOn(01, '01,02,03')->at('11:53');
         
+        //schedule untuk menghitung sisacuti tahunan karyawan tahun lalu.
         $schedule->call(function () 
         {
             $year = Carbon::now()->subYear()->year;

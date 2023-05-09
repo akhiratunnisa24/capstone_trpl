@@ -184,7 +184,11 @@ class HomeController extends Controller
         ->count('terlambat');
 
         //Data alokasi cuti seljuruh karyawan
-        $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)->get();
+        $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
+            ->whereYear('aktif_dari', '=', Carbon::now()->year)
+            ->whereYear('sampai', '=', Carbon::now()->year)
+            ->where('status', '=', 1)
+            ->get();
 
         //Data alokasi cuti seljuruh karyawan
         $alokasicuti2 = Alokasicuti::all();
