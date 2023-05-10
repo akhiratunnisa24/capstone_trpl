@@ -335,7 +335,7 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label class="form-label">Upload CV</label>
-                                                        <input type="file" name="pdfPelamar" class="form-control" value="{{ $pelamar->cv ?? '' }}">
+                                                        <input type="file" name="pdfPelamar" class="form-control" value="{{ $pelamar->cv ?? '' }}" required>
                                                     </div>
                                                 </div>
 
