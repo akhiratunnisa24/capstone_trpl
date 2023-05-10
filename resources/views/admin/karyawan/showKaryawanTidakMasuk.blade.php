@@ -42,10 +42,8 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Status</th>
-                                        <th>Email</th>
                                         <th>Divisi</th>
+                                        <th>Status</th>
                                         <th>Tanggal</th>
                                     </tr>
                                 </thead>
@@ -56,10 +54,8 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nama }}</td>
-                                            <td>{{ $k->karyawan2->jenis_kelamin }}</td>
-                                            <td>{{ $k->status }}</td>
-                                            <td>{{ $k->karyawan2->email }}</td>
                                             <td>{{ $k->departemen->nama_departemen }}</td>
+                                            <td>{{ $k->status }}</td>
                                             <td>{{ \Carbon\Carbon::now()->format('d/m/Y') }}</td>
 
                                         </tr>
@@ -77,34 +73,26 @@
 
                         </div>
                         <div class="panel-body">
-                            <table id="datatable-responsive6"
-                                class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
+                            <table id="datatable-responsive25"  class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
                                 width="100%">
 
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Status</th>
-                                        <th>Email</th>
                                         <th>Divisi</th>
+                                        <th>Status</th>
                                         <th>Tanggal</th>
                                     </tr>
                                 </thead>
-
-
                                 <tbody>
                                     @foreach ($tidakMasukBulanIni as $k)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nama }}</td>
-                                            <td>{{ $k->karyawan2->jenis_kelamin }}</td>
-                                            <td>{{ $k->status }}</td>
-                                            <td>{{ $k->karyawan2->nama }}</td>
                                             <td>{{ $k->departemen->nama_departemen }}</td>
+                                            <td>{{ $k->status }}</td>
                                             <td>{{ \Carbon\Carbon::now()->format('d/m/Y') }}</td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -121,18 +109,15 @@
 
                         </div>
                         <div class="panel-body">
-                            <table id="datatable-responsive6"
-                                class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
+                            <table id="datatable-responsive26" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
                                 width="100%">
 
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Status</th>
-                                        <th>Email</th>
                                         <th>Divisi</th>
+                                        <th>Status</th>
                                         <th>Tanggal</th>
                                     </tr>
                                 </thead>
@@ -143,12 +128,9 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nama }}</td>
-                                            <td>{{ $k->karyawan2->jenis_kelamin }}</td>
-                                            <td>{{ $k->status }}</td>
-                                            <td>{{ $k->karyawan2->email }}</td>
                                             <td>{{ $k->departemen->nama_departemen }}</td>
+                                            <td>{{ $k->status }}</td>
                                             <td>{{ \Carbon\Carbon::now()->format('d/m/Y') }}</td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>
