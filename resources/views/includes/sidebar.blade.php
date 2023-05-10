@@ -145,7 +145,7 @@
                             {{-- <li><a href="settinguser"><i class="fa fa-group (alias)"></i><span></span>Managemen
                                     User</a></li> --}}
                             <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
-                            <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>SettingKalender</span></a></li>
+                            <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Setting Kalender</span></a></li>
                         </ul>
                     </li>
                 </ul>
