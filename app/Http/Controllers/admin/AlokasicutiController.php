@@ -43,7 +43,8 @@ class AlokasicutiController extends Controller
             //     ->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)
             //     ->select('alokasicuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen')
             //     ->get();
-            $alokasicuti = Alokasicuti::where('alokasicuti.status',1)->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)->get();
+            //$alokasicuti = Alokasicuti::where('alokasicuti.status',1)->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)->get();
+            $alokasicuti = Alokasicuti::where('alokasicuti.status',1)->get();
             
             return view('admin.alokasicuti.index', compact('alokasicuti','row'));
         } else {

@@ -145,10 +145,9 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
+    <a href="/" class="btn btn-sm btn-danger pull-right" style="margin-right:15px;">Kembali <i class="fa fa-home"></i></a>
 </div>
 
 
