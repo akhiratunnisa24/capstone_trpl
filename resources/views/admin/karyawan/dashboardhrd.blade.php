@@ -968,6 +968,7 @@
                                                 <th>Dibutuhkan</th>
                                                 <th>Durasi Aktif</th>
                                                 <th>Berakhir</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -980,6 +981,15 @@
                                                     <td>{{ \Carbon\Carbon::parse($k->tgl_mulai)->format('d/m/Y') }}
                                                     </td>
                                                     <td>{{ \Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y') }}</td>
+                                                    <td>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <form action="/show_rekrutmen{{ $k->id }}">
+                                                                    <button type="submit" class="fa fa-eye btn-info btn-sm"></button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             @endforeach
 
