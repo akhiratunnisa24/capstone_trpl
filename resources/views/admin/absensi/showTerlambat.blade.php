@@ -138,7 +138,7 @@
         </div>
     @endif
         
-    <a href="/" class="btn btn-sm btn-danger pull-right" style="margin-right:15px">Kembali</a>
+    <a href="/" class="btn btn-sm btn-danger pull-right" style="margin-right:15px">Kembali <i class="fa fa-home"></i></a>
 
     {{-- @endif --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>         
