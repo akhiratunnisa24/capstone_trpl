@@ -154,7 +154,7 @@ class Kernel extends ConsoleKernel
                 }
 
         })
-        ->dailyAt('10:23');
+        ->dailyAt('23:59');
 
         //schedule untuk mengubah status alokasi cuti tahun lalu menjadi tidak aktif
         $schedule->call(function () 
@@ -172,7 +172,7 @@ class Kernel extends ConsoleKernel
                     ->update(['status' => 0]);
             }
 
-        })->yearlyOn(12, 31, '00:01');
+        })->yearlyOn(12, 31, '23:59');
         //->yearlyOn(03, 29, '10:27'); 
 
 
@@ -220,7 +220,7 @@ class Kernel extends ConsoleKernel
                     Mail::to($tujuan)->send(new SisacutiNotification($data));
                 }        
             }
-        })->monthlyOn(01, '01,02,03')->at('11:53');
+        })->monthlyOn(01, '01,02,03')->at('23:59');
         
         //schedule untuk menghitung sisacuti tahunan karyawan tahun lalu.
         $schedule->call(function () 
