@@ -45,4 +45,14 @@ class Departemen extends Model
     {
         return $this->hasMany(Resign::class, 'departemen', 'id');
     }
+
+    public function tims()
+    {
+        return $this->hasMany(Tim::class, 'divisi', 'id');
+    }
+
+    public function timkaryawans()
+    {
+        return $this->hasMany(Timkaryawan::class, 'svisi', 'id');
+    }
 }

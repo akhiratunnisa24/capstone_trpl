@@ -176,7 +176,7 @@ class Kernel extends ConsoleKernel
         //->yearlyOn(03, 29, '10:27'); 
 
 
-        //scheduler untuk notifikasi sisacuti tahunan karyawan
+        //scheduler untuk notifikasi sisacuti tahunan kepada karyawan
         $schedule->call(function () 
         {
             $jeniscuti = Jeniscuti::find(1);
@@ -222,7 +222,7 @@ class Kernel extends ConsoleKernel
             }
         })->monthlyOn(01, '01,02,03')->at('23:59');
         
-        //schedule untuk menghitung sisacuti tahunan karyawan tahun lalu.
+        //schedule untuk update status sisacuti tahunan karyawan tahun lalu.
         $schedule->call(function () 
         {
             $year = Carbon::now()->subYear()->year;

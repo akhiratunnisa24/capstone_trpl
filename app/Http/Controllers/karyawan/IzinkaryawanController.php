@@ -464,6 +464,6 @@ class IzinkaryawanController extends Controller
         //     // proses jika data atasan tidak ada / email tidak ada
         // }
 
-        return redirect()->back()->with('success','Email Notifikasi Perubahan Data Permohonan Izin Berhasil Dikirim');
+        return redirect()->back()->with('pesan','Email Notifikasi Perubahan Data Permohonan Izin Berhasil Dikirim');
     }
 }

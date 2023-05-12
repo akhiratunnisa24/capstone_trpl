@@ -49,7 +49,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nama }}</td>
                                             <td>{{ $k->departemen->nama_departemen }}</td>
-                                            <td>{{ \Carbon\Carbon::now()->format('d/m/Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tanggal)->format('d/m/Y') }}</td>
                                             <td>{{ $k->status }}</td>
 
                                         </tr>
@@ -85,7 +85,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nama }}</td>
                                             <td>{{ $k->departemen->nama_departemen }}</td>
-                                            <td>{{ \Carbon\Carbon::now()->format('d/m/Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tanggal)->format('d/m/Y') }}</td>
                                             <td>{{ $k->status }}</td>
                                         </tr>
                                     @endforeach
@@ -121,7 +121,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nama }}</td>
                                             <td>{{ $k->departemen->nama_departemen }}</td>
-                                            <td>{{ \Carbon\Carbon::now()->format('d/m/Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tanggal)->format('d/m/Y') }}</td>
                                             <td>{{ $k->status }}</td>
                                         </tr>
                                     @endforeach

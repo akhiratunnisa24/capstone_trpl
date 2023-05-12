@@ -42,6 +42,7 @@ use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\admin\LeveljabatanController;
 use App\Http\Controllers\karyawan\KaryawansController;
 use App\Http\Controllers\manager\KpimanagerController;
+use App\Http\Controllers\manager\TimKaryawanController;
 use App\Http\Controllers\admin\SettingabsensiController;
 use App\Http\Controllers\karyawan\KpikaryawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
@@ -425,6 +426,25 @@ Route::post('/permintaanresign_reject/{id}', [ResignAdminController::class, 'rej
 //KPI
 Route::get('/master-kpi', [KpimanagerController::class, 'index'])->name('manager.kpi');
 Route::get('/data-kpi', [KpimanagerController::class, 'data'])->name('data.kpi');
+
+//tim
+Route::get('/tim', [TimKaryawanController::class, 'index'])->name('tim.index');
+Route::post('/tim', [TimKaryawanController::class, 'store'])->name('tim.store');
+Route::put('/tim-update/{id}', [TimKaryawanController::class, 'update'])->name('tim.update');
+Route::get('/tim-delete{id}', [TimKaryawanController::class, 'destroy'])->name('tim.delete');
+
+//tim karyawan
+Route::get('/tim-karyawan', [TimKaryawanController::class, 'indexs'])->name('timkaryawan.index');
+Route::post('/tim-karyawan', [TimKaryawanController::class, 'stores'])->name('timkaryawan.store');
+Route::put('/tugas-update/{id}', [TimKaryawanController::class, 'update'])->name('tim.update');
+Route::get('/tim-karyawan-delete{id}', [TimKaryawanController::class, 'destroys'])->name('timkaryawan.delete');
+Route::post('/getNik', [TimKaryawanController::class, 'getNik'])->name('getNik');
+
+//tugas karyawan
+Route::get('/tugas', [TimKaryawanController::class, 'indexs'])->name('timkaryawan.index');
+Route::post('/tugas', [TimKaryawanController::class, 'stores'])->name('timkaryawan.store');
+Route::get('/tim-karyawan-delete{id}', [TimKaryawanController::class, 'destroys'])->name('timkaryawan.delete');
+Route::post('/getNik', [TimKaryawanController::class, 'getNik'])->name('getNik');
 
 //================================================================================
 //ROLE DIREKTUR
