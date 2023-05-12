@@ -172,11 +172,11 @@ class Kernel extends ConsoleKernel
                     ->update(['status' => 0]);
             }
 
-        })->yearlyOn(12, 31, '00:01');
+        })->yearlyOn(12, 31, '23:59');
         //->yearlyOn(03, 29, '10:27'); 
 
 
-        //scheduler untuk notifikasi sisacuti tahunan karyawan
+        //scheduler untuk notifikasi sisacuti tahunan kepada karyawan
         $schedule->call(function () 
         {
             $jeniscuti = Jeniscuti::find(1);
@@ -220,9 +220,9 @@ class Kernel extends ConsoleKernel
                     Mail::to($tujuan)->send(new SisacutiNotification($data));
                 }        
             }
-        })->monthlyOn(01, '01,02,03')->at('11:53');
+        })->monthlyOn(01, '01,02,03')->at('07:00');
         
-        //schedule untuk menghitung sisacuti tahunan karyawan tahun lalu.
+        //schedule untuk update status sisacuti tahunan karyawan tahun lalu.
         $schedule->call(function () 
         {
             $year = Carbon::now()->subYear()->year;

@@ -132,13 +132,18 @@ class CutikaryawanController extends Controller
 
         $jeniscuti = Jeniscuti::where('id', $request->id_jeniscuti)->first();
 
-        $today = \Carbon\Carbon::today();
+        $tglpermohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_permohonan)->format("Y-m-d");
+
         $existingCuti = Cuti::where('id_karyawan', $karyawan)
                         ->where('id_jeniscuti', $request->id_jeniscuti)
-                        ->whereDate('tgl_permohonan', $today)
-                        ->first();
+                        ->where('tgl_permohonan',  $tglpermohonan)
+                        ->exists();
 
-        if (!$existingCuti) 
+        if($existingCuti)    
+        {
+            return redirect()->back()->with('pesa', 'Anda sudah mengajukan cuti !');
+        }            
+        else
         {
             $cuti = new Cuti;
             $cuti->tgl_permohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_permohonan)->format("Y-m-d");
@@ -231,8 +236,6 @@ class CutikaryawanController extends Controller
     
             return redirect()->back()->with('pesan', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
 
-        }else{
-            return redirect()->back()->with('pesa', 'Anda sudah mengajukan cuti pada hari ini!');
         }
     }
 
@@ -420,10 +423,10 @@ class CutikaryawanController extends Controller
         if($atasan2 !== NULL){
             $data['atasan2'] = $atasan2->email;
         }
+        // dd($data);
         Mail::to($tujuan)->send(new PerubahanNotification($data));
 
-        return redirect()->back()
-            ->with('pesan','Email Notifikasi Perubahan Data Permohonan Cuti Berhasil Dikirim');
+        return redirect()->back()->with('pesan','Email Notifikasi Perubahan Data Permohonan Cuti Berhasil Dikirim');
     }
 }
  // $tujuan = 'andiny700@gmail.com';

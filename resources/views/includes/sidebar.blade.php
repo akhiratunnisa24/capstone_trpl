@@ -193,8 +193,7 @@
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span
                                 class="text-info panel-title">Data Staff</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li> <a href="/data-staff" class="waves-effect"><i
-                                        class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
+                            <li> <a href="/data-staff" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
                             </li>
                             @if($row->jabatan == "Manajer" || $row->jabatan == "Asisten Manajer")
                                 <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi</span></a></li>
@@ -203,10 +202,17 @@
                                 <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Transaksi Cuti</span></a></li>
                             @else
                             @endif
-                            <li><a href="/resign_manager" class="waves-effect"><i
-                                        class="mdi mdi-account-off"></i><span>Data Resign</span></a></li>
+                            <li><a href="/resign_manager" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Data Resign</span></a></li>
                         </ul>
                     </li>
+                    {{-- <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-clipboard-text"></i><span class="text-info panel-title">Tugas</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="/tim"><i class="ion-person-stalker"></i><span>Master Tim</span></a></li>
+                            <li><a href="/tim-karyawan"><i class="fa fa-group (alias)"></i><span>Data Tim</span></a></li>
+                            <li><a href="/tugas-karyawan"><i class="fa fa-list"></i><span>Data Tugas</span></a></li>
+                        </ul>
+                    </li> --}}
                 </ul>
             </div>
         @endif

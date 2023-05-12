@@ -141,4 +141,9 @@ class Karyawan extends Model
         return $this->hasMany(Jadwal::class, 'id');
     }
 
+    public function timkaryawans()
+    {
+        return $this->hasMany(Timkaryawan::class,'id_karyawan','id');
+    }
+
 }

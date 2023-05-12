@@ -82,12 +82,13 @@
             <th>Plg Cepat</th>
             <th>Jml Jam Kerja</th>
         </tr>
+        @php use Carbon; @endphp
         @forelse($data as $key => $d)
             <tr align="center">
                 <td>{{$loop->iteration}}</td>
                 <td id="n">{{$d->karyawans->nama}}</td>
                 <td>{{$d->departemens->nama_departemen}}</td>
-                <td>{{\Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
+                <td>{{ \Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
                 <td>{{$d->jam_masuk}}</td>
                 <td>{{$d->jam_keluar}}</td>
                 <td>{{$d->terlambat}}</td>
