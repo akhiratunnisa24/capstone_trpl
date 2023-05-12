@@ -266,9 +266,16 @@ class SettingalokasicutiController extends Controller
                 $saldo   = $selisih - abs($cutidimuka) - abs($cutmin) - abs($jum);
 
                 // Menambahkan data ke dalam tabel alokasicuti
+                // $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)
+                //     ->where('id_karyawan', $karyawan->id)
+                //     ->whereYear('aktif_dari', '=', $year)
+                //     ->exists();
                 $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)
                     ->where('id_karyawan', $karyawan->id)
-                    ->whereYear('aktif_dari', '=', $year)
+                    ->where(function ($query) {
+                        $query->whereYear('aktif_dari', '=', Carbon::now()->year)
+                              ->orWhereNull('aktif_dari');
+                    })
                     ->exists();
 
                 if(!$check) 

@@ -675,7 +675,7 @@
 
 
     <div class="modal-footer">
-        <a href="/data_rekrutmen" type="button" class="btn btn-sm btn-danger fa fa-mail-reply"> Kembali</a>
+        <a href="/data_rekrutmen" type="button" class="btn btn-sm btn-danger"> Kembali <i class="fa fa-home"></i></a>
     </div>
 
 

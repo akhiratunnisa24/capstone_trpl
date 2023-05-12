@@ -57,4 +57,9 @@ class Cuti extends Model
     {
         return $this->hasMany(Datareject::class,'id');
     } 
+    
+    public function statuses()
+    {
+        return $this->belongsTo(Status::class, 'status', 'id');
+    }
 }

@@ -2126,7 +2126,7 @@ class karyawanController extends Controller
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-            $izin = Izin::with('karyawan',)
+            $izin = Izin::with('karyawan','statuses')
                 ->whereYear('tgl_mulai', '=', Carbon::now()->year)
                 ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
                 ->whereDay('tgl_mulai', '=', Carbon::now())
@@ -2148,7 +2148,7 @@ class karyawanController extends Controller
                 ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
                 ->get();
 
-            $izinBulanLalu = Izin::with('karyawan',)
+            $izinBulanLalu = Izin::with('karyawan','statuses')
                 ->whereYear('tgl_mulai', '=', Carbon::now()->year)
                 ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
                 ->get();
