@@ -60,12 +60,15 @@
                                                         <div class="col-md-6 m-t-10">
 
                                                             
-                        
+                                                            <div class="row">
                                                             <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label  class="form-label col-sm-4">Foto Karyawan</label>
-                                                                    <img src="{{ asset('Foto_Profile/'.$karyawan->foto) }}" style="width:299px;">
+                                                                <div class="mb-3 col-sm-12 text-center">
+                                                                    <label  class="form-label ">Foto Karyawan</label>
                                                                 </div>
+                                                                <div class="mb-3 col-sm-12 text-center">
+                                                                <img src="{{ asset('Foto_Profile/'.$karyawan->foto) }}" style="width:299px;" >
+                                                                </div>
+                                                            </div>
                                                             </div>
 
                                                                 <div class="form-group">
