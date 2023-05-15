@@ -496,11 +496,11 @@ class IzinAdminController extends Controller
                 ->whereYear('izin.tgl_mulai', $year)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
         } else {
-            $data = Izin::join('statuses', 'izin.status', '=', 'statuses.id')
-                ->join('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
-                ->join('departemen','izin.departemen','=','departemen.id')
+            $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
-        }
+            }
 
         $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai])
             ->setPaper('a4', 'landscape');

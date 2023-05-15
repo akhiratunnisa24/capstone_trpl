@@ -439,8 +439,12 @@
 
 
     {{-- <br>
+         use Carbon\Carbon;
+        $now = Carbon::now();
+        $bulan = $now->locale('id')->monthName;
+        $formatted_date = $now->day . ' ' . $bulan . ' ' . $now->year;
     <div class="row-sm-3">
-        <p id="ttd">Jakarta Selatan, {{ date('d F Y') }}</p>
+        <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
         <br>
         <br>
         <p id="tt">(HR Development)</p>

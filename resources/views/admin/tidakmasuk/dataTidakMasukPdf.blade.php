@@ -71,17 +71,17 @@
         <tr>
             <th>No.</th>
             <th>Nama</th>
-            <th>Departemen
+            <th>Departemen</th>
             <th>Tanggal</th>
             <th>Keterangan</th>
         </tr>
         @forelse($tidakmasuk as $key => $data)
             <tr align="center">
                 <td>{{$loop->iteration}}</td>
-                <td>{{$data->nama}}</td>
-                <td>
+                <td style="text-align: left;">{{ucwords(strtolower($data->nama))}}</td>
+                <td style="text-align: left;">
                     @if ($data->departemen)
-                        {{ $data->departemen->nama_departemen }}
+                        {{ ucwords(strtolower($data->departemen->nama_departemen)) }}
                     @endif
                 </td>
                 <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
@@ -94,8 +94,14 @@
         @endforelse
     </table>
     <br>
+    @php
+        use Carbon\Carbon;
+        $now = Carbon::now();
+        $bulan = $now->locale('id')->monthName;
+        $formatted_date = $now->day . ' ' . $bulan . ' ' . $now->year;
+    @endphp
     <div class="row-sm-3">
-        <p id="ttd">Jakarta Selatan, {{ date("d F Y") }}</p>
+        <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
         {{-- <p id="t">Hormat Kami,</p> --}}
         <p id="tt">(HR Development)</p>
     </div>

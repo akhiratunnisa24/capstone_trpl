@@ -74,7 +74,7 @@
             padding-top: 40px;
         }
 
-        #n {
+        .n {
             text-align: left;
         }
     </style>
@@ -92,7 +92,7 @@
             <th>Nama</th>
             <th>Kategori</th>
             <th>Tanggal Pelaksanaan</th>
-            <th>Keperluan</th>
+            {{-- <th>Keperluan</th> --}}
             <th>Jam Pelaksanaan</th>
             <th>Jumlah Jam</th>
         </tr>
@@ -101,10 +101,10 @@
             <tr align="center">
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $d->nik }}</td>
-                <td class="align-nama">{{  ucwords(strtolower($d->karyawans->nama)) }}</td>
-                <td>{{ $d->jenisizins->jenis_izin }}</td>
+                <td class="n">{{  ucwords(strtolower($d->karyawans->nama)) }}</td>
+                <td class="n">{{ $d->jenisizins->jenis_izin }}</td>
                 <td class="align-tanggal">{{\Carbon\Carbon::parse($d->tgl_mulai)->format('d/m/Y')}} @if($d->tgl_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->tgl_selesai)->format('d/m/Y')}} @endif</td>
-                <td>{{ $d->keperluan }}</td>
+                {{-- <td>{{ $d->keperluan }}</td> --}}
                 @if($d->jam_mulai != NULL)
                     <td class="align-tanggal">{{\Carbon\Carbon::parse($d->jam_mulai)->format('H:i')}} @if($d->jam_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->jam_selesai)->format('H:i')}} @endif</td>
                     <td>{{ $d->jml_jam }}</td>
@@ -120,8 +120,14 @@
         @endforelse
     </table>
     <br>
+    @php
+        use Carbon\Carbon;
+        $now = Carbon::now();
+        $bulan = $now->locale('id')->monthName;
+        $formatted_date = $now->day . ' ' . $bulan . ' ' . $now->year;
+    @endphp
     <div class="row-sm-3">
-        <p id="ttd">Jakarta Selatan, {{ date('d F Y') }}</p>
+        <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
         {{-- <p id="t">Hormat Kami,</p> --}}
         <p id="tt">(HR Development)</p>
     </div>
