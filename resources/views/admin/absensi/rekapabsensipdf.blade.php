@@ -13,6 +13,11 @@
             margin-bottom: 5px;
         } 
         
+        .align-tanggal {
+            text-align: center;
+            white-space: nowrap;
+        }
+
         #absensi {
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
@@ -67,22 +72,27 @@
     <p id="address">Graha GRM Royal Spring Business Park 11, Jl. Ragunan Raya No. 29A, Jakarta Selatan, 12540</p>
     <div class="garis"></div>
     <h3 align="center">Report Absensi Pegawai</h3>
+
+    <p>Periode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $nbulan}}</p>
+
     <table id="absensi">
         <tr>
-            <th>ID Absen</th>
+            <th>No.</th>
             <th>Nama</th>
+            <th>Departemen</th>
             <th>Tanggal</th>
             <th>Jam Masuk</th>
             <th>Jam Keluar</th>
             <th>Terlambat</th>
             <th>Plg Cepat</th>
-            <th>Jml Kehadiran</th>
+            <th>Jml Jam Kerja</th>
         </tr>
         @forelse($data as $key => $d)
             <tr align="center">
-                <td>{{$d->id}}</td>
-                <td id="n">{{$d->karyawans->nama}}</td>
-                <td>{{\Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
+                <td>{{$loop->iteration}}</td>
+                <td id="n">{{ucwords(strtolower($d->karyawans->nama))}}</td>
+                <td>{{ucwords(strtolower($d->departemens->nama_departemen))}}</td>
+                <td class="align-tanggal">{{\Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
                 <td>{{$d->jam_masuk}}</td>
                 <td>{{$d->jam_keluar}}</td>
                 <td>{{$d->terlambat}}</td>

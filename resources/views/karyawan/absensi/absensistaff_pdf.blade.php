@@ -12,6 +12,11 @@
             border-bottom: 1px solid black;
             margin-bottom: 5px;
         } 
+
+        .align-tanggal {
+            text-align: center;
+            white-space: nowrap;
+        }
         
         #absensi {
         font-family: Arial, Helvetica, sans-serif;
@@ -68,11 +73,14 @@
     <div class="garis"></div>
     <h3 align="center">Report Absensi Staff Departemen</h3>
 
+    <p>Unit Kerja: {{ ucwords(strtolower($departemen->nama_departemen))}}</p>
+    <p>Periode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $nbulan}}</p>
+
     <table id="absensi">
         <tr>
             <th>No.</th>
             <th>Nama</th>
-            <th>Departemen</th>
+            {{-- <th>Departemen</th> --}}
             <th>Tanggal</th>
             <th>Jam Masuk</th>
             <th>Jam Keluar</th>
@@ -83,9 +91,9 @@
         @forelse($data as $key => $d)
             <tr align="center">
                 <td>{{$loop->iteration}}</td>
-                <td id="n">{{$d->karyawans->nama}}</td>
-                <td>{{$d->departemens->nama_departemen}}</td>
-                <td>{{\Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
+                <td id="n">{{ucwords(strtolower($d->karyawans->nama))}}</td>
+                {{-- <td>{{$d->departemens->nama_departemen}}</td> --}}
+                <td class="align-tanggal">{{\Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
                 <td>{{$d->jam_masuk}}</td>
                 <td>{{$d->jam_keluar}}</td>
                 <td>{{$d->terlambat}}</td>

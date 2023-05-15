@@ -19,13 +19,13 @@
     <div class="row">
         <div class="col-lg-12">
             <ul class="nav nav-tabs navtab-bg">
-                <li class="active">
+                <li class="active" id="act">
                     <a id="tab1" href="#cuti" data-toggle="tab" aria-expanded="false">
                         <span class="visible-xs"><i class="fa fa-home"></i></span>
                         <span class="hidden-xs">Cuti</span>
                     </a>
                 </li>
-                <li class="">
+                <li class="" id="aiz">
                     <a id="tab2" href="#izin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
                         <span class="hidden-xs">Sakit/Ijin</span>
@@ -259,13 +259,25 @@
     </script>
 @endif
 
-    {{-- <script type="text/javascript">
+<script type="text/javascript">
     let tp = '{{$tipe}}';
     
         if(tp == 1) {
             $('#tab1').click();
+            $('#tab1').addClass('active');
+            $('#tab2').removeClass('active');
+            $('#cuti').addClass('active');
+            $('#izin').removeClass('active');
+            $('#act').addClass('active');
+            $('#aiz').removeClass('active');
         } else {
             $('#tab2').click();
+            $('#tab1').removeClass('active');
+            $('#tab2').addClass('active');
+            $('#cuti').removeClass('active');
+            $('#izin').addClass('active');
+            $('#act').removeClass('active');
+            $('#aiz').addClass('active');
         }
-</script> --}}
+</script>
 @endsection
