@@ -2321,7 +2321,6 @@ class ManagerController extends Controller
     {
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
 
         //mengambil id_departemen user
         $middep = DB::table('absensi')
@@ -2333,10 +2332,14 @@ class ManagerController extends Controller
         $bulan      = $request->query('bulan',Carbon::now()->format('m'));
         $tahun      = $request->query('tahun',Carbon::now()->format('Y'));
 
+
         // simpan session
         $idkaryawan = $request->session()->get('idkaryawan');
         $bulan      = $request->session()->get('bulan');
-        $tahun      = $request->session()->get('tahun',);
+        $tahun      = $request->session()->get('tahun');
+
+        $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
+        $nbulan    = $namaBulan . ' ' . $tahun;
 
         if($role == 3 && $row->jabatan = "Manajer")
         {
@@ -2348,8 +2351,8 @@ class ManagerController extends Controller
                     ->whereYear('tanggal',$tahun)
                     ->get();
                 $departemen = Departemen::where('id',$middep->id_departement)->first();
-
-                $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'departemen'=>$departemen])
+                $nama = Karyawan::where('id',$idkaryawan)->first();
+                $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen, 'nbulan'=>$nbulan])
                 ->setPaper('A4','landscape');
                 return $pdf->stream("REKAP ABSENSI BULAN ".$nbulan." ".$data->first()->karyawans->nama." DEPARTEMEN ".$departemen->nama_departemen.".pdf");
         
@@ -2358,9 +2361,10 @@ class ManagerController extends Controller
                 $data = Absensi::with('karyawans','departemens')
                     ->where('id_departement',$middep->id_departement)
                     ->get();
+                 $nama = Karyawan::where('id',$idkaryawan)->first();
                 $departemen = Departemen::where('id',$middep->id_departement)->first();
             }
-            $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'departemen'=>$departemen])
+            $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen,'nbulan'=>$nbulan])
             ->setPaper('A4','landscape');
             return $pdf->stream("REKAP ABSENSI BULAN ".$nbulan." "." DEPARTEMEN ".$departemen->nama_departemen.".pdf");
         }
@@ -2375,8 +2379,8 @@ class ManagerController extends Controller
                         ->whereYear('tanggal',$tahun)
                         ->get();
                     $departemen = Departemen::where('id',$middep->id_departement)->first();
-
-                    $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'departemen'=>$departemen])
+                    $nama = Karyawan::where('id',$idkaryawan)->first();
+                    $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen,'nbulan'=>$nbulan])
                     ->setPaper('A4','landscape');
         
                     return $pdf->stream("REKAP ABSENSI BULAN ".$nbulan." ".$data->first()->karyawans->nama." DEPARTEMEN ".$departemen->nama_departemen.".pdf");
@@ -2389,10 +2393,11 @@ class ManagerController extends Controller
                     $data = Absensi::where('id_departement', $middep->id_departement)
                         ->whereIn('id_karyawan',$pegawai->pluck('idkaryawan'))
                         ->get();
+                     $nama = Karyawan::where('id',$idkaryawan)->first();
                     // $data = Absensi::where('id_departement',$middep->id_departement)->get();
                     $departemen = Departemen::where('id',$middep->id_departement)->first();
                 }
-                $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'departemen'=>$departemen])
+                $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen,'nbulan'=>$nbulan])
                 ->setPaper('A4','landscape');
         
                 return $pdf->stream("REKAP ABSENSI BULAN ".$nbulan." DEPARTEMEN ".$departemen->nama_departemen.".pdf");

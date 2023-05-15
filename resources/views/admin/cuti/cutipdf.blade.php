@@ -14,6 +14,11 @@
             margin-bottom: 5px;
         }
 
+        .align-tanggal {
+            text-align: center;
+            white-space: nowrap;
+        }
+
         #absensi {
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
@@ -77,22 +82,22 @@
     <h3 align="center">Report Cuti Pegawai</h3>
     <table id="absensi">
         <tr>
-            <th>ID </th>
+            <th>No. </th>
+            <th>NIK</th>
             <th>Nama</th>
             <th>Kategori Cuti</th>
-            <th>Tanggal Mulai</th>
-            <th>Tanggal Selesai</th>
+            <th>Tanggal Pelaksanaan</th>
             <th>Keperluan</th>
             <th>Status</th>
         </tr>
 
         @forelse($data as $key => $d)
             <tr align="center">
-                <td>{{ $d->id }}</td>
-                <td id="n">{{ $d->karyawans->nama }}</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $d->nik }}</td>
+                <td id="n">{{ ucwords(strtolower($d->karyawans->nama)) }}</td>
                 <td>{{ $d->jeniscutis->jenis_cuti }}</td>
-                <td>{{ $d->tgl_mulai }}</td>
-                <td>{{ $d->tgl_selesai }}</td>
+                <td class="align-tanggal">{{\Carbon\Carbon::parse($d->tgl_mulai)->format('d/m/Y')}} @if($d->tgl_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->tgl_selesai)->format('d/m/Y')}} @endif</td>
                 <td>{{ $d->keperluan }}</td>
                 <td>
                     <span

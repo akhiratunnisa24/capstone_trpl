@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Jadwal;
 use App\Models\Absensi;
 use App\Models\Karyawan;
+use App\Models\Departemen;
 use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
 use App\Exports\AbsensiExport;
@@ -288,7 +289,10 @@ class AbsensiController extends Controller
         // simpan session
         $idkaryawan = $request->session()->get('idkaryawan');
         $bulan      = $request->session()->get('bulan');
-        $tahun      = $request->session()->get('tahun',);
+        $tahun      = $request->session()->get('tahun');
+
+        $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
+        $nbulan    = $namaBulan . ' ' . $tahun;
 
         // dd($idkaryawan,$bulan,$tahun );
     
@@ -299,10 +303,9 @@ class AbsensiController extends Controller
             ->whereYear('tanggal',$tahun)
             ->get();
         }else{
-            $data = Absensi::all();
+            $data = Absensi::with('departemens','karyawans')->get();
         }
-
-        $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan])
+        $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan])
         ->setPaper('a4','landscape');
         return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
     }

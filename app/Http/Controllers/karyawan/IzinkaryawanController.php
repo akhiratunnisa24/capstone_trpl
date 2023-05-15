@@ -140,11 +140,11 @@ class IzinkaryawanController extends Controller
                 }
                 Mail::to($tujuan)->send(new IzinNotification($data));
                 
-                return redirect()->back()->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
+                return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
             }
             else
             {
-                return redirect()->back()->with('pesa', 'Anda sudah mengajukan izin pada hari ini!');
+                return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesa', 'Anda sudah mengajukan izin pada hari ini!');
             }
         }
         else
@@ -232,12 +232,12 @@ class IzinkaryawanController extends Controller
                 }
                 Mail::to($tujuan)->send(new IzinNotification($data));
                 // dd($data);
-                return redirect()->back()->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
+                return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
 
             }
             else
             {
-                return redirect()->back()->with('pesa', 'Anda sudah mengajukan izin dengan kategori yang sama pada hari ini!');
+                return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesa', 'Anda sudah mengajukan izin dengan kategori yang sama pada hari ini!');
             } 
         }  
 
@@ -314,7 +314,7 @@ class IzinkaryawanController extends Controller
         //     // proses jika data atasan tidak ada / email tidak ada
         // }
 
-        return redirect()->back()
+        return redirect()->route('cuti_karyawan',['tipe'=>2])
             ->with('pesan','Email Notifikasi Pembatalan Permohonan Izin Berhasil Dikirim');
     }
 
@@ -464,6 +464,6 @@ class IzinkaryawanController extends Controller
         //     // proses jika data atasan tidak ada / email tidak ada
         // }
 
-        return redirect()->back()->with('pesan','Email Notifikasi Perubahan Data Permohonan Izin Berhasil Dikirim');
+        return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesan','Email Notifikasi Perubahan Data Permohonan Izin Berhasil Dikirim');
     }
 }

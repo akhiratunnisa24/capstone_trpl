@@ -6,6 +6,7 @@ use PDF;
 use Carbon\Carbon;
 use App\Models\Absensi;
 use App\Models\Karyawan;
+use App\Models\Departemen;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -127,31 +128,36 @@ class AbsensiKaryawanController extends Controller
 
     public function absensiPeroranganPdf(Request $request)
     {
+         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $iduser = Auth::user()->id_pegawai;
+
         $nama   = Karyawan::where('id','=', $iduser)->first();
-        $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
+      
+        $data = Absensi::with('karyawans', 'departemens')
+            ->where('id_karyawan', $iduser)->get();
+
 
         $bulan  = $request->query('bulan',Carbon::now()->format('m'));
         $tahun  = $request->query('tahun',Carbon::now()->format('Y'));
 
         // simpan session
         $bulan      = $request->session()->get('bulan');
-        $tahun      = $request->session()->get('tahun',);
+        $tahun      = $request->session()->get('tahun');
+
+        $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
+        $nbulan    = $namaBulan . ' ' . $tahun;
 
         if(isset($bulan) && isset($tahun))
         {
-            $data = Absensi::with('karyawans','departemens')
+           $data = Absensi::with('karyawans','departemens')
                 ->where('id_karyawan', $iduser)
                 ->whereMonth('tanggal', $bulan)
                 ->whereYear('tanggal',$tahun)
                 ->get();
-            // dd($data);
-        }else{
-            $data = Absensi::with('karyawans', 'departemens')
-                ->where('id_karyawan', $iduser)
-                ->get();
         }
-        $pdf  = PDF::loadview('karyawan.absensi.absensistaff_pdf',['data'=>$data,'iduser'=>$iduser])
+        $nama = Karyawan::where('id',$iduser)->first();
+        $departemen = Departemen::where('id',$nama->divisi)->first();
+        $pdf  = PDF::loadview('karyawan.absensi.absensistaff_pdf',['data'=>$data,'departemen'=>$departemen,'iduser'=>$iduser, 'nama'=> $nama, 'nbulan'=>$nbulan])
         ->setPaper('A4','landscape');
 
         return $pdf->stream("Report Absensi {$nama->nama} Bulan {$nbulan}.pdf");

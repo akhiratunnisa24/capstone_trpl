@@ -14,6 +14,16 @@
             margin-bottom: 5px;
         }
 
+        .align-tanggal {
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .align-nama {
+            text-align: center;
+            white-space: nowrap;
+        }
+
         #absensi {
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
@@ -77,33 +87,31 @@
     <h3 align="center">Report Izin Pegawai</h3>
     <table id="absensi">
         <tr>
-            <th>Emp No.</th>
+            <th>No.</th>
+            <th>NIK</th>
             <th>Nama</th>
+            <th>Kategori</th>
+            <th>Tanggal Pelaksanaan</th>
             <th>Keperluan</th>
-            <th>Tanggal Mulai</th>
-            <th>Tanggal Selesai</th>
-            <th>Jam Mulai</th>
-            <th>Jam Selesai</th>
+            <th>Jam Pelaksanaan</th>
             <th>Jumlah Jam</th>
-            <th>Status</th>
         </tr>
 
         @forelse($data as $key => $d)
             <tr align="center">
-               <td>{{ $d->id_karyawan }}</td>
-                <td>{{ $d->karyawans->nama }}</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $d->nik }}</td>
+                <td class="align-nama">{{  ucwords(strtolower($d->karyawans->nama)) }}</td>
+                <td>{{ $d->jenisizins->jenis_izin }}</td>
+                <td class="align-tanggal">{{\Carbon\Carbon::parse($d->tgl_mulai)->format('d/m/Y')}} @if($d->tgl_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->tgl_selesai)->format('d/m/Y')}} @endif</td>
                 <td>{{ $d->keperluan }}</td>
-                <td>{{ $d->tgl_mulai }}</td>
-                <td>{{ $d->tgl_selesai }}</td>
-                <td>{{ $d->jam_mulai }}</td>
-                <td>{{ $d->jam_selesai }}</td>
-                <td>{{ $d->jml_jam }}</td>
-                <td>
-                    <span
-                        class="badge badge-{{ $d->status == 1 ? 'warning' : ($d->status == 2 ? 'info' : ($d->status == 5 ? 'danger' : ($d->status == 6 ? 'secondary' : ($d->status == 7 ? 'success' : '')))) }}">
-                        {{ $d->status == 1 ? 'Pending' : ($d->status == 2 ? 'Disetujui Manager' : ($d->status == 5 ? 'Ditolak' : ($d->status == 6 ? 'Disetujui Asisten Manajer' : ($d->status == 7 ? 'Disetujui' : '')))) }}
-                    </span>
-                </td>
+                @if($d->jam_mulai != NULL)
+                    <td class="align-tanggal">{{\Carbon\Carbon::parse($d->jam_mulai)->format('H:i')}} @if($d->jam_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->jam_selesai)->format('H:i')}} @endif</td>
+                    <td>{{ $d->jml_jam }}</td>
+                @else
+                    <td>-</td>
+                    <td>-</td>
+                @endif
             </tr>
         @empty
             <tr>
