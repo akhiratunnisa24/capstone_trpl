@@ -62,7 +62,7 @@
             padding-right: 33px; 
             padding-top:40px;
         }
-        #n {
+        .n {
             text-align: left;
         }
     </style>
@@ -88,8 +88,8 @@
         @forelse($data as $key => $d)
             <tr align="center">
                 <td>{{$loop->iteration}}</td>
-                <td id="n">{{$d->karyawans->nama}}</td>
-                <td>{{$d->departemens->nama_departemen}}</td>
+                <td class="n">{{$d->karyawans->nama}}</td>
+                <td class="n">{{$d->departemens->nama_departemen}}</td>
                 <td class="align-tanggal">{{\Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
                 <td>{{$d->jam_masuk}}</td>
                 <td>{{$d->jam_keluar}}</td>
@@ -104,8 +104,14 @@
         @endforelse
     </table>
     <br>
+    @php
+        use Carbon\Carbon;
+        $now = Carbon::now();
+        $bulan = $now->locale('id')->monthName;
+        $formatted_date = $now->day . ' ' . $bulan . ' ' . $now->year;
+    @endphp
     <div class="row-sm-3">
-        <p id="ttd">Jakarta Selatan, {{ date("d F Y") }}</p>
+        <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
         {{-- <p id="t">Hormat Kami,</p> --}}
         <p id="tt">(HR Development)</p>
     </div>
