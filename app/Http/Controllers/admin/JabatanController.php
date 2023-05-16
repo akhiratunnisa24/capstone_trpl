@@ -49,7 +49,7 @@ class JabatanController extends Controller
         $jabatan->nama_jabatan = $request->nama_jabatan;
         $jabatan->update();
     
-        return redirect()->back();
+        return redirect()->back()->with('pesan','Data berhasil diupdate !');
     }
     
     public function destroy($id)

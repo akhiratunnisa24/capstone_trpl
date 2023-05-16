@@ -51,16 +51,22 @@ class DepartemenController extends Controller
         $departemen->nama_departemen = $request->nama_departemen;
         $departemen->save();
 
-        return redirect('/departemen')->with('pesan','Data berhasil disimpan !');
+        return redirect()->back()->with('pesan','Data berhasil disimpan !');
     }
 
     public function update(Request $request, $id)
     {
-        $departemen = Departemen::find($id);
-        $departemen->nama_departemen = $request->nama_departemen;
-        $departemen->update();
+        $role = Auth::user()->role;
+        if ($role == 1 || $role == 2) 
+        {
+            $departemen = Departemen::find($id);
+            $departemen->nama_departemen = $request->nama_departemen;
+            $departemen->update();
 
-        return redirect()->back();
+            return redirect()->back()->with('pesan','Data berhasil diupdate !');
+        }else{
+            return redirect()->back();
+        }
     }
 
     public function destroy($id)
@@ -68,6 +74,6 @@ class DepartemenController extends Controller
         $departemen = Departemen::find($id);
         $departemen->delete();
 
-        return redirect('/departemen');
+        return redirect()->back();
     }
 }

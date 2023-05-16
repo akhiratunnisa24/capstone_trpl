@@ -61,15 +61,15 @@
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
 
-                                                    {{-- <a class="btn btn-success btn-sm" data-toggle="modal" 
-                                                       data-target="#editShift{{$data->id}}"><i class="fa fa-edit"></i>
-                                                    </a> --}}
+                                                    <a class="btn btn-success btn-sm" data-toggle="modal" 
+                                                       data-target="#editJadwal{{$data->id}}"><i class="fa fa-edit"></i>
+                                                    </a>
 
                                                     <button class="btn btn-danger btn-sm" onclick="hapusjadwal({{ $data->id }})"><i class="fa fa-trash"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
-                                        {{-- @include('admin.datamaster.shift.editShift') --}}
+                                        @include('admin.datamaster.jadwal.edit')
                                     @endforeach
                                 </tbody>
                             </table>

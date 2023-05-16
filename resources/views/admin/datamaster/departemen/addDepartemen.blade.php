@@ -4,16 +4,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-center" id="myModalLabel">Tambah Data Departemen</h4>
+                <h4 class="modal-title text-center" id="myModalLabel">Tambah Data Divisi</h4>
             </div>
             <div class="modal-body">
-                <form action="{{ route('departemen.store')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('divisi.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="form-group col-sm">
-                        <label for="nama_departemen" class="col-form-label">Nama Departemen</label>
+                        <label for="nama_departemen" class="col-form-label">Nama Divisi</label>
                         <input type="text" class="form-control" name="nama_departemen" id="nama_departemen" autocomplete="off"
-                            placeholder="Masukkan Nama Departemen" required>
+                            placeholder="Masukkan Nama Divisi" required>
                     </div>
 
                     <div class="modal-footer">

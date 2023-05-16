@@ -144,22 +144,34 @@ class JadwalkerjaController extends Controller
     
     public function update(Request $request, $id)
     {
-        // $shift = Shift::find($id);
-        $shift = array(
-            'id_pegawai' => NULL,
-            'nama_shift' => $request->post('nama_shift'),
-            'jam_masuk' => \Carbon\Carbon::parse($request->post('jam_masuk'))->format('H:i:s'),
-            'jam_pulang' => \Carbon\Carbon::parse($request->post('jam_pulang'))->format('H:i:s')
-        );
-        // dd($shift);
-        DB::table('shift')->where('id',$id)->update($shift);
-        return redirect()->back();
+        $jadwal = Jadwal::find($id);
+        $jadwal->id_pegawai = $request->post('id_pegawai');
+        $jadwal->id_shift = $request->post('id_shift');
+        $jadwal->tanggal = \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tanggal'))->format('Y-m-d');
+        $jadwal->jadwal_masuk = $request->post('jadwal_masuk');
+        $jadwal->jadwal_pulang = $request->post('jadwal_pulang');
+
+        $existingData = Jadwal::where('id_pegawai', $jadwal->id_pegawai)
+                            ->where('id_shift', $jadwal->id_shift)
+                            ->where('tanggal', $jadwal->tanggal)
+                            ->exists();
+
+        // dd( $jadwal,$existingData);
+       if ($existingData) 
+        {
+            // Data sudah ada di database
+            return redirect()->back()->with('pesa','Data tersebut sudah ada.');
+        }
+
+        $jadwal->update();
+
+        return redirect()->back()->with('pesan', 'Data berhasil diupdate!');
     }
     
     public function destroy($id)
     {
-        DB::table('shift')->where('id', $id)->delete();
-        return redirect('/shift');
+        DB::table('jadwal')->where('id', $id)->delete();
+        return redirect()->back();
     }
 
 }
