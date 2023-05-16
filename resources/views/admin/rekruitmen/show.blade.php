@@ -103,7 +103,9 @@
                         </ul>
                     </div>
 
+                    {{-- Tabel Pelamar Tahap 1 --}}
                     <div class="tab-content">
+
                         <div class="tab-pane" id="1">
                             <table class="table table-bordered table-striped" style="width:100%">
                                 <thead>
@@ -123,7 +125,7 @@
 
 
                                 <tbody>
-                                    @foreach ($dataTahap1 as $k)
+                                    @foreach ($dataId1 as $k)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nik }}</td>
@@ -208,11 +210,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
-
                         </div>
 
-                        <div class="tab-pane" id="2">
-
+                        <div class="tab-pane" id="5">
                             <table class="table table-bordered table-striped" style="width:100%">
                                 <thead>
                                     <tr>
@@ -228,10 +228,8 @@
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-
-
                                 <tbody>
-                                    @foreach ($dataTahap2 as $k)
+                                    @foreach ($dataId5 as $k)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nik }}</td>
@@ -240,27 +238,14 @@
                                             <td>{{ $k->email }}</td>
                                             <td>{{ $k->jenis_kelamin }}</td>
                                             <td>{{ $k->alamat }}</td>
-                                            <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
                                             <td>{{ $k->tanggal_tahapan }}</td>
                                             <td>
-
-                                                {{-- @if ($k->status_lamaran == 'tahap 2') --}}
-
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
                                                         <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
                                                 </div>
-
-                                                {{-- <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#myModal{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
-                                                    </a>
-                                                </div>
-                                                @include('admin.rekruitmen.showModal') --}}
-
                                                 <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
@@ -269,22 +254,6 @@
                                                     </a>
                                                 </div>
                                                 @include('admin.rekruitmen.lulusModal')
-
-                                                {{-- <div class="col-md-3">
-                                                <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                    onsubmit="return confirmSave2()">
-                                                    @csrf
-                                                    <select class="form-control selectpicker "
-                                                        onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
-                                                        <option value="">Pilih Tahap Selanjutnya</option>
-                                                        @foreach ($metode as $k)
-                                                            <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </form>
-                                            </div> --}}
-
                                                 <div class="col-md-3">
                                                     <form action="update_pelamar{{ $k->id }}" method="POST"
                                                         onsubmit="return confirmTolak2()">
@@ -296,21 +265,14 @@
                                                             class="fa fa-times btn-danger btn-sm"></button>
                                                     </form>
                                                 </div>
-                                                {{-- @endif --}}
                                             </td>
-
-
-
-
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-
                         </div>
 
-
-                        <div class="tab-pane" id="3">
+                        <div class="tab-pane" id="7">
                             <table class="table table-bordered table-striped" style="width:100%">
                                 <thead>
                                     <tr>
@@ -322,14 +284,14 @@
                                         <th>L / P</th>
                                         <th>Alamat</th>
                                         <th>Status</th>
-                                        <th>Tanggal Interview Ke-1</th>
+                                        <th>Tanggal Test Asuransi Umum</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
 
 
                                 <tbody>
-                                    @foreach ($dataTahap3 as $k)
+                                    @foreach ($dataId7 as $k)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nik }}</td>
@@ -338,27 +300,14 @@
                                             <td>{{ $k->email }}</td>
                                             <td>{{ $k->jenis_kelamin }}</td>
                                             <td>{{ $k->alamat }}</td>
-                                            <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? ''}}</td>
                                             <td>{{ $k->tanggal_tahapan }}</td>
                                             <td>
-
-                                                {{-- @if ($k->status_lamaran == 'tahap 2') --}}
-
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
                                                         <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
                                                 </div>
-
-                                                {{-- <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#myModal{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
-                                                    </a>
-                                                </div>
-                                                @include('admin.rekruitmen.showModal') --}}
-
                                                 <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
@@ -367,24 +316,6 @@
                                                     </a>
                                                 </div>
                                                 @include('admin.rekruitmen.lulusModal')
-
-
-
-                                                {{-- <div class="col-md-3">
-                                                <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                    onsubmit="return confirmSave2()">
-                                                    @csrf
-                                                   <select class="form-control selectpicker "
-                                                        onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
-                                                        <option value="">Pilih Tahap Selanjutnya</option>
-                                                        @foreach ($metode as $k)
-                                                            <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </form>
-                                            </div> --}}
-
 
                                                 <div class="col-md-3">
                                                     <form action="update_pelamar{{ $k->id }}" method="POST"
@@ -397,12 +328,7 @@
                                                             class="fa fa-times btn-danger btn-sm"></button>
                                                     </form>
                                                 </div>
-                                                {{-- @endif --}}
                                             </td>
-
-
-
-
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -437,7 +363,7 @@
                                             <td>{{ $k->email }}</td>
                                             <td>{{ $k->jenis_kelamin }}</td>
                                             <td>{{ $k->alamat }}</td>
-                                            <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
                                             <td>{{ $k->tanggal_tahapan }}</td>
                                             <td>
 
@@ -533,7 +459,7 @@
                                             <td>{{ $k->email }}</td>
                                             <td>{{ $k->jenis_kelamin }}</td>
                                             <td>{{ $k->alamat }}</td>
-                                            <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
                                             <td>{{ $k->tanggal_tahapan }}</td>
                                             <td>
 
@@ -601,8 +527,6 @@
                             </table>
                         </div>
 
-
-
                         <div class="tab-pane" id="6">
 
 
@@ -633,7 +557,7 @@
                                             <td>{{ $k->email }}</td>
                                             <td>{{ $k->jenis_kelamin }}</td>
                                             <td>{{ $k->alamat }}</td>
-                                            <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
                                             <td>{{ $k->tanggal_tahapan }}</td>
 
                                             <td>

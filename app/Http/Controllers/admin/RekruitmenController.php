@@ -162,10 +162,6 @@ class RekruitmenController extends Controller
                 ->where('status_lamaran', '=', '2')
                 ->count('posisi');
 
-            // Show data Kanidat di Tahap 1
-            $dataTahap1 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
-                ->where('status_lamaran', '=', '1')
-                ->get();
             // // Data Keluarga show di Modal
             // foreach ($dataTahap1 as $data) {
 
@@ -203,14 +199,20 @@ class RekruitmenController extends Controller
 
             //     $dataKdarurat = Kdarurat::where('id_pelamar', $data->id)
             //     ->get();
-            // }
+            // }    
 
-            $dataTahap2 = Rekruitmen::with('mrekruitmen', 'namatahap')->where('id_lowongan', $id)
-                ->where('status_lamaran', '=', '2')
+
+            // Show data Kanidat di Tahap 1
+            $dataId1 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '1')
+            ->get();
+
+            $dataId5 = Rekruitmen::where('id_lowongan', $id)
+                ->where('status_lamaran', '=', '5')
                 ->get();
 
-            $dataTahap3 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
-                ->where('status_lamaran', '=', '3')
+            $dataId7 = Rekruitmen::where('id_lowongan', $id)
+                ->where('status_lamaran', '=', '7')
                 ->get();
 
             $dataTahap4 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
@@ -233,9 +235,9 @@ class RekruitmenController extends Controller
                 'totalTahap1',
                 'totalTahap2',
                 'totalTahap3',
-                'dataTahap1',
-                'dataTahap2',
-                'dataTahap3',
+                'dataId1',
+                'dataId5',
+                'dataId7',
                 'dataTahap4',
                 'dataTahap5',
                 'row',
@@ -582,6 +584,7 @@ class RekruitmenController extends Controller
 
         $user = new MetodeRekruitmen();
         $user->nama_tahapan = $request->namaTahapan;
+        $user->status = 'Aktif';
         $user->save();
 
         return redirect()->back();
