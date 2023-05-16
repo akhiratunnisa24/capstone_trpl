@@ -29,9 +29,9 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 m-b-10">
-                            <a type="button" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
+                            {{-- <a type="button" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
                                 data-target="#myModal"> Tambah
-                                Metode Rekruitmen</a>
+                                Metode Rekruitmen</a> --}}
                         </div>
                         @include('admin.rekruitmen.tambahMetodeModal')
                         <div class="panel-body">

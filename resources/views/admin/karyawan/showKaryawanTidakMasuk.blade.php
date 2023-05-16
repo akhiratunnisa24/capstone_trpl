@@ -46,11 +46,11 @@
                                 <tbody>
                                     @foreach ($tidakMasuk as $k)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $k->nama }}</td>
-                                            <td>{{ $k->departemen->nama_departemen }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($k->tanggal)->format('d/m/Y') }}</td>
-                                            <td>{{ $k->status }}</td>
+                                            <td>{{ $loop->iteration ?? '' }}</td>
+                                            <td>{{ $k->nama ?? ''}}</td>
+                                            <td>{{ $k->departemen->nama_departemen ?? ''}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tanggal)->format('d/m/Y') ?? '' }}</td>
+                                            <td>{{ $k->status  ?? ''}}</td>
 
                                         </tr>
                                     @endforeach
@@ -82,11 +82,11 @@
                                 <tbody>
                                     @foreach ($tidakMasukBulanIni as $k)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $k->nama }}</td>
-                                            <td>{{ $k->departemen->nama_departemen }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($k->tanggal)->format('d/m/Y') }}</td>
-                                            <td>{{ $k->status }}</td>
+                                            <td>{{ $loop->iteration ?? '' }}</td>
+                                            <td>{{ $k->nama ?? ''}}</td>
+                                            <td>{{ $k->departemen->nama_departemen ?? ''}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tanggal)->format('d/m/Y') ?? ''}}</td>
+                                            <td>{{ $k->status ?? ''}}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -118,11 +118,11 @@
                                 <tbody>
                                     @foreach ($tidakMasukBulanLalu as $k)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $k->nama }}</td>
-                                            <td>{{ $k->departemen->nama_departemen }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($k->tanggal)->format('d/m/Y') }}</td>
-                                            <td>{{ $k->status }}</td>
+                                            <td>{{ $loop->iteration ?? ''}}</td>
+                                            <td>{{ $k->nama ?? ''}}</td>
+                                            <td>{{ $k->departemen->nama_departemen ?? ''}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tanggal)->format('d/m/Y') ?? ''}}</td>
+                                            <td>{{ $k->status ?? ''}}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
