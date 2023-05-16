@@ -336,10 +336,10 @@ Route::post('/permintaanresignreject/{id}', [ResignAdminController::class, 'reje
 Route::get('/getUserData/{id}', [ResignAdminController::class, 'getUserData'])->name('getUserData');
 
 //Departemen
-Route::get('/departemen', [DepartemenController::class, 'index'])->name('departemen.index');
-Route::post('/departemen', [DepartemenController::class, 'store'])->name('departemen.store');
-Route::put('/departemen/update/{id}', [DepartemenController::class, 'update'])->name('departemen.update');
-Route::get('/departemen/delete{id}', [DepartemenController::class, 'destroy'])->name('departemen.delete');
+Route::get('/divisi', [DepartemenController::class, 'index'])->name('divisi.index');
+Route::post('/divisi', [DepartemenController::class, 'store'])->name('divisi.store');
+Route::put('/divisi/update/{id}', [DepartemenController::class, 'update'])->name('divisi.update');
+Route::get('/divisi/delete{id}', [DepartemenController::class, 'destroy'])->name('divisi.delete');
 
 //Jabatan
 Route::get('/jabatan', [JabatanController::class, 'index'])->name('jabatan.index');
@@ -362,6 +362,7 @@ Route::get('/shift/delete/{id}', [ShiftController::class, 'destroy'])->name('shi
 //jadwal
 Route::get('/jadwal', [JadwalkerjaController::class, 'index'])->name('jadwal.index');
 Route::post('/getshift', [JadwalkerjaController::class, 'getShift'])->name('get.Shift');
+Route::post('/getShift', [JadwalkerjaController::class, 'getShift'])->name('getshift');
 Route::post('/jadwal', [JadwalkerjaController::class, 'store'])->name('jadwal.store');
 Route::put('/jadwal/update/{id}', [JadwalkerjaController::class, 'update'])->name('jadwal.update');
 Route::get('/jadwal/delete/{id}', [JadwalkerjaController::class, 'destroy'])->name('jadwal.delete');

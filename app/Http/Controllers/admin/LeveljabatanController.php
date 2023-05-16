@@ -49,7 +49,7 @@ class LeveljabatanController extends Controller
         $leveljabatan->nama_level = $request->nama_level;
         $leveljabatan->update();
     
-        return redirect()->back();
+        return redirect()->back()->with('pesan','Data berhasil diupdate !');
     }
     
     public function destroy($id)

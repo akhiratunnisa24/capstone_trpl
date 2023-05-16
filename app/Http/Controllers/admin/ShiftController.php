@@ -47,7 +47,7 @@ class ShiftController extends Controller
         );
         // dd($shift);
         DB::table('shift')->insert($shift);
-        return redirect('/shift')->with('pesan','Data berhasil disimpan !');
+        return redirect()->back()->with('pesan','Data berhasil disimpan !');
     }
     
     public function update(Request $request, $id)
@@ -61,13 +61,13 @@ class ShiftController extends Controller
         );
         // dd($shift);
         DB::table('shift')->where('id',$id)->update($shift);
-        return redirect()->back();
+        return redirect()->back()->with('pesan','Data berhasil diupdate !');;
     }
     
     public function destroy($id)
     {
         DB::table('shift')->where('id', $id)->delete();
-        return redirect('/shift');
+        return redirect()->back();
     }
 
 }

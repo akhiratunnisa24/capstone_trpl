@@ -70,12 +70,32 @@ class HomeController extends Controller
         $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)->whereMonth('created_at', '=', Carbon::now()->month)->count('jam_masuk');
 
         // Data Cuti dan Izin Hari ini 
-        $dataIzinHariini = Izin::whereYear('tgl_mulai', '=', Carbon::now()->year)
-            ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
-            ->whereDay('tgl_mulai', '=', Carbon::now())->count('jml_hari');
-        $cutiHariini     = Cuti::whereYear('tgl_mulai', '=', Carbon::now()->year)
-            ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
-            ->whereDay('tgl_mulai', '=', Carbon::now())->count('jml_cuti');
+        // $dataIzinHariini = Izin::whereYear('tgl_mulai', '=', Carbon::now()->year)
+        //     ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+        //     ->whereDay('tgl_mulai', '=', Carbon::now())
+        //     ->where('status','=',7)
+        //     ->count('jml_hari');
+    
+        // $cutiHariini     = Cuti::whereYear('tgl_mulai', '=', Carbon::now()->year)
+        // ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+        // ->whereDay('tgl_mulai', '=', Carbon::now())
+        // ->where('status','=',7)
+        // ->count('jml_cuti');
+
+        $today = Carbon::now()->format('Y-m-d');
+        $dataIzinHariini = Izin::where(function ($query) use ($today) {
+                $query->where('tgl_mulai', '<=', $today)
+                ->where('tgl_selesai', '>=', $today);
+            })
+            ->where('status', '=', 7)
+            ->count('jml_hari');
+
+        $cutiHariini = Cuti::where(function ($query) use ($today) {
+                $query->where('tgl_mulai', '<=', $today)
+                    ->where('tgl_selesai', '>=', $today);
+            })
+            ->where('status', '=', 7)
+            ->count('jml_cuti');
              // Total
         $cutidanizin     = $dataIzinHariini + $cutiHariini;
         // Data Cuti dan Izin Bulan ini 

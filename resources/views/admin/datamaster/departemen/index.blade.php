@@ -5,11 +5,11 @@
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Master Departemen</h4>
+                <h4 class="pull-left page-title">Master Divisi</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Master Departemen</li>
+                    <li class="active">Master Divisi</li>
                 </ol>
 
                 <div class="clearfix">
@@ -28,7 +28,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                data-target="#AddModal"> Tambah Data Departemen</a>
+                                data-target="#AddModal"> Tambah Data Divisi</a>
                         </div>
                         @include('admin.datamaster.departemen.addDepartemen')
                         <div class="panel-body">
@@ -38,7 +38,7 @@
                                     <tr>
                                         <th>No</th>
                                         {{-- <th>ID</th> --}}
-                                        <th>Nama Departemen</th>
+                                        <th>Nama Divisi</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -112,8 +112,8 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= '/departemen/delete' ?>' + id;
-                    // location.href = '<?= 'http://localhost:8000/departemen/delete' ?>' + id;
+                    location.href = '<?= '/divisi/delete' ?>' + id;
+                    // location.href = '<?= 'http://localhost:8000/divisi/delete' ?>' + id;
                 }
             })
         }

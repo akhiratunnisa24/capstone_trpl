@@ -607,6 +607,11 @@
             autoclose: true,
             todayHighlight: true,
         });
+        jQuery("#datepicker-autoclosey").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
 
         jQuery("#datepicker-inline").datepicker();
         jQuery("#datepicker-multiple-date").datepicker({

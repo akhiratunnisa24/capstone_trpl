@@ -109,7 +109,7 @@
                                 class="text-info panel-title">Data Master</span><span class="pull-right"><i
                                     class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="/departemen"><i class="fa fa-sitemap"></i><span></span>Departemen</a></li>
+                            <li><a href="/divisi"><i class="fa fa-sitemap"></i><span></span>Divisi</a></li>
                             <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a></li>
                             <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>  
                             <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>

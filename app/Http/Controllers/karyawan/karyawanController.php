@@ -2126,26 +2126,44 @@ class karyawanController extends Controller
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-            $izin = Izin::with('karyawan','statuses')
-                ->whereYear('tgl_mulai', '=', Carbon::now()->year)
-                ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
-                ->whereDay('tgl_mulai', '=', Carbon::now())
+            // $izin = Izin::with('karyawan','statuses')
+            //     ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+            //     ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+            //     ->whereDay('tgl_mulai', '=', Carbon::now())
+            //     ->where('status','=',7)
+            //     ->get();
+
+            // $cuti = Cuti::with('karyawan', 'jeniscuti')
+            //     ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+            //     ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+            //     ->whereDay('tgl_mulai', '=', Carbon::now())
+            //     ->get();
+            $today = Carbon::now()->format('Y-m-d');
+
+            $izin = Izin::where(function ($query) use ($today) {
+                    $query->where('tgl_mulai', '<=', $today)
+                    ->where('tgl_selesai', '>=', $today);
+                })
+                ->where('status', '=', 7)
                 ->get();
 
-            $cuti = Cuti::with('karyawan', 'jeniscuti')
-                ->whereYear('tgl_mulai', '=', Carbon::now()->year)
-                ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
-                ->whereDay('tgl_mulai', '=', Carbon::now())
+            $cuti = Cuti::where(function ($query) use ($today) {
+                    $query->where('tgl_mulai', '<=', $today)
+                        ->where('tgl_selesai', '>=', $today);
+                })
+                ->where('status', '=', 7)
                 ->get();
 
             $izinBulanIni = Izin::with('karyawan','statuses')
                 ->whereYear('tgl_mulai', '=', Carbon::now()->year)
                 ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+                ->where('status','=',7)
                 ->get();
 
             $cutiBulanIni = Cuti::with('karyawan', 'jeniscuti')
                 ->whereYear('tgl_mulai', '=', Carbon::now()->year)
                 ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+                ->where('status','=',7)
                 ->get();
 
             $izinBulanLalu = Izin::with('karyawan','statuses')

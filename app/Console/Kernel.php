@@ -53,20 +53,21 @@ class Kernel extends ConsoleKernel
         $schedule->call(function ()
         {
                 $karyawanSudahAbsen = DB::table('absensi')
-                ->whereYear('tanggal', '=', Carbon::now()->year)
-                ->whereMonth('tanggal', '=', Carbon::now()->month)
-                ->whereDay('tanggal', '=', Carbon::now())->pluck('id_karyawan');
+                    ->whereYear('tanggal', '=', Carbon::now()->year)
+                    ->whereMonth('tanggal', '=', Carbon::now()->month)
+                    ->whereDay('tanggal', '=', Carbon::now())->pluck('id_karyawan');
                 $karyawan = DB::table('karyawan')->whereNotIn('id', $karyawanSudahAbsen)->get();
                 // dd($karyawan);
             
                 //pengecekan ke data cuti apakah ada atau tidak
 
                 $cuti = Cuti::whereDate('tgl_mulai', Carbon::today())
-                ->whereDate('tgl_selesai', '>=', Carbon::today())
-                ->where('status', 7)
-                ->get();
+                    ->whereDate('tgl_selesai', '>=', Carbon::today())
+                    ->where('status', 7)
+                    ->get();
     
-            if ($karyawan->count() > 0) {
+            if ($karyawan->count() > 0) 
+            {
                 foreach ($karyawan as $karyawan) {
                     $absen = new Tidakmasuk();
                     $absen->id_pegawai = $karyawan->id;
@@ -76,15 +77,32 @@ class Kernel extends ConsoleKernel
                     $absen->tanggal = Carbon::today();
 
                     // cek apakah karyawan memiliki cuti pada hari ini
-                    $cuti = Cuti::join('jeniscuti', 'cuti.id_jeniscuti', '=', 'jeniscuti.id')
-                        ->where('id_karyawan', $karyawan->id)
-                        ->whereDate('tgl_mulai', '=', Carbon::today())
-                        ->first();
 
-                    $izin = Izin::join('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                    // $cuti = Cuti::join('jeniscuti', 'cuti.id_jeniscuti', '=', 'jeniscuti.id')
+                    //     ->where('id_karyawan', $karyawan->id)
+                    //     ->whereDate('tgl_mulai', '=', Carbon::today())
+                    //     ->first();
+                    // $izin = Izin::join('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                    //     ->where('id_karyawan', $karyawan->id)
+                    //     ->whereDate('tgl_mulai', '=', Carbon::today())
+                    //     ->first();
+
+
+                    $today = Carbon::now()->format('Y-m-d');
+                    $cuti = Cuti::where('tgl_mulai', '<=', $today)
+                        ->where('tgl_selesai', '>=', $today)
+                        ->where('status', 7)
                         ->where('id_karyawan', $karyawan->id)
-                        ->whereDate('tgl_mulai', '=', Carbon::today())
                         ->first();
+                
+
+                     // Cek apakah karyawan memiliki izin pada hari ini
+                    $izin = Izin::where('tgl_mulai', '<=', $today)
+                        ->where('tgl_selesai', '>=', $today)
+                        ->where('status', 7)
+                        ->where('id_karyawan', $karyawan->id)
+                        ->first();
+            
 
                     if ($cuti) {
                         $absen->status = $cuti->jeniscuti->jenis_cuti;
@@ -142,7 +160,7 @@ class Kernel extends ConsoleKernel
                 }
 
                 
-                }
+            }
                 $inactiveUsers = User::whereHas('karyawan', function ($query) {
                     $query->where('status_kerja', 'Non-Aktif');
                 })->get();
@@ -156,7 +174,7 @@ class Kernel extends ConsoleKernel
         })
         ->dailyAt('23:59');
 
-        //schedule untuk mengubah status alokasi cuti tahun lalu menjadi tidak aktif
+        //schedule untuk mengubah status alokasi cuti tahun selain cuti tsahunan lalu menjadi tidak aktif
         $schedule->call(function () 
         {
             $year = Carbon::now()->year;
