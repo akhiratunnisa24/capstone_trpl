@@ -1018,7 +1018,7 @@
                 </div>
                 <div class="panel-body">
                     <h3 class=""><b>{{ $cutidanizin }}</b></h3>
-                    <p class="text-muted"><b>Total Pengajuan Cuti dan Izin </b> </p>
+                    <p class="text-muted"><b>Total Cuti dan Izin </b> </p>
                 </div>
             </div>
         </div>
@@ -1077,7 +1077,7 @@
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $cutidanizinPerbulan }}</b></h3>
-                <p class="text-muted"><b>Total Pengajuan Cuti dan Izin </b> </p>
+                <p class="text-muted"><b>Total Cuti dan Izin </b> </p>
             </div>
         </div>
     </div>
