@@ -77,7 +77,7 @@ class RekruitmenSeeder extends Seeder
         ]);
         DB::table('mrekruitmen')->insert([
             'nama_tahapan' => 'Penempatan Tenaga Kerja',
-            'status' => 'Aktif',
+            'status' => 'hidden',
 
         ]);
         // harus id 6

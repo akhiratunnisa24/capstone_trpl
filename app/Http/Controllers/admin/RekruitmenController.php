@@ -112,7 +112,7 @@ class RekruitmenController extends Controller
 
         $data[] = [
             'id_lowongan' => $user->id,
-            'id_mrekruitmen' => 6
+            'id_mrekruitmen' => 18
         ];
         DB::table('namatahapan')->insert($data);
 
@@ -215,15 +215,47 @@ class RekruitmenController extends Controller
                 ->where('status_lamaran', '=', '7')
                 ->get();
 
-            $dataTahap4 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
-                ->where('status_lamaran', '=', '4')
+            $dataId8 = Rekruitmen::where('id_lowongan', $id)
+                ->where('status_lamaran', '=', '8')
                 ->get();
 
-            $dataTahap5 = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
-                ->where('status_lamaran', '=', '5')
+            $dataId9 = Rekruitmen::where('id_lowongan', $id)
+                ->where('status_lamaran', '=', '9')
                 ->get();
 
-            $dataDiterima = Rekruitmen::with('mrekruitmen')->where('id_lowongan', $id)
+            $dataId10 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '10')
+            ->get();
+
+            $dataId11 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '11')
+            ->get();
+
+            $dataId12 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '12')
+            ->get();
+
+            $dataId13 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '13')
+            ->get();
+
+            $dataId14 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '14')
+            ->get();
+
+            $dataId15 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '15')
+            ->get();
+
+            $dataId17 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '17')
+            ->get();
+
+            $dataId18 = Rekruitmen::where('id_lowongan', $id)
+            ->where('status_lamaran', '=', '18')
+            ->get();
+
+            $dataDiterima = Rekruitmen::where('id_lowongan', $id)
                 ->where('status_lamaran', '=', '6')
                 ->get();
 
@@ -238,8 +270,16 @@ class RekruitmenController extends Controller
                 'dataId1',
                 'dataId5',
                 'dataId7',
-                'dataTahap4',
-                'dataTahap5',
+                'dataId8',
+                'dataId9',
+                'dataId10',
+                'dataId11',
+                'dataId12',
+                'dataId13',
+                'dataId14',
+                'dataId15',
+                'dataId17',
+                'dataId18',
                 'row',
                 'dataDiterima',
                 'posisi',
@@ -346,7 +386,7 @@ class RekruitmenController extends Controller
         
         $rekrutmen = Rekruitmen::find($id);
 
-        if ($rekrutmen->status_lamaran == '6') {
+        if ($rekrutmen->status_lamaran == '18') {
             $lowongan = Lowongan::find($rekrutmen->id_lowongan);
             $lowongan->jumlah_dibutuhkan--;
             if ($lowongan->jumlah_dibutuhkan == 0) {
