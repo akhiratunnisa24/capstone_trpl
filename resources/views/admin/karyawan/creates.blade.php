@@ -78,7 +78,7 @@
                                                                 <div class="mb-3">
                                                                     <label  class="form-label">Tanggal Lahir</label>
                                                                     <div class="input-group">
-                                                                        <input id="datepicker-autoclose15" type="text" class="form-control" placeholder="yyyy/mm/dd" id="4"
+                                                                        <input id="datepicker-autoclose-format" type="text" class="form-control" placeholder="dd/mm/yyyy" id="4"
                                                                             name="tgllahirKaryawan" value="{{ $karyawan->tgllahir ?? '' }}" autocomplete="off" rows="10" required></input><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i  class="mdi mdi-calendar text-white"></i></span>
                                                                     </div><!-- input-group -->
@@ -102,7 +102,7 @@
                                                             </div>  
                         
                                                             <div class="form-group">
-                                                                <label class="form-label">Departemen</label>
+                                                                <label class="form-label">Divisi</label>
                                                                 <select class="form-control selectpicker" name="divisi" data-live-search="true" required>
                                                                     <option value="">Pilih Departemen</option>
                                                                     @foreach ($departemen as $d)
@@ -164,10 +164,10 @@
                                                                 <label class="form-label">Status Karyawan</label>
                                                                 <select class="form-control selectpicker" name="statusKaryawan" required>
                                                                     <option value="">Pilih Status   </option>
-                                                                    <option value="Pengurus"  {{ $karyawan->status_karyawan ?? '' == 'Pengurus' ? 'selected' : '' }}>Pengurus</option>
-                                                                    <option value="Tetap"  {{ $karyawan->status_karyawan ?? '' == 'Tetap' ? 'selected' : '' }}>Tetap</option>
-                                                                    <option value="Kontrak" {{ $karyawan->status_karyawan ?? '' == 'Kontrak' ? 'selected' : '' }}>Kontrak</option>
-                                                                    <option value="Probation" {{ $karyawan->status_karyawan ?? '' == 'Probation' ? 'selected' : '' }}>Probation</option>
+                                                                    <option value="Pengurus"  {{ $karyawan->status_karyawan == 'Pengurus' ? 'selected' : '' }}>Pengurus</option>
+                                                                    <option value="Tetap"  {{ $karyawan->status_karyawan == 'Tetap' ? 'selected' : '' }}>Tetap</option>
+                                                                    <option value="Kontrak" {{ $karyawan->status_karyawan == 'Kontrak' ? 'selected' : '' }}>Kontrak</option>
+                                                                    <option value="Probation" {{ $karyawan->status_karyawan == 'Percobaan' ? 'selected' : '' }}>Percobaan</option>
                                                                 </select>
                                                             </div>
 
@@ -175,10 +175,10 @@
                                                                     <label class="form-label">Golongan Darah</label>
                                                                     <select class="form-control selectpicker" name="gol_darahKaryawan" required>
                                                                         <option value="">Pilih Golongan Darah</option>
-                                                                        <option value="A" {{ $karyawan->gol_darah ?? '' == 'A' ? 'selected' : '' }}>A</option>
-                                                                        <option value="B" {{ $karyawan->gol_darah ?? '' == 'B' ? 'selected' : '' }}>B</option>
-                                                                        <option value="AB" {{ $karyawan->gol_darah ?? '' == 'AB' ? 'selected' : '' }}>AB</option>
-                                                                        <option value="O" {{ $karyawan->gol_darah ?? '' == 'O' ? 'selected' : '' }}>O</option>
+                                                                        <option value="A" {{ $karyawan->gol_darah == 'A' ? 'selected' : '' }}>A</option>
+                                                                        <option value="B" {{ $karyawan->gol_darah == 'B' ? 'selected' : '' }}>B</option>
+                                                                        <option value="AB" {{ $karyawan->gol_darah == 'AB' ? 'selected' : '' }}>AB</option>
+                                                                        <option value="O" {{ $karyawan->gol_darah == 'O' ? 'selected' : '' }}>O</option>
                                                                     </select>
                                                                 </div>
                         
@@ -213,10 +213,10 @@
                                                                     <label for="exampleInputEmail1" class="form-label">Status Pernikahan</label>
                                                                     <select class="form-control selectpicker" name="status_pernikahan" required>
                                                                         <option value="">Pilih Status Pernikahan</option>
-                                                                        <option value="Sudah Menikah" {{ $karyawan->status_pernikahan ?? '' == 'Sudah Menikah' ? 'selected' : '' }} >Sudah Menikah</option>
-                                                                        <option value="Belum Menikah" {{ $karyawan->status_pernikahan ?? '' == 'Belum Menikah' ? 'selected' : '' }}>Belum Menikah</option>
-                                                                        <option value="Duda" {{ $karyawan->status_pernikahan ?? '' == 'Duda' ? 'selected' : '' }}>Duda</option>
-                                                                        <option value="Janda" {{ $karyawan->status_pernikahan ?? '' == 'Janda' ? 'selected' : '' }}>Janda</option>
+                                                                        <option value="Sudah Menikah" {{ $karyawan->status_pernikahan == 'Sudah Menikah' ? 'selected' : '' }} >Sudah Menikah</option>
+                                                                        <option value="Belum Menikah" {{ $karyawan->status_pernikahan == 'Belum Menikah' ? 'selected' : '' }}>Belum Menikah</option>
+                                                                        <option value="Duda" {{ $karyawan->status_pernikahan == 'Duda' ? 'selected' : '' }}>Duda</option>
+                                                                        <option value="Janda" {{ $karyawan->status_pernikahan == 'Janda' ? 'selected' : '' }}>Janda</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -250,12 +250,12 @@
                                                                         <label class="form-label">Agama</label>
                                                                         <select class="form-control selectpicker" name="agamaKaryawan" required>
                                                                             <option value="">Pilih Agama</option>
-                                                                            <option value="Islam" {{ $karyawan->agama ?? '' == 'Islam' ? 'selected' : '' }}>Islam</option>
-                                                                            <option value="Kristen" {{ $karyawan->agama ?? '' == 'Kristen' ? 'selected' : '' }}>Kristen</option>
-                                                                            <option value="Katholik" {{ $karyawan->agama ?? '' == 'Katholik' ? 'selected' : '' }}>Katholik</option>
-                                                                            <option value="Hindu" {{ $karyawan->agama ?? '' == 'Hindu' ? 'selected' : '' }}>Hindu</option>
-                                                                            <option value="Budha" {{ $karyawan->agama ?? '' == 'Budha' ? 'selected' : '' }}>Budha</option>
-                                                                            <option value="Khong Hu Chu" {{ $karyawan->agama ?? '' == 'Khong Hu Chu' ? 'selected' : '' }}>Khong Hu Chu</option>
+                                                                            <option value="Islam" {{ $karyawan->agama  == 'Islam' ? 'selected' : '' }}>Islam</option>
+                                                                            <option value="Kristen" {{ $karyawan->agama  == 'Kristen' ? 'selected' : '' }}>Kristen</option>
+                                                                            <option value="Katholik" {{ $karyawan->agama == 'Katholik' ? 'selected' : '' }}>Katholik</option>
+                                                                            <option value="Hindu" {{ $karyawan->agama  == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                                                                            <option value="Budha" {{ $karyawan->agama  == 'Budha' ? 'selected' : '' }}>Budha</option>
+                                                                            {{-- <option value="Khong Hu Chu" {{ $karyawan->agama ?? '' == 'Khong Hu Chu' ? 'selected' : '' }}>Khong Hu Chu</option> --}}
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -265,7 +265,7 @@
                                                                         <label class="form-label">Tanggal Masuk</label>
                                                                         <div class="input-group">
                                                                             <input type="text" class="form-control"
-                                                                                placeholder="yyyy/mm/dd" id="datepicker-autoclose2"
+                                                                                placeholder="dd/mm/yyyy" id="datepicker-autoclose-format2" data-date-format="dd/mm/yyyy"
                                                                                 name="tglmasukKaryawan" rows="10" autocomplete="off" value="{{ $karyawan->tglmasuk ?? '' }}"
                                                                                 required><br>
                                                                             <span class="input-group-addon bg-custom b-0"><i
@@ -277,7 +277,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">No. KTP</label>
-                                                                        <input type="number" name="nikKaryawan" class="form-control" value="{{ $karyawan->nik ?? '' }}"
+                                                                        <input type="text" name="nikKaryawan" class="form-control" value="{{ $karyawan->nik ?? '' }}"
                                                                             placeholder="Masukkan No. KTP / NIK" required>
                                                                     </div>
                                                                 </div>
@@ -285,7 +285,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">No. Kartu Keluarga</label>
-                                                                        <input type="number" name="nokkKaryawan" class="form-control" value="{{ $karyawan->no_kk ?? '' }}"
+                                                                        <input type="text" name="nokkKaryawan" class="form-control" value="{{ $karyawan->no_kk ?? '' }}"
                                                                             placeholder="Masukkan No. Kartu Keluarga" >
                                                                     </div>
                                                                 </div>
@@ -293,7 +293,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">No. NPWP</label>
-                                                                        <input type="number" name="nonpwpKaryawan" class="form-control" value="{{ $karyawan->no_npwp ?? '' }}"
+                                                                        <input type="text" name="nonpwpKaryawan" class="form-control" value="{{ $karyawan->no_npwp ?? '' }}"
                                                                             placeholder="Masukkan No. NPWP" >
                                                                     </div>
                                                                 </div>
@@ -301,7 +301,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">No. BPJS Ketenagakerjaan</label>
-                                                                        <input type="number" name="nobpjsketKaryawan" class="form-control" value="{{ $karyawan->no_bpjs_ket ?? '' }}"
+                                                                        <input type="text" name="nobpjsketKaryawan" class="form-control" value="{{ $karyawan->no_bpjs_ket ?? '' }}"
                                                                             placeholder="Masukkan No. BPJS Ketenagakerjaan" >
                                                                     </div>
                                                                 </div>
@@ -309,7 +309,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">No. BPJS Kesehatan</label>
-                                                                        <input type="number" name="nobpjskesKaryawan" class="form-control" value="{{ $karyawan->no_bpjs_kes ?? '' }}"
+                                                                        <input type="text" name="nobpjskesKaryawan" class="form-control" value="{{ $karyawan->no_bpjs_kes ?? '' }}"
                                                                             placeholder="Masukkan No. BPJS Kesehatan" >
                                                                     </div>
                                                                 </div>
@@ -317,7 +317,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">No. Asuransi AKDHK</label>
-                                                                        <input type="number" name="noAkdhk" class="form-control" value="{{ $karyawan->no_akdhk ?? '' }}"
+                                                                        <input type="text" name="noAkdhk" class="form-control" value="{{ $karyawan->no_akdhk ?? '' }}"
                                                                             placeholder="Masukkan No. AKDHK" >
                                                                     </div>
                                                                 </div>
@@ -325,7 +325,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">No. Program Pensiun</label>
-                                                                        <input type="number" name="noprogramPensiun" class="form-control" value="{{ $karyawan->no_program_pensiun ?? '' }}"
+                                                                        <input type="text" name="noprogramPensiun" class="form-control" value="{{ $karyawan->no_program_pensiun ?? '' }}"
                                                                             placeholder="Masukkan No. Program Pensiun" >
                                                                     </div>
                                                                 </div>
@@ -333,7 +333,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">No. Program ASKES</label>
-                                                                        <input type="number" name="noprogramAskes" class="form-control" value="{{ $karyawan->no_program_askes ?? '' }}"
+                                                                        <input type="text" name="noprogramAskes" class="form-control" value="{{ $karyawan->no_program_askes ?? '' }}"
                                                                             placeholder="Masukkan No. Program ASKES" >
                                                                     </div>
                                                                 </div>
@@ -343,26 +343,26 @@
                                                                     <label class="form-label">Nama Bank</label>
                                                                     <select class="form-control selectpicker" name="nama_bank" required>
                                                                         <option value="">Pilih Bank</option>
-                                                                        <option value="Bank ANZ Indonesia" {{ $karyawan->nama_bank ?? '' == 'Bank ANZ Indonesia' ? 'selected' : '' }}>Bank ANZ Indonesia</option>
-                                                                        <option value="Bank Bukopin" {{ $karyawan->nama_bank ?? '' == 'Bank Bukopin' ? 'selected' : '' }}>Bank Bukopin</option>
-                                                                        <option value="Bank Central Asia (BCA)" {{ $karyawan->nama_bank ?? '' == 'Bank Central Asia (BCA)' ? 'selected' : '' }}>Bank Central Asia (BCA)</option>
-                                                                        <option value="Bank Danamon" {{ $karyawan->nama_bank ?? '' == 'Bank Danamon' ? 'selected' : '' }} >Bank Danamon</option>
-                                                                        <option value="Bank DBS Indonesia" {{ $karyawan->nama_bank ?? '' == 'Bank DBS Indonesia' ? 'selected' : '' }} >Bank DBS Indonesia</option>
-                                                                        <option value="Bank HSBC Indonesia" {{ $karyawan->nama_bank ?? '' == 'Bank HSBC Indonesia' ? 'selected' : '' }} >Bank HSBC Indonesia</option>
-                                                                        <option value="Bank Jabar Banten (BJB)" {{ $karyawan->nama_bank ?? '' == 'Bank Jabar Banten (BJB)' ? 'selected' : '' }} >Bank Jabar Banten (BJB)</option>
-                                                                        <option value="Bank Mandiri" {{ $karyawan->nama_bank ?? '' == 'Bank Mandiri' ? 'selected' : '' }} >Bank Mandiri</option>
-                                                                        <option value="Bank Maybank" {{ $karyawan->nama_bank ?? '' == 'Bank Maybank' ? 'selected' : '' }} >Bank Maybank</option>
-                                                                        <option value="Bank Mega" {{ $karyawan->nama_bank ?? '' == 'Bank Mega' ? 'selected' : '' }} >Bank Mega</option>
-                                                                        <option value="Bank Muamalat" {{ $karyawan->nama_bank ?? '' == 'Bank Muamalat' ? 'selected' : '' }} >Bank Muamalat</option>
+                                                                        <option value="Bank ANZ Indonesia" {{ $karyawan->nama_bank  == 'Bank ANZ Indonesia' ? 'selected' : '' }}>Bank ANZ Indonesia</option>
+                                                                        <option value="Bank Bukopin" {{ $karyawan->nama_bank  == 'Bank Bukopin' ? 'selected' : '' }}>Bank Bukopin</option>
+                                                                        <option value="Bank Central Asia (BCA)" {{ $karyawan->nama_bank  == 'Bank Central Asia (BCA)' ? 'selected' : '' }}>Bank Central Asia (BCA)</option>
+                                                                        <option value="Bank Danamon" {{ $karyawan->nama_bank  == 'Bank Danamon' ? 'selected' : '' }} >Bank Danamon</option>
+                                                                        <option value="Bank DBS Indonesia" {{ $karyawan->nama_bank  == 'Bank DBS Indonesia' ? 'selected' : '' }} >Bank DBS Indonesia</option>
+                                                                        <option value="Bank HSBC Indonesia" {{ $karyawan->nama_bank  == 'Bank HSBC Indonesia' ? 'selected' : '' }} >Bank HSBC Indonesia</option>
+                                                                        <option value="Bank Jabar Banten (BJB)" {{ $karyawan->nama_bank  == 'Bank Jabar Banten (BJB)' ? 'selected' : '' }} >Bank Jabar Banten (BJB)</option>
+                                                                        <option value="Bank Mandiri" {{ $karyawan->nama_bank  == 'Bank Mandiri' ? 'selected' : '' }} >Bank Mandiri</option>
+                                                                        <option value="Bank Maybank" {{ $karyawan->nama_bank  == 'Bank Maybank' ? 'selected' : '' }} >Bank Maybank</option>
+                                                                        <option value="Bank Mega" {{ $karyawan->nama_bank  == 'Bank Mega' ? 'selected' : '' }} >Bank Mega</option>
+                                                                        <option value="Bank Muamalat" {{ $karyawan->nama_bank  == 'Bank Muamalat' ? 'selected' : '' }} >Bank Muamalat</option>
                                                                         <option value="Bank Negara Indonesia (BNI)" {{ $karyawan->nama_bank ?? '' == 'Bank Negara Indonesia (BNI)' ? 'selected' : '' }} >Bank Negara Indonesia (BNI)</option>
-                                                                        <option value="Bank OCBC NISP" {{ $karyawan->nama_bank ?? '' == 'Bank OCBC NISP' ? 'selected' : '' }} >Bank OCBC NISP</option>
-                                                                        <option value="Bank Panin" {{ $karyawan->nama_bank ?? '' == 'Bank Panin' ? 'selected' : '' }} >Bank Panin</option>
-                                                                        <option value="Bank Permata" {{ $karyawan->nama_bank ?? '' == 'Bank Permata' ? 'selected' : '' }} >Bank Permata</option>
-                                                                        <option value="Bank Rakyat Indonesia (BRI)" {{ $karyawan->nama_bank ?? '' == 'Bank Rakyat Indonesia (BRI)' ? 'selected' : '' }} >Bank Rakyat Indonesia (BRI)</option>
-                                                                        <option value="Bank Syariah Mandiri" {{ $karyawan->nama_bank ?? '' == 'Bank Syariah Mandiri' ? 'selected' : '' }} >Bank Syariah Mandiri</option>
-                                                                        <option value="Bank Tabungan Negara (BTN)" {{ $karyawan->nama_bank ?? '' == 'Bank Tabungan Negara (BTN)' ? 'selected' : '' }} >Bank Tabungan Negara (BTN)</option>
-                                                                        <option value="Bank UOB Indonesia" {{ $karyawan->nama_bank ?? '' == 'Bank UOB Indonesia' ? 'selected' : '' }} >Bank UOB Indonesia</option>
-                                                                        <option value="Bank CIMB Niaga" {{ $karyawan->nama_bank ?? '' == 'Bank CIMB Niaga' ? 'selected' : '' }} >Bank CIMB Niaga</option>
+                                                                        <option value="Bank OCBC NISP" {{ $karyawan->nama_bank  == 'Bank OCBC NISP' ? 'selected' : '' }} >Bank OCBC NISP</option>
+                                                                        <option value="Bank Panin" {{ $karyawan->nama_bank  == 'Bank Panin' ? 'selected' : '' }} >Bank Panin</option>
+                                                                        <option value="Bank Permata" {{ $karyawan->nama_bank  == 'Bank Permata' ? 'selected' : '' }} >Bank Permata</option>
+                                                                        <option value="Bank Rakyat Indonesia (BRI)" {{ $karyawan->nama_bank  == 'Bank Rakyat Indonesia (BRI)' ? 'selected' : '' }} >Bank Rakyat Indonesia (BRI)</option>
+                                                                        <option value="Bank Syariah Mandiri" {{ $karyawan->nama_bank  == 'Bank Syariah Mandiri' ? 'selected' : '' }} >Bank Syariah Mandiri</option>
+                                                                        <option value="Bank Tabungan Negara (BTN)" {{ $karyawan->nama_bank  == 'Bank Tabungan Negara (BTN)' ? 'selected' : '' }} >Bank Tabungan Negara (BTN)</option>
+                                                                        <option value="Bank UOB Indonesia" {{ $karyawan->nama_bank  == 'Bank UOB Indonesia' ? 'selected' : '' }} >Bank UOB Indonesia</option>
+                                                                        <option value="Bank CIMB Niaga" {{ $karyawan->nama_bank  == 'Bank CIMB Niaga' ? 'selected' : '' }} >Bank CIMB Niaga</option>
                                                                         {{-- <option value="Mandiri" {{ $karyawan->nama_bank ?? '' == 'Mandiri' ? 'selected' : '' }} >Mandiri</option> --}}
                                                                     </select>
                                                                 </div>

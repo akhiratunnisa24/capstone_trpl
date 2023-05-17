@@ -257,6 +257,16 @@
             autoclose: true,
             todayHighlight: true,
         });
+        jQuery("#datepicker-autoclose-format").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format2").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
         jQuery("#datepicker-autoclosea1").datepicker({
             format: "yyyy/mm/dd",
             autoclose: true,

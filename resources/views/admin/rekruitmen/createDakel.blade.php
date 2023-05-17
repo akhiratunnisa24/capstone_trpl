@@ -422,7 +422,7 @@
                 var data = {!! json_encode($datakeluarga) !!}[nomorIndex];
                 // Isi data ke dalam form
                 $('#nama').val(data.nama);
-                $('#tgllahirPasangan').val(data.tgllahir);
+                $('#datepicker-autoclose39').val(data.tgllahir);
                 $('#hubungankeluargaa').val(data.hubungan);
                 $('#alamat').val(data.alamat);
                 $('#pekerjaan').val(data.pekerjaan);

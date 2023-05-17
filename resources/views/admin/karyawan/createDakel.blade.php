@@ -128,18 +128,18 @@
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Hubungan</label>
                                                                     <select class="form-control selectpicker" id="hubungan" name="hubungankeluarga" required>
-                                                                        <option value="">Pilih Hubungan</option>
+                                                                        <option value="" >Pilih Hubungan</option>
                                                                         <option value="Ayah">Ayah</option>
-                                                                        <option value="Ibu">Ibu</option>
+                                                                        <option value="Ibu" >Ibu</option>
                                                                         <option value="Suami">Suami</option>
-                                                                        <option value="Istri">Istri</option>
-                                                                        <option value="Kakak">Kakak</option>
-                                                                        <option value="Adik">Adik</option>
-                                                                        <option value="Anak Ke-1">Anak Ke-1 </option>
+                                                                        <option value="Istri" >Istri</option>
+                                                                        <option value="Kakak" >Kakak</option>
+                                                                        <option value="Adik" >Adik</option>
+                                                                        <option value="Anak Ke-1">Anak Ke-1</option>
                                                                         <option value="Anak Ke-2">Anak Ke-2</option>
                                                                         <option value="Anak Ke-3">Anak Ke-3</option>
                                                                         <option value="Anak Ke-4">Anak Ke-4</option>
-                                                                        <option value="Anak Ke-5">Anak Ke-5</option>
+                                                                        <option value="Anak Ke-5">Anak Ke-1</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -166,7 +166,7 @@
                                                                     <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
                                                                     <div class="input-group">
                                                                         <input type="text" class="form-control" placeholder="yyyy/mm/dd"
-                                                                            id="datepicker-autoclose8" autocomplete="off" name="tgllahirPasangan" rows="10" required></input><br>
+                                                                            id="datepicker-autoclose-format" autocomplete="off" name="tgllahirPasangan" rows="10" required></input><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                     </div>
                                                                 </div>
@@ -190,6 +190,7 @@
                                                                 <label for="exampleInputEmail1" class="form-label">Pendidikan Terakhir</label>
                                                                 <select class="form-control selectpicker" id="pendidikan_terakhirPasangan" name="pendidikan_terakhirPasangan"required>
                                                                     <option value="">Pilih Pendidikan Terakhir</option>
+                                                                    <option value="Belum Sekolah">Belum Sekolah</option>
                                                                     <option value="SD">SD</option>
                                                                     <option value="SMP">SMP</option>
                                                                     <option value="SMA/K">SMA/K</option>
@@ -241,20 +242,20 @@
                                                             </div>
                                                             <div class="form-group" style="margin-left:10px;margin-right:10px;">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Hubungan</label>
+                                                                    <label class="form-label">Hubungan</label>
                                                                     <select class="form-control selectpicker" id="hubungankeluargaa" name="hubungankeluarga" required>
-                                                                        <option value="">Pilih Hubungan</option>
-                                                                        <option value="Ayah">Ayah</option>
-                                                                        <option value="Ibu">Ibu</option>
+                                                                        <option value="" >Pilih Hubungan</option>
+                                                                        <option value="Ayah" >Ayah</option>
+                                                                        <option value="Ibu" >Ibu</option>
                                                                         <option value="Suami">Suami</option>
-                                                                        <option value="Istri">Istri</option>
-                                                                        <option value="Kakak">Kakak</option>
-                                                                        <option value="Adik">Adik</option>
-                                                                        <option value="Anak Pertama">Anak Pertama</option>
-                                                                        <option value="Anak Ke-2">Anak Ke-2</option>
-                                                                        <option value="Anak Ke-3">Anak Ke-3</option>
-                                                                        <option value="Anak Ke-4">Anak Ke-4</option>
-                                                                        <option value="Anak Ke-5">Anak Ke-5</option>
+                                                                        <option value="Istri" >Istri</option>
+                                                                        <option value="Kakak" >Kakak</option>
+                                                                        <option value="Adik" >Adik</option>
+                                                                        <option value="Anak Ke-1" >Anak Ke-1</option>
+                                                                        <option value="Anak Ke-2" >Anak Ke-2</option>
+                                                                        <option value="Anak Ke-3" >Anak Ke-3</option>
+                                                                        <option value="Anak Ke-4" >Anak Ke-4</option>
+                                                                        <option value="Anak Ke-5" >Anak Ke-1</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -268,8 +269,8 @@
                                                                 <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
                                                                 <select class="form-control selectpicker"id="jeniskelamin" name="jenis_kelaminKeluarga" required>
                                                                     <option value="">Pilih Jenis Kelamin</option>
-                                                                    <option value="Laki-Laki">Laki-Laki</option>
-                                                                    <option value="Perempuan">Perempuan</option>
+                                                                    <option value="Laki-Laki" >Laki-Laki</option>
+                                                                    <option value="Perempuan" >Perempuan</option>
                                                                 </select>
                                                             </div>
 
@@ -278,7 +279,7 @@
                                                                     <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
                                                                     <div class="input-group">
                                                                         <input type="text" class="form-control" placeholder="yyyy/mm/dd"
-                                                                            id="datepicker-autoclose30" autocomplete="off" name="tgllahirPasangan" rows="10" required></input><br>
+                                                                            id="datepicker-autoclose-format2" autocomplete="off" name="tgllahirPasangan" rows="10" required></input><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                     </div>
                                                                 </div>
@@ -295,13 +296,14 @@
                                                                 <label for="exampleInputEmail1" class="form-label">Pendidikan Terakhir</label>
                                                                 <select class="form-control selectpicker" id="pendidikan_terakhir" name="pendidikan_terakhirPasangan"required>
                                                                     <option value="">Pilih Pendidikan Terakhir</option>
-                                                                    <option value="SD">SD</option>
+                                                                    <option value="Belum Sekolah">Belum Sekolah</option>
+                                                                    <option value="SD"  >SD</option>
                                                                     <option value="SMP">SMP</option>
-                                                                    <option value="SMA/K">SMA/K</option>
+                                                                    <option value="SMA/K" >SMA/K</option>
                                                                     <option value="D-3">D-3</option>
-                                                                    <option value="S-1">S-1</option>
-                                                                    <option value="S-2">S-2</option>
-                                                                    <option value="S-3">S-3</option>
+                                                                    <option value="S-1" >S-1</option>
+                                                                    <option value="S-2" >S-2</option>
+                                                                    <option value="S-3" >S-3</option>
                                                                 </select>
                                                             </div>
 
@@ -339,7 +341,6 @@
     </div>
      {{-- <script src="assets/js/jquery.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="assets/pages/form-advanced.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -361,7 +362,7 @@
                 // Isi data ke dalam form
                     $('#nama').val(data.nama);
                     $('#jeniskelamin').val(data.jenis_kelamin);
-                    $('#datepicker-autoclose30').val(data.tgllahir);
+                    $('#datepicker-autoclose-format2').val(data.tgllahir);
                     $('#tempatlahir').val(data.tempatlahir);
                     $('#hubungankeluargaa').val(data.hubungan);
                     $('#alamat').val(data.alamat);
