@@ -188,7 +188,7 @@
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1"
                                                                                     class="form-label">Atasan Langsung
-                                                                                    (Asisten Manajer/Manajer/Direktur)</label>
+                                                                                    (Asisten Manager/Manager/Direksi)</label>
                                                                                 <select
                                                                                     class="form-control selectpicker"
                                                                                     name="atasan_pertama"
@@ -207,7 +207,7 @@
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1"
                                                                                     class="form-label">Atasan
-                                                                                    (Manajer/Direktur)</label>
+                                                                                    (Manager/Direksi)</label>
                                                                                 <select
                                                                                     class="form-control selectpicker"
                                                                                     name="atasan_kedua"
@@ -235,10 +235,10 @@
                                                                                     <option value="Direksi">
                                                                                         Direksi
                                                                                     </option>
-                                                                                    <option value="Manajer">Manajer
+                                                                                    <option value="Manager">Manager
                                                                                     </option>
-                                                                                    <option value="Asisten Manajer">
-                                                                                        Asisten Manajer
+                                                                                    <option value="Asisten Manager">
+                                                                                        Asisten Manager
                                                                                     </option>
                                                                                     <option value="Staff">Staff
                                                                                     </option>

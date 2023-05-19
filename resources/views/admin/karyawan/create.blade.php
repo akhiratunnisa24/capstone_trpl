@@ -118,7 +118,7 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1" class="form-label">Atasan Langsung
-                                                        (Asisten Manajer/Manajer/Direktur)</label>
+                                                        (Asistant Manager/Manajer/Direksi)</label>
                                                     <select class="form-control selectpicker" name="atasan_pertama"
                                                         data-live-search="true">
                                                         <option value="">Pilih Atasan Langsung</option>
@@ -131,7 +131,7 @@
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1" class="form-label">Atasan
-                                                        (Manajer/Direktur)</label>
+                                                        (Manajer/Direksi)</label>
                                                     <select class="form-control selectpicker" name="atasan_kedua"
                                                         data-live-search="true">
                                                         <option value="">Pilih Atasan</option>
@@ -149,7 +149,7 @@
                                                         <option value="">Pilih Jabatan</option>
                                                         <option value="Management">Management</option>
                                                         <option value="Manajer">Manajer</option>
-                                                        <option value="Asisten Manajer">Asisten Manajer</option>
+                                                        <option value="Asistant Manager">Asistant Manager</option>
                                                         <option value="Staff">Staff</option>
                                                     </select>
                                                 </div>

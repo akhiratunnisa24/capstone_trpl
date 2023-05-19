@@ -115,7 +115,7 @@
                                                             </div>
                         
                                                             <div class="form-group">
-                                                                <label class="form-label">Atasan Langsung (Asisten Manajer/Manajer/Direktur)</label>
+                                                                <label class="form-label">Atasan Langsung (Asistant Manager/Manager/Direksi)</label>
                                                                 <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
                                                                     <option value="">Pilih Atasan Langsung</option>
                                                                     @foreach ($atasan_pertama as $atasan)
@@ -128,7 +128,7 @@
                                                             </div>
                                                             
                                                             <div class="form-group">
-                                                                <label class="form-label">Atasan/Pimpinan (Manajer/Direktur)</label>
+                                                                <label class="form-label">Atasan/Pimpinan (Manager/Direksi)</label>
                                                                 <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
                                                                     <option value="">Pilih Atasan</option>
                                                                     @foreach ($atasan_kedua as $atasan)

@@ -28,7 +28,7 @@ class PembatalanIzinController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         // return $row->jabatan;
-        if($dataizin && $role == 3 && $row->jabatan == "Asisten Manajer")
+        if($dataizin && $role == 3 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(12);
                 // return $status->name_status;
@@ -97,7 +97,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($dataizin && $role == 1 && $row->jabatan == "Asisten Manajer")
+        elseif($dataizin && $role == 1 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(12);
                 // return $status->name_status;
@@ -166,7 +166,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($dataizin && $role == 3 && $row->jabatan == "Manajer")
+        elseif($dataizin && $role == 3 && $row->jabatan == "Manager")
         {
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -309,7 +309,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             }
         }
-        elseif($dataizin && $role == 1 && $row->jabatan == "Manajer")
+        elseif($dataizin && $role == 1 && $row->jabatan == "Manager")
         {
             if($dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -616,7 +616,7 @@ class PembatalanIzinController extends Controller
         $role = Auth::user()->role;
         // return $row->jabatan;
         // dd(Auth::user()->role,$row->jabatan,$role);
-        if($dataizin && $role == 3 && $row->jabatan == "Asisten Manajer")
+        if($dataizin && $role == 3 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(9);
                 // return $status->name_status;
@@ -685,7 +685,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($dataizin && $role == 1 && $row->jabatan == "Asisten Manajer")
+        elseif($dataizin && $role == 1 && $row->jabatan == "Asistant Manager")
         {
             $status = Status::find(9);
             // return $status->name_status;
@@ -754,7 +754,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($dataizin && $role == 3 && $row->jabatan == "Manajer")
+        elseif($dataizin && $role == 3 && $row->jabatan == "Manager")
         {
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -898,7 +898,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             }
         }
-        elseif($dataizin && $role == 1 && $row->jabatan == "Manajer")
+        elseif($dataizin && $role == 1 && $row->jabatan == "Manager")
         {
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -1204,7 +1204,7 @@ class PembatalanIzinController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         // dd($row->jabatan,$role);
-        if($dataizin && $role == 3 && $row->jabatan == "Asisten Manajer")
+        if($dataizin && $role == 3 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(15);
                 // return $status->name_status;
@@ -1272,7 +1272,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             // }
         }
-        if($dataizin && $role == 1 && $row->jabatan == "Asisten Manajer")
+        if($dataizin && $role == 1 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(15);
                 // return $status->name_status;
@@ -1338,7 +1338,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             // }
         }
-        else if($dataizin && $role == 3 && $row->jabatan == "Manajer")
+        else if($dataizin && $role == 3 && $row->jabatan == "Manager")
         {
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -1481,7 +1481,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             }
         }
-        else if($dataizin && $role == 1 && $row->jabatan == "Manajer")
+        else if($dataizin && $role == 1 && $row->jabatan == "Manager")
         {
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -1785,7 +1785,7 @@ class PembatalanIzinController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         // return $row->jabatan;
-        if($dataizin &&  $role == 3 && $row->jabatan == "Asisten Manajer")
+        if($dataizin &&  $role == 3 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(9);
                 // return $status->name_status;
@@ -1854,7 +1854,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             // }
         }
-        if($dataizin && $role == 1 && $row->jabatan == "Asisten Manajer")
+        if($dataizin && $role == 1 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(9);
                 // return $status->name_status;
@@ -1923,7 +1923,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             // }
         }
-        else if($dataizin && $role == 3 && $row->jabatan == "Manajer")
+        else if($dataizin && $role == 3 && $row->jabatan == "Manager")
         {
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -2210,7 +2210,7 @@ class PembatalanIzinController extends Controller
                 return redirect()->back();
             }
         }
-        else if($dataizin && $role == 1 && $row->jabatan == "Manajer")
+        else if($dataizin && $role == 1 && $row->jabatan == "Manager")
         {
             if($dataizin && $dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
