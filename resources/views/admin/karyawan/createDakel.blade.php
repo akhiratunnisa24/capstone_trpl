@@ -339,8 +339,8 @@
             </div>
         </div>
     </div>
-     {{-- <script src="assets/js/jquery.min.js"></script> --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="assets/pages/form-advanced.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
