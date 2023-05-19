@@ -248,7 +248,7 @@ class HomeController extends Controller
 
         $posisi = Lowongan::all()->where('status', '=', 'Aktif');
 
-        if($role->role == 3 && $row->jabatan == "Manajer")
+        if($role->role == 3 && $row->jabatan == "Manager")
         {
             $cuti = DB::table('cuti')
                 ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -344,7 +344,7 @@ class HomeController extends Controller
                 ->get();
             $jumizin = $ijin->count();
         } 
-        elseif($role->role == 1 && $row->jabatan == "Manajer")
+        elseif($role->role == 1 && $row->jabatan == "Manager")
         {
             $cuti = DB::table('cuti')
                 ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -439,7 +439,7 @@ class HomeController extends Controller
             $jumizin = $ijin->count();
 
         } 
-        elseif($role->role == 3 && $row->jabatan == "Asisten Manajer")
+        elseif($role->role == 3 && $row->jabatan == "Asistant Manager")
         {
             $cuti = DB::table('cuti')
                 ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -513,7 +513,7 @@ class HomeController extends Controller
                 ->get();
             $jumizin = $ijin->count();
         }
-        elseif($role->role == 1 && $row->jabatan == "Asisten Manajer")
+        elseif($role->role == 1 && $row->jabatan == "Asistant Manager")
         {
             $cuti = DB::table('cuti')
                 ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
@@ -886,7 +886,7 @@ class HomeController extends Controller
             ];
             return view('admin.karyawan.dashboardhrd', $output);
 
-        } elseif ($role->role == 3 && $row->jabatan == "Asisten Manajer") {
+        } elseif ($role->role == 3 && $row->jabatan == "Asistant Manager") {
 
             $output = [
                 'row' => $row,
@@ -944,7 +944,7 @@ class HomeController extends Controller
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }
-        elseif($role->role == 3 && $row->jabatan == "Manajer")
+        elseif($role->role == 3 && $row->jabatan == "Manager")
         {
 
             $output = [

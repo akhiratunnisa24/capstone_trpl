@@ -201,7 +201,7 @@
                                                         <td>
                                                             <div class="row">
                                                                 
-                                                                @if ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manajer")
+                                                                @if ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manager")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('batal.approved', $data->id) }}" method="POST">
                                                                             @csrf
@@ -216,7 +216,7 @@
                                                                             <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                         </form>
                                                                     </div>
-                                                                @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Perubahan Disetujui Atasan" && $row->jabatan == "Manajer")
+                                                                @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Perubahan Disetujui Atasan" && $row->jabatan == "Manager")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
                                                                             @csrf
@@ -231,7 +231,7 @@
                                                                             <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                         </form>
                                                                     </div>
-                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Manajer")
+                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Manager")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('batal.approved', $data->id) }}" method="POST">
                                                                             @csrf
@@ -246,7 +246,7 @@
                                                                             <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                         </form>
                                                                     </div>
-                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Manajer")
+                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Manager")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
                                                                             @csrf
@@ -261,7 +261,7 @@
                                                                             <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                         </form>
                                                                     </div>
-                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asisten Manajer")
+                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asistant Manager")
                                                                 
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('batal.approved', $data->id) }}" method="POST">
@@ -277,7 +277,7 @@
                                                                             <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                         </form>
                                                                     </div>
-                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asisten Manajer")
+                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asistant Manager")
                                                                 
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
@@ -392,7 +392,7 @@
 
                                                     <td>
                                                         <div class="row">
-                                                            {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manajer') --}}
+                                                            {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
                                                             @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('izinapproved', $data->id) }}"
@@ -506,10 +506,10 @@
 
                                                         <td>
                                                             <div class="row">
-                                                                {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manajer') --}}
+                                                                {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
                                                                 <div class="row">
                                                                     
-                                                                    @if ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manajer")
+                                                                    @if ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manager")
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
                                                                                 @csrf
@@ -524,7 +524,7 @@
                                                                                 <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                             </form>
                                                                         </div>
-                                                                    @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Perubahan Disetujui Atasan" && $row->jabatan == "Manajer")
+                                                                    @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Perubahan Disetujui Atasan" && $row->jabatan == "Manager")
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
                                                                                 @csrf
@@ -539,7 +539,7 @@
                                                                                 <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                             </form>
                                                                         </div>
-                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Manajer")
+                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Manager")
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
                                                                                 @csrf
@@ -554,7 +554,7 @@
                                                                                 <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                             </form>
                                                                         </div>
-                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Manajer")
+                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Manager")
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
                                                                                 @csrf
@@ -569,7 +569,7 @@
                                                                                 <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                             </form>
                                                                         </div>
-                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asisten Manajer")
+                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asistant Manager")
                                                                     
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
@@ -585,7 +585,7 @@
                                                                                 <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                             </form>
                                                                         </div>
-                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asisten Manajer")
+                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asistant Manager")
                                                                     
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">

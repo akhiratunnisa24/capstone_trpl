@@ -31,7 +31,7 @@ class PembatalanPerubahanController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         // return $row->jabatan;
-        if($datacuti && $role == 3 && $row->jabatan == "Asisten Manajer")
+        if($datacuti && $role == 3 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(12);
                 // return $status->name_status;
@@ -99,7 +99,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($datacuti && $role == 1 && $row->jabatan == "Asisten Manajer")
+        elseif($datacuti && $role == 1 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(12);
                 // return $status->name_status;
@@ -167,7 +167,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($datacuti && $role == 3 && $row->jabatan == "Manajer")
+        elseif($datacuti && $role == 3 && $row->jabatan == "Manager")
         {
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -344,7 +344,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             }
         }
-        elseif($datacuti && $role == 1 && $row->jabatan == "Manajer")
+        elseif($datacuti && $role == 1 && $row->jabatan == "Manager")
         {
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -725,7 +725,7 @@ class PembatalanPerubahanController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         // return $row->jabatan;
-        if($datacuti && $role == 3 && $row->jabatan == "Asisten Manajer")
+        if($datacuti && $role == 3 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(9);
                 // return $status->name_status;
@@ -794,7 +794,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($datacuti && $role == 1 && $row->jabatan == "Asisten Manajer")
+        elseif($datacuti && $role == 1 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(9);
                 // return $status->name_status;
@@ -863,7 +863,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        else if($datacuti && $role == 3 && $row->jabatan == "Manajer")
+        else if($datacuti && $role == 3 && $row->jabatan == "Manager")
         {
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -1152,7 +1152,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             }
         }
-        else if($datacuti && $role == 1 && $row->jabatan == "Manajer")
+        else if($datacuti && $role == 1 && $row->jabatan == "Manager")
         {
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -1313,7 +1313,7 @@ class PembatalanPerubahanController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         // return $row->jabatan;
-        if($datacuti  && $role == 3 && $row->jabatan == "Asisten Manajer")
+        if($datacuti  && $role == 3 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(15);
                 // return $status->name_status;
@@ -1381,7 +1381,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($datacuti && $role == 1 && $row->jabatan == "Asisten Manajer")
+        elseif($datacuti && $role == 1 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(15);
                 // return $status->name_status;
@@ -1449,7 +1449,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        elseif($datacuti && $role == 3 && $row->jabatan == "Manajer")
+        elseif($datacuti && $role == 3 && $row->jabatan == "Manager")
         {
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -1815,7 +1815,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             }
         }
-        elseif($datacuti && $role == 1 && $row->jabatan == "Manajer")
+        elseif($datacuti && $role == 1 && $row->jabatan == "Manager")
         {
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -2015,7 +2015,7 @@ class PembatalanPerubahanController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         // return $row->jabatan;
-        if($datacuti  && $role == 3 && $row->jabatan == "Asisten Manajer")
+        if($datacuti  && $role == 3 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(9);
                 // return $status->name_status;
@@ -2084,7 +2084,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        else if($datacuti && $role == 1 && $row->jabatan == "Asisten Manajer")
+        else if($datacuti && $role == 1 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(9);
                 // return $status->name_status;
@@ -2153,7 +2153,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             // }
         }
-        else if($datacuti && $role == 3 && $row->jabatan == "Manajer")
+        else if($datacuti && $role == 3 && $row->jabatan == "Manager")
         {
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -2440,7 +2440,7 @@ class PembatalanPerubahanController extends Controller
                 return redirect()->back();
             }
         }
-        else if($datacuti && $role == 1 && $row->jabatan == "Manajer")
+        else if($datacuti && $role == 1 && $row->jabatan == "Manager")
         {
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Models\Cuti;
+use App\Models\Izin;
 use App\Models\Jabatan;
 use App\Models\Karyawan;
+use App\Models\Alokasicuti;
 use App\Models\LevelJabatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -46,18 +49,54 @@ class JabatanController extends Controller
     public function update(Request $request, $id)
     {
         $jabatan = Jabatan::find($id);
+        $jbtnSebelum = $jabatan->nama_jabatan;
+
         $jabatan->nama_jabatan = $request->nama_jabatan;
         $jabatan->update();
-    
+
+        $jbtnSesudah = $jabatan->nama_jabatan;
+
+        Karyawan::where('nama_jabatan',  $jbtnSebelum)
+            ->update(['nama_jabatan' =>  $jbtnSesudah]);
+
+        // Ambil data karyawan setelah pembaruan
+        $karyawanSetelah = Karyawan::where('nama_jabatan', $jbtnSesudah)
+            ->select('id', 'nama_jabatan')
+            ->get();
+        // dd($karyawanSetelah);
+
+        foreach($karyawanSetelah as $karyawanSetelah)
+        {
+            Alokasicuti::where('id_karyawan', $karyawanSetelah->id)
+            ->update(['jabatan' => $karyawanSetelah->nama_jabatan]);
+
+            Cuti::where('id_karyawan', $karyawanSetelah->id)
+                ->update(['jabatan' => $karyawanSetelah->nama_jabatan]);
+
+            Izin::where('id_karyawan', $karyawanSetelah->id)
+                ->update(['jabatan' => $karyawanSetelah->nama_jabatan]);
+        }
         return redirect()->back()->with('pesan','Data berhasil diupdate !');
     }
     
     public function destroy($id)
     {
         $jabatan = Jabatan::find($id);
-        $jabatan->delete();
-    
-        return redirect()->back();
+        $njabatan = $jabatan->nama_jabatan;
+
+        // return $njabatan;
+
+        $karyawan = Karyawan::where('nama_jabatan', $njabatan)->first();
+        $alokasicuti = Alokasicuti::where('jabatan', $njabatan)->first();
+        $cuti = Cuti::where('jabatan', $njabatan)->first();
+        $izin = Izin::where('jabatan', $njabatan)->first();
+
+        if ($karyawan !== null || $alokasicuti !== null || $cuti !== null || $izin !== null) {
+            return redirect()->back()->with('pesa', 'Jabatan tidak dapat dihapus karena digunakan dalam tabel lainnya');
+        } else {
+            $jabatan->delete();
+            return redirect()->back();
+        }
     }
     
 }

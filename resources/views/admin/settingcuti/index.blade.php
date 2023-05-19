@@ -16,6 +16,13 @@
     </div>
 
 <!-- Start content -->
+    @php 
+        $currentDate = date('Y-m-d');
+        $lastWeekDecember = date('Y-12-25', strtotime('-1 week'));
+
+        // Jika saat ini berada dalam satu minggu terakhir di bulan Desember, tombol akan ditampilkan
+        $showButton = ($currentDate >= $lastWeekDecember);
+    @endphp
     <div class="content">
         <div class="container">
             <div class="row">
@@ -26,14 +33,15 @@
                                 <form action="/reset-cuti-tahun-ini" method="POST" align="center">
                                     @csrf
                                     @method('POST')
-                                    <button type="submit" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Kosongkan Data</button>
+                                    <button type="submit" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Kosongkan Sisa Cuti Tahun Lalu</button>
                                 </form>
-                            @else
+                            @elseif($showButton)
                                 <form action="/reset-cuti-tahunan" method="POST" align="center">
                                     @csrf
                                     @method('POST')
                                     <button type="submit" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Reset Cuti Tahunan</button>
                                 </form>
+                            @else
                             @endif
 
                         </div>

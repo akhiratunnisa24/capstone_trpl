@@ -72,8 +72,29 @@ class DepartemenController extends Controller
     public function destroy($id)
     {
         $departemen = Departemen::find($id);
-        $departemen->delete();
-
-        return redirect()->back();
+    
+        // Cek data ke tabel "karyawan"
+        $karyawan = Karyawan::where('divisi', $departemen->id)->first();
+        if ($karyawan !== null) {
+            return redirect()->back()->with('pesa', 'Divisi tidak dapat dihapus karena digunakan dalam tabel karyawan.');
+        } else {
+            $departemen->delete();
+            return redirect()->back();
+        }
     }
+
+    // public function destroy($id)
+    // {
+    //     $departemen = Departemen::find($id);
+
+    //     // Cek data ke tabel "karyawan"
+    //     $karyawan = Karyawan::where('divisi', $departemen->id)->first();
+    //     if ($karyawan !== null) {
+    //         return response()->json(['status' => 'error', 'message' => 'Divisi tidak dapat dihapus karena digunakan dalam tabel karyawan.']);
+    //     } else {
+    //         $departemen->delete();
+    //         return response()->json(['status' => 'success', 'message' => 'Data berhasil dihapus.']);
+    //     }
+    // }
+
 }

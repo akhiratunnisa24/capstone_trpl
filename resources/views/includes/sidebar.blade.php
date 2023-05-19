@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        {{-- Role HRD Manajer --}}
+        {{-- Role HRD Manager --}}
         @if (Auth::check() && Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 2)
             <div id="sidebar-menu">
                 <ul>
@@ -145,7 +145,7 @@
                             {{-- <li><a href="settinguser"><i class="fa fa-group (alias)"></i><span></span>Managemen
                                     User</a></li> --}}
                             <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
-                            <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Setting Kalender</span></a></li>
+                            {{-- <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Setting Kalender</span></a></li> --}}
                         </ul>
                     </li>
                 </ul>
@@ -167,7 +167,7 @@
             </div>
         @endif
 
-        <!--- Role Manajer / Asisten Manajer / yang mempunyai bawahan  -->
+        <!--- Role Manager / Asistant Manager / yang mempunyai bawahan  -->
         @if (Auth::check() && Auth::user()->role == 3)
             <div id="sidebar-menu">
                 <ul>
@@ -195,7 +195,7 @@
                         <ul class="list-unstyled">
                             <li> <a href="/data-staff" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
                             </li>
-                            @if($row->jabatan == "Manajer" || $row->jabatan == "Asisten Manajer")
+                            @if($row->jabatan == "Manager" || $row->jabatan == "Asistant Manager")
                                 <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi</span></a></li>
                                 <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Transaksi Cuti</span></a></li>
                             @elseif($row->jabatan == "Direksi")
