@@ -45,6 +45,7 @@ class JeniscutiController extends Controller
     {
         $request->validate([
             'jenis_cuti' => 'required',
+            'status'     => 'required',
         ]);
         $jeniscuti = Jeniscuti::create($request->all());
         
