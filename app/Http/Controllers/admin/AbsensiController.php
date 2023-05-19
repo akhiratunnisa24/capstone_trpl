@@ -45,7 +45,7 @@ class AbsensiController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         
-        if ($role == 1 && $row->jabatan == "Manajer") {
+        if ($role == 1 || $role == 2 ) {
             //filter data
             $karyawan = Karyawan::all();
 
@@ -77,7 +77,7 @@ class AbsensiController extends Controller
             $request->session()->forget('bulan');
             $request->session()->forget('tahun');
 
-        }elseif(($role == 1 && $row->jabatan == "Asisten Manajer") || $role == 2)
+        }elseif(($role == 1) || $role == 2)
         {
             $karyawan = Karyawan::all();
 

@@ -153,7 +153,7 @@
                                                                     <option value="">Pilih Tingkat Pendidikan</option>
                                                                     <option value="SD">SD</option>
                                                                     <option value="SMP">SMP</option>
-                                                                    <option value="SMA/K">SMA/K</option>
+                                                                    <option value="SMA/K">SMA/SEDERAJAT</option>
                                                                     <option value="Perguruan Tinggi">Perguruan Tinggi</option>
 
                                                                 </select>
@@ -289,7 +289,7 @@
                                                                     <option value="">Pilih Tingkat Pendidikan</option>
                                                                     <option value="SD">SD</option>
                                                                     <option value="SMP">SMP</option>
-                                                                    <option value="SMA/K">SMA/K</option>
+                                                                    <option value="SMA/K">SMA/SEDERAJAT</option>
                                                                     <option value="Perguruan Tinggi">Perguruan Tinggi</option>
 
                                                                 </select>

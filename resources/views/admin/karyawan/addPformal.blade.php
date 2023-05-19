@@ -19,7 +19,7 @@
                                     <option value="">Pilih Tingkat Pendidikan</option>
                                     <option value="SD">SD</option>
                                     <option value="SMP">SMP</option>
-                                    <option value="SMA/K">SMA/K</option>
+                                    <option value="SMA/K">SMA/SEDERAJAT</option>
                                     <option value="Universitas">Universitas</option>
                                 </select>
                             </div>
