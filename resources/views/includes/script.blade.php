@@ -58,9 +58,9 @@ https://cdn.jsdelivr.net/npm/pdfjs-dist@3.3.122/build/pdf.min.js
 <script type="text/javascript" src="assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
 
 <<!--Summernote js-->
-    <script src="assets/plugins/summernote/summernote.min.js"></script>
+<script src="assets/plugins/summernote/summernote.min.js"></script>
 
-    <script>
+<script>
         jQuery(document).ready(function() {
             $('.wysihtml5').wysihtml5();
 
@@ -74,5 +74,5 @@ https://cdn.jsdelivr.net/npm/pdfjs-dist@3.3.122/build/pdf.min.js
             });
 
         });
-    </script>
+</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
