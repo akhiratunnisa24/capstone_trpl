@@ -47,7 +47,7 @@
                             </div>
                             <div class="form-group" id="durasii">
                                 <label for="durasi" class="col-form-label">Durasi (Hari)</label>
-                                <input type="number" class="form-control" autocomplete="off" name="durasi" placeholder="durasi" id="durasi">
+                                <input type="number" class="form-control" autocomplete="off" name="durasi" placeholder="durasi" id="durasi" required>
                             </div>
                         {{-- </div>
                         <div class="col-md-6"> --}}
@@ -119,7 +119,7 @@
                 $('#mode_employee').prop("hidden", false);
                 $('#mode_employees').prop("hidden", true);
                 $('#cutibersama').prop("hidden", true);
-                $('#durasii').prop("hidden", true);
+                $('#durasii').prop("hidden", false);
             }
         });
     });

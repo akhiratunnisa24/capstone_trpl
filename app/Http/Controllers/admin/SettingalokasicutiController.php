@@ -64,7 +64,7 @@ class SettingalokasicutiController extends Controller
 
             $settingalokasi = new Settingalokasi;
             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
-            $settingalokasi->durasi       = 0;
+            $settingalokasi->durasi       = $request->durasi;
             $mode = implode(',', $request->mode_karyawan);
             $settingalokasi['mode_karyawan']        = $mode;
             $settingalokasi->cuti_bersama_terhutang = null;
@@ -123,7 +123,7 @@ class SettingalokasicutiController extends Controller
                     $alokasicuti->departemen       = $karyawan->divisi;
                     $alokasicuti->id_settingalokasi = $settingalokasi->id;
                     $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
-                    $alokasicuti->durasi           = 0;
+                    $alokasicuti->durasi           = $request->durasi;
                     $alokasicuti->status_durasialokasi = null;
                     $alokasicuti->tgl_masuk        = null;
                     $alokasicuti->tgl_sekarang     = null;

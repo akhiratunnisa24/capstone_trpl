@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
+
 class AbsensiImport implements ToModel,WithHeadingRow
 {
     //untuk excel
@@ -36,16 +37,18 @@ class AbsensiImport implements ToModel,WithHeadingRow
         {
             if(!Absensi::where('id_karyawan',$row['emp_no'])->where('tanggal',Carbon::parse($row['tanggal'])->format("Y-m-d"))->exists())
             {
-                $departement_map = [
-                    'KONVENSIONAL' => 1,
-                    'KEUANGAN' => 2,
-                    'TEKNOLOGI INFORMASI' => 3,
-                    'HUMAN RESOURCE' => 4,
-                    'BOD'=> 5,
-                    'BOARD OF DIRECTORS'=>5,
-                ];
+                $departments = Departemen::pluck('id', 'nama_departemen')->toArray();
+                $departement_map = isset($departments[$row['departemen']]) ? $departments[$row['departemen']] : 0;
 
-                $tgl = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d");
+                $tanggal = $row['tanggal'];
+                $tanggal = trim($tanggal);
+                $objTanggal = Carbon::createFromFormat('m/d/Y', $tanggal)->format('Y-m-d');
+                $tgl = Carbon::createFromFormat('Y-m-d', $objTanggal);                
+
+                // Ubah format objek Carbon menjadi objek DateTime
+                // $objTanggal = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($objTanggal);
+                // $tgl = $objTanggal->format("Y-m-d");
+                // $tgl = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d");
                 if($row['absent'] == 'True')
                 {
                     
@@ -101,7 +104,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
                                         $tidakmasuk = new Tidakmasuk;
                                         $tidakmasuk->id_pegawai = $izin->id_karyawan;
                                         $tidakmasuk->nama       = $nama->nama;
-                                        $tidakmasuk->divisi     = $departement_map[$row['departemen']];
+                                        $tidakmasuk->divisi     = isset($departement_map[$row['departemen']]) ? $departement_map[$row['departemen']] : 0;
                                         $tidakmasuk->status     = $reason->jenis_izin;
                                         $tidakmasuk->tanggal    = $date->format('Y-m-d');
                                         $tidakmasuk->save();
@@ -111,7 +114,8 @@ class AbsensiImport implements ToModel,WithHeadingRow
                         }
                         else
                         {
-                            $cek = Tidakmasuk::where('id_pegawai', $row['emp_no'])->where('tanggal',\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d"))->first();
+                            //$cek = Tidakmasuk::where('id_pegawai', $row['emp_no'])->where('tanggal',\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d"))->first();
+                            $cek = Tidakmasuk::where('id_pegawai', $row['emp_no'])->where('tanggal', Carbon::createFromFormat('m/d/Y', $row['tanggal'])->format("Y-m-d"))->first();
                             if(!$cek)
                             {
                                 $nama = Karyawan::where('id',$row['emp_no'])->select('nama')->first();
@@ -119,9 +123,10 @@ class AbsensiImport implements ToModel,WithHeadingRow
                                 $tidakmasuk = new Tidakmasuk;
                                 $tidakmasuk->id_pegawai = $row['emp_no'];
                                 $tidakmasuk->nama       = $nama->nama;
-                                $tidakmasuk->divisi     = $departement_map[$row['departemen']];
+                                $tidakmasuk->divisi     = isset($departement_map[$row['departemen']]) ? $departement_map[$row['departemen']] : 0;
                                 $tidakmasuk->status     = 'tanpa keterangan';
-                                $tidakmasuk->tanggal    = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d");
+                                $tidakmasuk->tanggal    = Carbon::createFromFormat('m/d/Y', $row['tanggal'])->format('Y-m-d');
+                                //$tidakmasuk->tanggal    = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d");
                                 $tidakmasuk->save();
 
                                 $alokasicuti = Alokasicuti::where('id_jeniscuti','=',1)
@@ -157,10 +162,11 @@ class AbsensiImport implements ToModel,WithHeadingRow
                 }else
                 {
                      // dd($row);
+                     //'tanggal'       => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d"),
                      $data = [
                         'id_karyawan'   => $row['emp_no'],
                         'nik'           => $row['nik'] ?? null,
-                        'tanggal'       => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])->format("Y-m-d"),
+                        'tanggal'       => Carbon::createFromFormat('m/d/Y', $row['tanggal'])->format('Y-m-d'),
                         'shift'         => $row['jam_kerja'] ?? null,
                         'jadwal_masuk'  => $row['jam_masuk'] ?? null,
                         'jadwal_pulang' => $row['jam_pulang'] ?? null,
@@ -176,7 +182,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
                         'pengecualian'  => $row['pengecualian'] ?? null,
                         'hci'           => $row['harus_cin'],
                         'hco'           => (String) $row['harus_cout'],
-                        'id_departement'=> $departement_map[$row['departemen']] ?? null,
+                        'id_departement'=> isset($departement_map[$row['departemen']]) ? $departement_map[$row['departemen']] : null,
                         'h_normal'      => (Double) $row['hari_normal']?? null,
                         'ap'            => (Double) $row['akhir_pekan']?? null,
                         'hl'            => (Double) $row['hari_libur']?? null,
