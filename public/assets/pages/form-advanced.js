@@ -640,6 +640,14 @@
             format: "dd/mm/yyyy",
             toggleActive: true,
         });
+        jQuery("#date-range6").datepicker({
+            format: "dd/mm/yyyy",
+            toggleActive: true,
+        });
+        jQuery("#date-range7").datepicker({
+            format: "dd/mm/yyyy",
+            toggleActive: true,
+        });
 
         jQuery("#date-range3").datepicker({
             // autoclose: true,

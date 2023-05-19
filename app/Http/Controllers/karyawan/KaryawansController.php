@@ -333,16 +333,16 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
-    //delete data saat form create pertama
-    public function deletedk(Request $request, $key)
-    {
-        $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
-        if(isset($datakeluarga[$key])) {
-            unset($datakeluarga[$key]);
-            session()->put('datakeluarga', json_encode($datakeluarga));
-        }
-        return redirect()->back();
-    }
+    // //delete data saat form create pertama
+    // public function deletedk(Request $request, $key)
+    // {
+    //     $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
+    //     if(isset($datakeluarga[$key])) {
+    //         unset($datakeluarga[$key]);
+    //         session()->put('datakeluarga', json_encode($datakeluarga));
+    //     }
+    //     return redirect()->back();
+    // }
 
     //data kontak darurat
     public function createkonrat(Request $request)
@@ -426,9 +426,11 @@ class KaryawansController extends Controller
             'nama_lembaga'         => $request->namaLembaga,
             'kota_pformal'         => $request->kotaPendidikanFormal,
             'jurusan'              => $request->jurusan,
+            'tahun_masuk_formal'   => $request->tahun_masukFormal,
             'tahun_lulus_formal'   => $request->tahun_lulusFormal,
             'jenis_pendidikan'     => $request->jenis_pendidikan,
             'kota_pnonformal'      => $request->kotaPendidikanNonFormal,
+            'tahun_masuk_nonformal' => $request->tahunMasukNonFormal,
             'tahun_lulus_nonformal' => $request->tahunLulusNonFormal,
             'ijazah_formal' => $request->noijazahPformal,
             'ijazah_nonformal' => $request->noijazahPnonformal,
@@ -450,10 +452,12 @@ class KaryawansController extends Controller
         $pendidikan[$index]['nama_lembaga']         = $request->namaLembaga;
         $pendidikan[$index]['kota_pformal']         = $request->kotaPendidikanFormal;
         $pendidikan[$index]['jurusan']              = $request->jurusan;
+        $pendidikan[$index]['tahun_masuk_formal']   = $request->tahun_masukFormal;
         $pendidikan[$index]['tahun_lulus_formal']   = $request->tahun_lulusFormal;
         $pendidikan[$index]['jenis_pendidikan']     = $request->jenis_pendidikan;
         $pendidikan[$index]['kota_pnonformal']      = $request->kotaPendidikanNonFormal;
-        $pendidikan[$index]['tahun_lulus_nonformal'] = $request->tahunLulusNonFormal;
+        $pendidikan[$index]['tahun_masuk_nonformal'] = $request->tahun_masukNonFormal;
+        $pendidikan[$index]['tahun_lulus_nonformal'] = $request->tahun_lulusNonFormal;
         $pendidikan[$index]['ijazah_formal'] = $request->noijazahPformal;
         $pendidikan[$index]['ijazah_nonformal'] = $request->noijazahPnonformal;
 
@@ -827,6 +831,7 @@ class KaryawansController extends Controller
                 'nama_sekolah' => $request->post('nama_sekolah'),
                 'kota_pformal' => $request->post('kotaPendidikanFormal'),
                 'jurusan' => $request->post('jurusan'),
+                'tahun_masuk_formal' => $request->post('tahun_masukFormal'),
                 'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
                 'ijazah_formal' => $request->post('noijazahPformal'),
 
@@ -852,6 +857,7 @@ class KaryawansController extends Controller
                 'nama_lembaga' => $request->post('namaLembaga'),
                 'jenis_pendidikan' => $request->post('jenis_pendidikan'),
                 'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
+                'tahun_masuk_nonformal' => $request->post('tahunMasukNonFormal'),
                 'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
                 'ijazah_nonformal' => $request->post('noijazahPnonformal'),
                 'created_at' => new \DateTime(),
