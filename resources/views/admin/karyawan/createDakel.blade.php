@@ -2,7 +2,7 @@
 @section('content')
 
     <head>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
         <style>
             input::-webkit-outer-spin-button,
             input::-webkit-inner-spin-button {
@@ -412,6 +412,7 @@
             </div>
         </div>
     </div>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="assets/pages/form-advanced.js"></script>
     <script type="text/javascript">
@@ -488,4 +489,5 @@
             });
         });
     </script> --}}
+    
 @endsection
