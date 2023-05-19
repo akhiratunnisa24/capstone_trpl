@@ -55,7 +55,7 @@
                                             <th>No</th>
                                             <th>Tingkat Pendidikan</th>
                                             <th>Jurusan</th>
-                                            <th>Lama Pendidikan</th>
+                                            {{-- <th>Lama Pendidikan</th> --}}
                                             <th>Lembaga Pendidikan</th>
                                             <th>Alamat</th>
                                             <th>Nomor Ijazah</th>
@@ -70,7 +70,7 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{$p['tingkat'] }}</td>
                                                     <td>{{$p['jurusan'] }}</td>
-                                                    <td></td>
+                                                    {{-- <td></td> --}}
                                                     <td>{{$p['nama_sekolah'] }}</td>
                                                     <td>{{$p['kota_pformal'] }}</td>
                                                     <td>{{$p['ijazah_formal']}}</td>
@@ -99,6 +99,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Bidang/Jenis</th>
+                                            <th>Lembaga Pendidikan</th>
                                             <th>Alamat</th>
                                             <th>Tahun Lulus</th>
                                             <th>Aksi</th>
@@ -108,8 +109,9 @@
                                         @foreach($pendidikan as $key => $nf)
                                             @if($nf['jenis_pendidikan'] != null)
                                                 <tr>
-                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $no++ }}</td>
                                                     <td>{{ $nf['jenis_pendidikan'] }}</td>
+                                                    <td>{{ $nf['nama_lembaga'] }}</td>
                                                     <td>{{ $nf['kota_pnonformal'] }}</td>
                                                     <td>{{ $nf['tahun_lulus_nonformal'] }}</td>
                                                     <td class="text-center">
@@ -162,7 +164,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label"> Jurusan</label>
-                                                                    <input type="text" name="jurusan" class="form-control" id="exampleInputEmail1" placeholder="Masukkan Jurusan" autocomplete="off">
+                                                                    <input type="text" name="jurusan" class="form-control" placeholder="Masukkan Jurusan" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -176,7 +178,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label"> Alamat</label>
-                                                                    <input type="text" name="kotaPendidikanFormal"  class="form-control" id="exampleInputEmail1" placeholder="Masukkan Alamat" autocomplete="off">
+                                                                    <input type="text" name="kotaPendidikanFormal"  class="form-control"     placeholder="Masukkan Alamat" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -193,10 +195,27 @@
                                                                 </div>
                                                             </div>
 
+                                                            {{-- <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Lama Pendidikan</label>
+                                                                    <div>
+                                                                        <div class="input-daterange input-group"
+                                                                            id="date-range">
+                                                                            <input type="text" class="form-control"
+                                                                                name="tahun_masukFormal" id="datepicker-autoclose20" placeholder="yyyy" autocomplete="off" />
+                                                                            <span
+                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input type="text" class="form-control"
+                                                                                name="tahun_lulusFormal" id="datepicker-autoclose21" placeholder="yyyy" autocomplete="off" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div> --}}
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">No. Ijazah</label>
-                                                                    <input type="number" name="noijazahPformal"  class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
+                                                                    <input type="text" name="noijazahPformal"   class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -239,10 +258,27 @@
                                                                 </div>
                                                             </div>
 
+                                                            {{-- <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Lama Pendidikan</label>
+                                                                    <div>
+                                                                        <div class="input-daterange input-group"
+                                                                            id="date-range">
+                                                                            <input type="text" class="form-control"
+                                                                                name="tahunMasukNonFormal" id="datepicker-autoclose31" placeholder="yyyy" autocomplete="off" />
+                                                                            <span
+                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input type="text" class="form-control"
+                                                                                name="tahunLulusNonFormal" id="datepicker-autoclose32" placeholder="yyyy" autocomplete="off" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div> --}}
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">No. Ijazah</label>
-                                                                    <input type="number" name="noijazahPnonformal"  class="form-control" id="kotaPendidikanNonFormal" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
+                                                                    <input type="number" name="noijazahPnonformal"  class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -284,14 +320,13 @@
                                                                 <span class="form-group badge badge-secondary col-sm-15 m-b-5 m-t-10"><label class=""> 1. Pendidikan Formal</label></span>
                                                             {{-- </div> --}}
                                                             <div class="form-group">
-                                                                <label for="exampleInputEmail1" class="form-label">Tingkat</label>
-                                                                <select class="form-control selectpicker" id="tingkat_pendidikan" name="tingkat_pendidikan">
+                                                                <label class="form-label">Tingkat</label>
+                                                                <select class="form-control " id="tingkat_pendidikan" name="tingkat_pendidikan">
                                                                     <option value="">Pilih Tingkat Pendidikan</option>
                                                                     <option value="SD">SD</option>
                                                                     <option value="SMP">SMP</option>
                                                                     <option value="SMA/K">SMA/SEDERAJAT</option>
                                                                     <option value="Perguruan Tinggi">Perguruan Tinggi</option>
-
                                                                 </select>
                                                             </div>
 
@@ -301,7 +336,7 @@
                                                                     <input type="text" name="nama_sekolah" id="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
                                                                 </div>
                                                             </div>
-
+                                                            
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label"> Alamat</label>
@@ -330,7 +365,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">No. Ijazah</label>
-                                                                    <input type="numberv" name="noijazahPformal"  class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
+                                                                    <input type="number" id="ijazahFormal" name="noijazahPformal"  class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -351,7 +386,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lembaga Pendidikan</label>
-                                                                    <input type="text" name="namaLembaga" class="form-control" placeholder="Masukkan Nama Lembaga" autocomplete="off"> 
+                                                                    <input type="text" name="namaLembaga" id="namaLembaga" class="form-control" placeholder="Masukkan Nama Lembaga" autocomplete="off"> 
                                                                 </div>
                                                             </div>  
 
@@ -376,7 +411,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">No. Ijazah</label>
-                                                                    <input type="number" name="noijazahPnonformal"  class="form-control" id="kotaPendidikanNonFormal" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
+                                                                    <input type="number" name="noijazahPnonformal"  class="form-control" id="noijazahPnonformal" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -413,6 +448,9 @@
         $(document).ready(function() {
             $('#formCreatePendidikan').prop('hidden', false);
             $('#formUpdatePendidikan').prop('hidden',true);
+
+            // EDIT PENDIDIKAN FORMAL
+
             $(document).on('click', '#editPendidikan', function() {
                 // Menampilkan form update data dan menyembunyikan form create data
                 $('#formCreatePendidikan').prop('hidden', true);
@@ -429,12 +467,15 @@
                 // Isi data ke dalam form
                     $('#tingkat_pendidikan').val(data.tingkat);
                     $('#nama_sekolah').val(data.nama_sekolah);
+                    $('#namaLembaga').val(data.nama_lembaga);
                     $('#jurusan').val(data.jurusan);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
                     $('#datepicker-autoclose31').val(data.tahun_lulus_formal);
+                    $('#ijazahFormal').val(data.ijazah_formal);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
                     $('#datepicker-autoclose32').val(data.tahun_lulus_nonformal);
+                    $('#noijazahPnonformal').val(data.ijazah_nonformal);
         
                     // Set opsi yang dipilih pada dropdown select option
                     var select = document.getElementById("tingkat_pendidikan");
@@ -446,6 +487,7 @@
                     }
             });
 
+            // EDIT PENDIDIKAN NON FORMAL
             $(document).on('click', '#edittPendidikan', function() {
                 // Menampilkan form update data dan menyembunyikan form create data
                 $('#formCreatePendidikan').prop('hidden', true);
@@ -460,23 +502,17 @@
                 // Ambil data dari objek yang sesuai dengan nomor index
                 var data = {!! json_encode($pendidikan) !!}[nomorIndex];
                 // Isi data ke dalam form
-                    $('#tingkat_pendidikan').val(data.tingkat);
+                     $('#tingkat_pendidikan').val(data.tingkat);
                     $('#nama_sekolah').val(data.nama_sekolah);
+                    $('#namaLembaga').val(data.nama_lembaga);
                     $('#jurusan').val(data.jurusan);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
                     $('#datepicker-autoclose31').val(data.tahun_lulus_formal);
+                    $('#ijazahFormal').val(data.ijazah_formal);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
                     $('#datepicker-autoclose32').val(data.tahun_lulus_nonformal);
-        
-                    // Set opsi yang dipilih pada dropdown select option
-                    var select = document.getElementById("tingkat_pendidikan");
-                    for (var i = 0; i < select.options.length; i++) {
-                        if (select.options[i].value == data.tingkat) {
-                            select.options[i].selected = true;
-                            break;
-                        }
-                    }
+                    $('#noijazahPnonformal').val(data.ijazah_nonformal);
             });
         });
     </script>

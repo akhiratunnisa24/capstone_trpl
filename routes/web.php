@@ -501,7 +501,7 @@ Route::post('/storepage', [karyawansController::class, 'store_page'])->name('sto
 Route::get('/create-data-keluarga', [KaryawansController::class, 'createdakel'])->name('create.dakel');
 Route::post('/storedatakeluarga', [KaryawansController::class, 'storedk'])->name('storedk');
 Route::post('/updatedatakeluarga', [KaryawansController::class, 'updatedk'])->name('updatedk');
-Route::post('/delete-keluarga/{key}', [KaryawansController::class, 'deletedk'])->name('deletedk');
+Route::post('/delete-keluarga/{{key}}', [KaryawansController::class, 'deletedk'])->name('deletedk');
 // Tambah Data Keluarga saat data sudah di database / saat Show
 Route::post('/storesdatakeluarga/{id}', [karyawansController::class, 'storedatakel'])->name('storedatakel');
 // Edit Data Keluarga saat data sudah di database / saat Show

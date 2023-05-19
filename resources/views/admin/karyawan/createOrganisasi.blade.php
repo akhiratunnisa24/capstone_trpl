@@ -66,8 +66,10 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $pek['nama_organisasi'] }}</td>
                                                 <td>{{ $pek['alamat'] }}</td>
-                                                <td>{{ $pek['tgl_mulai'] }}</td>
-                                                <td>{{ $pek['tgl_selesai'] }}</td>
+                                                {{-- <td>{{ $pek['tgl_mulai'] }}</td> --}}
+                                                <td>{{ date('d/m/y', strtotime($pek['tgl_mulai'])) }}</td>
+                                                <td>{{ date('d/m/y', strtotime($pek['tgl_selesai'])) }}</td>
+                                                {{-- <td>{{ $pek['tgl_selesai'] }}</td> --}}
                                                 <td>{{ $pek['jabatan'] }}</td>
                                                 <td>{{ $pek['no_sk'] }}</td>
                                                 <td class="text-center">
@@ -133,11 +135,11 @@
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range">
                                                                             <input type="text" class="form-control"
-                                                                                name="tglmulai" autocomplete="off" />
+                                                                                name="tglmulai" autocomplete="off" placeholder="dd/mm/yyyy" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tglselesai" autocomplete="off" />
+                                                                                name="tglselesai" autocomplete="off" placeholder="dd/mm/yyyy" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -232,13 +234,13 @@
                                                                     <label class="form-label">Lama Bertugas</label>
                                                                     <div>
                                                                         <div class="input-daterange input-group"
-                                                                            id="date-range">
+                                                                            id="date-range2">
                                                                             <input type="text" class="form-control"
-                                                                                name="tglmulai" id="tglmulai"  />
+                                                                                name="tglmulai" id="tglmulai" placeholder="dd/mm/yyyy" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tglselesai" id="tglselesai"  />
+                                                                                name="tglselesai" id="tglselesai" placeholder="dd/mm/yyyy" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -323,10 +325,19 @@
                 // Isi data ke dalam form
                 $('#namaOrganisasi').val(data.nama_organisasi);
                 $('#alamatOrganisasi').val(data.alamat);
-                $('#tglmulai').val(data.tgl_mulai);
-                $('#tglselesai').val(data.tgl_selesai);
                 $('#jabatanRorganisasi').val(data.jabatan);
                 $('#noSKorganisasi').val(data.no_sk);
+
+                var tanggal = new Date(data.tgl_mulai);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tglmulai').val(tanggalFormatted);
+
+                    var tanggal = new Date(data.tgl_selesai);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tglselesai').val(tanggalFormatted);
+
+                // $('#tglmulai').val(data.tgl_mulai);
+                // $('#tglselesai').val(data.tgl_selesai);
             });
         });
     </script>

@@ -79,7 +79,7 @@
                                                                     <label  class="form-label">Tanggal Lahir</label>
                                                                     <div class="input-group">
                                                                         <input id="datepicker-autoclose-format" type="text" class="form-control" placeholder="dd/mm/yyyy" id="4"
-                                                                            name="tgllahirKaryawan" value="{{ $karyawan->tgllahir ?? '' }}" autocomplete="off" rows="10" required></input><br>
+                                                                            name="tgllahirKaryawan" value="{{ $karyawan->tgllahir ? date('d/m/y', strtotime($karyawan->tgllahir)) : '' }}"autocomplete="off" rows="10" required></input><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i  class="mdi mdi-calendar text-white"></i></span>
                                                                     </div><!-- input-group -->
                                                                 </div>
@@ -266,8 +266,7 @@
                                                                         <div class="input-group">
                                                                             <input type="text" class="form-control"
                                                                                 placeholder="dd/mm/yyyy" id="datepicker-autoclose-format2" data-date-format="dd/mm/yyyy"
-                                                                                name="tglmasukKaryawan" rows="10" autocomplete="off" value="{{ $karyawan->tglmasuk ?? '' }}"
-                                                                                required><br>
+                                                                                name="tglmasukKaryawan" rows="10" autocomplete="off" value="{{ $karyawan->tgllahir ? date('d/m/y', strtotime($karyawan->tglmasuk)) : '' }}">
                                                                             <span class="input-group-addon bg-custom b-0"><i
                                                                                     class="mdi mdi-calendar text-white"></i></span>
                                                                         </div>

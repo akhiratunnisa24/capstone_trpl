@@ -632,10 +632,12 @@
         });
         jQuery("#date-range").datepicker({
             // autoclose: true,
+            format: "dd/mm/yyyy",
             toggleActive: true,
         });
 
         jQuery("#date-range2").datepicker({
+            format: "dd/mm/yyyy",
             toggleActive: true,
         });
 

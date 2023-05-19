@@ -107,7 +107,7 @@
                                                             </div>  
                         
                                                             <div class="form-group">
-                                                                <label  class="form-label">Departemen</label>
+                                                                <label  class="form-label">Divisi</label>
                                                                 <label class="form-control">{{ $karyawan->departemen->nama_departemen ?? '-' }}</label>
                                                             </div>
                         

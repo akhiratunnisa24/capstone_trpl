@@ -30,7 +30,7 @@
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
                                         <label class="font-size-14 fw-bold">NIK Karyawan *</label>
-                                        <p style="text-transform: uppercase;">{{ $karyawan->nik }}</p>
+                                        <p style="text-transform: uppercase;">{{ $karyawan->nip }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
                                         <label class="font-size-14 fw-bold">Nama lengkap *</label>
-                                        <p style="text-transform: uppercase;">{{ $karyawan->nama }}</p>
+                                        <p >{{ $karyawan->nama }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +54,8 @@
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
                                         <label class="font-size-14 fw-bold">Tanggal Lahir *</label>
-                                        <p style="text-transform: uppercase;">{{ $karyawan->tgllahir }}</p>
+                                        {{-- <p >{{ $karyawan->tgllahir }}</p> --}}
+                                        <p>{{ \Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +67,7 @@
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
                                         <label class="font-size-14 fw-bold">Tempat Lahir *</label>
-                                        <p style="text-transform: uppercase;">{{ $karyawan->tempatlahir }}</p>
+                                        <p >{{ $karyawan->tempatlahir }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +91,7 @@
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
                                         <label class="font-size-14 fw-bold">Jenis Kelamin *</label>
-                                        @if ($karyawan->jenis_kelamin == 'P')
+                                        @if ($karyawan->jenis_kelamin == 'Perempuan')
                                             <p>Perempuan</p>
                                         @else
                                             <p>Laki-Laki</p>
@@ -232,7 +233,7 @@
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
                                         <label class="font-size-14 fw-bold">No. Program Pensiun *</label>
-                                        <p>{{ $karyawan->no_bpjs_ket }}</p>
+                                        <p>{{ $karyawan->no_program_pensiun }}</p>
                                     </div>
                                 </div>
                             </div>

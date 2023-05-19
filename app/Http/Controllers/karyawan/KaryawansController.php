@@ -333,16 +333,16 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
-    // //delete data saat form create pertama
-    // public function deletedk(Request $request, $key)
-    // {
-    //     $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
-    //     if(isset($datakeluarga[$key])) {
-    //         unset($datakeluarga[$key]);
-    //         session()->put('datakeluarga', json_encode($datakeluarga));
-    //     }
-    //     return redirect()->back();
-    // }
+    //delete data saat form create pertama
+    public function deletedk(Request $request, $key)
+    {
+        $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
+        if(isset($datakeluarga[$key])) {
+            unset($datakeluarga[$key]);
+            session()->put('datakeluarga', json_encode($datakeluarga));
+        }
+        return redirect()->back();
+    }
 
     //data kontak darurat
     public function createkonrat(Request $request)
@@ -401,6 +401,7 @@ class KaryawansController extends Controller
         $role = Auth::user()->role;
         if ($role == 1 || $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $no = 1;
 
             $karyawan     = $request->session()->get('karyawan');
             $datakeluarga = $request->session()->get('datakeluarga');
@@ -409,7 +410,7 @@ class KaryawansController extends Controller
             if (empty($pendidikan)) {
                 $pendidikan = [];
             }
-            return view('admin.karyawan.createPendidikan', compact('karyawan', 'datakeluarga', 'kontakdarurat', 'pendidikan', 'row'));
+            return view('admin.karyawan.createPendidikan', compact('karyawan', 'datakeluarga', 'kontakdarurat', 'pendidikan', 'row', 'no'));
         } else {
             return redirect()->back();
         }
@@ -491,8 +492,8 @@ class KaryawansController extends Controller
             'nama_perusahaan' => $request->namaPerusahaan,
             'alamat'          => $request->alamatPerusahaan,
             // 'jenis_usaha'     => $request->jenisUsaha,
-            'tgl_mulai'       => \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d'),
-            'tgl_selesai'     => \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d'),
+            'tgl_mulai'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d'),
+            'tgl_selesai'     => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d'),
             'jabatan'         => $request->jabatanRpekerjaan,
             'level'           => $request->levelRpekerjaan,
             // 'nama_atasan'     => $request->namaAtasan,
@@ -515,13 +516,13 @@ class KaryawansController extends Controller
         // dd($index);
         $pekerjaan[$index]['nama_perusahaan'] = $request->namaPerusahaan;
         $pekerjaan[$index]['alamat']         = $request->alamatPerusahaan;
-        $pekerjaan[$index]['jenis_usaha']    = $request->jenisUsaha;
+        // $pekerjaan[$index]['jenis_usaha']    = $request->jenisUsaha;
         $pekerjaan[$index]['jabatan']        = $request->jabatanRpekerjaan;
         $pekerjaan[$index]['level']          = $request->levelRpekerjaan;
-        $pekerjaan[$index]['nama_atasan']    = $request->namaAtasan;
-        $pekerjaan[$index]['nama_direktur']  = $request->namaDirektur;
-        $datakeluarga[$index]['tgl_mulai'] = \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d');
-        $datakeluarga[$index]['tgl_selesai'] = \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d');
+        // $pekerjaan[$index]['nama_atasan']    = $request->namaAtasan;
+        // $pekerjaan[$index]['nama_direktur']  = $request->namaDirektur;
+        $datakeluarga[$index]['tgl_mulai'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d');
+        $datakeluarga[$index]['tgl_selesai'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d');
         $pekerjaan[$index]['alasan_berhenti'] = $request->alasanBerhenti;
         $pekerjaan[$index]['gaji']           = $request->gajiRpekerjaan;
 
@@ -566,8 +567,8 @@ class KaryawansController extends Controller
         $organisasiBaru = [
             'nama_organisasi' => $request->namaOrganisasi,
             'alamat'          => $request->alamatOrganisasi,
-            'tgl_mulai'     => \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d'),
-            'tgl_selesai'         => \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d'),
+            'tgl_mulai'     => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d'),
+            'tgl_selesai'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d'),    
             'jabatan'     => $request->jabatanRorganisasi,
             'no_sk'   => $request->noSKorganisasi,
         ];
@@ -586,8 +587,8 @@ class KaryawansController extends Controller
         // dd($index);
         $organisasi[$index]['nama_organisasi'] = $request->namaOrganisasi;
         $organisasi[$index]['alamat']         = $request->alamatOrganisasi;
-        $organisasi[$index]['tgl_mulai']    = \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d');
-        $organisasi[$index]['tgl_selesai']        = \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d');
+        $organisasi[$index]['tgl_mulai']    = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d');
+        $organisasi[$index]['tgl_selesai']        = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d');
         $organisasi[$index]['jabatan']          = $request->jabatanRorganisasi;
         $organisasi[$index]['no_sk']    = $request->noSKorganisasi;
 
@@ -635,7 +636,9 @@ class KaryawansController extends Controller
             'nama_instansi' => $request->namaInstansi,
             'alamat'        => $request->alamatInstansi,
             'no_surat'      => $request->noSurat,
-            'tanggal_surat' => $request->tgl_surat,
+            // 'tanggal_surat' => $request->tgl_surat,
+            'tanggal_surat'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d'),    
+
         ];
 
         $prestasi[] = $prestasiBaru;
@@ -654,7 +657,9 @@ class KaryawansController extends Controller
         $prestasi[$index]['nama_instansi']    = $request->namaInstansi;
         $prestasi[$index]['alamat']           = $request->alamatInstansi;
         $prestasi[$index]['no_surat']         = $request->noSurat;
-        $prestasi[$index]['tanggal_surat']    = $request->tgl_surat;
+        // $prestasi[$index]['tanggal_surat']    = $request->tgl_surat;
+        $prestasi[$index]['tanggal_surat']    = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d');
+
 
         session()->put('prestasi', json_encode($prestasi));
 
@@ -953,6 +958,7 @@ class KaryawansController extends Controller
             $pegawai->no_program_askes   = $request->noprogramAskes;
             $pegawai->no_rek   = $request->norekKaryawan;
             $pegawai->nama_bank   = $request->nama_bank;
+            // $karyawan->tglmasuk      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tglmasukKaryawan)->format('Y-m-d');
             $pegawai->tgllahir = $request->tgllahirKaryawan;
             $pegawai->jenis_kelamin = $request->jenis_kelaminKaryawan;
             $pegawai->alamat = $request->alamatKaryawan;

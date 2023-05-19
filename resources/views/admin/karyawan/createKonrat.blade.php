@@ -169,7 +169,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Hubungan</label>
-                                                                        <select class="form-control selectpicker" id="hubunganKdarurat" name="hubunganKdarurat" required>
+                                                                        <select class="form-control" id="hubunganKdarurat" name="hubunganKdarurat" required>
                                                                             <option value="">Pilih Hubungan</option>
                                                                             <option value="Ayah" {{ $kontakdarurat->hubungan ?? 'Ayah' == '' ? 'selected' : '' }}>Ayah</option>
                                                                             <option value="Ibu" {{ $kontakdarurat->hubungan ?? 'Ibu' == '' ? 'selected' : '' }}>Ibu</option>

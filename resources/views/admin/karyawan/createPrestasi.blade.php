@@ -67,7 +67,8 @@
                                                 <td>{{ $pres['nama_instansi'] }}</td>
                                                 <td>{{ $pres['alamat'] }}</td>
                                                 <td>{{ $pres['no_surat'] }}</td>
-                                                <td>{{ $pres['tanggal_surat'] }}</td>
+                                                <td>{{ date('d/m/y', strtotime($pres['tanggal_surat'])) }}</td>
+                                                {{-- <td>{{ $pres['tanggal_surat'] }}</td> --}}
                                                 <td class="text-center">
                                                     <div class="row d-grid gap-2" role="group" aria-label="Basic example">
                                                         <a href="#formUpdatePrestasi" class="btn btn-sm btn-info"
@@ -154,7 +155,7 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label">Tanggal Surat</label>
                                                                 <div class="input-group">
-                                                                    <input id="datepicker-autoclose40" type="text" class="form-control" placeholder="yyyy/mm/dd" id="4"
+                                                                    <input id="datepicker-autoclose-format" type="text" class="form-control" placeholder="dd/mm/yyyy" id="4"
                                                                         name="tgl_surat" autocomplete="off" rows="10" required><br>
                                                                     <span class="input-group-addon bg-custom b-0"><i  class="mdi mdi-calendar text-white"></i></span>
                                                                 </div><!-- input-group -->
@@ -239,7 +240,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Tanggal Surat</label>
                                                         <div class="input-group">
-                                                            <input id="datepicker-autoclose41" type="text" class="form-control" placeholder="yyyy/mm/dd" id="4"
+                                                            <input id="datepicker-autoclose-format2" type="text" class="form-control" placeholder="yyyy/mm/dd" id="4"
                                                                 name="tgl_surat" autocomplete="off" rows="10" required><br>
                                                             <span class="input-group-addon bg-custom b-0"><i  class="mdi mdi-calendar text-white"></i></span>
                                                         </div><!-- input-group -->
@@ -296,7 +297,12 @@
                 $('#namainstansi').val(data.nama_instansi);
                 $('#alamatInstansi').val(data.alamat);
                 $('#nomorSertifikat').val(data.no_surat);
-                $('#datepicker-autoclose41').val(data.tanggal_surat);
+
+                var tanggal = new Date(data.tanggal_surat);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#datepicker-autoclose-format2').val(tanggalFormatted);
+
+                // $('#datepicker-autoclose-format2').val(data.tanggal_surat);
             });
         });
     </script>
