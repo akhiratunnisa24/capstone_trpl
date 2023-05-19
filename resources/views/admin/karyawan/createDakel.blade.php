@@ -339,9 +339,11 @@
             </div>
         </div>
     </div>
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="assets/js/jquery.min.js"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="assets/pages/form-advanced.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#formCreateDatakeluarga').prop('hidden', false);
@@ -396,25 +398,5 @@
             });
         });
     </script>
-
-    {{-- <script>
-        $(document).ready(function() {
-            $('.delete_dakel').on('click', function() {
-                // Ambil index data yang akan dihapus
-                var index = $(this).data('key');
-                
-                // Kirim request AJAX ke controller
-                $.ajax({
-                    url: '/delete-keluarga',
-                    type: 'POST',
-                    data: { index: index },
-                    success: function() {
-                        // Hapus baris tabel yang sesuai dengan index
-                        $('tr').eq(index+1).remove();
-                    }
-                });
-            });
-        });
-    </script> --}}
 
 @endsection
