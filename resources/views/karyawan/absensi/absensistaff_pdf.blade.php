@@ -116,7 +116,7 @@
     <div class="row-sm-3">
         <p id="ttd">Jakarta Selatan, {{ $formatted_date }}</p>
         {{-- <p id="t">Hormat Kami,</p> --}}
-        <p id="tt">(Departemen Manajer)</p>
+        <p id="tt">(Departemen Manager)</p>
     </div>
 </body>
 </html>

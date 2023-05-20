@@ -225,7 +225,7 @@ class IzinAdminController extends Controller
                 'subject'     =>'Notifikasi Approval Pertama Permohonan Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
                 'id'          =>$izinn->id,
                 'noregistrasi'=>$izinn->id,
-                'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR CUTI KARYAWAN',
+                'title' =>  'NOTIFIKASI PERSETUJUAN PERTAMA FORMULIR KETIDAKHADIRAN KARYAWAN',
                 'subtitle' => '[PERSETUJUAN ATASAN]',
                 'tgl_permohonan' =>Carbon::parse($izinn->tgl_permohonan)->format("d/m/Y"),
                 'nik'         => $izinn->nik,

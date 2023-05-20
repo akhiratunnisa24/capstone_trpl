@@ -139,7 +139,7 @@
                 <p>Terima kasih atas perhatian dan kerja sama Anda dalam hal ini.</p>
             
                 <p>Salam Hormat,<br><br></p>
-                <p>[Manajer/HR]<br>
+                <p>[Manager/HR]<br>
 			</div>
 		</div>
 		<div class="footer">

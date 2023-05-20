@@ -46,8 +46,15 @@ class LeveljabatanController extends Controller
     public function update(Request $request, $id)
     {
         $leveljabatan = LevelJabatan::find($id);
+        $levelsebelum =  $leveljabatan->nama_level;
+
         $leveljabatan->nama_level = $request->nama_level;
         $leveljabatan->update();
+
+        $levelSesudah = $leveljabatan->nama_level;
+
+        Karyawan::where('jabatan',  $levelsebelum)
+            ->update(['jabatan' =>  $levelSesudah]);
     
         return redirect()->back()->with('pesan','Data berhasil diupdate !');
     }
@@ -55,11 +62,18 @@ class LeveljabatanController extends Controller
     public function destroy($id)
     {
         $leveljabatan = LevelJabatan::find($id);
+        $level = $leveljabatan->nama_level;
+
+        $karyawan = Karyawan::where('jabatan', $level)->first();
 
         if ($leveljabatan) {
             $leveljabatan->delete();
             return redirect()->back()->with('pesan', 'Data berhasil dihapus');
-        } else {
+        }elseif($karyawan !== null)
+        {
+            return redirect()->back()->with('pesa', 'Level Jabatan tidak dapat dihapus karena digunakan dalam tabel lainnya');
+        }
+        else {
             return redirect()->back()->with('error', 'Data tidak ditemukan atau telah dihapus');
         }
     }

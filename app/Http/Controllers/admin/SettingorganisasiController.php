@@ -45,7 +45,7 @@ class SettingorganisasiController extends Controller
 
         if ($fileFoto = $request->hasFile('logo'))
         {
-            if($fotoLama !== null){
+            if($fotoLama !== ""){
                 $oldImage = public_path('images/'.$fotoLama);
                 if(file_exists($oldImage)){
                     unlink($oldImage);
@@ -66,6 +66,7 @@ class SettingorganisasiController extends Controller
         $settingorganisasi->no_telp = $request->no_telp;
         $settingorganisasi->kode_pos = $request->kode_pos;
 
+        // dd($settingorganisasi);
         $settingorganisasi->update();
 
         return redirect('/setting-organisasi')->with('pesan','Data Organisasi berhasil diperbaharui !');

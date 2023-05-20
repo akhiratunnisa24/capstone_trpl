@@ -43,7 +43,7 @@ class CutiadminController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role; 
-        // if ($role == 1 || $role == 1 && $row->jabatan == "Asisten Manajer")        
+        // if ($role == 1 || $role == 1 && $row->jabatan == "Asistant Manager")        
         if ($role == 1 || $role == 2) 
         {
             $type = $request->query('type', 1);
@@ -319,7 +319,7 @@ class CutiadminController extends Controller
                           ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->first();
-            if($row->jabatan == "Manajer" && $role == 1)
+            if($row->jabatan == "Manager" && $role == 1)
             {
                 if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
                 {
@@ -463,7 +463,7 @@ class CutiadminController extends Controller
                     return redirect()->back();
                 }
             }
-            elseif($row->jabatan == "Asisten Manajer" && $role == 1)
+            elseif($row->jabatan == "Asistant Manager" && $role == 1)
             {
                 if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
                 {
@@ -552,7 +552,7 @@ class CutiadminController extends Controller
                           ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->first();
-                if($row->jabatan == "Manajer" && $role == 1 && $datacuti)
+                if($row->jabatan == "Manager" && $role == 1 && $datacuti)
                 {
                     //dd($datacuti->atasan_kedua,Auth::user()->id_pegawai,$datacuti->atasan_pertama, $datacuti);
                     if(Auth::user()->id_pegawai == $datacuti->atasan_pertama)
@@ -697,7 +697,7 @@ class CutiadminController extends Controller
                         return redirect()->back();
                     }
                 }
-                elseif($row->jabatan == "Asisten Manajer" && $role == 1)
+                elseif($row->jabatan == "Asistant Manager" && $role == 1)
                 {
                     if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
                     {
@@ -779,7 +779,7 @@ class CutiadminController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
 
-        if($datacuti && $role == 1 && $row->jabatan == "Manajer")
+        if($datacuti && $role == 1 && $row->jabatan == "Manager")
         {
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
@@ -932,7 +932,7 @@ class CutiadminController extends Controller
                 return redirect()->back();
             }
         }
-        elseif($datacuti && $role == 1 && $row->jabatan == "Asisten Manajer")
+        elseif($datacuti && $role == 1 && $row->jabatan == "Asistant Manager")
         {
             // if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             // {
