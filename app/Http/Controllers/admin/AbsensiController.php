@@ -265,12 +265,28 @@ class AbsensiController extends Controller
 
     public function importexcel(Request $request)
     {
-        // notifikasi dengan session
-		// Session::flash('sukses','Data Siswa Berhasil Diimport!');
-        Excel::import(new AbsensiImport, request()->file('file'));
+       
+        // Excel::import(new AbsensiImport, request()->file('file'));
 
-        return redirect()->back();
+        // return redirect()->back();
+
+        try {
+            $file = $request->file('file');
+            $import = new AbsensiImport();
+            Excel::import($import, $file);
+            
+            $jumlahdatadiimport = $import->getJumlahDataDiimport();
+            $jumlahdata         = $import->getJumlahData();
+            $jumlahimporttidakmasuk =$import->getDataImportTidakMasuk();
+            $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport();
+            
+            return redirect()->back()->with('pesan', 'Data Absensi yang berhasil diimport: ' . $jumlahdatadiimport .'<br>' . 'Data diimport ke database Tidak Masuk: ' . $jumlahimporttidakmasuk . '<br>' . 'Jumlah Data tidak bisa diimport: ' . $datatidakbisadiimport . '<br>'. 'Jumlah Data Keseluruhan : ' . $jumlahdata);
+        } catch (\Throwable $th) {
+            // Tangani jika terjadi kesalahan
+            return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data absensi.');
+        }
     }
+
 
     public function importcsv(Request $request)
     {

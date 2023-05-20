@@ -1388,7 +1388,7 @@ class ManagerController extends Controller
                 }
                 // dd($data);
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                // return $data;
+                return redirect()->back();
             }else{
                 return redirect()->back();
             }
@@ -1551,7 +1551,7 @@ class ManagerController extends Controller
             {
                 // return $datacuti;
                 $status = Status::find(9);
-                return $status->id;
+                // return $status->id;
                 Cuti::where('id',$id)->update([
                     'status' => $status->id,
                     'tglditolak' => Carbon::now()->format('Y-m-d H:i:s'),
