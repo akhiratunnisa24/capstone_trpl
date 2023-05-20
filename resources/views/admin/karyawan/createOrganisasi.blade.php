@@ -165,7 +165,7 @@
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
                                                                         class="form-label">No. Surat Keterangan / SK</label>
-                                                                    <input type="number" name="noSKorganisasi"
+                                                                    <input type="text" name="noSKorganisasi"
                                                                         class="form-control" placeholder="Masukkan Nomor SK"
                                                                         autocomplete="off">
                                                                 </div>
@@ -266,7 +266,7 @@
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
                                                                         class="form-label">No. Surat Keterangan / SK</label>
-                                                                    <input type="number" name="noSKorganisasi" id="noSKorganisasi"
+                                                                    <input type="text" name="noSKorganisasi" id="noSKorganisasi"
                                                                         class="form-control" placeholder="Masukkan Nomor SK"
                                                                         autocomplete="off">
                                                                 </div>

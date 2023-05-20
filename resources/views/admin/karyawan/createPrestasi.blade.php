@@ -146,7 +146,7 @@
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
                                                                         class="form-label">Nomor Surat / Sertifikat </label>
-                                                                    <input type="number" name="noSurat"
+                                                                    <input type="text" name="noSurat"
                                                                         class="form-control" placeholder="Masukkan Nomor Surat"
                                                                         autocomplete="off">
                                                                 </div>
@@ -232,7 +232,7 @@
                                                         <div class="mb-3">
                                                             <label for="exampleInputEmail1"
                                                                 class="form-label">Nomor Surat / Sertifikat </label>
-                                                            <input type="number" name="noSurat" id="nomorSertifikat"
+                                                            <input type="text" name="noSurat" id="nomorSertifikat"
                                                                 class="form-control" placeholder="Masukkan Nomor Surat"
                                                                 autocomplete="off">
                                                         </div>

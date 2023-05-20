@@ -192,7 +192,7 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Tahun Lulus</label>
                                                                     <div class="input-group">
-                                                                        <input id="datepicker-autoclose20" type="text"  class="form-control" placeholder="yyyy" id="4"
+                                                                        <input id="tahun_masukNonFormal" type="text"  class="form-control" placeholder="yyyy" id="4"
                                                                                 name="tahun_lulusFormal" rows="10" autocomplete="off"></input><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                     </div>
@@ -204,9 +204,9 @@
                                                                     <label class="form-label">Lama Pendidikan</label>
                                                                     <div>
                                                                         <div class="input-daterange input-group"
-                                                                            id="date-range">
+                                                                        id="date-range">
                                                                             <input type="text" class="form-control"
-                                                                                name="tahun_masukFormal"  placeholder="dd/mm/yyyy" autocomplete="off" />
+                                                                                name="tahun_masukFormal"  placeholder="dd/mm/yyyy" autocomplete="off"  />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
@@ -215,6 +215,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
@@ -255,7 +256,7 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lulus Tahun</label>
                                                                     <div class="input-group">
-                                                                        <input id="datepicker-autoclose21" type="text" class="form-control" placeholder="yyyy" id="4"
+                                                                        <input id="tahun_lulusNonFormal" type="text" class="form-control" placeholder="yyyy" id="4"
                                                                                 name="tahunLulusNonFormal" autocomplete="off" rows="10" ><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                     </div>
@@ -269,11 +270,11 @@
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range2">
                                                                             <input type="text" class="form-control"
-                                                                                name="tahunMasukNonFormal" placeholder="yyyy" autocomplete="off" />
+                                                                                name="tahunMasukNonFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tahunLulusNonFormal" placeholder="yyyy" autocomplete="off" />
+                                                                                name="tahunLulusNonFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -359,7 +360,7 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Tahun Lulus</label>
                                                                     <div class="input-group">
-                                                                        <input id="datepicker-autoclose31" type="text"  class="form-control" placeholder="yyyy" id="4"
+                                                                        <input id="tahun_masukFormal" type="text"  class="form-control" placeholder="yyyy" id="4"
                                                                                 name="tahun_lulusFormal" rows="10" autocomplete="off"></input><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                     </div>
@@ -373,11 +374,11 @@
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range6">
                                                                             <input type="text" class="form-control"
-                                                                                name="tahun_masukFormal" id="datepicker-autoclose31" placeholder="yyyy" autocomplete="off" />
+                                                                                name="tahun_masukFormal" id="tahun_masukFormal" placeholder="yyyy" autocomplete="off" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tahun_lulusFormal" id="datepicker-autoclose32" placeholder="yyyy" autocomplete="off" />
+                                                                                name="tahun_lulusFormal" id="tahun_lulusFormal" placeholder="yyyy" autocomplete="off" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -422,7 +423,7 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lulus Tahun</label>
                                                                     <div class="input-group">
-                                                                        <input id="datepicker-autoclose32" type="text" class="form-control" placeholder="yyyy" id="4"
+                                                                        <input id="tahun_lulusFormal" type="text" class="form-control" placeholder="yyyy" id="4"
                                                                                 name="tahunLulusNonFormal" autocomplete="off" rows="10" ><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                     </div>
@@ -436,11 +437,11 @@
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range7">
                                                                             <input type="text" class="form-control"
-                                                                                name="tahun_masukNonFormal" id="datepicker-autoclose20" placeholder="yyyy" autocomplete="off" />
+                                                                                name="tahun_masukNonFormal" id="tahun_masukNonFormal" placeholder="yyyy" autocomplete="off" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tahun_lulusNonFormal" id="datepicker-autoclose21" placeholder="yyyy" autocomplete="off" />
+                                                                                name="tahun_lulusNonFormal" id="tahun_lulusNonFormal" placeholder="yyyy" autocomplete="off" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -480,7 +481,7 @@
     {{-- <script src="assets/js/jquery.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script src="assets/pages/form-advanced.js"></script>
+    {{-- <script src="assets/pages/form-advanced.js"></script> --}}
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -508,13 +509,13 @@
                     $('#namaLembaga').val(data.nama_lembaga);
                     $('#jurusan').val(data.jurusan);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
-                    $('#datepicker-autoclose31').val(data.tahun_masuk_formal);
-                    $('#datepicker-autoclose32').val(data.tahun_lulus_formal);
+                    $('#tahun_masukFormal').val(data.tahun_masuk_formal);
+                    $('#tahun_lulusFormal').val(data.tahun_lulus_formal);
                     $('#ijazahFormal').val(data.ijazah_formal);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
-                    $('#datepicker-autoclose20').val(data.tahun_masuk_nonformal);
-                    $('#datepicker-autoclose21').val(data.tahun_lulus_nonformal);
+                    $('#tahun_masukNonFormal').val(data.tahun_masuk_nonformal);
+                    $('#tahun_lulusNonFormal').val(data.tahun_lulus_nonformal);
                     $('#noijazahPnonformal').val(data.ijazah_nonformal);
         
                     // Set opsi yang dipilih pada dropdown select option
@@ -547,13 +548,13 @@
                     $('#namaLembaga').val(data.nama_lembaga);
                     $('#jurusan').val(data.jurusan);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
-                    $('#datepicker-autoclose31').val(data.tahun_masuk_formal);
-                    $('#datepicker-autoclose32').val(data.tahun_lulus_formal);
+                    $('#tahun_masukFormal').val(data.tahun_masuk_formal);
+                    $('#tahun_lulusFormal').val(data.tahun_lulus_formal);
                     $('#ijazahFormal').val(data.ijazah_formal);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
-                    $('#datepicker-autoclose20').val(data.tahun_masuk_nonformal);
-                    $('#datepicker-autoclose21').val(data.tahun_lulus_nonformal);
+                    $('#tahun_masukNonFormal').val(data.tahun_masuk_nonformal);
+                    $('#tahun_lulusNonFormal').val(data.tahun_lulus_nonformal);
                     $('#noijazahPnonformal').val(data.ijazah_nonformal);
             });
         });
