@@ -279,7 +279,7 @@ class CutiadminController extends Controller
 
     public function storeCuti(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
 
         $karyawan = Karyawan::where('id',$request->id_karyawan)->first();
         $jeniscuti = Jeniscuti::where('id', $request->id_jeniscuti)->first();
@@ -718,7 +718,7 @@ class CutiadminController extends Controller
                 })
                 ->first();
                 // dd($datacuti);
-                dd($datacuti->atasan_kedua,Auth::user()->id_pegawai,$datacuti->atasan_pertama, $datacuti,$role,$row->jabatan);
+                //dd($datacuti->atasan_kedua,Auth::user()->id_pegawai,$datacuti->atasan_pertama, $datacuti,$role,$row->jabatan);
                 if($row->jabatan == "Manager" && $role == 1 && $datacuti)
                 {
                     // dd($datacuti->atasan_kedua,Auth::user()->id_pegawai,$datacuti->atasan_pertama, $datacuti);
