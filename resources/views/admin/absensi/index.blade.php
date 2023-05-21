@@ -231,27 +231,11 @@
             });
         </script>
     @endif
-    {{-- @if(Session::has('pesan'))
-        @php
-            $pesan = Session::get('pesan');
-            $message = '';
-
-            foreach($pesan as $label => $value) {
-                $message .= $label . ': ' . $value . '\n';
-            }
-        @endphp
-
-        <script>
-            swal("Selamat", "{!! $message !!}", 'success', {
-                button: "OK",
-            });
-        </script> --}}
-    {{-- @endif --}}
 
 
     @if(Session::has('pesa'))
         <script>
-            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'serror', {
+            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
                 button:true,
                 button:"OK",
             });

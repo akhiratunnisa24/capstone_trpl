@@ -266,7 +266,9 @@ Route::get('/rekapabsensiExcel', [AbsensiController::class, 'rekapabsensiExcel']
 Route::get('/permintaan_cuti', [CutiadminController::class, 'index'])->name('permintaancuti.index');
 Route::post('/permintaan_cuti/{id}', [CutiadminController::class, 'update'])->name('cuti.update');
 Route::post('/permintaan/{id}', [CutiadminController::class, 'tolak'])->name('cuti.tolak');
-Route::post('/getkaryawan', [CutiadminController::class, 'getkaryawan'])->name('get.Karyawan');
+Route::get('/getkaryawan', [CutiadminController::class, 'getkaryawan'])->name('get.Karyawan');
+Route::get('/getcuti', [CutiadminController::class, 'getCuti'])->name('get.Cuti');
+Route::get('/getharilibur', [CutiadminController::class, 'getLibur'])->name('get.liburs');
 Route::post('/getalokasi', [CutiadminController::class, 'getAlokasiCuti'])->name('get.Alokasicuti');
 Route::post('/permintaan_cutis', [CutiadminController::class, 'storeCuti'])->name('cuti.stores');
 Route::get('/rekapcutiExcel', [CutiadminController::class, 'rekapcutiExcel'])->name('rekapcutiExcel');

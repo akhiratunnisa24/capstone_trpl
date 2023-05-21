@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Illuminate\Support\Facades\Validator;
 
 class AbsensiController extends Controller
 {
@@ -266,33 +267,57 @@ class AbsensiController extends Controller
     public function importexcel(Request $request)
     {
        
-        // Excel::import(new AbsensiImport, request()->file('file'));
-
-        // return redirect()->back();
-
         try {
             $file = $request->file('file');
             $import = new AbsensiImport();
             Excel::import($import, $file);
             
-            $jumlahdatadiimport = $import->getJumlahDataDiimport();
-            $jumlahdata         = $import->getJumlahData();
-            $jumlahimporttidakmasuk =$import->getDataImportTidakMasuk();
-            $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport();
+            $jumlahdatadiimport = $import->getJumlahDataDiimport();//SUDAH BENAR 12
+            $jumlahdata         = $import->getJumlahData(); //SUDAH BENAR 22
+            $jumlahimporttidakmasuk =$import->getDataImportTidakMasuk(); //SUDAH BENAR 1
+            $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport(); // 9
             
             return redirect()->back()->with('pesan', 'Data Absensi yang berhasil diimport: ' . $jumlahdatadiimport .'<br>' . 'Data diimport ke database Tidak Masuk: ' . $jumlahimporttidakmasuk . '<br>' . 'Jumlah Data tidak bisa diimport: ' . $datatidakbisadiimport . '<br>'. 'Jumlah Data Keseluruhan : ' . $jumlahdata);
+            
         } catch (\Throwable $th) {
             // Tangani jika terjadi kesalahan
-            return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data absensi.');
+            return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari Excel.');
         }
     }
 
 
     public function importcsv(Request $request)
     {
-        Excel::import(new AttendanceImport, request()->file('file'));
-        return redirect()->back()->with('success','Data Imported Successfully');
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:csv|max:2048'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors());
+        }
+
+        try {
+            $import = new AbsensiImport();
+            Excel::import($import, $request->file('file'));
+
+            // Gabungkan pesan-pesan dalam satu variabel
+            $pesan = 'Data Imported Successfully<br>';
+            $pesan .= 'Jumlah Data: ' . $import->getJumlahData() . '<br>';
+            $pesan .= 'Jumlah Data Diimport: ' . $import->getJumlahDataDiimport() . '<br>';
+            $pesan .= 'Data Import Tidak Masuk: ' . $import->getDataImportTidakMasuk() . '<br>';
+            $pesan .= 'Data Tidak Bisa Diimport: ' . $import->getDatatTidakBisaDiimport();
+
+            return redirect()->back()->with('pesan', $pesan);
+        } catch (\Throwable $th) {
+            // Tangani jika terjadi kesalahan
+            return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data absensi.');
+        }
     }
+    // public function importcsv(Request $request)
+    // {
+    //     Excel::import(new AttendanceImport, request()->file('file'));
+    //     return redirect()->back()->with('success','Data Imported Successfully');
+    // }
 
     public function rekapabsensipdf(Request $request)
     {

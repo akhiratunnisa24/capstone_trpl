@@ -39,7 +39,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
     private $tidakmasukdatabse = 0;
     private $jumlahdata = 0; //jumlah data keseluruhan
     private $jumlahimporttidakmasuk = 0;
-    private $datatidakbisadiimport = 0;
+    private $datatidakbisadiimport = 0; //JUMLAH DATA TIDAK DIIMPORT
 
     public function model(array $row)
     {
@@ -50,6 +50,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
             // Inisialisasi jumlah data yang sudah ada menjadi 0
             $jumlahDatasudahada = 0;
             $jumlahKaryawanTidakTerdaftar = 0; 
+            $tidakbisa = 0;
 
             // $departments = Departemen::pluck('id', 'nama_departemen')->toArray();
             // $departement_map = isset($departments[$row['departemen']]) ? $departments[$row['departemen']] : 0;
@@ -210,6 +211,8 @@ class AbsensiImport implements ToModel,WithHeadingRow
                                 else{
                                     $this->datatidakbisadiimport++;
                                     $this->tidakmasukdatabse++;
+                                    $tidakbisa++;
+                                    Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);         
                                     Log::info('Data tidak masuk karyawan sudah ada');
                                 }
                             } 
@@ -261,15 +264,20 @@ class AbsensiImport implements ToModel,WithHeadingRow
                         ->count();
 
                     Log::info('Jumlah id karaywan dan tanggal absensi sudah ada: '. $jumlahDatasudahada);  
+                    $tidakbisa++;
+                    Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);         
                 }
             }
             else
             {
                 $this->datatidakbisadiimport++;
                 $jumlahKaryawanTidakTerdaftar++;
+                $tidakbisa++;
+                Log::info('JUMLAH DATA TIDAK BISA DIIMPORT KE  DATABASE: : ' . $tidakbisa);                
                 Log::info('Jumlah data absensi dengan karyawan tidak terdaftar: ' . $jumlahKaryawanTidakTerdaftar);                
             }
-        }else
+        }
+        else
         {
             Log::info('Row 1 kosong');
         }

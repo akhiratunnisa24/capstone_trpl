@@ -25,31 +25,31 @@
                             <div class="col-md-12">
                                 <div class="col-md-6">
                                     {{-- <div class="form-group col-sm">
-                                        <label for="tgl_permohonan" class="col-form-label">Tanggal Permohonan</label>
+                                        <label class="col-form-label">Tanggal Permohonan</label>
                                         <input type="text" class="form-control" name="tgl_permohonan" id="tgl_permohonan" value="{{ date('d/m/Y') }}" readonly>
                                     </div>  --}}
                                     <div class="form-group col-sm">
-                                        <label for="tgl_permohonan" class="form-label">Tanggal Permohonan</label>
+                                        <label class="form-label">Tanggal Permohonan</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosew" name="tgl_permohonan"  autocomplete="off" rows="10" required>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>              
                                     <div class="form-group col-sm">
-                                        <label for="nik" class="col-form-label">Nomor Induk Karyawan</label>
+                                        <label  class="col-form-label">Nomor Induk Karyawan</label>
                                         <input type="text" class="form-control" name="nik" id="nik" value="{{$datakry->nip}}" readonly>
                                     </div>         
                                     <div class="form-group col-sm">
-                                        <label for="id_karyawan" class="col-form-label">Nama Karyawan</label>
+                                        <label class="col-form-label">Nama Karyawan</label>
                                         <input type="text" class="form-control" id="id_karyawan" value="{{Auth::user()->name}}" readonly>
                                         <input type="hidden" class="form-control" name="id_karyawan" id="id_karyawan" value="{{$karyawan}}" hidden>
                                     </div>
                                     <div class="form-group col-sm">
-                                        <label for="jabatan" class="col-form-label">Jabatan</label>
+                                        <label class="col-form-label">Jabatan</label>
                                         <input type="text" class="form-control" name="jabatan" id="jabatan" value="{{$datakry->nama_jabatan}}" readonly>
                                     </div> 
                                     <div class="form-group col-sm">
-                                        <label for="departemen" class="col-form-label">Departemen/Divisi</label>
+                                        <label class="col-form-label">Departemen/Divisi</label>
                                         <input type="text" class="form-control" id="departemen" value="{{$departemen->nama_departemen}}" readonly>
                                         <input type="hidden" class="form-control" name="departemen" id="departemen" value="{{$departemen->id}}" hidden>
                                     </div> 
@@ -57,7 +57,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group col-sm">
-                                        <label for="id_jeniscuti" class="col-form-label">Status Ketidakhadiran / Kategori Cuti</label>
+                                        <label  class="col-form-label">Status Ketidakhadiran / Kategori Cuti</label>
                                         <select name="id_jeniscuti" id="id_jeniscuti" class="form-control selectpicker" data-live-search="true" required>
                                             <option>-- Pilih Status Ketidakhadiran --</option>
                                             @foreach ($jeniscuti as $data)
@@ -71,7 +71,7 @@
                                         <div class="col-sm-6 col-xs-12">
                                             <div>
                                                 <div class="form-group">
-                                                    <label for="tgl_mulai" class="form-label">Tanggal Pelaksanaan</label>
+                                                    <label  class="form-label">Tanggal Pelaksanaan</label>
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="dd/mm/yyyy" id="datepicker-autoclosef" name="tgl_mulai"  autocomplete="off" rows="10" required>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
@@ -83,7 +83,7 @@
                                         <div class="col-sm-6 col-xs-12">
                                             <div>
                                                 <div class="form-group">
-                                                    <label for="tgl_selesai" class="form-label">Sampai</label>
+                                                    <label  class="form-label">Sampai</label>
                                                     <div class="input-group">
                                                         <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="dd/mm/yyyy" id="datepicker-autocloseg" name="tgl_selesai"  autocomplete="off" rows="10" required>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
@@ -94,20 +94,20 @@
                                     </div>
             
                                     <div class="form-group col-sm">
-                                        <label for="keperluan" class="col-form-label">Keterangan</label>
+                                        <label  class="col-form-label">Keterangan</label>
                                         <textarea class="form-control" name="keperluan" id="keperluan" rows="5" placeholder="Masukkan keterangan" autocomplete="off" required></textarea>
                                         {{-- <input type="text" class="form-control" name="keperluan" id="keperluan" placeholder="Masukkan keterangan" autocomplete="off" required> --}}
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 col-xs-12">
                                             <div class="form-group col-sm">
-                                                <label for="" class="col-form-label">Durasi Tersedia</label>
+                                                <label  class="col-form-label">Durasi Tersedia</label>
                                                 <input type="text" class="form-control" name="durasi" id="durasi" readonly>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-xs-12">
                                             <div class="form-group col-sm">
-                                                <label for="jml_cuti" class="col-form-label">Jumlah Cuti</label>
+                                                <label  class="col-form-label">Jumlah Cuti</label>
                                                 <input type="text" class="form-control" name="jml_cuti" id="jumlah" readonly>
                                             </div>
                                         </div>
@@ -130,102 +130,6 @@
                         </div>
                     </form>
                 </div>
-                {{--<div class="modal-body">
-                    <form action="{{ route('cuti.store')}}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('POST')
-                        <div class="form-group col-sm">
-                            <label for="tgl_permohonan" class="col-form-label">Tanggal Permohonan</label>
-                            <input type="text" class="form-control" id="tgl_permohonan" value="{{ date('d/m/Y') }}" readonly>
-                        </div>               
-                        <div class="form-group col-sm">
-                            <label for="nik" class="col-form-label">Nomor Induk Karyawan</label>
-                            <input type="text" class="form-control" id="nik" value="{{$datakry->nip}}" readonly>
-                        </div>         
-                        <div class="form-group col-sm">
-                            <label for="id_karyawan" class="col-form-label">Nama Karyawan</label>
-                            <input type="text" class="form-control" id="id_karyawan" value="{{Auth::user()->name}}" readonly>
-                            <input type="hidden" class="form-control" id="id_karyawan" value="{{$karyawan}}" hidden>
-                        </div>
-                        <div class="form-group col-sm">
-                            <label for="jabatan" class="col-form-label">Jabatan</label>
-                            <input type="text" class="form-control" id="jabatan" value="{{$datakry->jabatan}}" readonly>
-                        </div> 
-                        <div class="form-group col-sm">
-                            <label for="departemen" class="col-form-label">Departemen/Divisi</label>
-                            <input type="text" class="form-control" id="departemen" value="{{$departemen->nama_departemen}}" readonly>
-                            <input type="hidden" class="form-control" id="nik" value="{{$departemen->id}}" hidden>
-                        </div> 
-                        <div class="row">
-                            <div class="col-sm-6 col-xs-12">
-                                <div class="m-t-20">
-                                    <div class="form-group">
-                                        <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autoclosef" name="tgl_mulai"  autocomplete="off" rows="10" required>
-                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                            <div class="col-sm-6 col-xs-12">
-                                <div class="m-t-20">
-                                    <div class="form-group">
-                                        <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autocloseg" name="tgl_selesai"  autocomplete="off" rows="10" required>
-                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-sm">
-                            <label for="id_jeniscuti" class="col-form-label">Status Ketidakhadiran / Kategori Cuti</label>
-                            <select name="id_jeniscuti" id="id_jeniscuti" class="form-control selectpicker" data-live-search="true" required>
-                                <option>-- Pilih Kategori --</option>
-                                @foreach ($jeniscuti as $data)
-                                        <option value="{{ $data->id_jeniscuti}}">
-                                           {{ $data->jenis_cuti }} 
-                                        </option>
-                                @endforeach
-                            </select> 
-                        </div>
-                        <div class="form-group col-sm">
-                            <input type="hidden" class="form-control" name="id_alokasi" id="id_alokasi">
-                            <input type="hidden" class="form-control" name="id_settingalokasi" id="id_settingalokasi">
-                        </div>
-                        <div class="form-group col-sm">
-                            <label for="keperluan" class="col-form-label">Keterangan</label>
-                            <input type="text" class="form-control" name="keperluan" id="keperluan" placeholder="Masukkan keperluan" autocomplete="off" required>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 col-xs-12">
-                                <div class="form-group col-sm">
-                                    <label for="" class="col-form-label">Durasi Tersedia</label>
-                                    <input type="text" class="form-control" name="durasi" id="durasi" readonly>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-xs-12">
-                                <div class="form-group col-sm">
-                                    <label for="jml_cuti" class="col-form-label">Jumlah Cuti</label>
-                                    <input type="text" class="form-control" name="jml_cuti" id="jumlah" readonly>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-sm">
-                            <input type="hidden" class="form-control" name="status" id="status" value="Pending">
-                        </div>
-                            
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" id="submit-button" class="btn btn-success" value="save">Send</button>
-                        </div>
-                    </form>
-                </div> --}}
             </div>
         </div>
     </div>
@@ -281,7 +185,7 @@
         {
             var start= $('#datepicker-autoclosef').val();
             var end  = $('#datepicker-autocloseg').val();
-            console.log(start,end);
+            // console.log(start,end);
 
             // Mengubah format tanggal pada variabel start
             var startArray = start.split('/');

@@ -15,6 +15,7 @@ use App\Exports\CutiExport;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use App\Mail\CutiNotification;
+use App\Models\SettingHarilibur;
 use App\Mail\CutiHRDNotification;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -48,8 +49,8 @@ class CutiadminController extends Controller
         if ($role == 1 || $role == 2) 
         {
             $type = $request->query('type', 1);
-            $karyawan = Karyawan::all();
             $pegawai = Karyawan::all();
+            $jeniscuti = Jeniscuti::where('status',1)->get();
 
             //form create cuti untuk karyawan.
             $karyawan = Karyawan::where('id','!=',Auth::user()->id_pegawai)->get();
@@ -93,7 +94,7 @@ class CutiadminController extends Controller
                         ->distinct()
                         ->orderBy('created_at','DESC')
                         ->get();
-                    return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai','role'));
+                    return view('admin.cuti.index', compact('cuti','izin','jeniscuti','type','row','karyawan','pegawai','role'));
                 } else 
                 {
                     $type = $request->query('type', 1);
@@ -119,7 +120,7 @@ class CutiadminController extends Controller
                         ->distinct()
                         ->orderBy('created_at','DESC')
                         ->get();
-                    return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai','role'));
+                    return view('admin.cuti.index', compact('cuti','izin','jeniscuti','type','row','karyawan','pegawai','role'));
                 }  
             }
             else
@@ -163,7 +164,7 @@ class CutiadminController extends Controller
                         ->orderBy('created_at', 'DESC')
                         ->get();
                     // return $type;
-                    return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai','role'));   
+                    return view('admin.cuti.index', compact('cuti','izin','jeniscuti','type','row','karyawan','pegawai','role'));   
                 }
                 else
                 {
@@ -189,7 +190,7 @@ class CutiadminController extends Controller
                         ->orderBy('created_at', 'DESC')
                         ->get();
                         
-                    return view('admin.cuti.index', compact('cuti','izin','type','row','karyawan','pegawai','role'));
+                    return view('admin.cuti.index', compact('cuti','izin','jeniscuti','type','row','karyawan','pegawai','role'));
                 };
            
             }
@@ -212,33 +213,38 @@ class CutiadminController extends Controller
     public function getkaryawan(Request $request)
     {
         try {
-            $getKaryawan = Karyawan::select('karyawan.nama', 'karyawan.nip','karyawan.divisi', 'karyawan.nama_jabatan', 'departemen.nama_departemen','departemen.id')
-                ->join('departemen', 'karyawan.divisi', '=', 'departemen.id')
-                ->where('karyawan.id', '=', $request->id_karyawan)
+            $getKaryawan = Karyawan::leftjoin('departemen', 'karyawan.divisi', '=', 'departemen.id')
+                ->select('karyawan.nama_jabatan','karyawan.id' ,'karyawan.divisi', 'karyawan.nip', 'departemen.nama_departemen')
+                ->where('karyawan.id','=', $request->id_karyawans)
                 ->first();
-
+            
             if (!$getKaryawan) {
-                throw new \Exception('Data not found');
+                 throw new \Exception('Data not found');
             }
 
-            $getJenis = Alokasicuti::select('alokasicuti.id_jeniscuti', 'jeniscuti.jenis_cuti')
-                ->join('jeniscuti', 'alokasicuti.id_jeniscuti', '=', 'jeniscuti.id')
-                ->where('alokasicuti.id_karyawan', '=', $getKaryawan->id)
-                ->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)
-                ->distinct()
+            return response()->json( $getKaryawan,200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getCuti(Request $request)
+    {
+        try {
+            $jeniscuti = Alokasicuti::leftjoin('jeniscuti','alokasicuti.id_jeniscuti','=','jeniscuti.id')
+                ->select('alokasicuti.id','alokasicuti.id_jeniscuti','jeniscuti.jenis_cuti','alokasicuti.durasi','alokasicuti.id_settingalokasi')
+                ->where('alokasicuti.id_karyawan','=',$request->id_karyawans)
+                ->whereYear('alokasicuti.sampai', Carbon::now()->year)
                 ->get();
-
-            if (!$getJenis) {
+            
+            if (!$jeniscuti) {
                 throw new \Exception('Data not found');
-            }
-
-            $result = [
-                'karyawan' => $getKaryawan,
-                'jenis' => $getJenis
-            ];
-    
-            return response()->json($result, 200);
-
+           }
+            
+           return response()->json($jeniscuti,200);
+        
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
@@ -248,14 +254,7 @@ class CutiadminController extends Controller
 
     public function getAlokasiCuti(Request $request)
     {
-        // ->where('alokasicuti.id_jeniscuti','=',1)
         try {
-            // $getAlokasiCuti = Alokasicuti::select('alokasicuti.*','jeniscuti.jenis_cuti')
-            //     ->join('jeniscuti','alokasicuti.id_jeniscuti','=','jeniscuti.id')
-            //     ->where('alokasicuti.id_karyawan', '=', $request->id_karyawan)
-            //     ->where('alokasicuti.status','=',1)
-            //     ->get();
-
             $getAlokasiCuti = DB::table('alokasicuti')
                 ->join('jeniscuti', 'alokasicuti.id_jeniscuti', '=', 'jeniscuti.id')
                 ->join('settingalokasi', 'alokasicuti.id_settingalokasi', '=', 'settingalokasi.id')
@@ -277,12 +276,28 @@ class CutiadminController extends Controller
         }
     }
 
+    public function getLibur()
+    {
+        try {
+            $getLibur = SettingHarilibur::all();
+            if (!$getLibur) {
+                throw new \Exception('Data not found');
+            }
+            return response()->json($getLibur, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function storeCuti(Request $request)
     {
         // dd($request->all());
 
-        $karyawan = Karyawan::where('id',$request->id_karyawan)->first();
+        $karyawan = Karyawan::where('id',$request->id_karyawans)->first();
         $jeniscuti = Jeniscuti::where('id', $request->id_jeniscuti)->first();
+        // dd($jeniscuti);
         $tglpermohonan = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_permohonan)->format("Y-m-d");
         $status = Status::find(1);
 
@@ -298,17 +313,15 @@ class CutiadminController extends Controller
         else
         {
             $cuti = New Cuti;
-            $cuti->id_karyawan      = $request->id_karyawan;
+            $cuti->id_karyawan      = $request->id_karyawans;
             $cuti->tgl_permohonan   = $tglpermohonan;
-            $cuti->nik              = $karyawan->nik;
+            $cuti->nik              = $karyawan->nip;
             $cuti->jabatan          = $karyawan->nama_jabatan;
-            $cuti->departemen       = $karyawan->departemen;
+            $cuti->departemen       = $karyawan->divisi;
             $cuti->id_jeniscuti     = $request->id_jeniscuti;
             $cuti->id_alokasi       = $request->id_alokasi;
             $cuti->id_settingalokasi= $request->id_settingalokasi;
             $cuti->keperluan        = $request->keperluan;
-            $cuti->tgl_mulai        = Carbon::parse($request->tgl_mulai)->format("Y-m-d");
-            $cuti->tgl_selesai      = Carbon::parse($request->tgl_selesai)->format("Y-m-d");
             $cuti->jmlharikerja   = $request->jml_cuti;
             $cuti->catatan   = null;
 
@@ -340,7 +353,10 @@ class CutiadminController extends Controller
 
             $cuti->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
             $cuti->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
+        
             $cuti->status           = $status->id;
+
+            // dd($cuti);
             $cuti->save();
 
             $emailkry = DB::table('cuti')
@@ -349,7 +365,7 @@ class CutiadminController extends Controller
                 ->where('cuti.id_karyawan', '=', $cuti->id_karyawan)
                 ->select('karyawan.email', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
                 ->first();
-            
+            // dd($emailkry);
             $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
                 ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
                 ->first();
@@ -362,6 +378,7 @@ class CutiadminController extends Controller
                     ->first();
             }
             $tujuan = $atasan->email;
+            // dd($tujuan);
 
             $data = [
                 'subject' => 'Notifikasi Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#' . $cuti->id . ' ' . ucwords(strtolower($emailkry->nama)),
@@ -387,8 +404,9 @@ class CutiadminController extends Controller
                 $data['atasan2'] = $atasan2->email;
             }
             Mail::to($tujuan)->send(new CutiNotification($data));
+            // dd($data);
     
-            return redirect()->back()->with('pesan', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan karyawan');
+            return redirect()->back()->with('pesan', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim');
         }
     }
 
