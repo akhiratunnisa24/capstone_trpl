@@ -65,8 +65,9 @@
                                                                 <th>No</th>
                                                                 <th>Perihal / Keterangan</th>
                                                                 <th>Instansi Pemberi</th>
-                                                                <th>Alamat Instansi</th>
+                                                                <th>Alamat</th>
                                                                 <th>No. Surat</th>
+                                                                <th>Tanggal Surat</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
@@ -78,6 +79,7 @@
                                                                     <td>{{ $pres->nama_instansi }}</td>
                                                                     <td>{{ $pres->alamat }}</td>
                                                                     <td>{{ $pres->no_surat }}</td>
+                                                                    <td>{{ $pres->tanggal_surat }}</td>
                                                                     <td class="">
                                                                         <a class="btn btn-sm btn-primary pull-right"
                                                                             data-toggle="modal"

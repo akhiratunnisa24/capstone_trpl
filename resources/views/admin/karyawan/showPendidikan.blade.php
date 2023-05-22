@@ -67,11 +67,13 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No</th>
-                                                            <th>Tingkat</th>
+                                                            <th>Tingkat Pendidikan</th>
                                                             <th>Nama Sekolah</th>
-                                                            <th>Alamat</th>
                                                             <th>Jurusan</th>
-                                                            <th>Tahun Lulus</th>
+                                                            <th>Tahun Mulai</th>
+                                                            <th>Tahun Selesai</th>
+                                                            <th>Alamat</th>
+                                                            {{-- <th>Tahun Lulus</th> --}}
                                                             <th>Nomor Ijazah</th>
                                                             <th>Aksi</th>
                                                         </tr>
@@ -84,9 +86,11 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $rpendidikan->tingkat }}</td>
                                                                     <td>{{ $rpendidikan->nama_sekolah }}</td>
-                                                                    <td>{{ $rpendidikan->kota_pformal }}</td>
                                                                     <td>{{ $rpendidikan->jurusan }}</td>
+                                                                    <td>{{ $rpendidikan->tahun_masuk_formal }}</td>
                                                                     <td>{{ $rpendidikan->tahun_lulus_formal }}</td>
+                                                                    <td>{{ $rpendidikan->kota_pformal }}</td>
+                                                                    {{-- <td>{{ $rpendidikan->tahun_lulus_formal }}</td> --}}
                                                                     <td>{{ $rpendidikan->ijazah_formal }}</td>
                                                                     <td class="">
                                                                         <a class="btn btn-sm btn-primary editPformal pull-right"
@@ -116,10 +120,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No</th>
-                                                            <th>Jenis Pendidikan</th>
-                                                            <th>Nama Lembaga Pendidikan</th>
-                                                            <th>Kota</th>
+                                                            <th>Bidang/Jenis</th>
+                                                            <th>Lembaga Pendidikan</th>
+                                                            <th>Tahun Mulai</th>
                                                             <th>Tahun Lulus</th>
+                                                            <th>Alamat</th>
                                                             <th>Nomor Ijazah</th>
                                                             <th>Aksi</th>
                                                         </tr>
@@ -130,8 +135,9 @@
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $rpendidikan->jenis_pendidikan }}</td>
                                                                 <td>{{ $rpendidikan->nama_lembaga }}</td>
-                                                                <td>{{ $rpendidikan->kota_pnonformal }}</td>
+                                                                <td>{{ $rpendidikan->tahun_masuk_nonformal }}</td>
                                                                 <td>{{ $rpendidikan->tahun_lulus_nonformal }}</td>
+                                                                <td>{{ $rpendidikan->kota_pnonformal }}</td>
                                                                 <td>{{ $rpendidikan->ijazah_nonformal }}</td>
                                                                 <td class="">
                                                                     <a class="btn btn-sm btn-primary editPnformal pull-right"

@@ -51,9 +51,9 @@
                                                                 <label class="form-label col-sm-12">Kartu Tanda Penduduk ( KTP )</label>
                                                                 <div class="col-sm-9">              
                                                                     @if(!empty($file->ktp))
-                                                                        <a href="{{ asset('File_KTP/' . $file->ktp) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
+                                                                        <a href="{{ asset('File_KTP/' . $file->ktp) }}" class="btn btn-sm btn-primary " target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -66,7 +66,7 @@
                                                                     @if(!empty($file->kk))
                                                                         <a href="{{ asset('File_KK/' . $file->kk) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -80,7 +80,7 @@
                                                                     @if(!empty($file->npwp))
                                                                         <a href="{{ asset('File_NPWP/' . $file->npwp) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -94,7 +94,7 @@
                                                                     @if(!empty($file->bpjs_ket))
                                                                         <a href="{{ asset('File_BPJSKet/' . $file->bpjs_ket) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -108,7 +108,7 @@
                                                                     @if(!empty($file->bpjs_kes))
                                                                         <a href="{{ asset('File_BPJSKes/' . $file->bpjs_kes) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -121,7 +121,7 @@
                                                                     @if(!empty($file->as_akdhk))
                                                                         <a href="{{ asset('File_AKDHK/' . $file->as_akdhk) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -135,7 +135,7 @@
                                                                     @if(!empty($file->buku_tabungan))
                                                                         <a href="{{ asset('File_Tabungan/' . $file->buku_tabungan) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>  
                                                             </div>
@@ -149,7 +149,7 @@
                                                                     @if(!empty($file->skck))
                                                                         <a href="{{ asset('File_SKCK/' . $file->skck) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div> 
                                                             </div>
@@ -169,7 +169,7 @@
                                                                     @if(!empty($file->ijazah))
                                                                         <a href="{{ asset('File_Ijazah/' . $file->ijazah) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div> 
                                                             </div>
@@ -183,7 +183,7 @@
                                                                     @if(!empty($file->lamaran))
                                                                         <a href="{{ asset('File_Lamaran/' . $file->lamaran) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div> 
                                                             </div>
@@ -197,7 +197,7 @@
                                                                     @if(!empty($file->surat_pengalaman_kerja))
                                                                         <a href="{{ asset('File_Pengalaman/' . $file->surat_pengalaman_kerja) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div> 
                                                             </div>
@@ -211,7 +211,7 @@
                                                                     @if(!empty($file->surat_penghargaan))
                                                                         <a href="{{ asset('File_Prestasi/' . $file->surat_penghargaan) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -225,7 +225,7 @@
                                                                     @if(!empty($file->surat_pelatihan))
                                                                         <a href="{{ asset('File_Pendidikan/' . $file->surat_pelatihan) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -239,7 +239,7 @@
                                                                     @if(!empty($file->surat_perjanjian_kerja))
                                                                         <a href="{{ asset('File_Perjanjian/' . $file->surat_perjanjian_kerja) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -253,7 +253,7 @@
                                                                     @if(!empty($file->surat_pengangkatan_kartap))
                                                                         <a href="{{ asset('File_Pengangkatan/' . $file->surat_pengangkatan_kartap) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -267,7 +267,7 @@
                                                                     @if(!empty($file->surat_alih_tugas))
                                                                         <a href="{{ asset('File_Keputusan/' . $file->surat_alih_tugas) }}" class="btn btn-sm btn-primary" target='_blank'>Lihat File</a>
                                                                     @else
-                                                                    <p>File tidak tersedia.</p>
+                                                                    <p  style="color: red;">File tidak tersedia.</p>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -276,13 +276,13 @@
 
                                                     </div>
 
-
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
+                                            <a href="/karyawanupload{{ $karyawan->id }}" class="btn btn-sm btn-success "> Upload Data <i class="fa fa-upload"></i> </a>
+                                            {{-- <a href="editfile{{ $karyawan->id }}" class="btn btn-sm btn-primary" type="button">Edit Data <i class="fa fa-edit"></i></a> --}}
+                                            <a href="editfile{{ $karyawan->id }}" class="btn btn-sm btn-primary" type="button" <?php echo ($file === null) ? 'disabled' : ''; ?>>Edit Data <i class="fa fa-edit"></i></a>
                                             <a href="karyawan" class="btn btn-sm btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
-                                            <a href="editfile{{ $karyawan->id }}" class="btn btn-sm btn-primary" type="button">Upload / Edit Data <i class="fa fa-edit"></i></a>
-                                            {{-- <button type="submit" name="submit" id="simpan" class="btn btn-sm btn-success">Simpan</button>  --}}
                                         </div>
 
                                         </table>

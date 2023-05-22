@@ -40,8 +40,9 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 m-t-10">
-                                                           
-
+                                                                <label class="text-black m-b-10 col-sm-12" style="font-size: 30px">{{ $karyawan->nama }}</label>
+                                                                <input class="form-control selectpicker" name="karyawan" value="{{ $karyawan->id }}"  style="display: none;">
+                                                            </div>
                                                         </div>
 
                                                         <div class="col-md-6 m-t-10">
@@ -49,7 +50,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Kartu Tanda Penduduk ( KTP )</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->ktp ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->ktp ? 'text-success' : 'text-danger' }}">{{ $file->ktp ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoKTP" id="fotoKTP" class="form-control" >    
                                                                 </div>
                                                             </div>
@@ -57,7 +58,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Kartu Keluarga ( KK )</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->kk ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->kk ? 'text-success' : 'text-danger' }}">{{ $file->kk ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoKK" id="fotoKK" class="form-control">
                                                                 </div>
                                                             </div>
@@ -65,7 +66,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Nomor Pokok Wajib Pajak ( NPWP )</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->npwp ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->npwp ? 'text-success' : 'text-danger' }}">{{ $file->npwp ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoNPWP" id="fotoNPWP" class="form-control">
                                                                 </div>
                                                             </div>
@@ -73,7 +74,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">BPJS Ketenagakerjaan</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->bpjs_ket ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->bpjs_ket ? 'text-success' : 'text-danger' }}">{{ $file->bpjs_ket ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoBPJSket" id="fotoBPJSket" class="form-control" >
                                                                 </div>
                                                             </div>
@@ -81,7 +82,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">BPJS Kesehatan ( Karyawan + Keluarga )</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->bpjs_kes ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->bpjs_kes ? 'text-success' : 'text-danger' }}">{{ $file->bpjs_kes ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoBPJSkes" id="fotoBPJSkes" class="form-control" >
                                                                 </div>
                                                             </div>
@@ -89,7 +90,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Asuransi AKDHK</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->as_akdhk ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->as_akdhk ? 'text-success' : 'text-danger' }}">{{ $file->as_akdhk ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoAKDHK" id="fotoAKDHK" class="form-control">
                                                                 </div>
                                                             </div>
@@ -97,7 +98,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Buku Tabungan Nomor Rekening & Nama Bank</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->buku_tabungan ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->buku_tabungan ? 'text-success' : 'text-danger' }}">{{ $file->buku_tabungan ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoTabungan" id="fotoTabungan" class="form-control">
                                                                 </div>
                                                             </div>
@@ -105,7 +106,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Surat Keterangan Kepolisian ( SKKB/SKCK/Lainnya )</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->skck ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->skck ? 'text-success' : 'text-danger' }}">{{ $file->skck ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoSKCK" id="fotoSKCK" class="form-control" >
                                                                 </div>
                                                             </div>
@@ -119,7 +120,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Ijazah Pendidikan Terakhir</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->ijazah ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->ijazah ? 'text-success' : 'text-danger' }}">{{ $file->ijazah ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoIjazah" id="fotoIjazah" class="form-control" >
                                                                 </div>
                                                             </div>
@@ -127,7 +128,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Formulir Lamaran & Penawaran Pekerjaan ( Remunerasi )</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->lamaran ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->lamaran ? 'text-success' : 'text-danger' }}">{{ $file->lamaran ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoLamaran" id="fotoLamaran" class="form-control">
                                                                 </div>
                                                             </div>
@@ -135,7 +136,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Surat Pengalaman Bekerja</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->surat_pengalaman_kerja ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->surat_pengalaman_kerja ? 'text-success' : 'text-danger' }}">{{ $file->surat_pengalaman_kerja ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoSuratPengalaman" id="fotoSuratPengalaman" class="form-control">
                                                                 </div>
                                                             </div>
@@ -143,7 +144,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Surat Penghargaan/Prestasi</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->surat_penghargaan ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->surat_penghargaan ? 'text-success' : 'text-danger' }}">{{ $file->surat_penghargaan ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoSuratPrestasi" id="fotoSuratPrestasi" class="form-control">
                                                                 </div>
                                                             </div>
@@ -151,7 +152,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Pendidikan & Pelatihan ( Kursus/Seminar/Workshop/DLL )</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->surat_pelatihan ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->surat_pelatihan ? 'text-success' : 'text-danger' }}">{{ $file->surat_pelatihan ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoSuratPendidikan" id="fotoSuratPendidikan" class="form-control" >
                                                                 </div>
                                                             </div>
@@ -159,7 +160,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Surat Perjanjian Kerja ( Kontrak/Percobaan/Staff-Ahli )</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->surat_perjanjian_kerja ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->surat_perjanjian_kerja ? 'text-success' : 'text-danger' }}">{{ $file->surat_perjanjian_kerja ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoPerjanjianKerja" id="fotoPerjanjianKerja" class="form-control" >
                                                                 </div>
                                                             </div>
@@ -167,7 +168,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Surat Pengangkatan Karyawan Tetap</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->surat_pengangkatan_kartap ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->surat_pengangkatan_kartap ? 'text-success' : 'text-danger' }}">{{ $file->surat_pengangkatan_kartap ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoSuratPengangkatan" id="fotoSuratPengangkatan" class="form-control">
                                                                 </div>
                                                             </div>
@@ -175,7 +176,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-12">Surat Keputusan Alih-Tugas Jabatan</label>
-                                                                    <label class="form-label col-sm-12">{{ $file->surat_alih_tugas ?? 'File tidak tersedia.' }}</label>
+                                                                    <label class="form-label col-sm-12 {{ $file->surat_alih_tugas ? 'text-success' : 'text-danger' }}">{{ $file->surat_alih_tugas ?? 'File tidak tersedia.' }}</label>
                                                                     <input type="file" name="fotoSuratKeputusan" id="fotoSuratKeputusan" class="form-control" >
                                                                 </div>
                                                             </div>
@@ -187,9 +188,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                            <a href="showfile{{ $karyawan->id }}" class="btn btn-sm btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
                                                     <button type="submit" name="submit" id="simpan"
-                                                        class="btn btn-sm btn-success">Simpan</button>
+                                                    class="btn btn-sm btn-success">Simpan</button>
+                                                    <a href="showfile{{ $karyawan->id }}" class="btn btn-sm btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
                                                 </div>
 
                                             </table>

@@ -73,7 +73,7 @@
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">NIK Karyawan</label>
+                                                                        <label class="form-label">NIP Karyawan</label>
                                                                         <label class="form-control" >{{ $karyawan->nip ?? '-' }}</label>
                                                                     </div>
                                                                 </div>
@@ -94,7 +94,7 @@
                         
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label  class="form-label">Kota Kelahiran</label>
+                                                                    <label  class="form-label">Tempat Lahir</label>
                                                                     <label class="form-control">{{ $karyawan->tempatlahir ?? '-' }}</label>
                                                                 </div>
                                                             </div>

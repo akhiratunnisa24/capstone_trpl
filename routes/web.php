@@ -107,7 +107,9 @@ Route::get('showkontakdarurat{id}', [karyawanController::class, 'showkontakdarur
 // Edit Data Karyawan Vesi Baru
 
 //Upload File Digital Karyawan
-Route::get('/karyawanupload', [UploadController::class, 'index'])->name('index');
+
+// Route::get('/karyawanupload', [UploadController::class, 'index'])->name('index');
+Route::get('/karyawanupload{id}', [UploadController::class, 'index'])->name('index');
 Route::post('/storeupload', [UploadController::class, 'store'])->name('store_upload');
 
 

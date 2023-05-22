@@ -64,7 +64,7 @@
                                                                 <th>No</th>
                                                                 <th>Nama </th>
                                                                 <th>Hubungan</th>
-                                                                <th>Nomor Handphone</th>
+                                                                <th>No HP</th>
                                                                 <th>Alamat</th>
                                                                 <th>Aksi</th>
                                                             </tr>

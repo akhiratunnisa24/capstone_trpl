@@ -68,7 +68,7 @@
                                                                 <th>Tanggal Masuk</th>
                                                                 <th>Tanggal Keluar</th>
                                                                 <th>Jabatan</th>
-                                                                <th>Nomor Surat Keterangan</th>
+                                                                <th>Nomor SK</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>

@@ -49,9 +49,9 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama</th>
+                                                <th>Hubungan</th>
                                                 <th>No HP</th>
                                                 <th>Alamat</th>
-                                                <th>Hubungan Keluarga</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -60,9 +60,9 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $kd['nama']}}</td>
+                                                    <td>{{ $kd['hubungan']}}</td>
                                                     <td>{{ $kd['no_hp']}}</td>
                                                     <td>{{ $kd['alamat']}}</td>
-                                                    <td>{{ $kd['hubungan']}}</td>
                                                     <td  class="text-center">
                                                        <div class="row d-grid gap-2 " role="group" aria-label="Basic example">
                                                             <a class="btn btn-sm btn-info" id="editKonrat" data-key="{{ $key }}" style="margin-right:10px">

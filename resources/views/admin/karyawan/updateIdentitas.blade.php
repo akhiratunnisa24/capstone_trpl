@@ -75,7 +75,7 @@
 
                                                         <div class="form-group">
                                                             <div class="mb-3">
-                                                                <label class="form-label">NIK Karyawan</label>
+                                                                <label class="form-label">NIP Karyawan</label>
                                                                 <input name="nipKaryawan" type="text"
                                                                     class="form-control" autocomplete="off"
                                                                     value="{{ $karyawan->nip ?? '-' }}">
@@ -98,9 +98,9 @@
                                                                 <div class="input-group">
                                                                     {{-- <input id="datepicker-autoclose36" type="text" class="form-control"
                                                                             name="tgllahirKaryawan" value="{{\Carbon\Carbon::parse($karyawan->tgllahir)->format('Y/m/d') ?? '-' }}" autocomplete="off" > --}}
-                                                                    <input id="datepicker-autoclose36" type="text"
+                                                                    <input id="datepicker-autoclose-format" type="text"
                                                                         class="form-control" name="tgllahirKaryawan"
-                                                                        value="{{ $karyawan->tgllahir ?? '-' }}"
+                                                                        value="{{\Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y') ?? '-' }}"
                                                                         autocomplete="off">
                                                                     <span class="input-group-addon bg-custom b-0"><i
                                                                             class="mdi mdi-calendar"></i></span>
@@ -111,7 +111,7 @@
 
                                                         <div class="form-group">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Kota Kelahiran</label>
+                                                                <label class="form-label">Tempat Kelahiran</label>
                                                                 <input name="tempatlahirKaryawan" type="text"
                                                                     class="form-control" autocomplete="off"
                                                                     value="{{ $karyawan->tempatlahir ?? '-' }}">
@@ -329,10 +329,10 @@
                                                                     <div class="input-group">
                                                                         <input type="text" class="form-control"
                                                                             placeholder="yyyy/mm/dd"
-                                                                            id="datepicker-autoclose2"
+                                                                            id="datepicker-autoclose-format2"
                                                                             name="tglmasukKaryawan" rows="10"
                                                                             autocomplete="off"
-                                                                            value="{{ $karyawan->tglmasuk ?? '' }}">
+                                                                            value="{{\Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') ?? '-' }}">
                                                                         <span class="input-group-addon bg-custom b-0"><i
                                                                                 class="mdi mdi-calendar text-white"></i></span>
                                                                     </div>

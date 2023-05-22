@@ -68,8 +68,8 @@
                                                                 <th>Tanggal Masuk</th>
                                                                 <th>Tanggal Keluar</th>
                                                                 <th>Jabatan</th>
-                                                                <th>Level/Pangkat/Golongan</th>
-                                                                <th>Gaji Terakhir</th>
+                                                                <th>Level</th>
+                                                                <th>Gaji</th>
                                                                 <th>Alasan Berhenti</th>
                                                                 <th>Aksi</th>
                                                             </tr>

@@ -34,7 +34,7 @@
                             <a type="button" class="btn btn-sm btn-dark fa fa-at " data-toggle="modal"
                                 data-target="#myModal"> Buat Akun Karyawan</a>
 
-                            {{-- <a href="/karyawanupload" class="btn btn-sm btn-dark fa fa-upload"> Upload File Digital</a> --}}
+                            <a href="/karyawanupload" class="btn btn-sm btn-dark fa fa-upload"> Upload File Digital</a>
 
                             {{-- <a href="" class="btn btn-sm btn-dark fa fa-cloud-download" data-toggle="modal"
                                 data-target="#Modal2"> Import Excel</a>

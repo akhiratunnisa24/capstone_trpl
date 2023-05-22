@@ -54,6 +54,7 @@
                                             <th>Jabatan</th>
                                             <th>Level</th>
                                             <th>Gaji</th>
+                                            <th>Alasan Berhenti</th>
                                             <th>Aksi</th>
             
                                         </tr>
@@ -71,6 +72,7 @@
                                                 <td>{{ $pek['jabatan'] }}</td>
                                                 <td>{{ $pek['level'] }}</td>
                                                 <td>{{ $pek['gaji'] }}</td>
+                                                <td>{{ $pek['alasan_berhenti'] }}</td>
                                                 <td class="text-center">
                                                     <div class="row d-grid gap-2" role="group" aria-label="Basic example">
                                                         <a href="#formUpdatePekerjaan" class="btn btn-sm btn-info" id="editPekerjaan" data-key="{{ $key }}">

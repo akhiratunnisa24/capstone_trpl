@@ -106,9 +106,7 @@
                                                                 <select class="form-control selectpicker" name="divisi" data-live-search="true" required>
                                                                     <option value="">Pilih Departemen</option>
                                                                     @foreach ($departemen as $d)
-                                                                    <option value="{{ $d->id }}" 
-                                                                        {{ $karyawan->divisi == $d->id ? 'selected' : '' }}>
-                                                                        {{ $d->nama_departemen ?? '' }}
+                                                                    <option value="{{ $d->id }}" {{ $karyawan->divisi == $d->id ? 'selected' : '' }}>{{ $d->nama_departemen ?? '' }}
                                                                     </option>
                                                                     @endforeach
                                                                 </select>
