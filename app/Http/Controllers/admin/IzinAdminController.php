@@ -180,7 +180,7 @@ class IzinAdminController extends Controller
                 'jam_mulai'   =>Carbon::parse($izinn->jam_mulai)->format("H:i"),
                 'jam_selesai' =>Carbon::parse($izinn->jam_selesai)->format("H:i"),
                 'jml_hari'    =>$izinn->jml_hari,
-                'tgldisetujuiatasan' =>Carbon::parse($izinn->tgl_setuju_b)->format("d/m/Y H:i"),
+                'tgldisetujuiatasan' =>Carbon::parse($izinn->tgl_setuju_a)->format("d/m/Y H:i"),
                 'tgldisetujuipimpinan' => Carbon::parse($izinn->tgl_setuju_b)->format("d/m/Y H:i"),
                 'jumlahjam'   =>$izinn->jml_jam,
                 'status'      =>$status->name_status,

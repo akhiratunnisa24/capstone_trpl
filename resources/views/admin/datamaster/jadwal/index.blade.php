@@ -100,7 +100,7 @@
 
     @if(Session::has('pesa'))
     <script>
-        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'danger', {
+        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
             button:true,
             button:"OK",
         });

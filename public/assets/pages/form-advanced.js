@@ -537,7 +537,7 @@
             },
         });
         jQuery("#datepicker-autocloseh").datepicker({
-            format: "yyyy-mm-dd",
+            format: "dd/mm/yyyy",
             autoclose: true,
             minDate: minDate,
             maxDate: maxDate,
@@ -548,7 +548,7 @@
             },
         });
         jQuery("#datepicker-autoclosei").datepicker({
-            format: "yyyy-mm-dd",
+            format: "dd/mm/yyyy",
             autoclose: true,
             minDate: minDate,
             maxDate: maxDate,
