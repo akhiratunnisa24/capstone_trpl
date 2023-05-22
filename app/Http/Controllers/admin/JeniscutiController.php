@@ -47,11 +47,22 @@ class JeniscutiController extends Controller
             'jenis_cuti' => 'required',
             'status'     => 'required',
         ]);
-        $jeniscuti = Jeniscuti::create($request->all());
-        
-        // dd($jeniscuti);
-        return redirect()->back()->with('pesan','Data berhasil disimpan !');
 
+        $jenis_cuti = $request->jenis_cuti;
+        $status = $request->status;
+
+        // Cek apakah data jenis cuti sudah ada di dalam database
+        $jeniscuti = Jeniscuti::whereRaw('LOWER(jenis_cuti) = ?', [strtolower($jenis_cuti)])->first();
+
+        if ($jeniscuti) {
+            // Jika data jenis cuti sudah ada, kembalikan pesan bahwa data sudah ada
+            return redirect()->back()->with('pesa', 'Data sudah ada !');
+        } else {
+            // Jika data jenis cuti belum ada, simpan data baru
+            $jeniscuti = Jeniscuti::create($request->all());
+
+            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+        }
     }
 
     public function show($id)

@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\karyawan;
 
 
+use PDF;
 use Carbon\Carbon;
 use App\Models\Cuti;
+use App\Models\File;
 use App\Models\Izin;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Users;
+use App\Models\Atasan;
 use App\Models\Resign;
 use App\Models\Status;
 use App\Models\Absensi;
+use App\Models\Jabatan;
 use App\Models\Karyawan;
 use App\Models\Kdarurat;
 use App\Models\Keluarga;
@@ -25,24 +29,21 @@ use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
 use App\Models\Rorganisasi;
 use App\Models\Rpendidikan;
-use App\Models\Jabatan;
-use App\Models\LevelJabatan ;
-use App\Models\File;
 use Illuminate\Http\Request;
+use App\Models\LevelJabatan ;
 use App\Mail\CutiNotification;
 use App\Models\Settingabsensi;
 use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
 use App\Events\AbsenKaryawanEvent;
 use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
-use PDF;
 
 class karyawanController extends Controller
 {
@@ -1014,8 +1015,8 @@ class karyawanController extends Controller
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager','Managemen'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Managemen'])->get();
+            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager','Direksi'])->get();
+            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])->get();
 
             $output = [
                 'row' => $row,
@@ -1359,8 +1360,8 @@ class karyawanController extends Controller
             $rpekerjaan     = Rpekerjaan::where('id_pegawai', $id)->first();
             $row            = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager','Direksi'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])->get();
+            $atasan_pertama = Atasan::whereIn('level_jabatan', ['Asistant Manager', 'Manager','Direksi'])->get();
+            $atasan_kedua   = Atasan::whereIn('level_jabatan', ['Manager','Direksi'])->get();
 
             $output = [
                 'row' => $row

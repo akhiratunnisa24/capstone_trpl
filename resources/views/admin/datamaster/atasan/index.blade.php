@@ -1,15 +1,17 @@
 @extends('layouts.default')
 @section('content')
     <!-- Header -->
+    <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+    <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     <div class="row">
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Master Level Jabatan</h4>
+                <h4 class="pull-left page-title">Master Atasan</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Master Level Jabatan</li>
+                    <li class="active">Master Atasan</li>
                 </ol>
 
                 <div class="clearfix">
@@ -27,38 +29,48 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
-                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                data-target="#addLevel"> Tambah Level Jabatan</a>
+                            <form action="{{route('atasan.store')}}" method="POST" align="center">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Generate Atasan</button>
+                            </form>
                         </div>
-                        @include('admin.datamaster.leveljabatan.addleveljabatan')
+                        
                         <div class="panel-body">
-                            <table id="datatable-responsive13" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                            <table id="datatable-responsive15" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Karyawan</th>
+                                        <th>Jabatan</th>
                                         <th>Level Jabatan</th>
-                                        <th>Aksi</th>
+                                        {{-- <th>Aksi</th> --}}
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($leveljabatan as $data)
+                                    @foreach ($atasan as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $data->nama_level }}</td>
-                                            <td class="text-center">
+                                            <td>{{ $data->nik }}</td>
+                                            <td>{{ $data->karyawan->nama }}</td>
+                                            <td>{{ $data->jabatan }}</td>
+                                            <td>{{ $data->level_jabatan }}</td>
+                                            
+                                            {{-- <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
 
-                                                    <a class="btn btn-success btn-sm editLeveljabatan" data-toggle="modal" 
-                                                       data-target="#editLeveljabatan{{$data->id}}"><i class="fa fa-edit"></i>
+                                                    <a class="btn btn-success btn-sm" data-toggle="modal" 
+                                                       data-target="#editJadwal{{$data->id}}"><i class="fa fa-edit"></i>
                                                     </a>
 
-                                                    <button class="btn btn-danger btn-sm" onclick="hapuslevel({{ $data->id }})"><i class="fa fa-trash"></i></button>
+                                                    <button class="btn btn-danger btn-sm" onclick="hapusjadwal({{ $data->id }})"><i class="fa fa-trash"></i></button>
                                                 </div>
-                                            </td>
+                                            </td> --}}
                                         </tr>
-                                        @include('admin.datamaster.leveljabatan.editLeveljabatan')
+                                        {{-- @include('admin.datamaster.jadwal.edit') --}}
                                     @endforeach
                                 </tbody>
                             </table>
@@ -68,7 +80,6 @@
             </div>
         </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
@@ -89,36 +100,11 @@
     @endif
 
     @if(Session::has('pesa'))
-        <script>
-            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
-                button:true,
-                button:"OK",
-            });
-        </script>
-    @endif
-
     <script>
-        function hapuslevel(id) {
-            swal.fire({
-                title: "Apakah anda yakin ?",
-                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: "Ya, hapus!",
-                closeOnConfirm: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    swal.fire({
-                        title: "Mohon Menunggu",
-                        text: "Data Level Jabatan sedang diperiksa.",
-                        icon: "info",
-                        confirmButtonColor: '#3085d6',
-                    })
-                    location.href = '<?= '/level-jabatan/delete/' ?>' + id;
-                }
-            })
-        }
+        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+            button:true,
+            button:"OK",
+        });
     </script>
+@endif
 @endsection

@@ -25,10 +25,18 @@ class JenisizinController extends Controller
             'jenis_izin' => 'required',
             'code' => 'required',
         ]);
-        $jenisizin = Jenisizin::create($request->all());
-        
-        // dd($jenisizin);
-        return redirect()->route('kategori.index', ['type'=>2])->with('pesan','Data berhasil disimpan !');
+        $jenisizin = $request->jenis_izin;
+        $jenisizin = Jenisizin::whereRaw('LOWER(jenis_izin) = ?', [strtolower($jenisizin)])->first();
+
+        if ($jenisizin) {
+            // Jika data jenis izin sudah ada, kembalikan pesan bahwa data sudah ada
+            return redirect()->route('kategori.index', ['type'=>2])->with('pesa','Data sudah ada !');
+        } else {
+            // Jika data jenis izin belum ada, simpan data baru
+            $jenisizin= Jenisizin::create($request->all());
+
+            return redirect()->route('kategori.index', ['type'=>2])->with('pesan','Data berhasil disimpan !');
+        }
     }
 
     public function show($id)

@@ -276,8 +276,17 @@ class AbsensiController extends Controller
             $jumlahdata         = $import->getJumlahData(); //SUDAH BENAR 22
             $jumlahimporttidakmasuk =$import->getDataImportTidakMasuk(); //SUDAH BENAR 1
             $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport(); // 9
-            
-            return redirect()->back()->with('pesan', 'Data Absensi yang berhasil diimport: ' . $jumlahdatadiimport .'<br>' . 'Data diimport ke database Tidak Masuk: ' . $jumlahimporttidakmasuk . '<br>' . 'Jumlah Data tidak bisa diimport: ' . $datatidakbisadiimport . '<br>'. 'Jumlah Data Keseluruhan : ' . $jumlahdata);
+
+            $pesan = 'Jumlah Data yang berhasil diimport : ' . $jumlahdatadiimport . '\n' .
+                     'Jumlah Data diimport ke Tidak Masuk: ' . $jumlahimporttidakmasuk . '\n' .
+                     'Jumlah Data tidak bisa diimport    : ' . $datatidakbisadiimport . '\n' .
+                     'Jumlah Data Keseluruhan            : ' . $jumlahdata;
+           
+            $pesan = nl2br(html_entity_decode($pesan));
+            return redirect()->back()->with('pesan', $pesan);       
+            //return redirect()->back()->with('pesan', nl2br('Data Absensi yang berhasil diimport: ' . $jumlahdatadiimport .'\n' . 'Data diimport ke database Tidak Masuk: ' . $jumlahimporttidakmasuk . '\n' . 'Jumlah Data tidak bisa diimport: ' . $datatidakbisadiimport . '\n'. 'Jumlah Data Keseluruhan : ' . $jumlahdata));
+
+            //return redirect()->back()->with('pesan', 'Data Absensi yang berhasil diimport: ' . $jumlahdatadiimport .'<br>' . 'Data diimport ke database Tidak Masuk: ' . $jumlahimporttidakmasuk . '<br>' . 'Jumlah Data tidak bisa diimport: ' . $datatidakbisadiimport . '<br>'. 'Jumlah Data Keseluruhan : ' . $jumlahdata);
             
         } catch (\Throwable $th) {
             // Tangani jika terjadi kesalahan

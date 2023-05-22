@@ -94,6 +94,15 @@
         </script>
     @endif
 
+    @if(Session::has('pesa'))
+        <script>
+            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
+
     <script>
         function hapus(id) {
             swal.fire({

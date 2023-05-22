@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label class="form-label">Tanggal</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" value="{{$data->tanggal}}" placeholder="yyyy/mm/dd" id="datepicker-autoclose34" name="tanggal" autocomplete="off" required>
+                                <input type="text" class="form-control" value="{{\Carbon\Carbon::parse($data->tanggal)->format("d/m/Y")}}" placeholder="dd/mm/yyyy" id="datepicker-autoclose34" name="tanggal" autocomplete="off" required>
                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                             </div>
                         </div>

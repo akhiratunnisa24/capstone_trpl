@@ -116,9 +116,9 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     swal.fire({
-                        title: "Terhapus!",
-                        text: "Data berhasil di hapus..",
-                        icon: "success",
+                        title: "Mohon Menunggu",
+                        text: "Data divisi sedang diperiksa.",
+                        icon: "info",
                         confirmButtonColor: '#3085d6',
                     })
                     location.href = '<?= '/divisi/delete' ?>' + id;
