@@ -111,6 +111,7 @@
                                                                             <option value="Kakak" {{ $kontakdarurat->hubungan ?? 'Kakak' == '' ? 'selected' : '' }}>Kakak</option>
                                                                             <option value="Adik" {{ $kontakdarurat->hubungan ?? 'Adik' == '' ? 'selected' : '' }}>Adik</option>
                                                                             <option value="Anak" {{ $kontakdarurat->jhubungan ?? 'Anak' == '' ? 'selected' : '' }}>Anak</option>
+                                                                            <option value="Famili/Saudara/Teman" {{ $kontakdarurat->jhubungan ?? 'Famili/Saudara/Teman' == '' ? 'selected' : '' }}>Famili/Saudara/Teman</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -178,6 +179,7 @@
                                                                             <option value="Kakak" {{ $kontakdarurat->hubungan ?? 'Kakak' == '' ? 'selected' : '' }}>Kakak</option>
                                                                             <option value="Adik" {{ $kontakdarurat->hubungan ?? 'Adik' == '' ? 'selected' : '' }}>Adik</option>
                                                                             <option value="Anak" {{ $kontakdarurat->jhubungan ?? 'Anak' == '' ? 'selected' : '' }}>Anak</option>
+                                                                            <option value="Famili/Saudara/Teman" {{ $kontakdarurat->jhubungan ?? 'Famili/Saudara/Teman' == '' ? 'selected' : '' }}>Famili/Saudara/Teman</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>

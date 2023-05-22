@@ -159,8 +159,11 @@
                                                                     <option value="">Pilih Tingkat Pendidikan</option>
                                                                     <option value="SD">SD</option>
                                                                     <option value="SMP">SMP</option>
-                                                                    <option value="SMA/K">SMA/SEDERAJAT</option>
-                                                                    <option value="Perguruan Tinggi">Perguruan Tinggi</option>
+                                                                    <option value="SMA/Sederajat">SMA/Sederajat</option>
+                                                                <option value="Sarjana Muda D3">Sarjana Muda D3</option>
+                                                                <option value="Sarjana S1">Sarjana S1</option>
+                                                                <option value="Pasca Sarjana S2">Pasca Sarjana S2</option>
+                                                                <option value="Doktoral/Phd">Doktoral/Phd</option>
 
                                                                 </select>
                                                             </div>
@@ -330,8 +333,11 @@
                                                                     <option value="">Pilih Tingkat Pendidikan</option>
                                                                     <option value="SD">SD</option>
                                                                     <option value="SMP">SMP</option>
-                                                                    <option value="SMA/K">SMA/SEDERAJAT</option>
-                                                                    <option value="Perguruan Tinggi">Perguruan Tinggi</option>
+                                                                    <option value="SMA/Sederajat">SMA/Sederajat</option>
+                                                                <option value="Sarjana Muda D3">Sarjana Muda D3</option>
+                                                                <option value="Sarjana S1">Sarjana S1</option>
+                                                                <option value="Pasca Sarjana S2">Pasca Sarjana S2</option>
+                                                                <option value="Doktoral/Phd">Doktoral/Phd</option>
                                                                 </select>
                                                             </div>
 
@@ -374,11 +380,11 @@
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range6">
                                                                             <input type="text" class="form-control"
-                                                                                name="tahun_masukFormal" id="tahun_masukFormal" placeholder="yyyy" autocomplete="off" />
+                                                                                name="tahun_masukFormal" id="tahun_masukFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tahun_lulusFormal" id="tahun_lulusFormal" placeholder="yyyy" autocomplete="off" />
+                                                                                name="tahun_lulusFormal" id="tahun_lulusFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -423,7 +429,7 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lulus Tahun</label>
                                                                     <div class="input-group">
-                                                                        <input id="tahun_lulusFormal" type="text" class="form-control" placeholder="yyyy" id="4"
+                                                                        <input id="tahun_lulusFormal" type="text" class="form-control" placeholder="dd/mm/yyyy" id="4"
                                                                                 name="tahunLulusNonFormal" autocomplete="off" rows="10" ><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                     </div>
@@ -437,11 +443,11 @@
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range7">
                                                                             <input type="text" class="form-control"
-                                                                                name="tahun_masukNonFormal" id="tahun_masukNonFormal" placeholder="yyyy" autocomplete="off" />
+                                                                                name="tahun_masukNonFormal" id="tahun_masukNonFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tahun_lulusNonFormal" id="tahun_lulusNonFormal" placeholder="yyyy" autocomplete="off" />
+                                                                                name="tahun_lulusNonFormal" id="tahun_lulusNonFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
                                                                         </div>
                                                                     </div>
                                                                 </div>

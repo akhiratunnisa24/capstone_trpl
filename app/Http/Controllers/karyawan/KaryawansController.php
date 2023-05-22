@@ -426,12 +426,16 @@ class KaryawansController extends Controller
             'nama_lembaga'         => $request->namaLembaga,
             'kota_pformal'         => $request->kotaPendidikanFormal,
             'jurusan'              => $request->jurusan,
-            'tahun_masuk_formal'   => $request->tahun_masukFormal,
-            'tahun_lulus_formal'   => $request->tahun_lulusFormal,
+            // 'tahun_masuk_formal'   => $request->tahun_masukFormal,
+            'tahun_masuk_formal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d'),
+            'tahun_lulus_formal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulus_formal)->format('Y-m-d'),
+            // 'tahun_lulus_formal'   => $request->tahun_lulusFormal,
             'jenis_pendidikan'     => $request->jenis_pendidikan,
             'kota_pnonformal'      => $request->kotaPendidikanNonFormal,
-            'tahun_masuk_nonformal' => $request->tahunMasukNonFormal,
-            'tahun_lulus_nonformal' => $request->tahunLulusNonFormal,
+            // 'tahun_masuk_nonformal' => $request->tahunMasukNonFormal,
+            'tahun_masuk_nonformal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masuk_nonformal)->format('Y-m-d'),
+            'tahun_lulus_nonformal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulus_nonformal)->format('Y-m-d'),
+            // 'tahun_lulus_nonformal' => $request->tahunLulusNonFormal,
             'ijazah_formal' => $request->noijazahPformal,
             'ijazah_nonformal' => $request->noijazahPnonformal,
         ];
@@ -452,8 +456,10 @@ class KaryawansController extends Controller
         $pendidikan[$index]['nama_lembaga']         = $request->namaLembaga;
         $pendidikan[$index]['kota_pformal']         = $request->kotaPendidikanFormal;
         $pendidikan[$index]['jurusan']              = $request->jurusan;
-        $pendidikan[$index]['tahun_masuk_formal']   = $request->tahun_masukFormal;
-        $pendidikan[$index]['tahun_lulus_formal']   = $request->tahun_lulusFormal;
+        $datakeluarga[$index]['tahun_masuk_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d');
+        // $pendidikan[$index]['tahun_masuk_formal']   = $request->tahun_masukFormal;
+        $datakeluarga[$index]['tahun_lulus_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d');
+        // $pendidikan[$index]['tahun_lulus_formal']   = $request->tahun_lulusFormal;
         $pendidikan[$index]['jenis_pendidikan']     = $request->jenis_pendidikan;
         $pendidikan[$index]['kota_pnonformal']      = $request->kotaPendidikanNonFormal;
         $pendidikan[$index]['tahun_masuk_nonformal'] = $request->tahun_masukNonFormal;
@@ -698,6 +704,18 @@ class KaryawansController extends Controller
     public function storetoDatabase(Request $request)
     {
         //meyimpan data ke database
+
+        // // Mengambil NIP dari sesi
+        // $nip = $request->session()->get('karyawan.nip');
+        // // Melakukan pengecekan apakah NIP ada dalam database
+        // $existingKaryawan = Karyawan::where('nip', $nip)->first();
+        // // Jika NIP ditemukan, munculkan alert
+        // if ($existingKaryawan) {
+        //     // Tambahkan kode untuk menampilkan alert di sini
+        //     echo '<script>alert("Data sudah ada di database!");</script>';
+        // }
+
+        // Jika NIP tidak ditemukan, simpan data ke database
         if ($request->session()->has('karyawan')) {
 
             $karyawan = $request->session()->get('karyawan');

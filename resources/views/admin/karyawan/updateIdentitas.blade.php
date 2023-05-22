@@ -426,26 +426,27 @@
                                                                     <select class="form-control" name="nama_bank"
                                                                         required>
                                                                         <option value="">Pilih Bank</option>
-                                                                        <option value="Bank ANZ Indonesia" {{ $karyawan->nama_bank == 'Bank ANZ Indonesia' ? 'selected' : '' }}>Bank ANZ Indonesia</option>
-                                                                        <option value="Bank Bukopin" {{ $karyawan->nama_bank  == 'Bank Bukopin' ? 'selected' : '' }}>Bank Bukopin</option>
-                                                                        <option value="Bank Central Asia (BCA)" {{ $karyawan->nama_bank  == 'Bank Central Asia (BCA)' ? 'selected' : '' }}>Bank Central Asia (BCA)</option>
-                                                                        <option value="Bank Danamon" {{ $karyawan->nama_bank  == 'Bank Danamon' ? 'selected' : '' }} >Bank Danamon</option>
-                                                                        <option value="Bank DBS Indonesia" {{ $karyawan->nama_bank  == 'Bank DBS Indonesia' ? 'selected' : '' }} >Bank DBS Indonesia</option>
-                                                                        <option value="Bank HSBC Indonesia" {{ $karyawan->nama_bank  == 'Bank HSBC Indonesia' ? 'selected' : '' }} >Bank HSBC Indonesia</option>
-                                                                        <option value="Bank Jabar Banten (BJB)" {{ $karyawan->nama_bank  == 'Bank Jabar Banten (BJB)' ? 'selected' : '' }} >Bank Jabar Banten (BJB)</option>
-                                                                        <option value="Bank Mandiri" {{ $karyawan->nama_bank  == 'Bank Mandiri' ? 'selected' : '' }} >Bank Mandiri</option>
-                                                                        <option value="Bank Maybank" {{ $karyawan->nama_bank  == 'Bank Maybank' ? 'selected' : '' }} >Bank Maybank</option>
-                                                                        <option value="Bank Mega" {{ $karyawan->nama_bank  == 'Bank Mega' ? 'selected' : '' }} >Bank Mega</option>
-                                                                        <option value="Bank Muamalat" {{ $karyawan->nama_bank  == 'Bank Muamalat' ? 'selected' : '' }} >Bank Muamalat</option>
-                                                                        <option value="Bank Negara Indonesia (BNI)" {{ $karyawan->nama_bank  == 'Bank Negara Indonesia (BNI)' ? 'selected' : '' }} >Bank Negara Indonesia (BNI)</option>
-                                                                        <option value="Bank OCBC NISP" {{ $karyawan->nama_bank  == 'Bank OCBC NISP' ? 'selected' : '' }} >Bank OCBC NISP</option>
-                                                                        <option value="Bank Panin" {{ $karyawan->nama_bank  == 'Bank Panin' ? 'selected' : '' }} >Bank Panin</option>
-                                                                        <option value="Bank Permata" {{ $karyawan->nama_bank  == 'Bank Permata' ? 'selected' : '' }} >Bank Permata</option>
-                                                                        <option value="Bank Rakyat Indonesia (BRI)" {{ $karyawan->nama_bank  == 'Bank Rakyat Indonesia (BRI)' ? 'selected' : '' }} >Bank Rakyat Indonesia (BRI)</option>
-                                                                        <option value="Bank Syariah Mandiri" {{ $karyawan->nama_bank  == 'Bank Syariah Mandiri' ? 'selected' : '' }} >Bank Syariah Mandiri</option>
-                                                                        <option value="Bank Tabungan Negara (BTN)" {{ $karyawan->nama_bank  == 'Bank Tabungan Negara (BTN)' ? 'selected' : '' }} >Bank Tabungan Negara (BTN)</option>
-                                                                        <option value="Bank UOB Indonesia" {{ $karyawan->nama_bank  == 'Bank UOB Indonesia' ? 'selected' : '' }} >Bank UOB Indonesia</option>
-                                                                        <option value="Bank CIMB Niaga" {{ $karyawan->nama_bank  == 'Bank CIMB Niaga' ? 'selected' : '' }} >Bank CIMB Niaga</option>
+                                                                        <option value="Pengurus"@if ($karyawan->status_karyawan == 'Pengurus') selected @endif>Pengurus</option>
+                                                                        <option value="Bank ANZ Indonesia"@if ($karyawan->nama_bank == 'Bank ANZ Indonesia') selected @endif>Bank ANZ Indonesia</option>
+                                                                        <option value="Bank Bukopin"@if ($karyawan->nama_bank == 'Bank Bukopin') selected @endif>Bank Bukopin</option>
+                                                                        <option value="Bank Central Asia (BCA)"@if ($karyawan->nama_bank == 'Bank Central Asia (BCA)') selected @endif>Bank Central Asia (BCA)</option>
+                                                                        <option value="Bank Danamon"@if ($karyawan->nama_bank == 'Bank Danamon') selected @endif>Bank Danamon</option>
+                                                                        <option value="Bank DBS Indonesia"@if ($karyawan->nama_bank == 'Bank DBS Indonesia') selected @endif>Bank DBS Indonesia</option>
+                                                                        <option value="Bank HSBC Indonesia"@if ($karyawan->nama_bank == 'Bank HSBC Indonesia') selected @endif>Bank HSBC Indonesia</option>
+                                                                        <option value="Bank Jabar Banten (BJB)"@if ($karyawan->nama_bank == 'Bank Jabar Banten (BJB)') selected @endif>Bank Jabar Banten (BJB)</option>
+                                                                        <option value="Bank Mandiri"@if ($karyawan->nama_bank == 'Bank Mandiri') selected @endif>Bank Mandiri</option>
+                                                                        <option value="Bank Maybank"@if ($karyawan->nama_bank == 'Bank Maybank') selected @endif>Bank Maybank</option>
+                                                                        <option value="Bank Mega"@if ($karyawan->nama_bank == 'Bank Mega') selected @endif>Bank Mega</option>
+                                                                        <option value="Bank Muamalat"@if ($karyawan->nama_bank == 'Bank Muamalat') selected @endif>Bank Muamalat</option>
+                                                                        <option value="Bank Negara Indonesia (BNI)"@if ($karyawan->nama_bank == 'Bank Negara Indonesia (BNI)') selected @endif>Bank Negara Indonesia (BNI)</option>
+                                                                        <option value="Bank OCBC NISP"@if ($karyawan->nama_bank == 'Bank OCBC NISP') selected @endif>Bank OCBC NISP</option>
+                                                                        <option value="Bank Panin"@if ($karyawan->nama_bank == 'Bank Panin') selected @endif>Bank Panin</option>
+                                                                        <option value="Bank Permata"@if ($karyawan->nama_bank == 'Bank Permata') selected @endif>Bank Permata</option>
+                                                                        <option value="Bank Rakyat Indonesia (BRI)"@if ($karyawan->nama_bank == 'Bank Rakyat Indonesia (BRI)') selected @endif>Bank Rakyat Indonesia (BRI)</option>
+                                                                        <option value="Bank Syariah Mandiri"@if ($karyawan->nama_bank == 'Bank Syariah Mandiri') selected @endif>Bank Syariah Mandiri</option>
+                                                                        <option value="Bank Tabungan Negara (BTN)"@if ($karyawan->nama_bank == 'Bank Tabungan Negara (BTN)') selected @endif>Bank Tabungan Negara (BTN)</option>
+                                                                        <option value="Bank UOB Indonesia"@if ($karyawan->nama_bank == 'Bank UOB Indonesia') selected @endif>Bank UOB Indonesia</option>
+                                                                        <option value="Bank CIMB Niaga"@if ($karyawan->nama_bank == 'Bank CIMB Niaga') selected @endif>Bank CIMB Niaga</option>
                                                                     </select>
                                                                 </div>
                                                             </div>

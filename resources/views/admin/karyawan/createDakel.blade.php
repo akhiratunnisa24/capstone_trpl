@@ -224,11 +224,11 @@
                                                                 <option value="Belum Sekolah">Belum Sekolah</option>
                                                                 <option value="SD">SD</option>
                                                                 <option value="SMP">SMP</option>
-                                                                <option value="SMA/K">SMA/K</option>
-                                                                <option value="D-3">D-3</option>
-                                                                <option value="S-1">S-1</option>
-                                                                <option value="S-2">S-2</option>
-                                                                <option value="S-3">S-3</option>
+                                                                <option value="SMA/Sederajat">SMA/Sederajat</option>
+                                                                <option value="Sarjana Muda D3">Sarjana Muda D3</option>
+                                                                <option value="Sarjana S1">Sarjana S1</option>
+                                                                <option value="Pasca Sarjana S2">Pasca Sarjana S2</option>
+                                                                <option value="Doktoral/Phd">Doktoral/Phd</option>
                                                             </select>
                                                         </div>
 
@@ -363,11 +363,11 @@
                                                                 <option value="Belum Sekolah">Belum Sekolah</option>
                                                                 <option value="SD">SD</option>
                                                                 <option value="SMP">SMP</option>
-                                                                <option value="SMA/K">SMA/K</option>
-                                                                <option value="D-3">D-3</option>
-                                                                <option value="S-1">S-1</option>
-                                                                <option value="S-2">S-2</option>
-                                                                <option value="S-3">S-3</option>
+                                                                <option value="SMA/Sederajat">SMA/Sederajat</option>
+                                                                <option value="Sarjana Muda D3">Sarjana Muda D3</option>
+                                                                <option value="Sarjana S1">Sarjana S1</option>
+                                                                <option value="Pasca Sarjana S2">Pasca Sarjana S2</option>
+                                                                <option value="Doktoral/Phd">Doktoral/Phd</option>
                                                             </select>
                                                         </div>
 

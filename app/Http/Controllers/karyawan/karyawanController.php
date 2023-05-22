@@ -2395,16 +2395,17 @@ class karyawanController extends Controller
             $digital->ktp = $namaKtp;
             // $digital->save();
         }
+        
 
-        $kkLama = $digital->kk;
+        // $kkLama = $digital->kk;
         if ($file = $request->file('fotoKK')) {
             // hapus KK lama dari storage
-            if ($kkLama !== null) {
-                $kk = public_path('File_KK/' . $kkLama);
-                if (file_exists($kk)) {
-                    unlink($kk);
-                }
-            }
+            // if ($kkLama !== null) {
+            //     $kk = public_path('File_KK/' . $kkLama);
+            //     if (file_exists($kk)) {
+            //         unlink($kk);
+            //     }
+            // }
 
             $namaKK = 'KK-' . time() . '-' . $file->getClientOriginalName();
             $file->move(public_path() . '\File_KK', $namaKK);
