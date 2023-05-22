@@ -57,7 +57,8 @@ class AbsensiImport implements ToModel,WithHeadingRow
             // $karyawan = Karyawan::where('id', $row['emp_no'])
             //     ->where('divisi', $departement_map)
             //     ->first();
-            $departement_map = Departemen::where('nama_departemen', $row['departemen'])->first();
+            // $departement_map = Departemen::where('nama_departemen', $row['departemen'])->first();
+            $departement_map = Departemen::whereRaw('LOWER(nama_departemen) = ?', strtolower($row['departemen']))->first();
             if ($departement_map) {
                 $karyawan = Karyawan::where('id', $row['emp_no'])
                     ->where('divisi', $departement_map->id)
@@ -70,8 +71,8 @@ class AbsensiImport implements ToModel,WithHeadingRow
                 {
                     // $departments = Departemen::pluck('id', 'nama_departemen')->toArray();
                     // $departement_map = isset($departments[$row['departemen']]) ? $departments[$row['departemen']] : 0;
-                    $departement_map = Departemen::where('nama_departemen', $row['departemen'])->first();
-
+                   // $departement_map = Departemen::where('nama_departemen', $row['departemen'])->first();
+                   $departement_map = Departemen::whereRaw('LOWER(nama_departemen) = ?', strtolower($row['departemen']))->first();
                     $tanggal = $row['tanggal'];
                     $tanggal = trim($tanggal);
                     $objTanggal = Carbon::createFromFormat('m/d/Y', $tanggal)->format('Y-m-d');
