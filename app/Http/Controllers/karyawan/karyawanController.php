@@ -1779,6 +1779,24 @@ class karyawanController extends Controller
 
             Karyawan::where('id', $id)->update($data);
 
+            // Mengambil nama jabatan baru
+            $namaJabatanBaru = $request->post('namaJabatan');
+            // Mengambil data jabatan dari tabel jabatan
+            $jabatan = Jabatan::where('nama_jabatan', $namaJabatanBaru)->first();
+            if ($jabatan) {
+                // Update tabel alokasicuti
+                AlokasiCuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            
+                // Update tabel atasan
+                Atasan::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            
+                // Update tabel cuti
+                Cuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            
+                // Update tabel izin
+                Izin::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            }
+            
             return redirect()->back();
         } else {
 
@@ -1819,6 +1837,24 @@ class karyawanController extends Controller
             // $idKaryawan = $request->post('id_karyawan');
 
             Karyawan::where('id', $id)->update($data);
+
+            // Mengambil nama jabatan baru
+            $namaJabatanBaru = $request->post('namaJabatan');
+            // Mengambil data jabatan dari tabel jabatan
+            $jabatan = Jabatan::where('nama_jabatan', $namaJabatanBaru)->first();
+            if ($jabatan) {
+                // Update tabel alokasicuti
+                AlokasiCuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            
+                // Update tabel atasan
+                Atasan::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            
+                // Update tabel cuti
+                Cuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            
+                // Update tabel izin
+                Izin::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            }
 
             return redirect()->back();
         }
