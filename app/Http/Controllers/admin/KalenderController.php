@@ -20,19 +20,19 @@ class KalenderController extends Controller
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $id_pegawai = Auth::user()->id_pegawai;
-            // $getHarilibur = SettingHarilibur::all();
-            // foreach($getHarilibur as $harilibur)
-            // {
-            //     $events[] = [
-            //         'date' => $harilibur->tanggal,
-            //         'title' => $harilibur->keterangan,
-            //         'type' => $harilibur->tipe,
-            //     ];
+            $getHarilibur = SettingHarilibur::all();
+            foreach($getHarilibur as $harilibur)
+            {
+                $events[] = [
+                    'date' => $harilibur->tanggal,
+                    'title' => $harilibur->keterangan,
+                    'type' => $harilibur->tipe,
+                ];
                
-            // }
-            // return $events;
+            }
+            return $events;
            
-            return view('admin.kalender.index',compact('row','id_pegawai'));
+            return view('admin.kalender.index',compact('row','id_pegawai','getHarilibur','role'));
         }else{
             return redirect()->back();
         }
@@ -127,7 +127,7 @@ class KalenderController extends Controller
     public function setting()
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2) 
+        if ($role == 1 || $role == 2 || $role == 5) 
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $settingharilibur = SettingHarilibur::all();
@@ -138,7 +138,7 @@ class KalenderController extends Controller
         }
     }
 
-    public function storeSetting(Request $request)
+    public function storeSettings(Request $request)
     {
          $settingharilibur  = new SettingHarilibur;
          $settingharilibur ->tanggal = \Carbon\Carbon::parse($request->input('tanggal'))->format('Y-m-d');
@@ -148,6 +148,39 @@ class KalenderController extends Controller
 
          return redirect('/setting-kalender')->with('pesan','Data berhasil disimpan !');
     }
+
+    public function storeSetting(Request $request)
+    {
+        $request->validate([
+            'tanggal' => 'required',
+            'tipe' => 'required',
+            'keterangan' => 'required',
+        ]);
+
+        $tanggal = \Carbon\Carbon::parse($request->input('tanggal'))->format('Y-m-d');
+        $keterangan = strtolower($request->input('keterangan'));
+
+        // Cek apakah data dengan tanggal dan keterangan yang sama sudah ada di dalam tabel
+        $existingData = SettingHarilibur::where('tanggal', $tanggal)
+            ->whereRaw('LOWER(keterangan) = ?', [$keterangan])
+            ->first();
+
+        if ($existingData) {
+            // Jika data sudah ada, kembalikan pesan bahwa data sudah ada dalam tabel
+            return redirect()->back()->with('pesa', 'Data sudah ada dalam tabel!');
+        } else {
+            // Jika data belum ada, simpan data baru
+            $settingharilibur = new SettingHarilibur;
+            $settingharilibur->tanggal = $tanggal;
+            $settingharilibur->tipe = $request->input('tipe');
+            $settingharilibur->keterangan = $request->input('keterangan');
+            $settingharilibur->save();
+
+            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+        }
+    }
+
+
 
     public function update(Request $request, $id)
     {

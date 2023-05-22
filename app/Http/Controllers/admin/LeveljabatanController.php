@@ -36,11 +36,26 @@ class LeveljabatanController extends Controller
         $request->validate([
             'nama_level' => 'required',
         ]);
-        $leveljabatan = new LevelJabatan;
-        $leveljabatan->nama_level = $request->nama_level;
-        $leveljabatan->save();
-    
-        return redirect('/level-jabatan')->with('pesan','Data berhasil disimpan !');
+       
+        $nama_level = $request->nama_level;
+
+        // Cek apakah data level jabatan sudah ada di dalam database
+        $leveljabatan = LevelJabatan::where(function ($query) use ($nama_level) {
+                            $query->whereRaw('LOWER(nama_level) = ?', [strtolower($nama_level)]);
+                        })->first();
+
+        if ($leveljabatan) {
+            // Jika data level jabatan sudah ada, kembalikan pesan bahwa data sudah ada
+            return redirect()->back()->with('pesa', 'Data ' . $nama_level . ' sudah ada !');
+        } else {
+            // Jika data level jabatan belum ada, simpan data baru
+            $leveljabatan = new LevelJabatan;
+            $leveljabatan->nama_level = $nama_level;
+            $leveljabatan->save();
+
+            return redirect('/level-jabatan')->with('pesan', 'Data berhasil disimpan!');
+        }
+
     }
     
     public function update(Request $request, $id)
@@ -62,19 +77,16 @@ class LeveljabatanController extends Controller
     public function destroy($id)
     {
         $leveljabatan = LevelJabatan::find($id);
-        $level = $leveljabatan->nama_level;
 
-        $karyawan = Karyawan::where('jabatan', $level)->first();
+        $karyawan = Karyawan::where('jabatan', $leveljabatan->nama_level)->exists();
 
-        if ($leveljabatan) {
+        if (!$karyawan) {
+            $leveljabatan = LevelJabatan::find($id);
             $leveljabatan->delete();
-            return redirect()->back()->with('pesan', 'Data berhasil dihapus');
-        }elseif($karyawan !== null)
-        {
-            return redirect()->back()->with('pesa', 'Level Jabatan tidak dapat dihapus karena digunakan dalam tabel lainnya');
+            return redirect()->back()->with('pesan', 'Level Jabatan berhasil dihapus');
+        } else {
+            return redirect()->back()->with('pesa', 'Level Jabatan tidak dapat dihapus karena digunakan dalam tabel karyawan.');
         }
-        else {
-            return redirect()->back()->with('error', 'Data tidak ditemukan atau telah dihapus');
-        }
+
     }
 }

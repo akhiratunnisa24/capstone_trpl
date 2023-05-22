@@ -160,7 +160,7 @@ class JadwalkerjaController extends Controller
        if ($existingData) 
         {
             // Data sudah ada di database
-            return redirect()->back()->with('pesa','Data tersebut sudah ada.');
+            return redirect()->back()->with('pesa','Data sudah ada.');
         }
 
         $jadwal->update();

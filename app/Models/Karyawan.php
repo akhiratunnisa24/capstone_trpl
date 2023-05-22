@@ -113,6 +113,12 @@ class Karyawan extends Model
     {
         return $this->hasMany(Cuti::class, 'id');
     }
+
+    public function atasan()
+    {
+        return $this->hasOne(Atasan::class, 'id_karyawan');
+    }
+
     public function izin()
     {
         return $this->hasMany(Izin::class, 'id');

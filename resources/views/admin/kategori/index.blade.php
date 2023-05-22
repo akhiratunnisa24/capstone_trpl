@@ -189,6 +189,15 @@
     </script>
 @endif
 
+@if(Session::has('pesa'))
+    <script>
+        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+            button:true,
+            button:"OK",
+        });
+    </script>
+@endif
+
 {{-- Direct halaman tambah data --}}
 <script type="text/javascript">
     function cuti(id){

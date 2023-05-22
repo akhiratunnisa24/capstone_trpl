@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\ShiftController;
+use App\Http\Controllers\admin\AtasanController;
 use App\Http\Controllers\admin\UploadController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\JabatanController;
@@ -20,11 +21,11 @@ use App\Http\Controllers\admin\SisacutiController;
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\IzinAdminController;
 use App\Http\Controllers\admin\JeniscutiController;
+
 use App\Http\Controllers\admin\JenisizinController;
 
+
 use App\Http\Controllers\admin\MasterkpiController;
-
-
 use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\DepartemenController;
@@ -357,6 +358,10 @@ Route::get('/level-jabatan', [LeveljabatanController::class, 'index'])->name('le
 Route::post('/level-jabatan', [LeveljabatanController::class, 'store'])->name('leveljabatan.store');
 Route::put('/level-jabatan/update/{id}', [LeveljabatanController::class, 'update'])->name('leveljabatan.update');
 Route::get('/level-jabatan/delete/{id}', [LeveljabatanController::class, 'destroy'])->name('leveljabatan.delete');
+
+//Atasan
+Route::get('/atasan', [AtasanController::class, 'index'])->name('atasan.index');
+Route::post('/atasan', [AtasanController::class, 'store'])->name('atasan.store');
 
 //Shift
 Route::get('/shift', [ShiftController::class, 'index'])->name('shift.index');

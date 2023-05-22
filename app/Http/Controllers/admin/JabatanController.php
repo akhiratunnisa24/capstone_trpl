@@ -39,11 +39,25 @@ class JabatanController extends Controller
         $request->validate([
             'nama_jabatan' => 'required',
         ]);
-        $jabatan = new Jabatan;
-        $jabatan->nama_jabatan = $request->nama_jabatan;
-        $jabatan->save();
-    
-        return redirect('/jabatan')->with('pesan','Data berhasil disimpan !');
+
+        $nama_jabatan = $request->nama_jabatan;
+
+        $jabatan = Jabatan::where(function ($query) use ($nama_jabatan) {
+            $query->whereRaw('LOWER(nama_jabatan) = ?', [strtolower($nama_jabatan)]);
+        })->first();
+
+        if ($jabatan) {
+            // Jika data jabatan sudah ada, kembalikan pesan bahwa data sudah ada
+            return redirect()->back()->with('pesa', 'Data ' . $nama_jabatan . ' sudah ada !');
+        } else 
+        {
+            // Jika data jabatan belum ada, simpan data baru
+            $jabatan = new Jabatan;
+            $jabatan->nama_jabatan = $nama_jabatan;
+            $jabatan->save();
+
+            return redirect('/jabatan')->with('pesan', 'Data berhasil disimpan!');
+        }
     }
     
     public function update(Request $request, $id)
@@ -95,7 +109,7 @@ class JabatanController extends Controller
             return redirect()->back()->with('pesa', 'Jabatan tidak dapat dihapus karena digunakan dalam tabel lainnya');
         } else {
             $jabatan->delete();
-            return redirect()->back();
+            return redirect()->back()->with('pesan', 'Jabatan berhasil dihapus');
         }
     }
     

@@ -47,11 +47,24 @@ class DepartemenController extends Controller
         $request->validate([
             'nama_departemen' => 'required',
         ]);
-        $departemen = new Departemen;
-        $departemen->nama_departemen = $request->nama_departemen;
-        $departemen->save();
+        $nama_departemen = $request->nama_departemen;
 
-        return redirect()->back()->with('pesan','Data berhasil disimpan !');
+        // Cek apakah data departemen sudah ada di dalam database
+        $departemen = Departemen::where(function ($query) use ($nama_departemen) {
+            $query->whereRaw('LOWER(nama_departemen) = ?', [strtolower($nama_departemen)]);
+        })->first();
+    
+        if ($departemen) {
+            // Jika data departemen sudah ada, kembalikan pesan bahwa data sudah ada
+            return redirect()->back()->with('pesa', 'Data Divisi ' . $nama_departemen . ' sudah ada !');
+        } else {
+            // Jika data departemen belum ada, simpan data baru
+            $departemen = new Departemen;
+            $departemen->nama_departemen = $nama_departemen;
+            $departemen->save();
+    
+            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+        }
     }
 
     public function update(Request $request, $id)
@@ -79,22 +92,7 @@ class DepartemenController extends Controller
             return redirect()->back()->with('pesa', 'Divisi tidak dapat dihapus karena digunakan dalam tabel karyawan.');
         } else {
             $departemen->delete();
-            return redirect()->back();
+            return redirect()->back()->with('pesan', 'Data Divisi berhasil dihapus');
         }
     }
-
-    // public function destroy($id)
-    // {
-    //     $departemen = Departemen::find($id);
-
-    //     // Cek data ke tabel "karyawan"
-    //     $karyawan = Karyawan::where('divisi', $departemen->id)->first();
-    //     if ($karyawan !== null) {
-    //         return response()->json(['status' => 'error', 'message' => 'Divisi tidak dapat dihapus karena digunakan dalam tabel karyawan.']);
-    //     } else {
-    //         $departemen->delete();
-    //         return response()->json(['status' => 'success', 'message' => 'Data berhasil dihapus.']);
-    //     }
-    // }
-
 }
