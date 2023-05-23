@@ -15,12 +15,6 @@
                             <input type="hidden" id="id" name="id_keluarga" value="{{$kel->id}}">
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Nama Keluarga</label>
-                                    <input type="text" name="namaKeluarga" id="nama" class="form-control" autocomplete="off" value="{{$kel->nama}}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="mb-3">
                                     <label for="hubungan">Hubungan</label>
                                     <select type="text" class="form-control" id="hubungan" name="hubungankeluarga">
                                         <option value="">Pilih Hubungan</option>
@@ -30,8 +24,18 @@
                                         <option value="Istri" @if($kel->hubungan == "Istri") selected @endif>Istri</option>
                                         <option value="Kakak" @if($kel->hubungan == "Kakak") selected @endif>Kakak</option>
                                         <option value="Adik" @if($kel->hubungan == "Adik") selected @endif>Adik</option>
-                                        <option value="Anak" @if($kel->hubungan == "Anak") selected @endif>Anak</option>
+                                                                    <option value="Anak Ke-1" @if($kel->hubungan == "Anak Ke-1") selected @endif>Anak Ke-1</option>
+                                                                    <option value="Anak Ke-2" @if($kel->hubungan == "Anak Ke-2") selected @endif>Anak Ke-2</option>
+                                                                    <option value="Anak Ke-3" @if($kel->hubungan == "Anak Ke-3") selected @endif>Anak Ke-3</option>
+                                                                    <option value="Anak Ke-4" @if($kel->hubungan == "Anak Ke-4") selected @endif>Anak Ke-4</option>
+                                                                    <option value="Anak Ke-5" @if($kel->hubungan == "Anak Ke-5") selected @endif>Anak Ke-5</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Nama Lengkap</label>
+                                    <input type="text" name="namaKeluarga" id="nama" class="form-control" autocomplete="off" value="{{$kel->nama}}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -54,7 +58,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Tempat Lahir</label>
+                                    <label for="exampleInputEmail1" class="form-label">Kota Kelahiran</label>
                                     <input class="form-control" name="tempatlahirKeluarga" autocomplete="off" rows="9"
                                         placeholder="Masukkan Tempat Lahir" value="{{$kel->tempatlahir}}">
                                 </div>
@@ -65,9 +69,11 @@
                                     <option value="">Pilih Pendidikan Terakhir</option>
                                     <option value="SD" @if($kel->pendidikan_terakhir == "SD") selected @endif >SD</option>
                                     <option value="SMP" @if($kel->pendidikan_terakhir == "SMP") selected @endif >SMP</option>
-                                    <option value="SMA/K" @if($kel->pendidikan_terakhir == "SMA/K") selected @endif >SMA/K</option>
-                                    <option value="D-3" @if($kel->pendidikan_terakhir == "D-3") selected @endif >D-3</option>
-                                    <option value="S-1" @if($kel->pendidikan_terakhir == "S-1") selected @endif >S-1</option>
+                                    <option value="SMA/Sederajat" @if($kel->pendidikan_terakhir == "SMA/Sederajat") selected @endif>SMA/Sederajat</option>
+                                    <option value="Sarjana Muda D3" @if($kel->pendidikan_terakhir == "Sarjana Muda D3") selected @endif>Sarjana Muda D3</option>
+                                    <option value="Sarjana S1" @if($kel->pendidikan_terakhir == "Sarjana S1") selected @endif>Sarjana S1</option>
+                                    <option value="Pasca Sarjana S2" @if($kel->pendidikan_terakhir == "Pasca Sarjana S2") selected @endif>Pasca Sarjana S2</option>
+                                    <option value="Doktoral/Phd" @if($kel->pendidikan_terakhir == "Doktoral/Phd") selected @endif>Doktoral/Phd S3</option>
                                 </select>
                             </div>
                             <div class="form-group">

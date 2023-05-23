@@ -31,19 +31,20 @@
                                         <option value="Kakak">Kakak</option>
                                         <option value="Adik">Adik</option>
                                         <option value="Anak">Anak</option>
+                                        <option value="Famili/Suadara/Teman">Famili/Suadara/Teman</option>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
-                                    <input type="number" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <div class="mb-3 ">
                                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
                                     <input class="form-control" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat"></input>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
+                                    <input type="number" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
                                 </div>
                             </div>
                         </div>

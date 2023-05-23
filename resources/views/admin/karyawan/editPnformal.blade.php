@@ -15,22 +15,36 @@
                             <input type="hidden" name="id_pendidikan" value="{{$rpendidikan->id}}">
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Bidang/ Jenis Pendidikan</label>
+                                    <label>Bidang/ Jenis</label>
                                     <input type="text" name="jenis_pendidikan" autocomplete="off" class="form-control" value="{{$rpendidikan->jenis_pendidikan}}">
                                 </div>
                             </div><div class="form-group">
                                 <div class="mb-3">
-                                    <label>Nama Lembaga Pendidikan</label>
+                                    <label>Lembaga Pendidikan</label>
                                     <input type="text" name="namaLembaga" autocomplete="off" class="form-control" value="{{$rpendidikan->nama_lembaga}}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Kota</label>
+                                    <label>Alamat</label>
                                     <input type="text" name="kotaPendidikanNonFormal" autocomplete="off" class="form-control" value="{{$rpendidikan->kota_pnonformal}}">
                                 </div>
                             </div>
                             <div class="form-group">
+                                <div class="mb-3">
+                                    <label class="form-label">Lama Pendidikan</label>
+                                    <div>
+                                        <div class="input-daterange input-group">
+                                            <input type="date" class="form-control" name="tahun_masukNonFormal"
+                                                placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_masuk_nonformal }}" />
+                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                            <input type="date" class="form-control" name="tahun_lulusNonFormal"
+                                                placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_lulus_nonformal }}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="form-group">
                                 <div class="mb-3">
                                     <label>Lulus Tahun</label>
                                     <div class="input-group">
@@ -40,11 +54,11 @@
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label>Nomor Ijazah</label>
-                                    <input type="number" name="noijazahPnonformal" autocomplete="off" class="form-control" value="{{$rpendidikan->ijazah_nonformal}}">
+                                    <input type="text" name="noijazahPnonformal" autocomplete="off" class="form-control" value="{{$rpendidikan->ijazah_nonformal}}">
                                 </div>
                             </div>
                         </div>

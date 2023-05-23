@@ -165,7 +165,7 @@
                                                                 <option value="Sarjana Muda D3">Sarjana Muda D3</option>
                                                                 <option value="Sarjana S1">Sarjana S1</option>
                                                                 <option value="Pasca Sarjana S2">Pasca Sarjana S2</option>
-                                                                <option value="Doktoral/Phd">Doktoral/Phd</option>
+                                                                <option value="Doktoral/Phd">Doktoral/Phd S3</option>
 
                                                                 </select>
                                                             </div>

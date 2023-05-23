@@ -154,7 +154,7 @@
                                                                     <option value="Anak Ke-2">Anak Ke-2</option>
                                                                     <option value="Anak Ke-3">Anak Ke-3</option>
                                                                     <option value="Anak Ke-4">Anak Ke-4</option>
-                                                                    <option value="Anak Ke-5">Anak Ke-1</option>
+                                                                    <option value="Anak Ke-5">Anak Ke-5</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -228,7 +228,7 @@
                                                                 <option value="Sarjana Muda D3">Sarjana Muda D3</option>
                                                                 <option value="Sarjana S1">Sarjana S1</option>
                                                                 <option value="Pasca Sarjana S2">Pasca Sarjana S2</option>
-                                                                <option value="Doktoral/Phd">Doktoral/Phd</option>
+                                                                <option value="Doktoral/Phd">Doktoral/Phd S3</option>
                                                             </select>
                                                         </div>
 
@@ -367,7 +367,7 @@
                                                                 <option value="Sarjana Muda D3">Sarjana Muda D3</option>
                                                                 <option value="Sarjana S1">Sarjana S1</option>
                                                                 <option value="Pasca Sarjana S2">Pasca Sarjana S2</option>
-                                                                <option value="Doktoral/Phd">Doktoral/Phd</option>
+                                                                <option value="Doktoral/Phd">Doktoral/Phd S3</option>
                                                             </select>
                                                         </div>
 

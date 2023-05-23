@@ -35,7 +35,7 @@
 
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label"> Alamat Instansi</label>
+                                    <label for="exampleInputEmail1" class="form-label"> Alamat </label>
                                     <input type="text" name="alamatInstansi" class="form-control"
                                         id="exampleInputEmail1" aria-describedby="emailHelp"
                                         placeholder="Masukkan Alamat" autocomplete="off">
@@ -44,10 +44,23 @@
 
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label"> Nomor Surat</label>
-                                    <input type="number" name="noSurat" class="form-control"
+                                    <label for="exampleInputEmail1" class="form-label"> Nomor Surat / Sertifikat</label>
+                                    <input type="text" name="noSurat" class="form-control"
                                         id="exampleInputEmail1" aria-describedby="emailHelp"
                                         placeholder="Masukkan Nomor Surat" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Tanggal Surat</label>
+                                    <div class="input-group">
+                                        <input id="datepicker-autoclose-format" type="text" class="form-control"
+                                            placeholder="dd/mm/yyyy" id="4" name="tgl_surat" rows="10"
+                                            autocomplete="off"><br>
+                                        <span class="input-group-addon bg-custom b-0"><i
+                                                class="mdi mdi-calendar text-white"></i></span>
+                                    </div>
                                 </div>
                             </div>
 

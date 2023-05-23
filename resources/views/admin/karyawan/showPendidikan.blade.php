@@ -87,18 +87,21 @@
                                                                     <td>{{ $rpendidikan->tingkat }}</td>
                                                                     <td>{{ $rpendidikan->nama_sekolah }}</td>
                                                                     <td>{{ $rpendidikan->jurusan }}</td>
-                                                                    <td>{{ $rpendidikan->tahun_masuk_formal }}</td>
-                                                                    <td>{{ $rpendidikan->tahun_lulus_formal }}</td>
+                                                                    {{-- <td>{{ $rpendidikan->tahun_masuk_formal }}</td> --}}
+                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_formal)->format('d/m/Y') }}</td>
+                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_formal)->format('d/m/Y') }}</td>
+                                                                    {{-- <td>{{ $rpendidikan->tahun_lulus_formal }}</td> --}}
                                                                     <td>{{ $rpendidikan->kota_pformal }}</td>
                                                                     {{-- <td>{{ $rpendidikan->tahun_lulus_formal }}</td> --}}
                                                                     <td>{{ $rpendidikan->ijazah_formal }}</td>
                                                                     <td class="">
-                                                                        <a class="btn btn-sm btn-primary editPformal pull-right"
-                                                                            data-toggle="modal"
-                                                                            data-target="#editPformal{{ $rpendidikan->id }}"
-                                                                            style="margin-right:10px">
-                                                                            <i class="fa fa-edit"></i>
-                                                                        </a>
+                                                                        <a class="btn btn-sm btn-primary editPformal "
+                                                                        data-toggle="modal"
+                                                                        data-target="#editPformal{{ $rpendidikan->id }}"
+                                                                        style="margin-right:10px">
+                                                                        <i class="fa fa-edit"></i>
+                                                                    </a>
+                                                                    <button onclick="hapus_karyawan({{ $rpendidikan->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                                                     </td>
                                                                 </tr>
                                                                 @include('admin.karyawan.editPformal')
@@ -135,17 +138,20 @@
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $rpendidikan->jenis_pendidikan }}</td>
                                                                 <td>{{ $rpendidikan->nama_lembaga }}</td>
-                                                                <td>{{ $rpendidikan->tahun_masuk_nonformal }}</td>
-                                                                <td>{{ $rpendidikan->tahun_lulus_nonformal }}</td>
+                                                                {{-- <td>{{ $rpendidikan->tahun_masuk_nonformal }}</td> --}}
+                                                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_nonformal)->format('d/m/Y') }}</td>
+                                                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_nonformal)->format('d/m/Y') }}</td>
+                                                                {{-- <td>{{ $rpendidikan->tahun_lulus_nonformal }}</td> --}}
                                                                 <td>{{ $rpendidikan->kota_pnonformal }}</td>
                                                                 <td>{{ $rpendidikan->ijazah_nonformal }}</td>
                                                                 <td class="">
-                                                                    <a class="btn btn-sm btn-primary editPnformal pull-right"
+                                                                    <a class="btn btn-sm btn-primary editPnformal"
                                                                         data-toggle="modal"
                                                                         data-target="#editPnformal{{ $rpendidikan->id }}"
                                                                         style="margin-right:10px">
                                                                         <i class="fa fa-edit"></i>
                                                                     </a>
+                                                                        <button onclick="hapus_karyawan({{ $rpendidikan->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
                                                             @include('admin.karyawan.editPnformal')
@@ -203,4 +209,30 @@
                 </div>
             </div>
         </div>
+
+        <script>
+        function hapus_karyawan(id) {
+            swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swal.fire({
+                        title: "Terhapus!",
+                        text: "Data berhasil di hapus..",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                    })
+                    location.href = '<?= '/destroyPendidikan' ?>' + id;
+                }
+            })
+        }
+    </script>
+
     @endsection

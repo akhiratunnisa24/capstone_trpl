@@ -93,7 +93,7 @@
                                                                             style="margin-right:10px">
                                                                             <i class="fa fa-edit"></i>
                                                                         </a>
-                                                                        {{-- <button onclick="pekerjaan({{$$rpekerjaan->id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
+                                                                        <button onclick="hapus_karyawan({{ $rpekerjaan->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                                                     </td>
                                                                 </tr>
                                                                 @include('admin.karyawan.editPekerjaan')
@@ -156,4 +156,30 @@
         </div>
     </div>
     </div>
+
+    <script>
+        function hapus_karyawan(id) {
+            swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swal.fire({
+                        title: "Terhapus!",
+                        text: "Data berhasil di hapus..",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                    })
+                    location.href = '<?= '/destroyPekerjaan' ?>' + id;
+                }
+            })
+        }
+    </script>
+
 @endsection

@@ -36,14 +36,14 @@
                             </div> 
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Nomor Handphone</label>
-                                    <input type="text" name="no_hpKdarurat" autocomplete="off" class="form-control" value="{{$kondar->no_hp}}">
+                                    <label>Alamat </label>
+                                    <input type="text" name="alamatKdarurat" class="form-control" autocomplete="off" value="{{$kondar->alamat}}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Alamat </label>
-                                    <input type="text" name="alamatKdarurat" class="form-control" autocomplete="off" value="{{$kondar->alamat}}">
+                                    <label>Nomor Handphone</label>
+                                    <input type="text" name="no_hpKdarurat" autocomplete="off" class="form-control" value="{{$kondar->no_hp}}">
                                 </div>
                             </div>
                         </div>

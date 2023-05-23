@@ -84,12 +84,13 @@
                                                                     <td>{{ $kel->pendidikan_terakhir }}</td>
                                                                     <td>{{ $kel->pekerjaan }}</td>
                                                                     <td class="">
-                                                                        <a class="btn btn-sm btn-primary pull-right"
+                                                                        <a class="btn btn-sm btn-primary"
                                                                             data-toggle="modal"
                                                                             data-target="#editKeluarga{{ $kel->id }}"
                                                                             style="margin-right:10px">
                                                                             <i class="fa fa-edit"></i>
                                                                         </a>
+                                                                        <button onclick="hapus_karyawan({{ $kel->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                                                     </td>
                                                                 </tr>
                                                                 @include('admin.karyawan.editKeluarga')
@@ -116,4 +117,29 @@
             </div>
         </div>
     </div>
+
+      <script>
+        function hapus_karyawan(id) {
+            swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swal.fire({
+                        title: "Terhapus!",
+                        text: "Data berhasil di hapus..",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                    })
+                    location.href = '<?= '/destroyKeluarga' ?>' + id;
+                }
+            })
+        }
+    </script>
 @endsection

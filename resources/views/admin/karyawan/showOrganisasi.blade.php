@@ -78,18 +78,20 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $org->nama_organisasi }}</td>
                                                                     <td>{{ $org->alamat }}</td>
-                                                                    <td>{{ $org->tgl_mulai }}</td>
-                                                                    <td>{{ $org->tgl_selesai }}</td>
+                                                                    {{-- <td>{{ $org->tgl_mulai }}</td> --}}
+                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_mulai)->format('d/m/Y') }}</td>
+                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_selesai)->format('d/m/Y') }}</td>
+                                                                    {{-- <td>{{ $org->tgl_selesai }}</td> --}}
                                                                     <td>{{ $org->jabatan }}</td>
                                                                     <td>{{ $org->no_sk }}</td>
                                                                     <td class="">
-                                                                        <a class="btn btn-sm btn-primary pull-right"
+                                                                        <a class="btn btn-sm btn-primary"
                                                                             data-toggle="modal"
                                                                             data-target="#editPekerjaan{{ $org->id }}"
                                                                             style="margin-right:10px">
                                                                             <i class="fa fa-edit"></i>
                                                                         </a>
-                                                                        {{-- <button onclick="pekerjaan({{$$rpekerjaan->id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
+                                                                        <button onclick="hapus_karyawan({{ $org->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                                                     </td>
                                                                 </tr>
                                                                 @include('admin.karyawan.editOrganisasi')
@@ -116,4 +118,31 @@
             </div>
         </div>
     </div>
+
+       <script>
+        function hapus_karyawan(id) {
+            swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swal.fire({
+                        title: "Terhapus!",
+                        text: "Data berhasil di hapus..",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                    })
+                    location.href = '<?= '/destroyOrganisasi' ?>' + id;
+                }
+            })
+        }
+    </script>
+
+
 @endsection

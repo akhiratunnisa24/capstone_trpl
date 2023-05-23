@@ -18,13 +18,6 @@
                                 class="form-control">
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Nama Keluarga</label>
-                                    <input type="text" name="namaKeluarga" class="form-control" autocomplete="off"
-                                        placeholder="Masukkan Nama">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="mb-3" >
                                     <label for="exampleInputEmail1" class="form-label">Hubungan</label>
                                     <select class="form-control " name="hubungankeluarga">
                                         <option value="">Pilih Hubungan</option>
@@ -34,20 +27,31 @@
                                         <option value="Istri">Istri</option>
                                         <option value="Kakak">Kakak</option>
                                         <option value="Adik">Adik</option>
-                                        <option value="Anak">Anak</option>
+                                        <option value="Anak Ke-1">Anak Ke-1</option>
+                                        <option value="Anak Ke-2">Anak Ke-2</option>
+                                        <option value="Anak Ke-3">Anak Ke-3</option>
+                                        <option value="Anak Ke-4">Anak Ke-4</option>
+                                        <option value="Anak Ke-5">Anak Ke-5</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
+                                    <input type="text" name="namaKeluarga" class="form-control" autocomplete="off"
+                                        placeholder="Masukkan Nama">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
-                                <select class="form-control" name="jenis_kelaminKeluarga">
-                                    <option value="">Pilih Jenis Kelamin</option>
-                                    <option value="Laki-Laki">Laki-Laki</option>
-                                    <option value="Perempuan">Perempuan</option>
-                                </select>
-                            </div>
+                                    <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
+                                    <select class="form-control" name="jenis_kelaminKeluarga">
+                                        <option value="">Pilih Jenis Kelamin</option>
+                                        <option value="Laki-Laki">Laki-Laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -64,9 +68,9 @@
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Tempat Lahir</label>
-                                    <input class="form-control" name="tempatlahirKeluarga" autocomplete="off" rows="9"
-                                        placeholder="Masukkan Tempat Lahir">
+                                    <label class="form-label">Kota Kelahiran</label>
+                                    <input class="form-control" name="tempatlahirKeluarga" autocomplete="off"
+                                        rows="9" placeholder="Masukkan Tempat Lahir">
                                 </div>
                             </div>
 
@@ -76,9 +80,11 @@
                                     <option value="">Pilih Pendidikan Terakhir</option>
                                     <option value="SD">SD</option>
                                     <option value="SMP">SMP</option>
-                                    <option value="SMA/K">SMA/K</option>
-                                    <option value="D-3">D-3</option>
-                                    <option value="S-1">S-1</option>
+                                    <option value="SMA/Sederajat">SMA/Sederajat</option>
+                                    <option value="Sarjana Muda D3">Sarjana Muda D3</option>
+                                    <option value="Sarjana S1">Sarjana S1</option>
+                                    <option value="Pasca Sarjana S2">Pasca Sarjana S2</option>
+                                    <option value="Doktoral/Phd">Doktoral/Phd</option>
                                 </select>
                             </div>
 

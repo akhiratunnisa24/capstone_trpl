@@ -31,16 +31,28 @@
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Alamat Instansi</label>
+                                    <label>Alamat</label>
                                     <input type="text" name="alamatInstansi" autocomplete="off"
                                         class="form-control" value="{{ $pres->alamat }}">
                                 </div>
                             </div>
                                 <div class="form-group">
                                     <div class="mb-3">
-                                        <label>Nomor Surat</label>
-                                        <input type="number" name="noSurat" class="form-control"
+                                        <label>Nomor Surat / Sertifikat</label>
+                                        <input type="text" name="noSurat" class="form-control"
                                             autocomplete="off" value="{{ $pres->no_surat }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Tanggal Surat</label>
+                                    <div class="input-group">
+                                        <input id="datepicker-autoclose-format2" type="text" class="form-control"
+                                            placeholder="dd/mm/yyyy" id="4" name="tgl_surat" rows="10"
+                                            autocomplete="off"><br>
+                                        <span class="input-group-addon bg-custom b-0"><i
+                                                class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
                             </div>

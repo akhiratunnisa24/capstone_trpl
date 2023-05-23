@@ -1901,7 +1901,11 @@ class karyawanController extends Controller
                 'nama_sekolah' => $request->post('nama_sekolah'),
                 'kota_pformal' => $request->post('kotaPendidikanFormal'),
                 'jurusan' => $request->post('jurusan'),
-                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
+                'tahun_masuk_formal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d'),
+                'tahun_lulus_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusFormal'))->format('Y-m-d'),
+                
+                // 'tahun_lulus_formal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d'),
+
                 'ijazah_formal' => $request->post('noijazahPformal'),
 
                 'jenis_pendidikan' => null,
@@ -1926,7 +1930,11 @@ class karyawanController extends Controller
                 'nama_lembaga' => $request->post('namaLembaga'),
                 'jenis_pendidikan' => $request->post('jenis_pendidikan'),
                 'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-                'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
+
+                'tahun_masuk_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d'),
+                'tahun_lulus_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusNonFormal'))->format('Y-m-d'),
+                
+                // 'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
                 'ijazah_nonformal' => $request->post('noijazahPnonformal'),
                 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
@@ -1935,6 +1943,17 @@ class karyawanController extends Controller
             Rpendidikan::insert($r_pendidikan);
             return redirect()->back()->withInput();
         }
+    }
+
+    public function destroyPendidikan(Request $request, $id)
+    {
+        // $rpendidikan = Rpendidikan::where('id_pegawai', $id)->find($id);
+        //     dd($rpendidikan);
+        Rpendidikan::destroy($id);
+
+        // $rpendidikan->delete();
+
+        return redirect()->back();
     }
 
     public function showpekerjaan($id)
@@ -1961,6 +1980,13 @@ class karyawanController extends Controller
             return redirect()->back();
         }
     }
+    public function destroyPekerjaan($id)
+    {
+        Rpekerjaan::destroy($id);
+
+        return redirect()->back();
+    }
+
     public function showorganisasi($id)
     {
         $role = Auth::user()->role;
@@ -1985,6 +2011,13 @@ class karyawanController extends Controller
             return redirect()->back();
         }
     }
+    public function destroyOrganisasi(Request $request, $id)
+    {
+        Rorganisasi::destroy($id);
+
+        return redirect()->back();
+    }
+
     public function showprestasi($id)
     {
         $role = Auth::user()->role;
@@ -2008,6 +2041,12 @@ class karyawanController extends Controller
 
             return redirect()->back();
         }
+    }
+    public function destroyPrestasi(Request $request, $id)
+    {
+        Rprestasi::destroy($id);
+
+        return redirect()->back();
     }
     public function showkeluarga($id)
     {
@@ -2033,6 +2072,12 @@ class karyawanController extends Controller
             return redirect()->back();
         }
     }
+    public function destroyKeluarga($id)
+    {
+        Keluarga::destroy($id);
+
+        return redirect()->back();
+    }
     public function showkontakdarurat($id)
     {
         $role = Auth::user()->role;
@@ -2056,6 +2101,12 @@ class karyawanController extends Controller
 
             return redirect()->back();
         }
+    }
+    public function destroyKonrat($id)
+    {
+        Kdarurat::destroy($id);
+
+        return redirect()->back();
     }
 
     

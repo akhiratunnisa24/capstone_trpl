@@ -875,8 +875,8 @@ class KaryawansController extends Controller
                 'nama_lembaga' => $request->post('namaLembaga'),
                 'jenis_pendidikan' => $request->post('jenis_pendidikan'),
                 'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-                'tahun_masuk_nonformal' => $request->post('tahunMasukNonFormal'),
-                'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
+                'tahun_masuk_nonformal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d'),
+                'tahun_lulus_nonformal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d'),
                 'ijazah_nonformal' => $request->post('noijazahPnonformal'),
                 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
@@ -919,8 +919,10 @@ class KaryawansController extends Controller
             'id_pegawai' => $idk->id,
             'nama_organisasi' => $request->post('namaOrganisasi'),
             'alamat' => $request->post('alamatOrganisasi'),
-            'tgl_mulai' => Carbon::parse($request->post('tglmulai'))->format('Y/m/d'),
-            'tgl_selesai' => Carbon::parse($request->post('tglselesai'))->format('Y/m/d'),
+            // 'tgl_mulai' => Carbon::parse($request->post('tglmulai'))->format('Y/m/d'),
+            'tgl_mulai' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d'),
+            'tgl_selesai' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d'),
+            // 'tgl_selesai' => Carbon::parse($request->post('tglselesai'))->format('Y/m/d'),
             'jabatan' => $request->post('jabatanRorganisasi'),
             'no_sk' => $request->post('noSKorganisasi'),
             'created_at' => new \DateTime(),
@@ -940,6 +942,7 @@ class KaryawansController extends Controller
             'nama_instansi' => $request->post('namaInstansi'),
             'alamat' => $request->post('alamatInstansi'),
             'no_surat' => $request->post('noSurat'),
+            'tanggal_surat' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d'),
             'created_at' => new \DateTime(),
             'updated_at' => new \DateTime(),
         );
@@ -1082,7 +1085,10 @@ class KaryawansController extends Controller
                 'kota_pformal' => $request->kotaPendidikanFormal,
                 'jurusan' => $request->jurusan,
                 // 'tahun_lulus_formal' => $request->tahun_lulusFormal,
-                'tahun_lulus_formal' => \Carbon\Carbon::parse($request->tahun_lulusFormal)->format('Y'),
+                'tahun_masuk_formal' => \Carbon\Carbon::parse($request->tahun_masukFormal)->format('Y-m-d'),
+                'tahun_lulus_formal' => \Carbon\Carbon::parse($request->tahun_lulusFormal)->format('Y-m-d'),
+                
+                // 'tahun_masuk_formal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d'),
                 'ijazah_formal' => $request->noijazahPformal,
                 'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
             ]);
@@ -1091,8 +1097,8 @@ class KaryawansController extends Controller
                 'jenis_pendidikan' => $request->jenis_pendidikan,
                 'nama_lembaga' => $request->namaLembaga,
                 'kota_pnonformal' => $request->kotaPendidikanNonFormal,
-                // 'tahun_lulus_nonformal' => $request->tahunLulusNonFormal,
-                'tahun_lulus_nonformal' => \Carbon\Carbon::parse($request->tahunLulusNonFormal)->format('Y'),
+                'tahun_masuk_nonformal' => \Carbon\Carbon::parse($request->tahun_masukNonFormal)->format('Y-m-d'),
+                'tahun_lulus_nonformal' => \Carbon\Carbon::parse($request->tahun_lulusNonFormal)->format('Y-m-d'),
                 'ijazah_nonformal' => $request->noijazahPnonformal,
                 'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
             ]);
@@ -1157,6 +1163,7 @@ class KaryawansController extends Controller
             'nama_instansi' => $request->post('namaInstansi'),
             'alamat' => $request->post('alamatInstansi'),
             'no_surat' => $request->post('noSurat'),
+            'tanggal_surat' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d'),
             'updated_at' => new \DateTime(),
 
         );

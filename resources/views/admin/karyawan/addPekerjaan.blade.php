@@ -26,7 +26,7 @@
 
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label"> Alamat Perusahaan </label>
+                                    <label for="exampleInputEmail1" class="form-label"> Alamat</label>
                                     <input type="text" name="alamatPerusahaan" class="form-control"
                                         id="exampleInputEmail1" aria-describedby="emailHelp"
                                         placeholder="Masukkan Alamat"autocomplete="off">
@@ -38,10 +38,10 @@
                                     <label class="form-label">Lama Kerja</label>
                                     <div>
                                         <div class="input-daterange input-group" id="date-range">
-                                            <input type="text" class="form-control" name="tglmulai" id="tglmulai" />
+                                            <input type="text" class="form-control" name="tglmulai" id="tglmulai" placeholder="dd/mm/yyyy" autocomplete="off" />
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                             <input type="text" class="form-control" name="tglselesai"
-                                                id="tglselesai"/>
+                                                id="tglselesai" placeholder="dd/mm/yyyy" autocomplete="off"/>
                                         </div>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
 
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label"> Jabatan</label>
+                                    <label for="exampleInputEmail1" class="form-label">Jabatan Terakhir</label>
                                     <input type="text" name="jabatanRpkerejaan" class="form-control"
                                         id="exampleInputEmail1" aria-describedby="emailHelp"
                                         placeholder="Masukkan Jabatan" autocomplete="off">
