@@ -35,9 +35,10 @@ use App\Mail\CutiNotification;
 use App\Models\Settingabsensi;
 use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
+use App\Models\SettingOrganisasi;
 use App\Events\AbsenKaryawanEvent;
-use Illuminate\Support\Facades\DB;
 // use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -1015,9 +1016,8 @@ class karyawanController extends Controller
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager','Direksi'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])->get();
-
+            $atasan_pertama = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
+            $atasan_kedua   = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Manager', 'Direksi'])->get();
             $output = [
                 'row' => $row,
                 'departemen' => $departemen,
@@ -1360,8 +1360,8 @@ class karyawanController extends Controller
             $rpekerjaan     = Rpekerjaan::where('id_pegawai', $id)->first();
             $row            = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Atasan::whereIn('level_jabatan', ['Asistant Manager', 'Manager','Direksi'])->get();
-            $atasan_kedua   = Atasan::whereIn('level_jabatan', ['Manager','Direksi'])->get();
+            $atasan_pertama = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
+            $atasan_kedua   = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Manager', 'Direksi'])->get();
 
             $output = [
                 'row' => $row
@@ -1624,8 +1624,8 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager','Direksi'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])->get();
+            $atasan_pertama = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
+            $atasan_kedua   = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Manager', 'Direksi'])->get();
 
             $output = [
                 'row' => $row
@@ -1660,8 +1660,8 @@ class karyawanController extends Controller
 
             $karyawan = karyawan::findOrFail($id);
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Direksi'])->get();
+            $atasan_pertama = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
+            $atasan_kedua   = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Manager', 'Direksi'])->get();
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::all();
             
@@ -1694,8 +1694,8 @@ class karyawanController extends Controller
 
             $karyawan       = Karyawan::findOrFail($id);
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Direksi'])->get();
+            $atasan_pertama = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
+            $atasan_kedua   = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Manager', 'Direksi'])->get();
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::all();
 
@@ -1780,22 +1780,22 @@ class karyawanController extends Controller
             Karyawan::where('id', $id)->update($data);
 
             // Mengambil nama jabatan baru
-            $namaJabatanBaru = $request->post('namaJabatan');
-            // Mengambil data jabatan dari tabel jabatan
-            $jabatan = Jabatan::where('nama_jabatan', $namaJabatanBaru)->first();
-            if ($jabatan) {
-                // Update tabel alokasicuti
-                AlokasiCuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            // $namaJabatanBaru = $request->post('namaJabatan');
+            // // Mengambil data jabatan dari tabel jabatan
+            // $jabatan = Jabatan::where('nama_jabatan', $namaJabatanBaru)->first();
+            // if ($jabatan) {
+            //     // Update tabel alokasicuti
+            //     AlokasiCuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
             
-                // Update tabel atasan
-                Atasan::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            //     // Update tabel atasan
+            //     Atasan::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
             
-                // Update tabel cuti
-                Cuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            //     // Update tabel cuti
+            //     Cuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
             
-                // Update tabel izin
-                Izin::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
-            }
+            //     // Update tabel izin
+            //     Izin::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            // }
             
             return redirect()->back();
         } else {
@@ -1840,23 +1840,23 @@ class karyawanController extends Controller
 
             Karyawan::where('id', $id)->update($data);
 
-            // Mengambil nama jabatan baru
-            $namaJabatanBaru = $request->post('namaJabatan');
-            // Mengambil data jabatan dari tabel jabatan
-            $jabatan = Jabatan::where('nama_jabatan', $namaJabatanBaru)->first();
-            if ($jabatan) {
-                // Update tabel alokasicuti
-                AlokasiCuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            // // Mengambil nama jabatan baru
+            // $namaJabatanBaru = $request->post('namaJabatan');
+            // // Mengambil data jabatan dari tabel jabatan
+            // $jabatan = Jabatan::where('nama_jabatan', $namaJabatanBaru)->first();
+            // if ($jabatan) {
+            //     // Update tabel alokasicuti
+            //     AlokasiCuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
             
-                // Update tabel atasan
-                Atasan::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            //     // Update tabel atasan
+            //     Atasan::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
             
-                // Update tabel cuti
-                Cuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            //     // Update tabel cuti
+            //     Cuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
             
-                // Update tabel izin
-                Izin::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
-            }
+            //     // Update tabel izin
+            //     Izin::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
+            // }
 
             return redirect()->back();
         }
@@ -2404,6 +2404,7 @@ class karyawanController extends Controller
             $prestasi = Rprestasi::where('id_pegawai', $id)->get();
             $keluarga = Keluarga::where('id_pegawai', $id)->get();
             $kontakdarurat = Kdarurat::where('id_pegawai', $id)->get();
+            $setorganisasi = SettingOrganisasi::find(1);
 
             $pdf = PDF::loadview('admin.karyawan.downloadpdf', [
                 'data' => $data,
@@ -2413,6 +2414,7 @@ class karyawanController extends Controller
                 'prestasi' => $prestasi,
                 'keluarga' => $keluarga,
                 'kontakdarurat' => $kontakdarurat,
+                'setorganisasi' => $setorganisasi,
                 
                 ])
             ->setPaper('a4', 'landscape');
