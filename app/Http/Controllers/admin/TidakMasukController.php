@@ -11,6 +11,7 @@ use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
 use App\Models\Settingabsensi;
 use App\Exports\TidakmasukExport;
+use App\Models\SettingOrganisasi;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -315,10 +316,16 @@ class TidakMasukController extends Controller
             $tidakmasuk = Tidakmasuk::with('departemen')->orderBy('tanggal','desc')->get();
         }
         
-
-        $pdf = PDF::loadview('admin.tidakmasuk.dataTidakMasukPdf',['tidakmasuk'=>$tidakmasuk, 'idkaryawan'=>$idkaryawan])
+        if ($tidakmasuk->first()) {
+            $pdfName = "Data Absensi Tidak Masuk Bulan ".$nbulan." ".$tidakmasuk->first()->nama.".pdf";
+        } else {
+            $pdfName = "Data Absensi Tidak Masuk.pdf";
+        }
+        $setorganisasi = SettingOrganisasi::find(1);
+        $pdf = PDF::loadview('admin.tidakmasuk.dataTidakMasukPdf',['tidakmasuk'=>$tidakmasuk, 'idkaryawan'=>$idkaryawan,'setorganisasi'=> $setorganisasi])
         ->setPaper('a4','landscape');
-        return $pdf->stream("Data Absensi Tidak Masuk Bulan ".$nbulan." ".$tidakmasuk->first()->nama.".pdf");
+
+        return $pdf->stream($pdfName);
 
     }
 

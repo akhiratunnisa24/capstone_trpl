@@ -34,8 +34,6 @@ class AtasanController extends Controller
     {
         // $jabatan = ["Asistant Manager", "Manager", "Direksi"];
         $karyawan = Karyawan::whereIn('jabatan', ['Asistant Manager','Manager','Direksi'])->get();
-        // return $karyawan;
-        
         foreach ($karyawan as $data) {
             $cek = Atasan::where('id_karyawan', $data->id)
                 ->where('nik', $data->nip)
@@ -64,7 +62,7 @@ class AtasanController extends Controller
                 $pesan = 'Data Atasan berhasil diupdate!';
             }
         }
-        
+
         return redirect()->back()->with('pesan', $pesan);
     }
 

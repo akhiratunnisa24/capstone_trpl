@@ -10,6 +10,7 @@ use App\Models\Karyawan;
 use App\Exports\CutiExpor;
 use App\Exports\IzinExpor;
 use Illuminate\Http\Request;
+use App\Models\SettingOrganisasi;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -81,6 +82,7 @@ class CutiizinController extends Controller
 
     public function rekapcutipdf(Request $request)
     {
+        $setorganisasi = SettingOrganisasi::find(1);
         $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
 
         $idkaryawan = $request->id_karyawan;
@@ -103,9 +105,15 @@ class CutiizinController extends Controller
             $data = Cuti::all();
         }
 
-        $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan])
+        if ($data->first()) {
+            $pdfName = "Rekap Cuti Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf";
+        } else {
+            $pdfName = "Rekapan Cuti Tidak Ditemukan.pdf";
+        }
+
+        $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan, 'setorganisasi'=> $setorganisasi])
             ->setPaper('a4', 'landscape');
-        return $pdf->stream("Rekap Cuti Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf");
+        return $pdf->stream($pdfName);
     }
 
     public function rekapizinExcel(Request $request)
@@ -149,6 +157,7 @@ class CutiizinController extends Controller
 
     public function rekapizinpdf(Request $request)
     {
+        $setorganisasi = SettingOrganisasi::find(1);
         $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
 
         $idpegawai = $request->idpegawai;
@@ -177,8 +186,14 @@ class CutiizinController extends Controller
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
         }
 
-        $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai])
+        if ($data->first()) {
+            $pdfName = "Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf";
+        } else {
+            $pdfName = "Rekapan Izin Tidak Ditemukan.pdf";
+        }
+
+        $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai,'setorganisasi'=> $setorganisasi])
             ->setPaper('a4', 'landscape');
-        return $pdf->stream("Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf");
+        return $pdf->stream($pdfName);
     }
 }

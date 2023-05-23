@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Mail\CutiNotification;
 use App\Models\SettingHarilibur;
 use App\Mail\CutiHRDNotification;
+use App\Models\SettingOrganisasi;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -1241,6 +1242,7 @@ class CutiadminController extends Controller
 
     public function rekapcutipdf(Request $request)
     {
+        $setorganisasi = SettingOrganisasi::find(1);
         $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
 
         $idkaryawan = $request->id_karyawan;
@@ -1261,11 +1263,21 @@ class CutiadminController extends Controller
                 ->get();
         } else {
             $data = Cuti::all();
+            // $data = Cuti::leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+            //     ->leftjoin('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
+            //     ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+            //     ->get(['cuti.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
         }
 
-        $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan])
+        if ($data->first()) {
+            $pdfName = "Rekap Cuti Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf";
+        } else {
+            $pdfName = "Rekapan Cuti Tidak Ditemukan.pdf";
+        }
+
+        $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan,'setorganisasi'=> $setorganisasi])
             ->setPaper('a4', 'landscape');
-        return $pdf->stream("Rekap Cuti Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf");
+        return $pdf->stream($pdfName);
     }
 
 }

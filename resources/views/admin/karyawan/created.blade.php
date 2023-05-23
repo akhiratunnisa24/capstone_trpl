@@ -134,7 +134,7 @@
                                                                     <select class="form-control selectpicker" value="{{ old('atasan_pertama') }}" name="atasan_pertama" data-live-search="true">
                                                                         <option value="">Pilih Atasan Langsung</option>
                                                                         @foreach ($atasan_pertama as $atasan)
-                                                                            <option value="{{ $atasan->id }}">{{ $atasan->nama }}
+                                                                            <option value="{{ $atasan->id_karyawan }}">{{ $atasan->karyawan->nama }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
@@ -145,7 +145,7 @@
                                                                     <select class="form-control selectpicker" value="{{ old('atasan_kedua') }}" name="atasan_kedua"  data-live-search="true">
                                                                         <option value="">Pilih Atasan</option>
                                                                         @foreach ($atasan_kedua as $atasan)
-                                                                            <option value="{{ $atasan->atasan }}">{{ $atasan->nama }}
+                                                                            <option value="{{ $atasan->id_karyawan }}">{{ $atasan->karyawan->nama }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>

@@ -11,6 +11,7 @@ use App\Models\Jenisizin;
 use App\Models\Datareject;
 use App\Exports\IzinExport;
 use Illuminate\Http\Request;
+use App\Models\SettingOrganisasi;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -475,6 +476,13 @@ class IzinAdminController extends Controller
     public function rekapizinpdf(Request $request)
     {
         $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
+        $setorganisasi = SettingOrganisasi::find(1);
+
+        $data = Izin::all();
+        // $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+        // ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+        // ->leftjoin('departemen','izin.departemen','=','departemen.id')
+        // ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']); 
 
         $idpegawai = $request->idpegawai;
         $month     = $request->query('month', Carbon::now()->format('m'));
@@ -500,10 +508,16 @@ class IzinAdminController extends Controller
                 ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
                 ->leftjoin('departemen','izin.departemen','=','departemen.id')
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
-            }
+        }
 
-        $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai])
+        if ($data->first()) {
+            $pdfName = "Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf";
+        } else {
+            $pdfName = "Rekapan Izin Karyawan.pdf";
+        }
+
+        $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai,'setorganisasi'=> $setorganisasi])
             ->setPaper('a4', 'landscape');
-        return $pdf->stream("Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf");
+        return $pdf->stream($pdfName);
     }
 }

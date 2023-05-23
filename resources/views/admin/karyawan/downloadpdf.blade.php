@@ -104,8 +104,8 @@
 </head>
 
 <body>
-    <h1 align="center">PT. Global Risk Management (GRM)</h1>
-    <p id="address">Graha GRM Royal Spring Business Park 11, Jl. Ragunan Raya No. 29A, Jakarta Selatan, 12540</p>
+    <h1 align="center">{{$setorganisasi->nama_perusahaan}}</h1>
+    <p id="address">{{$setorganisasi->alamat}}, {{$setorganisasi->kode_pos}}</p>
     <div class="garis"></div>
     <h3 align="center">Data Karyawan</h3>
 

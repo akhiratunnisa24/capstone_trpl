@@ -18,6 +18,7 @@ use App\Models\Departemen;
 use App\Models\Alokasicuti;
 use Illuminate\Http\Request;
 use App\Mail\CutiNotification;
+use App\Models\SettingOrganisasi;
 use Illuminate\Support\Facades\DB;
 use App\Exports\AbsensiFilterExport;
 use App\Http\Controllers\Controller;
@@ -2341,6 +2342,7 @@ class ManagerController extends Controller
         $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
         $nbulan    = $namaBulan . ' ' . $tahun;
 
+        $setorganisasi = SettingOrganisasi::find(1);
         if($role == 3 && $row->jabatan = "Manager")
         {
             if(isset($idkaryawan) && isset($bulan) && isset($tahun))
@@ -2352,9 +2354,15 @@ class ManagerController extends Controller
                     ->get();
                 $departemen = Departemen::where('id',$middep->id_departement)->first();
                 $nama = Karyawan::where('id',$idkaryawan)->first();
-                $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen, 'nbulan'=>$nbulan])
+
+                if ($data->first()) {
+                    $pdfName = "REKAP ABSENSI BULAN ".$nbulan." "." DEPARTEMEN ".$departemen->nama_departemen.".pdf";
+                } else {
+                    $pdfName = "Rekap Absensi Tidak Ditemukan.pdf";
+                }
+                $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen, 'nbulan'=>$nbulan,'setorganisasi' => $setorganisasi])
                 ->setPaper('A4','landscape');
-                return $pdf->stream("REKAP ABSENSI BULAN ".$nbulan." ".$data->first()->karyawans->nama." DEPARTEMEN ".$departemen->nama_departemen.".pdf");
+                return $pdf->stream($pdfName);
         
             }else
             {
@@ -2364,9 +2372,16 @@ class ManagerController extends Controller
                  $nama = Karyawan::where('id',$idkaryawan)->first();
                 $departemen = Departemen::where('id',$middep->id_departement)->first();
             }
-            $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen,'nbulan'=>$nbulan])
+
+            if ($data->first()) {
+                $pdfName = "REKAP ABSENSI BULAN ".$nbulan." "." DEPARTEMEN ".$departemen->nama_departemen.".pdf";
+            } else {
+                $pdfName = "Rekap Absensi Tidak Ditemukan.pdf";
+            }
+
+            $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen,'nbulan'=>$nbulan,'setorganisasi' => $setorganisasi])
             ->setPaper('A4','landscape');
-            return $pdf->stream("REKAP ABSENSI BULAN ".$nbulan." "." DEPARTEMEN ".$departemen->nama_departemen.".pdf");
+            return $pdf->stream($pdfName);
         }
         elseif($role == 3 && $row->jabatan = "Asistant Manager")
             {
@@ -2380,10 +2395,14 @@ class ManagerController extends Controller
                         ->get();
                     $departemen = Departemen::where('id',$middep->id_departement)->first();
                     $nama = Karyawan::where('id',$idkaryawan)->first();
-                    $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen,'nbulan'=>$nbulan])
+                    if ($data->first()) {
+                        $pdfName = "REKAP ABSENSI BULAN ".$nbulan." "." DEPARTEMEN ".$departemen->nama_departemen.".pdf";
+                    } else {
+                        $pdfName = "Rekap Absensi Tidak Ditemukan.pdf";
+                    }
+                    $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen, 'nbulan'=>$nbulan,'setorganisasi' => $setorganisasi])
                     ->setPaper('A4','landscape');
-        
-                    return $pdf->stream("REKAP ABSENSI BULAN ".$nbulan." ".$data->first()->karyawans->nama." DEPARTEMEN ".$departemen->nama_departemen.".pdf");
+                    return $pdf->stream($pdfName);
                 
                 }else
                 {
@@ -2397,10 +2416,15 @@ class ManagerController extends Controller
                     // $data = Absensi::where('id_departement',$middep->id_departement)->get();
                     $departemen = Departemen::where('id',$middep->id_departement)->first();
                 }
-                $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen,'nbulan'=>$nbulan])
+                if ($data->first()) {
+                    $pdfName = "REKAP ABSENSI BULAN ".$nbulan." "." DEPARTEMEN ".$departemen->nama_departemen.".pdf";
+                } else {
+                    $pdfName = "Rekap Absensi Tidak Ditemukan.pdf";
+                }
+                $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen, 'nbulan'=>$nbulan,'setorganisasi' => $setorganisasi])
                 ->setPaper('A4','landscape');
-        
-                return $pdf->stream("REKAP ABSENSI BULAN ".$nbulan." DEPARTEMEN ".$departemen->nama_departemen.".pdf");
+                return $pdf->stream($pdfName);
+                
             }
             else{
                 return redirect()->back();

@@ -151,9 +151,9 @@
                                                                 data-live-search="true">
                                                                 <option value="">Pilih Atasan Langsung</option>
                                                                 @foreach ($atasan_pertama as $atasan)
-                                                                    <option value="{{ $atasan->id }}"
-                                                                        {{ $karyawan->atasan_pertama == $atasan->id ? 'selected' : '' }}>
-                                                                        {{ $atasan->nama ?? '' }}
+                                                                    <option value="{{ $atasan->id_karyawan }}"
+                                                                        {{ $karyawan->atasan_pertama == $atasan->id_karyawan ? 'selected' : '' }}>
+                                                                        {{ $atasan->karyawan->nama ?? '' }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
@@ -165,9 +165,9 @@
                                                                 data-live-search="true">
                                                                 <option value="">Pilih Atasan</option>
                                                                 @foreach ($atasan_kedua as $atasan)
-                                                                    <option value="{{ $atasan->id }}"
-                                                                        {{ $karyawan->atasan_kedua == $atasan->id ? 'selected' : '' }}>
-                                                                        {{ $atasan->nama ?? '' }}
+                                                                    <option value="{{ $atasan->id_karyawan }}"
+                                                                        {{ $karyawan->atasan_kedua == $atasan->id_karyawan ? 'selected' : '' }}>
+                                                                        {{ $atasan->karyawan->nama ?? '' }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>

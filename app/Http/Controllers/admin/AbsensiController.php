@@ -13,14 +13,15 @@ use Illuminate\Http\Request;
 use App\Exports\AbsensiExport;
 use App\Imports\AbsensiImport;
 use App\Imports\AttendanceImport;
+use App\Models\SettingOrganisasi;
 use Illuminate\Support\Facades\DB;
 use App\Exports\RekapabsensiExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Illuminate\Support\Facades\Validator;
 
 class AbsensiController extends Controller
 {
@@ -61,7 +62,8 @@ class AbsensiController extends Controller
     
             if(isset($idkaryawan) && isset($bulan) && isset($tahun))
             {
-                $absensi = Absensi::with('karyawans','departemens')->where('id_karyawan', $idkaryawan)
+                $absensi = Absensi::with('karyawans','departemens')
+                ->where('id_karyawan', $idkaryawan)
                 ->whereMonth('tanggal', $bulan)
                 ->whereYear('tanggal',$tahun)
                 ->get();
@@ -277,18 +279,17 @@ class AbsensiController extends Controller
             $jumlahimporttidakmasuk =$import->getDataImportTidakMasuk(); //SUDAH BENAR 1
             $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport(); // 9
 
-            $pesan = 'Jumlah Data yang berhasil diimport : ' . $jumlahdatadiimport . '\n' .
-                     'Jumlah Data diimport ke Tidak Masuk: ' . $jumlahimporttidakmasuk . '\n' .
-                     'Jumlah Data tidak bisa diimport    : ' . $datatidakbisadiimport . '\n' .
-                     'Jumlah Data Keseluruhan            : ' . $jumlahdata;
+            $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
+            "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
+            "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
+            "Jumlah Data Keseluruhan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getJumlahData(). "</strong>";
            
+            // dd($pesan);
+            $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
             $pesan = nl2br(html_entity_decode($pesan));
-            return redirect()->back()->with('pesan', $pesan);       
-            //return redirect()->back()->with('pesan', nl2br('Data Absensi yang berhasil diimport: ' . $jumlahdatadiimport .'\n' . 'Data diimport ke database Tidak Masuk: ' . $jumlahimporttidakmasuk . '\n' . 'Jumlah Data tidak bisa diimport: ' . $datatidakbisadiimport . '\n'. 'Jumlah Data Keseluruhan : ' . $jumlahdata));
-
-            //return redirect()->back()->with('pesan', 'Data Absensi yang berhasil diimport: ' . $jumlahdatadiimport .'<br>' . 'Data diimport ke database Tidak Masuk: ' . $jumlahimporttidakmasuk . '<br>' . 'Jumlah Data tidak bisa diimport: ' . $datatidakbisadiimport . '<br>'. 'Jumlah Data Keseluruhan : ' . $jumlahdata);
-            
-        } catch (\Throwable $th) {
+            return redirect()->back()->with('pesan', $pesan);  
+                
+        }catch (\Throwable $th) {
             // Tangani jika terjadi kesalahan
             return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari Excel.');
         }
@@ -309,27 +310,24 @@ class AbsensiController extends Controller
             $import = new AbsensiImport();
             Excel::import($import, $request->file('file'));
 
-            // Gabungkan pesan-pesan dalam satu variabel
-            $pesan = 'Data Imported Successfully<br>';
-            $pesan .= 'Jumlah Data: ' . $import->getJumlahData() . '<br>';
-            $pesan .= 'Jumlah Data Diimport: ' . $import->getJumlahDataDiimport() . '<br>';
-            $pesan .= 'Data Import Tidak Masuk: ' . $import->getDataImportTidakMasuk() . '<br>';
-            $pesan .= 'Data Tidak Bisa Diimport: ' . $import->getDatatTidakBisaDiimport();
+            $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
+            "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
+            "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
+            "Jumlah Data Keseluruhan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getJumlahData(). "</strong>";
 
+            $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
+            $pesan = nl2br(html_entity_decode($pesan));
             return redirect()->back()->with('pesan', $pesan);
+
         } catch (\Throwable $th) {
             // Tangani jika terjadi kesalahan
-            return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data absensi.');
+            return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari CSV.');
         }
     }
-    // public function importcsv(Request $request)
-    // {
-    //     Excel::import(new AttendanceImport, request()->file('file'));
-    //     return redirect()->back()->with('success','Data Imported Successfully');
-    // }
 
     public function rekapabsensipdf(Request $request)
     {
+        $setorganisasi = SettingOrganisasi::find(1);
         $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
 
         $idkaryawan = $request->id_karyawan;
@@ -349,15 +347,25 @@ class AbsensiController extends Controller
         if(isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
             $data = Absensi::where('id_karyawan', $idkaryawan)
-            ->whereMonth('tanggal', $bulan)
-            ->whereYear('tanggal',$tahun)
-            ->get();
+                ->with('karyawans','departemens')
+                ->whereMonth('tanggal', $bulan)
+                ->whereYear('tanggal',$tahun)
+                ->get();
         }else{
             $data = Absensi::with('departemens','karyawans')->get();
         }
-        $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan])
+
+        if ($data->first()) {
+            $pdfName = "Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf";
+        } else {
+            $pdfName = "Rekap Absensi Tidak Ditemukan.pdf";
+        }
+
+        $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
         ->setPaper('a4','landscape');
-        return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
+        // return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
+        return $pdf->stream($pdfName);
+       
     }
 
     public function rekapabsensiExcel(Request $request)
