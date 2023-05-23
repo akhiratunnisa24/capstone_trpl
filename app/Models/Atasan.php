@@ -9,7 +9,7 @@ class Atasan extends Model
 {
     use HasFactory;
     protected $table = 'atasan';
-    protected $fillable = ['id_karyawan','nik','nama','jabatan','level_jabatan'];
+    protected $fillable = ['id_karyawan','nik','jabatan','level_jabatan'];
 
     public function karyawan()
     {
