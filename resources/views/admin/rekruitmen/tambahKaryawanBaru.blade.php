@@ -197,8 +197,8 @@
                                                                                         Langsung</option>
                                                                                     @foreach ($atasan_pertama as $atasan)
                                                                                         <option
-                                                                                            value="{{ $atasan->id_karyawan }}">
-                                                                                            {{ $atasan->karyawan->nama }}
+                                                                                            value="{{ $atasan->id }}">
+                                                                                            {{ $atasan->nama }}
                                                                                         </option>
                                                                                     @endforeach
                                                                                 </select>
@@ -216,8 +216,8 @@
                                                                                     </option>
                                                                                     @foreach ($atasan_kedua as $atasan)
                                                                                         <option
-                                                                                            value="{{ $atasan->id_karyawan }}">
-                                                                                            {{ $atasan->karyawan->nama }}
+                                                                                            value="{{ $atasan->id }}">
+                                                                                            {{ $atasan->nama }}
                                                                                         </option>
                                                                                     @endforeach
                                                                                 </select>

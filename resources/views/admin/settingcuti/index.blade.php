@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
-                        <div class="panel-heading clearfix">
+                        <div class="panel-heading clearfix" style="height:35px">
                             @if(date('m') == 4 && date('d') == 1)
                                 <form action="/reset-cuti-tahun-ini" method="POST" align="center">
                                     @csrf
