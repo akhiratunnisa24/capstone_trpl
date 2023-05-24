@@ -56,8 +56,8 @@
                                             <th>Tingkat Pendidikan</th>
                                             <th>Nama Sekolah</th>
                                             <th>Jurusan</th>
-                                            <th>Tahun Mulai</th>
-                                            <th>Tahun Selesai</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Akhir</th>
                                             {{-- <th>Lama Pendidikan</th> --}}
                                             <th>Alamat</th>
                                             <th>Nomor Ijazah</th>
@@ -105,8 +105,8 @@
                                             <th>No</th>
                                             <th>Bidang/Jenis</th>
                                             <th>Lembaga Pendidikan</th>
-                                            <th>Tahun Mulai</th>
-                                            <th>Tahun Lulus</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Akhir</th>
                                             <th>Alamat</th>
                                             <th>Nomor Ijazah</th>
                                             <th>Aksi</th>
