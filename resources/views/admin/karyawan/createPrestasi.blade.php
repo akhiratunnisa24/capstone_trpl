@@ -67,7 +67,7 @@
                                                 <td>{{ $pres['nama_instansi'] }}</td>
                                                 <td>{{ $pres['alamat'] }}</td>
                                                 <td>{{ $pres['no_surat'] }}</td>
-                                                <td>{{ date('d/m/y', strtotime($pres['tanggal_surat'])) }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($pres['tanggal_surat'])->format('d/m/Y') }}</td>
                                                 {{-- <td>{{ $pres['tanggal_surat'] }}</td> --}}
                                                 <td class="text-center">
                                                     <div class="row d-grid gap-2" role="group" aria-label="Basic example">

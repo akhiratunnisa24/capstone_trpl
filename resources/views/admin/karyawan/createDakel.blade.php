@@ -72,7 +72,7 @@
                                                 <td>{{ $data['nama'] }}</td>
                                                 <td>{{ $data['jenis_kelamin'] }}</td>
                                                 {{-- <td>{{ $data['tgllahir'] }}</td> --}}
-                                                <td>{{ date('d/m/y', strtotime($data['tgllahir'])) }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($data['tgllahir'])->format('d/m/Y') }}</td>
                                                 <td>{{ $data['tempatlahir'] }}</td>
                                                 <td>{{ $data['pendidikan_terakhir'] }}</td>
                                                 <td>{{ $data['pekerjaan'] }}</td>

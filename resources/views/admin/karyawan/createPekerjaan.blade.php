@@ -65,8 +65,8 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $pek['nama_perusahaan'] }}</td>
                                                 <td>{{ $pek['alamat'] }}</td>
-                                                <td>{{ date('d/m/y', strtotime($pek['tgl_mulai'])) }}</td>
-                                                <td>{{ date('d/m/y', strtotime($pek['tgl_selesai'])) }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_mulai'])->format('d/m/Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_selesai'])->format('d/m/Y') }}</td>
                                                 {{-- <td>{{ $pek['tgl_mulai'] }}</td>
                                                 <td>{{ $pek['tgl_selesai'] }}</td> --}}
                                                 <td>{{ $pek['jabatan'] }}</td>
