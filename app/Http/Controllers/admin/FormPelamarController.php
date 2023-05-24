@@ -644,8 +644,8 @@ class FormPelamarController extends Controller
 
         // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $departemen     = Departemen::all();
-        $atasan_pertama = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
-        $atasan_kedua   = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Manager', 'Direksi'])->get();
+        // $atasan_pertama = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
+        // $atasan_kedua   = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Manager', 'Direksi'])->get();
         $user = Karyawan::max('id');
         $datakeluarga = Keluarga::where('id_pegawai', $user)->get();
         $kontakdarurat = Kdarurat::where('id_pegawai', $user)->get();

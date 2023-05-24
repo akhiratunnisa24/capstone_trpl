@@ -145,10 +145,10 @@
                         <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
                             <option value="">Pilih Atasan Langsung</option>
                             @foreach ($atasan_pertama as $atasan)
-                                <option value="{{ $atasan->id_karyawan }}"
-                                    @if($karyawan->atasan_pertama == $atasan->id_karyawan)
+                                <option value="{{ $atasan->id }}"
+                                    @if($karyawan->atasan_pertama == $atasan->id)
                                         selected
-                                    @endif>{{ $atasan->karyawan->nama }}
+                                    @endif>{{ $atasan->nama }}
                                 </option>
                                    
                             @endforeach
@@ -160,10 +160,10 @@
                         <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
                             <option value="">Pilih Atasan</option>
                             @foreach ($atasan_kedua as $atasan)
-                                <option value="{{ $atasan->id_karyawan}}"
-                                    @if($karyawan->atasan_kedua == $atasan->id_karyawan)
+                                <option value="{{ $atasan->id}}"
+                                    @if($karyawan->atasan_kedua == $atasan->id)
                                         selected
-                                    @endif>{{ $atasan->karyawan->nama }}
+                                    @endif>{{ $atasan->nama }}
                                 </option>
                             @endforeach
                         </select>
