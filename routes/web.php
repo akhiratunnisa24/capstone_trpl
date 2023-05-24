@@ -508,7 +508,7 @@ Route::post('/storepage', [karyawansController::class, 'store_page'])->name('sto
     Route::put('updateidentitas{id}', [karyawanController::class, 'updateidentitas'])->name('updateidentitas');
 
 //form data keluarga
-Route::get('/create-data-keluarga', [KaryawansController::class, 'createdakel'])->name('create.dakel');
+Route::get('/create-data-keluarga', [KaryawansController::class, 'crJeatedakel'])->name('create.dakel');
 Route::post('/storedatakeluarga', [KaryawansController::class, 'storedk'])->name('storedk');
 Route::post('/updatedatakeluarga', [KaryawansController::class, 'updatedk'])->name('updatedk');
 Route::post('/delete-keluarga/{{key}}', [KaryawansController::class, 'deletedk'])->name('deletedk');
