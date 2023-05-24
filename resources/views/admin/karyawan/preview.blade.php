@@ -381,6 +381,7 @@
                                 <th>Nama</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Tanggal Lahir</th>
+                                <th>Kota Kelahiran</th>
                                 {{-- <th>Alamat</th> --}}
                                 <th>Pendidikan Terakhir</th>
                                 <th>Pekerjaan</th>
@@ -390,13 +391,11 @@
                             @foreach ($datakeluarga as $keluarga)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $keluarga['nama'] }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($keluarga['tgllahir'])->format('d/m/Y') }}</td>
                                     <td>{{ $keluarga['hubungan'] }}</td>
                                     <td>{{ $keluarga['nama'] }}</td>
                                     <td>{{ $keluarga['jenis_kelamin'] }}</td>
-                                    {{-- <td>{{ $keluarga['tgllahir'] }}</td> --}}
                                     <td>{{ \Carbon\Carbon::parse($keluarga['tgllahir'])->format('d/m/Y') }}</td>
+                                    <td>{{ $keluarga['tempatlahir'] }}</td>
                                     {{-- <td>{{$keluarga['alamat']}}</td> --}}
                                     <td>{{ $keluarga['pendidikan_terakhir'] }}</td>
                                     <td>{{ $keluarga['pekerjaan'] }}</td>
@@ -610,7 +609,8 @@
                                     <td>{{ $pres['nama_instansi'] }}</td>
                                     <td>{{ $pres['alamat'] }}</td>
                                     <td>{{ $pres['no_surat'] }}</td>
-                                    <td>{{ $pres['tanggal_surat'] }}</td>
+                                    {{-- <td>{{ $pres['tanggal_surat'] }}</td> --}}
+                                    <td>{{ \Carbon\Carbon::parse($pres['tanggal_surat'])->format('d/m/Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
