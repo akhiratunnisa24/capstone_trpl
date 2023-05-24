@@ -295,7 +295,7 @@
                                                 <div class="modal-footer">
                                                     <button type="submit" name="submit" id="simpan"
                                                     class="btn btn-sm btn-success ">Simpan <i class="fa fa-save"></i></button>
-                                            <a href="editfile{{ $karyawan2->id }}" class="btn btn-sm btn-primary" type="button">Edit Data <i class="fa fa-edit"></i></a>
+                                            {{-- <a href="editfile{{ $karyawan2->id }}" class="btn btn-sm btn-primary" type="button">Edit Data <i class="fa fa-edit"></i></a> --}}
                                                     <a href="showfile{{ $karyawan2->id }}" class="btn btn-sm btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
                                                 </div>
 
