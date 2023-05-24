@@ -28,12 +28,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
-                        <div class="panel-heading  clearfix">
-                            <form action="{{route('atasan.store')}}" method="POST" align="center">
+                        <div class="panel-heading  clearfix" style="height:35px">
+                            {{-- <form action="{{route('atasan.store')}}" method="POST" align="center">
                                 @csrf
                                 @method('POST')
                                 <button type="submit" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Generate Atasan</button>
-                            </form>
+                            </form> --}}
                         </div>
                         
                         <div class="panel-body">
@@ -44,8 +44,8 @@
                                         <th>No</th>
                                         <th>NIK</th>
                                         <th>Karyawan</th>
-                                        <th>Jabatan</th>
                                         <th>Level Jabatan</th>
+                                        <th>Jabatan</th>
                                         {{-- <th>Aksi</th> --}}
                                     </tr>
                                 </thead>
@@ -55,22 +55,10 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $data->nik }}</td>
-                                            <td>{{ $data->karyawan->nama }}</td>
+                                            <td>{{ $data->nama }}</td>
                                             <td>{{ $data->jabatan }}</td>
-                                            <td>{{ $data->level_jabatan }}</td>
-                                            
-                                            {{-- <td class="text-center">
-                                                <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-
-                                                    <a class="btn btn-success btn-sm" data-toggle="modal" 
-                                                       data-target="#editJadwal{{$data->id}}"><i class="fa fa-edit"></i>
-                                                    </a>
-
-                                                    <button class="btn btn-danger btn-sm" onclick="hapusjadwal({{ $data->id }})"><i class="fa fa-trash"></i></button>
-                                                </div>
-                                            </td> --}}
+                                            <td>{{ $data->nama_jabatan }}</td>
                                         </tr>
-                                        {{-- @include('admin.datamaster.jadwal.edit') --}}
                                     @endforeach
                                 </tbody>
                             </table>
