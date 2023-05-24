@@ -138,16 +138,16 @@ class KalenderController extends Controller
         }
     }
 
-    public function storeSettings(Request $request)
-    {
-         $settingharilibur  = new SettingHarilibur;
-         $settingharilibur ->tanggal = \Carbon\Carbon::parse($request->input('tanggal'))->format('Y-m-d');
-         $settingharilibur ->tipe    = $request->input('tipe');
-         $settingharilibur ->keterangan = $request->input('keterangan');
-         $settingharilibur ->save();
+    // public function storeSettings(Request $request)
+    // {
+    //      $settingharilibur  = new SettingHarilibur;
+    //      $settingharilibur ->tanggal = \Carbon\Carbon::parse($request->input('tanggal'))->format('Y-m-d');
+    //      $settingharilibur ->tipe    = $request->input('tipe');
+    //      $settingharilibur ->keterangan = $request->input('keterangan');
+    //      $settingharilibur ->save();
 
-         return redirect('/setting-kalender')->with('pesan','Data berhasil disimpan !');
-    }
+    //      return redirect('/setting-kalender')->with('pesan','Data berhasil disimpan !');
+    // }
 
     public function storeSetting(Request $request)
     {
@@ -192,14 +192,14 @@ class KalenderController extends Controller
         );
 
         DB::table('setting_harilibur')->where('id',$id)->update($settingharilibur);
-        return redirect('/setting-kalender');
+        return redirect('/manajemen-harilibur');
         
     }
 
     public function destroy($id)
     {
         DB::table('setting_harilibur')->where('id', $id)->delete();
-        return redirect('/setting-kalender');
+        return redirect('/manajemen-harilibur');
     }
 
     // public function getDataHarilibur()

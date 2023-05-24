@@ -84,7 +84,7 @@ class KaryawansController extends Controller
                 $karyawan                = new Karyawan;
                 $karyawan->nip           = $request->nipKaryawan;
                 $karyawan->nama          = $request->namaKaryawan;
-                $karyawan->tgllahir      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgllahirKaryawan)->format('Y-m-d');
+                $karyawan->tgllahir      = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgllahirKaryawan)->format('Y-m-d');
                 $karyawan->tempatlahir   = $request->tempatlahirKaryawan;
                 $karyawan->jenis_kelamin = $request->jenis_kelaminKaryawan;
                 $karyawan->alamat        = $request->alamatKaryawan;
@@ -106,7 +106,7 @@ class KaryawansController extends Controller
                 $karyawan->nama_jabatan       = $request->namaJabatan;
                 $karyawan->jabatan       = $request->jabatanKaryawan;
                 $karyawan->status_karyawan       = $request->statusKaryawan;
-                $karyawan->tglmasuk      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tglmasukKaryawan)->format('Y-m-d');
+                $karyawan->tglmasuk      = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmasukKaryawan)->format('Y-m-d');
                 $karyawan->atasan_pertama = $request->atasan_pertama;
                 $karyawan->atasan_kedua  = $request->atasan_kedua;
                 $karyawan->tipe_karyawan = $request->tipe_karyawan;
@@ -126,12 +126,15 @@ class KaryawansController extends Controller
                 $karyawan->status_kerja  = 'Aktif';
 
                 $request->session()->put('karyawan', $karyawan);
+
+                $karyawan = $request->session()->get('karyawan');
+                // dd($karyawan);
             } else {
                 $karyawan = $request->session()->get('karyawan');
 
                 $karyawan->nip          = $request->nipKaryawan;
                 $karyawan->nama          = $request->namaKaryawan;
-                $karyawan->tgllahir      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgllahirKaryawan)->format('Y-m-d');
+                $karyawan->tgllahir      = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgllahirKaryawan)->format('Y-m-d');
                 $karyawan->tempatlahir   = $request->tempatlahirKaryawan;
                 $karyawan->jenis_kelamin = $request->jenis_kelaminKaryawan;
                 $karyawan->alamat        = $request->alamatKaryawan;
@@ -717,15 +720,13 @@ class KaryawansController extends Controller
         //     // Tambahkan kode untuk menampilkan alert di sini
         //     echo '<script>alert("Data sudah ada di database!");</script>';
         // }
-
-        // Jika NIP tidak ditemukan, simpan data ke database
+       
+        //Jika NIP tidak ditemukan, simpan data ke database
         if ($request->session()->has('karyawan')) {
 
             $karyawan = $request->session()->get('karyawan');
             $karyawan->save();
-            $idKaryawan = $karyawan->id;
-
-            
+            $idKaryawan = $karyawan->id;  
         }
 
         if ($request->session()->has('datakeluarga')) {

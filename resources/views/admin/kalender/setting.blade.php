@@ -5,11 +5,11 @@
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Setting Hari Libur</h4>
+                <h4 class="pull-left page-title">Data Hari Libur</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Setting Hari Libur</li>
+                    <li class="active">Data Hari Libur</li>
                 </ol>
 
                 <div class="clearfix">
@@ -28,7 +28,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                data-target="#AddSetting"> Tambah Setting Hari Libur</a>
+                                data-target="#AddSetting"> Tambah Data Hari Libur</a>
                         </div>
                         @include('admin.kalender.addSetting')
                         <div class="panel-body">

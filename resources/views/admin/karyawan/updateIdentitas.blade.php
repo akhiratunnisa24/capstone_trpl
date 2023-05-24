@@ -146,7 +146,7 @@
 
                                                     <div class="form-group">
                                                         <label class="form-label">Atasan Langsung
-                                                            (Asisten Manager/Manager/Direksi)</label>
+                                                            (Asistant Manager/Manager/Direksi)</label>
                                                         <select class="form-control" name="atasan_pertama"
                                                             data-live-search="true">
                                                             <option value="">Pilih Atasan Langsung</option>

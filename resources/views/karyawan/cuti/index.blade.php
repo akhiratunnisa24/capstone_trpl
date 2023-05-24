@@ -71,7 +71,7 @@
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
                                                                         <td>{{\Carbon\Carbon::parse($data->tgl_permohonan)->format("d/m/Y")}}</td>
-                                                                        <td>{{Auth::user()->name}}</td>
+                                                                        <td>{{$data->nama}}</td>
                                                                         {{-- <td>{{$data->jabatan}}</td> --}}
                                                                         <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s.d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                                         <td>{{$data->jenis_cuti}}</td>
@@ -171,7 +171,7 @@
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
                                                                         <td>{{ \Carbon\Carbon::parse($data->tgl_permohonan)->format('d/m/Y') }}</td>
-                                                                        <td>{{ Auth::user()->name }}</td>
+                                                                        <td>{{ $data->nama }}</td>
                                                                         <td>
                                                                             {{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }} @if($data->tgl_selesai !== NULL) s/d 
                                                                             {{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }} @endif

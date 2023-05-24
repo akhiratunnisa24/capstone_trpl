@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SetcutiController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\ShiftController;
@@ -20,11 +21,11 @@ use App\Http\Controllers\admin\KalenderController;
 use App\Http\Controllers\admin\SisacutiController;
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\IzinAdminController;
+
 use App\Http\Controllers\admin\JeniscutiController;
 
+
 use App\Http\Controllers\admin\JenisizinController;
-
-
 use App\Http\Controllers\admin\MasterkpiController;
 use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
@@ -284,6 +285,8 @@ Route::get('/rekapizinExcel', [IzinAdminController::class, 'rekapizinExcel'])->n
 Route::get('/rekapizinpdf', [IzinAdminController::class, 'rekapizinpdf'])->name('rekapizinpdf');
 //kategori cuti
 Route::get('/kategori_cuti', [JeniscutiController::class, 'index'])->name('kategori.index');
+Route::get('/setting-kategori-cuti', [SetcutiController::class, 'index'])->name('setkategori.index');
+Route::put('/update-kategori/{id}', [SetcutiController::class, 'update'])->name('setkategori.update');
 Route::post('/kategori_cuti', [JeniscutiController::class, 'store'])->name('kategori.store');
 Route::put('/cuti_update/{id}', [JeniscutiController::class, 'update'])->name('cuti_update');
 Route::get('/cuti_show/{id}', [JeniscutiController::class, 'show'])->name('cuti_show');
@@ -609,7 +612,7 @@ Route::get('/delete-pekerjaan/{id}', [karyawansController::class, 'destroy'])->n
 //Kalender
 Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender');
 Route::get('/get-harilibur-data', [KalenderController::class, 'getHarilibur'])->name('getharilibur'); //getdatajson untuk ditampilkan di kalender
-Route::get('/setting-kalender', [KalenderController::class, 'setting'])->name('setting.kalender');
+Route::get('/manajemen-harilibur', [KalenderController::class, 'setting'])->name('setting.kalender');
 Route::post('/store-kalender', [KalenderController::class, 'storeSetting'])->name('store.kalender');
 Route::put('/update-kalender/{id}', [KalenderController::class, 'update'])->name('kalender.update');
 Route::get('/delete-kalender/{id}', [KalenderController::class, 'destroy'])->name('kalender.delete');
