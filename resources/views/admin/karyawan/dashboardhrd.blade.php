@@ -328,7 +328,7 @@
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#2" class="collapsed"
                                 aria-expanded="false">
-                                Permintaan Izin Karyawan
+                                Permintaan Sakit/Ijin/Dinas/lain-lain
                                 
                                 @if ($izinjumlah)
                                     <span class="badge badge badge-danger" style="background-color:red">{{ $izinjumlah }}</span>

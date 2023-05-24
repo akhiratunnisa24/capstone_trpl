@@ -41,8 +41,8 @@
                                     </div>         
                                     <div class="form-group col-sm">
                                         <label class="col-form-label">Nama Karyawan</label>
-                                        <input type="text" class="form-control" id="id_karyawan" value="{{Auth::user()->name}}" readonly>
-                                        <input type="hidden" class="form-control" name="id_karyawan" id="id_karyawan" value="{{$karyawan}}" hidden>
+                                        <input type="text" class="form-control" id="id_karyawan" value="{{$datakry->nama}}" readonly>
+                                        <input type="hidden" class="form-control" name="id_karyawan" id="id_karyawan" value="{{$datakry->id}}" hidden>
                                     </div>
                                     <div class="form-group col-sm">
                                         <label class="col-form-label">Jabatan</label>

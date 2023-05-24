@@ -116,6 +116,7 @@
                             <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
                             <li><a href="jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li>
                             <li><a href="/metode_rekrutmen"><i class="fa fa-user-plus"></i><span></span>Rekruitmen</a></li>
+                            <li><a href="/manajemen-harilibur"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li>
                             {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li> --}}
                             {{-- <li><a href="#"><i class="fa fa-institution (alias)"></i><span></span>Setting
                                     Organisasi</a></li> --}}
@@ -146,7 +147,7 @@
                             {{-- <li><a href="settinguser"><i class="fa fa-group (alias)"></i><span></span>Managemen
                                     User</a></li> --}}
                             <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
-                            {{-- <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Setting Kalender</span></a></li> --}}
+                            {{-- <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li> --}}
                         </ul>
                     </li>
                 </ul>
@@ -228,7 +229,7 @@
                         <a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Managemen User</span></a>
                         <a href="settingrole" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Setting Role Login</span></a>
                         <a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a>
-                        <a href="/setting-kalender"><i class="ti-calendar"></i><span>Setting Kalender</span></a>
+                        <a href="/setting-kalender"><i class="ti-calendar"></i><span>Manajemen Libur</span></a>
                     </li>
                 </ul>
             </div>

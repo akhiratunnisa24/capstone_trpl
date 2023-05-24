@@ -41,7 +41,7 @@
                             <div class="form-group mb-3">
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
-                                        <label class="font-size-14 fw-bold">Nama lengkap *</label>
+                                        <label class="font-size-14 fw-bold">Nama Lengkap *</label>
                                         <p >{{ $karyawan->nama }}</p>
                                     </div>
                                 </div>
@@ -78,18 +78,6 @@
                             <div class="form-group mb-3">
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
-                                        <label class="font-size-14 fw-bold">Nomor Induk Kependudukan (NIK) *</label>
-                                        <p style="text-transform: uppercase;">{{ $karyawan->nik }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="my-5">
-                        <div class="col-12 pl-0">
-                            <div class="form-group mb-3">
-                                <div class="row align-items-end">
-                                    <div class="col-md mb-md-0 m-l-15">
                                         <label class="font-size-14 fw-bold">Jenis Kelamin *</label>
                                         @if ($karyawan->jenis_kelamin == 'Perempuan')
                                             <p>Perempuan</p>
@@ -101,48 +89,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="my-5">
-                        <div class="col-12 pl-0">
-                            <div class="form-group mb-3">
-                                <div class="row align-items-end">
-                                    <div class="col-md mb-md-0 m-l-15">
-                                        <label class="font-size-14 fw-bold">Nomor NPWP *</label>
-                                        <p style="text-transform: uppercase;">{{ $karyawan->no_npwp }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="my-5">
-                        <div class="col-12 pl-0">
-                            <div class="form-group mb-3">
-                                <div class="row align-items-end">
-                                    <div class="col-md mb-md-0 m-l-15">
-                                        <label class="font-size-14 fw-bold">Nomor Asuransi AKDHK</label>
-                                        <p style="text-transform: uppercase;">{{ $karyawan->no_akdhk }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Nama Bank *</label>
-                                    <p>{{ $karyawan->nama_bank }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-md-4">
-                    <label class="">
-                        <h4 class="text-white">#</h4>
-                    </label>
                     <div class="my-5">
                         <div class="col-12 pl-0">
                             <div class="form-group mb-3">
@@ -191,7 +137,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="my-5">
+                </div>
+
+
+                <div class="col-md-4">
+                    <label class="">
+                        <h4 class="text-white">#</h4>
+                    </label>
+                    <div class="row my-5">
                         <div class="col-12 pl-0">
                             <div class="form-group mb-3">
                                 <div class="row align-items-end">
@@ -203,48 +156,42 @@
                             </div>
                         </div>
                     </div>
-                    <div class="my-5">
+                    <div class="row my-5">
+                        <div class="col-12 pl-0">
+                            <div class="form-group mb-3">
+                                <div class="row align-items-end">
+                                    <div class="col-md mb-md-0 m-l-15">
+                                        <label class="font-size-14 fw-bold">Nomor Induk Kependudukan (NIK) *</label>
+                                        <p>{{ $karyawan->nik }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-5">
+                        <div class="col-12 pl-0">
+                            <div class="form-group mb-3">
+                                <div class="row align-items-end">
+                                    <div class="col-md mb-md-0 m-l-15">
+                                        <label class="font-size-14 fw-bold">Nomor Kartu Keluarga *</label>
+                                        <p>{{ $karyawan->no_kk }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-5">
                         <div class="col-12 pl-0">
                             <div class="form-group mb-3">
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
                                         <label class="font-size-14 fw-bold">Tanggal Masuk *</label>
-                                        <p>{{ $karyawan->tglmasuk }}</p>
+                                        <p>{{ \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="my-5">
-                        <div class="col-12 pl-0">
-                            <div class="form-group mb-3">
-                                <div class="row align-items-end">
-                                    <div class="col-md mb-md-0 m-l-15">
-                                        <label class="font-size-14 fw-bold">No. BPJS Ketenagakerjaan *</label>
-                                        <p>{{ $karyawan->no_bpjs_ket }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="my-5">
-                        <div class="col-12 pl-0">
-                            <div class="form-group mb-3">
-                                <div class="row align-items-end">
-                                    <div class="col-md mb-md-0 m-l-15">
-                                        <label class="font-size-14 fw-bold">No. Program Pensiun *</label>
-                                        <p>{{ $karyawan->no_program_pensiun }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <label class="">
-                        <h4 class="text-white">#</h4>
-                    </label>
                     <div class="row my-5">
                         <div class="col-12 pl-0">
                             <div class="form-group mb-3">
@@ -298,7 +245,7 @@
                             <div class="form-group mb-3">
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
-                                        <label class="font-size-14 fw-bold">Atasan (Asistant Manager/Manager/Direksi)</label>
+                                        <label class="font-size-14 fw-bold">Atasan (Manager/Direksi)</label>
                                         @if (!empty($atasan_kedua_nama))
                                             <p>{{ $atasan_kedua_nama }}</p>
                                         @else
@@ -309,13 +256,55 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="">
+                        <h4 class="text-white">#</h4>
+                    </label>
                     <div class="row my-5">
                         <div class="col-12 pl-0">
                             <div class="form-group mb-3">
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
-                                        <label class="font-size-14 fw-bold">Nomor Kartu Keluarga *</label>
-                                        <p>{{ $karyawan->no_kk }}</p>
+                                        <label class="font-size-14 fw-bold">Nomor NPWP *</label>
+                                        <p style="text-transform: uppercase;">{{ $karyawan->no_npwp }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-5">
+                        <div class="col-12 pl-0">
+                            <div class="form-group mb-3">
+                                <div class="row align-items-end">
+                                    <div class="col-md mb-md-0 m-l-15">
+                                        <label class="font-size-14 fw-bold">No. BPJS Ketenagakerjaan *</label>
+                                        <p>{{ $karyawan->no_bpjs_ket }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-5">
+                        <div class="col-12 pl-0">
+                            <div class="form-group mb-3">
+                                <div class="row align-items-end">
+                                    <div class="col-md mb-md-0 m-l-15">
+                                        <label class="font-size-14 fw-bold">No. Program Pensiun *</label>
+                                        <p>{{ $karyawan->no_program_pensiun }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-5">
+                        <div class="col-12 pl-0">
+                            <div class="form-group mb-3">
+                                <div class="row align-items-end">
+                                    <div class="col-md mb-md-0 m-l-15">
+                                        <label class="font-size-14 fw-bold">Nomor Asuransi AKDHK</label>
+                                        <p style="text-transform: uppercase;">{{ $karyawan->no_akdhk }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -346,6 +335,16 @@
                             <div class="form-group mb-3">
                                 <div class="row align-items-end">
                                     <div class="col-md mb-md-0 m-l-15">
+                                        <label class="font-size-14 fw-bold">Nama Bank *</label>
+                                        <p>{{ $karyawan->nama_bank }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 pl-0">
+                            <div class="form-group mb-3">
+                                <div class="row align-items-end">
+                                    <div class="col-md mb-md-0 m-l-15">
                                         <label class="font-size-14 fw-bold">No. Rekening *</label>
                                         <p>{{ $karyawan->no_rek }}</p>
                                     </div>
@@ -353,19 +352,28 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
-
             </div>
+            <br>
 
             <div id="data-keluarga">
                 <div class="modal-body" style="margin-left:15px;margin-right:15px;">
-                    <label>
-                        <h4>B. DATA KELUARGA </h4>
-                    </label>
+                    <div class="my-5">
+                        <div class="col-12 pl-0">
+                            <div class="form-group mb-3">
+                                <div class="row align-items-end">
+                                    <div class="col-md mb-md-0 m-l-15">
+                                        <label class="font-size-14 fw-bold"></label>
+                                        <p style="text-transform: uppercase;"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <table class="table table-striped">
+                        <label>
+                            <h4>B. DATA KELUARGA </h4>
+                        </label>
                         <thead class="alert alert-info">
                             <tr>
                                 <th>No</th>
@@ -382,7 +390,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $keluarga['nama'] }}</td>
-                                    <td>{{ $keluarga['tgllahir'] }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($keluarga['tgllahir'])->format('d/m/Y') }}</td>
                                     <td>{{ $keluarga['hubungan'] }}</td>
                                     {{-- <td>{{$keluarga['alamat']}}</td> --}}
                                     <td>{{ $keluarga['pendidikan_terakhir'] }}</td>

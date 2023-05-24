@@ -142,7 +142,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1" class="form-label">Atasan Langsung
-                                        (Asisten Manager/Manager/Direksi)</label>
+                                        (Asistant Manager/Manager/Direksi)</label>
                                     <select class="form-control" name="atasan_pertama">
                                         <option value="">Pilih Atasan Langsung</option>
                                         @foreach ($atasan_pertama as $atasan)
