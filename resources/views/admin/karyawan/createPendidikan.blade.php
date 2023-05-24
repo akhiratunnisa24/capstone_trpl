@@ -56,8 +56,8 @@
                                             <th>Tingkat Pendidikan</th>
                                             <th>Nama Sekolah</th>
                                             <th>Jurusan</th>
-                                            <th>Tahun Mulai</th>
-                                            <th>Tahun Selesai</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Akhir</th>
                                             {{-- <th>Lama Pendidikan</th> --}}
                                             <th>Alamat</th>
                                             <th>Nomor Ijazah</th>
@@ -72,8 +72,11 @@
                                                     <td>{{$p['tingkat'] }}</td>
                                                     <td>{{$p['nama_sekolah'] }}</td>
                                                     <td>{{$p['jurusan'] }}</td>
-                                                    <td>{{$p['tahun_masuk_formal'] }}</td>
-                                                    <td>{{$p['tahun_lulus_formal'] }}</td>
+                                                    {{-- <td>{{$p['tahun_masuk_formal'] }}</td>
+                                                    <td>{{$p['tahun_lulus_formal'] }}</td> --}}
+                                                    <td>{{ \Carbon\Carbon::parse($p['tahun_masuk_formal'])->format('d/m/Y') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($p['tahun_lulus_formal'])->format('d/m/Y') }}</td>
+
                                                     {{-- <td></td> --}}
                                                     <td>{{$p['kota_pformal'] }}</td>
                                                     <td>{{$p['ijazah_formal']}}</td>
@@ -102,8 +105,8 @@
                                             <th>No</th>
                                             <th>Bidang/Jenis</th>
                                             <th>Lembaga Pendidikan</th>
-                                            <th>Tahun Mulai</th>
-                                            <th>Tahun Lulus</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Akhir</th>
                                             <th>Alamat</th>
                                             <th>Nomor Ijazah</th>
                                             <th>Aksi</th>
@@ -116,8 +119,10 @@
                                                     <td>{{ $no++ }}</td>
                                                     <td>{{ $nf['jenis_pendidikan'] }}</td>
                                                     <td>{{ $nf['nama_lembaga'] }}</td>
-                                                    <td>{{ $nf['tahun_masuk_nonformal'] }}</td>
-                                                    <td>{{ $nf['tahun_lulus_nonformal'] }}</td>
+                                                    {{-- <td>{{ $nf['tahun_masuk_nonformal'] }}</td>
+                                                    <td>{{ $nf['tahun_lulus_nonformal'] }}</td> --}}
+                                                    <td>{{ \Carbon\Carbon::parse($nf['tahun_masuk_nonformal'])->format('d/m/Y') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($nf['tahun_lulus_nonformal'])->format('d/m/Y') }}</td>
                                                     <td>{{ $nf['kota_pnonformal'] }}</td>
                                                     <td>{{ $nf['ijazah_nonformal'] }}</td>
                                                     <td class="text-center">

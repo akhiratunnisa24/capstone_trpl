@@ -39,18 +39,18 @@
                                                                 <label class="text-white m-b-10">UPLOAD FILE DIGITAL</label>
                                                             </div>
                                                         </div>
-                                                        
 
-                                                            @if (session('alert'))
+
+                                                        @if (session('alert'))
                                                             <div class="alert alert-danger">
                                                                 {{ session('alert') }}
                                                             </div>
-                                                            @endif
-                                                            @if (session('alert2'))
+                                                        @endif
+                                                        @if (session('alert2'))
                                                             <div class="alert alert-success">
                                                                 {{ session('alert2') }}
                                                             </div>
-                                                            @endif
+                                                        @endif
 
                                                         {{-- <div class="col-md-12 m-t-10">
                                                             <div class="form-group">
@@ -67,15 +67,17 @@
                                                             </div>
                                                         </div> --}}
 
-                                                         <div class="col-md-12 m-t-10">
-                                                                <label class="text-black m-b-10 col-sm-12" style="font-size: 30px">{{ $karyawan2->nama }}</label>
-                                                                <input class="form-control selectpicker" name="karyawan" value="{{ $karyawan2->id }}"  style="display: none;">
-                                                            </div>
+                                                        <div class="col-md-12 m-t-10">
+                                                            <label class="text-black m-b-10 col-sm-12"
+                                                                style="font-size: 30px">{{ $karyawan2->nama }}</label>
+                                                            <input class="form-control selectpicker" name="karyawan"
+                                                                value="{{ $karyawan2->id }}" style="display: none;">
                                                         </div>
+                                                    </div>
 
-                                                        <div class="col-md-6 m-t-10">
+                                                    <div class="col-md-6 m-t-10">
 
-                                                            {{-- <div class="form-group">
+                                                        {{-- <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Foto
                                                                         Karyawan</label>
@@ -86,240 +88,283 @@
                                                                 </div>
                                                             </div> --}}
 
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Kartu Tanda Penduduk ( KTP )</label>
-                                                                    <label class="form-label col-sm-12 {{ isset($file->ktp) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->ktp) ? $file->ktp : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoKTP" id="fotoKTP"
-                                                                        class="form-control" onchange="previewImage()" value="{{ $file->ktp ?? 'File tidak tersedia.' }}">
-                                                                        
-                                                                </div>
-                                                            </div>
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Kartu Tanda Penduduk (
+                                                                    KTP )</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->ktp) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->ktp) ? $file->ktp : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoKTP" id="fotoKTP"
+                                                                    class="form-control" onchange="previewImage()"
+                                                                    value="{{ $file->ktp ?? 'File tidak tersedia.' }}">
 
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Kartu Keluarga ( KK )</label>
-                                                                    <label class="form-label col-sm-12 {{ isset($file->kk) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->kk) ? $file->kk : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview2 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoKK" id="fotoKK"
-                                                                        class="form-control" onchange="previewImageKK()">
-                                                                </div>
                                                             </div>
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Nomor Pokok Wajib Pajak ( NPWP )</label>
-                                                                    <label class="form-label col-sm-12 {{ isset($file->npwp) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->npwp) ? $file->npwp : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview3 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoNPWP" id="fotoNPWP"
-                                                                        class="form-control" onchange="previewImageNPWP()">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">BPJS Ketenagakerjaan</label>
-                                                                    <label class="form-label col-sm-12 {{ isset($file->bpjs_ket) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->bpjs_ket) ? $file->bpjs_ket : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview4 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoBPJSket" id="fotoBPJSket"
-                                                                        class="form-control" onchange="previewImageBPJSket()">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">BPJS Kesehatan ( Karyawan + Keluarga )</label>
-                                                                    <label class="form-label col-sm-12 {{ isset($file->bpjs_kes) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->bpjs_kes) ? $file->bpjs_kes : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview5 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoBPJSkes" id="fotoBPJSkes"
-                                                                        class="form-control" onchange="previewImageBPJSkes()">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Asuransi AKDHK</label>
-                                                                    <label class="form-label col-sm-12 {{ isset($file->as_akdhk) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->as_akdhk) ? $file->as_akdhk : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview6 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoAKDHK" id="fotoAKDHK"
-                                                                        class="form-control" onchange="previewImageAKDHK()">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Buku Tabungan Nomor Rekening & Nama Bank</label>
-                                                                     <label class="form-label col-sm-12 {{ isset($file->buku_tabungan) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->buku_tabungan) ? $file->buku_tabungan : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview7 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoTabungan" id="fotoTabungan"
-                                                                        class="form-control" onchange="previewImageTabungan()">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Surat Keterangan Kepolisian ( SKKB/SKCK/Lainnya )</label>
-                                                                    <label class="form-label col-sm-12 {{ isset($file->skck) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->skck) ? $file->skck : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview8 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoSKCK" id="fotoSKCK"
-                                                                        class="form-control" onchange="previewImageSKCK()">
-                                                                </div>
-                                                            </div>
-
                                                         </div>
 
-                                                        <!-- baris sebelah kanan  -->
-
-                                                        <div class="col-md-6 m-t-10">
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Ijazah Pendidikan Terakhir</label>
-                                                                     <label class="form-label col-sm-12 {{ isset($file->ijazah) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->ijazah) ? $file->ijazah : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                        <img class="img-preview9 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoIjazah" id="fotoIjazah"
-                                                                        class="form-control" onchange="previewImageIjazah()">
-                                                                </div>
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Kartu Keluarga ( KK
+                                                                    )</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->kk) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->kk) ? $file->kk : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview2 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoKK" id="fotoKK"
+                                                                    class="form-control" onchange="previewImageKK()">
                                                             </div>
+                                                        </div>
 
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Formulir Lamaran & Penawaran Pekerjaan ( Remunerasi )</label>
-                                                                    <label class="form-label col-sm-12 {{ isset($file->lamaran) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->lamaran) ? $file->lamaran : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview10 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoLamaran" id="fotoLamaran"
-                                                                        class="form-control" onchange="previewImageLamaran()">
-                                                                </div>
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Nomor Pokok Wajib Pajak
+                                                                    ( NPWP )</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->npwp) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->npwp) ? $file->npwp : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview3 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoNPWP" id="fotoNPWP"
+                                                                    class="form-control" onchange="previewImageNPWP()">
                                                             </div>
+                                                        </div>
 
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Surat Pengalaman Bekerja</label>
-                                                                     <label class="form-label col-sm-12 {{ isset($file->surat_pengalaman_kerja) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->surat_pengalaman_kerja) ? $file->surat_pengalaman_kerja : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview11 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoSuratPengalaman" id="fotoSuratPengalaman"
-                                                                        class="form-control" onchange="previewImagePengalaman()">
-                                                                </div>
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">BPJS
+                                                                    Ketenagakerjaan</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->bpjs_ket) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->bpjs_ket) ? $file->bpjs_ket : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview4 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoBPJSket" id="fotoBPJSket"
+                                                                    class="form-control" onchange="previewImageBPJSket()">
                                                             </div>
+                                                        </div>
 
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Surat Penghargaan/Prestasi</label>
-                                                                   <label class="form-label col-sm-12 {{ isset($file->surat_penghargaan) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->surat_penghargaan) ? $file->surat_penghargaan : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview12 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoSuratPrestasi" id="fotoSuratPrestasi"
-                                                                        class="form-control" onchange="previewImagePrestasi()">
-                                                                </div>
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">BPJS Kesehatan (
+                                                                    Karyawan + Keluarga )</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->bpjs_kes) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->bpjs_kes) ? $file->bpjs_kes : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview5 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoBPJSkes" id="fotoBPJSkes"
+                                                                    class="form-control" onchange="previewImageBPJSkes()">
                                                             </div>
+                                                        </div>
 
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Pendidikan & Pelatihan ( Kursus/Seminar/Workshop/DLL )</label>
-                                                                    <label class="form-label col-sm-12 {{ isset($file->surat_pelatihan) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->surat_pelatihan) ? $file->surat_pelatihan : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview13 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoSuratPendidikan" id="fotoSuratPendidikan"
-                                                                        class="form-control" onchange="previewImagePendidikan()">
-                                                                </div>
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Asuransi AKDHK</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->as_akdhk) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->as_akdhk) ? $file->as_akdhk : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview6 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoAKDHK" id="fotoAKDHK"
+                                                                    class="form-control" onchange="previewImageAKDHK()">
                                                             </div>
+                                                        </div>
 
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Surat Perjanjian Kerja ( Kontrak/Percobaan/Staff-Ahli )</label>
-                                                                    <label class="form-label col-sm-12 {{ isset($file->surat_perjanjian_kerja) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->surat_perjanjian_kerja) ? $file->surat_perjanjian_kerja : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview14 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoPerjanjianKerja" id="fotoPerjanjianKerja"
-                                                                        class="form-control" onchange="previewImagePerjanjianKerja()">
-                                                                </div>
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Buku Tabungan Nomor
+                                                                    Rekening & Nama Bank</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->buku_tabungan) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->buku_tabungan) ? $file->buku_tabungan : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview7 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoTabungan"
+                                                                    id="fotoTabungan" class="form-control"
+                                                                    onchange="previewImageTabungan()">
                                                             </div>
+                                                        </div>
 
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Surat Pengangkatan Karyawan Tetap</label>
-                                                                   <label class="form-label col-sm-12 {{ isset($file->surat_pengangkatan_kartap) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->surat_pengangkatan_kartap) ? $file->surat_pengangkatan_kartap : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview15 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoSuratPengangkatan" id="fotoSuratPengangkatan"
-                                                                        class="form-control" onchange="previewImagePengangkatan()">
-                                                                </div>
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Surat Keterangan
+                                                                    Kepolisian ( SKKB/SKCK/Lainnya )</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->skck) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->skck) ? $file->skck : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview8 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoSKCK" id="fotoSKCK"
+                                                                    class="form-control" onchange="previewImageSKCK()">
                                                             </div>
+                                                        </div>
 
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label col-sm-12">Surat Keputusan Alih-Tugas Jabatan</label>
-                                                                    <label class="form-label col-sm-12 {{ isset($file->surat_alih_tugas) ? 'text-success' : 'text-danger' }}">
-                                                                        {{ isset($file->surat_alih_tugas) ? $file->surat_alih_tugas : 'File tidak tersedia.' }}
-                                                                    </label>
-                                                                    <img class="img-preview16 img-fluid mb-3 col-sm-4">
-                                                                    <input type="file" name="fotoSuratKeputusan" id="fotoSuratKeputusan"
-                                                                        class="form-control" onchange="previewImageKeputusan()">
-                                                                </div>
+                                                    </div>
+
+                                                    <!-- baris sebelah kanan  -->
+
+                                                    <div class="col-md-6 m-t-10">
+
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Ijazah Pendidikan
+                                                                    Terakhir</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->ijazah) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->ijazah) ? $file->ijazah : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview9 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoIjazah" id="fotoIjazah"
+                                                                    class="form-control" onchange="previewImageIjazah()">
                                                             </div>
+                                                        </div>
 
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Formulir Lamaran &
+                                                                    Penawaran Pekerjaan ( Remunerasi )</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->lamaran) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->lamaran) ? $file->lamaran : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview10 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoLamaran" id="fotoLamaran"
+                                                                    class="form-control" onchange="previewImageLamaran()">
+                                                            </div>
+                                                        </div>
 
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Surat Pengalaman
+                                                                    Bekerja</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->surat_pengalaman_kerja) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->surat_pengalaman_kerja) ? $file->surat_pengalaman_kerja : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview11 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoSuratPengalaman"
+                                                                    id="fotoSuratPengalaman" class="form-control"
+                                                                    onchange="previewImagePengalaman()">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Surat
+                                                                    Penghargaan/Prestasi</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->surat_penghargaan) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->surat_penghargaan) ? $file->surat_penghargaan : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview12 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoSuratPrestasi"
+                                                                    id="fotoSuratPrestasi" class="form-control"
+                                                                    onchange="previewImagePrestasi()">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Pendidikan & Pelatihan
+                                                                    ( Kursus/Seminar/Workshop/DLL )</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->surat_pelatihan) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->surat_pelatihan) ? $file->surat_pelatihan : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview13 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoSuratPendidikan"
+                                                                    id="fotoSuratPendidikan" class="form-control"
+                                                                    onchange="previewImagePendidikan()">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Surat Perjanjian Kerja
+                                                                    ( Kontrak/Percobaan/Staff-Ahli )</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->surat_perjanjian_kerja) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->surat_perjanjian_kerja) ? $file->surat_perjanjian_kerja : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview14 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoPerjanjianKerja"
+                                                                    id="fotoPerjanjianKerja" class="form-control"
+                                                                    onchange="previewImagePerjanjianKerja()">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Surat Pengangkatan
+                                                                    Karyawan Tetap</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->surat_pengangkatan_kartap) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->surat_pengangkatan_kartap) ? $file->surat_pengangkatan_kartap : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview15 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoSuratPengangkatan"
+                                                                    id="fotoSuratPengangkatan" class="form-control"
+                                                                    onchange="previewImagePengangkatan()">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label col-sm-12">Surat Keputusan
+                                                                    Alih-Tugas Jabatan</label>
+                                                                <label
+                                                                    class="form-label col-sm-12 {{ isset($file->surat_alih_tugas) ? 'text-success' : 'text-danger' }}">
+                                                                    {{ isset($file->surat_alih_tugas) ? $file->surat_alih_tugas : 'File tidak tersedia.' }}
+                                                                </label>
+                                                                <img class="img-preview16 img-fluid mb-3 col-sm-4">
+                                                                <input type="file" name="fotoSuratKeputusan"
+                                                                    id="fotoSuratKeputusan" class="form-control"
+                                                                    onchange="previewImageKeputusan()">
+                                                            </div>
                                                         </div>
 
 
                                                     </div>
-                                                </div>
-                                                
-                                                <div class="modal-footer">
-                                                    <button type="submit" name="submit" id="simpan"
-                                                    class="btn btn-sm btn-success ">Simpan <i class="fa fa-save"></i></button>
-                                            {{-- <a href="editfile{{ $karyawan2->id }}" class="btn btn-sm btn-primary" type="button">Edit Data <i class="fa fa-edit"></i></a> --}}
-                                                    <a href="showfile{{ $karyawan2->id }}" class="btn btn-sm btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
-                                                </div>
 
-                                            </table>
+
+                                                </div>
                                         </div>
+
+                                        <div class="modal-footer">
+                                            <button type="submit" name="submit" id="simpan"
+                                                class="btn btn-sm btn-success ">Simpan <i class="fa fa-save"></i></button>
+                                            @if (isset($file))
+                                            <a href="editfile{{ $karyawan2->id }}" class="btn btn-sm btn-primary"
+                                                type="button">Edit Data <i class="fa fa-edit"></i></a>
+                                            @endif
+                                            <a href="showfile{{ $karyawan2->id }}" class="btn btn-sm btn-danger"
+                                                type="button">Kembali <i class="fa fa-home"></i></a>
+                                        </div>
+
+                                        </table>
                                     </div>
-                                </form>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
+    </div>
     <script>
-  function myFunction() {
-    alert("Data berhasil disimpan !");
-  }
-</script>
+        function myFunction() {
+            alert("Data berhasil disimpan !");
+        }
+    </script>
 
-{{-- Script Preview Image --}}
-<script>
+    {{-- Script Preview Image --}}
+    <script>
         function previewImage() {
-            const image = document.querySelector('#fotoKTP',);
+            const image = document.querySelector('#fotoKTP', );
             const imgPreview = document.querySelector('.img-preview');
 
             imgPreview.style.display = 'block';
@@ -333,7 +378,7 @@
         }
 
         function previewImageKK() {
-            const image = document.querySelector('#fotoKK',);
+            const image = document.querySelector('#fotoKK', );
             const imgPreview = document.querySelector('.img-preview2');
 
             imgPreview.style.display = 'block';
@@ -347,7 +392,7 @@
         }
 
         function previewImageNPWP() {
-            const image = document.querySelector('#fotoNPWP',);
+            const image = document.querySelector('#fotoNPWP', );
             const imgPreview = document.querySelector('.img-preview3');
 
             imgPreview.style.display = 'block';
@@ -361,7 +406,7 @@
         }
 
         function previewImageBPJSket() {
-            const image = document.querySelector('#fotoNPWP',);
+            const image = document.querySelector('#fotoNPWP', );
             const imgPreview = document.querySelector('.img-preview4');
 
             imgPreview.style.display = 'block';
@@ -375,7 +420,7 @@
         }
 
         function previewImageBPJSkes() {
-            const image = document.querySelector('#fotoBPJSkes',);
+            const image = document.querySelector('#fotoBPJSkes', );
             const imgPreview = document.querySelector('.img-preview5');
 
             imgPreview.style.display = 'block';
@@ -389,7 +434,7 @@
         }
 
         function previewImageAKDHK() {
-            const image = document.querySelector('#fotoAKDHK',);
+            const image = document.querySelector('#fotoAKDHK', );
             const imgPreview = document.querySelector('.img-preview6');
 
             imgPreview.style.display = 'block';
@@ -403,7 +448,7 @@
         }
 
         function previewImageTabungan() {
-            const image = document.querySelector('#fotoTabungan',);
+            const image = document.querySelector('#fotoTabungan', );
             const imgPreview = document.querySelector('.img-preview7');
 
             imgPreview.style.display = 'block';
@@ -417,7 +462,7 @@
         }
 
         function previewImageSKCK() {
-            const image = document.querySelector('#fotoSKCK',);
+            const image = document.querySelector('#fotoSKCK', );
             const imgPreview = document.querySelector('.img-preview8');
 
             imgPreview.style.display = 'block';
@@ -431,7 +476,7 @@
         }
 
         function previewImageIjazah() {
-            const image = document.querySelector('#fotoIjazah',);
+            const image = document.querySelector('#fotoIjazah', );
             const imgPreview = document.querySelector('.img-preview9');
 
             imgPreview.style.display = 'block';
@@ -445,7 +490,7 @@
         }
 
         function previewImageLamaran() {
-            const image = document.querySelector('#fotoLamaran',);
+            const image = document.querySelector('#fotoLamaran', );
             const imgPreview = document.querySelector('.img-preview10');
 
             imgPreview.style.display = 'block';
@@ -459,7 +504,7 @@
         }
 
         function previewImagePengalaman() {
-            const image = document.querySelector('#fotoSuratPengalaman',);
+            const image = document.querySelector('#fotoSuratPengalaman', );
             const imgPreview = document.querySelector('.img-preview11');
 
             imgPreview.style.display = 'block';
@@ -473,7 +518,7 @@
         }
 
         function previewImagePrestasi() {
-            const image = document.querySelector('#fotoSuratPrestasi',);
+            const image = document.querySelector('#fotoSuratPrestasi', );
             const imgPreview = document.querySelector('.img-preview12');
 
             imgPreview.style.display = 'block';
@@ -487,7 +532,7 @@
         }
 
         function previewImagePendidikan() {
-            const image = document.querySelector('#fotoSuratPendidikan',);
+            const image = document.querySelector('#fotoSuratPendidikan', );
             const imgPreview = document.querySelector('.img-preview13');
 
             imgPreview.style.display = 'block';
@@ -501,7 +546,7 @@
         }
 
         function previewImagePerjanjianKerja() {
-            const image = document.querySelector('#fotoPerjanjianKerja',);
+            const image = document.querySelector('#fotoPerjanjianKerja', );
             const imgPreview = document.querySelector('.img-preview14');
 
             imgPreview.style.display = 'block';
@@ -514,8 +559,8 @@
             }
         }
 
-         function previewImagePengangkatan() {
-            const image = document.querySelector('#fotoSuratPengangkatan',);
+        function previewImagePengangkatan() {
+            const image = document.querySelector('#fotoSuratPengangkatan', );
             const imgPreview = document.querySelector('.img-preview15');
 
             imgPreview.style.display = 'block';
@@ -529,7 +574,7 @@
         }
 
         function previewImageKeputusan() {
-            const image = document.querySelector('#fotoSuratKeputusan',);
+            const image = document.querySelector('#fotoSuratKeputusan', );
             const imgPreview = document.querySelector('.img-preview16');
 
             imgPreview.style.display = 'block';
@@ -541,8 +586,5 @@
                 imgPreview.src = oFREvent.target.result;
             }
         }
-
-</script>
-   
-    
+    </script>
 @endsection

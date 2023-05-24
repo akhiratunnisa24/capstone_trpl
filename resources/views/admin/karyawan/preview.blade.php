@@ -377,9 +377,10 @@
                         <thead class="alert alert-info">
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>Tanggal Lahir</th>
                                 <th>Hubungan</th>
+                                <th>Nama</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Tanggal Lahir</th>
                                 {{-- <th>Alamat</th> --}}
                                 <th>Pendidikan Terakhir</th>
                                 <th>Pekerjaan</th>
@@ -392,6 +393,10 @@
                                     <td>{{ $keluarga['nama'] }}</td>
                                     <td>{{ \Carbon\Carbon::parse($keluarga['tgllahir'])->format('d/m/Y') }}</td>
                                     <td>{{ $keluarga['hubungan'] }}</td>
+                                    <td>{{ $keluarga['nama'] }}</td>
+                                    <td>{{ $keluarga['jenis_kelamin'] }}</td>
+                                    {{-- <td>{{ $keluarga['tgllahir'] }}</td> --}}
+                                    <td>{{ \Carbon\Carbon::parse($keluarga['tgllahir'])->format('d/m/Y') }}</td>
                                     {{-- <td>{{$keluarga['alamat']}}</td> --}}
                                     <td>{{ $keluarga['pendidikan_terakhir'] }}</td>
                                     <td>{{ $keluarga['pekerjaan'] }}</td>
@@ -412,9 +417,9 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>Hubungan</th>
                                 <th>No HP</th>
                                 <th>Alamat</th>
-                                <th>Hubungan Keluarga</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -422,9 +427,9 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $kd['nama'] }}</td>
+                                    <td>{{ $kd['hubungan'] }}</td>
                                     <td>{{ $kd['no_hp'] }}</td>
                                     <td>{{ $kd['alamat'] }}</td>
-                                    <td>{{ $kd['hubungan'] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -444,9 +449,11 @@
                                 <th>No</th>
                                 <th>Tingkat Pendidikan</th>
                                 <th>Nama Sekolah</th>
-                                <th>Alamat</th>
                                 <th>Jurusan</th>
-                                <th>Tahun Lulus</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tahun Akhir</th>
+                                <th>Alamat</th>
+                                <th>No. Ijazah</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -456,9 +463,13 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $p['tingkat'] }}</td>
                                         <td>{{ $p['nama_sekolah'] }}</td>
-                                        <td>{{ $p['kota_pformal'] }}</td>
                                         <td>{{ $p['jurusan'] }}</td>
-                                        <td>{{ $p['tahun_lulus_formal'] }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($p['tahun_masuk_formal'])->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($p['tahun_lulus_formal'])->format('d/m/Y') }}</td>
+                                        <td>{{ $p['kota_pformal'] }}</td>
+                                        <td>{{ $p['ijazah_formal'] }}</td>
+                                        {{-- <td>{{ $p['tahun_lulus_formal'] }}</td> --}}
+
                                     </tr>
                                 @endif
                             @endforeach
@@ -471,9 +482,12 @@
                         <thead class="alert alert-info">
                             <tr>
                                 <th>No</th>
-                                <th>Jenis/Bidang Pendidikan</th>
+                                <th>Bidang/Jenis</th>
+                                <th>Lembaga Pendidikan</th>
+                                <th>Tanggal Mulai</th>
+                                <th>Tanggal Akhir</th>
                                 <th>Alamat</th>
-                                <th>Tahun Lulus</th>
+                                <th>No. Ijazah</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -482,8 +496,12 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $nf['jenis_pendidikan'] }}</td>
+                                        <td>{{ $nf['nama_lembaga'] }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($p['tahun_masuk_nonformal'])->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($p['tahun_lulus_nonformal'])->format('d/m/Y') }}</td>
                                         <td>{{ $nf['kota_pnonformal'] }}</td>
-                                        <td>{{ $nf['tahun_lulus_nonformal'] }}</td>
+                                        <td>{{ $nf['ijazah_nonformal'] }}</td>
+                                        {{-- <td>{{ $nf['tahun_lulus_nonformal'] }}</td> --}}
                                     </tr>
                                 @endif
                             @endforeach
@@ -501,13 +519,14 @@
                         <thead class="alert alert-info">
                             <tr>
                                 <th>No</th>
-                                <th>Perusahaan</th>
+                                <th>Nama Perusahaan</th>
                                 <th>Alamat</th>
                                 <th>Tanggal Masuk</th>
                                 <th>Tanggal Keluar</th>
                                 <th>Jabatan</th>
                                 <th>Level</th>
                                 <th>Gaji</th>
+                                <th>Alasan Berhenti</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -516,11 +535,14 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $pek['nama_perusahaan'] }}</td>
                                     <td>{{ $pek['alamat'] }}</td>
-                                    <td>{{ $pek['tgl_mulai'] }}</td>
-                                    <td>{{ $pek['tgl_selesai'] }}</td>
+                                    {{-- <td>{{ $pek['tgl_mulai'] }}</td>
+                                    <td>{{ $pek['tgl_selesai'] }}</td> --}}
+                                        <td>{{ \Carbon\Carbon::parse($pek['tgl_mulai'])->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($pek['tgl_selesai'])->format('d/m/Y') }}</td>
                                     <td>{{ $pek['jabatan'] }}</td>
                                     <td>{{ $pek['level'] }}</td>
                                     <td>{{ $pek['gaji'] }}</td>
+                                    <td>{{ $pek['alasan_berhenti'] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -537,10 +559,10 @@
                         <thead class="alert alert-info">
                             <tr>
                                 <th>No</th>
-                                <th>Lembaga</th>
+                                <th>Nama Organisasi</th>
                                 <th>Alamat</th>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Selesai</th>
+                                <th>Tanggal Masuk</th>
+                                <th>Tanggal Keluar</th>
                                 <th>Jabatan</th>
                                 <th>Nomor SK</th>
                             </tr>
@@ -551,8 +573,10 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $org['nama_organisasi'] }}</td>
                                     <td>{{ $org['alamat'] }}</td>
-                                    <td>{{ $org['tgl_mulai'] }}</td>
-                                    <td>{{ $org['tgl_selesai'] }}</td>
+                                    {{-- <td>{{ $org['tgl_mulai'] }}</td>
+                                    <td>{{ $org['tgl_selesai'] }}</td> --}}
+                                    <td>{{ \Carbon\Carbon::parse($org['tgl_mulai'])->format('d/m/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($org['tgl_selesai'])->format('d/m/Y') }}</td>
                                     <td>{{ $org['jabatan'] }}</td>
                                     <td>{{ $org['no_sk'] }}</td>
                                 </tr>
@@ -574,7 +598,7 @@
                                 <th>Perihal / Keterangan</th>
                                 <th>Instansi Pemberi</th>
                                 <th>Alamat</th>
-                                <th>Nomor Surat</th>
+                                <th>No. Surat</th>
                                 <th>Tanggal Surat</th>
                             </tr>
                         </thead>

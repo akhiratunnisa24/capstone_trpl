@@ -79,7 +79,7 @@
                                                                     <label  class="form-label">Tanggal Lahir</label>
                                                                     <div class="input-group">
                                                                         <input id="datepicker-autoclose-format" type="text" class="form-control" placeholder="dd/mm/yyyy" id="4"
-                                                                            name="tgllahirKaryawan" value="{{ $karyawan->tgllahir ? date('d/m/y', strtotime($karyawan->tgllahir)) : '' }}"autocomplete="off" rows="10" required><br>
+                                                                            name="tgllahirKaryawan" value="{{ \Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y') }}"autocomplete="off" rows="10" required><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i  class="mdi mdi-calendar text-white"></i></span>
                                                                     </div><!-- input-group -->
                                                                 </div>
@@ -264,11 +264,9 @@
                                                                     <div class="mb-3">
                                                                         <label class="form-label">Tanggal Masuk</label>
                                                                         <div class="input-group">
-                                                                            <input type="text" class="form-control"
-                                                                                placeholder="dd/mm/yyyy" id="datepicker-autoclose-format2" data-date-format="dd/mm/yyyy"
-                                                                                name="tglmasukKaryawan" rows="10" autocomplete="off" value="{{ $karyawan->tgllahir ? date('d/m/y', strtotime($karyawan->tglmasuk)) : '' }}" required
-                                                                            <span class="input-group-addon bg-custom b-0"><i
-                                                                                    class="mdi mdi-calendar text-white"></i></span>
+                                                                            <input id="datepicker-autoclose-format2" type="text" class="form-control" placeholder="dd/mm/yyyy" 
+                                                                                name="tglmasukKaryawan" value="{{ \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') }}" autocomplete="off"  rows="10"  required>
+                                                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
