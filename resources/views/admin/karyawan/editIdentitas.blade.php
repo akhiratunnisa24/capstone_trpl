@@ -146,8 +146,8 @@
                                     <select class="form-control" name="atasan_pertama">
                                         <option value="">Pilih Atasan Langsung</option>
                                         @foreach ($atasan_pertama as $atasan)
-                                            <option value="{{ $atasan->id }}"
-                                                @if ($karyawan->atasan_pertama == $atasan->id) selected @endif>{{ $atasan->nama }}
+                                            <option value="{{ $atasan->id_karyawan }}"
+                                                @if ($karyawan->atasan_pertama == $atasan->id_karyawan) selected @endif>{{ $atasan->karyawan->nama }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -159,8 +159,8 @@
                                     <select class="form-control" name="atasan_kedua">
                                         <option value="">Pilih Atasan</option>
                                         @foreach ($atasan_kedua as $atasan)
-                                            <option value="{{ $atasan->id }}"
-                                                @if ($karyawan->atasan_kedua == $atasan->id) selected @endif>{{ $atasan->nama }}
+                                            <option value="{{ $atasan->id_karyawan }}"
+                                                @if ($karyawan->atasan_kedua == $atasan->id_karyawan) selected @endif>{{ $atasan->karyawan->nama }}
                                             </option>
                                         @endforeach
                                     </select>

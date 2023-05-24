@@ -225,12 +225,26 @@
 
     @if(Session::has('pesan'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            swal("Selamat",<?php echo json_encode( Session::get('pesan') ) ?>, 'success', {
                 button:true,
                 button:"OK",
+                 customClass: {
+                    content: 'text-left',
+                }
             });
         </script>
+        // <script>
+        //     swal({
+        //         title: "Selamat",
+        //         html: <?php echo json_encode( Session::get('pesan') ); ?>,
+        //         icon: 'success',
+        //         button: true,
+        //         button: "OK",
+               
+        //     });
+        // </script>
     @endif
+    
 
 
     @if(Session::has('pesa'))

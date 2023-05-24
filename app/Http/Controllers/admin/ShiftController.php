@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Models\Shift;
+use App\Models\Jadwal;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -85,8 +86,15 @@ class ShiftController extends Controller
     
     public function destroy($id)
     {
-        DB::table('shift')->where('id', $id)->delete();
-        return redirect()->back();
+        $shift = Shift::find($id);
+
+        $jadwal = Jadwal::where('id_shift', $id)->first();
+        if ($jadwal != null) {
+            return redirect()->back()->with('pesa', 'Shift tidak dapat dihapus karena digunakan pada Jadwal');
+        } else {
+            $shift->delete();
+            return redirect()->back()->with('pesan', 'Shift berhasil dihapus');
+        }
     }
 
 }

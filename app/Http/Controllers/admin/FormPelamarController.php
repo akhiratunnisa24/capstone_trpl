@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Lowongan;
-use App\Models\Rekruitmen;
+use Carbon\Carbon;
+use App\Models\Atasan;
 use App\Models\Karyawan;
 use App\Models\Kdarurat;
 use App\Models\Keluarga;
-use App\Models\Departemen;
-use App\Models\Rpekerjaan;
-use App\Models\Rpendidikan;
-use App\Models\Rorganisasi;
+use App\Models\Lowongan;
 use App\Models\Rprestasi;
+use App\Models\Departemen;
+use App\Models\Rekruitmen;
+use App\Models\Rpekerjaan;
+use App\Models\Rorganisasi;
+use App\Models\Rpendidikan;
 // use Illuminate\Support\Facades\Auth;
-use App\Mail\RekruitmenApplyNotification;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use Carbon\Carbon;
+use App\Mail\RekruitmenApplyNotification;
 
 
 
@@ -643,8 +644,8 @@ class FormPelamarController extends Controller
 
         // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $departemen     = Departemen::all();
-        $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
-        $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Direksi'])->get();
+        $atasan_pertama = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
+        $atasan_kedua   = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Manager', 'Direksi'])->get();
         $user = Karyawan::max('id');
         $datakeluarga = Keluarga::where('id_pegawai', $user)->get();
         $kontakdarurat = Kdarurat::where('id_pegawai', $user)->get();

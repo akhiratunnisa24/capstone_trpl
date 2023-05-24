@@ -81,6 +81,130 @@
                                                             <input name="nipKaryawan" type="text" class="form-control"
                                                                 autocomplete="off" value="{{ $karyawan->nip ?? '-' }}">
                                                         </div>
+<<<<<<< HEAD
+=======
+
+                                                        <div class="form-group">
+                                                            <label class="form-label">Jenis Kelamin</label>
+                                                            <select class="form-control" name="jenis_kelaminKaryawan">
+                                                                <option value="">Pilih Jenis Kelamin</option>
+                                                                <option value="Laki-Laki"
+                                                                    @if ($karyawan->jenis_kelamin == 'Laki-Laki') selected @endif>
+                                                                    Laki-Laki</option>
+                                                                <option value="Perempuan"
+                                                                    @if ($karyawan->jenis_kelamin == 'Perempuan') selected @endif>
+                                                                    Perempuan</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="form-label">Divisi</label>
+                                                            <select class="form-control" name="divisi">
+                                                                <option value="">Pilih Departemen</option>
+                                                                @foreach ($departemen as $d)
+                                                                    <option value="{{ $d->id }}"
+                                                                        {{ $karyawan->divisi == $d->id ? 'selected' : '' }}>
+                                                                        {{ $d->nama_departemen ?? '' }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="form-label">Atasan Langsung
+                                                                (Asisten Manager/Manager/Direksi)</label>
+                                                            <select class="form-control" name="atasan_pertama"
+                                                                data-live-search="true">
+                                                                <option value="">Pilih Atasan Langsung</option>
+                                                                @foreach ($atasan_pertama as $atasan)
+                                                                    <option value="{{ $atasan->id_karyawan }}"
+                                                                        {{ $karyawan->atasan_pertama == $atasan->id_karyawan ? 'selected' : '' }}>
+                                                                        {{ $atasan->karyawan->nama ?? '' }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="form-label">Atasan (Manager/Direksi)</label>
+                                                            <select class="form-control" name="atasan_kedua"
+                                                                data-live-search="true">
+                                                                <option value="">Pilih Atasan</option>
+                                                                @foreach ($atasan_kedua as $atasan)
+                                                                    <option value="{{ $atasan->id_karyawan }}"
+                                                                        {{ $karyawan->atasan_kedua == $atasan->id_karyawan ? 'selected' : '' }}>
+                                                                        {{ $atasan->karyawan->nama ?? '' }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="form-label">Nama Jabatan</label>
+                                                            <select class="form-control" name="namaJabatan">
+                                                                <option value="">Pilih Nama Jabatan</option>
+                                                                @foreach ($namajabatan as $nama)
+                                                                    <option value="{{ $nama->nama_jabatan }}"
+                                                                        {{ $karyawan->nama_jabatan == $nama->nama_jabatan ? 'selected' : '' }}>
+                                                                        {{ $nama->nama_jabatan ?? '' }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="form-label">Level Jabatan</label>
+                                                            <select class="form-control" name="jabatanKaryawan">
+                                                                <option value="">Pilih Level Jabatan</option>
+                                                                @foreach ($leveljabatan as $level)
+                                                                    <option value="{{ $level->nama_level }}"
+                                                                        {{ $karyawan->jabatan == $level->nama_level ? 'selected' : '' }}>
+                                                                        {{ $level->nama_level ?? '' }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="form-label">Status Karyawan</label>
+                                                            <select class="form-control" name="statusKaryawan">
+                                                                <option value="">Pilih Status Karyawan</option>
+                                                                <option value="Pengurus"@if ($karyawan->status_karyawan == 'Pengurus') selected @endif>Pengurus</option>
+                                                                <option value="Tetap" @if ($karyawan->status_karyawan == 'Tetap') selected @endif>Tetap</option>
+                                                                <option value="Kontrak" @if ($karyawan->status_karyawan == 'Kontrak') selected @endif>Kontrak</option>
+                                                                <option value="Probation" @if ($karyawan->status_karyawan == 'Percobaan') selected @endif> Percobaan</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="form-label">Golongan Darah</label>
+                                                            <select class="form-control" name="gol_darahKaryawan">
+                                                                <option value="">Pilih Golongan Darah</option>
+                                                                <option value="A"
+                                                                    @if ($karyawan->gol_darah == 'A') selected @endif>A
+                                                                </option>
+                                                                <option value="B"
+                                                                    @if ($karyawan->gol_darah == 'B') selected @endif>B
+                                                                </option>
+                                                                <option
+                                                                    value="AB"@if ($karyawan->gol_darah == 'AB') selected @endif>
+                                                                    AB</option>
+                                                                <option value="O"
+                                                                    @if ($karyawan->gol_darah == 'O') selected @endif>O
+                                                                </option>
+                                                            </select>
+                                                        </div>
+
+
+
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Alamat</label>
+                                                                <textarea name="alamatKaryawan" class="form-control" rows="5">{{ $karyawan->alamat ?? '' }}</textarea>
+                                                            </div>
+                                                        </div>
+
+>>>>>>> 458ba333d535aaabe7ec29d21a9dfb6e78f4657f
                                                     </div>
 
                                                     <div class="form-group">

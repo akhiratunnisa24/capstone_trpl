@@ -8,6 +8,7 @@ use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Departemen;
 use Illuminate\Http\Request;
+use App\Models\SettingOrganisasi;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -128,7 +129,8 @@ class AbsensiKaryawanController extends Controller
 
     public function absensiPeroranganPdf(Request $request)
     {
-         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $setorganisasi = SettingOrganisasi::find(1);
         $iduser = Auth::user()->id_pegawai;
 
         $nama   = Karyawan::where('id','=', $iduser)->first();
@@ -157,7 +159,7 @@ class AbsensiKaryawanController extends Controller
         }
         $nama = Karyawan::where('id',$iduser)->first();
         $departemen = Departemen::where('id',$nama->divisi)->first();
-        $pdf  = PDF::loadview('karyawan.absensi.absensistaff_pdf',['data'=>$data,'departemen'=>$departemen,'iduser'=>$iduser, 'nama'=> $nama, 'nbulan'=>$nbulan])
+        $pdf  = PDF::loadview('karyawan.absensi.absensistaff_pdf',['data'=>$data,'departemen'=>$departemen,'iduser'=>$iduser, 'nama'=> $nama, 'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
         ->setPaper('A4','landscape');
 
         return $pdf->stream("Report Absensi {$nama->nama} Bulan {$nbulan}.pdf");

@@ -30,7 +30,7 @@ class KalenderController extends Controller
                 ];
                
             }
-            return $events;
+            // return $events;
            
             return view('admin.kalender.index',compact('row','id_pegawai','getHarilibur','role'));
         }else{

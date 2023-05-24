@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Cuti;
 use App\Models\Izin;
+use App\Models\Atasan;
 use App\Models\Jabatan;
 use App\Models\Karyawan;
 use App\Models\Alokasicuti;
@@ -73,22 +74,25 @@ class JabatanController extends Controller
         Karyawan::where('nama_jabatan',  $jbtnSebelum)
             ->update(['nama_jabatan' =>  $jbtnSesudah]);
 
-        // Ambil data karyawan setelah pembaruan
+        //Ambil data karyawan setelah pembaruan
         $karyawanSetelah = Karyawan::where('nama_jabatan', $jbtnSesudah)
             ->select('id', 'nama_jabatan')
             ->get();
-        // dd($karyawanSetelah);
 
         foreach($karyawanSetelah as $karyawanSetelah)
         {
-            Alokasicuti::where('id_karyawan', $karyawanSetelah->id)
+            $alokasi = Alokasicuti::where('id_karyawan', $karyawanSetelah->id)
             ->update(['jabatan' => $karyawanSetelah->nama_jabatan]);
-
-            Cuti::where('id_karyawan', $karyawanSetelah->id)
+            
+            $cuti = Cuti::where('id_karyawan', $karyawanSetelah->id)
                 ->update(['jabatan' => $karyawanSetelah->nama_jabatan]);
 
-            Izin::where('id_karyawan', $karyawanSetelah->id)
+            $izin = Izin::where('id_karyawan', $karyawanSetelah->id)
                 ->update(['jabatan' => $karyawanSetelah->nama_jabatan]);
+
+            $atasan = Atasan::where('id_karyawan', $karyawanSetelah->id)
+                ->update(['jabatan' => $karyawanSetelah->nama_jabatan]);
+            
         }
         return redirect()->back()->with('pesan','Data berhasil diupdate !');
     }
@@ -98,7 +102,6 @@ class JabatanController extends Controller
         $jabatan = Jabatan::find($id);
         $njabatan = $jabatan->nama_jabatan;
 
-        // return $njabatan;
 
         $karyawan = Karyawan::where('nama_jabatan', $njabatan)->first();
         $alokasicuti = Alokasicuti::where('jabatan', $njabatan)->first();

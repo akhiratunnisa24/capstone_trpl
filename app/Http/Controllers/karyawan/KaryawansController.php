@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\karyawan;
 
 use Carbon\Carbon;
+use App\Models\Atasan;
+use App\Models\Jabatan;
 use App\Models\Karyawan;
 use App\Models\Kdarurat;
 use App\Models\Keluarga;
+use App\Models\Rprestasi;
 use App\Models\Departemen;
 use App\Models\Rpekerjaan;
+use App\Models\Rorganisasi;
 use App\Models\Rpendidikan;
+use App\Models\LevelJabatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Jabatan;
-use App\Models\LevelJabatan;
-use App\Models\Rorganisasi;
-use App\Models\Rprestasi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -45,10 +46,12 @@ class KaryawansController extends Controller
         if ($role == 1 || $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager', 'Direksi'])->get();
+            $atasan_pertama = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
+            $atasan_kedua   = Atasan::with('karyawan')->whereIn('atasan.level_jabatan', ['Manager', 'Direksi'])->get();
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::all();
+
+            // dd($atasan_pertama,$atasan_kedua);
 
             $karyawan = $request->session()->get('karyawan');
             if (!$karyawan) {
