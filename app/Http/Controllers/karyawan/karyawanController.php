@@ -892,7 +892,17 @@ class karyawanController extends Controller
             // // dd($cutijumlah);
             // return $role;
 
-            $resign = Resign::orderBy('created_at', 'desc')->get();
+            $resign = Resign::where(function ($query) {
+                $query->where('status', '=', '1')
+                ->whereHas('karyawan', function ($query) {
+                    $query->where('atasan_pertama', Auth::user()->id_pegawai);
+                });
+            })->orWhere(function ($query) {
+                $query->where('status', '=', '6')
+                ->whereHas('karyawan', function ($query) {
+                    $query->where('atasan_kedua', Auth::user()->id_pegawai);
+                });
+            })->get();
             $resignjumlah = $resign->count();
             $rekruitmen = Rekruitmen::orderBy('created_at', 'desc')->get();
             $rekruitmenjumlah = $rekruitmen->count();

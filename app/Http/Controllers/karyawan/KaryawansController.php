@@ -339,7 +339,20 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
-    // //delete data saat form create pertama
+    public function deletedk(Request $request)
+    {
+        $key = $request->input('key');
+        $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
+
+        if (array_key_exists($key, $datakeluarga)) {
+            unset($datakeluarga[$key]);
+            session()->put('datakeluarga', json_encode($datakeluarga));
+        }
+
+        return redirect()->back();
+    }
+
+    //delete data saat form create pertama
     // public function deletedk(Request $request, $key)
     // {
     //     $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
@@ -398,6 +411,19 @@ class KaryawansController extends Controller
         $kontakdarurat[$index]['hubungan'] = $request->hubunganKdarurat;
 
         session()->put('kontakdarurat', json_encode($kontakdarurat));
+        return redirect()->back();
+    }
+    //delete data pada form create
+    public function deletekd(Request $request)
+    {
+        $key = $request->input('key');
+        $kontakdarurat = json_decode($request->session()->get('kontakdarurat', '[]'), true);
+
+        if (array_key_exists($key, $kontakdarurat)) {
+            unset($kontakdarurat[$key]);
+            session()->put('kontakdarurat', json_encode($kontakdarurat));
+        }
+
         return redirect()->back();
     }
 
@@ -479,6 +505,20 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
+    //delete data pendidikan pada session 
+    public function deletePendidikan(Request $request)
+    {
+        $key = $request->input('key');
+        $pendidikan = json_decode($request->session()->get('pendidikan', '[]'), true);
+
+        if (array_key_exists($key, $pendidikan)) {
+            unset($pendidikan[$key]);
+            session()->put('pendidikan', json_encode($pendidikan));
+        }
+
+        return redirect()->back();
+    }
+
     //data untuk pekerjaan
     public function createpekerjaan(Request $request)
     {
@@ -491,6 +531,7 @@ class KaryawansController extends Controller
             $kontakdarurat = $request->session()->get('kontakdarurat');
             $pendidikan   = $request->session()->get('pendidikan');
             $pekerjaan = json_decode(session('pekerjaan', '[]'), true);
+
             // dd($pekerjaan);
             if (empty($pekerjaan)) {
                 $pekerjaan = [];
@@ -553,6 +594,19 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
+    public function deletePekerjaan(Request $request)
+    {
+        $key = $request->input('key');
+        $pekerjaan = json_decode($request->session()->get('pekerjaan', '[]'), true);
+
+        if (array_key_exists($key, $pekerjaan)) {
+            unset($pekerjaan[$key]);
+            session()->put('pekerjaan', json_encode($pekerjaan));
+        }
+
+        return redirect()->back();
+    }
+
     //data untuk oganisasi
     public function createorganisasi(Request $request)
     {
@@ -565,7 +619,7 @@ class KaryawansController extends Controller
             $pendidikan   = $request->session()->get('pendidikan');
             $pekerjaan   = $request->session()->get('pekerjaan');
             $organisasi = json_decode(session('organisasi', '[]'), true);
-            // dd($pekerjaan);
+            // dd($pekerjaan,$organisasi);
 
             if (empty($organisasi)) {
                 $organisasi = [];
@@ -615,6 +669,19 @@ class KaryawansController extends Controller
 
         // $d= json_decode(session('pekerjaan', '[]'), true);
         // dd($d);
+
+        return redirect()->back();
+    }
+
+    public function deleteOrganisasi(Request $request)
+    {
+        $key = $request->input('key');
+        $organisasi = json_decode($request->session()->get('organisasi', '[]'), true);
+
+        if (array_key_exists($key, $organisasi)) {
+            unset($organisasi[$key]);
+            session()->put('organisasi', json_encode($organisasi));
+        }
 
         return redirect()->back();
     }
@@ -687,6 +754,19 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
+    public function deletePrestasi(Request $request)
+    {
+        $key = $request->input('key');
+        $prestasi = json_decode($request->session()->get('prestasi', '[]'), true);
+
+        if (array_key_exists($key, $prestasi)) {
+            unset($prestasi[$key]);
+            session()->put('prestasi', json_encode($prestasi));
+        }
+
+        return redirect()->back();
+    }
+
 
     public function previewData(Request $request)
     {
@@ -704,6 +784,7 @@ class KaryawansController extends Controller
         $pendidikan = json_decode(session('pendidikan', '[]'), true);
         $pekerjaan = json_decode(session('pekerjaan', '[]'), true);
         $organisasi = json_decode(session('organisasi', '[]'), true);
+        // dd($pekerjaan,$organisasi);
         $prestasi    = json_decode(session('prestasi', '[]'), true);
 
         return view('admin.karyawan.preview', compact('karyawan', 'datakeluarga', 'kontakdarurat', 'pendidikan', 'pekerjaan', 'atasan_pertama_nama', 'atasan_kedua_nama', 'organisasi', 'prestasi', 'row'));

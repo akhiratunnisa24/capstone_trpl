@@ -68,6 +68,14 @@
                                                             <a class="btn btn-sm btn-info" id="editKonrat" data-key="{{ $key }}" style="margin-right:10px">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
+                                                            <form class="pull-right" action="{{ route('deletekd') }}" method="POST" style="margin-right: 60px;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="key" value="{{$key}}">
+                                                                <button type="submit" class="btn btn-danger btn-sm delete_konrat" data-key="{{$key}}">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </form>
                                                             {{-- action="/delete-kontakdarurat/{{$key}}" --}}
                                                             {{-- <form class="pull-right" action="" method="POST" style="margin-right:80px;">
                                                                 <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{ $key }}"><i class="fa fa-trash"></i></button>
