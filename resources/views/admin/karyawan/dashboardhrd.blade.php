@@ -704,12 +704,20 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#3" class="collapsed"
                                     aria-expanded="false">
                                     Permintaan Resign Karyawan
+                                    {{-- @php
+                                        
+                                        dd($resign);
+                                    @endphp --}}
                                     
+                                    {{-- @if ($resign->karyawan->atasan_pertama || $resign->karyawan->atasan_pertama = Auth::user()->id_pegawai ) --}}
+                                        
                                     @if ($resignjumlah)
                                         <span class="badge badge badge-danger" style="background-color:red">{{ $resignjumlah }}</span>
                                     @else
-
                                     @endif
+                                    
+                                    {{-- @endif --}}
+
                                 </a>
                             </h4>
                         </div>

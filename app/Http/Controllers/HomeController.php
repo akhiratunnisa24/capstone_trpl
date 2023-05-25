@@ -748,9 +748,22 @@ class HomeController extends Controller
             $jumizin = $ijin->count();
         }
 
-        $resign = Resign::where('status', '!=', '7')
-            ->where('status', '!=', '5')
-            ->get();
+        // $resign = Resign::where('status', '!=', '7')
+        //     ->where('status', '!=', '5')
+        //     ->get();
+
+        $resign = Resign::where(function ($query) {
+            $query->where('status', '=', '1')
+            ->whereHas('karyawan', function ($query) {
+                $query->where('atasan_pertama', Auth::user()->id_pegawai);
+            });
+        })->orWhere(function ($query) {
+            $query->where('status', '=', '6')
+            ->whereHas('karyawan', function ($query) {
+                $query->where('atasan_kedua', Auth::user()->id_pegawai);
+            });
+        })->get();
+        
         $resignjumlah = $resign->count();
 
         // $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->where('status',1)->get();
