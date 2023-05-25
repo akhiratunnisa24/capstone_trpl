@@ -49,6 +49,7 @@ use App\Http\Controllers\admin\SettingabsensiController;
 use App\Http\Controllers\karyawan\KpikaryawanController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
+use App\Http\Controllers\manager\TugasKaryawanController;
 use App\Http\Controllers\manager\PembatalanIzinController;
 use App\Http\Controllers\admin\SettingorganisasiController;
 use App\Http\Controllers\admin\SettingalokasicutiController;
@@ -452,13 +453,13 @@ Route::get('/tim-karyawan', [TimKaryawanController::class, 'indexs'])->name('tim
 Route::post('/tim-karyawan', [TimKaryawanController::class, 'stores'])->name('timkaryawan.store');
 Route::put('/tugas-update/{id}', [TimKaryawanController::class, 'update'])->name('tim.update');
 Route::get('/tim-karyawan-delete{id}', [TimKaryawanController::class, 'destroys'])->name('timkaryawan.delete');
-Route::post('/getNik', [TimKaryawanController::class, 'getNik'])->name('getNik');
+// Route::post('/getNik', [TimKaryawanController::class, 'getNik'])->name('get.nik');
 
 //tugas karyawan
-Route::get('/tugas', [TimKaryawanController::class, 'indexs'])->name('timkaryawan.index');
-Route::post('/tugas', [TimKaryawanController::class, 'stores'])->name('timkaryawan.store');
-Route::get('/tim-karyawan-delete{id}', [TimKaryawanController::class, 'destroys'])->name('timkaryawan.delete');
-Route::post('/getNik', [TimKaryawanController::class, 'getNik'])->name('getNik');
+Route::get('/tugas-karyawan', [TugasKaryawanController::class, 'index'])->name('tugas.index');
+Route::post('/tugas-karyawan', [TugasKaryawanController::class, 'stores'])->name('timkaryawan.store');
+Route::post('/getNik', [TugasKaryawanController::class, 'getNik'])->name('get.nik');
+Route::post('/getTim', [TugasKaryawanController::class, 'getTim'])->name('get.tim');
 
 //================================================================================
 //ROLE DIREKTUR

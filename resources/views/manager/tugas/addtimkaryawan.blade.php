@@ -37,11 +37,11 @@
                             @endforeach
                         </select> 
                     </div>
-                    <div class="form-group col-sm">
+                    {{-- <div class="form-group col-sm">
                         <label for="nik" class="col-form-label">NIK Karyawan</label>
                         <input type="text" class="form-control" name="nik" id="niks" autocomplete="off" disabled>
                         <input type="hidden" class="form-control" name="nik" id="nik" autocomplete="off" required>
-                    </div>
+                    </div> --}}
                     <div class="form-group col-sm">
                         <label for="divisi" class="col-form-label">Departemen</label>
                         <input type="text" class="form-control" name="divisis" id="divisis" value="{{$departemen->nama_departemen}}" autocomplete="off" disabled>
@@ -58,7 +58,7 @@
     </div>
 </div>
 
-    <script src="assets/js/jquery.min.js"></script>
+    {{-- <script src="assets/js/jquery.min.js"></script>
     <script>
         $('#id_karyawan').on('change', function(e) {
             var id_karyawan = e.target.value;
@@ -80,5 +80,5 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 

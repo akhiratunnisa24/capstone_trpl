@@ -39,7 +39,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Tim</th>
-                                        <th>NIK</th>
+                                        {{-- <th>NIK</th> --}}
                                         <th>Karyawan</th>
                                         <th>Departemen</th>
                                         <th>Aksi</th>
@@ -51,7 +51,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $data->tims->namatim }}</td>
-                                            <td>{{ $data->nik }}</td>
+                                            {{-- <td>{{ $data->nik }}</td> --}}
                                             <td>{{ $data->karyawans->nama }}</td>
                                             <td>{{ $data->departemens->nama_departemen }}</td>
                                             <td class="text-center">
@@ -83,6 +83,15 @@
     @if(Session::has('pesan'))
         <script>
             swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
+
+    @if(Session::has('pesa'))
+        <script>
+            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
                 button:true,
                 button:"OK",
             });

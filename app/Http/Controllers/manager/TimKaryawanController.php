@@ -108,23 +108,27 @@ class TimKaryawanController extends Controller
     public function stores(Request $request)
     {
         $request->validate([
-            'id_tim' =>'required',
+            'id_tim' => 'required',
             'id_karyawan' => 'required',
-            'nik' => 'required',
             'divisi' => 'required',
         ]);
-        $timkaryawan = new Timkaryawan;
-        $timkaryawan->id_tim = $request->id_tim;
-        $timkaryawan->id_karyawan = $request->id_karyawan;
-        $timkaryawan->nik = $request->nik;
-        $timkaryawan->divisi = $request->divisi;
-
-        $timkaryawan->save();
     
-        return redirect()->back()->with('pesan','Data Tim berhasil ditambahkan !');
-
+        // Melakukan pengecekan untuk memastikan data tidak terduplikasi
+        $timkaryawan = Timkaryawan::firstOrNew([
+            'id_tim' => $request->id_tim,
+            'id_karyawan' => $request->id_karyawan,
+            'divisi' => $request->divisi,
+        ]);
+    
+        if (!$timkaryawan->exists) {
+            $timkaryawan->save();
+            return redirect()->back()->with('pesan', 'Data Tim berhasil ditambahkan!');
+        }
+    
+        return redirect()->back()->with('pesa', 'Data Tim sudah ada!');
     }
-
+    
+    
     // public function updates(Request $request, $id)
     // {
     //     $timkaryawan = Timkaryawan::find($id);
