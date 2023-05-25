@@ -9,7 +9,7 @@ class Tugas extends Model
 {
     use HasFactory;
 
-    protected $table = 'tidakmasuk';
+    protected $table = 'tugas';
 
     protected $fillable = [
         'id',
@@ -22,6 +22,27 @@ class Tugas extends Model
         'tgl_deadline',
         'status',
         'komentar',
-        'keterangan'
+        'keterangan',
+        'divisi'
     ];
+
+    public function departemens()
+    {
+        return $this->belongsTo(Departemen::class,'divisi','id');
+    }
+
+    public function tims()
+    {
+        return $this->belongsTo(Tim::class,'tim_id','id');
+    }
+
+    public function karyawans()
+    {
+        return $this->belongsTo(Karyawan::class, 'id_karyawan', 'id');
+    }
+
+    public function timkaryawans()
+    {
+        return $this->belongsTo(Timkaryawan::class, 'id_timkry', 'id');
+    }
 }

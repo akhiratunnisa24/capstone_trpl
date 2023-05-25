@@ -635,6 +635,29 @@
             todayHighlight: true,
         });
 
+        jQuery("#datepicker-autoclosez").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+        jQuery("#datepicker-autoclosezz").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+
         jQuery("#datepicker-inline").datepicker();
         jQuery("#datepicker-multiple-date").datepicker({
             format: "yyyy/mm/dd",

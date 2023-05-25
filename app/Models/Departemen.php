@@ -51,6 +51,12 @@ class Departemen extends Model
         return $this->hasMany(Tim::class, 'divisi', 'id');
     }
 
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class, 'divisi', 'id');
+    }
+
+
     public function timkaryawans()
     {
         return $this->hasMany(Timkaryawan::class, 'svisi', 'id');

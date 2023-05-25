@@ -31,7 +31,7 @@
                                 data-target="#Modaltugas"> Tambah Tugas</a>
                            
                         </div>
-                        @include('manager.tugas.addttugas')
+                        @include('manager.tugas.addtugas');
                         <div class="panel-body">
                             <table id="datatable-responsive15" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
@@ -39,28 +39,36 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Tim</th>
-                                        <th>NIK</th>
                                         <th>Karyawan</th>
+                                        <th>Judul</th>
+                                        <th>Deskripsi</th>
+                                        <th>Tanggal Mulai</th>
+                                        <th>Deadline</th>
                                         <th>Departemen</th>
+                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($timkaryawan as $data)
+                                    @foreach ($tugas as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $data->tims->namatim }}</td>
-                                            <td>{{ $data->nik }}</td>
-                                            <td>{{ $data->karyawans->nama }}</td>
-                                            <td>{{ $data->departemens->nama_departemen }}</td>
+                                            <td>{{ $data->tim_id }}</td>
+                                            <td>{{ $data->id_kry }}</td>
+                                            <td>{{ $data->judul}}</td>
+                                            <td>{{ $data->deksripsi}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y')}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($data->tgl_deadline)->format('d/m/Y')}}</td>
+                                            <td>{{ $data->status}}</td>
+
                                             <td class="text-center">
                                                  <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                     <button class="btn btn-danger btn-sm" onclick="haps({{ $data->id }})"><i class="fa fa-trash"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
-                                        @include('manager.tugas.edittim')
+                                        {{-- @include('manager.tugas.edittim') --}}
                                     @endforeach
                                 </tbody>
                             </table>

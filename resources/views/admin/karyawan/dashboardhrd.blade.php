@@ -768,7 +768,7 @@
                                                                             <i class="fa fa-times"></i>
                                                                         </button>
                                                                     </form>
-                                                                @elseif($r->karyawan->atasan_kedua == Auth::user()->id_pegawai && $r->status == 6)
+                                                            @elseif($r->karyawan->atasan_kedua == Auth::user()->id_pegawai && $r->status == 6)
                                                                 <form action="{{ route('resign_approved_manager', $r->id) }}"
                                                                         method="POST">
                                                                         @csrf
@@ -788,7 +788,7 @@
                                                                             <i class="fa fa-times"></i>
                                                                         </button>
                                                                     </form>
-                                                                @endif
+                                                            @endif
                                                                 <a class="btn btn-info btn-sm" data-toggle="modal"
                                                                     data-target="#Showresign{{ $r->id }}">
                                                                     <i class="fa fa-eye"></i>

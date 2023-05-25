@@ -30,4 +30,9 @@ class Timkaryawan extends Model
     {
         return $this->belongsTo(Karyawan::class, 'id_karyawan', 'id');
     }
+
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class,'id_timkry','id');
+    } 
 }

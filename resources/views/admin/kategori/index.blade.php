@@ -49,7 +49,7 @@
                                         <div class="panel-heading clearfix">
                                             @if($role == 1)
                                                 <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#Modal"> Tambah Kategori Cuti</a>
-                                                <a href="/setting-kategori-cuti" class="btn btn-sm btn-dark fa fa-gear pull-right"> Setting Kategori</a>
+                                                <a href="/setting-kategori-cuti" class="btn btn-sm btn-dark fa fa-gear pull-right"> Manage Kategori</a>
                                             @endif
                                         </div>
                                     {{-- MODALS TAMBAH KATEGORI CUTI --}}

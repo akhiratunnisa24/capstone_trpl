@@ -4,10 +4,10 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Setting Kategori Cuti</h4>
+                <h4 class="pull-left page-title">Manage Kategori Cuti</h4>
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Setting Kategori Cuti</li>
+                    <li class="active">Manage Kategori Cuti</li>
                 </ol>
                 <div class="clearfix"></div>
             </div>
@@ -52,30 +52,21 @@
                                                             <form action="/update-kategori/{{ $data->id }}" method="POST">
                                                                 @csrf
                                                                 @method('PUT')
-                                                                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" style="color:black; font-weight: bold;">Aktifkan</a>
+                                                                <button type="submit" class="btn btn-sm btn-success" style="color:black;">Aktifkan</button>
                                                                 <input type="hidden" name="status" value="1">
                                                             </form>
                                                         </div>
-                                                        
-                                                        {{-- <div class="col-sm-3">
-                                                            <form action="/delete-kategori/{{ $data->id }}" method="POST">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" style="color:black; font-weight: bold;">Hapus</a>
-                                                                <input type="hidden" name="status" value="1">
-                                                            </form>
-                                                        </div> --}}
                                                     @else
                                                         <div class="col-sm-3">
                                                             <form action="/update-kategori/{{ $data->id }}" method="POST" style="width:200px">
                                                                 @csrf
                                                                 @method('PUT')
-                                                                <a href="#" onclick="event.preventDefault(); this.closest('form').submit();" style="color: rgb(249, 7, 7); font-weight: bold;width:200px">Non-Aktifkan</a>
+                                                                <button type="submit" class="btn btn-sm btn-danger" style="color: rgb(249, 7, 7);">Non-Aktifkan</button>
                                                                 <input type="hidden" name="status" value="0">
                                                             </form>
                                                         </div>
                                                     @endif
-
+                                                
                                                 </td>
                                             </tr>
                                             @endforeach
