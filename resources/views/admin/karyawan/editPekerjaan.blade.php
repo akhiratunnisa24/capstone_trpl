@@ -31,7 +31,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Lama Kerja</label>
                                     <div>
-                                        <div class="input-daterange input-group" id="date-range4">
+                                        <div class="input-daterange input-group">
                                             <input type="date" class="form-control" name="tglmulai" id="tglmulai" value="{{$rpekerjaan->tgl_mulai}}" />
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                             <input type="date" class="form-control" name="tglselesai"

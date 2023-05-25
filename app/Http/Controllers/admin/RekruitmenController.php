@@ -89,10 +89,13 @@ class RekruitmenController extends Controller
 
         $user = new Lowongan();
         $user->posisi = $request->posisi;
-        $user->jumlah_dibutuhkan = $request->jumlah_dibutuhkan;
+        $user->jumlah_dibutuhkan = $request->jumlah_dibutuhkan; 
         $user->status = 'Aktif';
-        $user->tgl_mulai =  Carbon::parse($request->tglmulai)->format("Y-m-d");
-        $user->tgl_selesai =  Carbon::parse($request->tglselesai)->format("Y-m-d");
+        // $user->tgl_mulai =  Carbon::parse($request->tglmulai)->format("Y-m-d");
+        // $user->tgl_selesai =  Carbon::parse($request->tglselesai)->format("Y-m-d");
+        $user->tgl_mulai      = Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d');
+        $user->tgl_selesai      = Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d');
+
         $user->persyaratan = $request->persyaratan;
         $user->save();
 

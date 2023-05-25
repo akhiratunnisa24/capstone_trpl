@@ -80,8 +80,10 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $rpekerjaan->nama_perusahaan }}</td>
                                                                     <td>{{ $rpekerjaan->alamat }}</td>
-                                                                    <td>{{ $rpekerjaan->tgl_mulai }}</td>
-                                                                    <td>{{ $rpekerjaan->tgl_selesai }}</td>
+                                                                    {{-- <td>{{ $rpekerjaan->tgl_mulai }}</td>
+                                                                    <td>{{ $rpekerjaan->tgl_selesai }}</td> --}}
+                                                                    <td>{{ $rpekerjaan->tgl_mulai ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpekerjaan->tgl_mulai)->format('d/m/Y') : '' }}</td>
+                                                                    <td>{{ $rpekerjaan->tgl_selesai ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpekerjaan->tgl_selesai)->format('d/m/Y') : '' }}</td>
                                                                     <td>{{ $rpekerjaan->jabatan }}</td>
                                                                     <td>{{ $rpekerjaan->level }}</td>
                                                                     <td>Rp. {{ $rpekerjaan->gaji }},-</td>
