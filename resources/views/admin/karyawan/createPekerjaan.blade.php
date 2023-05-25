@@ -78,14 +78,14 @@
                                                         <a href="#formUpdatePekerjaan" class="btn btn-sm btn-info" id="editPekerjaan" data-key="{{ $key }}">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
-                                                        {{-- <form class="pull-right" action="{{ route('deletepekerjaan') }}" method="POST" style="margin-right: 5px;">
+                                                        <form class="pull-right" action="{{ route('deletepekerjaan') }}" method="POST" style="margin-right: 5px;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <input type="hidden" name="key" value="{{$key}}">
                                                             <button type="submit" class="btn btn-danger btn-sm delete_pekerjaan" data-key="{{$key}}">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
-                                                        </form> --}}
+                                                        </form>
                                                         {{-- /delete-pekerjaan/{{$key}} --}}
                                                         {{-- <form class="pull-right" action="" method="POST" style="margin-right:5px;">
                                                             <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{ $key }}"><i class="fa fa-trash"></i></button>
