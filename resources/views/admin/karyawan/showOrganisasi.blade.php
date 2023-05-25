@@ -79,8 +79,11 @@
                                                                     <td>{{ $org->nama_organisasi }}</td>
                                                                     <td>{{ $org->alamat }}</td>
                                                                     {{-- <td>{{ $org->tgl_mulai }}</td> --}}
-                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_mulai)->format('d/m/Y') }}</td>
-                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_selesai)->format('d/m/Y') }}</td>
+                                                                    {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_mulai)->format('d/m/Y') }}</td>
+                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_selesai)->format('d/m/Y') }}</td> --}}
+                                                                    <td>{{ $org->tgl_mulai ? \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_mulai)->format('d/m/Y') : '' }}</td>
+                                                                    <td>{{ $org->tgl_selesai ? \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_selesai)->format('d/m/Y') : '' }}</td>
+
                                                                     {{-- <td>{{ $org->tgl_selesai }}</td> --}}
                                                                     <td>{{ $org->jabatan }}</td>
                                                                     <td>{{ $org->no_sk }}</td>
