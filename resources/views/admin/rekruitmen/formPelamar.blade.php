@@ -101,8 +101,8 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Tanggal Lahir</label>
                                                     <div class="input-group">
-                                                        <input id="datepicker-autoclose34" type="text"
-                                                            class="form-control" placeholder="yyyy/mm/dd"
+                                                        <input id="datepicker-autoclose-format" type="text"
+                                                            class="form-control" placeholder="dd/mm/yyyy"
                                                             name="tgllahirPelamar" autocomplete="off" rows="10"
                                                             value="{{ $pelamar->tgllahir ?? '' }}" required><br>
                                                         <span class="input-group-addon bg-custom b-0"><i

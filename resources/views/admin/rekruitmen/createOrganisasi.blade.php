@@ -52,6 +52,7 @@
                                             <th>Tanggal Keluar</th>
                                             <th>Jabatan</th>
                                             <th>Nomor SK</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -61,8 +62,10 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $pek['nama_organisasi'] }}</td>
                                                 <td>{{ $pek['alamat'] }}</td>
-                                                <td>{{ $pek['tgl_mulai'] }}</td>
-                                                <td>{{ $pek['tgl_selesai'] }}</td>
+                                                {{-- <td>{{ $pek['tgl_mulai'] }}</td>
+                                                <td>{{ $pek['tgl_selesai'] }}</td> --}}
+                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_mulai'])->format('d/m/Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_selesai'])->format('d/m/Y') }}</td>
                                                 <td>{{ $pek['jabatan'] }}</td>
                                                 <td>{{ $pek['no_sk'] }}</td>
                                                 <td class="text-center">
@@ -72,13 +75,13 @@
                                                             <i class="fa fa-edit"></i>
                                                         </a>
                                                         {{-- /delete-pekerjaan/{{$key}} --}}
-                                                        <form class="pull-right" action="" method="POST"
+                                                        {{-- <form class="pull-right" action="" method="POST"
                                                             style="margin-right:5px;">
                                                             <button type="submit"
                                                                 class="btn btn-danger btn-sm delete_dakel"
                                                                 data-key="{{ $key }}"><i
                                                                     class="fa fa-trash"></i></button>
-                                                        </form>
+                                                        </form> --}}
                                                         {{-- <button type="button" id="hapus_dakel" data-key="{{ $key }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                                     </div>
                                                 </td>
@@ -127,12 +130,12 @@
                                                                     <div>
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range">
-                                                                            <input id="datepicker-autoclose36" type="text" class="form-control"
-                                                                                name="tglmulai" autocomplete="off" placeholder="yyyy/mm/dd" />
+                                                                            <input type="text" class="form-control"
+                                                                                name="tglmulai" autocomplete="off" placeholder="dd/mm/yyyy" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input id="datepicker-autoclose39" type="text" class="form-control"
-                                                                                name="tglselesai"  autocomplete="off" placeholder="yyyy/mm/dd" />
+                                                                            <input type="text" class="form-control"
+                                                                                name="tglselesai"  autocomplete="off" placeholder="dd/mm/yyyy" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -158,7 +161,7 @@
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
                                                                         class="form-label">No. Surat Keterangan / SK</label>
-                                                                    <input type="number" name="noSKorganisasi"
+                                                                    <input type="text" name="noSKorganisasi"
                                                                         class="form-control" placeholder="Masukkan Nomor SK"
                                                                         autocomplete="off">
                                                                 </div>
@@ -227,13 +230,13 @@
                                                                     <label class="form-label">Lama Bertugas</label>
                                                                     <div>
                                                                         <div class="input-daterange input-group"
-                                                                            id="date-range">
+                                                                            id="date-range2">
                                                                             <input type="text" class="form-control"
-                                                                                name="tglmulai" id="datepicker-autoclose33" autocomplete="off" />
+                                                                                name="tglmulai" id="tglmulai" autocomplete="off" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tglselesai" id="datepicker-autoclose34" autocomplete="off" />
+                                                                                name="tglselesai" id="tglselesai" autocomplete="off" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -259,7 +262,7 @@
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
                                                                         class="form-label">No. Surat Keterangan / SK</label>
-                                                                    <input type="number" name="noSKorganisasi" id="noSKorganisasi"
+                                                                    <input type="text" name="noSKorganisasi" id="noSKorganisasi"
                                                                         class="form-control" placeholder="Masukkan Nomor SK"
                                                                         autocomplete="off">
                                                                 </div>
@@ -318,8 +321,16 @@
                 // Isi data ke dalam form
                 $('#namaOrganisasi').val(data.nama_organisasi);
                 $('#alamatOrganisasi').val(data.alamat);
-                $('#datepicker-autoclose33').val(data.tgl_mulai);
-                $('#datepicker-autoclose34').val(data.tgl_selesai);
+                // $('#datepicker-autoclose33').val(data.tgl_mulai);
+                // $('#datepicker-autoclose34').val(data.tgl_selesai);
+                var tanggal = new Date(data.tgl_mulai);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tglmulai').val(tanggalFormatted);
+
+                    var tanggal = new Date(data.tgl_selesai);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tglselesai').val(tanggalFormatted);
+
                 $('#jabatanRorganisasi').val(data.jabatan);
                 $('#noSKorganisasi').val(data.no_sk);
             });

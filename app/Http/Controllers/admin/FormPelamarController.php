@@ -87,7 +87,8 @@ class FormPelamarController extends Controller
             $pelamar->id_lowongan = $request->posisiPelamar;
             $pelamar->nik = $request->nikPelamar;
             $pelamar->nama = $request->namaPelamar;
-            $pelamar->tgllahir = Carbon::parse($request->tgllahirPelamar)->format('Y-m-d');
+            // $pelamar->tgllahir = Carbon::parse($request->tgllahirPelamar)->format('Y-m-d');
+            $pelamar->tgllahir = Carbon::createFromFormat('d/m/Y', $request->tgllahirPelamar)->format('Y-m-d');
             $pelamar->tempatlahir = $request->tempatlahirPelamar;
             $pelamar->jenis_kelamin = $request->jenis_kelaminPelamar;
             $pelamar->gol_darah = $request->gol_darahPelamar;
@@ -118,7 +119,8 @@ class FormPelamarController extends Controller
             $pelamar->id_lowongan = $request->posisiPelamar;
             $pelamar->nik = $request->nikPelamar;
             $pelamar->nama = $request->namaPelamar;
-            $pelamar->tgllahir = Carbon::parse($request->tgllahirPelamar)->format('Y-m-d');
+            // $pelamar->tgllahir = Carbon::parse($request->tgllahirPelamar)->format('Y-m-d');
+            $pelamar->tgllahir = Carbon::createFromFormat('d/m/Y', $request->tgllahirPelamar)->format('Y-m-d');
             $pelamar->tempatlahir = $request->tempatlahirPelamar;
             $pelamar->jenis_kelamin = $request->jenis_kelaminPelamar;
             $pelamar->gol_darah = $request->gol_darahPelamar;
@@ -167,7 +169,8 @@ class FormPelamarController extends Controller
             'hubungan' => $request->hubungankeluarga,
             'nama' => $request->namaPasangan,
             'jenis_kelamin' => $request->jenis_kelaminKeluarga,
-            'tgllahir' => Carbon::parse($request->tgllahirPasangan)->format('Y-m-d'),
+            // 'tgllahir' => Carbon::parse($request->tgllahirPasangan)->format('Y-m-d'),
+            'tgllahir' => Carbon::createFromFormat("d/m/Y", $request->tgllahirPasangan)->format('Y-m-d'),
             'tempatlahir' => $request->tempatlahirKeluarga,
             'pendidikan_terakhir' => $request->pendidikan_terakhirPasangan,
             'pekerjaan' => $request->pekerjaanPasangan,
@@ -189,7 +192,8 @@ class FormPelamarController extends Controller
         $datakeluarga[$index]['hubungan'] = $request->hubungankeluarga;
         $datakeluarga[$index]['nama'] = $request->namaPasangan;
         $datakeluarga[$index]['jenis_kelamin'] = $request->jenis_kelaminKeluarga;
-        $datakeluarga[$index]['tgllahir'] = Carbon::parse($request->tgllahirPasangan)->format('Y-m-d');
+        // $datakeluarga[$index]['tgllahir'] = Carbon::parse($request->tgllahirPasangan)->format('Y-m-d');
+        $datakeluarga[$index]['tgllahir'] = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgllahirPasangan)->format('Y-m-d');
         $datakeluarga[$index]['tempatlahir'] = $request->tempatlahirKeluarga;
         // $datakeluarga[$index]['alamat'] = $request->alamatPasangan;
         $datakeluarga[$index]['pendidikan_terakhir'] = $request->pendidikan_terakhirPasangan;
@@ -267,10 +271,14 @@ class FormPelamarController extends Controller
             'nama_lembaga'         => $request->namaLembaga,
             'kota_pformal'         => $request->kotaPendidikanFormal,
             'jurusan'              => $request->jurusan,
-            'tahun_lulus_formal'   => $request->tahun_lulusFormal,
-            'tahun_lulus_nonformal'=> $request->tahunLulusNonFormal,
+            // 'tahun_lulus_formal'   => $request->tahun_lulusFormal,
+            'tahun_masuk_formal' => ($request->tahun_masukFormal !== null) ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : null,
+            'tahun_lulus_formal' => ($request->tahun_lulusFormal !== null) ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : null,
             'jenis_pendidikan'     => $request->jenis_pendidikan,
             'kota_pnonformal'      => $request->kotaPendidikanNonFormal,
+            // 'tahun_lulus_nonformal'=> $request->tahunLulusNonFormal,
+            'tahun_masuk_nonformal' => ($request->tahunMasukNonFormal !== null) ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahunMasukNonFormal)->format('Y-m-d') : null,
+            'tahun_lulus_nonformal' => ($request->tahunLulusNonFormal !== null) ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahunLulusNonFormal)->format('Y-m-d') : null,
             'ijazah_formal' => $request->noijazahPformal,
             'ijazah_nonformal' => $request->noijazahPnonformal,
         ];
@@ -291,10 +299,20 @@ class FormPelamarController extends Controller
         $pendidikan[$index]['nama_lembaga']         = $request->namaLembaga;
         $pendidikan[$index]['kota_pformal']         = $request->kotaPendidikanFormal;
         $pendidikan[$index]['jurusan']              = $request->jurusan;
-        $pendidikan[$index]['tahun_lulus_formal']   = $request->tahun_lulusFormal;
+        // $pendidikan[$index]['tahun_masuk_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d');
+        // $pendidikan[$index]['tahun_lulus_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d');
+        if (!empty($request->tahun_masukFormal)) {$pendidikan[$index]['tahun_masuk_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d');}
+        if (!empty($request->tahun_lulusFormal)) {$pendidikan[$index]['tahun_lulus_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d');}
+
+        // $pendidikan[$index]['tahun_lulus_formal']   = $request->tahun_lulusFormal;
         $pendidikan[$index]['jenis_pendidikan']     = $request->jenis_pendidikan;
         $pendidikan[$index]['kota_pnonformal']      = $request->kotaPendidikanNonFormal;
-        $pendidikan[$index]['tahun_lulus_nonformal'] = $request->tahunLulusNonFormal;
+        // $pendidikan[$index]['tahun_lulus_nonformal'] = $request->tahunLulusNonFormal;
+        // $pendidikan[$index]['tahun_masuk_nonformal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d');
+        // $pendidikan[$index]['tahun_lulus_nonformal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d');
+        if (!empty($request->tahun_masukNonFormal)) {$pendidikan[$index]['tahun_masuk_nonformal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d');}
+        if (!empty($request->tahun_lulusNonFormal)) {$pendidikan[$index]['tahun_lulus_nonformal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d');}
+
         $pendidikan[$index]['ijazah_formal'] = $request->noijazahPformal;
         $pendidikan[$index]['ijazah_nonformal'] = $request->noijazahPnonformal;
 
@@ -326,8 +344,10 @@ class FormPelamarController extends Controller
             'nama_perusahaan' => $request->namaPerusahaan,
             'alamat'          => $request->alamatPerusahaan,
             // 'jenis_usaha'     => $request->jenisUsaha,
-            'tgl_mulai'       => Carbon::parse($request->tglmulai)->format('Y-m-d'),
-            'tgl_selesai'     => Carbon::parse($request->tglselesai)->format('Y-m-d'),
+            // 'tgl_mulai'       => Carbon::parse($request->tglmulai)->format('Y-m-d'),
+            // 'tgl_selesai'     => Carbon::parse($request->tglselesai)->format('Y-m-d'),
+            'tgl_mulai'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d'),
+            'tgl_selesai'     => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d'),
             'jabatan'         => $request->jabatanRpekerjaan,
             'level'           => $request->levelRpekerjaan,
             // 'nama_atasan'     => $request->namaAtasan,
@@ -354,8 +374,10 @@ class FormPelamarController extends Controller
         $pekerjaan[$index]['level']          = $request->levelRpekerjaan;
         $pekerjaan[$index]['nama_atasan']    = $request->namaAtasan;
         $pekerjaan[$index]['nama_direktur']  = $request->namaDirektur;
-        $pekerjaan[$index]['tgl_mulai'] = Carbon::parse($request->tglmulai)->format('Y-m-d');
-        $pekerjaan[$index]['tgl_selesai'] = Carbon::parse($request->tglselesai)->format('Y-m-d');
+        // $pekerjaan[$index]['tgl_mulai'] = Carbon::parse($request->tglmulai)->format('Y-m-d');
+        // $pekerjaan[$index]['tgl_selesai'] = Carbon::parse($request->tglselesai)->format('Y-m-d');
+        $datakeluarga[$index]['tgl_mulai'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d');
+        $datakeluarga[$index]['tgl_selesai'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d');
         $pekerjaan[$index]['alasan_berhenti'] = $request->alasanBerhenti;
         $pekerjaan[$index]['gaji']           = $request->gajiRpekerjaan;
         
@@ -390,8 +412,10 @@ class FormPelamarController extends Controller
         $organisasiBaru = [
             'nama_organisasi' => $request->namaOrganisasi,
             'alamat'          => $request->alamatOrganisasi,
-            'tgl_mulai'     => Carbon::parse($request->tglmulai)->format('Y-m-d'),
-            'tgl_selesai'   => Carbon::parse($request->tglselesai)->format('Y-m-d'),
+            // 'tgl_mulai'     => Carbon::parse($request->tglmulai)->format('Y-m-d'),
+            // 'tgl_selesai'   => Carbon::parse($request->tglselesai)->format('Y-m-d'),
+            'tgl_mulai'     => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d'),
+            'tgl_selesai'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d'),    
             'jabatan'     => $request->jabatanRorganisasi,
             'no_sk'   => $request->noSKorganisasi,
         ];
@@ -410,8 +434,10 @@ class FormPelamarController extends Controller
         // dd($index);
         $organisasi[$index]['nama_organisasi'] = $request->namaOrganisasi;
         $organisasi[$index]['alamat']         = $request->alamatOrganisasi;
-        $organisasi[$index]['tgl_mulai']    = Carbon::parse($request->tglmulai)->format('Y-m-d');
-        $organisasi[$index]['tgl_selesai']        = Carbon::parse($request->tglselesai)->format('Y-m-d');
+        // $organisasi[$index]['tgl_mulai']    = Carbon::parse($request->tglmulai)->format('Y-m-d');
+        // $organisasi[$index]['tgl_selesai']        = Carbon::parse($request->tglselesai)->format('Y-m-d');
+        $organisasi[$index]['tgl_mulai']    = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d');
+        $organisasi[$index]['tgl_selesai']        = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d');
         $organisasi[$index]['jabatan']          = $request->jabatanRorganisasi;
         $organisasi[$index]['no_sk']    = $request->noSKorganisasi;
 
@@ -453,6 +479,7 @@ class FormPelamarController extends Controller
             'nama_instansi' => $request->namaInstansi,
             'alamat'        => $request->alamatInstansi,
             'no_surat'      => $request->noSurat,
+            'tanggal_surat'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d'),    
         ];
 
         $prestasi[] = $prestasiBaru;
@@ -471,6 +498,7 @@ class FormPelamarController extends Controller
         $prestasi[$index]['nama_instansi']    = $request->namaInstansi;
         $prestasi[$index]['alamat']           = $request->alamatInstansi;
         $prestasi[$index]['no_surat']         = $request->noSurat;
+        $prestasi[$index]['tanggal_surat']    = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d');
 
         session()->put('prestasi', json_encode($prestasi));
         return redirect()->back();
@@ -655,8 +683,6 @@ class FormPelamarController extends Controller
         $output = [
             // 'row' => $row,
             'departemen' => $departemen,
-            'atasan_pertama' => $atasan_pertama,
-            'atasan_kedua' => $atasan_kedua,
             'user' => $user,
             'datakeluarga' => $datakeluarga,
             'kontakdarurat' => $kontakdarurat,

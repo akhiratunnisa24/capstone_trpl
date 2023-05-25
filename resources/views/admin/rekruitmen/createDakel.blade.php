@@ -66,7 +66,8 @@
                                                         <td>{{ $data['hubungan'] }}</td>
                                                         <td>{{ $data['nama'] }}</td>
                                                         <td>{{ $data['jenis_kelamin'] }}</td>
-                                                        <td>{{ $data['tgllahir'] }}</td>
+                                                        {{-- <td>{{ $data['tgllahir'] }}</td> --}}
+                                                        <td>{{ \Carbon\Carbon::parse($data['tgllahir'])->format('d/m/Y') }}</td>
                                                         <td>{{ $data['tempatlahir'] }}</td>
                                                         <td>{{ $data['pendidikan_terakhir'] }}</td>
                                                         <td>{{ $data['pekerjaan'] }}</td>
@@ -77,14 +78,14 @@
                                                                     data-key="{{ $key }}">
                                                                     <i class="fa fa-edit"></i>
                                                                 </a>
-                                                                <form class="pull-right"
+                                                                {{-- <form class="pull-right"
                                                                     action="/delete-keluarga/{{ $key }}"
                                                                     method="POST" style="margin-right:5px;">
                                                                     <button type="submit"
                                                                         class="btn btn-danger btn-sm delete_dakel"
                                                                         data-key="{{ $key }}"><i
                                                                             class="fa fa-trash"></i></button>
-                                                                </form>
+                                                                </form> --}}
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -159,13 +160,13 @@
                                                                     <div class="mb-3">
                                                                         <label class="form-label">Tanggal Lahir</label>
                                                                         <div class="input-group">
-                                                                            <input id="datepicker-autoclose36" type="text" class="form-control"
-                                                                                placeholder="yyyy/mm/dd"
+                                                                            <input id="datepicker-autoclose-format" type="text" class="form-control"
+                                                                                placeholder="dd/mm/yyyy"
                                                                                 autocomplete="off"
                                                                                 name="tgllahirPasangan" required>
-                                                                            {{-- <span
+                                                                            <span
                                                                                 class="input-group-addon bg-custom b-0"><i
-                                                                                    class="mdi mdi-calendar text-white"></i></span> --}}
+                                                                                    class="mdi mdi-calendar text-white"></i></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -310,8 +311,8 @@
                                                                     <div class="mb-3">
                                                                         <label class="form-label">Tanggal Lahir</label>
                                                                         <div class="input-group">
-                                                                            <input id="datepicker-autoclose39" type="text" class="form-control"
-                                                                                placeholder="yyyy/mm/dd"
+                                                                            <input id="datepicker-autoclose-format2" type="text" class="form-control"
+                                                                                placeholder="dd/mm/yyyy"
                                                                                 id="tgllahirPasangan"
                                                                                 autocomplete="off"
                                                                                 name="tgllahirPasangan" rows="10"
@@ -422,7 +423,11 @@
                 var data = {!! json_encode($datakeluarga) !!}[nomorIndex];
                 // Isi data ke dalam form
                 $('#nama').val(data.nama);
-                $('#datepicker-autoclose39').val(data.tgllahir);
+                $('#datepicker-autoclose-format2').val(data.tgllahir);
+                var tanggal = new Date(data.tgllahir);
+                var bulan = ("0" + (tanggal.getMonth() + 1)).slice(-2); // Menambahkan 0 di depan jika bulan < 10
+                var tanggalFormatted = tanggal.getDate() + '/' + bulan + '/' + tanggal.getFullYear();
+                $('#datepicker-autoclose-format2').val(tanggalFormatted);
                 $('#hubungankeluargaa').val(data.hubungan);
                 $('#alamat').val(data.alamat);
                 $('#pekerjaan').val(data.pekerjaan);

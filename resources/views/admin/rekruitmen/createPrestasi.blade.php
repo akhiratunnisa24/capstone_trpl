@@ -48,6 +48,7 @@
                                             <th>Instansi Pemberi</th>
                                             <th>Alamat</th>
                                             <th>No. Surat</th>
+                                            <th>Tanggal Surat</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -60,6 +61,7 @@
                                                 <td>{{ $pres['nama_instansi'] }}</td>
                                                 <td>{{ $pres['alamat'] }}</td>
                                                 <td>{{ $pres['no_surat'] }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($pres['tanggal_surat'])->format('d/m/Y') }}</td>
                                                 <td class="text-center">
                                                     <div class="row d-grid gap-2" role="group" aria-label="Basic example">
                                                         <a href="#formUpdatePrestasi" class="btn btn-sm btn-info"
@@ -67,13 +69,13 @@
                                                             <i class="fa fa-edit"></i>
                                                         </a>
                                                         {{-- /delete-pekerjaan/{{$key}} --}}
-                                                        <form class="pull-right" action="" method="POST"
+                                                        {{-- <form class="pull-right" action="" method="POST"
                                                             style="margin-right:5px;">
                                                             <button type="submit"
                                                                 class="btn btn-danger btn-sm delete_dakel"
                                                                 data-key="{{ $key }}"><i
                                                                     class="fa fa-trash"></i></button>
-                                                        </form>
+                                                        </form> --}}
                                                         {{-- <button type="button" id="hapus_dakel" data-key="{{ $key }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                                     </div>
                                                 </td>
@@ -118,11 +120,6 @@
                                                                 </div>
                                                             </div>
 
-                                                        </div>
-
-                                                        {{-- KANAN --}}
-                                                        <div class="col-md-6 m-t-10">
-
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
@@ -134,14 +131,29 @@
                                                                 </div>
                                                             </div>
 
+                                                        </div>
+
+                                                        {{-- KANAN --}}
+                                                        <div class="col-md-6 m-t-10">
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
                                                                         class="form-label">Nomor Surat / Sertifikat </label>
-                                                                    <input type="number" name="noSurat"
+                                                                    <input type="text" name="noSurat"
                                                                         class="form-control" placeholder="Masukkan Nomor Surat"
                                                                         autocomplete="off">
                                                                 </div>
+                                                            </div>
+                                                             <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Tanggal Surat</label>
+                                                                <div class="input-group">
+                                                                    <input id="datepicker-autoclose-format" type="text" class="form-control" placeholder="dd/mm/yyyy" id="4"
+                                                                        name="tgl_surat" autocomplete="off" rows="10" required><br>
+                                                                    <span class="input-group-addon bg-custom b-0"><i  class="mdi mdi-calendar text-white"></i></span>
+                                                                </div><!-- input-group -->
+                                                            </div>
                                                             </div>
                                                             
                                                         </div>
@@ -201,11 +213,6 @@
                                                                 </div>
                                                             </div>
 
-                                                        </div>
-
-                                                        {{-- KANAN --}}
-                                                        <div class="col-md-6 m-t-10">
-
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
@@ -217,15 +224,29 @@
                                                                 </div>
                                                             </div>
 
+                                                        </div>
+
+                                                        {{-- KANAN --}}
+                                                        <div class="col-md-6 m-t-10">
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
                                                                         class="form-label">Nomor Surat / Sertifikat </label>
-                                                                    <input type="number" name="noSurat" id="noSurat"
+                                                                    <input type="text" name="noSurat" id="noSurat"
                                                                         class="form-control" placeholder="Masukkan Nomor Surat"
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
+
+                                                            <div class="mb-3">
+                                                        <label class="form-label">Tanggal Surat</label>
+                                                        <div class="input-group">
+                                                            <input id="datepicker-autoclose-format2" type="text" class="form-control" placeholder="yyyy/mm/dd" id="4"
+                                                                name="tgl_surat" autocomplete="off" rows="10" required><br>
+                                                            <span class="input-group-addon bg-custom b-0"><i  class="mdi mdi-calendar text-white"></i></span>
+                                                        </div><!-- input-group -->
+                                                    </div>   
                                                             
                                                         </div>
 
@@ -281,6 +302,15 @@
                 $('#namaInstansi').val(data.nama_instansi);
                 $('#alamatInstansi').val(data.alamat);
                 $('#noSurat').val(data.no_surat);
+
+                var tanggal = new Date(data.tanggal_surat);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#datepicker-autoclose-format2').val(tanggalFormatted);
+
             });
         });
     </script>
+   <!-- datepicker  -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/pages/form-advanced.js"></script>

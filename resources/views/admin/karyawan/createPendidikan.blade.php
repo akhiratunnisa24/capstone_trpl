@@ -350,7 +350,14 @@
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Lembaga Pendidikan</label>
+                                                                    <label class="form-label"> Jurusan</label>
+                                                                    <input type="text" name="jurusan" id="jurusan" class="form-control"  placeholder="Masukkan Jurusan" autocomplete="off">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label for="exampleInputEmail1" class="form-label">Nama Sekolah</label>
                                                                     <input type="text" name="nama_sekolah" id="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
                                                                 </div>
                                                             </div>
@@ -359,13 +366,6 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label"> Alamat</label>
                                                                     <input type="text" name="kotaPendidikanFormal" id="kotaPendidikanFormal"  class="form-control" id="exampleInputEmail1" placeholder="Masukkan Alamat">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label"> Jurusan</label>
-                                                                    <input type="text" name="jurusan" id="jurusan" class="form-control"  placeholder="Masukkan Jurusan" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -522,13 +522,26 @@
                     $('#namaLembaga').val(data.nama_lembaga);
                     $('#jurusan').val(data.jurusan);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
-                    $('#tahun_masukFormal').val(data.tahun_masuk_formal);
-                    $('#tahun_lulusFormal').val(data.tahun_lulus_formal);
+                    // $('#tahun_masukFormal').val(data.tahun_masuk_formal);
+                    // $('#tahun_lulusFormal').val(data.tahun_lulus_formal);
+                    var tanggal = new Date(data.tahun_masuk_formal);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tahun_masukFormal').val(tanggalFormatted);
+                    var tanggal = new Date(data.tahun_lulus_formal);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tahun_lulusFormal').val(tanggalFormatted);
                     $('#ijazahFormal').val(data.ijazah_formal);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
-                    $('#tahun_masukNonFormal').val(data.tahun_masuk_nonformal);
-                    $('#tahun_lulusNonFormal').val(data.tahun_lulus_nonformal);
+                    // $('#tahun_masukNonFormal').val(data.tahun_masuk_nonformal);
+                    // $('#tahun_lulusNonFormal').val(data.tahun_lulus_nonformal);
+                    var tanggal = new Date(data.tahun_masuk_nonformal);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tahun_masukNonFormal').val(tanggalFormatted);
+                    var tanggal = new Date(data.tahun_lulus_nonformal);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tahun_lulusNonFormal').val(tanggalFormatted);
+
                     $('#noijazahPnonformal').val(data.ijazah_nonformal);
         
                     // Set opsi yang dipilih pada dropdown select option
@@ -561,13 +574,27 @@
                     $('#namaLembaga').val(data.nama_lembaga);
                     $('#jurusan').val(data.jurusan);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
-                    $('#tahun_masukFormal').val(data.tahun_masuk_formal);
-                    $('#tahun_lulusFormal').val(data.tahun_lulus_formal);
+                    // $('#tahun_masukFormal').val(data.tahun_masuk_formal);
+                    // $('#tahun_lulusFormal').val(data.tahun_lulus_formal);
+                    var tanggal = new Date(data.tahun_masuk_formal);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tahun_masukFormal').val(tanggalFormatted);
+                    var tanggal = new Date(data.tahun_lulus_formal);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tahun_lulusFormal').val(tanggalFormatted);
+
                     $('#ijazahFormal').val(data.ijazah_formal);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
-                    $('#tahun_masukNonFormal').val(data.tahun_masuk_nonformal);
-                    $('#tahun_lulusNonFormal').val(data.tahun_lulus_nonformal);
+                    // $('#tahun_masukNonFormal').val(data.tahun_masuk_nonformal);
+                    // $('#tahun_lulusNonFormal').val(data.tahun_lulus_nonformal);
+                    var tanggal = new Date(data.tahun_masuk_nonformal);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tahun_masukNonFormal').val(tanggalFormatted);
+                    var tanggal = new Date(data.tahun_lulus_nonformal);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tahun_lulusNonFormal').val(tanggalFormatted);
+
                     $('#noijazahPnonformal').val(data.ijazah_nonformal);
             });
         });

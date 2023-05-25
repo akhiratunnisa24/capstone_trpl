@@ -61,8 +61,10 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $pek['nama_perusahaan'] }}</td>
                                                 <td>{{ $pek['alamat'] }}</td>
-                                                <td>{{ $pek['tgl_mulai'] }}</td>
-                                                <td>{{ $pek['tgl_selesai'] }}</td>
+                                                {{-- <td>{{ $pek['tgl_mulai'] }}</td>
+                                                <td>{{ $pek['tgl_selesai'] }}</td> --}}
+                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_mulai'])->format('d/m/Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_selesai'])->format('d/m/Y') }}</td>
                                                 <td>{{ $pek['jabatan'] }}</td>
                                                 <td>{{ $pek['level'] }}</td>
                                                 <td>{{ $pek['gaji'] }}</td>
@@ -73,9 +75,9 @@
                                                             <i class="fa fa-edit"></i>
                                                         </a>
                                                         {{-- /delete-pekerjaan/{{$key}} --}}
-                                                        <form class="pull-right" action="" method="POST" style="margin-right:5px;">
+                                                        {{-- <form class="pull-right" action="" method="POST" style="margin-right:5px;">
                                                             <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{ $key }}"><i class="fa fa-trash"></i></button>
-                                                        </form> 
+                                                        </form>  --}}
                                                         {{-- <button type="button" id="hapus_dakel" data-key="{{ $key }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                                     </div>
                                                 </td>
@@ -118,12 +120,12 @@
                                                                     <div>
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range">
-                                                                            <input id="datepicker-autoclose36" type="text" class="form-control"
-                                                                                name="tglmulai" autocomplete="off"  />
+                                                                            <input type="text" class="form-control"
+                                                                                name="tglmulai" autocomplete="off" placeholder="dd/mm/yyyy"/>
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input id="datepicker-autoclose39" type="text" class="form-control"
-                                                                                name="tglselesai" autocomplete="off" />
+                                                                            <input type="text" class="form-control"
+                                                                                name="tglselesai" autocomplete="off" placeholder="dd/mm/yyyy" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -242,13 +244,13 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Kerja</label>
                                                                     <div>
-                                                                        <div class="input-daterange input-group">
-                                                                            <input id="datepicker-autoclose33" type="text" class="form-control"
-                                                                                name="tglmulai"/>
+                                                                        <div class="input-daterange input-group"  id="date-range2">
+                                                                            <input id="tgl_mulai" type="text" class="form-control"
+                                                                                name="tglmulai" placeholder="dd/mm/yyyy"/>
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input id="datepicker-autoclose34" type="text" class="form-control"
-                                                                                name="tglselesai"/>
+                                                                            <input id="tgl_selesai" type="text" class="form-control"
+                                                                                name="tglselesai" placeholder="dd/mm/yyyy"/>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -276,7 +278,7 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Gaji</label>
-                                                                    <input type="text" name="gaji" class="form-control" id="gajih" placeholder="Masukkan Gaji" autocomplete="off">
+                                                                    <input type="text" name="gajiRpekerjaan" class="form-control" id="gajih" placeholder="Masukkan Gaji" autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -341,6 +343,30 @@
         }
     </script>
 
+    <script>
+        var rupiah = document.getElementById('gajih');
+        rupiah.addEventListener('keyup', function(e) {
+            // tambahkan 'Rp.' pada saat form di ketik
+            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+            rupiah.value = formatRupiah(this.value);
+        });
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+        }
+    </script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#formCreatePekerjaan').prop('hidden', false);
@@ -367,8 +393,16 @@
                     $('#levelRpekerjaan').val(data.level);
                     $('#namaAtasan').val(data.nama_atasan);
                     $('#namaDirektur').val(data.nama_direktur);
-                    $('#datepicker-autoclose33').val(data.tgl_mulai);
-                    $('#datepicker-autoclose34').val(data.tgl_selesai);
+                    // $('#datepicker-autoclose33').val(data.tgl_mulai);
+                    // $('#datepicker-autoclose34').val(data.tgl_selesai);
+                    var tanggal = new Date(data.tgl_mulai);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tgl_mulai').val(tanggalFormatted);
+
+                    var tanggal = new Date(data.tgl_selesai);
+                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    $('#tgl_selesai').val(tanggalFormatted);
+
                     $('#alasanBerhenti').val(data.alasan_berhenti);
                     $('#gajih').val(data.gaji);
             });
