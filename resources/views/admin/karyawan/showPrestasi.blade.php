@@ -80,7 +80,8 @@
                                                                     <td>{{ $pres->alamat }}</td>
                                                                     <td>{{ $pres->no_surat }}</td>
                                                                     {{-- <td>{{ $pres->tanggal_surat }}</td> --}}
-                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $pres->tanggal_surat)->format('d/m/Y') }}</td>
+                                                                    {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $pres->tanggal_surat)->format('d/m/Y') }}</td> --}}
+                                                                    <td>{{ $pres->tanggal_surat ? \Carbon\Carbon::createFromFormat('Y-m-d', $pres->tanggal_surat)->format('d/m/Y') : '' }}</td>
                                                                     <td class="">
                                                                         <a class="btn btn-sm btn-primary"
                                                                             data-toggle="modal"
