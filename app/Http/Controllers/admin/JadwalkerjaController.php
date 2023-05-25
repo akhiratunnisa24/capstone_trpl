@@ -26,7 +26,8 @@ class JadwalkerjaController extends Controller
         if ($role == 1 || $role == 2) 
         {
             $row    = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $jadwal = Jadwal::all();
+            // $jadwal = Jadwal::all();
+            $jadwal = Jadwal::with('karyawans')->get();
             $karyawan= Karyawan::all();
             $shift= Shift::all();
             // dd($jadwal);
