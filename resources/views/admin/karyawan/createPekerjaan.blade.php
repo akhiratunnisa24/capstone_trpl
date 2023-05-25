@@ -54,7 +54,7 @@
                                             <th>Jabatan</th>
                                             <th>Level</th>
                                             <th>Gaji</th>
-                                            <th>Alasan Berhenti</th>
+                                            {{-- <th>Alasan Berhenti</th> --}}
                                             <th>Aksi</th>
             
                                         </tr>
@@ -72,12 +72,20 @@
                                                 <td>{{ $pek['jabatan'] }}</td>
                                                 <td>{{ $pek['level'] }}</td>
                                                 <td>{{ $pek['gaji'] }}</td>
-                                                <td>{{ $pek['alasan_berhenti'] }}</td>
+                                                {{-- <td>{{ $pek['alasan_berhenti'] }}</td> --}}
                                                 <td class="text-center">
                                                     <div class="row d-grid gap-2" role="group" aria-label="Basic example">
                                                         <a href="#formUpdatePekerjaan" class="btn btn-sm btn-info" id="editPekerjaan" data-key="{{ $key }}">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
+                                                        {{-- <form class="pull-right" action="{{ route('deletepekerjaan') }}" method="POST" style="margin-right: 5px;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="hidden" name="key" value="{{$key}}">
+                                                            <button type="submit" class="btn btn-danger btn-sm delete_pekerjaan" data-key="{{$key}}">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </form> --}}
                                                         {{-- /delete-pekerjaan/{{$key}} --}}
                                                         {{-- <form class="pull-right" action="" method="POST" style="margin-right:5px;">
                                                             <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{ $key }}"><i class="fa fa-trash"></i></button>

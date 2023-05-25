@@ -90,6 +90,14 @@
                                                                 data-key="{{ $key }}"><i
                                                                     class="fa fa-trash"></i></button>
                                                         </form> --}}
+                                                        <form class="pull-right" action="{{ route('deletedk') }}" method="POST" style="margin-right: 5px;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="hidden" name="key" value="{{$key}}">
+                                                            <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{$key}}">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </form>
                                                         {{-- <button type="button" id="hapus_dakel" data-key="{{ $key }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                                     </div>
                                                 </td>

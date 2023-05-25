@@ -85,6 +85,14 @@
                                                             <a href="#formUpdatePendidikan" class="btn btn-sm btn-info" id="editPendidikan" data-key="{{ $key }}">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
+                                                            <form class="pull-right" action="{{ route('deletependidikan') }}" method="POST" style="margin-right: 60px;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="key" value="{{$key}}">
+                                                                <button type="submit" class="btn btn-danger btn-sm delete_konrat" data-key="{{$key}}">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </form>
                                                             {{-- /delete-pendidikan/{{$key}} --}}
                                                             {{-- <form class="pull-right" action="" method="POST" style="margin-right:5px;">
                                                                 <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{ $key }}"><i class="fa fa-trash"></i></button>
@@ -130,6 +138,14 @@
                                                             <a href="#formUpdatePendidikan" class="btn btn-sm btn-info" id="edittPendidikan" data-key="{{ $key }}">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
+                                                            <form class="pull-right" action="{{ route('deletependidikan') }}" method="POST" style="margin-right: 60px;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="key" value="{{$key}}">
+                                                                <button type="submit" class="btn btn-danger btn-sm delete_konrat" data-key="{{$key}}">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </form>
                                                             {{-- /delete-pendidikan/{{$key}} --}}
                                                             {{-- <form class="pull-right" action="" method="POST" style="margin-right:5px;">
                                                                 <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{ $key }}"><i class="fa fa-trash"></i></button>
@@ -233,7 +249,7 @@
                                                                     <input type="text" name="noijazahPformal"   class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
                                                                 </div>
                                                             </div>
-
+                                                            <button type="submit" name="submit" class="btn btn-sm btn-dark" style="margin-left:170px">Simpan Pendidikan Formal</button>
                                                         </div>
 
                                                         {{-- KANAN --}}
@@ -296,16 +312,20 @@
                                                                     <input type="text" name="noijazahPnonformal"  class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
                                                                 </div>
                                                             </div>
-
-                                                            <div></div><br><br><br><br><br><br><br><br>
+                                                        
+                                                            <div></div><br><br><br><br>
+                                                            <button type="submit" name="submit" class="btn btn-sm btn-dark" style="margin-left:150px">Simpan Pendidikan Non Formal</button>
+                                                            <br>
                                                         </div>
-                                                    </div>
+                                                    </div><br><br>
+
                                                     <div class="row">
                                                         <div class="pull-left">
                                                             <a href="/create-kontak-darurat" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
+                                                            
                                                         </div>
                                                         <div class="pull-right">
-                                                            <button type="submit" name="submit" class="btn btn-sm btn-dark">Simpan</button>
+                                                            {{-- <button type="submit" name="submit" class="btn btn-sm btn-dark">Simpan</button> --}}
                                                             <a href="{{route('create.pekerjaan')}}" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
                                                         </div>
                                                     </div>
@@ -403,7 +423,7 @@
                                                                     <input type="text" id="ijazahFormal" name="noijazahPformal"  class="form-control" aria-describedby="emailHelp"   placeholder="Masukkan No. Ijazah" autocomplete="off">
                                                                 </div>
                                                             </div>
-
+                                                            <button type="submit" name="submit" class="btn btn-sm btn-dark" style="margin-left:170px">Update Pendidikan Formal</button>
                                                         </div>
 
                                                         {{-- KANAN --}}
@@ -467,15 +487,18 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div></div><br><br><br><br><br><br><br><br>
+                                                            <div></div><br><br><br><br>
+                                                            <button type="submit" name="submit" class="btn btn-sm btn-dark" style="margin-left:150px">Update Pendidikan Non Formal</button>
+                                                            <br>
                                                         </div>
-                                                    </div>
+                                                    </div><br><br>
+                                                
                                                     <div class="row">
                                                         <div class="pull-left">
                                                             <a href="/create-kontak-darurat" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
                                                         </div>
                                                         <div class="pull-right">
-                                                            <button type="submit" name="submit" class="btn btn-sm btn-dark">Update</button>
+                                                            {{-- <button type="submit" name="submit" class="btn btn-sm btn-dark">Update</button> --}}
                                                             <a href="{{route('create.pekerjaan')}}" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
                                                         </div>
                                                     </div>

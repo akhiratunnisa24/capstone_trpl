@@ -515,7 +515,9 @@ Route::post('/storepage', [karyawansController::class, 'store_page'])->name('sto
 Route::get('/create-data-keluarga', [KaryawansController::class, 'createdakel'])->name('create.dakel');
 Route::post('/storedatakeluarga', [KaryawansController::class, 'storedk'])->name('storedk');
 Route::post('/updatedatakeluarga', [KaryawansController::class, 'updatedk'])->name('updatedk');
-Route::post('/delete-keluarga/{{key}}', [KaryawansController::class, 'deletedk'])->name('deletedk');
+Route::delete('/delete-keluarga', [KaryawansController::class, 'deletedk'])->name('deletedk');
+// Route::post('/delete-keluarga/{{key}}', [KaryawansController::class, 'deletedk'])->name('deletedk');
+
 // Tambah Data Keluarga saat data sudah di database / saat Show
 Route::post('/storesdatakeluarga/{id}', [karyawansController::class, 'storedatakel'])->name('storedatakel');
 // Edit Data Keluarga saat data sudah di database / saat Show
@@ -528,6 +530,7 @@ Route::get('/destroyKeluarga{id}', [karyawanController::class, 'destroyKeluarga'
 //form data kontak darurat
 Route::get('/create-kontak-darurat', [KaryawansController::class, 'createkonrat'])->name('create.konrat');
 Route::post('/storekontakdarurat', [KaryawansController::class, 'storekd'])->name('storekd');
+Route::delete('/delete-kontakdarurat', [KaryawansController::class, 'deletekd'])->name('deletekd');
 Route::post('/updatekontakdarurat', [KaryawansController::class, 'updatekd'])->name('updatekd');
 // Tambah Data Kontak Darurat Karyawan saat data sudah di database / saat Show
 Route::post('/storeskontakdarurat/{id}', [karyawansController::class, 'storekonrat'])->name('storekonrat');
@@ -543,6 +546,7 @@ Route::get('/create-data-pendidikan', [KaryawansController::class, 'creatependid
 Route::post('/storepformal', [karyawansController::class, 'storepformal'])->name('storepformal');
 Route::post('/storepnformal', [karyawansController::class, 'storepformal'])->name('storepnformal');
 Route::post('/updatependidikan', [KaryawansController::class, 'updaterPendidikan'])->name('updatePendidikan');
+Route::delete('/delete-pendidikan', [KaryawansController::class, 'deletePendidikan'])->name('deletependidikan');
 
     // Show Pendidikan Karyawan 
     Route::get('showpendidikan{id}', [karyawanController::class, 'showpendidikan'])->name('showpendidikan');
@@ -560,6 +564,8 @@ Route::post('/updatependidikan', [KaryawansController::class, 'updaterPendidikan
 //form data pekerjaan
 Route::get('/create-data-pekerjaan', [KaryawansController::class, 'createpekerjaan'])->name('create.pekerjaan');
 Route::post('/updatepekerjaan', [KaryawansController::class, 'updaterPekerjaan'])->name('updatePekerjaan');
+Route::delete('/delete-pekerjaan', [KaryawansController::class, 'deletePekerjaan'])->name('deletepekerjaan');
+
 // Tambah Data Pekerjaan saat data sudah di database / saat Show
 Route::post('/storepekerjaan', [karyawansController::class, 'storepekerjaan'])->name('storepekerjaan');
 // Show Data Pekerjaan
@@ -574,6 +580,7 @@ Route::get('/destroyPekerjaan{id}', [karyawanController::class, 'destroyPekerjaa
 Route::get('/create-data-organisasi', [KaryawansController::class, 'createorganisasi'])->name('create.organisasi');
 Route::post('/storeorganisasi', [karyawansController::class, 'storeorganisasi'])->name('storeorganisasi');
 Route::post('/updateorganisasi', [KaryawansController::class, 'updaterOrganisasi'])->name('updateOrganisasi');
+Route::delete('/delete-organisasi', [KaryawansController::class, 'deleteOrganisasi'])->name('deleteorganisasi');
 // Tambah Data Organisasi saat data sudah di database / saat Show
 Route::post('/storesorganisasi/{id}', [karyawansController::class, 'storesorganisasi'])->name('storesorganisasi');
 // Edit Data Pekerjaan saat data sudah di database / saat Show
@@ -585,6 +592,8 @@ Route::get('/destroyOrganisasi{id}', [karyawanController::class, 'destroyOrganis
 Route::get('/create-data-prestasi', [KaryawansController::class, 'createprestasi'])->name('create.prestasi');
 Route::post('/storeprestasi', [karyawansController::class, 'storeprestasi'])->name('storeprestasi');
 Route::post('/updateprestasi', [KaryawansController::class, 'updaterPrestasi'])->name('updaterPrestasi');
+Route::delete('/delete-prestasi', [KaryawansController::class, 'deletePrestasi'])->name('deleteprestasi');
+
 // Tambah Data Prestasi saat data sudah di database / saat Show
 Route::post('/storesprestasi/{id}', [karyawansController::class, 'storesprestasi'])->name('storesprestasi');
 // Edit Data Prestasi saat data sudah di database / saat Show
