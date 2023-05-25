@@ -79,13 +79,13 @@
                                                             <i class="fa fa-edit"></i>
                                                         </a>
                                                         {{-- /delete-pekerjaan/{{$key}} --}}
-                                                        <form class="pull-right" action="" method="POST"
+                                                        {{-- <form class="pull-right" action="" method="POST"
                                                             style="margin-right:5px;">
                                                             <button type="submit"
                                                                 class="btn btn-danger btn-sm delete_dakel"
                                                                 data-key="{{ $key }}"><i
                                                                     class="fa fa-trash"></i></button>
-                                                        </form>
+                                                        </form> --}}
                                                         {{-- <button type="button" id="hapus_dakel" data-key="{{ $key }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                                     </div>
                                                 </td>

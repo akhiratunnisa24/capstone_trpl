@@ -374,7 +374,7 @@ class RekruitmenController extends Controller
         $hrd1 = 'hrd@gmail.com';
         $hrd2 = 'hrd2@gmail.com';
 
-        if ($data->status_lamaran !='6'){
+        if ($data->status_lamaran != '18'){
             Mail::to($tujuan)->send($email);
             Mail::to($hrd1)->send($email);
             Mail::to($hrd2)->send($email);
@@ -608,8 +608,8 @@ class RekruitmenController extends Controller
         if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $metode = MetodeRekruitmen::all();
-
+            $metode = MetodeRekruitmen::where('status','Aktif')->get();
+            // dd($metode);
 
 
             return view('admin.rekruitmen.createMetode', compact('row', 'metode'));

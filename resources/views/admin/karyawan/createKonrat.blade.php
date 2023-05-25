@@ -69,9 +69,9 @@
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
                                                             {{-- action="/delete-kontakdarurat/{{$key}}" --}}
-                                                            <form class="pull-right" action="" method="POST" style="margin-right:80px;">
+                                                            {{-- <form class="pull-right" action="" method="POST" style="margin-right:80px;">
                                                                 <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{ $key }}"><i class="fa fa-trash"></i></button>
-                                                            </form> 
+                                                            </form>  --}}
                                                         </div> 
                                                     </td>
                                                 </tr>

@@ -50,9 +50,9 @@
 
                                 <tbody>
                                     @foreach ($metode as $k)
-                                            @if ($k->id == '18')
+                                            {{-- @if ($k->id == '18' )
 
-                                            @else
+                                            @else --}}
                                         <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $k->nama_tahapan }}</td>
@@ -80,7 +80,7 @@
                                             </div>
                                             <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
                                             </td>
-                                            @endif
+                                            {{-- @endif --}}
 
                                         </tr>
                                         @include('admin.rekruitmen.editMetodeModal')
