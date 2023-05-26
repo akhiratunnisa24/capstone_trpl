@@ -156,8 +156,7 @@ class KalenderController extends Controller
             'tipe' => 'required',
             'keterangan' => 'required',
         ]);
-
-        $tanggal = \Carbon\Carbon::parse($request->input('tanggal'))->format('Y-m-d');
+        $tanggal = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tanggal)->format("Y-m-d");
         $keterangan = strtolower($request->input('keterangan'));
 
         // Cek apakah data dengan tanggal dan keterangan yang sama sudah ada di dalam tabel

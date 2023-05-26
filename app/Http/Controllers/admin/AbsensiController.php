@@ -217,14 +217,42 @@ class AbsensiController extends Controller
         $ak=Carbon::parse($jk);//mendapatkan data jam keluar yang disimpan pada variabel $jk
         $diff=$aw->diff($ak)->format("%H:%I:%S");//mencari jumlah jam kerja pegawai pada hari itu yang nantinya disimpan ke dalam database
 
-       
-
         //mencari value apakah pegawai pulang cepat
         // $jdp = "17:00:00";
+        // $jdp = $jadwalkaryawan->jadwal_pulang;
+        // // return $jdp;
+        // $jdplg= Carbon::parse($jdp);
+        // $jp = $ak;//jadwal pulang sama nilainya dengan $ak
+        // $plcpt= $jdplg->diff($jp)->format("%H:%I:%S");//value untuk pulang cepat
+
+        
+        // Mencari value apakah pegawai pulang cepat
         $jdp = $jadwalkaryawan->jadwal_pulang;
-        $jdplg= Carbon::parse($jdp);
-        $jp = $ak;//jadwal pulang sama nilainya dengan $ak
-        $plcpt= $jdplg->diff($jp)->format("%H:%I:%S");//value untuk pulang cepat
+        $jdplg = Carbon::parse($jdp);
+        $jp = $ak; // Jadwal pulang sama nilainya dengan $ak
+        $plcpt = $jp->diff($jdplg)->format("%H:%I:%S"); // Value untuk pulang cepat
+        
+        
+
+
+        //mencari jumlah jam kerja karyawan.
+        $aw  = Carbon::parse($absensi->jadwal_masuk);
+        $ak  = Carbon::parse($absensi->jadwal_pulang);
+        $scan_aw  = Carbon::parse($absensi->jam_masuk);
+        $scan_ak  = Carbon::parse($jk);
+
+        // Periksa apakah karyawan scan_masuk lebih awal dari jadwal_masuk
+        if ($scan_aw < $aw) {
+            $scan_aw = $aw; // Gunakan jadwal_masuk sebagai waktu awal
+        }
+
+        // Periksa apakah karyawan scan_pulang lebih lambat dari jadwal_pulang
+        if ($scan_ak > $ak) {
+            $scan_ak = $ak; // Gunakan jadwal_pulang sebagai waktu akhir
+        }
+
+        $jkerja = $scan_aw->diff($scan_ak)->format("%H:%I:%S");
+        // dd($aw,$ak,$scan_aw,$scan_ak,$jkerja);
 
         //update data abbsensi
         Absensi::where('id',$id)->update([
@@ -232,7 +260,11 @@ class AbsensiController extends Controller
             'jam_keluar' => $jk,
             'jam_kerja' =>$diff,
             'plg_cepat' =>$plcpt,
+            'jml_jamkerja' =>$jkerja,
         ]);
+
+        $absensi = Absensi::where('id',$id)->first();
+        return $absensi;
 
         return redirect()->back()->withInput();
     }

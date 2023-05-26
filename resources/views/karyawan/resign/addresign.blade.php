@@ -1,6 +1,3 @@
-  <!-- MODAL BEGIN -->
-
-<!-- sample modal content -->
 <div id="Modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -30,16 +27,15 @@
                     </div>
                     <div class="form-group col-xs-15">
                         <label for="tgl_masuk" class="form-label">Tanggal Bergabung</label>
-                        <input value="{{$karyawan->tglmasuk}}" id="tgl_masuk" type="text" class="form-control" name="tgl_masuk"
+                        <input value="{{\Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y')}}" id="tgl_masuk" type="text" class="form-control" name="tgl_masuk"
                             autocomplete="off" placeholder="" readonly>
 
                     </div>
 
-                    
                     <div class="form-group col-xs-15">
                         <label for="tgl_resign" class="form-label">Tanggal Resign</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose23" name="tgl_resign" onchange=(tgl_resign()) autocomplete="off">
+                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose23" name="tgl_resign" onchange=(tgl_resign()) autocomplete="off">
                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                         </div>
                     </div>
