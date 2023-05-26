@@ -93,13 +93,13 @@ class JadwalkerjaController extends Controller
                         }
                     }
                 }
-
+                dd($tanggal_kerja);
                 foreach($tanggal_kerja as $tanggal)
                 {
 
                     $jadwal = Jadwal::firstOrCreate([
                         'id_pegawai' => $data->id,
-                        'tanggal' => $tanggal,
+                        // 'tanggal' => Carbon::createFromFormat('d/m/Y', $tanggal)->format("Y-m-d"),
                         'id_shift' => $request->id_shift,
                     ], [
                         'jadwal_masuk' => $request->jadwal_masuk,
@@ -125,14 +125,15 @@ class JadwalkerjaController extends Controller
             $jadwal = Jadwal::updateOrCreate(
                 [
                     'id_pegawai' => $request->id_pegawai, 
-                    'tanggal' => $request->tanggal,
-                    'id_shift'      => $request->id_shift,
+                    'tanggal'    => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tanggal)->format("Y-m-d"),
+                    'id_shift'   => $request->id_shift,
                 ],
                 [
                     'jadwal_masuk'  => $request->jadwal_masuk,
                     'jadwal_pulang' => $request->jadwal_pulang
                 ]
             );
+            // return $jadwal;
             
             if ($jadwal->wasRecentlyCreated) {
                 return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');

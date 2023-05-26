@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label class="form-label">Tanggal</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose33" name="tanggal" autocomplete="off" required>
+                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose33" name="tanggal" autocomplete="off" required>
                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                             </div>
                         </div>

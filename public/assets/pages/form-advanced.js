@@ -150,7 +150,7 @@
             todayHighlight: true,
         });
         jQuery("#datepicker-autoclose23").datepicker({
-            format: "yyyy/mm/dd",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
         });
@@ -203,7 +203,7 @@
             minViewMode: "years",
         });
         jQuery("#datepicker-autoclose33").datepicker({
-            format: "yyyy/mm/dd",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
         });
@@ -258,6 +258,11 @@
             todayHighlight: true,
         });
         jQuery("#datepicker-autoclose-format").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose44").datepicker({
             format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
@@ -625,7 +630,7 @@
             minViewMode: "years",
         });
         jQuery("#datepicker-autoclosep").datepicker({
-            format: "yyyy-mm-dd",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
         });

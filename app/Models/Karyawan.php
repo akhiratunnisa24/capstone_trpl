@@ -127,6 +127,11 @@ class Karyawan extends Model
     {
         return $this->hasMany(Absensi::class, 'id');
     }
+
+    public function absensis()
+    {
+        return $this->hasMany(Absensis::class, 'id');
+    }
     public function departemen()
     {
         return $this->belongsTo(Departemen::class, 'divisi', 'id');

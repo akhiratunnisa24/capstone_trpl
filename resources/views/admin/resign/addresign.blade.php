@@ -45,8 +45,8 @@
                       <div class="form-group col-xs-15">
                           <label for="tgl_resign" class="form-label">Tanggal Resign</label>
                           <div class="input-group">
-                              <input type="text" class="form-control" placeholder="yyyy/mm/dd"
-                                  id="datepicker-autoclose23" name="tgl_resign" onchange=(tgl_resign())
+                              <input type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                  id="datepicker-autoclose44" name="tgl_resign" onchange=(tgl_resign())
                                   autocomplete="off">
                               <span class="input-group-addon bg-custom b-0"><i
                                       class="mdi mdi-calendar text-white"></i></span>
@@ -70,7 +70,7 @@
                               placeholder="Alasan Resign" required></textarea>
                       </div>        
                       <div class="form-group col-xs-15">
-                          <input id="status" type="text" class="form-control" name="status" value='1' hidden>
+                          <input id="status" type="hidden" class="form-control" name="status" value='1' hidden>
                       </div>                   
                       {{-- <div class="col-xs-12">
                           <div class="checkbox checkbox-primary">
@@ -189,9 +189,15 @@
                       $('#namaKaryawan').val(user.nama);
                       $('#departemen').val(user.departemen.id);
                       $('#departemen1').val(user.departemen.nama_departemen);
-                      $('#tgl_masuk').val(user.tglmasuk);
+                      $('#tgl_masuk').val(formatDate(user.tglmasuk));
+                    //   $('#tgl_masuk').val(user.tglmasuk);
                   }
               });
           });
       });
+      function formatDate(dateString) {
+        var dateParts = dateString.split("-");
+        var formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
+        return formattedDate;
+    }
   </script>

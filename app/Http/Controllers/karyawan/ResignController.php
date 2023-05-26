@@ -133,8 +133,8 @@ class ResignController extends Controller
         $resign = new Resign;
         $resign->id_karyawan = $karyawan;
         $resign->departemen = $tes->id_dep;
-        $resign->tgl_masuk = Carbon::parse($request->tgl_masuk)->format("Y-m-d");
-        $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
+        $resign->tgl_masuk = Carbon::createFromFormat('d/m/Y', $request->tgl_masuk)->format("Y-m-d");
+        $resign->tgl_resign = Carbon::createFromFormat('d/m/Y', $request->tgl_resign)->format("Y-m-d");       
         $resign->tipe_resign = $request->tipe_resign;
         $resign->alasan      = $request->alasan;
         $resign->status      = 1;
