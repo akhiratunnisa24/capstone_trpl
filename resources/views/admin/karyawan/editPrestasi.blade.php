@@ -25,50 +25,56 @@
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label>Instansi Pemberi</label>
-                                    <input type="text" name="namaInstansi" autocomplete="off"
-                                        class="form-control" value="{{ $pres->nama_instansi }}">
+                                    <input type="text" name="namaInstansi" autocomplete="off" class="form-control"
+                                        value="{{ $pres->nama_instansi }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label>Alamat</label>
-                                    <input type="text" name="alamatInstansi" autocomplete="off"
-                                        class="form-control" value="{{ $pres->alamat }}">
+                                    <input type="text" name="alamatInstansi" autocomplete="off" class="form-control"
+                                        value="{{ $pres->alamat }}">
                                 </div>
                             </div>
-                                <div class="form-group">
-                                    <div class="mb-3">
-                                        <label>Nomor Surat / Sertifikat</label>
-                                        <input type="text" name="noSurat" class="form-control"
-                                            autocomplete="off" value="{{ $pres->no_surat }}">
-                                    </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Nomor Surat / Sertifikat</label>
+                                    <input type="text" name="noSurat" class="form-control" autocomplete="off"
+                                        value="{{ $pres->no_surat }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label>Tanggal Surat</label>
                                     <div class="input-group">
-                                        <input id="datepicker-autoclose-format2" type="text" class="form-control"
-                                            placeholder="dd/mm/yyyy" id="4" name="tgl_surat" rows="10"
-                                            autocomplete="off"><br>
-                                        <span class="input-group-addon bg-custom b-0"><i
+                                    <input type="date" class="form-control"
+                                        placeholder="dd/mm/yyyy" name="tgl_surat" rows="10" autocomplete="off"
+                                        value="{{ $pres->tanggal_surat }}">
+                                    <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
-
-
+                            {{-- <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Tanggal Lahir </label>
+                                    <input type="date" name="tgllahirKeluarga"
+                                    autocomplete="off" class="form-control" placeholder="yyyy/mm/dd" 
+                                    value="{{ $kel->tgllahir }}">
+                                </div>
+                            </div> --}}
                     </div>
 
-                    <div class="modal-footer">
-                        <input type="hidden" name="id" id="id">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Update</button>
-                    </div>
-                </form>
+
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+
+            <div class="modal-footer">
+                <input type="hidden" name="id" id="id">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Update</button>
+            </div>
+            </form>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
