@@ -10,14 +10,15 @@ use App\Models\Karyawan;
 use App\Models\Departemen;
 use App\Models\Tidakmasuk;
 
-use App\Exports\AbsensisExport;
-// use App\Imports\AttendancesImport;
 use Illuminate\Http\Request;
+// use App\Imports\AttendancesImport;
 use App\Imports\AbsensiImport;
+use App\Exports\AbsensisExport;
 use App\Imports\AbsensisImport;
-use App\Http\Controllers\Controller;
+use App\Imports\AbsensicsvImport;
 use App\Models\SettingOrganisasi;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
@@ -39,20 +40,20 @@ class AbsensisController extends Controller
             $import = new AbsensisImport();
             Excel::import($import, $file);
             
-            // $jumlahdatadiimport = $import->getJumlahDataDiimport();//SUDAH BENAR 12
-            // $jumlahdata         = $import->getJumlahData(); //SUDAH BENAR 22
-            // $jumlahimporttidakmasuk =$import->getDataImportTidakMasuk(); //SUDAH BENAR 1
-            // $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport(); // 9
+            $jumlahdatadiimport = $import->getJumlahDataDiimport();//SUDAH BENAR 12
+            $jumlahdata         = $import->getJumlahData(); //SUDAH BENAR 22
+            $jumlahimporttidakmasuk =$import->getDataImportTidakMasuk(); //SUDAH BENAR 1
+            $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport(); // 9
 
-            // $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
-            // "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
-            // "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
-            // "Jumlah Data Keseluruhan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getJumlahData(). "</strong>";
+            $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
+            "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
+            "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
+            "Jumlah Data Keseluruhan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getJumlahData(). "</strong>";
            
-            // // dd($pesan);
-            // $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
-            // $pesan = nl2br(html_entity_decode($pesan));
-            // return redirect()->back()->with('pesan', $pesan);  
+            // dd($pesan);
+            $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
+            $pesan = nl2br(html_entity_decode($pesan));
+            return redirect()->back()->with('pesan', $pesan);  
                 
         }catch (\Throwable $th) {
             // Tangani jika terjadi kesalahan
@@ -72,13 +73,13 @@ class AbsensisController extends Controller
         }
 
         try {
-            $import = new AbsensisImport();
+            $import = new AbsensicsvImport();
             Excel::import($import, $request->file('file'));
 
-            // $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
-            // "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
-            // "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
-            // "Jumlah Data Keseluruhan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getJumlahData(). "</strong>";
+            $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
+            "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
+            "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
+            "Jumlah Data Keseluruhan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getJumlahData(). "</strong>";
 
             $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
             $pesan = nl2br(html_entity_decode($pesan));

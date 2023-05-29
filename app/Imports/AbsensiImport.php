@@ -285,7 +285,31 @@ class AbsensiImport implements ToModel,WithHeadingRow
        
     }
 
-
-    
+         //jumlah data keseluruhan dari excel yang akan diimport
+         public function getJumlahData()
+         {
+             return $this->jumlahdata;
+         }
+         public function getJumlahDataDiimport()
+         {
+             return $this->jumlahdatadiimport;
+         }
+     
+         //jumlah data yang masuk ke tabekl Tidak Masuk tanpa keterangan, sakit/ijin.
+         public function getJumlahDataTidakMasuk()
+         {
+             return $this->jumlahDataTidakMasuk;
+         }
+     
+         //jumlah data yang diimport ke tabel tidak masuk
+         public function getDataImportTidakMasuk()
+         {
+             return $this->jumlahimporttidakmasuk;
+         }
+     
+         public function getDatatTidakBisaDiimport()
+         {
+             return $this->datatidakbisadiimport;
+         } 
 }
 
