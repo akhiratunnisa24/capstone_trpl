@@ -1905,6 +1905,8 @@ class karyawanController extends Controller
     public function addpformal(Request $request, $id)
     {
         $idk = Karyawan::findorFail($id);
+        $nilaiNull = null;
+
         if ($request->tingkat_pendidikan) {
             $r_pendidikan = array(
                 'id_pegawai' => $idk->id,
@@ -1912,13 +1914,13 @@ class karyawanController extends Controller
                 'nama_sekolah' => $request->post('nama_sekolah'),
                 'kota_pformal' => $request->post('kotaPendidikanFormal'),
                 'jurusan' => $request->post('jurusan'),
-                'tahun_masuk_formal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d'),
-                'tahun_lulus_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusFormal'))->format('Y-m-d'),
-                
-                // 'tahun_lulus_formal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d'),
+                // 'tahun_masuk_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d'),
+                // 'tahun_lulus_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusFormal'))->format('Y-m-d'),
+                'tahun_masuk_formal' => $request->tahun_masukFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : $nilaiNull,
+                'tahun_lulus_formal' => $request->tahun_lulusFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : $nilaiNull,
+
 
                 'ijazah_formal' => $request->post('noijazahPformal'),
-
                 'jenis_pendidikan' => null,
                 'kota_pnonformal' => null,
                 'tahun_lulus_nonformal' => null,

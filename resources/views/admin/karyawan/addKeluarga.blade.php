@@ -58,8 +58,8 @@
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="yyyy/mm/dd"
-                                            id="datepicker-autoclose8" autocomplete="off" name="tgllahirKeluarga"
+                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                            id="datepicker-autoclose-format" autocomplete="off" name="tgllahirKeluarga"
                                             rows="10"><br>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>

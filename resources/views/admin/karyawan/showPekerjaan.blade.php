@@ -89,7 +89,7 @@
                                                                     <td>Rp. {{ $rpekerjaan->gaji }},-</td>
                                                                     <td>{{ $rpekerjaan->alasan_berhenti }}</td>
                                                                     <td class="">
-                                                                        <a class="btn btn-sm btn-primary pull-right"
+                                                                        <a class="btn btn-sm btn-primary"
                                                                             data-toggle="modal"
                                                                             data-target="#editPekerjaan{{ $rpekerjaan->id }}"
                                                                             style="margin-right:10px">

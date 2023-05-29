@@ -24,7 +24,7 @@
                                         <option value="Istri" @if($kel->hubungan == "Istri") selected @endif>Istri</option>
                                         <option value="Kakak" @if($kel->hubungan == "Kakak") selected @endif>Kakak</option>
                                         <option value="Adik" @if($kel->hubungan == "Adik") selected @endif>Adik</option>
-                                                                    <option value="Anak Ke-1" @if($kel->hubungan == "Anak Ke-1") selected @endif>Anak Ke-1</option>
+                                        <option value="Anak Ke-1" @if($kel->hubungan == "Anak Ke-1") selected @endif>Anak Ke-1</option>
                                                                     <option value="Anak Ke-2" @if($kel->hubungan == "Anak Ke-2") selected @endif>Anak Ke-2</option>
                                                                     <option value="Anak Ke-3" @if($kel->hubungan == "Anak Ke-3") selected @endif>Anak Ke-3</option>
                                                                     <option value="Anak Ke-4" @if($kel->hubungan == "Anak Ke-4") selected @endif>Anak Ke-4</option>

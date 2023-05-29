@@ -15,12 +15,27 @@
                     <div class="row">
                         <div class="col-md-12">
                             <input type="hidden" name="id_pendidikan" value="{{ $rpendidikan->id }}">
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <div class="mb-3">
                                     <label>Tingkat Pendidikan</label>
                                     <input type="text" name="tingkat_pendidikan" autocomplete="off"
                                         class="form-control" value="{{ $rpendidikan->tingkat }}">
                                 </div>
+                            </div> --}}
+                            <div class="form-group">
+                                <div class="mb-3">
+                                <label class="form-label">Tingkat Pendidikan</label>
+                                <select class="form-control" name="tingkat_pendidikan" type="text">
+                                    <option value="">Pilih Tingkat Pendidikan</option>
+                                    <option value="SD"  @if($rpendidikan->tingkat == "SD") selected @endif>SD</option>
+                                    <option value="SMP"  @if($rpendidikan->tingkat == "SMP") selected @endif>SMP</option>
+                                    <option value="SMA/Sederajat"  @if($rpendidikan->tingkat == "SMA/Sederajat") selected @endif>SMA/Sederajat</option>
+                                    <option value="Sarjana Muda D3"  @if($rpendidikan->tingkat == "Sarjana Muda D3") selected @endif>Sarjana Muda D3</option>
+                                    <option value="Sarjana S1"  @if($rpendidikan->tingkat == "Sarjana S1") selected @endif>Sarjana S1</option>
+                                    <option value="Pasca Sarjana S2"  @if($rpendidikan->tingkat == "Pasca Sarjana S2") selected @endif>Pasca Sarjana S2</option>
+                                    <option value="Doktoral/Phd S3"  @if($rpendidikan->tingkat == "Doktoral/Phd S3") selected @endif>Doktoral/Phd S3</option>
+                                </select>
+                            </div>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
@@ -61,8 +76,8 @@
                                     <label class="form-label">Lama Pendidikan</label>
                                     <div>
                                         <div class="input-daterange input-group">
-                                            <input type="date" class="form-control" name="tahun_masukFormal"
-                                                placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_masuk_formal }}" />
+                                                <input type="date" class="form-control" name="tahun_masukFormal"
+                                                    placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_masuk_formal }}" />
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                             <input type="date" class="form-control" name="tahun_lulusFormal"
                                                 placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_lulus_formal }}" />
