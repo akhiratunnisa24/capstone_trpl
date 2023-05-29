@@ -17,14 +17,15 @@ use App\Http\Controllers\admin\UploadController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\admin\AbsensisController;
 use App\Http\Controllers\admin\KalenderController;
 use App\Http\Controllers\admin\SisacutiController;
 use App\Http\Controllers\admin\CutiadminController;
+
 use App\Http\Controllers\admin\IzinAdminController;
 
+
 use App\Http\Controllers\admin\JeniscutiController;
-
-
 use App\Http\Controllers\admin\JenisizinController;
 use App\Http\Controllers\admin\MasterkpiController;
 use App\Http\Controllers\karyawan\ResignController;
@@ -267,6 +268,11 @@ Route::post('/importexcel', [AbsensiController::class, 'importexcel'])->name('im
 Route::post('/importcsv', [AbsensiController::class, 'importcsv'])->name('importcsv');
 Route::get('/rekapabsensipdf', [AbsensiController::class, 'rekapabsensipdf'])->name('rekapabsensipdf');
 Route::get('/rekapabsensiExcel', [AbsensiController::class, 'rekapabsensiExcel'])->name('rekapabsensiExcel');
+
+//absensis
+Route::post('/import-excel', [AbsensisController::class, 'importexcel'])->name('import.excel');
+Route::post('/import-csv', [AbsensisController::class, 'importcsv'])->name('import.csv');
+
 //cuti
 Route::get('/permintaan_cuti', [CutiadminController::class, 'index'])->name('permintaancuti.index');
 Route::post('/permintaan_cuti/{id}', [CutiadminController::class, 'update'])->name('cuti.update');
