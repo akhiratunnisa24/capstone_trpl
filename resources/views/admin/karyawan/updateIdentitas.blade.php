@@ -212,7 +212,7 @@
                                                             <option value="Kontrak"
                                                                 @if ($karyawan->status_karyawan == 'Kontrak') selected @endif>Kontrak
                                                             </option>
-                                                            <option value="Probation"
+                                                            <option value="Percobaan"
                                                                 @if ($karyawan->status_karyawan == 'Percobaan') selected @endif> Percobaan
                                                             </option>
                                                         </select>

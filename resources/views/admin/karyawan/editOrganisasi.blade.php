@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label"> Nomor Surat Keterangan</label>
-                                    <input type="number" name="noSKorganisasi" class="form-control"
+                                    <input type="text" name="noSKorganisasi" class="form-control"
                                         id="exampleInputEmail1" aria-describedby="emailHelp"
                                         placeholder="Masukkan Jabatan" autocomplete="off" value="{{ $org->no_sk }}">
                                 </div>
