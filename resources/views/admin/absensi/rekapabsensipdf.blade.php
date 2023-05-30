@@ -85,18 +85,20 @@
             <th>Jam Keluar</th>
             <th>Terlambat</th>
             <th>Plg Cepat</th>
-            <th>Jml Jam Kerja</th>
+            <th>Jam Kerja</th>
+            <th>Jml Hadir</th>
         </tr>
         @forelse($data as $key => $d)
             <tr align="center">
                 <td>{{$loop->iteration}}</td>
                 <td class="n">{{ucwords(strtolower($d->karyawans->nama))}}</td>
                 <td class="n">{{ucwords(strtolower($d->departemens->nama_departemen))}}</td>
-                <td class="align-tanggal">{{\Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
+                <td class="align-tanggal">{{$d->tanggal}}</td>
                 <td>{{$d->jam_masuk}}</td>
                 <td>{{$d->jam_keluar}}</td>
                 <td>{{$d->terlambat}}</td>
                 <td>{{$d->plg_cepat}}</td>
+                <td>{{$d->jml_jamkerja}}</td>
                 <td>{{$d->jam_kerja}}</td>
             </tr>
             @empty

@@ -82,7 +82,8 @@
             <th>Jam Keluar</th>
             <th>Terlambat</th>
             <th>Plg Cepat</th>
-            <th>Jml Jam Kerja</th>
+            <th>Jam Kerja</th>
+            <th>Jml Hadir</th>
         </tr>
 
         @forelse($data as $key => $d)
@@ -95,6 +96,7 @@
                 <td>{{$d->jam_keluar}}</td>
                 <td>{{$d->terlambat}}</td>
                 <td>{{$d->plg_cepat}}</td>
+                <td>{{$d->jml_jamkerja}}</td>
                 <td>{{$d->jam_kerja}}</td>
             </tr>
             @empty
