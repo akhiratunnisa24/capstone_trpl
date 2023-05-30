@@ -14,13 +14,20 @@ use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class AbsensisImport implements ToModel,WithHeadingRow
+class AbsensicsvImport implements ToModel,WithHeadingRow
 {
-    //untuk excel
+     //UNTUK CSV
     public function startRow(): int
-    {
-        return 2;
-    }
+     {
+         return 2;
+     }
+ 
+    public function getCsvSettings(): array
+     {
+         return [
+             'delimiter' => ';'
+         ];
+     }
 
     private $jumlahdatadiimport = 0;
     private $jumlahDataTidakMasuk = 0;
@@ -28,8 +35,6 @@ class AbsensisImport implements ToModel,WithHeadingRow
     private $jumlahdata = 0; //jumlah data keseluruhan
     private $jumlahimporttidakmasuk = 0;
     private $datatidakbisadiimport = 0; //JUMLAH DATA TIDAK DIIMPORT
-
-
     public function model(array $row)
     {
         if(isset($row['nama']) && isset($row['tanggal']))
@@ -53,8 +58,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
             {
                 // dd($karyawan);
                 $tanggal = $row['tanggal'];
-                $excelDate = intval($tanggal); // Mengubah string menjadi angka integer
-                $carbonDate = Carbon::createFromDate(1900, 1, 1)->addDays($excelDate - 2);
+                $carbonDate = Carbon::createFromFormat('m/d/Y', $tanggal);
                 $tgl = $carbonDate->format('Y-m-d');
                 $cek = !Absensis::where('id_karyawan',$karyawan->id)->where('tanggal',$tgl)->first();
                 // dd($tgl,$karyawan->id,$cek);
@@ -154,7 +158,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
                     }else
                     {   
                         //dd($row['jam_masuk'],$row['jam_pulang'],$row['scan_masuk'],$row['scan_keluar'], $row['plg_cpt'],$row['lembur'],$row['jam_kerja'],$row['jml_hadir']);
-                        // dd($jam_masuk);
+                        // dd($row['jam_masuk']);
                         $jam_excel = [
                             'jam_masuk'   => $row['jam_masuk'],
                             'jam_pulang'  => $row['jam_pulang'],
@@ -167,43 +171,17 @@ class AbsensisImport implements ToModel,WithHeadingRow
                         ];
                         
                         $formatted_jam = [];
+                        dd($jam_excel);
                         
-                        foreach ($jam_excel as $key => $value) {
+                        foreach ($jam_excel as $key => $value) 
+                        {
 
-                            // if (strpos($value, ',') !== false) {
-                            //     // Jika format nilai awal menggunakan koma, misalnya "08,00"
-                            //     $formatted_value = str_replace(',', ':', $value); // Mengganti koma menjadi titik dua (:)
-                            //     $formatted_jam[$key] = $formatted_value;
-                            // } elseif (strpos($value, '.') !== false) {
-
-                            //     //hasil 07:59 dari nilai 7.59 di excel 07,59
-                            //     $formatted_value = str_replace('.', ':', $value); // Mengganti titik desimal menjadi titik dua (:)
-                            //     $hours = sprintf('%02d', intval(substr($formatted_value, 0, 2))); // Mengambil dua digit pertama sebagai jam
-                            //     $minutes = sprintf('%02d', intval(substr($formatted_value, 3, 2))); // Mengambil dua digit menit dan memastikan format dua digit
-                            //     $formatted_jam[$key] = $hours . ':' . $minutes; // Menggabungkan jam dengan menit
-
-                                
-                            //     //hasil 0759
-                            //     // Jika format nilai awal menggunakan titik desimal, misalnya "08.00"
-                            //     // $formatted_value = str_replace('.', ':', $value); // Mengganti titik desimal menjadi titik dua (:)
-                            //     // $hours = sprintf('%02d', intval($formatted_value)); // Mengubah jam menjadi dua digit angka
-                            //     // $formatted_jam[$key] = $hours . substr($formatted_value, 2); // Menggabungkan jam dengan menit
-                                
-                            //     //.hasil 7:59
-                            //     // $formatted_value = str_replace('.', ':', $value); // Mengganti titik desimal menjadi titik dua (:)
-                            //     // $formatted_jam[$key] = $formatted_value;
-                            // } else {
-                            //     $formatted_jam[$key] = $value;
-                            // }
-                            
-
-                            // jika bentuk value nya yaitu : 08.00 maka pakai query dibawah ini: 
-                            $jam_decimal = floatval($value); // Konversi menjadi tipe data float
-                            $jam_decimal *= 24; // Kalikan dengan 24
-                            $hours = floor($jam_decimal);
-                            $minutes = round(($jam_decimal - $hours) * 60);
-                            $formatted_jam[$key] = sprintf('%02d:%02d', $hours, floor($minutes));
-
+                            //bentuk value csv 8:00 / 10:59
+                            $exploded_value = explode(':', $value); // Memisahkan jam dan menit menjadi array
+                            $hours = sprintf('%02d', intval($exploded_value[0])); // Mengambil jam dan memastikan format dua digit
+                            $minutes = sprintf('%02d', intval($exploded_value[1])); // Mengambil menit dan memastikan format dua digit
+                            $formatted_jam[$key] = $hours . ':' . $minutes; // Menggabungkan jam dengan menit
+                        
                         }
                         
                         dd($formatted_jam);
@@ -270,31 +248,32 @@ class AbsensisImport implements ToModel,WithHeadingRow
         }
     }
 
+     //jumlah data keseluruhan dari excel yang akan diimport
+     public function getJumlahData()
+     {
+         return $this->jumlahdata;
+     }
+     public function getJumlahDataDiimport()
+     {
+         return $this->jumlahdatadiimport;
+     }
+ 
+     //jumlah data yang masuk ke tabekl Tidak Masuk tanpa keterangan, sakit/ijin.
+     public function getJumlahDataTidakMasuk()
+     {
+         return $this->jumlahDataTidakMasuk;
+     }
+ 
+     //jumlah data yang diimport ke tabel tidak masuk
+     public function getDataImportTidakMasuk()
+     {
+         return $this->jumlahimporttidakmasuk;
+     }
+ 
+     public function getDatatTidakBisaDiimport()
+     {
+         return $this->datatidakbisadiimport;
+     }
 
-        //jumlah data keseluruhan dari excel yang akan diimport
-        public function getJumlahData()
-        {
-            return $this->jumlahdata;
-        }
-        public function getJumlahDataDiimport()
-        {
-            return $this->jumlahdatadiimport;
-        }
     
-        //jumlah data yang masuk ke tabekl Tidak Masuk tanpa keterangan, sakit/ijin.
-        public function getJumlahDataTidakMasuk()
-        {
-            return $this->jumlahDataTidakMasuk;
-        }
-    
-        //jumlah data yang diimport ke tabel tidak masuk
-        public function getDataImportTidakMasuk()
-        {
-            return $this->jumlahimporttidakmasuk;
-        }
-    
-        public function getDatatTidakBisaDiimport()
-        {
-            return $this->datatidakbisadiimport;
-        }
 }

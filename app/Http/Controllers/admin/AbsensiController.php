@@ -217,7 +217,7 @@ class AbsensiController extends Controller
         $ak=Carbon::parse($jk);//mendapatkan data jam keluar yang disimpan pada variabel $jk
         $diff=$aw->diff($ak)->format("%H:%I:%S");//mencari jumlah jam kerja pegawai pada hari itu yang nantinya disimpan ke dalam database
 
-        //mencari value apakah pegawai pulang cepat
+        // mencari value apakah pegawai pulang cepat
         // $jdp = "17:00:00";
         // $jdp = $jadwalkaryawan->jadwal_pulang;
         // // return $jdp;
@@ -227,13 +227,21 @@ class AbsensiController extends Controller
 
         
         // Mencari value apakah pegawai pulang cepat
-        $jdp = $jadwalkaryawan->jadwal_pulang;
+        // $jdp = $jadwalkaryawan->jadwal_pulang;
+        // $jdplg = Carbon::parse($jdp);
+        // $jp = $ak; // Jadwal pulang sama nilainya dengan $ak
+        // $plcpt = $jp->diff($jdplg)->format("%H:%I:%S"); // Value untuk pulang cepat
+        // Mencari value apakah pegawai pulang cepat
+        $jdp = $jadwalkaryawan->jadwal_pulang ;
         $jdplg = Carbon::parse($jdp);
         $jp = $ak; // Jadwal pulang sama nilainya dengan $ak
-        $plcpt = $jp->diff($jdplg)->format("%H:%I:%S"); // Value untuk pulang cepat
-        
-        
 
+        // Periksa apakah karyawan pulang sebelum jadwal_pulang_default
+        if ($jp < $jdplg) {
+            $plcpt = $jp->diff($jdplg)->format("%H:%I:%S"); // Value untuk pulang cepat
+        } else {
+            $plcpt = "00:00:00"; // Karyawan tidak pulang cepat
+        }
 
         //mencari jumlah jam kerja karyawan.
         $aw  = Carbon::parse($absensi->jadwal_masuk);
@@ -264,7 +272,7 @@ class AbsensiController extends Controller
         ]);
 
         $absensi = Absensi::where('id',$id)->first();
-        return $absensi;
+        // return $absensi;
 
         return redirect()->back()->withInput();
     }
