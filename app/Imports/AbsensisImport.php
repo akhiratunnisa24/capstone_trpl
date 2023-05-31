@@ -14,6 +14,18 @@ use App\Models\Tidakmasuk;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
+
+class UsersImport implements WithMultipleSheets
+{
+    public function sheets(): array
+    {
+        return [
+            'Sheet1',
+            'Sheet2',
+        ];
+    }
+}
 
 class AbsensisImport implements ToModel,WithHeadingRow
 {
@@ -270,8 +282,6 @@ class AbsensisImport implements ToModel,WithHeadingRow
             Log::info('Row 1 kosong');
         }
     }
-
-
         //jumlah data keseluruhan dari excel yang akan diimport
         public function getJumlahData()
         {
@@ -542,3 +552,6 @@ class AbsensisImport implements ToModel,WithHeadingRow
         // }
     
 }
+
+
+
