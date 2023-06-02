@@ -78,6 +78,7 @@
                                 <label for="exampleInputEmail1" class="form-label">Pendidikan Terakhir</label>
                                 <select class="form-control" name="pendidikan_terakhirKeluarga">
                                     <option value="">Pilih Pendidikan Terakhir</option>
+                                    <option value="Belum Sekolah">Belum Sekolah</option>
                                     <option value="SD">SD</option>
                                     <option value="SMP">SMP</option>
                                     <option value="SMA/Sederajat">SMA/Sederajat</option>

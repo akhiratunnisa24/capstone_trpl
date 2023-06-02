@@ -67,6 +67,7 @@
                                 <label for="exampleInputEmail1" class="form-label">Pendidikan Terakhir</label>
                                 <select class="form-control" name="pendidikan_terakhirKeluarga">
                                     <option value="">Pilih Pendidikan Terakhir</option>
+                                    <option value="Belum Sekolah" @if($kel->pendidikan_terakhir == "Belum Sekolah") selected @endif >Belum Sekolah</option>
                                     <option value="SD" @if($kel->pendidikan_terakhir == "SD") selected @endif >SD</option>
                                     <option value="SMP" @if($kel->pendidikan_terakhir == "SMP") selected @endif >SMP</option>
                                     <option value="SMA/Sederajat" @if($kel->pendidikan_terakhir == "SMA/Sederajat") selected @endif>SMA/Sederajat</option>

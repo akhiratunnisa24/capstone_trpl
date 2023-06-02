@@ -39,7 +39,7 @@
                                     <div class="col-sm-3">
                                         <div class="panel panel-primary">
 
-                                            @if ($k->status == 'Aktif' && $k->tgl_selesai > Carbon\Carbon::now())
+                                            @if ($k->status == 'Aktif' && $k->tgl_selesai > Carbon\Carbon::now() && $k->jumlah_dibutuhkan > 0 )
                                                 <div class="panel-heading btn-success">
                                                     <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
                                                         <h4 class="panel-title">{{ $k->status }}</h4>
@@ -57,11 +57,14 @@
 
                                         <div class="panel-body">
                                             <h3 class=""><b>{{ $k->posisi }}</b></h3>
+                                            {{-- @if ()
+                                                
+                                            @endif --}}
                                             <p class="text-muted"><b>Dibutuhkan {{ $k->jumlah_dibutuhkan }} Orang</b>
                                             </p>
-                                            @if ($k->tgl_selesai < Carbon\Carbon::now() && $k->jumlah_dibutuhkan > 0)
-                                                <p class="text-danger"><b>Lowongan sudah kadaluarsa</b></p>
-                                            @elseif ($k->jumlah_dibutuhkan == 0 && $k->tgl_selesai < Carbon\Carbon::now())
+                                            @if ($k->tgl_selesai < Carbon\Carbon::now())
+                                                <p class="text-muted"><b>Lowongan sudah kadaluarsa sejak tanggal <span class="text-danger"> {{ Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y') }}</span></b></p>
+                                            @elseif ($k->jumlah_dibutuhkan == 0)
                                                 <p class="text-danger"><b>Lowongan sudah terisi</b></p>
                                             @endif
                                             <button onclick="hapus_karyawan({{ $k->id }})"

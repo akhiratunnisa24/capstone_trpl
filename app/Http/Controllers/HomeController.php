@@ -829,6 +829,20 @@ class HomeController extends Controller
         $rekruitmen = Lowongan::where('status','Aktif');
         $rekruitmenjumlah = $rekruitmen->count();
         // dd($potongcuti);
+        $karyawan = Karyawan::groupBy('nama_jabatan')
+        ->select('nama_jabatan', DB::raw('count(*) as total'))
+        ->get();
+        $karyawan2 = Karyawan::all();
+        $jumlahkaryawan = $karyawan2->count();
+
+        $jabatan = ['Komisaris', 'Direksi', 'Manager'];
+        $jumlahKaryawanPerJabatan = Karyawan::groupBy('nama_jabatan')
+        ->whereIn('jabatan', $jabatan)
+        ->select('nama_jabatan', DB::raw('count(*) as total'))
+        ->get();
+
+        $jumlahKaryawanPerJabatan2 = Karyawan::whereIn('jabatan', $jabatan)
+        ->count();
 
         // Role Admin
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -895,7 +909,10 @@ class HomeController extends Controller
                 'jumdat' => $jumdat,
                 'rekruitmenjumlah' => $rekruitmenjumlah,
                 'role' => $role,
-
+                'karyawan' => $karyawan,
+                'jumlahKaryawanPerJabatan' => $jumlahKaryawanPerJabatan,
+                'jumlahKaryawanPerJabatan2' => $jumlahKaryawanPerJabatan2,
+                'jumlahkaryawan' => $jumlahkaryawan,
             ];
             return view('admin.karyawan.dashboardhrd', $output);
 

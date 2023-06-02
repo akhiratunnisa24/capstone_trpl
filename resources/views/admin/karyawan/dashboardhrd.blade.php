@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    {{-- @if(Auth::check() && $role == 1) --}}
+    {{-- @if (Auth::check() && $role == 1) --}}
     <div class="row">
         <div class="col-lg-6">
             <div class="panel-group " id="accordion-test-2">
@@ -27,9 +27,10 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#1" aria-expanded="false"
                                 class="dropdown-toggle waves-effect waves-light collapsed">
                                 Permintaan Cuti Karyawan
-                                
-                                @if($cutijumlah)
-                                    <span class="badge badge badge-danger" style="background-color:red">{{ $cutijumlah }}</span>
+
+                                @if ($cutijumlah)
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">{{ $cutijumlah }}</span>
                                 @endif
                             </a>
                         </h4>
@@ -58,11 +59,12 @@
                                                     <td>{{ $data->nama }}</td>
                                                     <td>{{ $data->jenis_cuti }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}</td>
-                                                     <td>{{ $data->jml_cuti }} Hari</td>
+                                                    <td>{{ $data->jml_cuti }} Hari</td>
                                                     <td>
-                                                      
-                                                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : ($data->status == 14 ? 'warning' :($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
-                                                            {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status :  ($data->status == 14 ?  $data->name_status :  ($data->status == 15 ?  $data->name_status :  ($data->status == 16 ?  $data->name_status : '')))))))))))) }}
+
+                                                        <span
+                                                            class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : ($data->status == 14 ? 'warning' : ($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' : 'secondary')))))))))))) }}">
+                                                            {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ? $data->name_status : ($data->status == 5 ? $data->name_status : ($data->status == 6 ? $data->name_status : ($data->status == 7 ? $data->name_status : ($data->status == 9 ? $data->name_status : ($data->status == 10 ? $data->name_status : ($data->status == 11 ? $data->name_status : ($data->status == 12 ? $data->name_status : ($data->status == 13 ? $data->name_status : ($data->status == 14 ? $data->name_status : ($data->status == 15 ? $data->name_status : ($data->status == 16 ? $data->name_status : '')))))))))))) }}
                                                         </span>
                                                     </td>
 
@@ -70,15 +72,20 @@
                                                         <div class="row">
                                                             @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1)
                                                                 <div class="col-sm-3">
-                                                                    <form action="/permintaan_cuti/{{ $data->id }}" method="POST">
+                                                                    <form action="/permintaan_cuti/{{ $data->id }}"
+                                                                        method="POST">
                                                                         @csrf
-                                                                        <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
                                                                     </form>
                                                                 </div>
                                                                 <div class="col-sm-3" style="margin-left:7px">
                                                                     <form action="" method="POST">
-                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cuReject{{ $data->id }}">
+                                                                        <a class="btn btn-danger btn-sm" style="height:26px"
+                                                                            data-toggle="modal"
+                                                                            data-target="#cuReject{{ $data->id }}">
                                                                             <i class="fa fa-times fa-md"></i>
                                                                         </a>
                                                                     </form>
@@ -88,13 +95,18 @@
                                                                     <form action="/permintaan_cuti/{{ $data->id }}"
                                                                         method="POST">
                                                                         @csrf
-                                                                        <input type="hidden" name="status"value="Disetujui" class="form-control" hidden>
-                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                        <input type="hidden"
+                                                                            name="status"value="Disetujui"
+                                                                            class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
                                                                     </form>
                                                                 </div>
                                                                 <div class="col-sm-3" style="margin-left:7px">
                                                                     <form action="" method="POST">
-                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cuReject{{ $data->id }}">
+                                                                        <a class="btn btn-danger btn-sm" style="height:26px"
+                                                                            data-toggle="modal"
+                                                                            data-target="#cuReject{{ $data->id }}">
                                                                             <i class="fa fa-times fa-md"></i>
                                                                         </a>
                                                                     </form>
@@ -104,13 +116,18 @@
                                                                     <form action="/permintaan_cuti/{{ $data->id }}"
                                                                         method="POST">
                                                                         @csrf
-                                                                        <input type="hidden" name="status"value="Disetujui" class="form-control" hidden>
-                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                        <input type="hidden"
+                                                                            name="status"value="Disetujui"
+                                                                            class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
                                                                     </form>
                                                                 </div>
                                                                 <div class="col-sm-3" style="margin-left:7px">
                                                                     <form action="" method="POST">
-                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#cuReject{{ $data->id }}">
+                                                                        <a class="btn btn-danger btn-sm" style="height:26px"
+                                                                            data-toggle="modal"
+                                                                            data-target="#cuReject{{ $data->id }}">
                                                                             <i class="fa fa-times fa-md"></i>
                                                                         </a>
                                                                     </form>
@@ -145,9 +162,9 @@
                                                 @include('admin.cuti.showcuti')
                                                 @include('admin.cuti.cutiReject')
                                             @empty
-                                            <tr>
-                                                <td>No data available in table</td>
-                                            </tr>
+                                                <tr>
+                                                    <td>No data available in table</td>
+                                                </tr>
                                             @endforelse
 
                                         </tbody>
@@ -164,11 +181,12 @@
                         <h4 class="panel-title ">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#8" aria-expanded="false"
                                 class="dropdown-toggle waves-effect waves-light collapsed">
-                                    Pembatalan dan Perubahan Cuti Karyawan
-                                    
-                                    @if($jumct)
-                                        <span class="badge badge badge-danger" style="background-color:red">{{$jumct}}</span>
-                                    @endif
+                                Pembatalan dan Perubahan Cuti Karyawan
+
+                                @if ($jumct)
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">{{ $jumct }}</span>
+                                @endif
                             </a>
                         </h4>
                     </div>
@@ -190,124 +208,181 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($cutis as $data)
-                                               
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $data->nama }}</td>
-                                                        <td>{{ $data->jenis_cuti }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}</td>
-                                                        <td> {{$data->catatan}}</td>
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $data->nama }}</td>
+                                                    <td>{{ $data->jenis_cuti }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}</td>
+                                                    <td> {{ $data->catatan }}</td>
 
-                                                        <td>
-                                                            <div class="row">
-                                                                
-                                                                @if ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manager")
-                                                                    <div class="col-sm-3">
-                                                                        <form action="{{ route('batal.approved', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="col-sm-3" style="margin-left:7px">
-                                                                        <form action="{{ route('batal.rejected', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Perubahan Disetujui Atasan" && $row->jabatan == "Manager")
-                                                                    <div class="col-sm-3">
-                                                                        <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="col-sm-3" style="margin-left:7px">
-                                                                        <form action="{{ route('ubah.rejected', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Manager")
-                                                                    <div class="col-sm-3">
-                                                                        <form action="{{ route('batal.approved', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="col-sm-3" style="margin-left:7px">
-                                                                        <form action="{{ route('batal.rejected', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Manager")
-                                                                    <div class="col-sm-3">
-                                                                        <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="col-sm-3" style="margin-left:7px">
-                                                                        <form action="{{ route('ubah.rejected', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asistant Manager")
-                                                                
-                                                                    <div class="col-sm-3">
-                                                                        <form action="{{ route('batal.approved', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="col-sm-3" style="margin-left:7px">
-                                                                        <form action="{{ route('batal.rejected', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asistant Manager")
-                                                                
-                                                                    <div class="col-sm-3">
-                                                                        <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="col-sm-3" style="margin-left:7px">
-                                                                        <form action="{{ route('ubah.rejected', $data->id) }}" method="POST">
-                                                                            @csrf
-                                                                            <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                            <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                        </form>
-                                                                    </div>
-                                                                @endif
-                                                                
-                                                                <div class="col-sm-3" style="margin-left:6px">
-                                                                    <form action="" method="POST">
-                                                                        <a class="btn btn-info btn-sm" style="height:26px"
-                                                                            data-toggle="modal"
-                                                                            data-target="#Showcuti{{ $data->id }}">
-                                                                            <i class="fa fa-eye"></i>
-                                                                        </a>
+                                                    <td>
+                                                        <div class="row">
+
+                                                            @if (
+                                                                $data->atasan_kedua == Auth::user()->id_pegawai &&
+                                                                    $data->catatan == 'Pembatalan Disetujui Atasan' &&
+                                                                    $row->jabatan == 'Manager')
+                                                                <div class="col-sm-3">
+                                                                    <form
+                                                                        action="{{ route('batal.approved', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
                                                                     </form>
                                                                 </div>
+                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                    <form
+                                                                        action="{{ route('batal.rejected', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-times btn-danger  btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                            @elseif (
+                                                                $data->atasan_kedua == Auth::user()->id_pegawai &&
+                                                                    $data->catatan == 'Perubahan Disetujui Atasan' &&
+                                                                    $row->jabatan == 'Manager')
+                                                                <div class="col-sm-3">
+                                                                    <form action="{{ route('ubah.approved', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                    <form action="{{ route('ubah.rejected', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-times btn-danger  btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                            @elseif (
+                                                                $data->atasan_pertama == Auth::user()->id_pegawai &&
+                                                                    $data->catatan == 'Mengajukan Pembatalan' &&
+                                                                    $row->jabatan == 'Manager')
+                                                                <div class="col-sm-3">
+                                                                    <form
+                                                                        action="{{ route('batal.approved', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                    <form
+                                                                        action="{{ route('batal.rejected', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-times btn-danger  btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                            @elseif (
+                                                                $data->atasan_pertama == Auth::user()->id_pegawai &&
+                                                                    $data->catatan == 'Mengajukan Perubahan' &&
+                                                                    $row->jabatan == 'Manager')
+                                                                <div class="col-sm-3">
+                                                                    <form action="{{ route('ubah.approved', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                    <form action="{{ route('ubah.rejected', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-times btn-danger  btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                            @elseif (
+                                                                $data->atasan_pertama == Auth::user()->id_pegawai &&
+                                                                    $data->catatan == 'Mengajukan Pembatalan' &&
+                                                                    $row->jabatan == 'Asistant Manager')
+                                                                <div class="col-sm-3">
+                                                                    <form
+                                                                        action="{{ route('batal.approved', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                    <form
+                                                                        action="{{ route('batal.rejected', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-times btn-danger  btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                            @elseif (
+                                                                $data->atasan_pertama == Auth::user()->id_pegawai &&
+                                                                    $data->catatan == 'Mengajukan Perubahan' &&
+                                                                    $row->jabatan == 'Asistant Manager')
+                                                                <div class="col-sm-3">
+                                                                    <form action="{{ route('ubah.approved', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-sm-3" style="margin-left:7px">
+                                                                    <form action="{{ route('ubah.rejected', $data->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-times btn-danger  btn-sm"></button>
+                                                                    </form>
+                                                                </div>
+                                                            @endif
+
+                                                            <div class="col-sm-3" style="margin-left:6px">
+                                                                <form action="" method="POST">
+                                                                    <a class="btn btn-info btn-sm" style="height:26px"
+                                                                        data-toggle="modal"
+                                                                        data-target="#Showcuti{{ $data->id }}">
+                                                                        <i class="fa fa-eye"></i>
+                                                                    </a>
+                                                                </form>
                                                             </div>
-                                                        </td>
-                                                    </tr>
-                                                
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
                                                 {{-- modal show cuti --}}
                                                 @include('admin.cuti.showcuti')
                                                 @include('manager.staff.cutiReject')
@@ -322,16 +397,17 @@
 
                     </div>
                 </div>
-        
+
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#2" class="collapsed"
                                 aria-expanded="false">
                                 Permintaan Sakit/Ijin/Dinas/lain-lain
-                                
+
                                 @if ($izinjumlah)
-                                    <span class="badge badge badge-danger" style="background-color:red">{{ $izinjumlah }}</span>
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">{{ $izinjumlah }}</span>
                                 @endif
                             </a>
 
@@ -385,8 +461,9 @@
                                                         <td></td>
                                                     @endif --}}
                                                     <td>
-                                                        <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : 'secondary' ))))))))) }}">
-                                                            {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status : ''))))))))) }}
+                                                        <span
+                                                            class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : 'secondary'))))))))) }}">
+                                                            {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ? $data->name_status : ($data->status == 5 ? $data->name_status : ($data->status == 6 ? $data->name_status : ($data->status == 7 ? $data->name_status : ($data->status == 9 ? $data->name_status : ($data->status == 10 ? $data->name_status : ($data->status == 11 ? $data->name_status : ($data->status == 12 ? $data->name_status : ($data->status == 13 ? $data->name_status : ''))))))))) }}
                                                         </span>
                                                     </td>
 
@@ -398,13 +475,17 @@
                                                                     <form action="{{ route('izinapproved', $data->id) }}"
                                                                         method="POST">
                                                                         @csrf
-                                                                        <input type="hidden" name="status"  value="Disetujui" class="form-control" hidden>
-                                                                        <button type="submit" class="fa fa-check btn-success btn-sm"></button>
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
                                                                     </form>
                                                                 </div>
                                                                 <div class="col-sm-3" style="margin-left:7px">
                                                                     <form action="" method="POST">
-                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal" data-target="#izReject{{ $data->id }}">
+                                                                        <a class="btn btn-danger btn-sm"
+                                                                            style="height:26px" data-toggle="modal"
+                                                                            data-target="#izReject{{ $data->id }}">
                                                                             <i class="fa fa-times fa-md"></i>
                                                                         </a>
                                                                     </form>
@@ -414,13 +495,17 @@
                                                                     <form action="{{ route('izinapproved', $data->id) }}"
                                                                         method="POST">
                                                                         @csrf
-                                                                        <input type="hidden" name="status"  value="Disetujui" class="form-control" hidden>
-                                                                        <button type="submit"  class="fa fa-check btn-success btn-sm"></button>
+                                                                        <input type="hidden" name="status"
+                                                                            value="Disetujui" class="form-control" hidden>
+                                                                        <button type="submit"
+                                                                            class="fa fa-check btn-success btn-sm"></button>
                                                                     </form>
                                                                 </div>
                                                                 <div class="col-sm-3" style="margin-left:7px">
                                                                     <form action="" method="POST">
-                                                                        <a class="btn btn-danger btn-sm" style="height:26px" data-toggle="modal"  data-target="#izReject{{ $data->id }}">
+                                                                        <a class="btn btn-danger btn-sm"
+                                                                            style="height:26px" data-toggle="modal"
+                                                                            data-target="#izReject{{ $data->id }}">
                                                                             <i class="fa fa-times fa-md"></i>
                                                                         </a>
                                                                     </form>
@@ -440,7 +525,7 @@
                                                             {{-- modal show izin --}}
                                                             @include('admin.cuti.showizin')
                                                             @include('admin.cuti.izinReject')
-                                                           
+
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -457,184 +542,261 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion-test-2" href="#9" class="collapsed"
-                                    aria-expanded="false">
-                                    Pembatalan/Perubahan Sakit/Ijin
-                                    
-                                    @if ($jumizin)
-                                        <span class="badge badge badge-danger" style="background-color:red">{{ $jumizin }}</span>
-                                    @endif
-                                </a>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#9" class="collapsed"
+                                aria-expanded="false">
+                                Pembatalan/Perubahan Sakit/Ijin
 
-                            </h4>
-                        </div>
-                        <div id="9" class="panel-collapse collapse">
+                                @if ($jumizin)
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">{{ $jumizin }}</span>
+                                @endif
+                            </a>
 
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr class="info">
-                                                    <th>No</th>
-                                                    <th>Karyawan</th>
-                                                    <th>Izin</th>
-                                                    <th>Tanggal</th>
-                                                    <th>Catatan</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($ijin as $data)
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $data->nama }}</td>
-                                                        <td>{{ $data->jenis_izin }}</td>
-                                                        @if ($data->tgl_mulai != null && $data->tgl_selesai != null)
-                                                            <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
-                                                                s/d
-                                                                {{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }}
-                                                            </td>
-                                                        @else
-                                                            <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
-                                                            </td>
-                                                        @endif
-                                                        
-                                                        <td>{{$data->catatan}}</td>
+                        </h4>
+                    </div>
+                    <div id="9" class="panel-collapse collapse">
 
-                                                        <td>
-                                                            <div class="row">
-                                                                {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
-                                                                <div class="row">
-                                                                    
-                                                                    @if ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manager")
-                                                                        <div class="col-sm-3">
-                                                                            <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                        <div class="col-sm-3" style="margin-left:7px">
-                                                                            <form action="{{ route('batal.tolak', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                    @elseif ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Perubahan Disetujui Atasan" && $row->jabatan == "Manager")
-                                                                        <div class="col-sm-3">
-                                                                            <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                        <div class="col-sm-3" style="margin-left:7px">
-                                                                            <form action="{{ route('ubah.tolak', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Manager")
-                                                                        <div class="col-sm-3">
-                                                                            <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                        <div class="col-sm-3" style="margin-left:7px">
-                                                                            <form action="{{ route('batal.tolak', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Manager")
-                                                                        <div class="col-sm-3">
-                                                                            <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                        <div class="col-sm-3" style="margin-left:7px">
-                                                                            <form action="{{ route('ubah.tolak', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asistant Manager")
-                                                                    
-                                                                        <div class="col-sm-3">
-                                                                            <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                        <div class="col-sm-3" style="margin-left:7px">
-                                                                            <form action="{{ route('batal.tolak', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                    @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asistant Manager")
-                                                                    
-                                                                        <div class="col-sm-3">
-                                                                            <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-check btn-success btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                        <div class="col-sm-3" style="margin-left:7px">
-                                                                            <form action="{{ route('ubah.tolak', $data->id) }}" method="POST">
-                                                                                @csrf
-                                                                                <input type="hidden" name="status" value="Disetujui" class="form-control" hidden>
-                                                                                <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
-                                                                            </form>
-                                                                        </div>
-                                                                    @endif
-                                                                    
-                                                                </div>
-                                                                <div class="col-sm-3" style="margin-left:5px">
-                                                                    <form action="" method="POST">
-                                                                        <a class="btn btn-info btn-sm" style="height:26px"
-                                                                            data-toggle="modal"
-                                                                            data-target="#Showizinm{{ $data->id }}">
-                                                                            <i class="fa fa-eye fa-md"></i>
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                                {{-- modal show izin --}}
-                                                                @include('manager.staff.showIzin')
-                                                                @include('manager.staff.izinReject')
-                                                            </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr class="info">
+                                                <th>No</th>
+                                                <th>Karyawan</th>
+                                                <th>Izin</th>
+                                                <th>Tanggal</th>
+                                                <th>Catatan</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($ijin as $data)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $data->nama }}</td>
+                                                    <td>{{ $data->jenis_izin }}</td>
+                                                    @if ($data->tgl_mulai != null && $data->tgl_selesai != null)
+                                                        <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
+                                                            s/d
+                                                            {{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }}
                                                         </td>
-                                                    </tr>
-                                                @endforeach
+                                                    @else
+                                                        <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
+                                                        </td>
+                                                    @endif
 
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                    <td>{{ $data->catatan }}</td>
+
+                                                    <td>
+                                                        <div class="row">
+                                                            {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
+                                                            <div class="row">
+
+                                                                @if (
+                                                                    $data->atasan_kedua == Auth::user()->id_pegawai &&
+                                                                        $data->catatan == 'Pembatalan Disetujui Atasan' &&
+                                                                        $row->jabatan == 'Manager')
+                                                                    <div class="col-sm-3">
+                                                                        <form
+                                                                            action="{{ route('batal.setuju', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-check btn-success btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-3" style="margin-left:7px">
+                                                                        <form
+                                                                            action="{{ route('batal.tolak', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-times btn-danger  btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                @elseif (
+                                                                    $data->atasan_kedua == Auth::user()->id_pegawai &&
+                                                                        $data->catatan == 'Perubahan Disetujui Atasan' &&
+                                                                        $row->jabatan == 'Manager')
+                                                                    <div class="col-sm-3">
+                                                                        <form
+                                                                            action="{{ route('ubah.setuju', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-check btn-success btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-3" style="margin-left:7px">
+                                                                        <form
+                                                                            action="{{ route('ubah.tolak', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-times btn-danger  btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                @elseif (
+                                                                    $data->atasan_pertama == Auth::user()->id_pegawai &&
+                                                                        $data->catatan == 'Mengajukan Pembatalan' &&
+                                                                        $row->jabatan == 'Manager')
+                                                                    <div class="col-sm-3">
+                                                                        <form
+                                                                            action="{{ route('batal.setuju', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-check btn-success btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-3" style="margin-left:7px">
+                                                                        <form
+                                                                            action="{{ route('batal.tolak', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-times btn-danger  btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                @elseif (
+                                                                    $data->atasan_pertama == Auth::user()->id_pegawai &&
+                                                                        $data->catatan == 'Mengajukan Perubahan' &&
+                                                                        $row->jabatan == 'Manager')
+                                                                    <div class="col-sm-3">
+                                                                        <form
+                                                                            action="{{ route('ubah.setuju', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-check btn-success btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-3" style="margin-left:7px">
+                                                                        <form
+                                                                            action="{{ route('ubah.tolak', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-times btn-danger  btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                @elseif (
+                                                                    $data->atasan_pertama == Auth::user()->id_pegawai &&
+                                                                        $data->catatan == 'Mengajukan Pembatalan' &&
+                                                                        $row->jabatan == 'Asistant Manager')
+                                                                    <div class="col-sm-3">
+                                                                        <form
+                                                                            action="{{ route('batal.setuju', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-check btn-success btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-3" style="margin-left:7px">
+                                                                        <form
+                                                                            action="{{ route('batal.tolak', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-times btn-danger  btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                @elseif (
+                                                                    $data->atasan_pertama == Auth::user()->id_pegawai &&
+                                                                        $data->catatan == 'Mengajukan Perubahan' &&
+                                                                        $row->jabatan == 'Asistant Manager')
+                                                                    <div class="col-sm-3">
+                                                                        <form
+                                                                            action="{{ route('ubah.setuju', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-check btn-success btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="col-sm-3" style="margin-left:7px">
+                                                                        <form
+                                                                            action="{{ route('ubah.tolak', $data->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Disetujui" class="form-control"
+                                                                                hidden>
+                                                                            <button type="submit"
+                                                                                class="fa fa-times btn-danger  btn-sm"></button>
+                                                                        </form>
+                                                                    </div>
+                                                                @endif
+
+                                                            </div>
+                                                            <div class="col-sm-3" style="margin-left:5px">
+                                                                <form action="" method="POST">
+                                                                    <a class="btn btn-info btn-sm" style="height:26px"
+                                                                        data-toggle="modal"
+                                                                        data-target="#Showizinm{{ $data->id }}">
+                                                                        <i class="fa fa-eye fa-md"></i>
+                                                                    </a>
+                                                                </form>
+                                                            </div>
+                                                            {{-- modal show izin --}}
+                                                            @include('manager.staff.showIzin')
+                                                            @include('manager.staff.izinReject')
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
+                </div>
 
             </div>
         </div>
 
         <div class="col-lg-6">
-            
+
             <div class="panel-group" id="accordion-test-2">
 
                 {{-- <div class="panel panel-default">
@@ -698,125 +860,127 @@
                         </div>
                     </div>
                 </div> --}}
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion-test-2" href="#3" class="collapsed"
-                                    aria-expanded="false">
-                                    Permintaan Resign Karyawan
-                                    {{-- @php
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#3" class="collapsed"
+                                aria-expanded="false">
+                                Permintaan Resign Karyawan
+                                {{-- @php
                                         
                                         dd($resign);
                                     @endphp --}}
-                                    
-                                    {{-- @if ($resign->karyawan->atasan_pertama || $resign->karyawan->atasan_pertama = Auth::user()->id_pegawai ) --}}
-                                        
-                                    @if ($resignjumlah)
-                                        <span class="badge badge badge-danger" style="background-color:red">{{ $resignjumlah }}</span>
-                                    @else
-                                    @endif
-                                    
-                                    {{-- @endif --}}
 
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="3" class="panel-collapse collapse">
+                                {{-- @if ($resign->karyawan->atasan_pertama || ($resign->karyawan->atasan_pertama = Auth::user()->id_pegawai)) --}}
 
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr class="info">
-                                                    <th>No</th>
-                                                    <th>Karyawan</th>
-                                                    <th>Departemen</th>
-                                                    <th>Tanggal</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($resign as $r)
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $r->karyawan->nama }}</td>
-                                                        <td>{{ $r->departemens->nama_departemen ?? ' ' }}</td>
-                                                        {{-- <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td> --}}
-                                                        <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}</td>
-                                                        {{-- <td>{{ $r->tipe_resign }}</td> --}}
-                                                        <!-- data for status -->
-                                                        <td>
-                                                            <span
-                                                                class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'warning' : 'danger'))) }}">
-                                                                {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 6 ? $r->statuses->name_status : ($r->status == 7 ? $r->statuses->name_status : ($r->status == 5 ? $r->statuses->name_status : 'Ditolak'))) }}
-                                                            </span>
-                                                        </td>
-                                                        <td id="b" class="text-center">
-                                                            <div class="btn-group" role="group">
-                                                                {{-- @if ($r->status == 2 || $r->status == 4) --}}
-                                                            @if($r->karyawan->atasan_pertama == Auth::user()->id_pegawai && $r->status == 1)
-                                                                    <form action="{{ route('resignapproved', $r->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        <input type="hidden" name="status" value=1
-                                                                            class="form-control" hidden>
-                                                                        <button type="submit" class="btn btn-success btn-sm">
-                                                                            <i class="fa fa-check"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                    <form action="{{ route('resignreject', $r->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('POST')
-                                                                        <input type="hidden" name="status" value=5
-                                                                            class="form-control" hidden>
-                                                                        <button type="submit" class="btn btn-danger btn-sm">
-                                                                            <i class="fa fa-times"></i>
-                                                                        </button>
-                                                                    </form>
+                                @if ($resignjumlah)
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">{{ $resignjumlah }}</span>
+                                @else
+                                @endif
+
+                                {{-- @endif --}}
+
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="3" class="panel-collapse collapse">
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr class="info">
+                                                <th>No</th>
+                                                <th>Karyawan</th>
+                                                <th>Departemen</th>
+                                                <th>Tanggal</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($resign as $r)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $r->karyawan->nama }}</td>
+                                                    <td>{{ $r->departemens->nama_departemen ?? ' ' }}</td>
+                                                    {{-- <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td> --}}
+                                                    <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}</td>
+                                                    {{-- <td>{{ $r->tipe_resign }}</td> --}}
+                                                    <!-- data for status -->
+                                                    <td>
+                                                        <span
+                                                            class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'warning' : 'danger'))) }}">
+                                                            {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 6 ? $r->statuses->name_status : ($r->status == 7 ? $r->statuses->name_status : ($r->status == 5 ? $r->statuses->name_status : 'Ditolak'))) }}
+                                                        </span>
+                                                    </td>
+                                                    <td id="b" class="text-center">
+                                                        <div class="btn-group" role="group">
+                                                            {{-- @if ($r->status == 2 || $r->status == 4) --}}
+                                                            @if ($r->karyawan->atasan_pertama == Auth::user()->id_pegawai && $r->status == 1)
+                                                                <form action="{{ route('resignapproved', $r->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <input type="hidden" name="status" value=1
+                                                                        class="form-control" hidden>
+                                                                    <button type="submit" class="btn btn-success btn-sm">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </button>
+                                                                </form>
+                                                                <form action="{{ route('resignreject', $r->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <input type="hidden" name="status" value=5
+                                                                        class="form-control" hidden>
+                                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                                        <i class="fa fa-times"></i>
+                                                                    </button>
+                                                                </form>
                                                             @elseif($r->karyawan->atasan_kedua == Auth::user()->id_pegawai && $r->status == 6)
-                                                                <form action="{{ route('resign_approved_manager', $r->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        <input type="hidden" name="status" value=1
-                                                                            class="form-control" hidden>
-                                                                        <button type="submit" class="btn btn-success btn-sm">
-                                                                            <i class="fa fa-check"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                    <form action="{{ route('resignreject', $r->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('POST')
-                                                                        <input type="hidden" name="status" value=5
-                                                                            class="form-control" hidden>
-                                                                        <button type="submit" class="btn btn-danger btn-sm">
-                                                                            <i class="fa fa-times"></i>
-                                                                        </button>
-                                                                    </form>
+                                                                <form
+                                                                    action="{{ route('resign_approved_manager', $r->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <input type="hidden" name="status" value=1
+                                                                        class="form-control" hidden>
+                                                                    <button type="submit" class="btn btn-success btn-sm">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </button>
+                                                                </form>
+                                                                <form action="{{ route('resignreject', $r->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <input type="hidden" name="status" value=5
+                                                                        class="form-control" hidden>
+                                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                                        <i class="fa fa-times"></i>
+                                                                    </button>
+                                                                </form>
                                                             @endif
-                                                                <a class="btn btn-info btn-sm" data-toggle="modal"
-                                                                    data-target="#Showresign{{ $r->id }}">
-                                                                    <i class="fa fa-eye"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    @include('karyawan.resign.showresign')
-                                                @endforeach
+                                                            <a class="btn btn-info btn-sm" data-toggle="modal"
+                                                                data-target="#Showresign{{ $r->id }}">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                @include('karyawan.resign.showresign')
+                                            @endforeach
 
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-
-
                         </div>
+
+
                     </div>
-                    @if(isset($potongtransport) || isset($potonguangmakan) ||  isset($terlambat) ||  isset($telat) ||  isset($datatelat))
+                </div>
+                @if (isset($potongtransport) || isset($potonguangmakan) || isset($terlambat) || isset($telat) || isset($datatelat))
                     @php
                         $jumlah = $jpc + $jpg;
                     @endphp
@@ -826,10 +990,10 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#4"
                                     aria-expanded="false" class="collapsed">
                                     Data Tidak Masuk
-                                    @if($jumlah)
-                                        <span class="badge badge badge-danger" style="background-color:red">@php  echo $jumlah; @endphp</span>
+                                    @if ($jumlah)
+                                        <span class="badge badge badge-danger"
+                                            style="background-color:red">@php  echo $jumlah; @endphp</span>
                                     @else
-                                    
                                     @endif
                                 </a>
                             </h4>
@@ -839,39 +1003,48 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <ul class="">
-                                            <li class="text-center notifi-title">Notifikasi Tidak Masuk  
-                                                @if($jumlah)
-                                                <span class="badge badge-xs badge-danger">@php  echo $jumlah; @endphp</span> 
-                                            @else
-                                            @endif
+                                            <li class="text-center notifi-title">Notifikasi Tidak Masuk
+                                                @if ($jumlah)
+                                                    <span class="badge badge-xs badge-danger">@php  echo $jumlah; @endphp</span>
+                                                @else
+                                                @endif
                                             </li>
                                             <li class="list-group">
-                                                @if(isset($potonguangmakan) && $jpc > 0)
+                                                @if (isset($potonguangmakan) && $jpc > 0)
                                                     <a href="/tindakan-tidak-masuk" class="list-group-item">
                                                         <div class="media">
                                                             <div class="media-heading">Sanksi Pemotongan Uang Makan
-                                                            <span class="badge badge-xs badge-danger">{{ $jpc }}</span></div>
+                                                                <span
+                                                                    class="badge badge-xs badge-danger">{{ $jpc }}</span>
+                                                            </div>
                                                             <p class="m-0">
-                                                            <small>Karyawan yang tidak masuk kerja tanpa keterangan yang dapat dipertanggungjawabkan akan mendapatkan sanksi dari Perusahaan</small>
+                                                                <small>Karyawan yang tidak masuk kerja tanpa keterangan yang
+                                                                    dapat dipertanggungjawabkan akan mendapatkan sanksi dari
+                                                                    Perusahaan</small>
                                                             </p>
                                                         </div>
                                                     </a>
                                                 @endif
-                                                @if(isset($potongtransport) && $jpg > 0)
+                                                @if (isset($potongtransport) && $jpg > 0)
                                                     <a href="/tindakan-tidak-masuk" class="list-group-item">
-                                                    <div class="media">
-                                                        <div class="media-body clearfix">
-                                                            <div class="media-heading">Sanksi Pemotongan Uang Transportasi<span class="badge badge-xs badge-danger">{{ $jpg }}</span></div>
-                                                            <p class="m-0">
-                                                                <small>Karyawan yang tidak masuk kerja tanpa keterangan yang dapat dipertanggungjawabkan akan mendapatkan sanksi dari Perusahaan</small>
-                                                            </p>
+                                                        <div class="media">
+                                                            <div class="media-body clearfix">
+                                                                <div class="media-heading">Sanksi Pemotongan Uang
+                                                                    Transportasi<span
+                                                                        class="badge badge-xs badge-danger">{{ $jpg }}</span>
+                                                                </div>
+                                                                <p class="m-0">
+                                                                    <small>Karyawan yang tidak masuk kerja tanpa keterangan
+                                                                        yang dapat dipertanggungjawabkan akan mendapatkan
+                                                                        sanksi dari Perusahaan</small>
+                                                                </p>
+                                                            </div>
                                                         </div>
-                                                    </div>
                                                     </a>
                                                 @endif
                                             </li>
                                         </ul>
-                                    </li>
+                                        </li>
                                     </div>
                                 </div>
                             </div>
@@ -880,19 +1053,20 @@
 
                     <div class="panel panel-default">
                         @php
-                             $jum = $jumter+ $jumtel + $jumdat;
+                            $jum = $jumter + $jumtel + $jumdat;
                         @endphp
-                        
+
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#7"
                                     aria-expanded="false" class="collapsed">
                                     Notifikasi Terlambat
-                                    {{-- @if($terlambat || $telat || $datatelat)
+                                    {{-- @if ($terlambat || $telat || $datatelat)
                                         <span class="badge badge badge-danger" style="background-color:red">@php  echo $jum; @endphp</span>
                                     @endif --}}
-                                    @if($jum)
-                                        <span class="badge badge badge-danger" style="background-color:red">@php  echo $jum; @endphp</span>
+                                    @if ($jum)
+                                        <span class="badge badge badge-danger"
+                                            style="background-color:red">@php  echo $jum; @endphp</span>
                                     @endif
                                 </a>
                             </h4>
@@ -902,48 +1076,61 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <ul class="">
-                                           
-                                            <li class="text-center notifi-title">Notifikasi Terlambat <span class="badge badge-xs badge-danger">@php  echo $jum; @endphp</span></li>
+
+                                            <li class="text-center notifi-title">Notifikasi Terlambat <span
+                                                    class="badge badge-xs badge-danger">@php  echo $jum; @endphp</span></li>
                                             <li class="list-group">
-                                                @if($terlambat && $jumter > 0)
+                                                @if ($terlambat && $jumter > 0)
                                                     <a href="/tindakan-terlambat" class="list-group-item">
                                                         <div class="media">
                                                             <div class="media-body clearfix">
-                                                                <div class="media-heading">Sanksi Teguran Biasa  <span class="badge badge-xs badge-danger">{{ $jumter }}</span></div>
+                                                                <div class="media-heading">Sanksi Teguran Biasa <span
+                                                                        class="badge badge-xs badge-danger">{{ $jumter }}</span>
+                                                                </div>
                                                                 <p class="m-0">
-                                                                    <small>Karyawan yang datang terlambat yang melebihi dari ketentuan yang ditetapkan akan mendapatkan sanksi sesuai ketentuan dari Perusahaan</small>
+                                                                    <small>Karyawan yang datang terlambat yang melebihi dari
+                                                                        ketentuan yang ditetapkan akan mendapatkan sanksi
+                                                                        sesuai ketentuan dari Perusahaan</small>
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                    </a>         
+                                                    </a>
                                                 @endif
-                                                @if(isset($telat) && $jumtel > 0)
+                                                @if (isset($telat) && $jumtel > 0)
                                                     <a href="/tindakan-terlambat" class="list-group-item">
                                                         <div class="media">
                                                             <div class="media-body clearfix">
-                                                                <div class="media-heading">Sanksi SP 1<span class="badge badge-xs badge-danger">{{ $jumtel }}</span></div>
+                                                                <div class="media-heading">Sanksi SP 1<span
+                                                                        class="badge badge-xs badge-danger">{{ $jumtel }}</span>
+                                                                </div>
                                                                 <p class="m-0">
-                                                                    <small>Karyawan yang datang terlambat yang melebihi dari ketentuan yang ditetapkan akan mendapatkan sanksi sesuai ketentuan dari Perusahaan</small>
+                                                                    <small>Karyawan yang datang terlambat yang melebihi dari
+                                                                        ketentuan yang ditetapkan akan mendapatkan sanksi
+                                                                        sesuai ketentuan dari Perusahaan</small>
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                    </a>    
+                                                    </a>
                                                 @endif
-                                                @if(isset($datatelat) && $jumdat > 0)
+                                                @if (isset($datatelat) && $jumdat > 0)
                                                     <a href="/tindakan-terlambat" class="list-group-item">
                                                         <div class="media">
                                                             <div class="media-body clearfix">
-                                                                <div class="media-heading">Sanksi SP 1<span class="badge badge-xs badge-danger">{{ $jumdat }}</span></div>
+                                                                <div class="media-heading">Sanksi SP 1<span
+                                                                        class="badge badge-xs badge-danger">{{ $jumdat }}</span>
+                                                                </div>
                                                                 <p class="m-0">
-                                                                    <small>Karyawan yang datang terlambat yang melebihi dari ketentuan yang ditetapkan akan mendapatkan sanksi sesuai ketentuan dari Perusahaan</small>
+                                                                    <small>Karyawan yang datang terlambat yang melebihi dari
+                                                                        ketentuan yang ditetapkan akan mendapatkan sanksi
+                                                                        sesuai ketentuan dari Perusahaan</small>
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                    </a>   
+                                                    </a>
                                                 @endif
                                             </li>
                                         </ul>
-                                    </li>
+                                        </li>
                                     </div>
                                 </div>
                             </div>
@@ -957,8 +1144,9 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#5"
                                 aria-expanded="false" class="collapsed">
                                 Data Rekruitmen
-                                 @if ($rekruitmenjumlah)
-                                    <span class="badge badge badge-danger" style="background-color:red">{{ $rekruitmenjumlah }}</span>
+                                @if ($rekruitmenjumlah)
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">{{ $rekruitmenjumlah }}</span>
                                 @endif
                             </a>
                         </h4>
@@ -986,13 +1174,15 @@
                                                     <td>{{ $k->posisi }}</td>
                                                     {{-- <td>{{ $k->jeniscutis->jenis_cuti }}</td> --}}
                                                     <td>{{ $k->jumlah_dibutuhkan }} Orang</td>
-                                                    <td>{{ \Carbon\Carbon::parse($k->tgl_mulai)->format('d/m/Y') }} s.d {{ \Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y') }}</td>
-                
+                                                    <td>{{ \Carbon\Carbon::parse($k->tgl_mulai)->format('d/m/Y') }} s.d
+                                                        {{ \Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y') }}</td>
+
                                                     <td>
                                                         <div class="row">
                                                             <div class="col-sm-3">
                                                                 <form action="/show_rekrutmen{{ $k->id }}">
-                                                                    <button type="submit" class="fa fa-eye btn-info btn-sm"></button>
+                                                                    <button type="submit"
+                                                                        class="fa fa-eye btn-info btn-sm"></button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -1011,11 +1201,79 @@
 
             </div>
         </div>
-        
+
     </div> <!-- end row -->
     {{-- @endif --}}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel-body">
+                <div class="row">
+                    <table class="table table-striped">
+                        <thead style="text-align: center;">
+                            <h4>Susunan Pengurus dan Manajemen</h4>
+                            <tr class="info">
+                                <th>No</th>
+                                <th>Management</th>
+                                <th>Head Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($jumlahKaryawanPerJabatan as $k)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $k->nama_jabatan }}</td>
+                                    <td>{{ $k->total }}</td>
+                                </tr>
+                            @endforeach
 
-    
+                            <tr>
+                                <td class="thick-line"></td>
+                                <td class="thick-line text-right"><strong>Total</strong></td>
+                                <td class="thick-line text-left">{{ $jumlahKaryawanPerJabatan2 }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="panel-body">
+                <div class="row">
+                    <table class="table table-striped">
+                        <thead style="text-align: center;">
+                            <h4>Number of Employee</h4>
+                            <tr class="info">
+                                <th>No</th>
+                                <th>Management</th>
+                                <th>Head Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($karyawan as $k)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $k->nama_jabatan }}</td>
+                                    <td>{{ $k->total }}</td>
+                                </tr>
+                            @endforeach
+
+                            <tr>
+                                <td class="thick-line"></td>
+                                <td class="thick-line text-right"><strong>Total</strong></td>
+                                <td class="thick-line text-left">{{ $jumlahkaryawan }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="row">
         <div class="col-sm-6 col-lg-3">
             <div class="panel panel-primary text-center">
@@ -1073,143 +1331,15 @@
             </div>
         </div>
 
+
+
+
     </div>
-
-    {{-- <div class="row">
-    <div class="col-sm-6 col-lg-3">
-        <div class="panel panel-primary text-center">
-            <div class="panel-heading btn-info">
-                <a href="{{ url('showkaryawancuti') }}" class="panel-title ">
-                <h4 class="panel-title ">Cuti dan Izin Bulan Ini</h4>
-                </a>
-            </div>
-            <div class="panel-body">
-                <h3 class=""><b>{{ $cutidanizinPerbulan }}</b></h3>
-                <p class="text-muted"><b>Total Cuti dan Izin </b> </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-lg-3">
-        <div class="panel panel-primary text-center">
-            <div class="panel-heading btn-success">
-                <a href="{{ url('showkaryawanabsen') }}" class="panel-title ">
-                <h4 class="panel-title">Absen Masuk Bulan Ini</h4>
-                </a>
-            </div>
-            <div class="panel-body">
-                <h3 class=""><b>{{ $absenBulanini }}</b></h3>
-                <p class="text-muted"><b>Total Absen Masuk </b> </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-lg-3">
-        <div class="panel panel-primary text-center">
-            <div class="panel-heading btn-warning">
-                <a href="{{ url('showkaryawanterlambat') }}" class="panel-title ">
-                <h4 class="panel-title">Terlambat Bulan Ini</h4>
-                </a>
-            </div>
-            <div class="panel-body">
-                <h3 class=""><b>{{ $absenTerlambat }}</b></h3>
-                <p class="text-muted"><b>Total Terlambat </b> </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-lg-3">
-        <div class="panel panel-primary text-center">
-            <div class="panel-heading btn-danger">
-                <a href="{{ url('showkaryawantidakmasuk') }}" class="panel-title ">
-                <h4 class="panel-title"> Tidak Masuk Bulan Ini</h4>
-                </a>
-            </div>
-            <div class="panel-body">
-                <h3 class=""><b>{{ $tidakMasukBulanIni }}</b></h3>
-                <p class="text-muted"><b>Total Absen Tidak Masuk </b> </p>
-            </div>
-        </div>
-    </div>
-
-</div> --}}
-
-    {{-- <div class="row">
-    <div class="col-sm-6 col-lg-3">
-        <div class="panel panel-primary text-center">
-            <div class="panel-heading btn-info">
-                <a href="{{ url('showkaryawancuti') }}" class="panel-title ">
-                <h4 class="panel-title">Cuti dan Izin Bulan Lalu</h4>
-                </a>
-            </div>
-            <div class="panel-body">
-                <h3 class=""><b>{{ $cutidanizibulanlalu }}</b></h3>
-                <p class="text-muted"><b>Total Cuti dan Izin</b> </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-lg-3">
-        <div class="panel panel-primary text-center">
-            <div class="panel-heading btn-success">
-                <a href="{{ url('showkaryawanabsen') }}" class="panel-title ">
-                <h4 class="panel-title">Absen Masuk Bulan Lalu</h4>
-                </a>
-            </div>
-            <div class="panel-body">
-                <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
-                <p class="text-muted"><b>Total Absen Masuk</b> </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-lg-3">
-        <div class="panel panel-primary text-center">
-            <div class="panel-heading btn-warning">
-                <a href="{{ url('showkaryawanterlambat') }}" class="panel-title ">
-                <h4 class="panel-title">Terlambat Bulan Lalu</h4>
-                </a>
-            </div>
-            <div class="panel-body">
-                <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
-                <p class="text-muted"><b>Lorem Ipsum </b> </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-lg-3">
-        <div class="panel panel-primary text-center">
-            <div class="panel-heading btn-danger">
-                <a href="{{ url('showkaryawantidakmasuk') }}" class="panel-title ">
-                <h4 class="panel-title">Tidak Masuk Bulan Lalu </h4>
-                </a>
-            </div>
-            <div class="panel-body">
-                <h3 class=""><b>0</b></h3>
-                {{$absenTidakMasukBulanLalu}}
-                <p class="text-muted"><b>Total Absen Tidak Masuk</b> </p>
-            </div>
-        </div>
-    </div>
-
-</div> --}}
 
 
     <div class="row">
 
-        <!-- Chart JS -->
-        {{-- <div class="col-lg-12">
-        <div class="panel panel-border panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title text-white">Cuti {{ $tahun }} </h3>
-            </div>
-            <div class="panel-body">
-                <div>
-                    <canvas id="myChart" style="height: 300px"></canvas>
-                </div>
-            </div>
-        </div>
-    </div> <!-- col --> --}}
+
 
     </div> <!-- End Row -->
 

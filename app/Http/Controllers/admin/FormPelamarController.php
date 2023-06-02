@@ -49,7 +49,10 @@ class FormPelamarController extends Controller
     {
         // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         // $posisi = Lowongan::all()->where('status', '=', 'Aktif');
-        $posisi = Lowongan::all()->where('status', '=', 'Aktif')->where('tgl_selesai','>',Carbon::now());
+        $posisi = Lowongan::all()
+        ->where('status', '=', 'Aktif')
+        ->where('jumlah_dibutuhkan', '>', 0)
+        ->where('tgl_selesai','>',Carbon::now());
         $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
 
         $pelamar = $request->session()->get('pelamar');
