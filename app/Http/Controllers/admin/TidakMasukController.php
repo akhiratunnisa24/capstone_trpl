@@ -315,17 +315,28 @@ class TidakMasukController extends Controller
         {
             $tidakmasuk = Tidakmasuk::with('departemen')->orderBy('tanggal','desc')->get();
         }
-        
-        if ($tidakmasuk->first()) {
-            $pdfName = "Data Absensi Tidak Masuk Bulan ".$nbulan." ".$tidakmasuk->first()->nama.".pdf";
-        } else {
-            $pdfName = "Data Absensi Tidak Masuk.pdf";
-        }
-        $setorganisasi = SettingOrganisasi::find(1);
-        $pdf = PDF::loadview('admin.tidakmasuk.dataTidakMasukPdf',['tidakmasuk'=>$tidakmasuk, 'idkaryawan'=>$idkaryawan,'setorganisasi'=> $setorganisasi])
-        ->setPaper('a4','landscape');
 
-        return $pdf->stream($pdfName);
+        if ($tidakmasuk->isEmpty()) 
+        {
+            return redirect()->back()->with('pesa','Tidak ditemukan data yang sesuai filter data.');
+        } else {
+            $setorganisasi = SettingOrganisasi::find(1);
+            $pdf = PDF::loadview('admin.tidakmasuk.dataTidakMasukPdf',['tidakmasuk'=>$tidakmasuk, 'idkaryawan'=>$idkaryawan,'setorganisasi'=> $setorganisasi])
+            ->setPaper('a4','landscape');
+            $pdfName = "Data Absensi Tidak Masuk Bulan ".$nbulan." ".$tidakmasuk->first()->nama.".pdf";
+            return $pdf->stream($pdfName);
+        }
+        
+        // if ($tidakmasuk->first()) {
+        //     $pdfName = "Data Absensi Tidak Masuk Bulan ".$nbulan." ".$tidakmasuk->first()->nama.".pdf";
+        // } else {
+        //     $pdfName = "Data Absensi Tidak Masuk.pdf";
+        // }
+        // $setorganisasi = SettingOrganisasi::find(1);
+        // $pdf = PDF::loadview('admin.tidakmasuk.dataTidakMasukPdf',['tidakmasuk'=>$tidakmasuk, 'idkaryawan'=>$idkaryawan,'setorganisasi'=> $setorganisasi])
+        // ->setPaper('a4','landscape');
+
+        // return $pdf->stream($pdfName);
 
     }
 
@@ -351,6 +362,16 @@ class TidakMasukController extends Controller
         {
             $data = Tidakmasuk::with('departemen')->orderBy('tanggal','desc')->get();
         }
-        return Excel::download(new TidakmasukExport($data,$idkaryawan),"Data Absensi Tidak Masuk ".$data->first()->nama.".xlsx");
+
+        if ($data->isEmpty()) {
+            // Jika $data kosong, berikan nilai default untuk $nama
+            // $nama = 'Data Kosong';
+            return redirect()->back()->with('pesa','Tidak ditemukan data yang sesuai filter data.');
+        } else {
+            // Jika $data tidak kosong, ambil nama dari elemen pertama
+            $nama = $data->first()->nama;
+            return Excel::download(new TidakmasukExport($data,$idkaryawan),"Data Absensi Tidak Masuk ".$data->first()->nama.".xlsx");
+        }
+        
     }
 }

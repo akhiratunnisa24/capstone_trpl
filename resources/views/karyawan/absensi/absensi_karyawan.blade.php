@@ -31,9 +31,11 @@
 
                             <div>
                                 @php
+                                    use App\Models\SettingHarilibur;
                                     $isWeekend = (date('N') == 6 || date('N') == 7); // cek apakah hari ini Sabtu atau Minggu
+                                    $isHoliday = SettingHarilibur::whereDate('tanggal', date('Y-m-d'))->exists(); 
                                 @endphp
-                                @if (!$isWeekend)
+                                @if (!$isWeekend && !$isHoliday)
                                     @if (!isset($absensi->jam_masuk))
                                         <form action="{{ route('absensi.action') }}" method="POST" align="center">
                                             @csrf
@@ -70,13 +72,15 @@
                                         </div>
                                     @endif
                                     @include('karyawan.absensi.tidakMasukModal')
+                                @elseif($isHoliday)
+                                    <div>
+                                        <h3 align="center">Hari Ini Adalah Hari Libur</h3>
+                                    </div>
                                 @else
                                     <div>
                                         <h3 align="center">Tidak Ada Jadwal Hari Ini</h3>
                                     </div>
                                 @endif
-
-
                         </h3>
                     </div>
                 </div>
