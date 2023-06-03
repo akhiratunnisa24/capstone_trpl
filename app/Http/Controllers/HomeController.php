@@ -209,6 +209,12 @@ class HomeController extends Controller
             ->whereYear('sampai', '=', Carbon::now()->year)
             ->where('status', '=', 1)
             ->get();
+        $alokasi = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
+            ->whereYear('aktif_dari', '=', Carbon::now()->year)
+            ->whereYear('sampai', '=', Carbon::now()->year)
+            ->where('status', '=', 1)
+            ->where('id_jeniscuti','=',1)
+            ->get();
 
         //Data alokasi cuti seljuruh karyawan
         $alokasicuti2 = Alokasicuti::all();
@@ -844,6 +850,8 @@ class HomeController extends Controller
         $jumlahKaryawanPerJabatan2 = Karyawan::whereIn('jabatan', $jabatan)
         ->count();
 
+        
+
         // Role Admin
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -884,6 +892,7 @@ class HomeController extends Controller
                 'tidakMasukBulanIni' => $tidakMasukBulanIni,
                 'tidakMasukHariIni' => $tidakMasukHariIni,
                 'alokasicuti' => $alokasicuti,
+                'alokasi' => $alokasi,
                 'absenKaryawan' => $absenKaryawan,
                 'alokasicuti2' => $alokasicuti2,
                 'posisi' => $posisi,
@@ -953,6 +962,7 @@ class HomeController extends Controller
                 'absenKaryawan' => $absenKaryawan,
                 'absenTidakmasuk' => $absenTidakmasuk,
                 'alokasicuti' => $alokasicuti,
+                'alokasi' => $alokasi,
                 'sisacuti' => $sisacuti,
                 'absenBulanini' => $absenBulanini,
                 'absenBulanlalu'=> $absenBulanlalu,

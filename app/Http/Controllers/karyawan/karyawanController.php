@@ -290,6 +290,13 @@ class karyawanController extends Controller
                 ->whereYear('sampai', '=', Carbon::now()->year)
                 ->where('status', '=', 1)
                 ->get();
+
+            // $alokasi = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
+            //     ->whereYear('aktif_dari', '=', Carbon::now()->year)
+            //     ->whereYear('sampai', '=', Carbon::now()->year)
+            //     ->where('status', '=', 1)
+            //     ->where('id_jeniscuti','=',1)
+            //     ->first();
                 // return $alokasicuti;
             
 
@@ -903,9 +910,17 @@ class karyawanController extends Controller
                     $query->where('atasan_kedua', Auth::user()->id_pegawai);
                 });
             })->get();
+            
             $resignjumlah = $resign->count();
             $rekruitmen = Rekruitmen::orderBy('created_at', 'desc')->get();
             $rekruitmenjumlah = $rekruitmen->count();
+
+            $alokasi = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
+                ->whereYear('aktif_dari', '=', Carbon::now()->year)
+                ->whereYear('sampai', '=', Carbon::now()->year)
+                ->where('status', '=', 1)
+                ->where('id_jeniscuti','=',1)
+                ->first();
 
             $output = [
                 'row' => $row,
