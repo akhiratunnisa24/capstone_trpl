@@ -93,7 +93,7 @@ class JadwalkerjaController extends Controller
                         }
                     }
                 }
-                dd($tanggal_kerja);
+                // dd($tanggal_kerja);
                 foreach($tanggal_kerja as $tanggal)
                 {
 
