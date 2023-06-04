@@ -1324,7 +1324,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped table-bordered">
                                         <thead>
                                         </thead>
                                         <tbody>
@@ -1374,20 +1374,30 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#13" aria-expanded="false"
                                 class="dropdown-toggle waves-effect waves-light collapsed">
                                 Informasi HRD
+                                @if (isset($jmlinfo))
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">{{ $jmlinfo }}</span>
+                                @endif
                             </a>
                         </h4>
                     </div>
                     <div id="13" class="panel-collapse collapse">
-
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped table-bordered">
                                         <thead>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                            </tr>
+                                            @foreach ($informasi as $key => $k)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>
+                                                        <b>{{$k->judul}}</b> <br><br>
+                                                        <p>{!! nl2br(html_entity_decode($k->konten)) !!}</p>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
 
                                         </tbody>
                                     </table>

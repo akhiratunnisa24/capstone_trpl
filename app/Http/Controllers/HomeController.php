@@ -11,9 +11,10 @@ use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Lowongan;
 use App\Models\Sisacuti;
+use App\Models\Informasi;
+use App\Models\Rekruitmen;
 use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
-use App\Models\Rekruitmen;
 use Illuminate\Http\Request;
 use App\Models\Settingabsensi;
 use Illuminate\Support\Facades\DB;
@@ -215,6 +216,12 @@ class HomeController extends Controller
             ->where('status', '=', 1)
             ->where('id_jeniscuti','=',1)
             ->get();
+
+        $currentDate = Carbon::now()->toDateString();
+
+        $informasi = Informasi::whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
+        // return $informasi;
+        $jmlinfo = $informasi->count();
 
         //Data alokasi cuti seljuruh karyawan
         $alokasicuti2 = Alokasicuti::all();
@@ -922,6 +929,8 @@ class HomeController extends Controller
                 'jumlahKaryawanPerJabatan' => $jumlahKaryawanPerJabatan,
                 'jumlahKaryawanPerJabatan2' => $jumlahKaryawanPerJabatan2,
                 'jumlahkaryawan' => $jumlahkaryawan,
+                'informasi' =>$informasi,
+                'jmlinfo' => $jmlinfo,
             ];
             return view('admin.karyawan.dashboardhrd', $output);
 
@@ -950,6 +959,8 @@ class HomeController extends Controller
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
                 'posisi' => $posisi,
+                'informasi' =>$informasi,
+                'jmlinfo' => $jmlinfo,
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
@@ -963,12 +974,16 @@ class HomeController extends Controller
                 'absenTidakmasuk' => $absenTidakmasuk,
                 'alokasicuti' => $alokasicuti,
                 'alokasi' => $alokasi,
+                'informasi' => $informasi,
+                'jmlinfo' => $jmlinfo,
                 'sisacuti' => $sisacuti,
                 'absenBulanini' => $absenBulanini,
                 'absenBulanlalu'=> $absenBulanlalu,
                 'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
                 'sisacutis' => $sisacutis,
                 'role' => $role,
+                'informasi' =>$informasi,
+                'jmlinfo' => $jmlinfo,
                 // 'cutijumlah' => $cutijumlah,
                 // 'cuti' => $cuti,
                 // 'jumct' => $jumct,
@@ -988,6 +1003,8 @@ class HomeController extends Controller
         {
 
             $output = [
+                'informasi' =>$informasi,
+                'jmlinfo' => $jmlinfo,
                 'row' => $row,
                 'role' => $role,
                 'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
@@ -1035,6 +1052,8 @@ class HomeController extends Controller
         {
 
             $output = [
+                'informasi' =>$informasi,
+                'jmlinfo' => $jmlinfo,
                 'row' => $row,
                 'role' => $role,
                 'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
@@ -1084,6 +1103,8 @@ class HomeController extends Controller
             $output = [
                 'row' => $row,
                 'role' => $role,
+                'informasi' =>$informasi,
+                'jmlinfo' => $jmlinfo,
                 'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
                 'absenKaryawan' => $absenKaryawan,
                 'absenTidakmasuk' => $absenTidakmasuk,

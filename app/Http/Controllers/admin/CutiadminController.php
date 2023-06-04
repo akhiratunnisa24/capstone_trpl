@@ -280,7 +280,8 @@ class CutiadminController extends Controller
     public function getLibur()
     {
         try {
-            $getLibur = SettingHarilibur::all();
+            // $getLibur = SettingHarilibur::all();
+            $getLibur = SettingHarilibur::where('tipe', 'Hari Libur Nasional')->get();
             if (!$getLibur) {
                 throw new \Exception('Data not found');
             }

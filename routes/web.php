@@ -22,9 +22,10 @@ use App\Http\Controllers\admin\KalenderController;
 use App\Http\Controllers\admin\SisacutiController;
 use App\Http\Controllers\admin\CutiadminController;
 
+use App\Http\Controllers\admin\InformasiController;
+
+
 use App\Http\Controllers\admin\IzinAdminController;
-
-
 use App\Http\Controllers\admin\JeniscutiController;
 use App\Http\Controllers\admin\JenisizinController;
 use App\Http\Controllers\admin\MasterkpiController;
@@ -356,6 +357,12 @@ Route::get('/divisi', [DepartemenController::class, 'index'])->name('divisi.inde
 Route::post('/divisi', [DepartemenController::class, 'store'])->name('divisi.store');
 Route::put('/divisi/update/{id}', [DepartemenController::class, 'update'])->name('divisi.update');
 Route::get('/divisi/delete{id}', [DepartemenController::class, 'destroy'])->name('divisi.delete');
+
+//Informasi
+Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi.index');
+Route::post('/informasi', [InformasiController::class, 'store'])->name('informasi.store');
+Route::put('/informasi/update/{id}', [InformasiController::class, 'update'])->name('informasi.update');
+Route::get('/informasi/delete{id}', [InformasiController::class, 'destroy'])->name('informasi.delete');
 
 //Jabatan
 Route::get('/jabatan', [JabatanController::class, 'index'])->name('jabatan.index');

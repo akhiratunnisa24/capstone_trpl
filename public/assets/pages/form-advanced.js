@@ -687,6 +687,53 @@
             },
         });
 
+        jQuery("#datepicker-autoclose47").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+
+        jQuery("#datepicker-autoclose48").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+        jQuery("#datepicker-autoclose49").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+
+        jQuery("#datepicker-autoclose50").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+
         jQuery("#datepicker-inline").datepicker();
         jQuery("#datepicker-multiple-date").datepicker({
             format: "yyyy/mm/dd",
