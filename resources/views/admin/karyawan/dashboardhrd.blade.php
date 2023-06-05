@@ -1294,9 +1294,13 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-8" href="#15" aria-expanded="false"
                                 class="dropdown-toggle waves-effect waves-light collapsed">
                                 Transaksi Kehadiran Kerja Karyawan
-                                @if (isset($jumAbsen))
+                                {{-- @if (isset($jumAbsen))
                                     <span class="badge badge badge-danger"
                                         style="background-color:red">@php  echo $jumAbsen; @endphp</span>
+                                @endif --}}
+                                @if ($jumAbsen != 0)
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">{{ $jumAbsen }}</span>
                                 @endif
                             </a>
                         </h4>
@@ -1401,10 +1405,14 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#13" aria-expanded="false"
                                 class="dropdown-toggle waves-effect waves-light collapsed">
                                 Informasi HRD
-                                @if (isset($jmlinfo))
+                                {{-- @if (isset($jmlinfo))
                                     <span class="badge badge badge-danger"
                                         style="background-color:red">{{ $jmlinfo }}</span>
-                                @endif
+                                @endif --}}
+                                @if ($jmlinfo != 0)
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">{{ $jmlinfo }}</span>
+                                @endif 
                             </a>
                         </h4>
                     </div>
