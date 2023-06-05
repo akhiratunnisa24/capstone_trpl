@@ -122,6 +122,13 @@ class HomeController extends Controller
         $absenHariini = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereDay('tanggal', '=', Carbon::now())->count('jam_masuk');
+        $absenHarini = Absensi::with('karyawans')
+            ->whereYear('tanggal', '=', Carbon::now()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->whereDay('tanggal', '=', Carbon::now())
+            ->get();
+        $jumAbsen = $absenHarini->count();
+        // dd($absenHarini);
         // Absen Bulan Ini
         $absenBulanini  = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
@@ -880,6 +887,8 @@ class HomeController extends Controller
                 'cutiPerbulan' => $cutiPerbulan,
                 'cutiHariini' => $cutiHariini,
                 'absenHariini' => $absenHariini,
+                'absenHarini' => $absenHarini,
+                'jumAbsen' =>  $jumAbsen,
                 'absenBulanini' => $absenBulanini,
                 'absenBulanlalu' => $absenBulanlalu,
                 'absenTerlambat' => $absenTerlambat,

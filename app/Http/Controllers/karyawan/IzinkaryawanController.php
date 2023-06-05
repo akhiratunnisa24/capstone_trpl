@@ -33,7 +33,9 @@ class IzinkaryawanController extends Controller
     public function getLiburdata()
     {
         try {
-            $getLibur = SettingHarilibur::all();
+            // $getLibur = SettingHarilibur::all();
+            $getLibur = SettingHarilibur::where('tipe', 'Hari Libur Nasional')->get();
+            return $getLibur;
             if(!$getLibur) {
                 throw new \Exception('Data not found');
             }

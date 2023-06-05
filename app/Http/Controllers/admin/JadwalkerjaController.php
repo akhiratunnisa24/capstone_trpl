@@ -69,12 +69,16 @@ class JadwalkerjaController extends Controller
                 'tgl_selesai'  => 'required',
             ]);
 
+            // dd($request->all());
             $karyawan = Karyawan::all();
             foreach($karyawan as $data)
             {
-                $tgl_mulai = Carbon::createFromFormat('Y/m/d', $request->tgl_mulai);
-                $tgl_selesai = Carbon::createFromFormat('Y/m/d', $request->tgl_selesai);
+                // $tgl_mulai = Carbon::createFromFormat('d/m/Y', $request->tgl_mulai);
+                // $tgl_selesai = Carbon::createFromFormat('d/m/Y', $request->tgl_selesai);
 
+                $tgl_mulai = Carbon::createFromFormat('d/m/Y', $request->tgl_mulai)->startOfDay();
+                $tgl_selesai = Carbon::createFromFormat('d/m/Y', $request->tgl_selesai)->startOfDay();
+                // dd($tgl_mulai, $tgl_selesai);
                 $tanggal_kerja = array();
                 while($tgl_mulai->lte($tgl_selesai)){
                     if($tgl_mulai->isWeekday()){
@@ -82,6 +86,7 @@ class JadwalkerjaController extends Controller
                     }
                     $tgl_mulai->addDay();
                 }
+                // dd($tgl_mulai, $tgl_selesai);
 
                 // Mengecek tanggal kerja yang tidak ada dalam tabel hari libur
                 $tanggal_libur = SettingHarilibur::whereBetween('tanggal', [$request->tgl_mulai, $request->tgl_selesai])->get();
@@ -99,7 +104,7 @@ class JadwalkerjaController extends Controller
 
                     $jadwal = Jadwal::firstOrCreate([
                         'id_pegawai' => $data->id,
-                        // 'tanggal' => Carbon::createFromFormat('d/m/Y', $tanggal)->format("Y-m-d"),
+                        'tanggal' => $tanggal,
                         'id_shift' => $request->id_shift,
                     ], [
                         'jadwal_masuk' => $request->jadwal_masuk,
