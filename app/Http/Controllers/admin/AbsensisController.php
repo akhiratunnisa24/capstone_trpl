@@ -10,8 +10,9 @@ use App\Models\Karyawan;
 use App\Models\Departemen;
 use App\Models\Tidakmasuk;
 
-use Illuminate\Http\Request;
+use App\Imports\SheetImport;
 // use App\Imports\AttendancesImport;
+use Illuminate\Http\Request;
 use App\Imports\AbsensiImport;
 use App\Exports\AbsensisExport;
 use App\Imports\AbsensisImport;
@@ -32,18 +33,63 @@ class AbsensisController extends Controller
         $this->middleware('auth');
     }
 
+    //fungsi awal
+    // public function importexcel(Request $request)
+    // {
+    //     try {
+    //         $file = $request->file('file');
+    //         $import = new AbsensisImport();
+    //         Excel::import($import, $file);
+            
+    //         $jumlahdatadiimport = $import->getJumlahDataDiimport();//SUDAH BENAR 12
+    //         $jumlahdata         = $import->getJumlahData(); //SUDAH BENAR 22
+    //         $jumlahimporttidakmasuk =$import->getDataImportTidakMasuk(); //SUDAH BENAR 1
+    //         $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport(); // 9
+
+    //         $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
+    //         "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
+    //         "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
+    //         "Jumlah Data Keseluruhan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getJumlahData(). "</strong>";
+           
+    //         // dd($pesan);
+    //         $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
+    //         $pesan = nl2br(html_entity_decode($pesan));
+    //         return redirect()->back()->with('pesan', $pesan);  
+                
+    //     }catch (\Throwable $th) {
+    //         // Tangani jika terjadi kesalahan
+    //         return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari Excel.');
+    //     }
+    // }
+
     public function importexcel(Request $request)
     {
-       
-        try {
+        // try {
+            // $file = $request->file('file');
+            // $storedFilePath = $file->store('temp'); // Menyimpan file sementara di direktori storage/app/temp
+            // $storedFilePath = storage_path('app/' . $storedFilePath); // Mendapatkan jalur fisik file
+
+            // $sheetImports = [];
+            // $sheetNames = Excel::filter('chunk')->load($storedFilePath)->getSheetNames();
+
+            // foreach ($sheetNames as $index => $sheetName) {
+            //     $sheetImports[$index] = new SheetImport($sheetName);
+            // }
+
+            // $import = new AbsensisImport($sheetImports);
+            // Excel::import($import, $storedFilePath);
+
+            // // Hapus file setelah selesai mengimpor
+            // unlink($storedFilePath);
+
             $file = $request->file('file');
             $import = new AbsensisImport();
             Excel::import($import, $file);
-            
+
             $jumlahdatadiimport = $import->getJumlahDataDiimport();//SUDAH BENAR 12
             $jumlahdata         = $import->getJumlahData(); //SUDAH BENAR 22
             $jumlahimporttidakmasuk =$import->getDataImportTidakMasuk(); //SUDAH BENAR 1
-            $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport(); // 9
+            $datatidakbisadiimport  = $import->getDatatTidakBisaDiimport(); // 
 
             $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
             "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
@@ -55,10 +101,10 @@ class AbsensisController extends Controller
             $pesan = nl2br(html_entity_decode($pesan));
             return redirect()->back()->with('pesan', $pesan);  
                 
-        }catch (\Throwable $th) {
-            // Tangani jika terjadi kesalahan
-            return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari Excel.');
-        }
+        // }catch (\Throwable $th) {
+        //     // Tangani jika terjadi kesalahan
+        //     return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari Excel.');
+        // }
     }
 
 

@@ -187,14 +187,14 @@ class AlokasicutiController extends Controller
             'message' => 'Data Alokasi Didapatkan',
             'data'    => $alokasicuti
         ]);
-        dd($alokasicuti);
+        // dd($alokasicuti);
         // dd($alokasicuti);
     }
 
     public function update(Request $request, $id)
     {
         $alokasicuti = Alokasicuti::find($id);
-        dd($request->all());
+        // dd($request->all());
         if ($request->id_jeniscuti == 1) {
             $validate = $request->validate([
                 'id_karyawan'  => 'required',
