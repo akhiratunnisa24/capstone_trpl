@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Imports;
 
 use Carbon\Carbon;
@@ -14,18 +13,6 @@ use App\Models\Tidakmasuk;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithMultipleSheets;
-
-class UsersImport implements WithMultipleSheets
-{
-    public function sheets(): array
-    {
-        return [
-            'Sheet1',
-            'Sheet2',
-        ];
-    }
-}
 
 class AbsensisImport implements ToModel,WithHeadingRow
 {
@@ -41,7 +28,6 @@ class AbsensisImport implements ToModel,WithHeadingRow
     private $jumlahdata = 0; //jumlah data keseluruhan
     private $jumlahimporttidakmasuk = 0;
     private $datatidakbisadiimport = 0; //JUMLAH DATA TIDAK DIIMPORT
-
 
     public function model(array $row)
     {
@@ -219,11 +205,10 @@ class AbsensisImport implements ToModel,WithHeadingRow
 
                         }
                         
-                        dd($formatted_jam);
                         $terlambat = sprintf('%02d:%02d', floor($row['terlambat'] / 60), $row['terlambat'] % 60);                   
-                    
+                        // dd($formatted_jam,$terlambat,$karyawan->id,$tgl);
                         $data = [
-                            'no_id'         => null,
+                            // 'no_id'         => null,
                             'id_karyawan'   => $karyawan->id,
                             'tanggal'       => $tgl,
                             'jam_masuk'     => isset($formatted_jam['jam_masuk']) ? $formatted_jam['jam_masuk'] : null,
@@ -236,6 +221,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
                             'jam_kerja'     => isset($formatted_jam['jam_kerja']) ? $formatted_jam['jam_kerja'] : null,
                             'jml_hadir'     => isset($formatted_jam['jml_hadir']) ? $formatted_jam['jml_hadir'] : null,
                         ];
+                        // return $data;
                         // dd($data);
                         
                         // $data = [
