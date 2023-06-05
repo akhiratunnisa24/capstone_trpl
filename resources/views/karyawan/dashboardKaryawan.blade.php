@@ -1032,6 +1032,93 @@
 
                         </div>
                     </div>
+                    {{-- <div class="col-lg-6">
+                        <div class="panel-group" id="accordion-test-7">
+                            <div class="panel panel-default ">
+                                <div class="panel-heading ">
+                                    <h4 class="panel-title ">
+                                        <a data-toggle="collapse" data-parent="#accordion-test-2" href="#13" aria-expanded="false"
+                                            class="dropdown-toggle waves-effect waves-light collapsed">
+                                            Informasi HRD
+                                            @if (isset($jmlinfo))
+                                                <span class="badge badge badge-danger"
+                                                    style="background-color:red">{{ $jmlinfo }}</span>
+                                            @endif
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="13" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($informasi as $key => $k)
+                                                            <tr>
+                                                                <td>{{$loop->iteration}}</td>
+                                                                <td>
+                                                                    <b>{{$k->judul}}</b> <br><br>
+                                                                    <p>{!! nl2br(html_entity_decode($k->konten)) !!}</p>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+            
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+            
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion-test-2" href="#13" aria-expanded="false"
+                                    class="dropdown-toggle waves-effect waves-light collapsed">
+                                    Informasi HRD
+                                    @if (isset($jmlinfo))
+                                        <span class="badge badge badge-danger"
+                                            style="background-color:red">{{ $jmlinfo }}</span>
+                                    @endif
+                                </a>
+
+                            </h4>
+                        </div>
+                        <div id="13" class="panel-collapse collapse">
+
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <table class="table table-striped table-bordered">
+                                            <thead>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($informasi as $key => $k)
+                                                    <tr>
+                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>
+                                                            <b>{{$k->judul}}</b> <br><br>
+                                                            <p>{!! nl2br(html_entity_decode($k->konten)) !!}</p>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+    
+                                            </tbody>
+                                        </table> 
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
 
                 @if (Auth::check() && Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 2)
                     <div class="panel panel-default">

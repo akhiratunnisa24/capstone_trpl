@@ -248,12 +248,12 @@
             todayHighlight: true,
         });
         jQuery("#datepicker-autoclose42").datepicker({
-            format: "yyyy/mm/dd",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
         });
         jQuery("#datepicker-autoclose43").datepicker({
-            format: "yyyy/mm/dd",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
         });
@@ -676,6 +676,53 @@
             },
         });
         jQuery("#datepicker-autoclosezz").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+
+        jQuery("#datepicker-autoclose47").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+
+        jQuery("#datepicker-autoclose48").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+        jQuery("#datepicker-autoclose49").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+
+        jQuery("#datepicker-autoclose50").datepicker({
             format: "dd/mm/yyyy",
             autoclose: true,
             minDate: minDate,

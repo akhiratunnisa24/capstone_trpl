@@ -792,6 +792,96 @@
                     </div>
                 </div>
 
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#12" aria-expanded="false"
+                                class="dropdown-toggle waves-effect waves-light collapsed">
+                                Susunan Pengurus dan Manajemen
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="12" class="panel-collapse collapse">
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-striped">
+                                        <thead style="text-align: center;">
+                                            <tr class="info">
+                                                <th>No</th>
+                                                <th>Management</th>
+                                                <th>Head Count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($jumlahKaryawanPerJabatan as $k)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $k->nama_jabatan }}</td>
+                                                    <td>{{ $k->total }}</td>
+                                                </tr>
+                                            @endforeach
+
+                                            <tr>
+                                                <td class="thick-line"></td>
+                                                <td class="thick-line text-right"><strong>Total</strong></td>
+                                                <td class="thick-line text-left">{{ $jumlahKaryawanPerJabatan2 }}</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-test-8" href="#14" aria-expanded="false"
+                                class="dropdown-toggle waves-effect waves-light collapsed">
+                                Number of Employee
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="14" class="panel-collapse collapse">
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-striped">
+                                        <thead style="text-align: center;">
+                                            <tr class="info">
+                                                <th>No</th>
+                                                <th>Management</th>
+                                                <th>Head Count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($karyawan as $k)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $k->nama_jabatan }}</td>
+                                                    <td>{{ $k->total }}</td>
+                                                </tr>
+                                            @endforeach
+
+                                            <tr>
+                                                <td class="thick-line"></td>
+                                                <td class="thick-line text-right"><strong>Total</strong></td>
+                                                <td class="thick-line text-left">{{ $jumlahkaryawan }}</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -1197,82 +1287,155 @@
                         </div>
                     </div>
                 </div>
+                <div class="panel panel-default">
 
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-test-8" href="#15" aria-expanded="false"
+                                class="dropdown-toggle waves-effect waves-light collapsed">
+                                Transaksi Kehadiran Kerja Karyawan
+                                @if (isset($jumAbsen))
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">@php  echo $jumAbsen; @endphp</span>
+                                @endif
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="15" class="panel-collapse collapse">
 
-            </div>
-        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-striped">
+                                        <thead style="text-align: center;">
+                                            <tr class="info">
+                                                <th>No</th>
+                                                <th>Nama</th>
+                                                <th>Tanggal</th>
+                                                <th>Jam Masuk</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($absenHarini as $k)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $k->karyawans->nama }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($k->total)->format('d/m/Y') }}</td>
+                                                    <td>{{ $k->jam_masuk}}</td>
+                                                </tr>
+                                            @endforeach
 
-    </div> <!-- end row -->
-    {{-- @endif --}}
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="panel-body">
-                <div class="row">
-                    <table class="table table-striped">
-                        <thead style="text-align: center;">
-                            <h4>Susunan Pengurus dan Manajemen</h4>
-                            <tr class="info">
-                                <th>No</th>
-                                <th>Management</th>
-                                <th>Head Count</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($jumlahKaryawanPerJabatan as $k)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $k->nama_jabatan }}</td>
-                                    <td>{{ $k->total }}</td>
-                                </tr>
-                            @endforeach
+                                            {{-- <tr>
+                                                <td class="thick-line"></td>
+                                                <td class="thick-line text-right"><strong>Total</strong></td>
+                                                <td class="thick-line text-left">{{ $jumlahkaryawan }}</td>
+                                            </tr> --}} 
 
-                            <tr>
-                                <td class="thick-line"></td>
-                                <td class="thick-line text-right"><strong>Total</strong></td>
-                                <td class="thick-line text-left">{{ $jumlahKaryawanPerJabatan2 }}</td>
-                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#11" aria-expanded="false"
+                                class="dropdown-toggle waves-effect waves-light collapsed">
+                                Status Hak Cuti Tahunan
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="11" class="panel-collapse collapse">
 
-                        </tbody>
-                    </table>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($alokasi as $key => $k)
+                                                @php 
+                                                    $jmlcuti = $k->jmlhakcuti;
+                                                    $durasi = $k->durasi;
+                                                    $sisa = $jmlcuti - $durasi;
+                                                @endphp
+                                                <tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Jumlah Hak Cuti Tahun 2023</td>
+                                                        <td>{{ $k->jmlhakcuti }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>Hak Cuti Yang Sudah Diambil</td>
+                                                        <td>{{$sisa}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>Sisa Hak Cuti</td>
+                                                        <td>{{ $k->durasi }}</td>
+                                                    </tr>
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div> <!-- end row -->
 
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel-group" id="accordion-test-7">
+                <div class="panel panel-default ">
+                    <div class="panel-heading ">
+                        <h4 class="panel-title ">
+                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#13" aria-expanded="false"
+                                class="dropdown-toggle waves-effect waves-light collapsed">
+                                Informasi HRD
+                                @if (isset($jmlinfo))
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">{{ $jmlinfo }}</span>
+                                @endif
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="13" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($informasi as $key => $k)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>
+                                                        <b>{{$k->judul}}</b> <br><br>
+                                                        <p>{!! nl2br(html_entity_decode($k->konten)) !!}</p>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
 
-        <div class="col-lg-6">
-            <div class="panel-body">
-                <div class="row">
-                    <table class="table table-striped">
-                        <thead style="text-align: center;">
-                            <h4>Number of Employee</h4>
-                            <tr class="info">
-                                <th>No</th>
-                                <th>Management</th>
-                                <th>Head Count</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($karyawan as $k)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $k->nama_jabatan }}</td>
-                                    <td>{{ $k->total }}</td>
-                                </tr>
-                            @endforeach
-
-                            <tr>
-                                <td class="thick-line"></td>
-                                <td class="thick-line text-right"><strong>Total</strong></td>
-                                <td class="thick-line text-left">{{ $jumlahkaryawan }}</td>
-                            </tr>
-
-                        </tbody>
-                    </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-sm-6 col-lg-3">

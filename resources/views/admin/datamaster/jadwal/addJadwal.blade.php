@@ -65,7 +65,7 @@
                                     <div class="form-group">
                                         <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose42" name="tgl_mulai"  autocomplete="off" rows="10">
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose42" name="tgl_mulai"  autocomplete="off" rows="10">
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                     <div class="form-group">
                                         <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose43" name="tgl_selesai"  autocomplete="off" rows="10">
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose43" name="tgl_selesai"  autocomplete="off" rows="10">
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>

@@ -21,6 +21,7 @@ use App\Models\Kdarurat;
 use App\Models\Keluarga;
 use App\Models\Lowongan;
 use App\Models\Sisacuti;
+use App\Models\Informasi;
 use App\Models\Rprestasi;
 use App\Models\Departemen;
 use App\Models\Rekruitmen;
@@ -36,8 +37,8 @@ use App\Models\Settingabsensi;
 use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
 use App\Models\SettingOrganisasi;
-use App\Events\AbsenKaryawanEvent;
 // use Illuminate\Support\Facades\File;
+use App\Events\AbsenKaryawanEvent;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -290,6 +291,13 @@ class karyawanController extends Controller
                 ->whereYear('sampai', '=', Carbon::now()->year)
                 ->where('status', '=', 1)
                 ->get();
+
+            // $alokasi = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
+            //     ->whereYear('aktif_dari', '=', Carbon::now()->year)
+            //     ->whereYear('sampai', '=', Carbon::now()->year)
+            //     ->where('status', '=', 1)
+            //     ->where('id_jeniscuti','=',1)
+            //     ->first();
                 // return $alokasicuti;
             
 
@@ -903,9 +911,22 @@ class karyawanController extends Controller
                     $query->where('atasan_kedua', Auth::user()->id_pegawai);
                 });
             })->get();
+            
             $resignjumlah = $resign->count();
             $rekruitmen = Rekruitmen::orderBy('created_at', 'desc')->get();
             $rekruitmenjumlah = $rekruitmen->count();
+
+            $alokasi = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
+                ->whereYear('aktif_dari', '=', Carbon::now()->year)
+                ->whereYear('sampai', '=', Carbon::now()->year)
+                ->where('status', '=', 1)
+                ->where('id_jeniscuti','=',1)
+                ->first();
+                
+            $currentDate = Carbon::now()->toDateString();
+            $informasi = Informasi::whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
+                // return $informasi;
+            $jmlinfo = $informasi->count();
 
             $output = [
                 'row' => $row,
@@ -916,6 +937,8 @@ class karyawanController extends Controller
                 'absenBulanini' => $absenBulanini,
                 'absenBulanlalu' => $absenBulanlalu,
                 'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
+                'informasi' => $informasi,
+                'jmlinfo' => $jmlinfo,
                 'cuti' => $cuti,
                 'cutijumlah' => $cutijumlah,
                 'cutis' => $cutis,
@@ -994,6 +1017,11 @@ class karyawanController extends Controller
             $rekruitmen = Rekruitmen::orderBy('created_at', 'desc')->get();
             $rekruitmenjumlah = $rekruitmen->count();
 
+            $currentDate = Carbon::now()->toDateString();
+            $informasi = Informasi::whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
+                // return $informasi;
+            $jmlinfo = $informasi->count();
+
             $output = [
                 'row' => $row,
                 'absenKaryawan' => $absenKaryawan,
@@ -1008,6 +1036,8 @@ class karyawanController extends Controller
                 'posisi' => $posisi,
                 'sisacutis' =>$sisacutis,
                 'rekruitmenjumlah' => $rekruitmenjumlah,
+                'informasi' => $informasi,
+                'jmlinfo' => $jmlinfo,
 
             ];
             return view('karyawan.dashboardKaryawan', $output);
