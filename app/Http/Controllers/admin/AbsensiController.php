@@ -26,22 +26,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class AbsensiController extends Controller
 {
 
-    
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
@@ -395,17 +384,16 @@ class AbsensiController extends Controller
             $data = Absensi::with('departemens','karyawans')->get();
         }
 
-        if ($data->first()) {
-            $pdfName = "Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf";
+        if ($data->isEmpty()) 
+        {
+            return redirect()->back()->with('pesa','Tidak Data Ada.');
         } else {
-            $pdfName = "Rekap Absensi Tidak Ditemukan.pdf";
-        }
-
-        $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
-        ->setPaper('a4','landscape');
-        // return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
-        return $pdf->stream($pdfName);
-       
+            $pdfName = "Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf";
+            $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
+            ->setPaper('a4','landscape');
+            // return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
+            return $pdf->stream($pdfName);
+        } 
     }
 
     public function rekapabsensiExcel(Request $request)
@@ -429,11 +417,25 @@ class AbsensiController extends Controller
             ->whereYear('tanggal',$tahun)
             ->get();
             // dd($data);
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } else {
+                return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".xlsx");
+            }  
         }else{
             $data = Absensi::with('karyawans','departemens')
             ->get();
+
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } else {
+                return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan " . $nbulan .".xlsx");
+            }  
         }
-        return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".xlsx");
+
+        
     }
 
     public function storeTidakmasuk(Request $data)

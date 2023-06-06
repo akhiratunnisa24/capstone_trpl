@@ -1,5 +1,8 @@
 @extends('layouts.default')
 @section('content')
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
@@ -123,7 +126,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                @forelse($absensi as $key => $data)
+                                                @foreach($absensi as $key => $data)
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data->karyawan->nama}}</td>
@@ -134,11 +137,7 @@
                                                         <td>{{$data->terlambat}}</td>
                                                         <td>{{$data->plg_cepat}}</td>
                                                     </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td>No data available in table</td>
-                                                    </tr>
-                                                @endforelse
+                                                @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -150,9 +149,36 @@
         </div> <!-- container -->
     </div> <!-- content -->
 
-    <!-- jQuery  -->
-    <script src="assets/js/jquery.min.js"></script>
-    <!-- Datatable init js -->
-    <script src="assets/pages/datatables.init.js"></script>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/pages/datatables.init.js"></script>
+        <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="assets/pages/form-advanced.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+    
+    
+        @if(Session::has('pesan'))
+            <script>
+                swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                    button:true,
+                    button:"OK",
+                });
+            </script>
+        @endif
+    
+        @if(Session::has('pesa'))
+            <script>
+                swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+                    button:true,
+                    button:"OK",
+                });
+            </script>
+        @endif
     {{-- <script src="assets/js/app.js"></script> --}}
 @endsection

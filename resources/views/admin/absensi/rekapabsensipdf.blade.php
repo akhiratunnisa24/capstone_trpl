@@ -92,7 +92,12 @@
             <tr align="center">
                 <td>{{$loop->iteration}}</td>
                 <td class="n">{{ucwords(strtolower($d->karyawans->nama))}}</td>
-                <td class="n">{{ucwords(strtolower($d->departemens->nama_departemen))}}</td>
+                <td class="n">
+                    @if ($d->departemens)
+                        {{ $d->departemens->nama_departemen }}
+                     @endif
+                </td>
+                {{-- <td class="n">{{ucwords(strtolower($d->departemens->nama_departemen))}}</td> --}}
                 <td class="align-tanggal">{{$d->tanggal}}</td>
                 <td>{{$d->jam_masuk}}</td>
                 <td>{{$d->jam_keluar}}</td>

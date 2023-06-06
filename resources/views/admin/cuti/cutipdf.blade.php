@@ -107,8 +107,8 @@
                 <td>{{ $d->keperluan }}</td>
                 <td>
                     <span
-                        class="badge badge-{{ $d->status == 1 ? 'warning' : ($d->status == 2 ? 'info' : ($d->status == 5 ? 'danger' : ($d->status == 6 ? 'secondary' : ($d->status == 7 ? 'success' : '')))) }}">
-                        {{ $d->status == 1 ? 'Pending' : ($d->status == 2 ? 'Disetujui Manager' : ($d->status == 5 ? 'Ditolak' : ($d->status == 6 ? 'Disetujui Asistant Manager' : ($d->status == 7 ? 'Disetujui' : '')))) }}
+                        class="badge badge-{{ $d->status == 1 ? 'warning' : ($d->status == 5 ? 'danger' : ($d->status == 6 ? 'info' : ($d->status == 7 ? 'success' : ($d->status == 9 ? 'secondary' : ($d->status == 10 ? 'success' : ''))))) }}">
+                        {{ $d->status == 1 ? 'Pending' : ($d->status == 5 ? 'Ditolak' : ($d->status == 6 ? 'Disetujui Atasan' : ($d->status == 7 ? 'Disetujui' : ($d->status == 9 ? 'Pending Atasan' : ($d->status == 10 ? 'Pending Pimpinan' : ''))))) }}
                     </span>
                 </td>
             </tr>
