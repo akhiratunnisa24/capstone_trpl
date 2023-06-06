@@ -43,15 +43,47 @@ use Carbon\Carbon;
                 <td>{{ $data->karyawans->nama }}</td>
                 <td>{{ $data->jabatan }}</td>
                 <td>{{ $data->departemens->nama_departemen }}</td>
-                <td>{{ \Carbon\Carbon::parse($data->tgl_permohonan)->format("d/m/Y") }}</td>
-                <td>{{ carbon::parse($data->alokasi->tgl_masuk)->format("d/m/Y")}}</td>
-                <td>{{ Carbon::parse($data->jatuhtempo_awal)->format("d/m/Y")}} s.d  {{Carbon::parse($data->jatuhtempo_akhir)->format("d/m/Y")}}</td>
+                <td>
+                        {{ \Carbon\Carbon::parse($data->tgl_permohonan)->format("d/m/Y") }}
+                </td>
+                <td>
+                    @if($data->alokasi->tgl_masuk !== NULL)
+                    {{ carbon::parse($data->alokasi->tgl_masuk)->format("d/m/Y")}}
+                    @else
+                        -
+                    @endif
+                </td>
+                <td>
+                    @if($data->alokasi->jatuhtempo_awal != NULL)
+                        {{ Carbon::parse($data->alokasi->jatuhtempo_awal)->format("d/m/Y")}} s.d  {{Carbon::parse($data->alokasi->jatuhtempo_akhir)->format("d/m/Y")}}
+                    @else
+                        -
+                    @endif
+                </td>
                 <td>{{ Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} @if($data->tgl_selesai !== NULL) s.d  {{Carbon::parse($data->tgl_selesai)->format("d/m/Y")}} @endif</td>
                 <td>{{ $data->jeniscuti->jenis_cuti }}</td>
                 <td>{{ $data->jmlharikerja }}</td>
-                <td>{{ $data->saldohakcuti }}</td>
-                <td>{{ $data->jml_cuti }}</td>
-                <td>{{ $data->sisacuti }}</td>
+                <td>
+                    @if($data->saldohakcuti !== NULL)
+                        {{ $data->saldohakcuti }}
+                    @else
+                    -
+                    @endif
+                </td>
+                <td>
+                    @if($data->saldohakcuti !== NULL)
+                        {{ $data->saldohakcuti }}
+                    @else
+                    -
+                    @endif
+                </td>
+                <td>
+                    @if($data->sisacuti !== NULL)
+                        {{ $data->sisacuti }}
+                    @else
+                    -
+                    @endif
+                </td>
                 <td>{{ $data->keterangan }}</td>
                 <td>
                     <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : ($data->status == 14 ? 'warning' :($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">

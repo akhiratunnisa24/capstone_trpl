@@ -318,7 +318,7 @@ class TidakMasukController extends Controller
 
         if ($tidakmasuk->isEmpty()) 
         {
-            return redirect()->back()->with('pesa','Tidak ditemukan data yang sesuai filter data.');
+            return redirect()->back()->with('pesa','Tidak Ada Data.');
         } else {
             $setorganisasi = SettingOrganisasi::find(1);
             $pdf = PDF::loadview('admin.tidakmasuk.dataTidakMasukPdf',['tidakmasuk'=>$tidakmasuk, 'idkaryawan'=>$idkaryawan,'setorganisasi'=> $setorganisasi])

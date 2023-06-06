@@ -99,15 +99,15 @@
 
         @forelse($data as $key => $d)
             <tr align="center">
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $d->nik }}</td>
-                <td class="n">{{  ucwords(strtolower($d->karyawans->nama)) }}</td>
-                <td class="n">{{ $d->jenisizins->jenis_izin }}</td>
-                <td class="align-tanggal">{{\Carbon\Carbon::parse($d->tgl_mulai)->format('d/m/Y')}} @if($d->tgl_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->tgl_selesai)->format('d/m/Y')}} @endif</td>
+                <td class="font-size-12">{{ $loop->iteration }}</td>
+                <td class="font-size-12">{{ $d->nik }}</td>
+                <td class="n font-size-12">{{  ucwords(strtolower($d->karyawans->nama)) }}</td>
+                <td class="n font-size-12">{{ $d->jenisizins->jenis_izin }}</td>
+                <td class="align-tanggal font-size-12">{{\Carbon\Carbon::parse($d->tgl_mulai)->format('d/m/Y')}} @if($d->tgl_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->tgl_selesai)->format('d/m/Y')}} @endif</td>
                 {{-- <td>{{ $d->keperluan }}</td> --}}
                 @if($d->jam_mulai != NULL)
-                    <td class="align-tanggal">{{\Carbon\Carbon::parse($d->jam_mulai)->format('H:i')}} @if($d->jam_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->jam_selesai)->format('H:i')}} @endif</td>
-                    <td>{{ $d->jml_jam }}</td>
+                    <td class="align-tanggal font-size-12">{{\Carbon\Carbon::parse($d->jam_mulai)->format('H:i')}} @if($d->jam_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->jam_selesai)->format('H:i')}} @endif</td>
+                    <td class="font-size-12">{{ $d->jml_jam }}</td>
                 @else
                     <td>-</td>
                     <td>-</td>
@@ -115,7 +115,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="12" class="text-center">Data Tidak Ditemukan</td>
+                <td colspan="12" class="text-center font-size-12">Data Tidak Ditemukan</td>
             </tr>
         @endforelse
     </table>

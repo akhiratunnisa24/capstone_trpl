@@ -438,7 +438,6 @@ class IzinAdminController extends Controller
 
     public function rekapizinExcel(Request $request)
     {
-        $nbulan = $request->query('month', Carbon::now()->format('M Y'));
 
         $idpegawai = $request->idpegawai;
         $month     = $request->query('month', Carbon::now()->format('m'));
@@ -460,7 +459,14 @@ class IzinAdminController extends Controller
                 ->whereYear('izin.tgl_mulai', $year)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
                
-                return Excel::download(new IzinExport($data, $idpegawai), "Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".xlsx");
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } 
+            else {
+                $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
+                return Excel::download(new IzinExport($data, $idpegawai), "Rekap Ijin dan Sakit Bulan " . $nbulan . " " . ucwords(strtolower($data->first()->karyawans->nama)) . ".xlsx");
+            }
         } else {
             $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
                 ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
@@ -468,14 +474,20 @@ class IzinAdminController extends Controller
                 ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
             
-            return Excel::download(new IzinExport($data, $idpegawai), "Rekap Izin Karyawan.xlsx");
+           
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } 
+            else {
+                 return Excel::download(new IzinExport($data, $idpegawai), "Rekap Ijin dan Sakit Karyawan.xlsx");
+            }
         }
        
     }
 
     public function rekapizinpdf(Request $request)
     {
-        $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
         $setorganisasi = SettingOrganisasi::find(1);
 
         $data = Izin::all();
@@ -503,21 +515,45 @@ class IzinAdminController extends Controller
                 ->whereMonth('izin.tgl_mulai', $month)
                 ->whereYear('izin.tgl_mulai', $year)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
+            
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } 
+            else {
+                $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
+                $pdfName = "Rekap Ijin dan Sakit Bulan " . $nbulan . " " . ucwords(strtolower($data->first()->karyawans->nama)) . ".pdf";
+                $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai,'setorganisasi'=> $setorganisasi])
+                ->setPaper('a4', 'landscape');
+                return $pdf->stream($pdfName);
+            }
+
         } else {
             $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
                 ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
                 ->leftjoin('departemen','izin.departemen','=','departemen.id')
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
+            
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } 
+            else {
+                $pdfName = "Rekap Ijin dan Sakit Karyawan.pdf";
+                $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai,'setorganisasi'=> $setorganisasi])
+                ->setPaper('a4', 'landscape');
+                return $pdf->stream($pdfName);
+            }
         }
 
-        if ($data->first()) {
-            $pdfName = "Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf";
-        } else {
-            $pdfName = "Rekapan Izin Karyawan.pdf";
-        }
+        // if ($data->first()) {
+        //     $pdfName = "Rekap Izin Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf";
+        // } else {
+        //     $pdfName = "Rekapan Izin Karyawan.pdf";
+        // }
 
-        $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai,'setorganisasi'=> $setorganisasi])
-            ->setPaper('a4', 'landscape');
-        return $pdf->stream($pdfName);
+        // $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai,'setorganisasi'=> $setorganisasi])
+        //     ->setPaper('a4', 'landscape');
+        // return $pdf->stream($pdfName);
     }
 }

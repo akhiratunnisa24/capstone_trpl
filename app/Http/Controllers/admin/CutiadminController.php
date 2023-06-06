@@ -1219,25 +1219,48 @@ class CutiadminController extends Controller
         $tahun      = $request->session()->get('tahun',);
 
         if (isset($idkaryawan) && isset($bulan) && isset($tahun)) {
-            $data = Cuti::join('statuses', 'cuti.status', '=', 'statuses.id')
-                ->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
-                ->join('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
-                ->join('departemen','cuti.departemen','=','departemen.id')
+            $data = Cuti::leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
+                ->leftjoin('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
                 ->where('cuti.id_karyawan', $idkaryawan)
                 ->whereMonth('cuti.tgl_mulai', $bulan)
                 ->whereYear('cuti.tgl_mulai', $tahun)
                 ->get(['cuti.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','alokasicuti.tgl_masuk','alokasicuti.jatuhtempo_awal','alokasicuti.jatuhtempo_akhir']);
             // dd($data);
-            return Excel::download(new CutiExport($data, $idkaryawan), "Rekap Cuti Bulan " . $nbulan . " " . $data->first()->nama . ".xlsx");
+
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } 
+            else {
+                return Excel::download(new CutiExport($data, $idkaryawan), "Rekap Cuti Bulan " . $nbulan . " " . ucwords(strtolower($data->first()->nama)) . ".xlsx");
+            }
+
         } else {
-            $data = Cuti::join('statuses', 'cuti.status', '=', 'statuses.id')
-                ->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
-                ->join('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
-                ->join('departemen','cuti.departemen','=','departemen.id')
+            $data = Cuti::leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
+                ->leftjoin('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
                 ->get(['cuti.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','alokasicuti.tgl_masuk','alokasicuti.jatuhtempo_awal','alokasicuti.jatuhtempo_akhir']);
             // return $data;
-            return Excel::download(new CutiExport($data, $idkaryawan), "Rekap Cuti Karyawan.xlsx");
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } 
+            else {
+                return Excel::download(new CutiExport($data, $idkaryawan), "Rekap Cuti Karyawan.xlsx");
+            }
         }
+
+        $request->session()->forget('idkaryawan');
+        $request->session()->forget('bulan');
+        $request->session()->forget('tahun');
+
+         //menghapus filter data
+         $request->session()->forget('idpegawai');
+         $request->session()->forget('month');
+         $request->session()->forget('year');
        
     }
 
@@ -1262,23 +1285,33 @@ class CutiadminController extends Controller
                 ->whereMonth('tgl_mulai', $bulan)
                 ->whereYear('tgl_mulai', $tahun)
                 ->get();
+
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } else {
+                $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan,'setorganisasi'=> $setorganisasi])
+                ->setPaper('a4', 'landscape');
+                $pdfName = "Rekap Cuti Bulan " . $nbulan . " " . ucwords(strtolower($data->first()->karyawans->nama)) . ".pdf";
+                return $pdf->stream($pdfName);
+            } 
         } else {
             $data = Cuti::all();
+
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } else {
+                $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan,'setorganisasi'=> $setorganisasi])
+                ->setPaper('a4', 'landscape');
+                $pdfName = "Rekap Cuti Karyawan.pdf";
+                return $pdf->stream($pdfName);
+            } 
             // $data = Cuti::leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
             //     ->leftjoin('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
             //     ->leftjoin('departemen','cuti.departemen','=','departemen.id')
             //     ->get(['cuti.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
         }
-
-        if ($data->first()) {
-            $pdfName = "Rekap Cuti Bulan " . $nbulan . " " . $data->first()->karyawans->nama . ".pdf";
-        } else {
-            $pdfName = "Rekapan Cuti Tidak Ditemukan.pdf";
-        }
-
-        $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan,'setorganisasi'=> $setorganisasi])
-            ->setPaper('a4', 'landscape');
-        return $pdf->stream($pdfName);
     }
 
 }

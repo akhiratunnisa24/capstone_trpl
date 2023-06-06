@@ -74,7 +74,12 @@
     <h3 align="center">Report Absensi Staff Departemen</h3>
 
     <p>Unit Kerja: {{ ucwords(strtolower($departemen->nama_departemen))}}</p>
-    <p>Periode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $nbulan}}</p>
+    @if(isset($nbulan))
+        <p>Periode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $nbulan}}</p>
+    @else
+        <p>Periode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: - </p>
+    @endif
+
     <table id="absensi">
         <tr>
             <th>No.</th>
