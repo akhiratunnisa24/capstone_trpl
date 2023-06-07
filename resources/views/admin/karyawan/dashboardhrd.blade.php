@@ -1310,7 +1310,10 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <table class="table table-striped">
+                                    <div class="text-right">
+                                        <a href="/tarik-data" class="btn bg-black btn-sm">Tarik Data</a>
+                                    </div>
+                                    <table class="table table-striped m-t-20">
                                         <thead style="text-align: center;">
                                             <tr class="info">
                                                 <th>No</th>
