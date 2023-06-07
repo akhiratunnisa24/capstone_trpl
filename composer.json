@@ -9,10 +9,12 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
+        "laminas/laminas-xmlrpc": "^2.16",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "maatwebsite/excel": "^3.1",
+        "phpxmlrpc/phpxmlrpc": "^4.10",
         "psr/simple-cache": "2.0",
         "realrashid/sweet-alert": "^5.1",
         "spatie/laravel-permission": "^5.7"
