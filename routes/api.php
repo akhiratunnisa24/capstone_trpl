@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AbsensiRequest;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('karyawanResponse', 'API\KaryawanResponseController@all');
 Route::get('karyawanRequest', 'API\KaryawanRequestController@getDataFromApi');
 // Route::get('karyawan', [KaryawanController::class, 'all']);
+Route::post('/absensi/request', 'API\AbsensiRequest@xmlRpcRequest');

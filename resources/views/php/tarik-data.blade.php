@@ -1,6 +1,9 @@
 @extends('layouts.default')
 
 @section('content')
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+<!-- Header -->
     {{-- <H3>Download Log Data</H3> --}}
 
     <!-- <php
@@ -11,9 +14,9 @@
     ?> -->
 
     @php
-        $IP = "192.168.10.217";
+        $IP = "192.168.10.205";
         $Key = "10";
-        if($IP == "") $IP = "192.168.10.217";
+        if($IP == "") $IP = "192.168.10.205";
         if($Key== "") $Key="10";
     @endphp
 
@@ -40,7 +43,8 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-body">
-                            <form action="{{ route('tarikdata') }}">
+                            <form method="POST" action="{{ route('tarikdata.download') }}">
+                                @csrf
                                 <div class="row">
                                     <div class="form-group col-md-5 m-t-5">
                                         <label for="ip">IP Address:</label>
@@ -57,7 +61,8 @@
                                 </div>
                             </form>
 
-                            <?php if ($IP != "") { ?>
+                            {{-- @if ($IP != "")  --}}
+                            @if(isset($logData))
                                 <table  id="datatable-responsive40" class="table table-striped table-bordered m-t-20" cellspacing="0" width="100%">
                                     <thead>
                                         <tr align="center">
@@ -67,7 +72,17 @@
                                             <td><B>Status</B></td>
                                         </tr>
                                     </thead>
-                                    <?php
+                                    <tbody>
+                                        @foreach ($logData as $data)
+                                            <tr align="center">
+                                                <td>{{ $data['PIN'] }}</td>
+                                                <td>{{ $data['DateTime'] }}</td>
+                                                <td>{{ $data['Verified'] }}</td>
+                                                <td>{{ $data['Status'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                    {{-- <php
                                     $Connect = fsockopen($IP, "80", $errno, $errstr, 1);
                                     if ($Connect) {
                                         $soap_request = "<GetAttLog><ArgComKey xsi:type=\"xsd:integer\">" . $Key . "</ArgComKey><Arg><PIN xsi:type=\"xsd:integer\">All</PIN></Arg></GetAttLog>";
@@ -94,19 +109,20 @@
                                         $DateTime = Parse_Data($data, "<DateTime>", "</DateTime>");
                                         $Verified = Parse_Data($data, "<Verified>", "</Verified>");
                                         $Status = Parse_Data($data, "<Status>", "</Status>");
-                                    ?>
-                                     <tbody>
+                                    ?> --}}
+                                     {{-- <tbody>
                                         <tr align="center">
-                                            <td><?php echo $PIN; ?></td>
-                                            <td><?php echo $DateTime; ?></td>
-                                            <td><?php echo $Verified; ?></td>
-                                            <td><?php echo $Status; ?></td>
+                                            <td><php echo $PIN; ?></td>
+                                            <td><php echo $DateTime; ?></td>
+                                            <td><php echo $Verified; ?></td>
+                                            <td><php echo $Status; ?></td>
                                         </tr>
                                      </tbody>
                                         
-                                    <?php } ?>
+                                    <php } ?> --}}
                                 </table>
-                            <?php } ?>
+                            {{-- <php } ?> --}}
+                            @endif
 
                         </div>
                     </div>
@@ -114,6 +130,31 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <!-- jangan lupa menambahkan script js sweet alert di bawah ini  -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+    @if(Session::has('pesan'))
+        <script>
+            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
+
+    @if(Session::has('gagal'))
+        <script>
+            swal("Mohon Maaf","{{ Session::get('gagal')}}", 'error', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
 
 @endsection
 
