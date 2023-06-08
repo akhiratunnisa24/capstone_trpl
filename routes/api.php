@@ -16,4 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
+}); 
+
+Route::get('karyawan', 'API\KaryawanController@all');
+// Route::get('karyawan', [KaryawanController::class, 'all']);
