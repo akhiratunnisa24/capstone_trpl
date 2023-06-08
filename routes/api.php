@@ -18,5 +18,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 }); 
 
-Route::get('karyawan', 'API\KaryawanController@all');
+Route::get('karyawanResponse', 'API\KaryawanResponseController@all');
+Route::get('karyawanRequest', 'API\KaryawanRequestController@getDataFromApi');
 // Route::get('karyawan', [KaryawanController::class, 'all']);

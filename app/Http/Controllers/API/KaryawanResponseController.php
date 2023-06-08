@@ -7,7 +7,7 @@ use App\Models\Karyawan;
 use Illuminate\Http\Request;
 
 
-class KaryawanController extends Controller
+class KaryawanResponseController extends Controller
 {
 
     public function all(Request $request)

@@ -22,6 +22,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use App\Helpers\NetworkHelper;
 
 class AbsensiController extends Controller
 {
@@ -478,5 +479,21 @@ class AbsensiController extends Controller
 
         return redirect()->back();
     }
+
+    // Fungsi tes koneksi ke Ip lain
+
+    // public function someControllerMethod()
+    // {
+    //     $networkHelper = new NetworkHelper();
+    //     $isConnected = $networkHelper->connectToIP('192.168.10.205');
+
+    //     if ($isConnected) {
+    //         // Koneksi berhasil
+    //         return view('konekip');
+    //     } else {
+    //         // Koneksi gagal
+    //         return view('tidakkonekip');
+    //     }
+    // }
 
 }
