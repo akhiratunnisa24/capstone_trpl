@@ -26,7 +26,7 @@ class KaryawanResponseController extends Controller
             if ($karyawan)
                 return ResponseFormatter::success($karyawan, 'Data karyawan berhasil diambil');
             else
-                return ResponseFormatter::error(null, 'Data produk tidak ada', 404);
+                return ResponseFormatter::error(null, 'Data Karyawan tidak ada', 404);
         }
 
         if ($slug) {
@@ -36,7 +36,7 @@ class KaryawanResponseController extends Controller
             if ($karyawan)
                 return ResponseFormatter::success($karyawan, 'Data produk berhasil diambil');
             else
-                return ResponseFormatter::error(null, 'Data produk tidak ada', 404);
+                return ResponseFormatter::error(null, 'Data Karyawan tidak ada', 404);
         }
 
 
