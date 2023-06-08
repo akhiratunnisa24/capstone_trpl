@@ -663,28 +663,17 @@ Route::get('/cutistaff', [DirekturController::class, 'index'])->name('cuti.Staff
 Route::post('/izinstaff/{id}', [DirekturController::class, 'izinApprove'])->name('izin.approv');
 Route::post('/izinstaf/{id}', [DirekturController::class, 'izinRejected'])->name('permission.rejected');
 
-
-
-
-
-
-
-
-
-
-
-
-
 //Integrasi Mesin Absensi ke HRMS
-Route::get('//tarik-data', [RequestAbsensiController::class, 'index'])->name('tarikdata');
+Route::get('/tarik-data', [RequestAbsensiController::class, 'index'])->name('indexdata');
 //Route::get('/tarik-data', [RequestAbsensiController::class, 'downloadLogData']); // Route untuk tautan tarik-data.php
 Route::get('/upload-nama', [RequestAbsensiController::class, 'uploadNama']); // Route untuk tautan upload-nama.php
 Route::get('/download-sidik-jari', [RequestAbsensiController::class, 'downloadSidikJari']); // Route untuk tautan download-sidik-jari.php
-Route::get('/upload-sidik-jari', [RequestAbsensiController::class, 'uploadSidikJari']);// Route untuk tautan upload-sidik-jari.php
+Route::get('/upload-sidik-jari', [RequestAbsensiController::class, 'uploadSidikJari']); // Route untuk tautan upload-sidik-jari.php
 //Route::get('/clear-data', [AbsensiController::class, 'clearLogData']); // Route untuk tautan clear-data.php
 //Route::get('/hapus-sidik-jari', [AbsensiController::class, 'hapusSidikJari']);// Route untuk tautan hapus-sidik-jari.php
 // Route::get('/syn-time', [AbsensiController::class, 'syncTime']);// Route untuk tautan syn-time.php
 // Route::get('/hapus-user', [AbsensiController::class, 'hapusUser']);// Route untuk tautan hapus-user.php
 
 
-
+// Route buat tes koneksi ke IP lain
+Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
