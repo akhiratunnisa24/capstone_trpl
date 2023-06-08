@@ -676,7 +676,7 @@ Route::post('/izinstaf/{id}', [DirekturController::class, 'izinRejected'])->name
 
 
 //Integrasi Mesin Absensi ke HRMS
-Route::get('//tarik-data', [RequestAbsensiController::class, 'index'])->name('indexdata');
+Route::get('//tarik-data', [RequestAbsensiController::class, 'index'])->name('tarikdata');
 //Route::get('/tarik-data', [RequestAbsensiController::class, 'downloadLogData']); // Route untuk tautan tarik-data.php
 Route::get('/upload-nama', [RequestAbsensiController::class, 'uploadNama']); // Route untuk tautan upload-nama.php
 Route::get('/download-sidik-jari', [RequestAbsensiController::class, 'downloadSidikJari']); // Route untuk tautan download-sidik-jari.php

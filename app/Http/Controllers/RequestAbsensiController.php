@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class RequestAbsensiController extends Controller
 {
@@ -14,7 +17,8 @@ class RequestAbsensiController extends Controller
 
     public function index()
     {
-        return view('php.tarik-data');
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        return view('php.tarik-data',compact('row'));
     }
 
     public function create()

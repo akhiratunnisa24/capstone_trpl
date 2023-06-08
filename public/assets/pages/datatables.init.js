@@ -80,6 +80,7 @@
         $('#datatable-responsive37').DataTable();
         $('#datatable-responsive38').DataTable();
         $('#datatable-responsive39').DataTable();
+        $('#datatable-responsive40').DataTable();
 
         $('#datatable-scrollera').DataTable({
             ajax: "assets/plugins/datatables/json/scroller-demo.json",
