@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use PDF;
+use parse;
 use Carbon\Carbon;
 use App\Models\Jadwal;
 use App\Models\Absensi;
@@ -11,6 +12,9 @@ use App\Models\Departemen;
 use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
 use App\Exports\AbsensiExport;
+use App\Helpers\AbsensiHelper;
+
+use App\Helpers\NetworkHelper;
 use App\Imports\AbsensiImport;
 use App\Imports\AttendanceImport;
 use App\Models\SettingOrganisasi;
@@ -22,7 +26,13 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-use App\Helpers\NetworkHelper;
+require_once app_path('Helpers/Parse.php');
+
+
+use App\Http\Controllers\API\AbsensiRequest;
+use PhpXmlRpc\Client;
+use PhpXmlRpc\Request as XmlRpcRequest;
+use PhpXmlRpc\Value;
 
 class AbsensiController extends Controller
 {
@@ -480,20 +490,169 @@ class AbsensiController extends Controller
         return redirect()->back();
     }
 
-    // Fungsi tes koneksi ke Ip lain
+    //Fungsi tes koneksi ke Ip lain
 
-    // public function someControllerMethod()
-    // {
-    //     $networkHelper = new NetworkHelper();
-    //     $isConnected = $networkHelper->connectToIP('192.168.10.205');
+    public function someControllerMethod()
+    {
+        $networkHelper = new NetworkHelper();
+        $isConnected = $networkHelper->connectToIP('192.168.10.217');
 
-    //     if ($isConnected) {
-    //         // Koneksi berhasil
-    //         return view('konekip');
-    //     } else {
-    //         // Koneksi gagal
-    //         return view('tidakkonekip');
-    //     }
-    // }
+        if ($isConnected) {
+            // Koneksi berhasil
+            return view('konekip');
+        } else {
+            // Koneksi gagal
+            return view('tidakkonekip');
+        }
+    }
 
+    public function indexs(Request $request)
+    {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        return view('php.tarik-data');
+    }
+
+    public function tarikData(Request $request)
+    {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+       
+        $ipAddress = $request->input('ip');
+        // $ipAddress = '192.168.10.205';
+        // dd($ipAddress);
+        // $absensiHelper = new absensiHelper();
+        // $isConnected =  $absensiHelper->connectToIP($ipAddress);
+
+        $absensiHelper = new absensiHelper();
+        $isConnected = $absensiHelper->connectToIP('192.168.10.205');
+
+        if ($isConnected) {
+            // Koneksi berhasil
+            return view('konekip');
+            // return redirect()->back()->with('pesan', 'Berhasil terkoneksi ke IP Address: ' . $ipAddress);
+        } else {
+            return view('tidakkonekip');
+            // Koneksi gagal
+            // return redirect()->back()->with('gagal', 'Tidak Bisa terkoneksi ke IP Address: ' . $ipAddress);
+        }
+
+    }
+
+    public function showDownloadLogForm()
+    {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $IP = "192.168.10.205";
+        $Key = "10";
+
+        return view('php.tarik-data', compact('IP', 'Key','row'));
+    }
+
+    public function downloadLogData(Request $request)
+   {
+        $IP = $request->input('ip', '192.168.1.205');
+        $Key = $request->input('key', '0');
+
+        // $absensiHelper = new absensiHelper();
+        // $Connect = $absensiHelper->connectToIP($IP,"80", 1);
+        // return $IP;
+        // $Connect = fsockopen($IP, "80", $errno, $errstr, 1);
+
+        // if ($Connect) {
+        //     $soapRequest = "<GetAttLog><ArgComKey xsi:type=\"xsd:integer\">" . $Key . "</ArgComKey><Arg><PIN xsi:type=\"xsd:integer\">All</PIN></Arg></GetAttLog>";
+        //     $newLine = "\r\n";
+
+        //     fputs($Connect, "POST /iWsService HTTP/1.0" . $newLine);
+        //     fputs($Connect, "Content-Type: text/xml" . $newLine);
+        //     fputs($Connect, "Content-Length: " . strlen($soapRequest) . $newLine . $newLine);
+        //     fputs($Connect, $soapRequest . $newLine);
+
+        //     $buffer = "";
+        //     while ($response = fgets($Connect, 1024)) {
+        //         $buffer .= $response;
+        //     }
+
+        //     fclose($Connect);
+
+        //     $responseData = Parse_Data($buffer, "<GetAttLogResponse>", "</GetAttLogResponse>");
+        //     $responseData = explode("\r\n", $responseData);
+
+        //     $logData = [];
+        //     foreach ($responseData as $line) {
+        //         $data = Parse_Data($line, "<Row>", "</Row>");
+        //         $PIN = Parse_Data($data, "<PIN>", "</PIN>");
+        //         $DateTime = Parse_Data($data, "<DateTime>", "</DateTime>");
+        //         $Verified = Parse_Data($data, "<Verified>", "</Verified>");
+        //         $Status = Parse_Data($data, "<Status>", "</Status>");
+
+        //         $logData[] = [
+        //             'PIN' => $PIN,
+        //             'DateTime' => $DateTime,
+        //             'Verified' => $Verified,
+        //             'Status' => $Status
+        //         ];
+        //     }
+
+        //     return [
+        //         'error' => null,
+        //         'result' => $logData
+        //     ];
+        // } else {
+        //     return [
+        //         'error' => "Koneksi Gagal",
+        //         'result' => null
+        //     ];
+        // }
+
+        // $absensiRequest = new AbsensiRequest();
+        // $result = $absensiRequest->xmlRpcRequest($IP, $Key);
+
+        $absensiRequest = new AbsensiRequest();
+        $result = $absensiRequest->xmlRpcRequest($IP, $Key);
+
+        if ($result instanceof \Illuminate\Http\JsonResponse) {
+            return $result;
+        } 
+        else
+        {
+            $Connect = $result['result'];
+
+            $soapRequest = "<GetAttLog><ArgComKey xsi:type=\"xsd:integer\">" . $Key . "</ArgComKey><Arg><PIN xsi:type=\"xsd:integer\">All</PIN></Arg></GetAttLog>";
+            $newLine = "\r\n";
+
+            fputs($Connect, "POST /iWsService HTTP/1.0" . $newLine);
+            fputs($Connect, "Content-Type: text/xml" . $newLine);
+            fputs($Connect, "Content-Length: " . strlen($soapRequest) . $newLine . $newLine);
+            fputs($Connect, $soapRequest . $newLine);
+
+            $buffer = "";
+            while ($response = fgets($Connect, 1024)) {
+                $buffer .= $response;
+            }
+
+            fclose($Connect);
+
+            $responseData = Parse_Data($buffer, "<GetAttLogResponse>", "</GetAttLogResponse>");
+            $responseData = explode("\r\n", $responseData);
+
+            $logData = [];
+            foreach ($responseData as $line) {
+                $data = Parse_Data($line, "<Row>", "</Row>");
+                $PIN = Parse_Data($data, "<PIN>", "</PIN>");
+                $DateTime = Parse_Data($data, "<DateTime>", "</DateTime>");
+                $Verified = Parse_Data($data, "<Verified>", "</Verified>");
+                $Status = Parse_Data($data, "<Status>", "</Status>");
+
+                $logData[] = [
+                    'PIN' => $PIN,
+                    'DateTime' => $DateTime,
+                    'Verified' => $Verified,
+                    'Status' => $Status
+                ];
+            }
+
+            return [
+                'error' => null,
+                'result' => $logData
+            ];
+        }
+   }
 }

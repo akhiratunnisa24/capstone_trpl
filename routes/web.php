@@ -664,7 +664,13 @@ Route::post('/izinstaff/{id}', [DirekturController::class, 'izinApprove'])->name
 Route::post('/izinstaf/{id}', [DirekturController::class, 'izinRejected'])->name('permission.rejected');
 
 //Integrasi Mesin Absensi ke HRMS
-Route::get('/tarik-data', [RequestAbsensiController::class, 'index'])->name('indexdata');
+// Route::get('/tarik-data', [AbsensiController::class, 'indexs'])->name('tarikdata');
+// Route::post('/tarik-data', [AbsensiController::class, 'tarikData'])->name('tarikdata.tarik');
+
+
+Route::get('/tarik-data', [AbsensiController::class, 'showDownloadLogForm'])->name('tarikdata');
+Route::post('/tarik-data', [AbsensiController::class, 'downloadLogData'])->name('tarikdata.download');
+
 //Route::get('/tarik-data', [RequestAbsensiController::class, 'downloadLogData']); // Route untuk tautan tarik-data.php
 Route::get('/upload-nama', [RequestAbsensiController::class, 'uploadNama']); // Route untuk tautan upload-nama.php
 Route::get('/download-sidik-jari', [RequestAbsensiController::class, 'downloadSidikJari']); // Route untuk tautan download-sidik-jari.php
@@ -677,3 +683,4 @@ Route::get('/upload-sidik-jari', [RequestAbsensiController::class, 'uploadSidikJ
 
 // Route buat tes koneksi ke IP lain
 Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
+// Route::get('/tarik-data', [AbsensiController::class, 'tarikData'])->name('tarikdata.tarik');
