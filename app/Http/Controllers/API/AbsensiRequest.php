@@ -10,49 +10,68 @@ use App\Helpers\AbsensiHelper;
  
 class AbsensiRequest extends Controller
 {
-    public function xmlRpcRequest($IP, $Key)
+    public function xmlRpxRequest($IP,$Key,$PIN) 
     {
-        $client = new Client('http://' . $IP . '/xmlrpc-endpoint');
-        // $client = new Client('http://example.com/xml-rpc-endpoint');
+        $endpoint = 'http://localhost/' . $IP . '/xmlrpc';
+        $client = new Client($endpoint);
 
-        // Mempersiapkan nama metode dan parameter
-        $methodName = 'sample_method';  //nama method berasal dari klien
-        $params = [
-            new Value('parameter1', 'string'),
-            new Value(2, 'int'),
-            new Value(true, 'boolean'),
-        ];
+        // Membuat argumen XML-RPC
+        $argComKey = new Value($Key, 'int');
+        $argPIN    = new Value($PIN, 'int');
+        $arg       = new Value(['PIN' => $argPIN], 'struct');
+    } 
+      // public function xmlRpcRequest($IP, $Key)
+    // {
+    //     $client = new Client('http://' . $IP . '/xmlrpc-endpoint');
+    //     // $client = new Client('http://example.com/xml-rpc-endpoint');
 
-        // Membuat permintaan XML-RPC
-        $request = new Request($methodName, $params);
+    //     // Mempersiapkan nama metode dan parameter
+    //     $methodName = 'sample_method';  //nama method berasal dari klien
+    //     $params = [
+    //         new Value('parameter1', 'string'),
+    //         new Value(2, 'int'),
+    //         new Value(true, 'boolean'),
+    //     ];
 
-        // Mengirim permintaan XML-RPC
-        $response = $client->send($request);
+    //     // Membuat permintaan XML-RPC
+    //     $request = new Request($methodName, $params);
 
-        // Memproses respons XML-RPC
-        if ($response->faultCode()) {
-            // Menangani kesalahan XML-RPC
-            $errorCode = $response->faultCode();
-            $errorMessage = $response->faultString();
+    //     // Mengirim permintaan XML-RPC
+    //     $response = $client->send($request);
 
-            // Lakukan penanganan kesalahan atau pencatatan
-            // ...
+    //     // Memproses respons XML-RPC
+    //     if ($response->faultCode()) {
+    //         // Menangani kesalahan XML-RPC
+    //         $errorCode = $response->faultCode();
+    //         $errorMessage = $response->faultString();
 
-            return response()->json([
-                'error' => 'XML-RPC Error: ' . $errorCode . ' - ' . $errorMessage,
-            ], 500);
-            // $result = null;
-            // $error = 'XML-RPC Error: ' . $errorCode . ' - ' . $errorMessage;
-        } else {
-            // Menangani kesuksesan XML-RPC
-            $result = $response->value();
-            $error = null;
-        }
+    //         // Lakukan penanganan kesalahan atau pencatatan
+    //         // ...
 
-        return [
-            'error' => $error,
-            'result' => $result
-        ];
+    //         return response()->json([
+    //             'error' => 'XML-RPC Error: ' . $errorCode . ' - ' . $errorMessage,
+    //         ], 500);
+    //         // $result = null;
+    //         // $error = 'XML-RPC Error: ' . $errorCode . ' - ' . $errorMessage;
+    //     } else {
+    //         // Menangani kesuksesan XML-RPC
+    //         $result = $response->value();
+    //         $error = null;
+    //     }
+
+    //     return [
+    //         'error' => $error,
+    //         'result' => $result
+    //     ];
+    // }
+
+    public function getAll($IP, $Key)
+    {
+        // Mengatur endpoint XML-RPC
+        $endpoint = 'http://'. $IP .'/xmlrpc';
+
+        // Membuat objek client XML-RPC
+        $client = new Client($endpoint);    
     }
     // public function xmlRpcRequest($IP, $Key)
     // {
