@@ -23,15 +23,30 @@ class AbsensiResponseController extends Controller
         // Loop melalui setiap baris absensi
         foreach ($absensi as $row) {
             // Mendapatkan nama, jam masuk, dan jam keluar
-            $nama = $row->karyawans->nama;
-            $jamMasuk = $row->jam_masuk;
-            $jamKeluar = $row->jam_keluar;
-
+            $nama       = $row->karyawans->nama;
+            $tanggal    = \Carbon\Carbon::parse($row->tanggal)->format('d/m/Y');
+            $jam_masuk  = \Carbon\Carbon::parse($row->jadwal_masuk)->format('H:i');
+            $jam_pulang = \Carbon\Carbon::parse($row->jadwal_pulang)->format('H:i');
+            $scan_masuk = \Carbon\Carbon::parse($row->jam_masuk)->format('H:i');
+            $scan_keluar= \Carbon\Carbon::parse($row->jam_keluar)->format('H:i');
+            $terlambat  = \Carbon\Carbon::parse($row->terlambat)->format('H:i');
+            $plg_cepat  = \Carbon\Carbon::parse($row->plg_cepat)->format('H:i');
+            $lembur     = \Carbon\Carbon::parse($row->lembur)->format('H:i');
+            $jam_kerja  = \Carbon\Carbon::parse($row->jml_jamkerja)->format('H:i');
+            $jml_hadir  = \Carbon\Carbon::parse($row-> jam_kerja)->format('H:i');
             // Membuat array dengan nilai XML-RPC
             $data = [
                 new Value($nama, 'string'),
-                new Value($jamMasuk, 'string'),
-                new Value($jamKeluar, 'string'),
+                new Value($tanggal, 'string'),
+                new Value($jam_masuk, 'string'),
+                new Value($jam_pulang, 'string'),
+                new Value($scan_masuk, 'string'),
+                new Value($scan_keluar, 'string'),
+                new Value($terlambat, 'string'),
+                new Value($plg_cepat, 'string'),
+                new Value($lembur, 'string'),
+                new Value($jam_kerja, 'string'),
+                new Value($jml_hadir, 'string'),
             ];
 
             // Menambahkan array data ke hasil query

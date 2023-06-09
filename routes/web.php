@@ -682,4 +682,4 @@ Route::get('/upload-sidik-jari', [RequestAbsensiController::class, 'uploadSidikJ
 
 
 // Route buat tes koneksi ke IP lain
-// Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
+Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
