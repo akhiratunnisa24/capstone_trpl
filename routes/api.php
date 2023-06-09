@@ -24,6 +24,9 @@ Route::get('karyawanResponse', 'API\KaryawanResponseController@all');
 Route::get('karyawanRequest', 'API\KaryawanRequestController@getDataFromApi');
 // Route::get('karyawan', [KaryawanController::class, 'all']);
 Route::post('/absensi/request', 'API\AbsensiRequest@xmlRpcRequest');
+Route::get('xmlrpc', 'API\AbsensiResponseController@index');
+Route::get('xmlrpcRequest', 'API\AbsensiRequestController@makeRequest');
+
 
 Route::post('cutiRequest', 'API\CutiRequestController@index');
 Route::get('cutiResponse', 'API\CutiResponseController@all');
