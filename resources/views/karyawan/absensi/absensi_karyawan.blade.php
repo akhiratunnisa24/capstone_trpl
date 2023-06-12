@@ -41,7 +41,7 @@
                                             @csrf
                                             @method('POST')
                                             <div align="center">
-                                                <h4>Shift : <label>{{ $jadwalkaryawan->nama_shift }}</label>  Jadwal:<label>{{ $jadwalkaryawan->jadwal_masuk }}</label> </h4>
+                                                <h4>Shift : <label>{{ $jadwalkaryawan->nama_shift ?? '' }}</label>  Jadwal:<label>{{ $jadwalkaryawan->jadwal_masuk }}</label> </h4>
                                             </div>
                                             <button type="submit" class="btn btn-info btn-lg"> <i class="fa fa-sign-in fa-3x"></i></button>
                                         </form>
