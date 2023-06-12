@@ -26,7 +26,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-require_once app_path('Helpers/Parse.php');
+// require_once app_path('Helpers/Parse.php');
 
 
 use App\Http\Controllers\API\AbsensiRequest;
