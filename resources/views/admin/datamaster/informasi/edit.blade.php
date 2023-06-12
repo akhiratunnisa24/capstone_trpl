@@ -1,5 +1,4 @@
  <!--bootstrap-wysihtml5-->
- <link rel="stylesheet" type="text/css" href="assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css">
 
 <div class="modal fade" id="ShowInformasi{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="AddModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -67,7 +66,7 @@
     </div>
 </div>
 
-<script src="assets/js/jquery.min.js"></script>
+{{-- <script src="assets/js/jquery.min.js"></script>
 <script src="assets/pages/form-advanced.js"></script>
 <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script><!--Summernote js-->
@@ -81,7 +80,7 @@
 <script src="assets/js/jquery.nicescroll.js"></script>
 <script src="assets/js/jquery.scrollTo.min.js"></script>
 <script type="text/javascript" src="assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
-<script type="text/javascript" src="assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+<script type="text/javascript" src="assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script> --}}
 
 <script src="assets/js/app.js"></script>
 
