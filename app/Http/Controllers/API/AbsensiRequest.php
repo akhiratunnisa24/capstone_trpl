@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use DOMDocument;
 use PhpXmlRpc\Value;
+use App\Models\Dummy;
 use PhpXmlRpc\Client;
 use SimpleXMLElement;
 use PhpXmlRpc\Request;
@@ -37,7 +38,7 @@ class AbsensiRequest extends Controller
 
         //Mengirim permintaan XML-RPC
         $response = $client->send($request);
-        //dd($response);
+        dd($response);
 
         // Mendapatkan data dari respons XML-RPC
         $xmlResponse = $response->value();
@@ -68,34 +69,89 @@ class AbsensiRequest extends Controller
         return $results;
     } 
 
-
     public function xmlRpcResponse()
     {
-        $results = [];
-        dd($results);
+        $results = Dummy::all()->toArray();
+        // dd($results);
+        // $results = [
+        //     [
+        //         'PIN' => 'XXXXX1',
+        //         'DateTime' => 'YYYY-MM-DD HH:MM:SS1',
+        //         'Verified' => 'X1',
+        //         'Status' => 'X1',
+        //         'WorkCode' => 'XXXXX1',
+        //     ],
+        //     [
+        //         'PIN' => 'XXXXX2',
+        //         'DateTime' => 'YYYY-MM-DD HH:MM:SS1',
+        //         'Verified' => 'X1',
+        //         'Status' => 'X1',
+        //         'WorkCode' => 'XXXXX1',
+        //     ],
+        //     // Tambahkan data dummy lainnya sesuai kebutuhan
+        // ];
+        // dd($results);
+        $processedResults = [];
 
         foreach ($results as $row) {
-            $PIN = (string) $row['PIN'];
-            $dateTime = (string) $row['DateTime'];
-            $verified = (string) $row['Verified'];
-            $status = (string) $row['Status'];
-            $workCode = (string) $row['WorkCode'];
+            $PIN = (string) $row['noid'];
+            $dateTime = (string) $row['tanggal'];
+            $verified = (string) $row['scan_masuk'];
+            $status = (string) $row['scan_keluar'];
+            $workCode = (string) $row['nama'];
 
             // Menyimpan hasil pemrosesan dalam array
             $data = [
+                // new Value($PIN),
+                // new Value($dateTime),
+                // new Value($verified),
+                // new Value($status),
+                // new Value($workCode),
                 'PIN' => $PIN,
                 'DateTime' => $dateTime,
                 'Verified' => $verified,
                 'Status' => $status,
                 'WorkCode' => $workCode,
             ];
-            $results[] = $data;
+            $processedResults[] = $data;
         }
+        // foreach ($results as $row) {
+        //     $noid       = (string) $row['noid'];
+        //     $nama       = (string) $row['nama'];
+        //     $tanggal    = (string) $row['tanggal'];
+        //     $jam_masuk  = (string) $row['jam_masuk'];
+        //     $jam_pulang = (string) $row['jam_pulang'];
+        //     $scan_masuk = (string) $row['scan_masuk'];
+        //     $scan_keluar= (string) $row['scan_keluar'];
+        //     $terlambat  = (string) $row['terlambat'];
+        //     $plg_cepat  = (string) $row['plg_cepat'];
+        //     $lembur     = (string) $row['lembur'];
+        //     $jam_kerja  = (string) $row['jam_kerja'];
+        //     $jml_hadir  = (string) $row['jml_hadir'];
+
+        //     // Menyimpan hasil pemrosesan dalam array
+        //     $data = [
+        //         'noid'       => $noid,
+        //         'nama'       => $nama,
+        //         'tanggal'    => $tanggal,
+        //         'jam_masuk'  => $jam_masuk,
+        //         'jam_pulang' => $jam_pulang,
+        //         'scan_masuk' => $scan_masuk,
+        //         'scan_keluar'=> $scan_keluar,
+        //         'terlambat'  => $terlambat,
+        //         'plg_cepat'  => $plg_cepat,
+        //         'lembur'     => $lembur,
+        //         'jam_kerja'  => $jam_kerja,
+        //         'jml_hadir'  => $jml_hadir,
+
+        //     ];
+        //     $processedResults[] = $data;
+        // }
 
         // Membuat objek response dengan hasil query sebagai argumen
         $response = [
             'GetAttLogResponse' => [
-                'Row' => $results,
+                'Row' => $processedResults,
             ],
         ];
 
@@ -121,7 +177,6 @@ class AbsensiRequest extends Controller
             }
         }
     }
-
 
 }
 
