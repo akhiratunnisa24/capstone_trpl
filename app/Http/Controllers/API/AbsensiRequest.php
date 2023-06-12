@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use DOMDocument;
 use PhpXmlRpc\Value;
-use App\Models\Absensis;
 use PhpXmlRpc\Client;
+use SimpleXMLElement;
 use PhpXmlRpc\Request;
 use PhpXmlRpc\Response;
+use App\Models\Absensis;
 use App\Http\Controllers\Controller;
  
 class AbsensiRequest extends Controller
@@ -31,7 +33,7 @@ class AbsensiRequest extends Controller
             ], 'struct')
         ]);
 
-        dd($request);
+        // dd($request);
 
         //Mengirim permintaan XML-RPC
         $response = $client->send($request);
@@ -42,24 +44,88 @@ class AbsensiRequest extends Controller
 
         // Melakukan pemrosesan terhadap hasil respons
         $results = [];
+        dd($results);
         if(isset($xmlResponse))
         {
-                $PIN = (integer) $xmlResponse->PIN;
-                $dateTime = (string) $xmlResponse->DateTime;
-                $verified = (string) $xmlResponse->Verified;
-                $status = (string) $xmlResponse->Status;
-                $workCode = (string) $xmlResponse->WorkCode;
+            $PIN = (string) $xmlResponse->PIN;
+            $dateTime = (string) $xmlResponse->DateTime;
+            $verified = (string) $xmlResponse->Verified;
+            $status = (string) $xmlResponse->Status;
+            $workCode = (string) $xmlResponse->WorkCode;
+    
+            // Menyimpan hasil pemrosesan dalam array
+            $results[] = [
+                'PIN' => $PIN,
+                'dateTime' => $dateTime,
+                'verified' => $verified,
+                'status' => $status,
+                'workCode' => $workCode,
+            ];
+        }
         
-                // Menyimpan hasil pemrosesan dalam array
-                $results[] = [
-                    'PIN' => $PIN,
-                    'dateTime' => $dateTime,
-                    'verified' => $verified,
-                    'status' => $status,
-                    'workCode' => $workCode,
-                ];
+        // Menggunakan hasil pemrosesan sesuai kebutuhan Anda
+        $results = $this->xmlRpcResponse($xmlResponse->value());
+        return $results;
+    } 
 
-            // dd($xmlResponse);
+
+    public function xmlRpcResponse()
+    {
+        $results = [];
+        dd($results);
+
+        foreach ($results as $row) {
+            $PIN = (string) $row['PIN'];
+            $dateTime = (string) $row['DateTime'];
+            $verified = (string) $row['Verified'];
+            $status = (string) $row['Status'];
+            $workCode = (string) $row['WorkCode'];
+
+            // Menyimpan hasil pemrosesan dalam array
+            $data = [
+                'PIN' => $PIN,
+                'DateTime' => $dateTime,
+                'Verified' => $verified,
+                'Status' => $status,
+                'WorkCode' => $workCode,
+            ];
+            $results[] = $data;
+        }
+
+        // Membuat objek response dengan hasil query sebagai argumen
+        $response = [
+            'GetAttLogResponse' => [
+                'Row' => $results,
+            ],
+        ];
+
+        // Mengubah array response menjadi XML
+        $xml = new SimpleXMLElement('<root/>');
+        $this->arrayToXml($response, $xml);
+
+        // Mengirim respons XML-RPC
+        return response($xml->asXML(), 200, ['Content-Type' => 'text/xml']);
+    }
+
+    private function arrayToXml($data, &$xml)
+    {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                if (is_numeric($key)) {
+                    $key = 'item' . $key;
+                }
+                $subnode = $xml->addChild($key);
+                $this->arrayToXml($value, $subnode);
+            } else {
+                $xml->addChild("$key", htmlspecialchars("$value"));
+            }
+        }
+    }
+
+
+}
+
+ // dd($xmlResponse);
             // foreach ($xmlResponse as $row) 
             // {
             //     $PIN = (string) $row->PIN;
@@ -77,19 +143,9 @@ class AbsensiRequest extends Controller
             //         'workCode' => $workCode,
             //     ];
             // }
-        }
-        
-        // Menggunakan hasil pemrosesan sesuai kebutuhan Anda
-        $results = $this->xmlRpcResponse($xmlResponse);
-        return $results;
 
-    } 
 
-    public function xmlRpcResponse()
-    {
-        $results = [];
-
-        // foreach ($results as $row) {
+ // foreach ($results as $row) {
         //     $PIN = (string) $row->PIN;
         //     $dateTime = (string) $row->DateTime;
         //     $verified = (string) $row->Verified;
@@ -105,29 +161,11 @@ class AbsensiRequest extends Controller
         //     ];
         //     $results[] = new Value($data, 'array');
         // }
-        foreach ($xmlResponse->scalarval() as $row) {
-            $PIN = (string) $row->PIN;
-            $dateTime = (string) $row->DateTime;
-            $verified = (string) $row->Verified;
-            $status = (string) $row->Status;
-            $workCode = (string) $row->WorkCode;
-            
-            // Menyimpan hasil pemrosesan dalam array
-            $data = [
-                new Value($PIN),
-                new Value($dateTime),
-                new Value($verified),
-                new Value($status),
-                new Value($workCode),
-            ];
-            $results[] = new Value($data);
-        }
-
-        // Membuat objek response dengan hasil query sebagai argumen
-        $response = new Response(new Value($results, 'array'));
-
-        // Mengirim respons XML-RPC
-        return response($response->serialize(), 200, ['Content-Type' => 'text/xml']);
-    }
-
-}
+        // $data = [
+        //     new Value($PIN),
+        //     new Value($dateTime),
+        //     new Value($verified),
+        //     new Value($status),
+        //     new Value($workCode),
+        // ];
+        // $results[] = new Value($data);
