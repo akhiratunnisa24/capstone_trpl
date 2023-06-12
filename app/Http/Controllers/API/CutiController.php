@@ -21,7 +21,7 @@ class CutiController extends Controller
         
         $Cuti = Cuti::with('jeniscuti', 'departemen')->get();
 
-        return response()->json($karyawan, 200);
+        return response()->json($Cuti, 200);
         
 
     }

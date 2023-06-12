@@ -521,7 +521,7 @@ class AbsensiController extends Controller
         // $isConnected =  $absensiHelper->connectToIP($ipAddress);
 
         $absensiHelper = new absensiHelper();
-        $isConnected = $absensiHelper->connectToIP('192.168.10.205');
+        $isConnected = $absensiHelper->connectToIP('192.168.1.32');
 
         if ($isConnected) {
             // Koneksi berhasil
@@ -545,7 +545,7 @@ class AbsensiController extends Controller
     }
 
     public function downloadLogData(Request $request)
-   {
+    {
         $IP = $request->input('ip', '192.168.1.205');
         $Key = $request->input('key', '0');
 
