@@ -13,7 +13,7 @@ class AbsensiRequest extends Controller
 {
     public function xmlRpcRequest() 
     {
-        $IP = '192.168.10.217';
+        $IP = '192.168.10.205';
         $endpoint = 'http://'.$IP.'/xmlrpc';
 
         $client = new Client($endpoint);
@@ -31,7 +31,7 @@ class AbsensiRequest extends Controller
             ], 'struct')
         ]);
 
-        // dd($request);
+        dd($request);
 
         //Mengirim permintaan XML-RPC
         $response = $client->send($request);
@@ -47,7 +47,7 @@ class AbsensiRequest extends Controller
                 $PIN = (integer) $xmlResponse->PIN;
                 $dateTime = (string) $xmlResponse->DateTime;
                 $verified = (string) $xmlResponse->Verified;
-                $status = (string)   $xmlResponse->Status;
+                $status = (string) $xmlResponse->Status;
                 $workCode = (string) $xmlResponse->WorkCode;
         
                 // Menyimpan hasil pemrosesan dalam array
@@ -89,21 +89,38 @@ class AbsensiRequest extends Controller
     {
         $results = [];
 
-        foreach ($results as $row) {
+        // foreach ($results as $row) {
+        //     $PIN = (string) $row->PIN;
+        //     $dateTime = (string) $row->DateTime;
+        //     $verified = (string) $row->Verified;
+        //     $status = (string) $row->Status;
+        //     $workCode = (string) $row->WorkCode;
+        //     // Menyimpan hasil pemrosesan dalam array
+        //     $data = [
+        //         new Value($PIN, 'string'),
+        //         new Value($dateTime, 'string'),
+        //         new Value($verified, 'string'),
+        //         new Value($status, 'string'),
+        //         new Value($workCode, 'string'),
+        //     ];
+        //     $results[] = new Value($data, 'array');
+        // }
+        foreach ($xmlResponse->scalarval() as $row) {
             $PIN = (string) $row->PIN;
             $dateTime = (string) $row->DateTime;
             $verified = (string) $row->Verified;
             $status = (string) $row->Status;
             $workCode = (string) $row->WorkCode;
+            
             // Menyimpan hasil pemrosesan dalam array
             $data = [
-                new Value($PIN, 'string'),
-                new Value($dateTime, 'string'),
-                new Value($verified, 'string'),
-                new Value($status, 'string'),
-                new Value($workCode, 'string'),
+                new Value($PIN),
+                new Value($dateTime),
+                new Value($verified),
+                new Value($status),
+                new Value($workCode),
             ];
-            $results[] = new Value($data, 'array');
+            $results[] = new Value($data);
         }
 
         // Membuat objek response dengan hasil query sebagai argumen

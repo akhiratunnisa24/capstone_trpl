@@ -30,9 +30,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 
 use App\Http\Controllers\API\AbsensiRequest;
-use PhpXmlRpc\Client;
-use PhpXmlRpc\Request as XmlRpcRequest;
-use PhpXmlRpc\Value;
+
 
 class AbsensiController extends Controller
 {

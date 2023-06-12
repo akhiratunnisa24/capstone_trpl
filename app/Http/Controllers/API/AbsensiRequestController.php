@@ -19,6 +19,7 @@ class AbsensiRequestController extends Controller
             new Value('your_username', 'string'), // Ganti dengan username yang valid
         ];
         $request->addParam(new Value($params, 'array'));
+        dd($request);
 
         // Membuat objek klien XML-RPC dan mengirimkan permintaan
         $client = new Client('http://localhost:8000/api/xmlrpc'); // Ganti dengan URL endpoint XML-RPC yang valid
