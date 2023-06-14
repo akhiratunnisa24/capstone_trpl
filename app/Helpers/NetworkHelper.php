@@ -1,28 +1,29 @@
 <?php
 
 namespace App\Helpers;
-
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class NetworkHelper
 {
     public function connectToIP($ipAddress)
     {
-        $client = new Client();
+        $response = Http::timeout(5)->get('http://' . $ipAddress);
+        $statusCode = $response->status();
 
-        try {
-            $response = $client->request('GET', $ipAddress);
+        if ($statusCode >= 200 && $statusCode < 300) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static function testConnection($ipAddress)
+    {
+        $pingCommand = "ping -c 1 " . $ipAddress;
+        exec($pingCommand, $output, $status);
 
-            if ($response->getStatusCode() === 200) {
-                // Koneksi berhasil
-                return true;
-            } else {
-                // Koneksi gagal
-                return false;
-            }
-        } catch (\Exception $e) {
-            // Tangani kesalahan jika terjadi
-
+        if ($status === 0) {
+            return true;
+        } else {
             return false;
         }
     }
