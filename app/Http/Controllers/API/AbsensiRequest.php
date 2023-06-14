@@ -17,7 +17,8 @@ class AbsensiRequest extends Controller
     public function xmlRpcRequest() 
     {
         // $endpoint = 'http://hrms.test/xmlrpc';
-        $client = new Client('http://hrms.test/api/getabsensi-response');
+        $client = new Client('http://192.168.100.51/iWsService');
+        // $client = new Client('http://hrms.test/api/getabsensi-response');
         $headers = [
         'Content-Type' => 'application/xml'
         ];
@@ -27,8 +28,19 @@ class AbsensiRequest extends Controller
         </GetAttLog>';
         $request = new Request('POST', $headers, $client,$body);
         $res = $client->send($request);
-        // echo $res->getBody();
-        dd($res->raw_data);
+        dd($res);
+
+        if ($res->faultCode()) 
+        {
+            // Tangani kesalahan jika terjadi saat permintaan XML-RPC
+            // Misalnya, tampilkan pesan kesalahan atau kembalikan nilai null
+
+            return null;
+        }
+        // $results = $res->value(raw_data);
+
+        // return $results;
+        // dd($res->raw_data);
         // echo $res;
 
         // $IP = '192.168.1.27';

@@ -45,7 +45,7 @@ class AbsensisImport implements ToModel,WithHeadingRow
             if($nama_map)
             {
                 $karyawan = Karyawan::where('nama', $nama_map->nama)->first();
-                // dd($nama_map,$karyawan);
+                dd($nama_map,$karyawan);
             }
 
             if ($karyawan)

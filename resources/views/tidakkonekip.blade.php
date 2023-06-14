@@ -1,1 +1,1 @@
-<p>ga konek</p>
+<p>Koneksi Gagal</p>
