@@ -1,1 +1,1 @@
-<p>Koneksi Gagal</p>
+<p>Koneksi gagal !</p>

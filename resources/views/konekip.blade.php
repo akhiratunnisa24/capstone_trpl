@@ -1,1 +1,1 @@
-<p>Koneksi Berhasil</p>
+<p>Koneksi berhasil Menggunakan use Illuminate\Support\Facades\Http !</p>

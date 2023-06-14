@@ -499,18 +499,26 @@ class AbsensiController extends Controller
 
     public function someControllerMethod()
     {
-        $networkHelper = new NetworkHelper();
-        $isConnected = $networkHelper->connectToIP('192.168.1.58');
-        // 192.168.100.51
-
-        if ($isConnected) {
-            // Koneksi berhasil
-            
+        $ipAddress = '192.168.1.43'; // Ganti dengan alamat IP perangkat yang ingin Anda tes
+        if (NetworkHelper::testConnection($ipAddress)) {
             return view('konekip');
         } else {
-            // Koneksi gagal
             return view('tidakkonekip');
         }
+
+        // $networkHelper = new NetworkHelper();
+        // $isConnected = $networkHelper->connectToIP('192.168.1.43');
+
+        // if ($isConnected) {
+        //     // Koneksi berhasil
+        //     return view('konekip');
+        // } else {
+        //     // Koneksi gagal
+        //     return view('tidakkonekip');
+        // }
+
+       
+
     }
 
     public function indexs(Request $request)
