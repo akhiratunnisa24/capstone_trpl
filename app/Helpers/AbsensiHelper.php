@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Exception;
 use GuzzleHttp\Client;
 
 class AbsensiHelper
@@ -9,7 +10,6 @@ class AbsensiHelper
     public function connectToIP($IP)
     {
         $client = new Client();
-
         try {
             $response = $client->request('GET', $IP);
 
@@ -22,7 +22,6 @@ class AbsensiHelper
             }
         } catch (\Exception $e) {
             // Tangani kesalahan jika terjadi
-
             return false;
         }
     }

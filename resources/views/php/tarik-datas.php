@@ -16,7 +16,7 @@ if($Key=="") $Key="0";
 $IP = "192.168.1.205";
 $Key = "10";
 if($IP == "") $IP = "192.168.1.205";
-if($Key== "") $Key="10";
+if($Key== "") $Key="0";
 ?>
 
 <form action="tarik-data.php">

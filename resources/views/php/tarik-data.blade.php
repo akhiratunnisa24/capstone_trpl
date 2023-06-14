@@ -14,10 +14,10 @@
     ?> -->
 
     @php
-        $IP = "192.168.10.205";
-        $Key = "10";
-        if($IP == "") $IP = "192.168.10.205";
-        if($Key== "") $Key="10";
+        $IP = "192.168.100.51";
+        $Key = "0";
+        if($IP == "") $IP = "192.168.100.51";
+        if($Key== "") $Key="0";
     @endphp
 
     <div class="row">
@@ -82,6 +82,7 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
+                            
                                     {{-- <php
                                     $Connect = fsockopen($IP, "80", $errno, $errstr, 1);
                                     if ($Connect) {

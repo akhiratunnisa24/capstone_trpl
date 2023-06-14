@@ -33,7 +33,7 @@ Route::get('cutiResponse', 'API\CutiResponseController@all');
 
 
 Route::get('/get-absensi', 'API\AbsensiRequest@xmlRpcRequest');
-Route::get('/getabsensi-response', 'API\AbsensiRequest@xmlRpcResponse');
+Route::post('/getabsensi-response', 'API\AbsensiRequest@xmlRpcResponse');
 
 
 Route::get('/test-koneksi', 'API\TesKoneksiController@testConnection');

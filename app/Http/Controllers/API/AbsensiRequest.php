@@ -16,57 +16,79 @@ class AbsensiRequest extends Controller
 {
     public function xmlRpcRequest() 
     {
-        $IP = '192.168.10.205';
-        $endpoint = 'http://'.$IP.'/xmlrpc';
+        // $endpoint = 'http://hrms.test/xmlrpc';
+        $client = new Client('http://192.168.100.51/iWsService');
+        // $client = new Client('http://hrms.test/api/getabsensi-response');
+        $headers = [
+        'Content-Type' => 'application/xml'
+        ];
+        $body = '<GetAttLog>
+            <ArgComKey xsi:type=\\"xsd:integer\\">0</ArgComKey>
+            <Arg><PIN xsi:type=\\"xsd:integer\\">All</PIN></Arg>
+        </GetAttLog>';
+        $request = new Request('POST', $headers, $client,$body);
+        $res = $client->send($request);
+        dd($res);
 
-        $client = new Client($endpoint);
-
-        $argComKey = new Value(0, 'int');
-        $argPIN = new Value('All', 'int');
-
-        // Membuat permintaan XML-RPC
-        $request = new Request('GetAttLog', [
-            new Value([
-                'ArgComKey' => $argComKey,
-                'Arg' => new Value([
-                    'PIN' => $argPIN
-                ], 'struct')
-            ], 'struct')
-        ]);
-
-        // dd($request);
-
-        //Mengirim permintaan XML-RPC
-        $response = $client->send($request);
-        dd($response);
-
-        // Mendapatkan data dari respons XML-RPC
-        $xmlResponse = $response->value();
-
-        // Melakukan pemrosesan terhadap hasil respons
-        $results = [];
-        dd($results);
-        if(isset($xmlResponse))
+        if ($res->faultCode()) 
         {
-            $PIN = (string) $xmlResponse->PIN;
-            $dateTime = (string) $xmlResponse->DateTime;
-            $verified = (string) $xmlResponse->Verified;
-            $status = (string) $xmlResponse->Status;
-            $workCode = (string) $xmlResponse->WorkCode;
-    
-            // Menyimpan hasil pemrosesan dalam array
-            $results[] = [
-                'PIN' => $PIN,
-                'dateTime' => $dateTime,
-                'verified' => $verified,
-                'status' => $status,
-                'workCode' => $workCode,
-            ];
+            // Tangani kesalahan jika terjadi saat permintaan XML-RPC
+            // Misalnya, tampilkan pesan kesalahan atau kembalikan nilai null
+
+            return null;
         }
-        
-        // Menggunakan hasil pemrosesan sesuai kebutuhan Anda
-        $results = $this->xmlRpcResponse($xmlResponse->value());
-        return $results;
+        // $results = $res->value(raw_data);
+
+        // return $results;
+        // dd($res->raw_data);
+        // echo $res;
+
+        // $IP = '192.168.1.27';
+        // $endpoint = 'http://hrms.test/xmlrpc';
+
+        // $client = new Client($endpoint);
+
+        // $argComKey = new Value(0, 'int');
+        // $argPIN = new Value('All', 'int');
+
+        // // Membuat permintaan XML-RPC
+        // $request = new Request('GetAttLog', [
+        //     new Value([
+        //         'ArgComKey' => $argComKey,
+        //         'Arg' => new Value([
+        //             'PIN' => $argPIN
+        //         ], 'struct')
+        //     ], 'struct')
+        // ]);
+        // //Mengirim permintaan XML-RPC
+        // $response = $client->send($request);
+        // // Mendapatkan data dari respons XML-RPC
+        // $xmlResponse = $response->value();
+        // dd($xmlResponse);
+
+        // // Melakukan pemrosesan terhadap hasil respons
+        // $results = [];
+        // // dd($results);
+        // // if(isset($xmlResponse))
+        // // {
+        // //     $PIN = (integer) $xmlResponse->PIN;
+        // //     $dateTime = (string) $xmlResponse->DateTime;
+        // //     $verified = (string) $xmlResponse->Verified;
+        // //     $status = (string) $xmlResponse->Status;
+        // //     $workCode = (string) $xmlResponse->WorkCode;
+    
+        // //     // Menyimpan hasil pemrosesan dalam array
+        // //     $results[] = [
+        // //         'PIN' => $PIN,
+        // //         'dateTime' => $dateTime,
+        // //         'verified' => $verified,
+        // //         'status' => $status,
+        // //         'workCode' => $workCode,
+        // //     ];
+        // // }
+        // // Menggunakan hasil pemrosesan sesuai kebutuhan Anda
+        // // $results = $this->xmlRpcResponse($xmlResponse->value());
+        // return $results;
     } 
 
     public function xmlRpcResponse()
@@ -155,8 +177,14 @@ class AbsensiRequest extends Controller
             ],
         ];
 
+        $xmlstr = <<<XML
+            <?xml version='1.0'?>
+            <methodResponse>
+            </methodResponse>
+            XML;
         // Mengubah array response menjadi XML
-        $xml = new SimpleXMLElement('<root/>');
+        $xml = new SimpleXMLElement($xmlstr);
+        
         $this->arrayToXml($response, $xml);
 
         // Mengirim respons XML-RPC
