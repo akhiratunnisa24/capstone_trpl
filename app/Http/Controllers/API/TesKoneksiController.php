@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Helpers\NetworkHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\RequestException;
 
 
 class TesKoneksiController extends Controller
@@ -73,6 +74,19 @@ class TesKoneksiController extends Controller
             return view('konekip');
         } else {
             return view('tidakkonekip');
+        }
+    }
+    public function testConnection5()
+    {
+        $ipAddress = '192.168.1.58'; // Ganti dengan alamat IP yang ingin Anda tuju
+
+        try {
+            $response = Http::timeout(10)->get("$ipAddress");
+            // Lakukan sesuatu dengan $response
+            return response('Connection successful');
+        } catch (RequestException $e) {
+            // Tangani jika terjadi kesalahan koneksi
+            return response('Connection failed: ' . $e->getMessage(), 500);
         }
     }
 }

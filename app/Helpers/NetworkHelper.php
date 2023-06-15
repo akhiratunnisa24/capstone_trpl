@@ -7,7 +7,7 @@ class NetworkHelper
 {
     public function connectToIP($ipAddress)
     {
-        $response = Http::timeout(5)->get('http://' . $ipAddress);
+        $response = Http::timeout(10)->get('http://' . $ipAddress);
         $statusCode = $response->status();
 
         if ($statusCode >= 200 && $statusCode < 300) {

@@ -1,1 +1,1 @@
-<p>Koneksi berhasil Menggunakan use Illuminate\Support\Facades\Http !</p>
+<p>Koneksi berhasil Menggunakan "ping -c 1 "!</p>

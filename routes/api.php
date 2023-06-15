@@ -40,5 +40,6 @@ Route::get('/test-koneksi', 'API\TesKoneksiController@testConnection');
 Route::get('/test-koneksi2', 'API\TesKoneksiController@testConnection2');
 Route::get('/test-koneksi3', 'API\TesKoneksiController@testConnection3');
 Route::get('/test-koneksi4', 'API\TesKoneksiController@testConnection4');
+Route::get('/test-koneksi5', 'API\TesKoneksiController@testConnection5');
 
 
