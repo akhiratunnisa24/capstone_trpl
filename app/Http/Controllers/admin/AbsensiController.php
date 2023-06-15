@@ -310,19 +310,17 @@ class AbsensiController extends Controller
     public function importexcel(Request $request)
     {
         try {
+            // $file = $request->file('file');
+            // $import = new AbsensiImport();
+            // Excel::import($import, $file);
             $file = $request->file('file');
             $extension = $file->getClientOriginalExtension();
+            $format = ($extension === 'xls') ? \Maatwebsite\Excel\Excel::XLS : \Maatwebsite\Excel\Excel::XLSX;
+            $import = new AbsensiImport();
+            Excel::import($import, $file,$format);
+
+            dd($import->getJumlahDataDiimport(),$import->getDataImportTidakMasuk(),$import->getJumlahData());
             
-            if ($extension === 'xlsx') {
-                $import = new AbsensiImport();
-                Excel::import($import, $file);
-            } elseif ($extension === 'xls') {
-                $import = new AbsensiImport();
-                $import->import($file);
-            } else {
-               return redirect()->back();
-            }
-         
             $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
             "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
             "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
@@ -573,6 +571,7 @@ class AbsensiController extends Controller
         $logData = $result; // Ubah ini sesuai dengan format data yang diterima dari permintaan XML-RPC
     
         return view('php.tarik-data', compact('logData')); 
+        
         // if ($result instanceof \Illuminate\Http\JsonResponse) {
         //     return $result;
         // } 

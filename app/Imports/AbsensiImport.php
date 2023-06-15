@@ -9,19 +9,10 @@ use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Jeniscuti;
 use App\Models\Jenisizin;
-use App\Models\Departemen;
 use App\Models\Tidakmasuk;
-use App\Models\Alokasicuti;
 use Illuminate\Support\Facades\Log;
-use App\Mail\TidakmasukNotification;
-use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Illuminate\Support\Facades\Session;
-use Maatwebsite\Excel\Readers\Xlsx;
-use Maatwebsite\Excel\Facades\Excel;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 
 class AbsensiImport implements ToModel,WithHeadingRow
@@ -42,9 +33,10 @@ class AbsensiImport implements ToModel,WithHeadingRow
     public function model(array $row)
     {
         static $counter = 0;
+        dd($row);
         if(isset($row['nik']) && isset($row['tanggal']))
         {
-            dd($row);
+            // dd($row);
             $this->jumlahdata++;
             // Inisialisasi jumlah data yang sudah ada menjadi 0
             $jumlahDatasudahada = 0;
@@ -245,6 +237,7 @@ class AbsensiImport implements ToModel,WithHeadingRow
             }
             else
             {
+                // dd($row);
                 $this->datatidakbisadiimport++;
                 $jumlahKaryawanTidakTerdaftar++;
                 $tidakbisa++;
@@ -268,43 +261,33 @@ class AbsensiImport implements ToModel,WithHeadingRow
        
     }
 
-    public function import($file)
-    {
-        $spreadsheet = IOFactory::load($file);
-        $sheet = $spreadsheet->getActiveSheet();
-        $data = $sheet->toArray();
-
-        foreach ($data as $row) {
-            $this->model($row);
-        }
-    }
 
          //jumlah data keseluruhan dari excel yang akan diimport
-         public function getJumlahData()
-         {
-             return $this->jumlahdata;
-         }
-         public function getJumlahDataDiimport()
-         {
-             return $this->jumlahdatadiimport;
-         }
+    public function getJumlahData()
+    {
+        return $this->jumlahdata;
+    }
+    public function getJumlahDataDiimport()
+    {
+        return $this->jumlahdatadiimport;
+    }
      
-         //jumlah data yang masuk ke tabekl Tidak Masuk tanpa keterangan, sakit/ijin.
-         public function getJumlahDataTidakMasuk()
-         {
-             return $this->jumlahDataTidakMasuk;
-         }
+    //jumlah data yang masuk ke tabekl Tidak Masuk tanpa keterangan, sakit/ijin.
+    public function getJumlahDataTidakMasuk()
+    {
+        return $this->jumlahDataTidakMasuk;
+    }
      
-         //jumlah data yang diimport ke tabel tidak masuk
-         public function getDataImportTidakMasuk()
-         {
-             return $this->jumlahimporttidakmasuk;
-         }
+    //jumlah data yang diimport ke tabel tidak masuk
+    public function getDataImportTidakMasuk()
+    {
+        return $this->jumlahimporttidakmasuk;
+    }
      
-         public function getDatatTidakBisaDiimport()
-         {
-             return $this->datatidakbisadiimport;
-         } 
+    public function getDatatTidakBisaDiimport()
+    {
+        return $this->datatidakbisadiimport;
+    } 
 }
 
     // public function model(array $row)

@@ -28,12 +28,13 @@ Route::get('xmlrpc', 'API\AbsensiResponseController@index');
 Route::get('xmlrpcRequest', 'API\AbsensiRequestController@makeRequest');
 
 
-Route::post('cutiRequest', 'API\CutiRequestController@index');
-Route::get('cutiResponse', 'API\CutiResponseController@all');
+// Route::post('cutiRequest', 'API\CutiRequestController@index');
+// Route::get('cutiResponse', 'API\CutiResponseController@all');
 
 
 Route::get('/get-absensi', 'API\AbsensiRequest@xmlRpcRequest');
-Route::post('/getabsensi-response', 'API\AbsensiRequest@xmlRpcResponse');
+Route::post('/absensi-response', 'API\AbsensiRequest@xmlRpcResponse');
+
 
 
 Route::get('/test-koneksi', 'API\TesKoneksiController@testConnection');

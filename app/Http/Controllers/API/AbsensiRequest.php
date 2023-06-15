@@ -17,8 +17,8 @@ class AbsensiRequest extends Controller
     public function xmlRpcRequest() 
     {
         // $endpoint = 'http://hrms.test/xmlrpc';
-        $client = new Client('http://192.168.100.51/iWsService');
-        // $client = new Client('http://hrms.test/api/getabsensi-response');
+        // $client = new Client('http://192.168.100.51/iWsService');
+        $client = new Client('http://hrms.test/api/absensi-response');
         $headers = [
         'Content-Type' => 'application/xml'
         ];
@@ -26,17 +26,67 @@ class AbsensiRequest extends Controller
             <ArgComKey xsi:type=\\"xsd:integer\\">0</ArgComKey>
             <Arg><PIN xsi:type=\\"xsd:integer\\">All</PIN></Arg>
         </GetAttLog>';
-        $request = new Request('POST', $headers, $client,$body);
-        $res = $client->send($request);
-        dd($res);
+         $request = new Request('POST', $headers, $client,$body);
 
-        if ($res->faultCode()) 
+        // $client = new Client('http://hrms.test/api/getabsensi-response');
+        // $argComKey = new Value(0, 'int');
+        // $argPIN = new Value('All', 'int');
+
+        // // Membuat permintaan XML-RPC
+        // $request = new Request('GetAttLog', [
+        //     new Value([
+        //         'ArgComKey' => $argComKey,
+        //         'Arg' => new Value([
+        //             'PIN' => $argPIN
+        //         ], 'struct')
+        //     ], 'struct')
+        // ]);
+        
+        $response = $client->send($request);
+
+        $xmlResponse = $response->raw_data;
+        // dd($xmlResponse);
+       // Menggunakan preg_match untuk mengekstrak bagian XML dari respons
+        if (preg_match('/<\?xml version="1.0"\?>\n(.*)<\/methodResponse>/s', $xmlResponse, $matches)) 
         {
-            // Tangani kesalahan jika terjadi saat permintaan XML-RPC
-            // Misalnya, tampilkan pesan kesalahan atau kembalikan nilai null
+            $xml = $matches[1];
+            dd($xml);
+            $xmlObject = simplexml_load_string($xml);
+            // dd($xmlObject);
+            $json = json_encode($xmlObject);
+            $array = json_decode($json, true);
+            // Lakukan perulangan untuk mengakses setiap item
+            foreach ($array['GetAttLogResponse']['Row'] as $item) {
+                // Akses data di dalam setiap item
+                $PIN = $item['PIN'];
+                $DateTime = $item['DateTime'];
+                $Verified = $item['Verified'];
+                $Status = $item['Status'];
+                $WorkCode = $item['WorkCode'];
 
-            return null;
+                $result[] = [
+                    'PIN' => $PIN,
+                    'DateTime' => $DateTime,
+                    'Verified' => $Verified,
+                    'Status' => $Status,
+                    'WorkCode' => $WorkCode
+                ];
+                dd($result);
+            }
+        } else {
+            // Jika tidak dapat menemukan bagian XML, tangani di sini
+            // ...
+            return "tidak ada data";
         }
+        // dd($response->raw_data);
+
+        // if ($res->faultCode()) 
+        // {
+        //     // Tangani kesalahan jika terjadi saat permintaan XML-RPC
+        //     // Misalnya, tampilkan pesan kesalahan atau kembalikan nilai null
+
+        //     return null;
+        // }
         // $results = $res->value(raw_data);
 
         // return $results;
