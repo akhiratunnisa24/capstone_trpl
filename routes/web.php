@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SetcutiController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\admin\XmlController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\ShiftController;
 use App\Http\Controllers\admin\AtasanController;
@@ -20,11 +21,11 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\AbsensisController;
 use App\Http\Controllers\admin\KalenderController;
 use App\Http\Controllers\admin\SisacutiController;
+
 use App\Http\Controllers\RequestAbsensiController;
 
+
 use App\Http\Controllers\admin\CutiadminController;
-
-
 use App\Http\Controllers\admin\InformasiController;
 use App\Http\Controllers\admin\IzinAdminController;
 use App\Http\Controllers\admin\JeniscutiController;
@@ -667,17 +668,12 @@ Route::post('/izinstaf/{id}', [DirekturController::class, 'izinRejected'])->name
 // Route::get('/tarik-data', [AbsensiController::class, 'indexs'])->name('tarikdata');
 Route::get('/tarikdatas', [AbsensiController::class, 'tarikdata'])->name('tarikdata.tarik');
 
-Route::get('/tarik-data', [AbsensiController::class, 'showDownloadLogForm'])->name('tarikdata');
-Route::post('/tarik-data', [AbsensiController::class, 'downloadLogData'])->name('tarikdata.download');
+// Route::get('/tarik-data', [AbsensiController::class, 'showDownloadLogForm'])->name('tarikdata');
+// Route::post('/tarik-data', [AbsensiController::class, 'downloadLogData'])->name('tarikdata.download');
+Route::get('/download-data', [XmlController::class, 'index'])->name('tarikdata');
+Route::post('/download-data', [XmlController::class, 'download'])->name('tarikdata.download');
 
-//Route::get('/tarik-data', [RequestAbsensiController::class, 'downloadLogData']); // Route untuk tautan tarik-data.php
-Route::get('/upload-nama', [RequestAbsensiController::class, 'uploadNama']); // Route untuk tautan upload-nama.php
-Route::get('/download-sidik-jari', [RequestAbsensiController::class, 'downloadSidikJari']); // Route untuk tautan download-sidik-jari.php
-Route::get('/upload-sidik-jari', [RequestAbsensiController::class, 'uploadSidikJari']); // Route untuk tautan upload-sidik-jari.php
-//Route::get('/clear-data', [AbsensiController::class, 'clearLogData']); // Route untuk tautan clear-data.php
-//Route::get('/hapus-sidik-jari', [AbsensiController::class, 'hapusSidikJari']);// Route untuk tautan hapus-sidik-jari.php
-// Route::get('/syn-time', [AbsensiController::class, 'syncTime']);// Route untuk tautan syn-time.php
-// Route::get('/hapus-user', [AbsensiController::class, 'hapusUser']);// Route untuk tautan hapus-user.php
+
 
 
 // Route buat tes koneksi ke IP lain

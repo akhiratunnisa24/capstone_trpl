@@ -75,4 +75,32 @@ class TesKoneksiController extends Controller
             return view('tidakkonekip');
         }
     }
+
+    public function testConnection5(Request $request)
+    {
+        $ipAddress = '192.168.1.58';
+        $port = 80;
+        $url = 'http://' . $ipAddress . ':' . $port;
+
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // Waktu tunggu dalam detik
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+
+        $result = curl_exec($ch);
+
+        if ($result !== false) {
+            $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            if ($statusCode == 200) {
+                return response()->json(['status' => 'success', 'message' => 'Berhasil terhubung.']);
+            } else {
+                return response()->json(['status' => 'error', 'message' => 'Gagal terhubung.']);
+            }
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Gagal terhubung: ' . curl_error($ch)]);
+        }
+
+        curl_close($ch);
+    }
 }
