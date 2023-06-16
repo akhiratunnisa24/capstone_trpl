@@ -527,17 +527,27 @@ class AbsensiController extends Controller
 
     public function tarikdata(Request $request)
     {
-        $IP = '192.168.1.58';
+        $IP = '192.168.1.47';
         $absensiHelper = new absensiHelper();
         $isConnected = $absensiHelper->connectToIP($IP);
         
-
         if ($isConnected) {
             // Koneksi berhasil
-            return view('konekip');
+            return 'Berhasil terkoneksi ke '. $IP;
+            // dd($IP,$absensiHelper,$isConnected);
+            // return response()->json([
+            //     'message' => 'Berhasil terkoneksi ke IP',
+            //     'IP' => $IP
+            //   ]);
+            // return view('konekip');
             // return "Berhasil Terkoneksi ke ". $IP. " tersebut";
         } else {
-            return view('tidakkonekip');
+            return response()->json([
+                'message' => 'Koneksi Gagal',
+                'IP' => $IP
+              ]);
+            // return 'Gagal terkoneksi ke '. $IP;
+            // return view('tidakkonekip');
             // return "Koneksi ke IP " . $IP . " Gagal";
         }
 
@@ -554,72 +564,38 @@ class AbsensiController extends Controller
 
     public function downloadLogData(Request $request)
     {
-        $IP = $request->input('ip', '192.168.1.205');
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $IP = $request->input('ip', '192.168.1.47');
         $Key = $request->input('key', '0');
 
         $absensiRequest = new AbsensiRequest();
-        $result = $absensiRequest->xmlRpcRequest($IP, $Key);
+        $logData = $absensiRequest->xmlRpcRequest($IP, $Key);
 
-        if ($result === null) {
-            // Tangani kesalahan jika terjadi saat permintaan XML-RPC
-            // Misalnya, tampilkan pesan kesalahan atau arahkan pengguna ke halaman yang sesuai
-            // ...
-    
+        if ($logData === null) {
             return "DATA KOSONG";
         }
-    
-        $logData = $result; // Ubah ini sesuai dengan format data yang diterima dari permintaan XML-RPC
-    
-        return view('php.tarik-data', compact('logData')); 
-        
-        // if ($result instanceof \Illuminate\Http\JsonResponse) {
-        //     return $result;
-        // } 
-        // else
-        // {
-        //     //     $Connect = $result['result'];
-        //     $Connect = $result;
 
-        //     $soapRequest = "<GetAttLog><ArgComKey xsi:type=\"xsd:integer\">" . $Key . "</ArgComKey><Arg><PIN xsi:type=\"xsd:integer\">All</PIN></Arg></GetAttLog>";
-        //     $newLine = "\r\n";
-
-        //     fputs($Connect, "POST /iWsService HTTP/1.0" . $newLine);
-        //     fputs($Connect, "Content-Type: text/xml" . $newLine);
-        //     fputs($Connect, "Content-Length: " . strlen($soapRequest) . $newLine . $newLine);
-        //     fputs($Connect, $soapRequest . $newLine);
-
-        //     $buffer = "";
-        //     while ($response = fgets($Connect, 1024)) {
-        //         $buffer .= $response;
-        //     }
-
-        //     fclose($Connect);
-
-        //     $responseData = Parse_Data($buffer, "<GetAttLogResponse>", "</GetAttLogResponse>");
-        //     $responseData = explode("\r\n", $responseData);
-
-        //     $logData = [];
-        //     foreach ($responseData as $line) {
-        //         $data = Parse_Data($line, "<Row>", "</Row>");
-        //         $PIN = Parse_Data($data, "<PIN>", "</PIN>");
-        //         $DateTime = Parse_Data($data, "<DateTime>", "</DateTime>");
-        //         $Verified = Parse_Data($data, "<Verified>", "</Verified>");
-        //         $Status = Parse_Data($data, "<Status>", "</Status>");
-
-        //         $logData[] = [
-        //             'PIN' => $PIN,
-        //             'DateTime' => $DateTime,
-        //             'Verified' => $Verified,
-        //             'Status' => $Status
-        //         ];
-        //     }
-
-        //     return [
-        //         'error' => null,
-        //         'result' => $logData
-        //     ];
-        // }  
+        return view('php.tarik-data', compact('logData','row'));
     }
+
+    // public function downloadLogData(Request $request)
+    // {
+    //     $IP = $request->input('ip', '192.168.1.205');
+    //     $Key = $request->input('key', '0');
+
+    //     $absensiRequest = new AbsensiRequest();
+    //     $result = $absensiRequest->xmlRpcRequest($IP, $Key);
+
+    //     if ($result === null) {
+    
+    //         return "DATA KOSONG";
+    //     }
+    
+    //     $logData = $result; // Ubah ini sesuai dengan format data yang diterima dari permintaan XML-RPC
+    
+    //     return view('php.tarik-data', compact('logData')); 
+        
+    // }
 
 }
 

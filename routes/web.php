@@ -671,7 +671,7 @@ Route::get('/tarikdatas', [AbsensiController::class, 'tarikdata'])->name('tarikd
 // Route::get('/tarik-data', [AbsensiController::class, 'showDownloadLogForm'])->name('tarikdata');
 // Route::post('/tarik-data', [AbsensiController::class, 'downloadLogData'])->name('tarikdata.download');
 Route::get('/download-data', [XmlController::class, 'index'])->name('tarikdata');
-Route::post('/download-data', [XmlController::class, 'download'])->name('tarikdata.download');
+Route::post('/downloaddata', [XmlController::class, 'download'])->name('tarikdata.download');
 
 
 
