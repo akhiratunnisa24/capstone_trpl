@@ -1312,7 +1312,11 @@
                                 <div class="col-xs-12">
                                     {{-- <div class="text-right">
                                         <a href="/download-data" class="btn btn-info btn-sm">Tarik Data</a>
-                                    </div> --}}
+                                    </div>
+                                    <form action="/tarikdatas">
+                                        @csrf
+                                        <input type="Submit" value="Tes Koneksi">
+                                    </form> --}}
                                     <table class="table table-striped m-t-20">
                                         <thead style="text-align: center;">
                                             <tr class="info">

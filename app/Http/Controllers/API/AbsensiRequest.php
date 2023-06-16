@@ -5,180 +5,174 @@ namespace App\Http\Controllers\API;
 use DOMDocument;
 use PhpXmlRpc\Value;
 use App\Models\Dummy;
-use PhpXmlRpc\Client;
+use PhpXmlRpc\Encoder;
 use SimpleXMLElement;
 use PhpXmlRpc\Request;
 use PhpXmlRpc\Response;
 use App\Models\Absensis;
+use GuzzleHttp\Client as GuzzleClient;
 use App\Http\Controllers\Controller;
  
 class AbsensiRequest extends Controller
 {
-    public function xmlRpcRequest() 
-    {
-        // $endpoint = 'http://hrms.test/xmlrpc';
-        // $client = new Client('http://192.168.100.51/iWsService');
-        $client = new Client('http://hrms.test/api/absensi-response');
-        $headers = [
-        'Content-Type' => 'application/xml'
-        ];
-        $body = '<GetAttLog>
-            <ArgComKey xsi:type=\\"xsd:integer\\">0</ArgComKey>
-            <Arg><PIN xsi:type=\\"xsd:integer\\">All</PIN></Arg>
-        </GetAttLog>';
-         $request = new Request('POST', $headers, $client,$body);
+    // public function xmlRpcRequest() 
+    // {
+        // $client = new Client('http://hrms.test/api/absensi-response');
+        // $headers = [
+        // 'Content-Type' => 'application/xml'
+        // ];
+        // $body = '<GetAttLog>
+        //     <ArgComKey xsi:type=\\"xsd:integer\\">0</ArgComKey>
+        //     <Arg><PIN xsi:type=\\"xsd:integer\\">All</PIN></Arg>
+        // </GetAttLog>';
+         
+        // $request = new Request('GET',$headers, $client,$body);
 
-        // $client = new Client('http://hrms.test/api/getabsensi-response');
-        // $argComKey = new Value(0, 'int');
-        // $argPIN = new Value('All', 'int');
-
-        // // Membuat permintaan XML-RPC
-        // $request = new Request('GetAttLog', [
-        //     new Value([
-        //         'ArgComKey' => $argComKey,
-        //         'Arg' => new Value([
-        //             'PIN' => $argPIN
-        //         ], 'struct')
-        //     ], 'struct')
-        // ]);
-        
-        $response = $client->send($request);
-
-        $xmlResponse = $response->raw_data;
-        // dd($xmlResponse);
-       // Menggunakan preg_match untuk mengekstrak bagian XML dari respons
-        if (preg_match('/<\?xml version="1.0"\?>\n(.*)<\/methodResponse>/s', $xmlResponse, $matches)) 
-        {
-            $xml = $matches[1];
-            dd($xml);
-            $xmlObject = simplexml_load_string($xml);
-            // dd($xmlObject);
-            $json = json_encode($xmlObject);
-            $array = json_decode($json, true);
-            // Lakukan perulangan untuk mengakses setiap item
-            foreach ($array['GetAttLogResponse']['Row'] as $item) {
-                // Akses data di dalam setiap item
-                $PIN = $item['PIN'];
-                $DateTime = $item['DateTime'];
-                $Verified = $item['Verified'];
-                $Status = $item['Status'];
-                $WorkCode = $item['WorkCode'];
-
-                $result[] = [
-                    'PIN' => $PIN,
-                    'DateTime' => $DateTime,
-                    'Verified' => $Verified,
-                    'Status' => $Status,
-                    'WorkCode' => $WorkCode
-                ];
-                dd($result);
-            }
-        } else {
-            // Jika tidak dapat menemukan bagian XML, tangani di sini
-            // ...
-            return "tidak ada data";
-        }
-        // dd($response->raw_data);
-
-        // if ($res->faultCode()) 
-        // {
-        //     // Tangani kesalahan jika terjadi saat permintaan XML-RPC
-        //     // Misalnya, tampilkan pesan kesalahan atau kembalikan nilai null
-
-        //     return null;
-        // }
-        // $results = $res->value(raw_data);
-
-        // return $results;
-        // dd($res->raw_data);
-        // echo $res;
-
-        // $IP = '192.168.1.27';
-        // $endpoint = 'http://hrms.test/xmlrpc';
-
-        // $client = new Client($endpoint);
-
-        // $argComKey = new Value(0, 'int');
-        // $argPIN = new Value('All', 'int');
-
-        // // Membuat permintaan XML-RPC
-        // $request = new Request('GetAttLog', [
-        //     new Value([
-        //         'ArgComKey' => $argComKey,
-        //         'Arg' => new Value([
-        //             'PIN' => $argPIN
-        //         ], 'struct')
-        //     ], 'struct')
-        // ]);
-        // //Mengirim permintaan XML-RPC
         // $response = $client->send($request);
-        // // Mendapatkan data dari respons XML-RPC
-        // $xmlResponse = $response->value();
-        // dd($xmlResponse);
 
-        // // Melakukan pemrosesan terhadap hasil respons
-        // $results = [];
-        // // dd($results);
-        // // if(isset($xmlResponse))
-        // // {
-        // //     $PIN = (integer) $xmlResponse->PIN;
-        // //     $dateTime = (string) $xmlResponse->DateTime;
-        // //     $verified = (string) $xmlResponse->Verified;
-        // //     $status = (string) $xmlResponse->Status;
-        // //     $workCode = (string) $xmlResponse->WorkCode;
-    
-        // //     // Menyimpan hasil pemrosesan dalam array
-        // //     $results[] = [
-        // //         'PIN' => $PIN,
-        // //         'dateTime' => $dateTime,
-        // //         'verified' => $verified,
-        // //         'status' => $status,
-        // //         'workCode' => $workCode,
-        // //     ];
-        // // }
-        // // Menggunakan hasil pemrosesan sesuai kebutuhan Anda
-        // // $results = $this->xmlRpcResponse($xmlResponse->value());
-        // return $results;
-    } 
+    //     $xmlResponse = $response->raw_data;
+    //     dd($response);
+    //    // Menggunakan preg_match untuk mengekstrak bagian XML dari respons
+    //     if (preg_match('/<\?xml version="1.0"\>\n(.*)<\/methodResponse>/s', $xmlResponse, $matches)) 
+    //     {
+    //         $xml = $matches[1];
+    //         dd($xml);
+    //         $xmlObject = simplexml_load_string($xml);
+    //         // dd($xmlObject);
+    //         $json = json_encode($xmlObject);
+    //         $array = json_decode($json, true);
+    //         // Lakukan perulangan untuk mengakses setiap item
+    //         foreach ($array['GetAttLogResponse']['Row'] as $item) {
+    //             // Akses data di dalam setiap item
+    //             $PIN = $item['PIN'];
+    //             $DateTime = $item['DateTime'];
+    //             $Verified = $item['Verified'];
+    //             $Status = $item['Status'];
+    //             $WorkCode = $item['WorkCode'];
+
+    //             $result[] = [
+    //                 'PIN' => $PIN,
+    //                 'DateTime' => $DateTime,
+    //                 'Verified' => $Verified,
+    //                 'Status' => $Status,
+    //                 'WorkCode' => $WorkCode
+    //             ];
+    //             dd($result);
+    //         }
+    //     } else {
+    //         // Jika tidak dapat menemukan bagian XML, tangani di sini
+    //         // ...
+    //         return "tidak ada data";
+    //     }
+        
+    // } 
+
+    // public function xmlRpcResponse()
+    // {
+    //     $results = Dummy::all()->toArray();
+    //     $processedResults = [];
+
+    //     foreach ($results as $row) {
+    //         $PIN = (string) $row['noid'];
+    //         $dateTime = (string) $row['tanggal'];
+    //         $verified = (string) $row['scan_masuk'];
+    //         $status = (string) $row['scan_keluar'];
+    //         $workCode = (string) $row['nama'];
+
+    //         // Menyimpan hasil pemrosesan dalam array
+    //         $data = [
+    //             'PIN' => $PIN,
+    //             'DateTime' => $dateTime,
+    //             'Verified' => $verified,
+    //             'Status' => $status,
+    //             'WorkCode' => $workCode,
+    //         ];
+    //         $processedResults[] = $data;
+    //     }
+    //     // Membuat objek response dengan hasil query sebagai argumen
+    //     $response = [
+    //         'GetAttLogResponse' => [
+    //             'Row' => $processedResults,
+    //         ],
+    //     ];
+    //     $xmlstr = <<<XML
+    //         <methodResponse>
+    //         </methodResponse>
+    //         XML;
+    //     // Mengubah array response menjadi XML
+    //     $xml = new SimpleXMLElement($xmlstr);
+    //     $this->arrayToXml($response, $xml);
+
+    //     // Mengirim respons XML-RPC
+    //     return response($xml->asXML(), 200, ['Content-Type' => 'text/xml']);
+    // }
+
+    public function xmlRpcRequest()
+    {
+        //Membuat objek GuzzleHttp\Client
+        $httpClient = new GuzzleClient();
+
+        // Membuat objek XmlRpcEncoder
+        $encoder = new Encoder();
+
+        // Membuat array data parameter untuk permintaan XML-RPC
+        $params = [
+            new Value(0, 'int'), // ArgComKey
+            new Value('All', 'int'), // Arg->PIN
+        ];
+
+        // Mengubah array data parameter menjadi XML menggunakan XmlRpcEncoder
+        $xmlParams = $encoder->encode($params)->serialize();
+
+        // Membuat objek permintaan HTTP menggunakan Guzzle
+        $response = $httpClient->post('http://hrms.test/api/absensi-response', [
+            'headers' => [
+                'Content-Type' => 'text/xml',
+            ],
+            'body' => $xmlParams,
+        ]);
+        // $client = new GuzzleClient();
+        // $headers = [
+        //     'Content-Type' => 'application/xml'
+        // ];
+        // $body = '<GetAttLog>
+        // <ArgComKey xsi:type="xsd:integer">0</ArgComKey>
+        // <Arg><PIN xsi:type="xsd:integer">All</PIN></Arg>
+        // </GetAttLog>';
+        
+        // $response = $client->post('http://hrms.test/api/absensi-response', [
+        //     'headers' => $headers,
+        //     'body' => $body,
+        // ]);
+
+        // Mendapatkan konten respons XML
+        $xmlResponse = trim($response->getBody()->getContents());
+        $xmlResponse = preg_replace('/[^\x{9}\x{A}\x{D}\x{20}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', '', $xmlResponse);
+        $xmlRespons = str_replace('◀', '', $xmlResponse);
+        $xmlRes = str_replace('▶', '', $xmlRespons);
+
+        // Konversi menjadi objek SimpleXMLElement
+        $xmlObject = simplexml_load_string($xmlRes);
+
+        // Konversi objek SimpleXMLElement menjadi array
+        $xmlArray = json_decode(json_encode($xmlObject), true);
+        return $xmlArray;
+    }
 
     public function xmlRpcResponse()
     {
         $results = Dummy::all()->toArray();
-        // dd($results);
-        // $results = [
-        //     [
-        //         'PIN' => 'XXXXX1',
-        //         'DateTime' => 'YYYY-MM-DD HH:MM:SS1',
-        //         'Verified' => 'X1',
-        //         'Status' => 'X1',
-        //         'WorkCode' => 'XXXXX1',
-        //     ],
-        //     [
-        //         'PIN' => 'XXXXX2',
-        //         'DateTime' => 'YYYY-MM-DD HH:MM:SS1',
-        //         'Verified' => 'X1',
-        //         'Status' => 'X1',
-        //         'WorkCode' => 'XXXXX1',
-        //     ],
-        //     // Tambahkan data dummy lainnya sesuai kebutuhan
-        // ];
-        // dd($results);
         $processedResults = [];
-
+    
         foreach ($results as $row) {
             $PIN = (string) $row['noid'];
             $dateTime = (string) $row['tanggal'];
             $verified = (string) $row['scan_masuk'];
             $status = (string) $row['scan_keluar'];
             $workCode = (string) $row['nama'];
-
+    
             // Menyimpan hasil pemrosesan dalam array
             $data = [
-                // new Value($PIN),
-                // new Value($dateTime),
-                // new Value($verified),
-                // new Value($status),
-                // new Value($workCode),
                 'PIN' => $PIN,
                 'DateTime' => $dateTime,
                 'Verified' => $verified,
@@ -187,71 +181,36 @@ class AbsensiRequest extends Controller
             ];
             $processedResults[] = $data;
         }
-        // foreach ($results as $row) {
-        //     $noid       = (string) $row['noid'];
-        //     $nama       = (string) $row['nama'];
-        //     $tanggal    = (string) $row['tanggal'];
-        //     $jam_masuk  = (string) $row['jam_masuk'];
-        //     $jam_pulang = (string) $row['jam_pulang'];
-        //     $scan_masuk = (string) $row['scan_masuk'];
-        //     $scan_keluar= (string) $row['scan_keluar'];
-        //     $terlambat  = (string) $row['terlambat'];
-        //     $plg_cepat  = (string) $row['plg_cepat'];
-        //     $lembur     = (string) $row['lembur'];
-        //     $jam_kerja  = (string) $row['jam_kerja'];
-        //     $jml_hadir  = (string) $row['jml_hadir'];
-
-        //     // Menyimpan hasil pemrosesan dalam array
-        //     $data = [
-        //         'noid'       => $noid,
-        //         'nama'       => $nama,
-        //         'tanggal'    => $tanggal,
-        //         'jam_masuk'  => $jam_masuk,
-        //         'jam_pulang' => $jam_pulang,
-        //         'scan_masuk' => $scan_masuk,
-        //         'scan_keluar'=> $scan_keluar,
-        //         'terlambat'  => $terlambat,
-        //         'plg_cepat'  => $plg_cepat,
-        //         'lembur'     => $lembur,
-        //         'jam_kerja'  => $jam_kerja,
-        //         'jml_hadir'  => $jml_hadir,
-
-        //     ];
-        //     $processedResults[] = $data;
-        // }
-
-        // Membuat objek response dengan hasil query sebagai argumen
+    
+        // Membuat array response
         $response = [
             'GetAttLogResponse' => [
                 'Row' => $processedResults,
             ],
         ];
-
-        $xmlstr = <<<XML
-            <?xml version='1.0'?>
-            <methodResponse>
-            </methodResponse>
-            XML;
-        // Mengubah array response menjadi XML
-        $xml = new SimpleXMLElement($xmlstr);
+    
+        // Membuat objek SimpleXMLElement untuk XML response
+        $xmlResponse = new SimpleXMLElement('<methodResponse></methodResponse>');
+        $this->arrayToXml($response, $xmlResponse);
         
-        $this->arrayToXml($response, $xml);
-
         // Mengirim respons XML-RPC
-        return response($xml->asXML(), 200, ['Content-Type' => 'text/xml']);
-    }
+        return response($xmlResponse->asXML(), 200, ['Content-Type' => 'text/xml']);
 
-    private function arrayToXml($data, &$xml)
+    }
+    
+    private function arrayToXml($data, &$xmlData)
     {
         foreach ($data as $key => $value) {
             if (is_array($value)) {
-                if (is_numeric($key)) {
-                    $key = 'item' . $key;
+                if (!is_numeric($key)) {
+                    $subnode = $xmlData->addChild("$key");
+                    $this->arrayToXml($value, $subnode);
+                } else {
+                    $subnode = $xmlData->addChild("item$key");
+                    $this->arrayToXml($value, $subnode);
                 }
-                $subnode = $xml->addChild($key);
-                $this->arrayToXml($value, $subnode);
             } else {
-                $xml->addChild("$key", htmlspecialchars("$value"));
+                $xmlData->addChild("$key", htmlspecialchars("$value"));
             }
         }
     }

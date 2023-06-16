@@ -34,6 +34,8 @@ Route::get('xmlrpcRequest', 'API\AbsensiRequestController@makeRequest');
 
 Route::get('/get-absensi', 'API\AbsensiRequest@xmlRpcRequest');
 Route::post('/absensi-response', 'API\AbsensiRequest@xmlRpcResponse');
+//untuk melihat data
+// Route::get('/absensi-response', 'API\AbsensiRequest@xmlRpcResponse');
 
 
 
