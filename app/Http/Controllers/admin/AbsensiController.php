@@ -497,11 +497,18 @@ class AbsensiController extends Controller
 
     public function someControllerMethod()
     {
-        $ipAddress = '192.168.1.43'; // Ganti dengan alamat IP perangkat yang ingin Anda tes
-        if (NetworkHelper::testConnection($ipAddress)) {
+        $ipAddress = '192.168.1.58';
+        $networkHelper = new NetworkHelper();
+        $isConnected = $networkHelper->connectToIP($ipAddress);
+
+
+        if ($isConnected) {
+            // Koneksi berhasil
             return view('konekip');
+            // return "Berhasil Terkoneksi ke ". $IP. " tersebut";
         } else {
             return view('tidakkonekip');
+            // return "Koneksi ke IP " . $IP . " Gagal";
         }
 
         // $networkHelper = new NetworkHelper();
