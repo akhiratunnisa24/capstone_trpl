@@ -38,7 +38,7 @@ Route::post('/absensi-response', 'API\AbsensiRequest@xmlRpcResponse');
 // Route::get('/absensi-response', 'API\AbsensiRequest@xmlRpcResponse');
 
 
-
+// Tes Koneksi
 Route::get('/test-koneksi', 'API\TesKoneksiController@testConnection');
 Route::get('/test-koneksi2', 'API\TesKoneksiController@testConnection2');
 Route::get('/test-koneksi3', 'API\TesKoneksiController@testConnection3');
