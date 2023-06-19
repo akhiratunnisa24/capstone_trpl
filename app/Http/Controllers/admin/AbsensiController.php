@@ -534,18 +534,14 @@ class AbsensiController extends Controller
 
     public function tarikdata(Request $request)
     {
-        $IP = '192.168.1.47';
+        // $IP = '192.168.1.96';
+        $IP = '192.168.0.183';
         $absensiHelper = new absensiHelper();
         $isConnected = $absensiHelper->connectToIP($IP);
         
         if ($isConnected) {
             // Koneksi berhasil
             return 'Berhasil terkoneksi ke '. $IP;
-            // dd($IP,$absensiHelper,$isConnected);
-            // return response()->json([
-            //     'message' => 'Berhasil terkoneksi ke IP',
-            //     'IP' => $IP
-            //   ]);
             // return view('konekip');
             // return "Berhasil Terkoneksi ke ". $IP. " tersebut";
         } else {
@@ -563,7 +559,7 @@ class AbsensiController extends Controller
     public function showDownloadLogForm()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $IP = "192.168.10.205";
+        $IP = "192.168.0.183";
         $Key = "10";
 
         return view('php.tarik-data', compact('IP', 'Key','row'));
@@ -572,11 +568,11 @@ class AbsensiController extends Controller
     public function downloadLogData(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $IP = $request->input('ip', '192.168.1.47');
+        $IP = $request->input('ip', '192.168.0.183');
         $Key = $request->input('key', '0');
 
         $absensiRequest = new AbsensiRequest();
-        $logData = $absensiRequest->xmlRpcRequest($IP, $Key);
+        $logData = $absensiRequest->xmlRpcRequest($IP,$Key);
 
         if ($logData === null) {
             return "DATA KOSONG";

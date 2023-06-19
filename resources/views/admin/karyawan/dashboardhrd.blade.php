@@ -1306,12 +1306,11 @@
                         </h4>
                     </div>
                     <div id="15" class="panel-collapse collapse">
-
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-12">
                                     {{-- <div class="text-right">
-                                        <a href="/download-data" class="btn btn-info btn-sm">Tarik Data</a>
+                                        <a href="/tarik-data" class="btn btn-info btn-sm">Tarik Data</a>
                                     </div>
                                     <form action="/tarikdatas">
                                         @csrf

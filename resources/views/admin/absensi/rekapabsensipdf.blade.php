@@ -98,7 +98,7 @@
                      @endif
                 </td>
                 {{-- <td class="n">{{ucwords(strtolower($d->departemens->nama_departemen))}}</td> --}}
-                <td class="align-tanggal">{{$d->tanggal}}</td>
+                <td class="align-tanggal">{{ \Carbon\Carbon::parse($d->tanggal)->format('d/m/Y')}}</td>
                 <td>{{$d->jam_masuk}}</td>
                 <td>{{$d->jam_keluar}}</td>
                 <td>{{$d->terlambat}}</td>
