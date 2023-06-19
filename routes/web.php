@@ -668,10 +668,10 @@ Route::post('/izinstaf/{id}', [DirekturController::class, 'izinRejected'])->name
 // Route::get('/tarik-data', [AbsensiController::class, 'indexs'])->name('tarikdata');
 Route::get('/tarikdatas', [AbsensiController::class, 'tarikdata'])->name('tarikdata.tarik');
 
-// Route::get('/tarik-data', [AbsensiController::class, 'showDownloadLogForm'])->name('tarikdata');
-// Route::post('/tarik-data', [AbsensiController::class, 'downloadLogData'])->name('tarikdata.download');
-Route::get('/download-data', [XmlController::class, 'index'])->name('tarikdata');
-Route::post('/downloaddata', [XmlController::class, 'download'])->name('tarikdata.download');
+Route::get('/tarik-data', [AbsensiController::class, 'showDownloadLogForm'])->name('tarikdata');
+Route::get('/download-data', [AbsensiController::class, 'downloadLogData'])->name('tarikdata.download');
+//Route::get('/download-data', [XmlController::class, 'index'])->name('tarikdata');
+// Route::post('/downloaddata', [XmlController::class, 'download'])->name('tarikdata.download');
 
 
 

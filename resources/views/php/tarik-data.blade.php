@@ -14,9 +14,9 @@
     ?> -->
 
     @php
-        $IP = "192.168.1.58";
+        $IP = "192.168.0.183";
         $Key = "0";
-        if($IP == "") $IP = "192.168.1.58";
+        if($IP == "") $IP = "192.168.0.183";
         if($Key== "") $Key="0";
     @endphp
 
@@ -43,7 +43,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-body">
-                            <form method="POST" action="{{ route('tarikdata.download') }}">
+                            <form method="GET" action="{{ route('tarikdata.download') }}">
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-md-5 m-t-5">
@@ -63,9 +63,11 @@
 
                             {{-- @if ($IP != "")  --}}
                             @if(isset($logData))
+                                
                                 <table  id="datatable-responsive40" class="table table-striped table-bordered m-t-20" cellspacing="0" width="100%">
                                     <thead>
                                         <tr align="center">
+                                            <td><B>Nama</B></td>
                                             <td><B>UserID</B></td>
                                             <td width="200"><B>Tanggal & Jam</B></td>
                                             <td><B>Verifikasi</B></td>
@@ -73,14 +75,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($logData as $data)
+                                        @foreach ($logData['GetAttLogResponse']['Row'] as $data)
                                             <tr align="center">
+                                                <td>{{ $data['WorkCode']}}</td>
                                                 <td>{{ $data['PIN'] }}</td>
                                                 <td>{{ $data['DateTime'] }}</td>
                                                 <td>{{ $data['Verified'] }}</td>
                                                 <td>{{ $data['Status'] }}</td>
                                             </tr>
                                         @endforeach
+                                        {{-- @foreach ($logData as $data)
+                                            @php dd($logData); @endphp
+                                            <tr align="center">
+                                                <td>{{ $data['PIN'] }}</td>
+                                                <td>{{ $data['DateTime'] }}</td>
+                                                <td>{{ $data['Verified'] }}</td>
+                                                <td>{{ $data['Status'] }}</td>
+                                            </tr>
+                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             @endif
