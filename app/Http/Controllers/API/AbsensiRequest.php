@@ -17,7 +17,8 @@ use App\Helpers\AbsensiHelper;
 class AbsensiRequest extends Controller
 {
 
-    public function amlRpcRequest()
+    //xmlrpcrequest ke localhost
+    public function xmlRpcRequest()
     {
         //Membuat objek GuzzleHttp\Client
         $httpClient = new GuzzleClient();
@@ -69,7 +70,48 @@ class AbsensiRequest extends Controller
         return $xmlArray;
     }
 
-    public function xmlrpcRequest($IP,$Key)
+    //xmlrpc response untuk localhost
+    public function xmlRpcResponse()
+    {
+        $results = Dummy::all()->toArray();
+        $processedResults = [];
+    
+        foreach ($results as $row) {
+            $PIN = (string) $row['noid'];
+            $dateTime = (string) $row['tanggal'];
+            $verified = (string) $row['scan_masuk'];
+            $status = (string) $row['scan_keluar'];
+            $workCode = (string) $row['nama'];
+    
+            // Menyimpan hasil pemrosesan dalam array
+            $data = [
+                'PIN' => $PIN,
+                'DateTime' => $dateTime,
+                'Verified' => $verified,
+                'Status' => $status,
+                'WorkCode' => $workCode,
+            ];
+            $processedResults[] = $data;
+        }
+    
+        // Membuat array response
+        $response = [
+            'GetAttLogResponse' => [
+                'Row' => $processedResults,
+            ],
+        ];
+    
+        // Membuat objek SimpleXMLElement untuk XML response
+        $xmlResponse = new SimpleXMLElement('<methodResponse></methodResponse>');
+        $this->arrayToXml($response, $xmlResponse);
+        
+        // Mengirim respons XML-RPC
+        return response($xmlResponse->asXML(), 200, ['Content-Type' => 'text/xml']);
+
+    }
+
+    //xmlrpc request ke IP lain
+    public function amlrpcRequest($IP,$Key)
     {
         $absensiHelper = new AbsensiHelper();
         $isConnected = $absensiHelper->connectToIP($IP);
@@ -85,23 +127,36 @@ class AbsensiRequest extends Controller
             $encoder = new Encoder();
 
             // Membuat array data parameter untuk permintaan XML-RPC
-            $params = [
-                new Value(0, 'int'), // ArgComKey
-                new Value('All', 'int'), // Arg->PIN
-            ];
+            // $params = [
+            //     new Value(0, 'int'), // ArgComKey
+            //     new Value('All', 'int'), // Arg->PIN
+            // ];
+            // $params = [
+            //     new Value(0, 'integer'), // ArgComKey
+            //     [
+            //         'PIN' => new Value('All', 'integer') // Arg->PIN
+            //     ]
+            // ];
+
+            $params = '<GetAttLog>
+                <ArgComKey xsi:type=\\"xsd:integer\\">0</ArgComKey>
+                <Arg><PIN xsi:type=\\"xsd:integer\\">All</PIN></Arg>
+            </GetAttLog>';
 
             // Mengubah array data parameter menjadi XML menggunakan XmlRpcEncoder
             $xmlParams = $encoder->encode($params)->serialize();
 
             // Membuat objek permintaan HTTP menggunakan Guzzle
-            $port = 4370;
-            $response = $httpClient->post("http://$IP:$port", [
-                'headers' => [
-                    'Content-Type' => 'application/xml',
-                ],
+            // $port = 4370;
+            $headers = [
+                'Content-Type' => 'application/xml'
+                ];
+            $port = 80;
+            $response = $httpClient->post("http://$IP:$port/iWsService", [
+                'headers' => $headers,
                 'body' => $xmlParams,
             ]);
-            dd($response);
+            dd($response->getHeaders(),$response->getBody()->getContents());
             
             // Mendapatkan konten respons XML
             $xmlResponse = trim($response->getBody()->getContents());
@@ -122,9 +177,10 @@ class AbsensiRequest extends Controller
         }
     }
 
-    public function xmlRpcResponse()
+    //xmlrpc response ke IP lain
+    public function amlRpcResponse($xmlArray)
     {
-        $results = Dummy::all()->toArray();
+        $results = json_decode($xmlArray, true);
         $processedResults = [];
     
         foreach ($results as $row) {

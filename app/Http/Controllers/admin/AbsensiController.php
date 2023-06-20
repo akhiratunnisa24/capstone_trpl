@@ -565,7 +565,8 @@ class AbsensiController extends Controller
         return view('php.tarik-data', compact('IP', 'Key','row'));
     }
 
-    public function downloadLogData(Request $request)
+    //untuk xmlrpcrequest yang memakai form dan ke ip lain
+    public function downloadLogDatas(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $IP = $request->input('ip', '192.168.0.183');
@@ -581,24 +582,26 @@ class AbsensiController extends Controller
         return view('php.tarik-data', compact('logData','row'));
     }
 
-    // public function downloadLogData(Request $request)
-    // {
-    //     $IP = $request->input('ip', '192.168.1.205');
-    //     $Key = $request->input('key', '0');
+    //untuk xmlrpcrequest ambil data ke localhost
+    public function downloadLogData(Request $request)
+    {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $IP = $request->input('ip', '192.168.1.205');
+        $Key = $request->input('key', '0');
 
-    //     $absensiRequest = new AbsensiRequest();
-    //     $result = $absensiRequest->xmlRpcRequest($IP, $Key);
+        $absensiRequest = new AbsensiRequest();
+        $result = $absensiRequest->xmlRpcRequest($IP, $Key);
 
-    //     if ($result === null) {
+        if ($result === null) {
     
-    //         return "DATA KOSONG";
-    //     }
+            return "DATA KOSONG";
+        }
     
-    //     $logData = $result; // Ubah ini sesuai dengan format data yang diterima dari permintaan XML-RPC
+        $logData = $result; // Ubah ini sesuai dengan format data yang diterima dari permintaan XML-RPC
     
-    //     return view('php.tarik-data', compact('logData')); 
+        return view('php.tarik-data', compact('logData','row')); 
         
-    // }
+    }
 
 }
 

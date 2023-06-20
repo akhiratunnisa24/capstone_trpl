@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AbsensiRequest;
+use App\Http\Controllers\API\CutiController;
 
 
 /*
@@ -29,13 +30,16 @@ Route::get('xmlrpcRequest', 'API\AbsensiRequestController@makeRequest');
 
 
 // Route::post('cutiRequest', 'API\CutiRequestController@index');
-// Route::get('cutiResponse', 'API\CutiResponseController@all');
+Route::get('/cutiResponse', 'API\CutiController@getAllCuti');
+Route::get('/izinResponse', 'API\IzinController@getAllizin');
+Route::get('/tidakmasukResponse', 'API\TidakmasukController@getAllData');
+Route::get('/absensiResponse', 'API\AbsensiController@getAllAbsensi');
 
 
 Route::get('/get-absensi', 'API\AbsensiRequest@xmlRpcRequest');
-// Route::post('/absensi-response', 'API\AbsensiRequest@xmlRpcResponse');
+Route::post('/absensi-response', 'API\AbsensiRequest@xmlRpcResponse');
 //untuk melihat data
-Route::get('/absensi-response', 'API\AbsensiRequest@xmlRpcResponse');
+// Route::get('/absensi-response', 'API\AbsensiRequest@xmlRpcResponse');
 
 
 

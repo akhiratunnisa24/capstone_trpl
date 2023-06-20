@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class KaryawanResponseController extends Controller
 {
-
     public function all(Request $request)
     {
 
