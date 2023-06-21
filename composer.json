@@ -14,7 +14,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "maatwebsite/excel": "^3.1",
-        "phpoffice/phpspreadsheet": "^1.28",
+        "phpoffice/phpspreadsheet": "^1.29",
         "phpxmlrpc/phpxmlrpc": "^4.10",
         "psr/simple-cache": "2.0",
         "realrashid/sweet-alert": "^5.1",

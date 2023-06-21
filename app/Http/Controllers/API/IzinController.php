@@ -14,13 +14,13 @@ class IzinController extends Controller
         $limit      = $request->input('limit',10);
         $nik        = $request->input('nik');
         $nama       = $request->input('nama');
-        $jenisizins = $request->input('jenisizin');
+        $id_jenisizin = $request->input('id_jenisizin');
         $status     = $request->input('status');
         $izin       = Izin::with('jenisizins', 'karyawans', 'statuses', 'departemens');
 
         if($nik)
         {
-            $izin = $izin->find($nik);
+            $izin->where('izin.nik',$nik);
         }
 
         if($nama)
@@ -30,27 +30,26 @@ class IzinController extends Controller
             });
         }
 
-        if($jenisizins) 
+        if($id_jenisizin) 
         {
-            $izin->whereHas('jenisizins', function ($query) use ($jenisizins) {
-                $query->where('jenisizins.jenis_izin', 'like', '%' . $jenisizins . '%');
-            });
+            $izin->where('id_jenisizin', $id_jenisizin);
         }
 
         if($status) 
         {
-            $izin->whereHas('status', function ($query) use ($status) {
-                $query->where('status.name_status', 'like', '%' . $status . '%');
+            $izin->whereHas('statuses', function ($query) use ($status) {
+                $query->where('name_status', 'like', '%' . $status . '%');
             });
         }
 
+        $izin = $izin->paginate($limit);
 
-        if ($izin == NULL) {
+        if ($izin->isEmpty()) {
             return ResponseFormatter::error(null, 'Data Izin tidak ditemukan', 404);
         }
 
         return ResponseFormatter::success(
-            $izin->paginate($limit),
+            $izin,
             'Data Izin/Sakit berhasil diambil'
         );
 

@@ -11,25 +11,26 @@ class TidakmasukController extends Controller
     public function getAllData(Request $request)
     {
         $limit      = $request->input('limit',10);
-        $nik        = $request->input('nik');
+        $id_pegawai = $request->input('id_pegawai');
         $nama       = $request->input('nama');
         $tidakmasuk = Tidakmasuk::with('departemen');
 
-        if($nik)
-        {
-            $tidakmasuk = $tidakmasuk->find($nik);
+        if ($id_pegawai) {
+            $tidakmasuk = $tidakmasuk->where('id_pegawai', $id_pegawai);
         }
 
         if ($nama) {
             $tidakmasuk->where('nama', 'like', '%' . $nama . '%');
         }
 
-        if ($tidakmasuk == NULL) {
+        $tidakmasuk = $tidakmasuk->paginate($limit);
+
+        if ($tidakmasuk->isEmpty()) {
             return ResponseFormatter::error(null, 'Data Tidakmasuk tidak ditemukan', 404);
         }
 
         return ResponseFormatter::success(
-            $tidakmasuk->paginate($limit),
+            $tidakmasuk,
             'Data Tidak Masuk berhasil diambil'
         );
     }

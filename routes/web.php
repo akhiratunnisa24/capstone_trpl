@@ -269,6 +269,7 @@ Route::post('/absensi_karyawan/{id}', [AbsensiController::class, 'update'])->nam
 // Route::get('/exportpdf',[AbsensiController::class,'exportpdf'])->name('exportpdf');
 Route::post('/importexcel', [AbsensiController::class, 'importexcel'])->name('importexcel');
 Route::post('/importcsv', [AbsensiController::class, 'importcsv'])->name('importcsv');
+Route::post('/importdata', [AbsensiController::class, 'importdataexcel'])->name('importdataexcel');
 Route::get('/rekapabsensipdf', [AbsensiController::class, 'rekapabsensipdf'])->name('rekapabsensipdf');
 Route::get('/rekapabsensiExcel', [AbsensiController::class, 'rekapabsensiExcel'])->name('rekapabsensiExcel');
 

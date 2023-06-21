@@ -14,16 +14,17 @@ class CutiController extends Controller
     //get All data
     public function getAllCuti(Request $request)
     {
-        $limit      = $request->input('limit',10);
-        $nik        = $request->input('nik');
-        $nama       = $request->input('nama');
-        $jeniscutis = $request->input('jeniscuti');
-        $status     = $request->input('status');
-        $cuti       = Cuti::with('jeniscutis', 'karyawans', 'status', 'departemens');
+        $limit          = $request->input('limit',10);
+        $nik            = $request->input('nik');
+        $nama           = $request->input('nama');
+        $id_jeniscuti   = $request->input('id_jeniscuti');
+        $jeniscuti   = $request->input('jeniscuti');
+        $status         = $request->input('status');
+        $cuti           = Cuti::with('jeniscutis', 'karyawans', 'status', 'departemens');
 
         if($nik)
         {
-            $cuti = Cuti::find($nik);
+            $cuti->where('cuti.nik',$nik);
         }
 
         if($nama)
@@ -33,23 +34,28 @@ class CutiController extends Controller
             });
         }
 
-        if($jeniscutis) 
+        if($id_jeniscuti) 
         {
-            $cuti->whereHas('jeniscutis', function ($query) use ($jeniscutis) {
-                $query->where('jeniscutis.jenis_cuti', 'like', '%' . $jeniscutis . '%');
+            $cuti->where('id_jeniscuti', $id_jeniscuti);
+        }
+
+        if($jeniscuti) 
+        {
+            $cuti->whereHas('jeniscutis', function ($query) use ($jeniscuti) {
+                $query->where('jenis_cuti', 'like', '%' . $jeniscuti . '%');
             });
         }
 
         if($status) 
         {
-            $cuti->whereHas('status', function ($query) use ($status) {
-                $query->where('status.name_status', 'like', '%' . $status . '%');
+            $cuti->whereHas('statuses', function ($query) use ($status) {
+                $query->where('name_status', 'like', '%' . $status . '%');
             });
         }
 
         $cuti = $cuti->paginate($limit);
 
-        if ($cuti == NULL) {
+        if ($cuti->isEmpty()) {
             return ResponseFormatter::error(null, 'Data cuti tidak ditemukan', 404);
         }
 
