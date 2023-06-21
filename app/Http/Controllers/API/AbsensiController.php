@@ -16,6 +16,7 @@ class AbsensiController extends Controller
         $nama       = $request->input('nama');
 
         $absensi    = Absensi::with('karyawans','departemens');
+        
         if($nik)
         {
             $absensi->where('nik', $nik);
@@ -29,7 +30,8 @@ class AbsensiController extends Controller
         }
 
         $absensi = $absensi->paginate($limit);
-        if ($absensi == NULL) {
+
+        if ($absensi->isEmpty()) {
             return ResponseFormatter::error(null, 'Data Absensi tidak ditemukan', 404);
         }
 

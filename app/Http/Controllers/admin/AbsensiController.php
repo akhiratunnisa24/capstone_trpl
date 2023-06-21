@@ -4,15 +4,19 @@ namespace App\Http\Controllers\admin;
 
 use PDF;
 use Carbon\Carbon;
+use App\Models\Cuti;
+use App\Models\Izin;
 use App\Helpers\Parse;
 use App\Models\Jadwal;
 use App\Models\Absensi;
 use App\Models\Karyawan;
+use App\Models\Jeniscuti;
+use App\Models\Jenisizin;
+
 use App\Models\Departemen;
 use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
 use App\Exports\AbsensiExport;
-
 use App\Helpers\AbsensiHelper;
 use App\Helpers\NetworkHelper;
 use App\Imports\AbsensiImport;
@@ -21,16 +25,17 @@ use App\Imports\AttendanceImport;
 use App\Models\SettingOrganisasi;
 use Illuminate\Support\Facades\DB;
 use App\Exports\RekapabsensiExport;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+// require_once app_path('Helpers/Parse.php');
+
+
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use App\Http\Controllers\API\AbsensiRequest;
-// require_once app_path('Helpers/Parse.php');
-
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -338,6 +343,224 @@ class AbsensiController extends Controller
         }
     }
 
+    public function importdataexcel(Request $request)
+    {
+        $request->validate([
+            'uploaded_file' => 'required|mimes:xls,xlsx',
+        ]);
+
+        $file = $request->file('uploaded_file');
+        $extension = $file->getClientOriginalExtension();
+        $spreadsheet = IOFactory::load($file);
+
+        $worksheet = $spreadsheet->getActiveSheet();
+        $data = $worksheet->toArray();
+        // Ambil header
+        $header = $data[0];
+        for ($i = 1; $i < count($data); $i++) {
+            // Ambil data pada baris saat ini
+            $rowData = $data[$i];
+        
+            // Buat array asosiatif menggunakan header sebagai kunci
+            $row = [];
+            for ($j = 0; $j < count($rowData); $j++) {
+                $row[$header[$j]] = $rowData[$j];
+            }
+            // dd($row);
+            if (isset($row['NIK']) && isset($row['Tanggal'])) 
+            {
+                $karyawan = Karyawan::where('nik', $row['NIK'])->first();
+                
+                if(isset($karyawan))
+                {
+                    $tgl = \Carbon\Carbon::createFromFormat('d/m/Y', $row['Tanggal'])->format('Y-m-d');
+                    // dd($row,$tgl);
+                    $absensicek = !Absensi::where('id_karyawan',$karyawan->id)->where('tanggal',$tgl)->first();
+                    
+                    if($absensicek)
+                    {
+                        $scan_masuk = $row['Scan Masuk'];
+                        $scan_pulang= $row['Scan Pulang']; 
+
+                        if($scan_masuk === "" && $scan_pulang === "")
+                        {
+                            $cuti = Cuti::where('id_karyawan', $karyawan->id)
+                                ->whereDate('tgl_mulai', '<=', $tgl)
+                                ->whereDate('tgl_selesai', '>=', $tgl)
+                                ->where('status', 7)
+                                ->select('cuti.id as id_cuti','cuti.id_karyawan','cuti.id_jeniscuti','cuti.tgl_mulai','cuti.tgl_selesai','cuti.status')
+                                ->first();
+
+                            $nama = Karyawan::where('id',$karyawan->id)->select('nama','divisi')->first();
+                            
+                            if($cuti !== NULL) 
+                            {
+
+                                $reason = Jeniscuti::where('id',$cuti->id_jeniscuti)->select('jenis_cuti')->first();
+    
+                                for($date = Carbon::parse($cuti->tgl_mulai);$date->lte(Carbon::parse($cuti->tgl_selesai)); $date->addDay())
+                                {
+                                    $cek = Tidakmasuk::where('id_pegawai', $cuti->id_karyawan)->where('tanggal', $date->format('Y-m-d'))->first();
+                                    if(!$cek){
+                                        $tidakmasuk = new Tidakmasuk;
+                                        $tidakmasuk->id_pegawai = $cuti->id_karyawan;
+                                        $tidakmasuk->nama       = $nama->nama;
+                                        $tidakmasuk->divisi     = $nama->divisi;
+                                        $tidakmasuk->status     = $reason->jenis_cuti;
+                                        $tidakmasuk->tanggal    = $date->format('Y-m-d');
+
+                                        dd($tidakmasuk);
+                                        $tidakmasuk->save();
+    
+                                        // $this->jumlahDataTidakMasuk++; // Increment jumlah data tidak masuk
+                                        // $this->jumlahimporttidakmasuk++;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                $izin = Izin::where('id_karyawan','=',$karyawan->id)
+                                    ->whereDate('tgl_mulai', '<=', $tgl)
+                                    ->whereDate('tgl_selesai', '>=', $tgl)
+                                    ->where('status',7)
+                                    ->select('izin.id','izin.id_karyawan','izin.id_jenisizin','izin.tgl_mulai','izin.tgl_selesai','izin.status')
+                                    ->first();
+                                // dd($izin);
+                                if($izin !== NULL)
+                                {
+                                    dd($izin);
+                                    if($izin->id_jenisizin !== 5)
+                                    {
+                                        $reason = Jenisizin::where('id',$izin->id_jenisizin)->select('jenis_izin')->first();
+    
+                                        for($date = Carbon::parse($izin->tgl_mulai);$date->lte(Carbon::parse($izin->tgl_selesai)); $date->addDay())
+                                        {
+                                            $cek = Tidakmasuk::where('id_pegawai', $izin->id_karyawan)->where('tanggal', $date->format('Y-m-d'))->first();
+                                            if(!$cek)
+                                            {
+                                                $tidakmasuk = new Tidakmasuk;
+                                                $tidakmasuk->id_pegawai = $izin->id_karyawan;
+                                                $tidakmasuk->nama       = $nama->nama;
+                                                $tidakmasuk->divisi     = $nama->divisi;
+                                                $tidakmasuk->status     = $reason->jenis_izin;
+                                                $tidakmasuk->tanggal    = $date->format('Y-m-d');
+                                                $tidakmasuk->save();
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // dd($izin);
+                                    $cek = Tidakmasuk::where('id_pegawai', $karyawan->id)->where('tanggal',$tgl)->first();
+                                    // dd($cek);
+                                    //jika tidak ada data atau $cek == null
+                                    if(!$cek)
+                                    {
+                                        // dd($cek);
+                                        $nama = Karyawan::where('nik',$row['NIK'])->first();
+                                        // dd($nama);
+                                        $tidakmasuk = new Tidakmasuk;
+                                        $tidakmasuk->id_pegawai = $nama->id;
+                                        $tidakmasuk->nama       = $nama->nama;
+                                        $tidakmasuk->divisi     = $nama->divisi;
+                                        $tidakmasuk->status     = 'tanpa keterangan';
+                                        $tidakmasuk->tanggal    = $tgl;
+                                
+                                        // dd($tidakmasuk);
+                                        $tidakmasuk->save();
+                                        // dd($tidakmasuk);
+
+                                    }
+                                    else{
+    
+                                        // dd($cek);
+                                        Log::info('Data tidak masuk karyawan sudah ada');
+                                    }
+                                } 
+                            }
+                            
+                        }
+                        else
+                        {
+                            dd($data);
+                            $jam_excel = [
+                                'Jam Masuk'   => $row['Jam Masuk'],
+                                'Jam Pulang'  => $row['Jam Pulang'],
+                                'Scan Masuk'  => $row['Scan Masuk'],
+                                'Scan Pulang' => $row['Scan Pulang'],
+                                'Terlambat'   => $row['Terlambat'],
+                                'Plg. Cepat'  => $row['Plg. Cepat'],
+                                'Lembur'      => $row['Lembur'],
+                                'Jml Jam Kerja'   => $row['Jml Jam Kerja'],
+                                'Jml Kehadiran'   => $row['Jml Kehadiran'],
+                            ];
+
+                            $formatted_jam = [];
+                        
+                            foreach ($jam_excel as $key => $value) {
+                                if (!empty($value)) {
+                                    $time = Carbon::createFromFormat('H.i', $value); // Create Carbon instance from the time string
+                                    $formatted_jam[$key] = $time->format('H:i:s'); // Format the time as HH:MM:SS
+                                } else {
+                                    $formatted_jam[$key] = null; // Assign null if the value is empty
+                                }
+                            }
+
+                            $data = [
+                                'id_karyawan'   => $karyawan->id,
+                                'nik'           => $karyawan->nip ?? null,
+                                'tanggal'       => $tgl,
+                                'shift'         => null,
+                                'jadwal_masuk'  => isset($formatted_jam['Jam Masuk']) ? $formatted_jam['Jam Masuk'] : null,
+                                'jadwal_pulang' => isset($formatted_jam['Jam Pulang']) ? $formatted_jam['Jam Pulang'] : null,
+                                'jam_masuk'     => isset($formatted_jam['Scan Masuk']) ? $formatted_jam['Scan Masuk'] : null,
+                                'jam_keluar'    => isset($formatted_jam['Scan Pulang']) ? $formatted_jam['Scan Pulang'] : null,
+                                'normal'        => null,
+                                'riil'          => null,
+                                'terlambat'     => isset($formatted_jam['Terlambat']) ? $formatted_jam['Terlambat'] : null,
+                                'plg_cepat'     => isset($formatted_jam['Plg. Cepat']) ? $formatted_jam['Plg. Cepat'] : null,
+                                'absent'        => null,
+                                'lembur'        => isset($formatted_jam['Lembur']) ? $formatted_jam['Lembur'] : null,
+                                'jml_jamkerja'  => isset($formatted_jam['Jml Jam Kerja']) ? $formatted_jam['Jml Jam Kerja'] : null,
+                                'pengecualian'  => null,
+                                'hci'           => null,
+                                'hco'           => null,
+                                'id_departement'=> $karyawan->divisi,
+                                'h_normal'      => null,
+                                'ap'            => null,
+                                'hl'            => null,
+                                'jam_kerja'     => isset($formatted_jam['Jml Kehadiran']) ? $formatted_jam['Jml Kehadiran'] : null,
+                                'lemhanor'      => null,
+                                'lemakpek'      => null,
+                                'lemhali'       => null,                
+                            ];
+                            //  dd($data);
+                            $absensi = Absensi::create($data);
+                        }
+                    }
+                    else
+                    {
+                        Log::info('Data sudah ada di sistem');    
+                    }
+
+                }
+                else
+                {
+                    Log::info('Karyawan tidak terdaftar di sistem');
+                }
+            }
+            else
+            {
+                return "NIK Kosong";
+                Log::info('NIK karyawan kosong');
+            }
+            // dd($rowDataAssoc['Emp No.'],$rowDataAssoc['Nama'],$rowDataAssoc['Scan Pulang'],$rowDataAssoc['Jml Jam Kerja']);
+        }
+
+        return redirect()->back()->with('pesan','Data berhasil di Import');
+    }
 
     public function importcsv(Request $request)
     {

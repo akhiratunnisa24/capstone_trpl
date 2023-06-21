@@ -107,6 +107,7 @@
                             @if($role == 1)
                                 <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Import Excel</a>
                                 <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Import CSV</a>
+                                <a href="" class="btn btn-success btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modalss"> Import Data</a>
                                 {{-- <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modals"> Import Excel</a>
                                 <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smalModal"> Import CSV</a> --}}
                             @endif
@@ -267,6 +268,35 @@
             </div>
         </div>
     </div>
+
+    {{-- import data dengan spreadsheet --}}
+    <div class="modal fade" id="Modalss" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Import Data Excel</h4>
+                </div>
+                <form action="importdata" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                    
+                            <div class="input-group">
+                                <input type="file" required class="form-control-file" name="uploaded_file" id="uploaded_file">
+                            </div>
+                            <small class="form-text text-muted">Please upload only Excel (.xlsx or .xls) files.</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Import Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 
     {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
