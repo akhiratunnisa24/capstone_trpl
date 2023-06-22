@@ -349,22 +349,24 @@ class AbsensiController extends Controller
     {
         try{
 
-            $request->validate([
-                'uploaded_file' => 'required|mimes:xls,xlsx',
-            ]);
-            
-            $file = $request->file('uploaded_file');
-            $extension = $file->getClientOriginalExtension();
-            
-            $reader = null;
-            if ($extension === 'xls') {
-                $reader = IOFactory::createReader('Xls');
-            } elseif ($extension === 'xlsx') {
-                $reader = IOFactory::createReader('Xlsx');
-            }
+        $file = $request->file('uploaded_file');
+        $extension = $file->getClientOriginalExtension();
+        dd($file, $extension);
+        
+        $spreadsheet = IOFactory::load($file);
 
-            if ($reader === null) {
-                // Handle unsupported file extension
+        $worksheet = $spreadsheet->getActiveSheet();
+        $data = $worksheet->toArray();
+        // Ambil header
+        $header = $data[0];
+        for ($i = 1; $i < count($data); $i++) {
+            // Ambil data pada baris saat ini
+            $rowData = $data[$i];
+        
+            // Buat array asosiatif menggunakan header sebagai kunci
+            $row = [];
+            for ($j = 0; $j < count($rowData); $j++) {
+                $row[$header[$j]] = $rowData[$j];
             }
         
             $spreadsheet = $reader->load($file);        
