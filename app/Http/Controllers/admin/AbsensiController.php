@@ -351,6 +351,8 @@ class AbsensiController extends Controller
 
         $file = $request->file('uploaded_file');
         $extension = $file->getClientOriginalExtension();
+        dd($file, $extension);
+        
         $spreadsheet = IOFactory::load($file);
 
         $worksheet = $spreadsheet->getActiveSheet();

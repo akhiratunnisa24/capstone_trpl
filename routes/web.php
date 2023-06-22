@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HomeController; 
 use App\Http\Controllers\SetcutiController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\admin\XmlController;
@@ -677,5 +677,5 @@ Route::get('/download-data', [AbsensiController::class, 'downloadLogData'])->nam
 
 
 
-// Route buat tes koneksi ke IP lainn
+// Route buat tes koneksi ke IP lain
 Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
