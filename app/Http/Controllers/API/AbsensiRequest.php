@@ -18,7 +18,7 @@ class AbsensiRequest extends Controller
 {
 
     //xmlrpcrequest ke localhost
-    public function xmlRpcRequest()
+    public function xmlRpcRequests()
     {
         //Membuat objek GuzzleHttp\Client
         $httpClient = new GuzzleClient();
@@ -71,7 +71,7 @@ class AbsensiRequest extends Controller
     }
 
     //xmlrpc response untuk localhost
-    public function xmlRpcResponse()
+    public function xmlRpcResponses()
     {
         $results = Dummy::all()->toArray();
         $processedResults = [];
@@ -111,7 +111,7 @@ class AbsensiRequest extends Controller
     }
 
     //xmlrpc request ke IP lain
-    public function amlrpcRequest($IP,$Key)
+    public function xmlrpcRequest($IP,$Key)
     {
         $absensiHelper = new AbsensiHelper();
         $isConnected = $absensiHelper->connectToIP($IP);
@@ -178,7 +178,7 @@ class AbsensiRequest extends Controller
     }
 
     //xmlrpc response ke IP lain
-    public function amlRpcResponse($xmlArray)
+    public function xmlRpcResponse($xmlArray)
     {
         $results = json_decode($xmlArray, true);
         $processedResults = [];
