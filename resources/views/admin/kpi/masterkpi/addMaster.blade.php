@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 {{-- {{route ('job.store')}} --}}
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action=" {{route ('master.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="form-group col-sm">
@@ -26,14 +26,14 @@
                         <input type="text" class="form-control" name="nama_master" id="nama_master" autocomplete="off"
                             placeholder="Masukkan Master Baru" required>
                     </div>
-                    <div class="form-group col-sm">
-                        <label for="" class="col-form-label">Bobot</label>
+                    {{-- <div class="form-group col-sm">
+                        <label for="" class="col-form-label">Bobot ( % )</label>
                         <input type="text" class="form-control" name="bobot" id="bobot" autocomplete="off" placeholder="Masukkan Bobot" required>
                     </div>
                     <div class="form-group col-sm">
                         <label for="" class="col-form-label">Target</label>
                         <input type="text" class="form-control" name="target" id="target" autocomplete="off" placeholder="Masukkan Target" required>
-                    </div>
+                    </div> --}}
 
                     <div class="row">
                         <div class="col-sm-6 col-xs-12">
@@ -41,7 +41,7 @@
                                     <div class="form-group">
                                         <label for="tgl_mulai" class="form-label">Tanggal Aktif</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclosej" name="tglaktif"  autocomplete="off" rows="10" required>
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosej" name="tglaktif"  autocomplete="off" rows="10" required>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>
@@ -54,7 +54,7 @@
                                     <div class="form-group">
                                         <label for="tgl_selesai" class="form-label">Tanggal Berakhir</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclosek" name="tglberakhir"  autocomplete="off" rows="10" required>
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosek" name="tglberakhir"  autocomplete="off" rows="10" required>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>

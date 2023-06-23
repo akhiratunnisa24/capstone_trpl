@@ -9,5 +9,16 @@ class Masterkpi extends Model
 {
     use HasFactory;
     protected $table='masterkpi';
-    protected $fillable=['id_departemen','nama_job','bobot','target','tglaktif','tglberakhir','status']; 
+    protected $fillable=[
+                            'id_departemen',
+                            'nama_master',
+                            'tglaktif',
+                            'tglberakhir',
+                            'status'
+                        ];
+                        
+    public function departemens()
+    {
+        return $this->belongsTo(Departemen::class,'id_departemen','id');
+    }
 }

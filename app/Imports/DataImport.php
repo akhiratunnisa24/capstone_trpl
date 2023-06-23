@@ -38,11 +38,8 @@ class DataImport
         }
         
         $spreadsheet = $reader->load($file);        
-        
         $worksheet = $spreadsheet->getActiveSheet();
-    
         $data = $worksheet->toArray();
-        
         $header = $data[0];
        
         for ($i = 1; $i < count($data); $i++) 

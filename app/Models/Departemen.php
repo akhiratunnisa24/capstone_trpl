@@ -19,6 +19,11 @@ class Departemen extends Model
         return $this->hasMany(Absensi::class, 'id_departement','id');
     }
 
+    public function masterkpi()
+    {
+        return $this->hasMany(Masterkpi::class, 'id_departemen','id');
+    }
+
     public function alokasicuti()
     {
         return $this->hasMany(Alokasicuti::class, 'departemen','id');

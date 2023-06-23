@@ -8,6 +8,7 @@
             </div>
             <div class="modal-body">
                 {{-- {{route ('job.store')}} --}}
+                {{-- {{$data->id}} --}}
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
@@ -15,12 +16,10 @@
                         <label for="" class="col-form-label">Nama Master</label>
                         <select class="form-control selectpicker" name="id_master" id="id_master" autocomplete="off" data-live-search="true">
                             <option value="">Pilih Master</option>
-                            <option value="">Master A</option>
-                            <option value="">Master B</option>
-                            {{-- @foreach ($departemen as $dep)
-                                <option value="{{ $dep->id }}">{{ $dep->nama_departemen }}
+                            @foreach ($master as $mas)
+                                <option value="{{ $mas->id }}">{{ $mas->nama_master }}
                                 </option>
-                            @endforeach --}}
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group col-sm">
@@ -31,7 +30,14 @@
                         <label for="" class="col-form-label">Deskripsi</label>
                         <textarea type="text" class="form-control" name="deskripsi" id="deskripsi" value="goasl of departemen IT" autocomplete="off" rows="5" placeholder="Masukkan Indikator" required></textarea>
                     </div>
-
+                    {{-- <div class="form-group col-sm">
+                        <label for="" class="col-form-label">Bobot Bobot ( % )</label>
+                        <input type="text" class="form-control" name="bobot" id="bobot" value="{{$data->bobot}}" autocomplete="off" placeholder="Masukkan Bobot">
+                    </div>
+                    <div class="form-group col-sm">
+                        <label for="" class="col-form-label">Target</label>
+                        <input type="text" class="form-control" name="target" id="target" value="{{$data->target}}" autocomplete="off" placeholder="Masukkan Target">
+                    </div> --}}
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success waves-effect waves-light" name="submit"
