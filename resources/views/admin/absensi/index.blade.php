@@ -107,7 +107,7 @@
                             @if($role == 1)
                                 <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Import Excel</a>
                                 <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Import CSV</a>
-                                <a href="" class="btn btn-success btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modalss"> Import Data</a>
+                                {{-- <a href="" class="btn btn-success btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modalss"> Import Data</a> --}}
                                 {{-- <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modals"> Import Excel</a>
                                 <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smalModal"> Import CSV</a> --}}
                             @endif
