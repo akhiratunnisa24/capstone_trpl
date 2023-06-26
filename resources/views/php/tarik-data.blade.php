@@ -15,9 +15,10 @@
 
     @php
         // $IP = "192.168.1.134";
-        $IP = "192.168.100.51";
+        // $IP = "192.168.100.51";
+        $IP = "192.168.1.8";
         $Key = "0";
-        if($IP == "") $IP = "192.168.100.51";
+        if($IP == "")  $IP = "192.168.1.8";
         if($Key== "") $Key="0";
     @endphp
 
@@ -45,7 +46,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-body">
                             <form method="GET" action="{{ route('tarikdata.download') }}">
-                                @csrf
+                                {{-- @csrf --}}
                                 <div class="row">
                                     <div class="form-group col-md-5 m-t-5">
                                         <label for="ip">IP Address:</label>
