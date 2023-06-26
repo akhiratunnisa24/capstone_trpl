@@ -144,18 +144,22 @@ class AbsensiRequest extends Controller
             </GetAttLog>';
 
             // Mengubah array data parameter menjadi XML menggunakan XmlRpcEncoder
-            $xmlParams = $encoder->encode($params)->serialize();
+            // $xmlParams = $encoder->encode($params)->serialize();
 
             // Membuat objek permintaan HTTP menggunakan Guzzle
-            $port = 4370;
+            $port = 80;
             $headers = [
                 'Content-Type' => 'application/xml'
                 ];
             // $port = 80;
             $response = $httpClient->post("http://$IP:$port/", [
                 'headers' => $headers,
-                'body' => $xmlParams,
+                'body' => $params,
             ]);
+            // $response = $httpClient->post("http://$IP/", [
+            //     'headers' => $headers,
+            //     'body' => $params,
+            // ]);
             // dd($response->getHeaders(),$response->getBody()->getContents());
             
             // Mendapatkan konten respons XML

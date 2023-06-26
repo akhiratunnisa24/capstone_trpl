@@ -567,8 +567,9 @@ class AbsensiController extends Controller
     public function tarikdata(Request $request)
     {
         // $IP = '192.168.1.96';
-        $IP = '192.168.100.51';
+        // $IP = '192.168.100.51';
         // $IP = '192.168.1.134';
+        $IP = '192.168.1.8';
         $absensiHelper = new absensiHelper();
         $isConnected = $absensiHelper->connectToIP($IP);
         
@@ -593,7 +594,8 @@ class AbsensiController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         // $IP = "192.168.1.134";
-        $IP =  '192.168.100.51';
+        // $IP =  '192.168.100.51';
+        $IP = '192.168.1.8';
         $Key = "0";
 
         return view('php.tarik-data', compact('IP', 'Key','row'));
@@ -604,7 +606,8 @@ class AbsensiController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         // $IP = $request->input('ip', '192.168.1.134');
-        $IP = $request->input('ip', '192.168.100.51');
+        // $IP = $request->input('ip', '192.168.100.51');
+        $IP = '192.168.1.8';
         $Key = $request->input('key', '0');
 
         $absensiRequest = new AbsensiRequest();
