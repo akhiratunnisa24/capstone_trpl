@@ -28,30 +28,32 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#addIndikator"> Tambah Indikator</a>
-                            <a href="" class="btn btn-sm btn-dark fa fa-edit pull-right" data-toggle="modal" data-target="#editIndikator"> Edit Indikator</a>
+                            <a href="" class="btn btn-sm btn-dark fa fa-edit pull-right" data-toggle="modal" data-target="#editIndikator">  Edit Indikator</a>
                         </div>
-                        {{-- @include('admin.kpi.job.addJob') --}}
-                        @include('admin.kpi.indicator.addIndikator');
-                        @include('admin.kpi.indicator.editIndikator');
+                        @include('admin.kpi.indicator.addIndikator')
+                        @include('admin.kpi.indicator.editIndikator')
                         <div class="panel-body">
                             <table id="datatable-responsive13" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Master Kpi</th>
+                                        <th>Master KPI</th>
                                         <th>Indikator</th>
-                                        <th>deskripsi</th>
+                                        <th>Bobot</th>
+                                        <th>Target</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    {{-- @foreach ($job as $data)
+                                    @foreach ($indikator as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $data->nama_job }}</td>
-                                            <td>{{ $data->id_departemen}}</td>
+                                            <td>{{ $data->id_master }}</td>
+                                            <td>{{ $data->indikator}}</td>
+                                            <td>{{ $data->bobot}}</td>
+                                            <td>{{ $data->target }}</td>
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                     <a class="btn btn-success btn-sm editJob" data-toggle="modal" 
@@ -61,9 +63,9 @@
                                                     <button class="btn btn-danger btn-sm" onclick="hapus({{ $data->id }})"><i class="fa fa-trash"></i></button>
                                                 </div>
                                             </td>
-                                        </tr> --}}
+                                        </tr> 
                                         {{-- @include('admin.kpi.job.editJob') --}}
-                                    {{-- @endforeach --}}
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -80,6 +82,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
+
+    @if(Session::has('pesan'))
+        <script>
+            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
+
+    @if(Session::has('pesa'))
+        <script>
+            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
 
     <script>
         function hapus(id) {

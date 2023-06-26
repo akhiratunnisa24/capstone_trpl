@@ -247,15 +247,12 @@ class AbsensiImport implements ToModel,WithHeadingRow
                 Log::info('Jumlah data absensi dengan karyawan tidak terdaftar: ' . $jumlahKaryawanTidakTerdaftar);                
             }
         }
-        elseif($row['nik'] === NULL)
-        {
-            // dd($row);
-            Log::info('NIK karyawan kosong');
-        }
         else
         {
             // $this->datatidakbisadiimport++;
-            dd($row);
+            // dd($row);
+            $this->jumlahdata++;
+            $this->datatidakbisadiimport++;
             Log::info('NIK karyawan kosong');
         }
        

@@ -1,5 +1,5 @@
 {{-- FORM TAMBAH JOBS --}}
-<div class="modal fade" id="editMaster" tabindex="-1" role="dialog" aria-labelledby="addJob" aria-hidden="true">
+<div class="modal fade" id="editMaster{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="addJob" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,32 +8,33 @@
             </div>
             <div class="modal-body">
                 {{-- {{route ('job.store')}} --}}
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="/masterkpi-update/{{$data->id}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="form-group col-sm">
                         <label for="" class="col-form-label">Departemen</label>
-                        <select class="form-control selectpicker" name="id_departemen" id="id_departemen" autocomplete="off" data-live-search="true">
+                        <select class="form-control" name="id_departemen" id="id_departemen" autocomplete="off">
                             <option value="">Pilih Departemen</option>
                             @foreach ($departemen as $dep)
-                                <option value="{{ $dep->id }}">{{ $dep->nama_departemen }}
+                                <option value="{{ $dep->id }}" {{ $data->departemens->nama_departemen == $dep->nama_departemen ? 'selected' : '' }}>
+                                    {{ $dep->nama_departemen }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-sm">
                         <label for="" class="col-form-label">Nama Master</label>
-                        <input type="text" class="form-control" name="nama_master" id="nama_master" autocomplete="off"
+                        <input type="text" class="form-control" name="nama_master" id="nama_master" value="{{$data->nama_master}}" autocomplete="off"
                             placeholder="Masukkan Master Baru" required>
                     </div>
-                    <div class="form-group col-sm">
-                        <label for="" class="col-form-label">Bobot</label>
-                        <input type="text" class="form-control" name="bobot" id="bobot" autocomplete="off" placeholder="Masukkan Bobot" required>
+                    {{-- <div class="form-group col-sm">
+                        <label for="" class="col-form-label">Bobot Bobot ( % )</label>
+                        <input type="text" class="form-control" name="bobot" id="bobot" value="{{$data->bobot}}" autocomplete="off" placeholder="Masukkan Bobot">
                     </div>
                     <div class="form-group col-sm">
                         <label for="" class="col-form-label">Target</label>
-                        <input type="text" class="form-control" name="target" id="target" autocomplete="off" placeholder="Masukkan Target" required>
-                    </div>
+                        <input type="text" class="form-control" name="target" id="target" value="{{$data->target}}" autocomplete="off" placeholder="Masukkan Target">
+                    </div> --}}
 
                     <div class="row">
                         <div class="col-sm-6 col-xs-12">
@@ -41,7 +42,7 @@
                                     <div class="form-group">
                                         <label for="tgl_mulai" class="form-label">Tanggal Aktif</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclosel" name="tglaktif"  autocomplete="off" rows="10" required>
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tglaktif)->format('d/m/Y')}}" id="datepicker-autoclosel" name="tglaktif"  autocomplete="off" rows="10">
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>
@@ -54,7 +55,7 @@
                                     <div class="form-group">
                                         <label for="tgl_selesai" class="form-label">Tanggal Berakhir</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclosem" name="tglberakhir"  autocomplete="off" rows="10" required>
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tglberakhir)->format('d/m/Y')}}" id="datepicker-autoclosem" name="tglberakhir"  autocomplete="off" rows="10">
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>

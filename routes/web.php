@@ -415,8 +415,12 @@ Route::get('/terlambat-detail{id}', [TidakMasukController::class, 'showTerlambat
 
 //KPI
 Route::get('/masterkpi', [MasterkpiController::class, 'index'])->name('master.index');
-Route::get('/indikator-kpi', [MasterkpiController::class, 'indikator'])->name('indicator.index');
+Route::post('/masterkpi', [MasterkpiController::class, 'store'])->name('master.store');
+Route::post('/masterkpi-update/{id}', [MasterkpiController::class, 'update'])->name('master.update');
 
+Route::get('/indikator-kpi', [MasterkpiController::class, 'indikator'])->name('indicator.index');
+Route::post('/indikator-kpi', [MasterkpiController::class, 'stores'])->name('indikator.store');
+Route::post('/indikator-kpi-update/{id}', [MasterkpiController::class, 'updates'])->name('indikator.update');
 //================================================================================
 //ROLE MANAGER atau SUPERVISOR
 
