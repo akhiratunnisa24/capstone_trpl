@@ -147,16 +147,16 @@ class AbsensiRequest extends Controller
             $xmlParams = $encoder->encode($params)->serialize();
 
             // Membuat objek permintaan HTTP menggunakan Guzzle
-            // $port = 4370;
+            $port = 4370;
             $headers = [
                 'Content-Type' => 'application/xml'
                 ];
-            $port = 80;
-            $response = $httpClient->post("http://$IP:$port/iWsService", [
+            // $port = 80;
+            $response = $httpClient->post("http://$IP:$port/", [
                 'headers' => $headers,
                 'body' => $xmlParams,
             ]);
-            dd($response->getHeaders(),$response->getBody()->getContents());
+            // dd($response->getHeaders(),$response->getBody()->getContents());
             
             // Mendapatkan konten respons XML
             $xmlResponse = trim($response->getBody()->getContents());
@@ -184,11 +184,10 @@ class AbsensiRequest extends Controller
         $processedResults = [];
     
         foreach ($results as $row) {
-            $PIN = (string) $row['noid'];
-            $dateTime = (string) $row['tanggal'];
-            $verified = (string) $row['scan_masuk'];
-            $status = (string) $row['scan_keluar'];
-            $workCode = (string) $row['nama'];
+            $PIN = (string) $row['PIN'];
+            $dateTime = (string) $row['DateTime'];
+            $verified = (string) $row['Verified'];
+            $status = (string) $row['Status'];
     
             // Menyimpan hasil pemrosesan dalam array
             $data = [
@@ -196,7 +195,7 @@ class AbsensiRequest extends Controller
                 'DateTime' => $dateTime,
                 'Verified' => $verified,
                 'Status' => $status,
-                'WorkCode' => $workCode,
+                // 'WorkCode' => $workCode,
             ];
             $processedResults[] = $data;
         }
