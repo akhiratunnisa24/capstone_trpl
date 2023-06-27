@@ -29,7 +29,7 @@ class TesKoneksiController extends Controller
     public function testConnection2(Request $request)
     {
         $IP = $request->input("192.168.1.58");
-        $Connect = fsockopen($IP, "80", $errno, $errstr, 5);
+        $Connect = fsockopen($IP, "4370", $errno, $errstr, 5);
         $Key = "0";
 
         if ($Connect) {
