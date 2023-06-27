@@ -21,16 +21,17 @@ use App\Exports\AbsensiExport;
 use App\Helpers\AbsensiHelper;
 use App\Helpers\NetworkHelper;
 use App\Imports\AbsensiImport;
+use App\Services\AbsensiService;
 use App\Imports\AbsensixlsImport;
 use App\Imports\AttendanceImport;
 use App\Models\SettingOrganisasi;
 use Illuminate\Support\Facades\DB;
 use App\Exports\RekapabsensiExport;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Controller;
 // require_once app_path('Helpers/Parse.php');
 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -594,8 +595,8 @@ class AbsensiController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         // $IP = "192.168.1.134";
-        // $IP =  '192.168.100.51';
-        $IP = '192.168.1.8';
+        $IP =  '192.168.100.51';
+        // $IP = '192.168.1.8';
         $Key = "0";
 
         return view('php.tarik-data', compact('IP', 'Key','row'));
@@ -606,8 +607,8 @@ class AbsensiController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         // $IP = $request->input('ip', '192.168.1.134');
-        // $IP = $request->input('ip', '192.168.100.51');
-        $IP = '192.168.1.8';
+        $IP = $request->input('ip', '192.168.100.51');
+        // $IP = '192.168.1.8';
         $Key = $request->input('key', '0');
 
         $absensiRequest = new AbsensiRequest();
@@ -640,6 +641,27 @@ class AbsensiController extends Controller
     
         return view('php.tarik-data', compact('logData','row')); 
         
+    }
+
+    public function showDownloadLog()
+    {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        // $IP = "192.168.1.134";
+        $IP =  '192.168.100.51';
+        // $IP = '192.168.1.8';
+        $Key = "0";
+
+        return view('php.tarik-datas', compact('IP', 'Key','row'));
+    }
+
+    public function downloadLog(Request $request, AbsensiService $attendanceService)
+    {
+        $ip = $request->input('ip', '192.168.100.51');
+        $key = $request->input('key', '0');
+
+        $response = $attendanceService->downloadLogData($ip, $key);
+
+        return view('php.tarik-datas', ['logData' => $response]);
     }
 
 }
