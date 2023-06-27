@@ -682,5 +682,5 @@ Route::get('/download-log', [AbsensiController::class, 'downloadLog'])->name('ta
 
 
 
-// Route buat tes koneksi ke IP lain
+// Route buat tes koneksi ke IP lainnya
 Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
