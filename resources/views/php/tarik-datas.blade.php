@@ -76,16 +76,6 @@
                                                 <td>{{ $data->Status }}</td>
                                             </tr>
                                         @endforeach
-
-                                        {{-- @foreach ($logData as $data)
-                                            @php dd($logData); @endphp
-                                            <tr align="center">
-                                                <td>{{ $data['PIN'] }}</td>
-                                                <td>{{ $data['DateTime'] }}</td>
-                                                <td>{{ $data['Verified'] }}</td>
-                                                <td>{{ $data['Status'] }}</td>
-                                            </tr>
-                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             @endif

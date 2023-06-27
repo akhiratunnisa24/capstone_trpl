@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
-class AbsensiService
+class AbsensiClients
 {
     public function downloadLogData($ip, $key)
     {
