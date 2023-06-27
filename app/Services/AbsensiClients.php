@@ -16,7 +16,7 @@ class AbsensiClients
             'Content-Type' => 'text/xml',
         ])->post("http://$ip:$port/iWsService", ['params' => $soapRequest]);        
         
-        // dd($response);
+        dd($response);
 
         if ($response->successful()) {
             $buffer = $response->body();
