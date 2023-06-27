@@ -14,7 +14,7 @@ class TesKoneksiController extends Controller
     public function testConnection(Request $request)
     {
         $ipAddress = $request->input('192.168.100.51');
-        $port = 80; // Port yang akan diuji (misalnya, port 80 untuk HTTP)
+        $port = 4370; // Port yang akan diuji (misalnya, port 80 untuk HTTP)
 
         $connection = fsockopen($ipAddress, $port, $errno, $errstr, 5);
 
