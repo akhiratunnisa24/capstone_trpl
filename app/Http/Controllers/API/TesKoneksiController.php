@@ -14,16 +14,17 @@ class TesKoneksiController extends Controller
 {
     public function testConnection(Request $request)
     {
-        $ipAddress = $request->input('192.168.100.51');
-        $port = 4370; // Port yang akan diuji (misalnya, port 80 untuk HTTP)
+        // $ipAddress = $request->input('192.168.100.51');
+        $ipAddress = $request->input('192.168.1.8');
+        // $port = 4370; // Port yang akan diuji (misalnya, port 80 untuk HTTP)
 
-        $connection = fsockopen($ipAddress, $port, $errno, $errstr, 5);
+        $connection = fsockopen($ipAddress, 5);
 
         if ($connection) {
             fclose($connection);
             return response()->json(['status' => 'success nihhh', 'message' => 'Koneksi berhasil banget pokoknya.']);
         } else {
-            return response()->json(['status' => 'error', 'message' => 'Koneksi gagal: ' . $errstr]);
+            return response()->json(['status' => 'error', 'message' => 'Koneksi gagal: ' ]);
         }
     }
 
@@ -60,7 +61,8 @@ class TesKoneksiController extends Controller
 
     public function testConnection3()
     {
-        $ipAddress = '192.168.1.58'; // Ganti dengan alamat IP perangkat yang ingin Anda tes
+        $ipAddress = '192.168.100.51'; // IP MESIN GRM
+        // $ipAddress = '192.168.1.8'; // Ganti dengan alamat IP perangkat yang ingin Anda tes
 
         if (NetworkHelper::testConnection($ipAddress)) {
             return "Koneksi berhasil, menggunakan ping -c1 !";
@@ -70,7 +72,7 @@ class TesKoneksiController extends Controller
     }
     public function testConnection4()
     {
-        $ipAddress = '192.168.1.58'; // Ganti dengan alamat IP perangkat yang ingin Anda tes
+        $ipAddress = '192.168.1.8'; // Ganti dengan alamat IP perangkat yang ingin Anda tes
         if (NetworkHelper::testConnection($ipAddress)) {
             return view('konekip');
         } else {
@@ -91,10 +93,10 @@ class TesKoneksiController extends Controller
         }
     }
 
-    public function connectToIP($ipAddress, $port)
+    public function connectToIP($ipAddress)
     {
         $client = new Client();
-        $url = 'http://' . $ipAddress . ':' . $port;
+        $url = 'http://' . $ipAddress;
         $response = $client->get($url);
 
         // Lakukan sesuatu dengan respons
@@ -108,8 +110,7 @@ class TesKoneksiController extends Controller
     public function testConnectionguzzle()
     {
         // $ipAddress = '192.168.100.51'; // Ganti dengan IP Address yang ingin Anda hubungi
-        $ipAddress = '192.168.100.51'; // Ganti dengan IP Address yang ingin Anda hubungi
-        $port = 4370; // Ganti dengan port yang sesuai
-        $this->connectToIP($ipAddress, $port);
+        $ipAddress = '192.168.1.8'; // Ganti dengan IP Address yang ingin Anda hubungi
+        $this->connectToIP($ipAddress);
     }
 }
