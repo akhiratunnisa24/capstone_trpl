@@ -10,11 +10,13 @@ class AbsensiService
     {
         $soapRequest = "<GetAttLog><ArgComKey xsi:type=\"xsd:integer\">$key</ArgComKey><Arg><PIN xsi:type=\"xsd:integer\">All</PIN></Arg></GetAttLog>";
         $newLine = "\r\n";
+        $port = 80;
 
         $response = Http::withHeaders([
             'Content-Type' => 'text/xml',
-        ])->post("http://$ip/iWsService", ['param' => $soapRequest]);        
+        ])->post("http://$ip:$port/iWsService", ['params' => $soapRequest]);        
         
+        // dd($response);
 
         if ($response->successful()) {
             $buffer = $response->body();
@@ -36,6 +38,8 @@ class AbsensiService
                 $hasil = substr($data, $awal + strlen("<GetAttLogResponse>"), $akhir - strlen("<GetAttLogResponse>"));
             }
         }
-       return simplexml_load_string($hasil);
+        $xmlResponse = simplexml_load_string($hasil);
+        dd($xmlResponse);
     }
+
 }

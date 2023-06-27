@@ -656,6 +656,7 @@ class AbsensiController extends Controller
 
     public function downloadLog(Request $request, AbsensiService $attendanceService)
     {
+        // $ip = $request->input('ip', '192.168.1.8');
         $ip = $request->input('ip', '192.168.100.51');
         $key = $request->input('key', '0');
 
