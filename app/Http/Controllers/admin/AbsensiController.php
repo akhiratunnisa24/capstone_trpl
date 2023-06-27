@@ -567,9 +567,9 @@ class AbsensiController extends Controller
     public function tarikdata(Request $request)
     {
         // $IP = '192.168.1.96';
-        // $IP = '192.168.100.51';
+        $IP = '192.168.100.51';
         // $IP = '192.168.1.134';
-        $IP = '192.168.1.8';
+        // $IP = '192.168.1.8';
         $absensiHelper = new absensiHelper();
         $isConnected = $absensiHelper->connectToIP($IP);
         
