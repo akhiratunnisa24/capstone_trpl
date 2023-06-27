@@ -91,10 +91,11 @@ class TesKoneksiController extends Controller
         }
     }
 
-    public function connectToIP($ipAddress)
+    public function connectToIP($ipAddress, $port)
     {
         $client = new Client();
-        $response = $client->get('http://' . $ipAddress);
+        $url = 'http://' . $ipAddress . ':' . $port;
+        $response = $client->get($url);
 
         // Lakukan sesuatu dengan respons
         $statusCode = $response->getStatusCode();
@@ -108,6 +109,7 @@ class TesKoneksiController extends Controller
     {
         // $ipAddress = '192.168.100.51'; // Ganti dengan IP Address yang ingin Anda hubungi
         $ipAddress = '192.168.100.51'; // Ganti dengan IP Address yang ingin Anda hubungi
-        $this->connectToIP($ipAddress);
+        $port = 4370; // Ganti dengan port yang sesuai
+        $this->connectToIP($ipAddress, $port);
     }
 }
