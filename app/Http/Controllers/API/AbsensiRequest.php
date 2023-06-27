@@ -147,7 +147,7 @@ class AbsensiRequest extends Controller
             // $xmlParams = $encoder->encode($params)->serialize();
 
             // Membuat objek permintaan HTTP menggunakan Guzzle
-            $port = 80;
+            $port = 4370;
             $headers = [
                 'Content-Type' => 'application/xml'
                 ];

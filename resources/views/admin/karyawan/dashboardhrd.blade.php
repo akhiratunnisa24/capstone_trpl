@@ -1309,13 +1309,16 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <div class="text-right">
+                                    <div class="text-right col-xs-9 m-b-10">
+                                        <a href="download-logs" class="btn btn-info btn-sm">Tes Koneksi</a>
+                                    </div>
+                                    <div class="text-right col-xs-3 m-b-10">
                                         <a href="/tarik-data" class="btn btn-info btn-sm">Tarik Data</a>
                                     </div>
-                                    <form action="/tarikdatas">
+                                    {{-- <form action="/tarikdatas">
                                         @csrf
                                         <input type="Submit" value="Tes Koneksi">
-                                    </form>
+                                    </form> --}}
                                     <table class="table table-striped m-t-20">
                                         <thead style="text-align: center;">
                                             <tr class="info">
