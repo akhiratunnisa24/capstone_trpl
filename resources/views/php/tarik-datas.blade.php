@@ -3,23 +3,12 @@
 @section('content')
 <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
 <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
-<!-- Header -->
-    {{-- <H3>Download Log Data</H3> --}}
 
-    <!-- <php
-    $IP=$HTTP_GET_VARS["ip"];
-    $Key=$HTTP_GET_VARS["key"];
-    if($IP=="") $IP="192.168.1.201";
-    if($Key=="") $Key="0";
-    ?> -->
 
     @php
-        // $IP = "192.168.1.134";
-        // $IP = "192.168.100.51";
-        // $IP = "192.168.1.8";
+        $IP = "192.168.100.51";
         $Key = "0";
-        // if($IP == "")  $IP = "192.168.1.8";
-        if($IP == "")  $IP = "192.168.1.8";
+        if($IP == "")  $IP = "192.168.100.51";
         if($Key== "") $Key="0";
     @endphp
 
@@ -46,7 +35,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-body">
-                            <form method="GET" action="{{ route('tarikdata.download') }}">
+                            <form method="GET" action="{{ route('tarikdatas') }}">
                                 {{-- @csrf --}}
                                 <div class="row">
                                     <div class="form-group col-md-5 m-t-5">
@@ -78,24 +67,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($logData['GetAttLogResponse']['Row'] as $data)
+                                        @foreach ($logData->GetAttLogResponse->Row as $data)
                                             <tr align="center">
-                                                <td>{{ $data['WorkCode']}}</td>
-                                                <td>{{ $data['PIN'] }}</td>
-                                                <td>{{ $data['DateTime'] }}</td>
-                                                <td>{{ $data['Verified'] }}</td>
-                                                <td>{{ $data['Status'] }}</td>
+                                                <td>{{ $data->WorkCode }}</td>
+                                                <td>{{ $data->PIN }}</td>
+                                                <td>{{ $data->DateTime }}</td>
+                                                <td>{{ $data->Verified }}</td>
+                                                <td>{{ $data->Status }}</td>
                                             </tr>
                                         @endforeach
-                                        {{-- @foreach ($logData as $data)
-                                            @php dd($logData); @endphp
-                                            <tr align="center">
-                                                <td>{{ $data['PIN'] }}</td>
-                                                <td>{{ $data['DateTime'] }}</td>
-                                                <td>{{ $data['Verified'] }}</td>
-                                                <td>{{ $data['Status'] }}</td>
-                                            </tr>
-                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             @endif
