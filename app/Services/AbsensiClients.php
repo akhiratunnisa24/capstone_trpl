@@ -8,15 +8,13 @@ class AbsensiClients
 {
     public function downloadLogData($ip, $key)
     {
-        $soapRequest = "<GetAttLog><ArgComKey xsi:type=\"xsd:integer\">$key</ArgComKey><Arg><PIN xsi:type=\"xsd:integer\">All</PIN></Arg></GetAttLog>";
-        $newLine = "\r\n";
-        $port = 80;
+        $soapRequest = "<GetAttLog><ArgComKey xsi:type='xsd:integer'>$key</ArgComKey><Arg><PIN xsi:type='xsd:integer'>All</PIN></Arg></GetAttLog>";
 
         $response = Http::withHeaders([
             'Content-Type' => 'text/xml',
-        ])->post("http://$ip:$port/iWsService", ['params' => $soapRequest]);        
+        ])->post("http://$ip", $soapRequest); 
         
-        // dd($response);
+        dd($response);
 
         if ($response->successful()) {
             $buffer = $response->body();

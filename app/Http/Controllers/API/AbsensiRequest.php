@@ -116,6 +116,43 @@ class AbsensiRequest extends Controller
         $absensiHelper = new AbsensiHelper();
         $isConnected = $absensiHelper->connectToIP($IP);
 
+        $httpClient = new GuzzleClient();
+
+            // Membuat objek XmlRpcEncoder
+            $encoder = new Encoder();
+
+            // Membuat array data parameter untuk permintaan XML-RPC
+            // $params = [
+            //     new Value(0, 'int'), // ArgComKey
+            //     new Value('All', 'int'), // Arg->PIN
+            // ];
+            // $params = [
+            //     new Value(0, 'integer'), // ArgComKey
+            //     [
+            //         'PIN' => new Value('All', 'integer') // Arg->PIN
+            //     ]
+            // ];
+
+            $params = '<GetAttLog>
+                <ArgComKey xsi:type=\\"xsd:integer\\">0</ArgComKey>
+                <Arg><PIN xsi:type=\\"xsd:integer\\">All</PIN></Arg>
+            </GetAttLog>';
+
+            // Mengubah array data parameter menjadi XML menggunakan XmlRpcEncoder
+            // $xmlParams = $encoder->encode($params)->serialize();
+
+            // Membuat objek permintaan HTTP menggunakan Guzzle
+            // $port = 4370;
+            $headers = [
+                'Content-Type' => 'application/xml'
+                ];
+            // $port = 80;
+            dd($headers,$params);
+            $response = $httpClient->post("http://$IP/", [
+                'headers' => $headers,
+                'body' => $params,
+            ]);
+            dd($response);
         if ($isConnected) {
             // Koneksi berhasil terbentuk
             echo "Terhubung ke alamat IP: $IP";
