@@ -79,7 +79,7 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 // Route::post('/registrasi', [HomeController::class, 'registrasi'])->name('registrasi');   
 
-// Role HRD
+// Role HRD 
 
 Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 
