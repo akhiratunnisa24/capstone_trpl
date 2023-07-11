@@ -580,8 +580,8 @@ class AbsensiController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         // $IP = "192.168.1.134";
-        $IP =  '192.168.100.51';
-        // $IP = '192.168.1.8';
+        // $IP =  '192.168.100.51';
+        $IP = '192.168.1.8';
         $Key = "0";
 
         return view('php.tarik-data', compact('IP', 'Key','row'));
@@ -641,8 +641,8 @@ class AbsensiController extends Controller
 
     public function downloadLog(Request $request)
     {
-        // $ip = $request->input('ip', '192.168.1.8');
-        $ip = $request->input('ip', '192.168.100.51');
+        $ip = $request->input('ip', '192.168.1.8');
+        // $ip = $request->input('ip', '192.168.100.51');
         $key = $request->input('key', '0');
 
         $attendanceClient = new AbsensiClients();
