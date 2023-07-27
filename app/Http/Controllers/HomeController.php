@@ -7,6 +7,7 @@ use App\Models\Cuti;
 use App\Models\Izin;
 use App\Models\User;
 use App\Models\Resign;
+use TADPHP\TADFactory;
 use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Lowongan;

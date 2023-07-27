@@ -1,17 +1,19 @@
 <?php
 
-use App\Models\Lowongan;
+use TADPHP\TADFactory;
 // use Illuminate\Support\Facades\Auth\LoginController;
+use App\Models\Lowongan;
+
 use Illuminate\Support\Facades\Auth;
 
+
 use Illuminate\Support\Facades\Route;
-
-
 use App\Http\Controllers\HomeController; 
 use App\Http\Controllers\SetcutiController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\admin\XmlController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\admin\MesinController;
 use App\Http\Controllers\admin\ShiftController;
 use App\Http\Controllers\admin\AtasanController;
 use App\Http\Controllers\admin\UploadController;
@@ -19,12 +21,12 @@ use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\AbsensisController;
+
 use App\Http\Controllers\admin\KalenderController;
+
+
 use App\Http\Controllers\admin\SisacutiController;
-
 use App\Http\Controllers\RequestAbsensiController;
-
-
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\InformasiController;
 use App\Http\Controllers\admin\IzinAdminController;
@@ -688,3 +690,12 @@ Route::get('/download-log', [AbsensiController::class, 'downloadLog'])->name('ta
 
 // Route buat tes koneksi ke IP lainnya
 Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
+
+
+
+
+
+
+
+
+Route::post('/tarik-absen', [MesinController::class, 'tarikAbsen'])->name('tarik.absen');

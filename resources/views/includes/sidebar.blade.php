@@ -114,8 +114,8 @@
                             <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a></li>
                             <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>  
                             <li><a href="/atasan"><i class="mdi mdi-account-star-variant"></i><span></span>Atasan</a></li>  
-                            {{-- <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
-                            <li><a href="jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li> --}}
+                            <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
+                            <li><a href="jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li>
                             <li><a href="/informasi"><i class="fa fa-exclamation-circle"></i><span></span>Informasi</a></li>
                             {{-- <li><a href="/metode_rekrutmen"><i class="fa fa-user-plus"></i><span></span>Rekruitmen</a></li> --}}
                             <li><a href="/manajemen-harilibur"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li>
