@@ -29,48 +29,35 @@
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Jenis Usaha</label>
-                                    <input type="text" name="jenisUsaha" class="form-control" autocomplete="off"
-                                    value="{{$rpekerjaan->jenis_usaha}}">
+                                    <label class="form-label">Lama Kerja</label>
+                                    <div>
+                                        <div class="input-daterange input-group">
+                                            <input type="date" class="form-control" name="tglmulai" id="tglmulai" value="{{$rpekerjaan->tgl_mulai}}" />
+                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                            <input type="date" class="form-control" name="tglselesai"
+                                                id="tglselesai" value="{{$rpekerjaan->tgl_selesai}}"/>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="mb-3">
-                                    <label>Nama Direktur</label>
-                                    <input type="text" name="namaDirektur" class="form-control" autocomplete="off"
-                                    value="{{$rpekerjaan->nama_direktur}}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="mb-3">
-                                    <label>Nama Atasan Langsung</label>
-                                    <input type="text" name="namaAtasan" autocomplete="off"
-                                    class="form-control" value="{{$rpekerjaan->nama_atasan}}">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- baris sebelah kanan  -->
-                        <div class="col-md-6 m-t-10">
-                            <div class="form-group">
+                                <div class="form-group">
                                 <div class="mb-3">
                                     <label>Jabatan</label>
                                     <input type="text" name="jabatan" class="form-control" autocomplete="off"
                                     value="{{$rpekerjaan->jabatan}}">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="mb-3">
-                                    <label>Lama Kerja</label>
-                                    <input type="text" name="lamaKerja" class="form-control" autocomplete="off"
-                                    value="{{$rpekerjaan->lama_kerja}}">
-                                </div>
                             </div>
+                        </div>
+
+                        <!-- baris sebelah kanan  -->
+                        <div class="col-md-6 m-t-10">
+                            
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Alasan Berhenti</label>
-                                    <input type="text" name="alasanBerhenti" autocomplete="off"
-                                    class="form-control" value="{{$rpekerjaan->alasan_berhenti}}">
+                                    <label for="exampleInputEmail1" class="form-label"> Level/Pangkat/Golongan</label>
+                                    <input type="text" name="levelRpekerjaan" class="form-control"
+                                        id="exampleInputEmail1" aria-describedby="emailHelp"
+                                        placeholder="Masukkan Jabatan" autocomplete="off" value="{{$rpekerjaan->level}}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -78,6 +65,13 @@
                                     <label>Gaji</label>
                                     <input type="text" name="gajiRpekerjaan" id="gaji" autocomplete="off"
                                     class="form-control" value="{{$rpekerjaan->gaji}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Alasan Berhenti</label>
+                                    <input type="text" name="alasanBerhenti" autocomplete="off"
+                                    class="form-control" value="{{$rpekerjaan->alasan_berhenti}}">
                                 </div>
                             </div>
                         </div>

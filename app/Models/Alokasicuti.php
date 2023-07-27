@@ -15,7 +15,10 @@ class Alokasicuti extends Model
     protected $table ='alokasicuti';
     protected $fillable = [
         'id_karyawan','id_settingalokasi','id_jeniscuti','durasi',
-        'mode_alokasi','tgl_masuk','tgl_sekarang','aktif_dari','sampai'
+        'tgl_masuk','tgl_sekarang','aktif_dari','sampai','status',
+        'nik','jabatan','departemen','jatuhtempo_awal',
+        'jatuhtempo_akhir','jmlhakcuti','cutidimuka','cutiminus',
+        'jmlcutibersama','keterangan'
     ];
 
     public function cuti()
@@ -26,6 +29,11 @@ class Alokasicuti extends Model
     public function jeniscutis()
     {
         return $this->belongsTo(Jeniscuti::class,'id_jeniscuti','id');
+    }
+
+    public function departemens()
+    {
+        return $this->belongsTo(Departemen::class,'departemen','id');
     }
 
     public function karyawans()

@@ -188,7 +188,7 @@
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1"
                                                                                     class="form-label">Atasan Langsung
-                                                                                    (SPV/Manager/Direktur)</label>
+                                                                                    (Asistant Manager/Manager/Direksi)</label>
                                                                                 <select
                                                                                     class="form-control selectpicker"
                                                                                     name="atasan_pertama"
@@ -207,7 +207,7 @@
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1"
                                                                                     class="form-label">Atasan
-                                                                                    (Manager/Direktur)</label>
+                                                                                    (Manager/Direksi)</label>
                                                                                 <select
                                                                                     class="form-control selectpicker"
                                                                                     name="atasan_kedua"
@@ -216,7 +216,7 @@
                                                                                     </option>
                                                                                     @foreach ($atasan_kedua as $atasan)
                                                                                         <option
-                                                                                            value="{{ $atasan->atasan }}">
+                                                                                            value="{{ $atasan->id }}">
                                                                                             {{ $atasan->nama }}
                                                                                         </option>
                                                                                     @endforeach
@@ -225,22 +225,24 @@
 
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1"
-                                                                                    class="form-label">Jabatan</label>
+                                                                                    class="form-label"> Level Jabatan</label>
                                                                                 <select
                                                                                     class="form-control selectpicker"
                                                                                     name="jabatanKaryawan" required>
                                                                                     <option value="">Pilih
                                                                                         Jabatan
                                                                                     </option>
-                                                                                    <option value="Management">
-                                                                                        Management
+                                                                                    <option value="Direksi">
+                                                                                        Direksi
                                                                                     </option>
                                                                                     <option value="Manager">Manager
                                                                                     </option>
-                                                                                    <option value="Supervisor">
-                                                                                        Supervisor
+                                                                                    <option value="Asisten Manager">
+                                                                                        Asisten Manager
                                                                                     </option>
                                                                                     <option value="Staff">Staff
+                                                                                    </option>
+                                                                                    <option value="Staff">Pelaksana
                                                                                     </option>
                                                                                 </select>
                                                                             </div>

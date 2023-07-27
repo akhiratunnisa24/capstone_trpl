@@ -26,13 +26,14 @@ class JeniscutiController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
-        if ($role == 1) {
+        if ($role == 1 || $role == 2) 
+        {
 
-        $type = $request->query('type', 1);
-        
-        $jeniscuti = Jeniscuti::all();
-        $jenisizin = Jenisizin::all();
-        return view('admin.kategori.index', compact('jeniscuti','jenisizin','type','row'));
+            $type = $request->query('type', 1);
+            
+            $jeniscuti = Jeniscuti::where('status','=',1)->get();
+            $jenisizin = Jenisizin::all();
+            return view('admin.kategori.index', compact('jeniscuti','jenisizin','type','row','role'));
 
         } else {
             
@@ -44,12 +45,24 @@ class JeniscutiController extends Controller
     {
         $request->validate([
             'jenis_cuti' => 'required',
+            'status'     => 'required',
         ]);
-        $jeniscuti = Jeniscuti::create($request->all());
-        
-        // dd($jeniscuti);
-        return redirect('/kategori_cuti');
 
+        $jenis_cuti = $request->jenis_cuti;
+        $status = $request->status;
+
+        // Cek apakah data jenis cuti sudah ada di dalam database
+        $jeniscuti = Jeniscuti::whereRaw('LOWER(jenis_cuti) = ?', [strtolower($jenis_cuti)])->first();
+
+        if ($jeniscuti) {
+            // Jika data jenis cuti sudah ada, kembalikan pesan bahwa data sudah ada
+            return redirect()->back()->with('pesa', 'Data sudah ada !');
+        } else {
+            // Jika data jenis cuti belum ada, simpan data baru
+            $jeniscuti = Jeniscuti::create($request->all());
+
+            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+        }
     }
 
     public function show($id)
@@ -63,7 +76,7 @@ class JeniscutiController extends Controller
         $jeniscuti = Jeniscuti::find($id);
         $jeniscuti->update($request->all());
 
-        return redirect('/kategori_cuti');
+        return redirect()->back();
         
     }
 
@@ -72,6 +85,6 @@ class JeniscutiController extends Controller
         $jeniscuti = Jeniscuti::find($id);
         $jeniscuti->delete();
 
-        return redirect('/kategori_cuti');
+        return redirect()->back();
     }
 }

@@ -1,5 +1,7 @@
 @extends('layouts.default')
 @section('content')
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
@@ -33,28 +35,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="col-sm-3 col-xs-12">
-                                <div class="m-t-20">
-                                    <div class="form-group">
-                                        <label>Departemen</label>
-
-                                        <select name="id_departemen" id="id_departemen" class="form-control">
-                                            <option>-- Pilih Departemen --</option>
-                                            <option value="KONVENSIONAL" {{ ('KONVENSIONAL' === request()->departemen) ? 'selected' : '' }}>
-                                                KONVENSIONAL
-                                            </option>
-                                            {{-- @foreach ($departemen as $data) --}}
-                                                {{-- <option value="{{ $data->id}}" --}}
-                                                    {{-- @if ($data->id ==request()->id_departemen)
-                                                    selected
-                                                    @endif --}}
-                                                    {{-- >{{ $data->departemen }}
-                                                </option> --}}
-                                            {{-- @endforeach --}}
-                                        {{-- </select>                                                  
-                                    </div>
-                                </div>
-                            </div>   --}}
                             <div class="col-sm-3 col-xs-12">
                                 <div class="m-t-20">
                                     <div class="form-group">
@@ -84,15 +64,6 @@
                                         <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" data-live-search="true" required>
                                             <option value="" required>-- Pilih Tahun --</option>
                                             {{-- {{ ('01' === request()->bulan) ? 'selected' : '' }} --}}
-                                            <option value="2011" {{ ('2011' === request()->tahun) ? 'selected' : '' }}>2011</option>
-                                            <option value="2012" {{ ('2012' === request()->tahun) ? 'selected' : '' }}>2012</option>
-                                            <option value="2013" {{ ('2013' === request()->tahun) ? 'selected' : '' }}>2013</option>
-                                            <option value="2014" {{ ('2014' === request()->tahun) ? 'selected' : '' }}>2014</option>
-                                            <option value="2015" {{ ('2015' === request()->tahun) ? 'selected' : '' }}>2015</option>
-                                            <option value="2016" {{ ('2016' === request()->tahun) ? 'selected' : '' }}>2016</option>
-                                            <option value="2017" {{ ('2017' === request()->tahun) ? 'selected' : '' }}>2017</option>
-                                            <option value="2018" {{ ('2018' === request()->tahun) ? 'selected' : '' }}>2018</option>
-                                            <option value="2019" {{ ('2019' === request()->tahun) ? 'selected' : '' }}>2019</option>
                                             <option value="2020" {{ ('2020' === request()->tahun) ? 'selected' : '' }}>2020</option>
                                             <option value="2021" {{ ('2021' === request()->tahun) ? 'selected' : '' }}>2021</option>
                                             <option value="2022" {{ ('2022' === request()->tahun) ? 'selected' : '' }}>2022</option>
@@ -125,20 +96,21 @@
             </div>
         </div>
     </div>
-    <!-- Close Header -->
-    <!-- Start content -->
     <div class="content">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 m-b-10">
-                            {{-- <a href="/exportexcel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export All to Excel</a>
-                            <a href="/exportpdf" class="btn btn-dark btn-sm fa fa-file-pdf-o"> Export All to PDF</a> --}}
                             <a href="/rekapabsensiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
                             <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
-                            <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Import Excel</a>
-                            <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Import CSV</a>
+                            @if($role == 1)
+                                <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Import Excel</a>
+                                <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Import CSV</a>
+                                <a href="" class="btn btn-success btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modalss"> Import Data</a>
+                                {{-- <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modals"> Import Excel</a>
+                                <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smalModal"> Import CSV</a> --}}
+                            @endif
                         </div>
                         <div class="panel-body m-b-5">
                             <div class="row">
@@ -206,6 +178,31 @@
         </div>
     </div>
 
+    <div class="modal fade" id="Modals" data-backdrop="-1" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Import Excel</h4>
+                </div>
+                <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="col-lg-5">
+                                <input type="file" name="file" required>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Import Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     {{-- Modal Import Data CSV--}}
     <div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
@@ -239,13 +236,115 @@
         </div>
     </div>
 
+    {{-- Modal Import Data CSV--}}
+    <div class="modal fade" id="smalModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Import CSV</h4>
+                </div>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                {{-- {{ route('importexcel') }} --}}
+                <form action="import-csv" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-lg-5">
+                                <input type="file" name="file" required>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Import Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- import data dengan spreadsheet --}}
+    <div class="modal fade" id="Modalss" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Import Data Excel</h4>
+                </div>
+                <form action="importdata" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                    
+                            <div class="input-group">
+                                <input type="file" required class="form-control-file" name="uploaded_file" id="uploaded_file">
+                            </div>
+                            <small class="form-text text-muted">Please upload only Excel (.xlsx or .xls) files.</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Import Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
     {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
+    @if(Session::has('pesan'))
+        <script>
+            swal("Selamat",<?php echo json_encode( Session::get('pesan') ) ?>, 'success', {
+                button:true,
+                button:"OK",
+                 customClass: {
+                    content: 'text-left',
+                }
+            });
+        </script>
+        // <script>
+        //     swal({
+        //         title: "Selamat",
+        //         html: <?php echo json_encode( Session::get('pesan') ); ?>,
+        //         icon: 'success',
+        //         button: true,
+        //         button: "OK",
+               
+        //     });
+        // </script>
+    @endif
+    
+
+
+    @if(Session::has('pesa'))
+        <script>
+            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">

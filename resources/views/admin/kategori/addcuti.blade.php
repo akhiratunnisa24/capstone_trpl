@@ -14,6 +14,8 @@
                         <label for="jenis_cuti" class="col-form-label">Kategori Baru</label>
                         <input type="text" class="form-control" name="jenis_cuti" id="jenis_cuti" autocomplete="off"
                             placeholder="Masukkan Kategori" required>
+                            <input type="hidden" class="form-control" name="status" id="status" autocomplete="off" value="0"
+                            placeholder="Masukkan Kategori" required>
                     </div>
 
                     <div class="modal-footer">

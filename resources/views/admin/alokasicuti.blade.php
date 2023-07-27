@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Alokasi Cuti HRD</h4>
+                <h4 class="pull-left page-title">Hak Cuti Karyawan</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
@@ -14,8 +14,7 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-    <!-- Start content -->
-    <!-- baris kedua -->
+    </div>
     <div class="row">
         <div id="a" class="col-md-12">
             <div id="a" class="panel panel-secondary">
@@ -29,9 +28,7 @@
                                         <th>Nama Karyawan</th>
                                         <th>Cuti Yang Didapat</th>
                                         <th>Durasi Cuti</th>
-                                        {{-- <th>Id Alokasi</th>
-                                        <th>Id Settingalokasi</th> --}}
-                                        <th>Aktif Dari</th>
+                                        <th>Durasi Aktif</th>
                                         <th>Berakhir</th>
                                     </tr>
                                 </thead>
@@ -42,14 +39,11 @@
                                             <td>{{ $alokasi->karyawans->nama }}</td>
                                             <td>{{ $alokasi->jeniscutis->jenis_cuti }}</td>
                                             <td>{{ $alokasi->durasi }} hari</td>
-                                            {{-- <td>{{ $alokasi->id }}</td>
-                                            <td>{{ $alokasi->id_settingalokasi }}</td> --}}
                                             <td>{{ \Carbon\Carbon::parse($alokasi->aktif_dari)->format('d/m/Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($alokasi->sampai)->format('d/m/Y') }}</td>
                                         </tr>
                                     @endforeach
     
-                                    <!-- mencari jumlah cuti -->
                                     @php
                                         $jml = 0;
                                     @endphp
@@ -75,7 +69,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End Row -->
+    </div> 
     <style>
         #a {
             border-radius: 10px;

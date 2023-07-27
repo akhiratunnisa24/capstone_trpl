@@ -31,9 +31,16 @@ class IzinApproveNotification extends Mailable
      */
     public function build()
     {
-        return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
-        ->subject($this->data['subject'])
-        ->view('emails.izinApprove')->with('data',$this->data);
+        $email = $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+            ->subject($this->data['subject'])
+            ->cc($this->data['atasan1'], 'Atasan Pertama')
+            ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
+            ->view('emails.izinApprove')->with('data',$this->data);
+       
+        if (isset($this->data['atasan2']) && $this->data['atasan2'] !== null) {
+            $email->cc($this->data['atasan2'], 'Atasan Kedua');
+        }
+        
     }
 
     /**

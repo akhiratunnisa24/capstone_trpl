@@ -39,37 +39,48 @@
                                     <div class="col-sm-3">
                                         <div class="panel panel-primary">
 
-                                            @if ($k->status == 'Aktif')
+                                            @if ($k->status == 'Aktif' && $k->tgl_selesai > Carbon\Carbon::now() && $k->jumlah_dibutuhkan > 0 )
                                                 <div class="panel-heading btn-success">
+                                                    <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
+                                                        <h4 class="panel-title">{{ $k->status }}</h4>
+                                                    </a>
                                                 @else
                                                     <div class="panel-heading btn-danger">
+                                                         <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
+                                                        <h4 class="panel-title">Tidak Aktif</h4>
+                                                    </a>
                                             @endif
-                                            <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
-                                                <h4 class="panel-title">{{ $k->status }}</h4>
-                                            </a>
+
                                         </div>
 
 
 
                                         <div class="panel-body">
                                             <h3 class=""><b>{{ $k->posisi }}</b></h3>
+                                            {{-- @if ()
+                                                
+                                            @endif --}}
                                             <p class="text-muted"><b>Dibutuhkan {{ $k->jumlah_dibutuhkan }} Orang</b>
                                             </p>
+                                            @if ($k->tgl_selesai < Carbon\Carbon::now())
+                                                <p class="text-muted"><b>Lowongan sudah kadaluarsa sejak tanggal <span class="text-danger"> {{ Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y') }}</span></b></p>
+                                            @elseif ($k->jumlah_dibutuhkan == 0)
+                                                <p class="text-danger"><b>Lowongan sudah terisi</b></p>
+                                            @endif
                                             <button onclick="hapus_karyawan({{ $k->id }})"
                                                 class="btn btn-danger btn-sm">
                                                 <i class="fa fa-trash" hidden></i>
                                             </button>
-                                            <button data-toggle="modal"
-                                                        data-target="#myModal{{ $k->id }}" class="btn btn-info btn-sm">
+                                            <button data-toggle="modal" data-target="#myModal{{ $k->id }}"
+                                                class="btn btn-info btn-sm">
                                                 <i class="fa fa-pencil" hidden></i>
                                             </button>
                                         </div>
                                     </div>
                             </div>
                             @include('admin.rekruitmen.editLowonganModal')
-
                             @endforeach
-                            
+
                         </div>
 
                         {{-- <a href="{{ url('Form-Rekruitmen-RYNEST') }}">Apply</a> --}}
@@ -121,7 +132,10 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/hapuslowongan' ?>' + id;
+                    // location.href = '<?= 'http://localhost:8000/hapuslowongan' ?>' + id;
+                    // location.href = '<?= 'http://dev.rynest-technology.com/hapuslowongan' ?>' + id;
+                    location.href = '<?= '/hapuslowongan' ?>' + id;
+
                 }
             })
         }

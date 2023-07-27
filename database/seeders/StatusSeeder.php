@@ -34,7 +34,7 @@ class StatusSeeder extends Seeder
             'name_status' => 'Ditolak',
         ]);
         Status::insert([
-            'name_status' => 'Disetujui Supervisor',
+            'name_status' => 'Disetujui Asistant Manager',
         ]);
         Status::insert([
             'name_status' => 'Disetujui',

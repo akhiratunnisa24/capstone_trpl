@@ -42,11 +42,6 @@
                                     <label>Tahun</label>
                                     <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" data-live-search="true" required>
                                         <option value="">-- Pilih Tahun --</option>
-                                        <option value="2015" {{ ('2015' === request()->tahun) ? 'selected' : '' }}>2015</option>
-                                        <option value="2016" {{ ('2016' === request()->tahun) ? 'selected' : '' }}>2016</option>
-                                        <option value="2017" {{ ('2017' === request()->tahun) ? 'selected' : '' }}>2017</option>
-                                        <option value="2018" {{ ('2018' === request()->tahun) ? 'selected' : '' }}>2018</option>
-                                        <option value="2019" {{ ('2019' === request()->tahun) ? 'selected' : '' }}>2019</option>
                                         <option value="2020" {{ ('2020' === request()->tahun) ? 'selected' : '' }}>2020</option>
                                         <option value="2021" {{ ('2021' === request()->tahun) ? 'selected' : '' }}>2021</option>
                                         <option value="2022" {{ ('2022' === request()->tahun) ? 'selected' : '' }}>2022</option>
@@ -79,8 +74,7 @@
         </div>
     </div>
 </div>
-<!-- Close Header -->
-<!-- Start content -->
+
 <div class="content">
     <div class="container">
         <div class="row">
@@ -91,11 +85,9 @@
                         <a href="/export-absensi-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Export PDF</a>
                     </div>
                     <div class="panel-body m-b-5">
-                        {{-- <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12"> --}}
-                                <table id="datatable-responsive8"
-                                    class="table table-responsive dt-responsive table-striped table-bordered"
-                                    width="100%">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="datatable-responsive8" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -110,24 +102,24 @@
                                     </thead>
                                     <tbody>
                                         @foreach($absensi as $data)
-                                            {{-- @if($data->id_karyawan == Auth::user()->id_pegawai) --}}
-                                                <tr>
-                                                    <td>{{$loop->iteration}}</td>
-                                                    <td>{{$data->karyawans->nama}}</td>
-                                                    <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
-                                                    <td>{{$data->jam_masuk}}</td>
-                                                    <td>{{$data->jam_keluar}}</td>
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$data->karyawans->nama}}</td>
+                                                <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
+                                                <td>{{$data->jam_masuk}}</td>
+                                                <td>{{$data->jam_keluar}}</td>
+                                                {{-- @if(isset($data->jam_kerja)) --}}
                                                     <td>{{$data->jam_kerja}}</td>
-                                                    <td>{{$data->terlambat}}</td>
-                                                    <td>{{$data->plg_cepat}}</td>
-                                                </tr>
-                                            {{-- @endif --}}
+                                                {{-- @endif --}}
+                                                <td>{{$data->terlambat}}</td>
+                                                <td>{{$data->plg_cepat}}</td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{--
+                                
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>

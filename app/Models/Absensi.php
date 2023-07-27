@@ -20,7 +20,7 @@ class Absensi extends Model
                             'hci','hco',
                             'id_departement','h_normal',
                             'ap','hl','jam_kerja',
-                            'lemhanor','lemakpek','lemhali',
+                            'lemhanor','lemakpek','lemhali'
                         ];
 
     public function userss(){

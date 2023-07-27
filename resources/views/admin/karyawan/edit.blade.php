@@ -141,7 +141,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="form-label">Atasan Langsung (SPV/Manager/Direktur)</label>
+                        <label for="exampleInputEmail1" class="form-label">Atasan Langsung (Asistant Manager/Manager/Direksi)</label>
                         <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
                             <option value="">Pilih Atasan Langsung</option>
                             @foreach ($atasan_pertama as $atasan)
@@ -156,11 +156,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="form-label">Atasan (Manager/Direktur)</label>
+                        <label for="exampleInputEmail1" class="form-label">Atasan/Pimpinan (Manager/Direksi)</label>
                         <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
                             <option value="">Pilih Atasan</option>
                             @foreach ($atasan_kedua as $atasan)
-                                <option value="{{ $atasan->id }}"
+                                <option value="{{ $atasan->id}}"
                                     @if($karyawan->atasan_kedua == $atasan->id)
                                         selected
                                     @endif>{{ $atasan->nama }}
@@ -174,9 +174,9 @@
                            <label>Jabatan</label> 
                            <select type="text" class="form-control selectpicker" name="jabatanKaryawan" required>
                             <option value="">Pilih Jabatan</option>
-                            <option value="Direktur" @if($karyawan->jabatan == "Direktur") selected @endif >Direktur</option>
+                            <option value="Direksi" @if($karyawan->jabatan == "Direksi") selected @endif >Direksi</option>
                             <option value="Manager" @if($karyawan->jabatan == "Manager") selected @endif >Manager</option>
-                            <option value="Supervisor" @if($karyawan->jabatan == "Supervisor") selected @endif >Supervisor</option>
+                            <option value="Asistant Manager" @if($karyawan->jabatan == "Asistant Manager") selected @endif >Asistant Manager</option>
                             <option value="HRD" @if($karyawan->jabatan == "HRD") selected @endif >HRD</option>
                             <option value="Staff" @if($karyawan->jabatan == "Staff") selected @endif >Staff</option>
                         </select>
@@ -397,7 +397,7 @@
                     </div>
                     <div class="form-group">
                         <div class="mb-3">
-                            <label>Nama Direktur</label>
+                            <label>Nama Direksi</label>
                             <input type="text" name="namaDirektur" class="form-control" autocomplete="off"
                             value="{{$rpekerjaan->nama_direktur}}">
                         </div>

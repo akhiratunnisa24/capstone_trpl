@@ -9,16 +9,11 @@ class Settingalokasi extends Model
 {
     use HasFactory;
     protected $table = 'settingalokasi';
-    protected $fillable = ['id','id_jeniscuti','durasi','mode_alokasi','departemen','mode_karyawan','tipe_approval'];
+    protected $fillable = ['id','id_jeniscuti','durasi','mode_karyawan','cuti_bersama_terhutang','periode','status'];
 
     public function jeniscutis()
     {
         return $this->belongsTo(Jeniscuti::class,'id_jeniscuti','id');
-    }
-
-    public function departemens()
-    {
-        return $this->belongsTo(Departemen::class,'departemen','id');
     }
 
     public function getModeKaryawanArrayAttribute() {

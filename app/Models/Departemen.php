@@ -18,15 +18,20 @@ class Departemen extends Model
     {
         return $this->hasMany(Absensi::class, 'id_departement','id');
     }
+
+    public function masterkpi()
+    {
+        return $this->hasMany(Masterkpi::class, 'id_departemen','id');
+    }
+
+    public function alokasicuti()
+    {
+        return $this->hasMany(Alokasicuti::class, 'departemen','id');
+    }
     
     public function karyawans()
     {
         return $this->hasMany(Karyawan::class, 'id_departement','id');
-    }
-
-    public function settingalokasi()
-    {
-        return $this->hasMany(Settingalokasi::class, 'departemen','id');
     }
 
     // public function karyawan()
@@ -44,5 +49,21 @@ class Departemen extends Model
     public function resign()
     {
         return $this->hasMany(Resign::class, 'departemen', 'id');
+    }
+
+    public function tims()
+    {
+        return $this->hasMany(Tim::class, 'divisi', 'id');
+    }
+
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class, 'divisi', 'id');
+    }
+
+
+    public function timkaryawans()
+    {
+        return $this->hasMany(Timkaryawan::class, 'svisi', 'id');
     }
 }

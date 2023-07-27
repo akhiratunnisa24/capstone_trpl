@@ -25,44 +25,62 @@
                         <h3 class="text-center m-t-0 m-b-30">
                             <span class=""><img id="img"
                                     src="{{ !empty($row->foto) ? asset('Foto_Profile/' . $row->foto) : asset('assets/images/users/avatar-1.jpg') }}"
-                                    alt="logo" class="img-circle" width="140" height="140"></span>
+                                    alt="logo" class="img-circle" width="100" height="100"></span>
                             <h3 align="center"><strong>{{ Auth::user()->name }}</strong></h3>
+                            <h1 align="center" style="color: blue"><span id="waktu"></span></h1>
 
                             <div>
-                                @if (!isset($absensi->jam_masuk))
-                                    <form action="{{ route('absensi.action') }}" method="POST" align="center">
-                                        @csrf
-                                        @method('POST')
-                                        <button type="submit" class="btn btn-info btn-lg">
-                                            <i class="fa fa-sign-in fa-3x"></i>
-                                        </button>
-                                    </form>
-                                    <div>
-                                        <h3 align="center">Masuk</h3>
-                                    </div>
+                                @php
+                                    use App\Models\SettingHarilibur;
+                                    $isWeekend = (date('N') == 6 || date('N') == 7); // cek apakah hari ini Sabtu atau Minggu
+                                    $isHoliday = SettingHarilibur::whereDate('tanggal', date('Y-m-d'))->exists(); 
+                                @endphp
+                                @if (!$isWeekend && !$isHoliday)
+                                    @if (!isset($absensi->jam_masuk))
+                                        <form action="{{ route('absensi.action') }}" method="POST" align="center">
+                                            @csrf
+                                            @method('POST')
+                                            <div align="center">
+                                                <h4>Shift : <label>{{ $jadwalkaryawan->nama_shift ?? '' }}</label>  Jadwal:<label>{{ $jadwalkaryawan->jadwal_masuk }}</label> </h4>
+                                            </div>
+                                            <button type="submit" class="btn btn-info btn-lg"> <i class="fa fa-sign-in fa-3x"></i></button>
+                                        </form>
+                                        <div>
+                                            <h3 align="center">Absensi Masuk</h3>
+                                        </div>
 
-                                @elseif(!isset($absensi->jam_keluar))
-                                    <form action="{{ route('absen_pulang', $absensi->id) }}" method="POST" align="center">
-                                        @csrf
-                                        <button type="submit" class="btn btn-warning btn-lg m-10">
-                                            <i class="fa fa-sign-out fa-3x"></i>
-                                        </button>
-                                    </form>
+                                    @elseif(!isset($absensi->jam_keluar))
+                                        <form action="{{ route('absen_pulang', $absensi->id) }}" method="POST" align="center">
+                                            @csrf
+                                            <div align="center">
+                                                <h4>Shift : <label>{{ $jadwalkaryawan->nama_shift }}</label>  Jadwal:<label>{{ $jadwalkaryawan->jadwal_pulang }}</label> </h4>
+                                            </div>
+                                            <button type="submit" class="btn btn-warning btn-lg m-10">
+                                                <i class="fa fa-sign-out fa-3x"></i>
+                                            </button>
+                                        </form>
+                                        <div>
+                                            <h3 align="center">Absensi Pulang</h3>
+                                        </div>
+                                        @elseif(isset($absensi->jam_keluar))
+                                        <div>
+                                            <h3 align="center">Terima kasih</h3>
+                                        </div>
+                                    @else
+                                        <div>
+                                            <h3 align="center">Anda {{ $status->status }} Hari Ini </h3>
+                                        </div>
+                                    @endif
+                                    @include('karyawan.absensi.tidakMasukModal')
+                                @elseif($isHoliday)
                                     <div>
-                                        <h3 align="center">Pulang</h3>
-                                    </div>
-                                    @elseif(isset($absensi->jam_keluar))
-                                    <div>
-                                        <h3 align="center">Terima kasih</h3>
+                                        <h3 align="center">Hari Ini Adalah Hari Libur</h3>
                                     </div>
                                 @else
                                     <div>
-                                        <h3 align="center">Anda {{ $status->status }} Hari Ini </h3>
+                                        <h3 align="center">Tidak Ada Jadwal Hari Ini</h3>
                                     </div>
                                 @endif
-                                @include('karyawan.absensi.tidakMasukModal')
-
-
                         </h3>
                     </div>
                 </div>
@@ -82,4 +100,15 @@
 
         ;
     </style>
+    <script>
+        function updateTime() {
+            var now = new Date();
+            var jam = now.getHours().toString().padStart(2, '0');
+            var menit = now.getMinutes().toString().padStart(2, '0');
+            var detik = now.getSeconds().toString().padStart(2, '0');
+            var waktuString = jam + ':' + menit + ':' + detik;
+            document.getElementById('waktu').textContent = waktuString;
+        }
+        setInterval(updateTime, 1000);
+    </script>
 @endsection

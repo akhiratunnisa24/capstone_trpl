@@ -49,17 +49,18 @@ class User extends Authenticatable
 
     public function karyawan()
     {
-        return $this->belongsTo(Karyawan::class, 
-        'id_pegawai',
-        'id',
-        'role',
-        'name',
-        'email', );
+        return $this->belongsTo(Karyawan::class, 'id_pegawai', 'id');
     }
 
     //hrms_git
     public function karyawans(){
         return $this->hasOne(Karyawan::class,'id_pegawai','id');
     }
+
+    public function roles()
+    {
+        return $this->belongsTo(Role::class,'role','id');
+    }
+    
 }
 

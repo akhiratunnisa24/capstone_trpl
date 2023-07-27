@@ -10,7 +10,7 @@ class Jenisizin extends Model
     use HasFactory;
     protected $table ='jenisizin';
     protected $fillable = [
-                            'jenis_izin',
+                            'jenis_izin','code'
                         ];
     public function izin()
     {

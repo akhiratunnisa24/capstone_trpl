@@ -27,11 +27,9 @@
                         <div class="panel-heading clearfix">
                           <a href="#" class="btn btn-sm btn-dark fa fa-plus pull-right"
                             @if ($status0 == 5 && $status1 == 8)
-                                onclick="alert('Kamu tidak bisa mengajukan resign lagi')"
-                                class="alert-button"
+                                onclick="alert('Kamu tidak bisa mengajukan resign lagi')" class="alert-button"
                             @elseif ($jumlah_resign > 0 && $status0 != 5)
-                                onclick="alert('Kamu tidak bisa mengajukan resign lagi')"
-                                class="alert-button"
+                                onclick="alert('Kamu tidak bisa mengajukan resign lagi')" class="alert-button"
                             @else
                                 data-toggle="modal" data-target="#Modal"
                             @endif>
@@ -72,8 +70,8 @@
                                           
                                                   <!-- data for status -->
                                                   <td>
-                                                    <span class="badge badge-{{ $r->status == 8 ? 'warning' : ($r->status == 2 ? 'info' : ($r->status == 3 ? 'success' : ($r->status == 4 ? 'warning' : 'danger'))) }}">
-                                                      {{ $r->status == 8 ? $r->statuses->name_status : ($r->status == 2 ? $r->statuses->name_status : ($r->status == 3 ? $r->statuses->name_status : ($r->status == 4 ? $r->statuses->name_status : 'Ditolak'))) }}
+                                                    <span class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'danger': 'danger'))) }}">
+                                                      {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 6 ? $r->statuses->name_status : ($r->status == 7 ? $r->statuses->name_status : ($r->status == 5 ? $r->statuses->name_status : 'Ditolak'))) }}
                                                     </span>
                                                   </td>
 

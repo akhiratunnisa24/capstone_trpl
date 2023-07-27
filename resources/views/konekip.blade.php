@@ -1,0 +1,1 @@
+<p>Koneksi berhasil Menggunakan "ping -c 1 "!</p>

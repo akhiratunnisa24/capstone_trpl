@@ -27,17 +27,14 @@ class CutiNotification extends Mailable
     public function build()
     {
         return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
-        ->subject($this->data['subject'])
-        ->view('emails.cutiindex')->with('data',$this->data);
-    }
+            ->subject($this->data['subject'])
+            ->cc($this->data['karyawan_email'], 'Karyawan')
+            ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '','Pimpinan Unit Kerja')
+            ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
+            ->view('emails.cutiindex')->with('data',$this->data);   
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array
-     */
-    public function attachments()
-    {
-        return [];
+            // ->cc('hrd-global@grm-risk.com','HRD GRM')
+            // ->cc('pandu@grm-risk.com','HRD Staff')
+            // ->cc('ariswan@grm-risk.com','HRD Manager')
     }
 }

@@ -19,23 +19,16 @@ class JeniscutiSeeder extends Seeder
             'jenis_cuti' => "Cuti Tahunan",
         ]);
         Jeniscuti::insert([
-            'jenis_cuti' => "Cuti Menikah",
+            'jenis_cuti' => "Cuti Bersalin",
         ]);
         Jeniscuti::insert([
-            'jenis_cuti' => "Cuti Menikahkan Anak",
+            'jenis_cuti' => "Cuti Keguguran",
         ]);
         Jeniscuti::insert([
-            'jenis_cuti' => "Cuti Keluarga Meninggal",
+            'jenis_cuti' => "Cuti Besar",
         ]);
         Jeniscuti::insert([
-            'jenis_cuti' => "Cuti Keluarga Dalam Satu Rumah Meninggal",
+            'jenis_cuti' => "Cuti Diluar Tanggungan Perusahaan",
         ]);
-        Jeniscuti::insert([
-            'jenis_cuti' => "Cuti Hamil/Melahirkan/Keguguran",
-        ]);
-        Jeniscuti::insert([
-            'jenis_cuti' => "Cuti Lebaran",
-        ]);
-
     }
 }

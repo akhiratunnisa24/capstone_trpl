@@ -14,6 +14,16 @@
             margin-bottom: 5px;
         }
 
+        .align-tanggal {
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .align-nama {
+            text-align: center;
+            white-space: nowrap;
+        }
+
         #absensi {
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
@@ -64,56 +74,60 @@
             padding-top: 40px;
         }
 
-        #n {
+        .n {
             text-align: left;
         }
     </style>
 </head>
 
 <body>
-    <h1 align="center">PT. Global Risk Management (GRM)</h1>
-    <p id="address">Graha GRM Royal Spring Business Park 11, Jl. Ragunan Raya No. 29A, Jakarta Selatan, 12540</p>
+    <h1 align="center">{{$setorganisasi->nama_perusahaan}}</h1>
+    <p id="address">{{$setorganisasi->alamat}}, {{$setorganisasi->kode_pos}}</p>
     <div class="garis"></div>
     <h3 align="center">Report Izin Pegawai</h3>
     <table id="absensi">
         <tr>
-            <th>Emp No.</th>
+            <th>No.</th>
+            <th>NIK</th>
             <th>Nama</th>
-            <th>Keperluan</th>
-            <th>Tanggal Mulai</th>
-            <th>Tanggal Selesai</th>
-            <th>Jam Mulai</th>
-            <th>Jam Selesai</th>
+            <th>Kategori</th>
+            <th>Tanggal Pelaksanaan</th>
+            {{-- <th>Keperluan</th> --}}
+            <th>Jam Pelaksanaan</th>
             <th>Jumlah Jam</th>
-            <th>Status</th>
         </tr>
 
         @forelse($data as $key => $d)
             <tr align="center">
-               <td>{{ $d->id_karyawan }}</td>
-                <td>{{ $d->karyawans->nama }}</td>
-                <td>{{ $d->keperluan }}</td>
-                <td>{{ $d->tgl_mulai }}</td>
-                <td>{{ $d->tgl_selesai }}</td>
-                <td>{{ $d->jam_mulai }}</td>
-                <td>{{ $d->jam_selesai }}</td>
-                <td>{{ $d->jml_jam }}</td>
-                <td>
-                    <span
-                        class="badge badge-{{ $d->status == 1 ? 'warning' : ($d->status == 2 ? 'info' : ($d->status == 5 ? 'danger' : ($d->status == 6 ? 'secondary' : ($d->status == 7 ? 'success' : '')))) }}">
-                        {{ $d->status == 1 ? 'Pending' : ($d->status == 2 ? 'Disetujui Manager' : ($d->status == 5 ? 'Ditolak' : ($d->status == 6 ? 'Disetujui Supervisor' : ($d->status == 7 ? 'Disetujui' : '')))) }}
-                    </span>
-                </td>
+                <td class="font-size-12">{{ $loop->iteration }}</td>
+                <td class="font-size-12">{{ $d->nik }}</td>
+                <td class="n font-size-12">{{  ucwords(strtolower($d->karyawans->nama)) }}</td>
+                <td class="n font-size-12">{{ $d->jenisizins->jenis_izin }}</td>
+                <td class="align-tanggal font-size-12">{{\Carbon\Carbon::parse($d->tgl_mulai)->format('d/m/Y')}} @if($d->tgl_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->tgl_selesai)->format('d/m/Y')}} @endif</td>
+                {{-- <td>{{ $d->keperluan }}</td> --}}
+                @if($d->jam_mulai != NULL)
+                    <td class="align-tanggal font-size-12">{{\Carbon\Carbon::parse($d->jam_mulai)->format('H:i')}} @if($d->jam_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->jam_selesai)->format('H:i')}} @endif</td>
+                    <td class="font-size-12">{{ $d->jml_jam }}</td>
+                @else
+                    <td>-</td>
+                    <td>-</td>
+                @endif
             </tr>
         @empty
             <tr>
-                <td colspan="12" class="text-center">Data Tidak Ditemukan</td>
+                <td colspan="12" class="text-center font-size-12">Data Tidak Ditemukan</td>
             </tr>
         @endforelse
     </table>
     <br>
+    @php
+        use Carbon\Carbon;
+        $now = Carbon::now();
+        $bulan = $now->locale('id')->monthName;
+        $formatted_date = $now->day . ' ' . $bulan . ' ' . $now->year;
+    @endphp
     <div class="row-sm-3">
-        <p id="ttd">Depok, {{ date('d F Y') }}</p>
+        <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
         {{-- <p id="t">Hormat Kami,</p> --}}
         <p id="tt">(HR Development)</p>
     </div>

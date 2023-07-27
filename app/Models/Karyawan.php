@@ -54,6 +54,16 @@ class Karyawan extends Model
         );
     }
 
+    public function atasan_pertamaa()
+    {
+        return $this->belongsTo(Karyawan::class, 'atasan_pertama','id');
+    }
+
+    public function atasan_keduab()
+    {
+        return $this->belongsTo(Karyawan::class, 'atasan_kedua','id');
+    }
+
     //hrms_git
     public function userss()
     {
@@ -63,22 +73,8 @@ class Karyawan extends Model
     //dipakai untuk mengambil data nama_departemen <---
     public function departemens()
     {
-        return $this->belongsTo(
-            Departemen::class,
-            'divisi',
-            'id',
-            'nama_departemen',
-        );
+        return $this->belongsTo(Departemen::class,'divisi','id');
     }
-
-    // public function departemen()
-    // {
-    //     return $this->hasMany(
-    //         Departemen::class, 
-    //         'id',
-    //         'nama_departemen',
-    //     );
-    // }
     
     public function keluarga()
     {
@@ -104,16 +100,25 @@ class Karyawan extends Model
     {
         return $this->belongsTo(User::class, 'id', 'id_pegawai');
     }
-
-    // public function absensi()
-    // {
-    //     return $this->hasMany(Absensi::class,'id_karyawan','id');
-    // }
+    public function rorganisasi()
+    {
+        return $this->belongsTo(Rorganisasi::class, 'id', 'id_pegawai');
+    }
+    public function rprestasi()
+    {
+        return $this->belongsTo(Rprestasi::class, 'id', 'id_pegawai');
+    }
     
     public function cuti()
     {
         return $this->hasMany(Cuti::class, 'id');
     }
+
+    public function atasan()
+    {
+        return $this->hasOne(Atasan::class, 'id_karyawan');
+    }
+
     public function izin()
     {
         return $this->hasMany(Izin::class, 'id');
@@ -122,13 +127,34 @@ class Karyawan extends Model
     {
         return $this->hasMany(Absensi::class, 'id');
     }
+
+    public function absensis()
+    {
+        return $this->hasMany(Absensis::class, 'id');
+    }
     public function departemen()
     {
         return $this->belongsTo(Departemen::class, 'divisi', 'id');
     }
-    // public function tidakmasuk2()
-    // {
-    //     return $this->hasMany(Absensi::class, 'id');
-    // }
-    
+
+    public function settingcuti()
+    {
+        return $this->hasMany(Settingcuti::class, 'id');
+    }
+
+    public function sisacuti()
+    {
+        return $this->hasMany(Sisacuti::class, 'id');
+    }
+
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class, 'id');
+    }
+
+    public function timkaryawans()
+    {
+        return $this->hasMany(Timkaryawan::class,'id_karyawan','id');
+    }
+
 }

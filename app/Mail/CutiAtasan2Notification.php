@@ -27,8 +27,9 @@ class CutiAtasan2Notification extends Mailable
     public function build()
     {
         return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
-        ->subject($this->data['subject'])
-        ->view('emails.cuti2index')->with('data',$this->data);
+            ->subject($this->data['subject'])
+            ->cc($this->data['karyawan_email'], 'Karyawan')
+            ->view('emails.cuti2index')->with('data',$this->data);
     }
     /**
      * Get the attachments for the message.

@@ -1,5 +1,8 @@
 @extends('layouts.default')
 @section('content')
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
@@ -61,11 +64,6 @@
                                         <label>Tahun</label>
                                         <select name="tahun" id="tahun" class="col-md-3 form-control selectpicker" data-live-search="true" required>
                                             <option value="">-- Pilih Tahun --</option>
-                                            <option value="2015" {{ ('2015' === request()->tahun) ? 'selected' : '' }}>2015</option>
-                                            <option value="2016" {{ ('2016' === request()->tahun) ? 'selected' : '' }}>2016</option>
-                                            <option value="2017" {{ ('2017' === request()->tahun) ? 'selected' : '' }}>2017</option>
-                                            <option value="2018" {{ ('2018' === request()->tahun) ? 'selected' : '' }}>2018</option>
-                                            <option value="2019" {{ ('2019' === request()->tahun) ? 'selected' : '' }}>2019</option>
                                             <option value="2020" {{ ('2020' === request()->tahun) ? 'selected' : '' }}>2020</option>
                                             <option value="2021" {{ ('2021' === request()->tahun) ? 'selected' : '' }}>2021</option>
                                             <option value="2022" {{ ('2022' === request()->tahun) ? 'selected' : '' }}>2022</option>
@@ -118,7 +116,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Karyawan</th>
-                                                <th>Departemen</th>
+                                                {{-- <th>Departemen</th> --}}
                                                 <th>Tanggal</th>
                                                 <th>Jam Masuk</th>
                                                 <th>Jam Keluar</th>
@@ -128,11 +126,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                @foreach($absensi as $data)
+                                                @foreach($absensi as $key => $data)
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data->karyawan->nama}}</td>
-                                                        <td>{{$data->departemens->nama_departemen}}
                                                         <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
                                                         <td>{{$data->jam_masuk}}</td>
                                                         <td>{{$data->jam_keluar}}</td>
@@ -140,8 +137,6 @@
                                                         <td>{{$data->terlambat}}</td>
                                                         <td>{{$data->plg_cepat}}</td>
                                                     </tr>
-                                                {{-- @empty
-                                                    <tr>No data available in table</tr> --}}
                                                 @endforeach
                                         </tbody>
                                     </table>
@@ -154,9 +149,36 @@
         </div> <!-- container -->
     </div> <!-- content -->
 
-    <!-- jQuery  -->
-    <script src="assets/js/jquery.min.js"></script>
-    <!-- Datatable init js -->
-    <script src="assets/pages/datatables.init.js"></script>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/pages/datatables.init.js"></script>
+        <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="assets/pages/form-advanced.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+    
+    
+        @if(Session::has('pesan'))
+            <script>
+                swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                    button:true,
+                    button:"OK",
+                });
+            </script>
+        @endif
+    
+        @if(Session::has('pesa'))
+            <script>
+                swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+                    button:true,
+                    button:"OK",
+                });
+            </script>
+        @endif
     {{-- <script src="assets/js/app.js"></script> --}}
 @endsection

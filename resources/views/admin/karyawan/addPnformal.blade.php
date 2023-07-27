@@ -15,25 +15,51 @@
                             <input type="hidden" name="id_pendidikan">
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Bidang/ Jenis Pendidikan</label>
-                                    <input type="text" name="jenis_pendidikan" autocomplete="off" class="form-control">
+                                    <label>Bidang / Jenis Pendidikan</label>
                                     <input type="hidden" name="idpegawai" autocomplete="off" value="{{$karyawan->id}}" class="form-control">
+                                    <input type="text" name="jenis_pendidikan" autocomplete="off" class="form-control">
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Lembaga Pendidikan</label>
+                                    <input type="text" name="namaLembaga" autocomplete="off" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Kota</label>
+                                    <label>Alamat</label>
                                     <input type="text" name="kotaPendidikanNonFormal" autocomplete="off" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
-                                    <label>Lulus Tahun</label>
+                                    <label class="form-label">Lama Pendidikan</label>
+                                    <div>
+                                        <div class="input-daterange input-group" id="date-range2">
+                                            <input type="text" class="form-control" name="tahun_masukNonFormal"
+                                                placeholder="dd/mm/yyyy" autocomplete="off" />
+                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                            <input type="text" class="form-control" name="tahun_lulusNonFormal"
+                                                placeholder="dd/mm/yyyy" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Tahun Lulus</label>
                                     <div class="input-group">
                                         <input id="datepicker-autoclose4" type="text"
                                                 class="form-control" placeholder="yyyy" id="4" name="tahunLulusNonFormal" autocomplete="off" rows="10"><br>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
+                                </div>
+                            </div> --}}
+                            <div class="form-group">
+                                <div class="mb-3">
+                                    <label>Nomor Ijazah</label>
+                                    <input type="text" name="noijazahPnonformal" autocomplete="off" class="form-control">
                                 </div>
                             </div>
                         </div>

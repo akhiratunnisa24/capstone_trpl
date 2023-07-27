@@ -29,9 +29,9 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 m-b-10">
-                            <a type="button" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
+                            {{-- <a type="button" class="btn btn-sm btn-dark fa fa-plus" data-toggle="modal"
                                 data-target="#myModal"> Tambah
-                                Metode Rekruitmen</a>
+                                Metode Rekruitmen</a> --}}
                         </div>
                         @include('admin.rekruitmen.tambahMetodeModal')
                         <div class="panel-body">
@@ -50,9 +50,9 @@
 
                                 <tbody>
                                     @foreach ($metode as $k)
-                                            @if ($k->id == '6')
+                                            {{-- @if ($k->id == '18' )
 
-                                            @else
+                                            @else --}}
                                         <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $k->nama_tahapan }}</td>
@@ -80,7 +80,7 @@
                                             </div>
                                             <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
                                             </td>
-                                            @endif
+                                            {{-- @endif --}}
 
                                         </tr>
                                         @include('admin.rekruitmen.editMetodeModal')
@@ -117,7 +117,7 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= 'http://localhost:8000/metode_rekrutmen_destroy' ?>' + id;
+                    location.href = '<?= 'metode_rekrutmen_destroy' ?>' + id;
                 }
             })
         }

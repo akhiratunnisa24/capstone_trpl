@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_jeniscuti');
             $table->integer('durasi');
-            $table->string('mode_alokasi',50)->nullable();
-            $table->unsignedBigInteger('departemen')->nullable();
             $table->string('mode_karyawan',100)->nullable();
-            $table->string('tipe_approval',50)->nullable();
+            $table->string('cuti_bersama_terhutang',10)->nullable();
+            $table->year('periode');
+            $table->boolean('status');
             $table->timestamps();
 
             $table->foreign('id_jeniscuti')->references('id')->on('jeniscuti')->onDelete('cascade');

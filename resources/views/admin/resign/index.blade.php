@@ -59,13 +59,15 @@
                                                 {{-- <td>{{ $r->tipe_resign }}</td> --}}
                                                   <!-- data for status -->
                                             <td>
-                                              <span class="badge badge-{{ $r->status == 8 ? 'warning' : ($r->status == 2 ? 'info' : ($r->status == 3 ? 'success' : ($r->status == 4 ? 'warning' : 'danger'))) }}">
-                                                {{ $r->status == 8 ? $r->statuses->name_status : ($r->status == 2 ? $r->statuses->name_status : ($r->status == 3 ? $r->statuses->name_status : ($r->status == 4 ? $r->statuses->name_status : 'Ditolak'))) }}
+                                              <span class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'danger' : 'danger'))) }}">
+                                                {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 6 ? $r->statuses->name_status : ($r->status == 7 ? $r->statuses->name_status : ($r->status == 5 ? $r->statuses->name_status : 'Ditolak'))) }}
                                               </span>
                                             </td>
                                             <td id="b" class="text-center">
                                               <div class="btn-group" role="group">
-                                                @if ($r->status == 2 || $r->status == 4)
+                                                {{-- @if ($r->status == 2 || $r->status == 4) --}}
+                                                @if($r->karyawan->atasan_pertama == Auth::user()->id_pegawai && $r->status == 1)
+
                                                   <form action="{{ route('resignapproved', $r->id) }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="status" value=1 class="form-control" hidden>
@@ -81,6 +83,25 @@
                                                       <i class="fa fa-times"></i>
                                                     </button>
                                                   </form>
+
+                                                @elseif($r->karyawan->atasan_kedua == Auth::user()->id_pegawai && $r->status == 6)
+
+                                                <form action="{{ route('resign_approved_manager', $r->id) }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="status" value=1 class="form-control" hidden>
+                                                    <button type="submit" class="btn btn-success btn-sm">
+                                                      <i class="fa fa-check"></i>
+                                                    </button>
+                                                  </form>
+                                                  <form action="{{ route('resignreject', $r->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <input type="hidden" name="status" value=5 class="form-control" hidden>
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                      <i class="fa fa-times"></i>
+                                                    </button>
+                                                  </form>
+
                                                 @endif
                                                 <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#Showresign{{ $r->id }}">
                                                   <i class="fa fa-eye"></i>

@@ -15,15 +15,26 @@ return new class extends Migration
     {
         Schema::create('alokasicuti', function (Blueprint $table) {
             $table->id();
+            $table->string('nik',20);
             $table->unsignedBigInteger('id_karyawan');
+            $table->string('jabatan',100);
+            $table->integer('departemen');
             $table->unsignedBigInteger('id_settingalokasi');
             $table->unsignedBigInteger('id_jeniscuti');
-            $table->integer('durasi')->nullable();
-            $table->string('mode_alokasi')->nullable();
+            $table->enum('status_durasialokasi',['Cuti Tidak Terhutang','Cuti Bersama Terhutang'])->nullable();
             $table->date('tgl_masuk')->nullable();
             $table->date('tgl_sekarang')->nullable();
+            $table->date('jatuhtempo_awal')->nullable();
+            $table->date('jatuhtempo_akhir')->nullable();
+            $table->integer('jmlhakcuti')->nullable();
+            $table->integer('cutidimuka')->nullable();
+            $table->integer('cutiminus')->nullable();
+            $table->integer('jmlcutibersama')->nullable();
+            $table->integer('durasi')->nullable();
+            $table->string('keterangan',100)->nullable();
             $table->date('aktif_dari')->nullable();
             $table->date('sampai')->nullable();
+            $table->boolean('status');
 
             $table->foreign('id_karyawan')->references('id')->on('karyawan')->onDelete('cascade');
             $table->foreign('id_settingalokasi')->references('id')->on('settingalokasi')->onDelete('cascade');

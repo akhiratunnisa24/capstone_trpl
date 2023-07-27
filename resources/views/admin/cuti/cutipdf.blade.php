@@ -14,6 +14,16 @@
             margin-bottom: 5px;
         }
 
+        .align-tanggal {
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .align-nama {
+            text-align: center;
+            white-space: nowrap;
+        }
+
         #absensi {
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
@@ -64,40 +74,41 @@
             padding-top: 40px;
         }
 
-        #n {
+        .n {
             text-align: left;
+            white-space: nowrap;
         }
     </style>
 </head>
 
 <body>
-    <h1 align="center">PT. Global Risk Management (GRM)</h1>
-    <p id="address">Graha GRM Royal Spring Business Park 11, Jl. Ragunan Raya No. 29A, Jakarta Selatan, 12540</p>
+    <h1 align="center">{{$setorganisasi->nama_perusahaan}}</h1>
+    <p id="address">{{$setorganisasi->alamat}}, {{$setorganisasi->kode_pos}}</p>
     <div class="garis"></div>
     <h3 align="center">Report Cuti Pegawai</h3>
     <table id="absensi">
         <tr>
-            <th>ID </th>
+            <th>No. </th>
+            <th>NIK</th>
             <th>Nama</th>
             <th>Kategori Cuti</th>
-            <th>Tanggal Mulai</th>
-            <th>Tanggal Selesai</th>
+            <th>Tanggal Pelaksanaan</th>
             <th>Keperluan</th>
             <th>Status</th>
         </tr>
 
         @forelse($data as $key => $d)
             <tr align="center">
-                <td>{{ $d->id }}</td>
-                <td id="n">{{ $d->karyawans->nama }}</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $d->nik }}</td>
+                <td class="n">{{ ucwords(strtolower($d->karyawans->nama)) }}</td>
                 <td>{{ $d->jeniscutis->jenis_cuti }}</td>
-                <td>{{ $d->tgl_mulai }}</td>
-                <td>{{ $d->tgl_selesai }}</td>
+                <td class="align-tanggal">{{\Carbon\Carbon::parse($d->tgl_mulai)->format('d/m/Y')}} @if($d->tgl_selesai != NULL) s.d {{\Carbon\Carbon::parse($d->tgl_selesai)->format('d/m/Y')}} @endif</td>
                 <td>{{ $d->keperluan }}</td>
                 <td>
                     <span
-                        class="badge badge-{{ $d->status == 1 ? 'warning' : ($d->status == 2 ? 'info' : ($d->status == 5 ? 'danger' : ($d->status == 6 ? 'secondary' : ($d->status == 7 ? 'success' : '')))) }}">
-                        {{ $d->status == 1 ? 'Pending' : ($d->status == 2 ? 'Disetujui Manager' : ($d->status == 5 ? 'Ditolak' : ($d->status == 6 ? 'Disetujui Supervisor' : ($d->status == 7 ? 'Disetujui' : '')))) }}
+                        class="badge badge-{{ $d->status == 1 ? 'warning' : ($d->status == 5 ? 'danger' : ($d->status == 6 ? 'info' : ($d->status == 7 ? 'success' : ($d->status == 9 ? 'secondary' : ($d->status == 10 ? 'success' : ''))))) }}">
+                        {{ $d->status == 1 ? 'Pending' : ($d->status == 5 ? 'Ditolak' : ($d->status == 6 ? 'Disetujui Atasan' : ($d->status == 7 ? 'Disetujui' : ($d->status == 9 ? 'Pending Atasan' : ($d->status == 10 ? 'Pending Pimpinan' : ''))))) }}
                     </span>
                 </td>
             </tr>
@@ -108,8 +119,15 @@
         @endforelse
     </table>
     <br>
+    @php
+        use Carbon\Carbon;
+
+        $now = Carbon::now();
+        $bulan = $now->locale('id')->monthName;
+        $formatted_date = $now->day . ' ' . $bulan . ' ' . $now->year;
+    @endphp
     <div class="row-sm-3">
-        <p id="ttd">Depok, {{ date('d F Y') }}</p>
+        <p id="ttd">Jakarta Selatan, {{   $formatted_date }}</p>
         {{-- <p id="t">Hormat Kami,</p> --}}
         <p id="tt">(HR Development)</p>
     </div>

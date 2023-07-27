@@ -14,7 +14,8 @@
                 <form method="POST" action="{{ url('/registrasi') }}">
                     @csrf
                     @method('POST')
-                    <div class="form-group col-xs-12">
+                    
+                    {{-- <div class="form-group col-xs-12">
                         <label class="form-label">Role</label>
                             <select type="text" class="form-control selecpicker @error('role') is-invalid @enderror"
                                 name="role" required autocomplete="role" autofocus placeholder="Role">
@@ -31,11 +32,21 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+                    </div> --}}
+
+                    <div class="form-group col-xs-12">
+                        <label class="form-label">Role</label>
+                        <select  class="form-control selecpicker" name="role" required>
+                            <option value="">Pilih Role</option>
+                            @foreach ($role as $k)
+                                <option value="{{ $k->id }}">{{ $k->role }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group col-xs-12" id="id_pegawai">
-                        <label for="id_pegawai" class="form-label">Karyawan</label>
-                        <select id="id_karyawan" class="form-control selecpicker" name="id_pegawai" required>
+                        <label class="form-label">Karyawan</label>
+                        <select  class="form-control selecpicker" name="id_pegawai" required>
                             <option value="">Pilih Karyawan</option>
                             @foreach ($akun as $k)
                                 <option value="{{ $k->id }}">{{ $k->nama }}</option>
@@ -43,11 +54,11 @@
                         </select>
                     </div>
                     <div class="form-group col-xs-12">
-                        <label for="emailKaryawan" class="form-label">Email</label>
+                        <label class="form-label">Email</label>
                         <input id="emailKaryawan" type="text" class="form-control" name="emailKaryawan"
                             autocomplete="off" placeholder="Email Address" readonly>
-
                     </div>
+                    
 
                     <div class="form-group col-xs-12">
                         {{-- <div class=""> --}}
@@ -133,6 +144,30 @@
                 // console.log(data);
                 $('#emailKaryawan').val(data.email);
                 console.log(data?.email)
+            }
+        });
+    });
+</script>
+
+<script>
+    $('#id_pegawai2').on('change', function(e) {
+        var id_pegawai = e.target.value;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                    .attr('content')
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: '{{ route('getPersyaratan') }}',
+            data: {
+                'id_pegawai': id_pegawai
+            },
+            success: function(data) {
+                // console.log(data);
+                $('#emailKaryawan2').val(data.persyaratan);
+                console.log(data?.persyaratan)
             }
         });
     });

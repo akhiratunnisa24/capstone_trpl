@@ -103,7 +103,9 @@
                         </ul>
                     </div>
 
+                    {{-- Tabel Pelamar Tahap 1 --}}
                     <div class="tab-content">
+
                         <div class="tab-pane" id="1">
                             <table class="table table-bordered table-striped" style="width:100%">
                                 <thead>
@@ -123,7 +125,7 @@
 
 
                                 <tbody>
-                                    @foreach ($dataTahap1 as $k)
+                                    @foreach ($dataId1 as $k)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nik }}</td>
@@ -139,13 +141,19 @@
                                                 {{-- @if ($k->status_lamaran == 'tahap 1') --}}
 
                                                 <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+
+                                                {{-- <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
                                                         data-target="#myModal{{ $k->id }}">
                                                         <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
                                                 </div>
-                                                @include('admin.rekruitmen.showModal')
+                                                @include('admin.rekruitmen.showModal') --}}
 
                                                 <div class="col-md-3">
                                                     @csrf
@@ -202,280 +210,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-
-                        </div>
-
-                        <div class="tab-pane" id="2">
-
-                            <table class="table table-bordered table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>NIK</th>
-                                        <th>Nama</th>
-                                        <th>Tanggal Lahir</th>
-                                        <th>Email</th>
-                                        <th>L / P</th>
-                                        <th>Alamat</th>
-                                        <th>Status</th>
-                                        <th>Tanggal Psikotest</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-
-
-                                <tbody>
-                                    @foreach ($dataTahap2 as $k)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $k->nik }}</td>
-                                            <td>{{ $k->nama }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
-                                            <td>{{ $k->email }}</td>
-                                            <td>{{ $k->jenis_kelamin }}</td>
-                                            <td>{{ $k->alamat }}</td>
-                                            <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
-                                            <td>{{ $k->tanggal_tahapan }}</td>
-                                            <td>
-
-                                                {{-- @if ($k->status_lamaran == 'tahap 2') --}}
-                                                <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#myModal{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
-                                                    </a>
-                                                </div>
-                                                @include('admin.rekruitmen.showModal')
-
-                                                <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#lulusModal{{ $k->id }}">
-                                                        <i class="fa fa-check btn-success btn-sm "></i>
-                                                    </a>
-                                                </div>
-                                                @include('admin.rekruitmen.lulusModal')
-
-                                                {{-- <div class="col-md-3">
-                                                <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                    onsubmit="return confirmSave2()">
-                                                    @csrf
-                                                    <select class="form-control selectpicker "
-                                                        onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
-                                                        <option value="">Pilih Tahap Selanjutnya</option>
-                                                        @foreach ($metode as $k)
-                                                            <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </form>
-                                            </div> --}}
-
-                                                <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                        onsubmit="return confirmTolak2()">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <input type="hidden" name="status" value="Ditolak"
-                                                            class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
-                                                    </form>
-                                                </div>
-                                                {{-- @endif --}}
-                                            </td>
-
-
-
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-
-                        </div>
-
-
-                        <div class="tab-pane" id="3">
-                            <table class="table table-bordered table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>NIK</th>
-                                        <th>Nama</th>
-                                        <th>Tanggal Lahir</th>
-                                        <th>Email</th>
-                                        <th>L / P</th>
-                                        <th>Alamat</th>
-                                        <th>Status</th>
-                                        <th>Tanggal Interview Ke-1</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-
-
-                                <tbody>
-                                    @foreach ($dataTahap3 as $k)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $k->nik }}</td>
-                                            <td>{{ $k->nama }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
-                                            <td>{{ $k->email }}</td>
-                                            <td>{{ $k->jenis_kelamin }}</td>
-                                            <td>{{ $k->alamat }}</td>
-                                            <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
-                                            <td>{{ $k->tanggal_tahapan }}</td>
-                                            <td>
-
-                                                {{-- @if ($k->status_lamaran == 'tahap 2') --}}
-                                                <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#myModal{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
-                                                    </a>
-                                                </div>
-                                                @include('admin.rekruitmen.showModal')
-
-                                                <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#lulusModal{{ $k->id }}">
-                                                        <i class="fa fa-check btn-success btn-sm "></i>
-                                                    </a>
-                                                </div>
-                                                @include('admin.rekruitmen.lulusModal')
-
-
-
-                                                {{-- <div class="col-md-3">
-                                                <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                    onsubmit="return confirmSave2()">
-                                                    @csrf
-                                                   <select class="form-control selectpicker "
-                                                        onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
-                                                        <option value="">Pilih Tahap Selanjutnya</option>
-                                                        @foreach ($metode as $k)
-                                                            <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </form>
-                                            </div> --}}
-
-
-                                                <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                        onsubmit="return confirmTolak2()">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <input type="hidden" name="status" value="Ditolak"
-                                                            class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
-                                                    </form>
-                                                </div>
-                                                {{-- @endif --}}
-                                            </td>
-
-
-
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="tab-pane" id="4">
-                            <table class="table table-bordered table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>NIK</th>
-                                        <th>Nama</th>
-                                        <th>Tanggal Lahir</th>
-                                        <th>Email</th>
-                                        <th>L / P</th>
-                                        <th>Alamat</th>
-                                        <th>Status</th>
-                                        <th>Tanggal Medical Check-Up</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-
-
-                                <tbody>
-                                    @foreach ($dataTahap4 as $k)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $k->nik }}</td>
-                                            <td>{{ $k->nama }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
-                                            <td>{{ $k->email }}</td>
-                                            <td>{{ $k->jenis_kelamin }}</td>
-                                            <td>{{ $k->alamat }}</td>
-                                            <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
-                                            <td>{{ $k->tanggal_tahapan }}</td>
-                                            <td>
-
-                                                {{-- @if ($k->status_lamaran == 'tahap 2') --}}
-                                                <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#myModal{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
-                                                    </a>
-                                                </div>
-                                                @include('admin.rekruitmen.showModal')
-
-                                                <div class="col-md-3">
-                                                    @csrf
-                                                    <a href="#" data-toggle="modal"
-                                                        data-target="#lulusModal{{ $k->id }}">
-                                                        <i class="fa fa-check btn-success btn-sm "></i>
-                                                    </a>
-                                                </div>
-                                                @include('admin.rekruitmen.lulusModal')
-
-                                                {{-- <div class="col-md-3">
-                                                <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                    onsubmit="return confirmSave2()">
-                                                    @csrf
-                                                   <select class="form-control selectpicker "
-                                                        onchange="if(confirm('Apakah Anda yakin?')){this.form.submit()}" name="status_lamaran">
-                                                        <option value="">Pilih Tahap Selanjutnya</option>
-                                                        @foreach ($metode as $k)
-                                                            <option value="{{ $k->mrekruitmen->id }}">{{ $k->mrekruitmen->nama_tahapan }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </form>
-                                            </div> --}}
-
-                                                <div class="col-md-3">
-                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
-                                                        onsubmit="return confirmTolak2()">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <input type="hidden" name="status" value="Ditolak"
-                                                            class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
-                                                    </form>
-                                                </div>
-                                                {{-- @endif --}}
-                                            </td>
-
-
-
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
                         </div>
 
                         <div class="tab-pane" id="5">
@@ -490,14 +224,12 @@
                                         <th>L / P</th>
                                         <th>Alamat</th>
                                         <th>Status</th>
-                                        <th>Tanggal Interview ke-2</th>
+                                        <th>Tanggal Test Psikotest</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-
-
                                 <tbody>
-                                    @foreach ($dataTahap5 as $k)
+                                    @foreach ($dataId5 as $k)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $k->nik }}</td>
@@ -506,19 +238,151 @@
                                             <td>{{ $k->email }}</td>
                                             <td>{{ $k->jenis_kelamin }}</td>
                                             <td>{{ $k->alamat }}</td>
-                                            <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
+                                            <td>{{ $k->tanggal_tahapan }}</td>
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @csrf
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#lulusModal{{ $k->id }}">
+                                                        <i class="fa fa-check btn-success btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                @include('admin.rekruitmen.lulusModal')
+                                                <div class="col-md-3">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="status" value="Ditolak"
+                                                            class="form-control" hidden>
+                                                        <button type="submit"
+                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="7">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Email</th>
+                                        <th>L / P</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Test Asuransi Umum</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+                                    @foreach ($dataId7 as $k)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nik }}</td>
+                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                            <td>{{ $k->email }}</td>
+                                            <td>{{ $k->jenis_kelamin }}</td>
+                                            <td>{{ $k->alamat }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? ''}}</td>
+                                            <td>{{ $k->tanggal_tahapan }}</td>
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @csrf
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#lulusModal{{ $k->id }}">
+                                                        <i class="fa fa-check btn-success btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                @include('admin.rekruitmen.lulusModal')
+
+                                                <div class="col-md-3">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="status" value="Ditolak"
+                                                            class="form-control" hidden>
+                                                        <button type="submit"
+                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="8">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Email</th>
+                                        <th>L / P</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Test Asuransi Syariah</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+                                    @foreach ($dataId8 as $k)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nik }}</td>
+                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                            <td>{{ $k->email }}</td>
+                                            <td>{{ $k->jenis_kelamin }}</td>
+                                            <td>{{ $k->alamat }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
                                             <td>{{ $k->tanggal_tahapan }}</td>
                                             <td>
 
                                                 {{-- @if ($k->status_lamaran == 'tahap 2') --}}
+
                                                 <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+
+                                                {{-- <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
                                                         data-target="#myModal{{ $k->id }}">
                                                         <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
                                                 </div>
-                                                @include('admin.rekruitmen.showModal')
+                                                @include('admin.rekruitmen.showModal') --}}
 
                                                 <div class="col-md-3">
                                                     @csrf
@@ -544,7 +408,6 @@
                                                 </form>
                                             </div> --}}
 
-
                                                 <div class="col-md-3">
                                                     <form action="update_pelamar{{ $k->id }}" method="POST"
                                                         onsubmit="return confirmTolak2()">
@@ -568,7 +431,545 @@
                             </table>
                         </div>
 
+                        <div class="tab-pane" id="9">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Email</th>
+                                        <th>L / P</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Test Pengetahuan Umum & Teknis</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataId9 as $k)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nik }}</td>
+                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                            <td>{{ $k->email }}</td>
+                                            <td>{{ $k->jenis_kelamin }}</td>
+                                            <td>{{ $k->alamat }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
+                                            <td>{{ $k->tanggal_tahapan }}</td>
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @csrf
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#lulusModal{{ $k->id }}">
+                                                        <i class="fa fa-check btn-success btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                @include('admin.rekruitmen.lulusModal')
+                                                <div class="col-md-3">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="status" value="Ditolak"
+                                                            class="form-control" hidden>
+                                                        <button type="submit"
+                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
+                        <div class="tab-pane" id="10">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Email</th>
+                                        <th>L / P</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Wawancara Tahap 1 (HRD)</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataId10 as $k)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nik }}</td>
+                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                            <td>{{ $k->email }}</td>
+                                            <td>{{ $k->jenis_kelamin }}</td>
+                                            <td>{{ $k->alamat }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
+                                            <td>{{ $k->tanggal_tahapan }}</td>
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @csrf
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#lulusModal{{ $k->id }}">
+                                                        <i class="fa fa-check btn-success btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                @include('admin.rekruitmen.lulusModal')
+                                                <div class="col-md-3">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="status" value="Ditolak"
+                                                            class="form-control" hidden>
+                                                        <button type="submit"
+                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="11">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Email</th>
+                                        <th>L / P</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Wawancara Tahap 2 (Atasan Karyawan / Pimpinan Unit Kerja)</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataId11 as $k)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nik }}</td>
+                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                            <td>{{ $k->email }}</td>
+                                            <td>{{ $k->jenis_kelamin }}</td>
+                                            <td>{{ $k->alamat }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
+                                            <td>{{ $k->tanggal_tahapan }}</td>
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @csrf
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#lulusModal{{ $k->id }}">
+                                                        <i class="fa fa-check btn-success btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                @include('admin.rekruitmen.lulusModal')
+                                                <div class="col-md-3">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="status" value="Ditolak"
+                                                            class="form-control" hidden>
+                                                        <button type="submit"
+                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="12">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Email</th>
+                                        <th>L / P</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Wawancara Tahap 3 (Direksi)</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataId12 as $k)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nik }}</td>
+                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                            <td>{{ $k->email }}</td>
+                                            <td>{{ $k->jenis_kelamin }}</td>
+                                            <td>{{ $k->alamat }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
+                                            <td>{{ $k->tanggal_tahapan }}</td>
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @csrf
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#lulusModal{{ $k->id }}">
+                                                        <i class="fa fa-check btn-success btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                @include('admin.rekruitmen.lulusModal')
+                                                <div class="col-md-3">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="status" value="Ditolak"
+                                                            class="form-control" hidden>
+                                                        <button type="submit"
+                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="13">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Email</th>
+                                        <th>L / P</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Wawancara Tahap 4 (Wakil Direktur Utama)</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataId13 as $k)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nik }}</td>
+                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                            <td>{{ $k->email }}</td>
+                                            <td>{{ $k->jenis_kelamin }}</td>
+                                            <td>{{ $k->alamat }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
+                                            <td>{{ $k->tanggal_tahapan }}</td>
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @csrf
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#lulusModal{{ $k->id }}">
+                                                        <i class="fa fa-check btn-success btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                @include('admin.rekruitmen.lulusModal')
+                                                <div class="col-md-3">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="status" value="Ditolak"
+                                                            class="form-control" hidden>
+                                                        <button type="submit"
+                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="14">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Email</th>
+                                        <th>L / P</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Wawancara Tahap 5 (Direktur Utama)</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataId14 as $k)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nik }}</td>
+                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                            <td>{{ $k->email }}</td>
+                                            <td>{{ $k->jenis_kelamin }}</td>
+                                            <td>{{ $k->alamat }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
+                                            <td>{{ $k->tanggal_tahapan }}</td>
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @csrf
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#lulusModal{{ $k->id }}">
+                                                        <i class="fa fa-check btn-success btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                @include('admin.rekruitmen.lulusModal')
+                                                <div class="col-md-3">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="status" value="Ditolak"
+                                                            class="form-control" hidden>
+                                                        <button type="submit"
+                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="15">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Email</th>
+                                        <th>L / P</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Test Kesehatan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataId15 as $k)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nik }}</td>
+                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                            <td>{{ $k->email }}</td>
+                                            <td>{{ $k->jenis_kelamin }}</td>
+                                            <td>{{ $k->alamat }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
+                                            <td>{{ $k->tanggal_tahapan }}</td>
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @csrf
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#lulusModal{{ $k->id }}">
+                                                        <i class="fa fa-check btn-success btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                @include('admin.rekruitmen.lulusModal')
+                                                <div class="col-md-3">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="status" value="Ditolak"
+                                                            class="form-control" hidden>
+                                                        <button type="submit"
+                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="17">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Email</th>
+                                        <th>L / P</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Pengumuman Hasil Seleksi</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataId17 as $k)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nik }}</td>
+                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                            <td>{{ $k->email }}</td>
+                                            <td>{{ $k->jenis_kelamin }}</td>
+                                            <td>{{ $k->alamat }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
+                                            <td>{{ $k->tanggal_tahapan }}</td>
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @csrf
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#lulusModal{{ $k->id }}">
+                                                        <i class="fa fa-check btn-success btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                @include('admin.rekruitmen.lulusModal')
+                                                <div class="col-md-3">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="status" value="Ditolak"
+                                                            class="form-control" hidden>
+                                                        <button type="submit"
+                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane" id="18">
+                            <table class="table table-bordered table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Lahir</th>
+                                        <th>Email</th>
+                                        <th>L / P</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Penempatan Tenaga Kerja</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataId18 as $k)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nik }}</td>
+                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}</td>
+                                            <td>{{ $k->email }}</td>
+                                            <td>{{ $k->jenis_kelamin }}</td>
+                                            <td>{{ $k->alamat }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
+                                            <td>{{ $k->tanggal_tahapan }}</td>
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @csrf
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#lulusModal{{ $k->id }}">
+                                                        <i class="fa fa-check btn-success btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                @include('admin.rekruitmen.lulusModal')
+                                                <div class="col-md-3">
+                                                    <form action="update_pelamar{{ $k->id }}" method="POST"
+                                                        onsubmit="return confirmTolak2()">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="hidden" name="status" value="Ditolak"
+                                                            class="form-control" hidden>
+                                                        <button type="submit"
+                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div class="tab-pane" id="6">
 
@@ -600,19 +1001,26 @@
                                             <td>{{ $k->email }}</td>
                                             <td>{{ $k->jenis_kelamin }}</td>
                                             <td>{{ $k->alamat }}</td>
-                                            <td>{{ $k->mrekruitmen->nama_tahapan }}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
                                             <td>{{ $k->tanggal_tahapan }}</td>
 
                                             <td>
 
                                                 {{-- @if ($k->status_lamaran == 'Diterima') --}}
+
                                                 <div class="col-md-3">
+                                                    <a href="showkanidat{{ $k->id }}">
+                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                    </a>
+                                                </div>
+                                                
+                                                {{-- <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"
                                                         data-target="#myModal{{ $k->id }}">
                                                         <i class="fa fa-eye btn-info btn-sm "></i>
                                                     </a>
-                                                </div>
+                                                </div> --}}
                                                 {{-- @endif --}}
                                             </td>
 
@@ -635,7 +1043,7 @@
 
 
     <div class="modal-footer">
-        <a href="/data_rekrutmen" type="button" class="btn btn-sm btn-danger fa fa-mail-reply"> Kembali</a>
+        <a href="/data_rekrutmen" type="button" class="btn btn-sm btn-danger"> Kembali <i class="fa fa-home"></i></a>
     </div>
 
 

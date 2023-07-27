@@ -43,6 +43,7 @@ class UserSeeder extends Seeder
         DB::table('rpendidikan')->insert([
             'id_pegawai' => '1',
         ]);
+        
 
         DB::table('users')->insert([
             'id_pegawai'=> '2',

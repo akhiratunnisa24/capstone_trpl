@@ -6,6 +6,11 @@
 ?>
 <table>
     <thead>
+        <style>
+            .th {
+                font-weight: bold;
+            }
+        </style>
         <tr>
             <th>Emp No.</th>
             <th>No. ID</th>

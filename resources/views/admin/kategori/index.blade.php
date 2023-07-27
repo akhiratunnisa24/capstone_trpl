@@ -20,18 +20,16 @@
     </div>
 </div>
 
-<!-- Start right Content here -->
-<!-- Start content -->
 <div class="row">
     <div class="col-lg-20">
         <ul class="nav nav-tabs navtab-bg">
-            <li class="active">
+            <li class="active" id="a">
                 <a id="tab1" href="#kategori_cuti" data-toggle="tab" aria-expanded="false">
                     <span class="visible-xs"><i class="fa fa-home"></i></span>
                     <span class="hidden-xs">Kategori Cuti</span>
                 </a>
             </li>
-            <li class="">
+            <li class="" id="b">
                 <a id="tab2" href="#kategori_izin" data-toggle="tab" aria-expanded="true">
                     <span class="visible-xs"><i class="fa fa-user"></i></span>
                     <span class="hidden-xs">Kategori Izin</span>
@@ -41,31 +39,30 @@
         </ul>
         <div class="tab-content">
             {{-- LIST CUTI --}}
-            <div class="tab-pane active" id="kategori_cuti">
+            <div class="tab-pane" id="kategori_cuti">
                 <!-- Start content -->
                 <div class="content">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20">
                                 <div class="panel panel-primary">
-                                    <div class="panel-heading clearfix">
-                                        {{-- <strong>Kategori Cuti</strong> --}}
-                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                            data-target="#Modal"> Tambah Kategori Cuti</a>
-                                    </div>
+                                        <div class="panel-heading clearfix">
+                                            @if($role == 1)
+                                                <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#Modal"> Tambah Kategori Cuti</a>
+                                                <a href="/setting-kategori-cuti" class="btn btn-sm btn-dark fa fa-gear pull-right"> Manage Kategori</a>
+                                            @endif
+                                        </div>
                                     {{-- MODALS TAMBAH KATEGORI CUTI --}}
                                     @include('admin.kategori.addcuti')
                                     <div class="panel-body m-b-5">
                                         <div class="row">
                                             <div class="col-md-20 col-sm-20 col-xs-20">
-                                                <table id="datatable-responsive"
-                                                    class="table dt-responsive table-striped table-bordered"
-                                                    width="100%">
+                                                <table id="datatable-responsive" class="table dt-responsive table-striped table-bordered" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th>No</th>
                                                             <th>Kategori Cuti</th>
-                                                            <th>Aksi</th>
+                                                            {{-- <th>Aksi</th> --}}
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -73,26 +70,16 @@
                                                         <tr>
                                                             <td>{{$loop->iteration}}</td>
                                                             <td>{{$data->jenis_cuti}}</td>
-                                                            <td class="text-center">
-                                                                <div class="d-grid gap-2 " role="group"
-                                                                    aria-label="Basic example">
-                                                                    {{-- <a id="bs" class="btn btn-info btn-sm Modalshowcuti"
-                                                                        data-toggle="modal"
-                                                                        data-target="#Modalshowcuti{{$data->id}}">
-                                                                        <i class="fa fa-eye"></i>
-                                                                    </a> --}}
-                                                                    <a id="bs"
-                                                                        class="btn btn-success btn-sm Modaleditcuti"
-                                                                        data-toggle="modal"
-                                                                        data-target="#Modaleditcuti{{$data->id}}">
+                                                            {{-- <td class="text-center">
+                                                                <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                                    <a id="bs" class="btn btn-success btn-sm Modaleditcuti" data-toggle="modal" data-target="#Modaleditcuti{{$data->id}}">
                                                                         <i class="fa fa-edit"></i>
                                                                     </a>
-                                                                    <button onclick="cuti({{$data->id}})"
-                                                                        class="btn btn-danger btn-sm">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
+                                                                    {{-- @if($role == 1)
+                                                                        <button onclick="cuti({{$data->id}})" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i> </button>
+                                                                    @endif --}}
+                                                                {{-- </div>
+                                                            </td> --}}
                                                         </tr>
                                                         {{-- modals show cuti --}}
                                                         @include('admin.kategori.showcuti')
@@ -120,54 +107,46 @@
                         <div class="row">
                             <div class="col-md-20">
                                 <div class="panel panel-primary">
+                                    
                                     <div class="panel-heading clearfix">
                                         {{-- <strong>Kategori Izin</strong> --}}
-                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                            data-target="#smallModal"> Tambah Kategori Izin</a>
-                                        {{--
-                                    </div> --}}
+                                        @if($role == 1)
+                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#smallModal"> Tambah Kategori Izin</a>
+                                        @endif
+                                        
+                                    </div>
                                 </div>
                                 {{-- MODALS TAMBAH KATEGORI IZIN --}}
                                 @include('admin.kategori.addizin')
                                 <div class="panel-body m-b-5">
                                     <div class="row">
                                         <div class="col-md-20 col-sm-20 col-xs-20">
-                                            <table id="datatable-responsive1"
-                                                class="table dt-responsive nowrap table-striped table-bordered"
-                                                cellspacing="0" width="100%">
+                                            <table id="datatable-responsive1" class="table dt-responsive nowrap table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
-                                                        <th>Kategori Izin</th>
-                                                        <th>Aksi</th>
+                                                        <th>Kode Kategori</th>
+                                                        <th>Kategori Ijin</th>
+                                                        {{-- <th>Aksi</th> --}}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($jenisizin as $data)
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
+                                                        <td>{{$data->code}}</td>
                                                         <td>{{$data->jenis_izin}}</td>
-                                                        <td class="text-center">
-                                                            <div class="d-grid gap-2 " role="group"
-                                                                aria-label="Basic example">
-                                                                <a id="bs" class="btn btn-sm btn-success Modaleditizin"
-                                                                    data-toggle="modal"
-                                                                    data-target="#Modaleditizin{{$data->id}}">
-                                                                    <i class="fa fa-edit"></i>
-                                                                </a>
+                                                        {{-- <td class="text-center">
+                                                            <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                                <a id="bs" class="btn btn-sm btn-success Modaleditizin"  data-toggle="modal"  data-target="#Modaleditizin{{$data->id}}">
+                                                                    <i class="fa fa-edit"></i></a>
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button onclick="izin({{$data->id}})"
-                                                                    class="btn btn-danger btn-sm">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </button>
-                                                                {{-- <button id="bs" type="submit"
-                                                                    class="btn btn-danger btn-sm"
-                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </button> --}}
-                                                            </div>
-                                                        </td>
+                                                                {{-- <button onclick="izin({{$data->id}})" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i></button> --}}
+                                                                {{-- <button id="bs" type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                                    <i class="fa fa-trash"></i> </button> --}}
+                                                            {{-- </div>
+                                                        </td> --}}
                                                     </tr>
                                                     {{-- modals show izin --}}
                                                     @include('admin.kategori.showizin')
@@ -189,10 +168,6 @@
     </div>
 </div>
 
-
-
-
-
 <!-- sweet alert -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
@@ -206,6 +181,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+@if(Session::has('pesan'))
+    <script>
+        swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            button:true,
+            button:"OK",
+        });
+    </script>
+@endif
+
+@if(Session::has('pesa'))
+    <script>
+        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+            button:true,
+            button:"OK",
+        });
+    </script>
+@endif
 
 {{-- Direct halaman tambah data --}}
 <script type="text/javascript">
@@ -227,7 +219,7 @@
                         icon: "success",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= "http://localhost:8000/kategoridelete" ?>'+id;
+                    location.href = '<?= '/kategoridelete' ?>'+id;
                 }
             })
         }
@@ -235,8 +227,20 @@
         let tp = `{{$type}}`;
         if(tp == 1) {
             $('#tab1').click();
+            $('#tab1').addClass('active');
+            $('#tab2').removeClass('active');
+            $('#cuti').addClass('active');
+            $('#izin').removeClass('active');
+            $('#a').addClass('active');
+            $('#b').removeClass('active');
         } else {
             $('#tab2').click();
+            $('#tab1').removeClass('active');
+            $('#tab2').addClass('active');
+            $('#cuti').removeClass('active');
+            $('#izin').addClass('active');
+            $('#a').removeClass('active');
+            $('#b').addClass('active');
         }
 </script>
 

@@ -16,14 +16,17 @@ return new class extends Migration
         Schema::create('rpekerjaan', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('id_pegawai');
+            $table->integer('id_pegawai')->nullable();
+            $table->integer('id_pelamar')->nullable();
             $table->string('nama_perusahaan')->nullable();
             $table->string('alamat')->nullable();            
             $table->string('jenis_usaha')->nullable();
             $table->string('jabatan')->nullable();
+            $table->string('level')->nullable();
             $table->text('nama_atasan')->nullable();
             $table->text('nama_direktur')->nullable();
-            $table->text('lama_kerja')->nullable();
+            $table->date('tgl_mulai')->nullable();
+            $table->date('tgl_selesai')->nullable();
             $table->text('alasan_berhenti')->nullable();
             $table->text('gaji')->nullable();
 

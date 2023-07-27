@@ -12,13 +12,13 @@ class IzinExport implements FromView, ShouldAutoSize
 {
 
     //UNTUK DATA ABSENSI BERDASARKAN FILTER
-    protected $idkaryawan;
+    protected $idpegawai;
     protected $data;
 
-    function __construct($data, $idkaryawan)
+    function __construct($data, $idpegawai)
     {
         $this->data = $data;
-        $this->idkaryawan = $idkaryawan;
+        $this->idpegawai = $idpegawai;
 
         // dd($data,$idkaryawan);
     }
@@ -31,7 +31,7 @@ class IzinExport implements FromView, ShouldAutoSize
         // $cuti = Cuti::with('karyawans')->get();
 
         $izin = $this->data;
-        $idkaryawan = $this->idkaryawan;
+        $idkaryawan = $this->idpegawai;
 
         return view('admin/cuti/izinExcel', ['izin' => $izin]);
     }

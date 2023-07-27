@@ -19,16 +19,16 @@
     <div class="row">
         <div class="col-lg-12">
             <ul class="nav nav-tabs navtab-bg">
-                <li class="active">
+                <li class="active" id="act">
                     <a id="tab1" href="#cuti" data-toggle="tab" aria-expanded="false">
                         <span class="visible-xs"><i class="fa fa-home"></i></span>
                         <span class="hidden-xs">Cuti</span>
                     </a>
                 </li>
-                <li class="">
+                <li class="" id="aiz">
                     <a id="tab2" href="#izin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
-                        <span class="hidden-xs">Izin</span>
+                        <span class="hidden-xs">Sakit/Ijin</span>
                     </a>
                 </li>
             </ul>
@@ -43,7 +43,7 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
                                                 <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                                    data-target="#Modal"> Ajukan Cuti</a>
+                                                    data-target="#Modal"> Pengajuan Cuti</a>
                                         </div>
                                         <!-- modals tambah data cuti -->
                                         @include('karyawan.cuti.addcuti')
@@ -51,19 +51,17 @@
                                         <div class="panel-body m-b-5">
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <table id="datatable-responsive"
-                                                        class="table dt-responsive nowrap table-striped table-bordered"
-                                                        cellspacing="0" width="100%">
+                                                    <table id="datatable-responsive" class="table dt-responsive nowrap table-striped table-bordered" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                {{-- <th>Karyawan</th> --}}
+                                                                <th>Tgl Permohonan</th>
+                                                                <th>Nama</th>
+                                                                {{-- <th>Jabatan</th> --}}
+                                                                <th>Tanggal Cuti</th>
                                                                 <th>Kategori Cuti</th>
-                                                                <th>Keperluan</th>
-                                                                <th>Tanggal Mulai</th>
-                                                                <th>Tanggal Selesai</th>
-                                                                <th>Jumlah Cuti</th>
-                                                                <th>Status</th>
+                                                                <th>Persetujuan</th>
+                                                                <th>Catatan</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
@@ -72,33 +70,52 @@
                                                                 @if ($data->id_karyawan == Auth::user()->id_pegawai)
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
-                                                                        {{-- <td>{{ $data->karyawans->nama }}</td> --}}
-                                                                        <td>{{ $data->jenis_cuti }}</td>
-                                                                        <td>{{ $data->keperluan }}</td>
-                                                                        <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
-                                                                        </td>
-                                                                        <td>{{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }}
-                                                                        </td>
-                                                                        <td>{{ $data->jml_cuti }} Hari</td>
-                                                                        <!-- data for status -->
+                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_permohonan)->format("d/m/Y")}}</td>
+                                                                        <td>{{$data->nama}}</td>
+                                                                        {{-- <td>{{$data->jabatan}}</td> --}}
+                                                                        <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s.d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
+                                                                        <td>{{$data->jenis_cuti}}</td>
+                                                
                                                                         <td>
-                                                                            <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : '')))) }}">
-                                                                                {{ $data->status == 1 ? 'Pending' : ($data->status == 2 ? 'Disetujui Manager' : ($data->status == 5 ? 'Ditolak' : ($data->status == 6 ? 'Disetujui Supervisor' : ($data->status == 7 ? 'Disetujui' : '')))) }}
+                                                                            {{-- <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : 'secondary' ))))))))) }}">
+                                                                                {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status : ''))))))))) }}
+                                                                            </span> --}}
+                                                                            <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : ($data->status == 14 ? 'warning' :($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
+                                                                                {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status :  ($data->status == 14 ?  $data->name_status :  ($data->status == 15 ?  $data->name_status :  ($data->status == 16 ?  $data->name_status : '')))))))))))) }}
                                                                             </span>
-                                                                        </td>        
+                                                             
+                                                                        </td> 
+                                                                        <td>
+                                                                            {{ $data->catatan ?? ''}}
+                                                                            {{-- {{ ($data->catatan >= 9 && $data->catatan <= 16) ? $data->name_status : '' }} --}}
+                                                                        </td>       
                                                                         <td class="text-center">
-                                                                            <form action="" method="POST">
-                                                                                <a class="btn btn-info btn-sm"
-                                                                                    data-toggle="modal"
-                                                                                    data-target="#Showcuti{{ $data->id }}">
-                                                                                    <i class="fa fa-eye"></i>
-                                                                                </a>
-                                                                            </form>
+                                                                            {{-- @if($data->status == ) --}}
+                                                                                <form action="" method="POST">
+                                                                                    <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#Showcuti{{ $data->id }}">
+                                                                                        <i class="fa fa-eye"></i>
+                                                                                    </a>
+                                                                                </form>
+                                                                                <form action="" method="POST">
+                                                                                    <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#Editcuti{{ $data->id }}">
+                                                                                        <i class="fa fa-edit"></i>
+                                                                                    </a>
+                                                                                </form>
+                                                                                {{-- {{ route('cuti.batal', $data->id) }}" --}}
+                                                                              
+                                                                                <form action="" method="POST">
+                                                                                    <a class="btn btn-warning btn-sm"  data-toggle="modal" data-target="#Batalcuti{{ $data->id }}">
+                                                                                        <i class="fa fa-undo"></i>
+                                                                                    </a>
+                                                                                </form>
+                                                                           
                                                                         </td>
                                                                     </tr>
                                                                     {{-- modal show cuti --}}
-                                                                    @include('karyawan.cuti.showcuti')
                                                                 @endif
+                                                                @include('karyawan.cuti.showcuti')
+                                                                @include('karyawan.cuti.pembatalan')
+                                                                @include('karyawan.cuti.update')
                                                             @endforeach
                                                         </tbody>
                                                     </table>
@@ -124,7 +141,7 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
                                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                                data-target="#smallModal"> Ajukan Izin</a>
+                                                data-target="#smallModal"> Sakit/Ijin/Alpa/Lain-lain</a>
                                         </div>
                                         {{-- modals tambah data izin --}}
                                         @include('karyawan.cuti.addizin')
@@ -138,70 +155,35 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                {{-- <th>Karyawan</th> --}}
-                                                                <th>K. Izin</th>
-                                                                <th>Keperluan</th>
-                                                                <th>Tanggal</th>
-                                                                <th>Jml</th>
-                                                                <th>Jam M-S</th>
-                                                                <th>Jml. Jam</th>
-                                                                <th>Status</th>
+                                                                <th>Tgl Permohonan</th>
+                                                                <th>Nama</th>
+                                                                {{-- <th>Jabatan</th> --}}
+                                                                <th>Tanggal Pelaksanaan</th>
+                                                                <th>Kategori</th>
+                                                                <th>Persetujuan</th>
+                                                                <th>Catatan</th>
                                                                 <th>Aksi</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($izin as $data)
-                                                                @if ($data->id_karyawan == Auth::user()->id_pegawai)
+                                                                {{-- @if ($data->id_karyawan == Auth::user()->id_pegawai) --}}
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
-                                                                        {{-- <td>{{ $data->karyawans->nama }}</td> --}}
-                                                                        <td>{{ $data->jenis_izin }}</td>
-                                                                        <td>{{ $data->keperluan }}</td>
-
-                                                                        <!-- tanggal mulai & tanggal selesai -->
-                                                                        @if ($data->tgl_selesai != null)
-                                                                            <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
-                                                                                s/d
-                                                                                {{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }}
-                                                                            </td>
-                                                                        @else
-                                                                            <td>
-                                                                                {{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}
-                                                                            </td>
-                                                                        @endif
-
-                                                                        <!-- Jumlah hari izin -->
-                                                                        @if ($data->jml_hari != null)
-                                                                            <td>{{ $data->jml_hari }} Hari</td>
-                                                                        @else
-                                                                            <td></td>
-                                                                        @endif
-
-                                                                        <!-- jam mulai & jam selesai -->
-                                                                        @if ($data->jam_mulai != null && $data->jam_mulai != null)
-                                                                            <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }}
-                                                                                s/d
-                                                                                {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }}
-                                                                            </td>
-                                                                        @else
-                                                                            <td></td>
-                                                                        @endif
-
-                                                                        <!-- Jumlah jam -->
-                                                                        @if ($data->jml_jam != null)
-                                                                            <td>
-                                                                                {{ \Carbon\Carbon::parse($data->jml_jam)->format('H:i') }}
-                                                                            </td>
-                                                                        @else
-                                                                            <td></td>
-                                                                        @endif
-
+                                                                        <td>{{ \Carbon\Carbon::parse($data->tgl_permohonan)->format('d/m/Y') }}</td>
+                                                                        <td>{{ $data->nama }}</td>
                                                                         <td>
-                                                                            <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 5 ? 'danger' : ($data->status == 7 ? 'success' : '')) }}">
-                                                                                {{ $data->status == 1 ? 'Pending' : ($data->status == 5 ? 'Ditolak' : ($data->status == 7 ? 'Disetujui' : '')) }}
-                                                                            </span>
+                                                                            {{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }} @if($data->tgl_selesai !== NULL) s/d 
+                                                                            {{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }} @endif
                                                                         </td>
-
+                                                                        <td>{{ $data->jenis_izin }}</td>
+                                                                        <td>
+                                                                            <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : ($data->status == 14 ? 'warning' :($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
+                                                                                {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status :  ($data->status == 14 ?  $data->name_status :  ($data->status == 15 ?  $data->name_status :  ($data->status == 16 ?  $data->name_status : '')))))))))))) }}
+                                                                            </span>
+                                                             
+                                                                        </td>
+                                                                        <td>{{ $data->catatan }}</td>
                                                                         <td class="text-center">
                                                                             <form action="" method="POST">
                                                                                 <a class="btn btn-info btn-sm"
@@ -210,11 +192,27 @@
                                                                                     <i class="fa fa-eye"></i>
                                                                                 </a>
                                                                             </form>
+                                                                            <form action="" method="POST">
+                                                                                    <a class="btn btn-success btn-sm"
+                                                                                        data-toggle="modal"data-target="#Editizin{{ $data->id }}">
+                                                                                        <i class="fa fa-edit"></i>
+                                                                                    </a>
+                                                                                </form>
+                                                                                {{-- {{ route('cuti.batal', $data->id) }}" --}}
+                                                                              
+                                                                                <form action="" method="POST">
+                                                                                    <a class="btn btn-warning btn-sm"
+                                                                                        data-toggle="modal" data-target="#Batalizin{{ $data->id }}">
+                                                                                        <i class="fa fa-undo"></i>
+                                                                                    </a>
+                                                                                </form>
                                                                         </td>
                                                                     </tr>
                                                                     {{-- modal show izin --}}
-                                                                @endif
+                                                                {{-- @endif --}}
                                                                 @include('karyawan.cuti.showizin')
+                                                                @include('karyawan.cuti.pembatalanIzin')
+                                                                @include('karyawan.cuti.updateIzin')
                                                             @endforeach
                                                         </tbody>
                                                     </table>
@@ -233,15 +231,53 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+</script>
+<!-- jangan lupa menambahkan script js sweet alert di bawah ini  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
+@if(Session::has('pesan'))
+    <script>
+        swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            button:true,
+            button:"OK",
+        });
+    </script>
+@endif
 
-    {{-- <script type="text/javascript">
+@if(Session::has('pesa'))
+    <script>
+        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+            button:true,
+            button:"OK",
+        });
+    </script>
+@endif
+
+<script type="text/javascript">
     let tp = '{{$tipe}}';
     
         if(tp == 1) {
             $('#tab1').click();
+            $('#tab1').addClass('active');
+            $('#tab2').removeClass('active');
+            $('#cuti').addClass('active');
+            $('#izin').removeClass('active');
+            $('#act').addClass('active');
+            $('#aiz').removeClass('active');
         } else {
             $('#tab2').click();
+            $('#tab1').removeClass('active');
+            $('#tab2').addClass('active');
+            $('#cuti').removeClass('active');
+            $('#izin').addClass('active');
+            $('#act').removeClass('active');
+            $('#aiz').addClass('active');
         }
-</script> --}}
+</script>
 @endsection

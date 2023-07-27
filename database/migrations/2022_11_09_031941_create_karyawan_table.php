@@ -20,10 +20,11 @@ return new class extends Migration
             $table->string('nik')->nullable();
             $table->string('nama')->nullable();
             $table->date('tgllahir')->nullable();           
+            $table->string('tempatlahir')->nullable();           
             $table->string('email')->unique();         
             $table->string('agama')->nullable(); 
             $table->enum('gol_darah',['A','B','AB','O'])->nullable();   
-            $table->enum('jenis_kelamin',['L','P'])->nullable();
+            $table->enum('jenis_kelamin',['Laki-Laki','Perempuan'])->nullable();
             $table->text('alamat')->nullable();
             $table->text('no_hp')->nullable();
             $table->enum('status_karyawan',['Tetap','Kontrak','Probation'])->nullable();
@@ -35,14 +36,20 @@ return new class extends Migration
             $table->enum('status_kerja',['Aktif','Non-Aktif'])->nullable();
             $table->integer('cuti_tahunan')->nullable();
             $table->integer('divisi')->nullable();
-            $table->integer('no_rek')->nullable();
-            $table->integer('no_bpjs_kes')->nullable();
-            $table->integer('no_npwp')->nullable();
-            $table->integer('no_bpjs_ket')->nullable();
+            $table->string('no_rek', )->nullable();
+            $table->string('no_bpjs_kes', )->nullable();
+            $table->string('no_npwp', )->nullable();
+            $table->string('no_bpjs_ket', )->nullable();
+            $table->string('no_akdhk', )->nullable();
+            $table->string('no_program_pensiun', )->nullable();
+            $table->string('no_program_askes', )->nullable();
+            $table->string('nama_bank')->nullable(); 
             $table->string('kontrak')->nullable();
+            $table->string('nama_jabatan')->nullable();
             $table->string('jabatan')->nullable();
             $table->string('gaji')->nullable();
-
+            $table->string('status_pernikahan')->nullable();
+            $table->integer('jumlah_anak')->nullable();
 
             $table->date('tglmasuk')->nullable();
             $table->date('tglkeluar')->nullable();
