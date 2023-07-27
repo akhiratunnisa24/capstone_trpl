@@ -217,6 +217,10 @@ Route::post('/getemail', [karyawanController::class, 'getEmail'])->name('getEmai
 Route::post('/getemail2', [karyawanController::class, 'getEmail2'])->name('getEmail2');
 Route::post('/tidakmasuk', [AbsensiController::class, 'storeTidakmasuk'])->name('tidakmasuk');
 
+//download data absensi ke mesin absen
+Route::post('/import-absensi', [AbsensiController::class, 'mesinabsen'])->name('download.mesin');
+
+
 
 
 //HALAMAN KARYAWAN

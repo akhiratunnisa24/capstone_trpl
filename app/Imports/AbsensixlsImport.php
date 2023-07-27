@@ -2,11 +2,6 @@
 
 namespace App\Imports;
 
-use Illuminate\Support\Collection;
-<?php
-
-namespace App\Imports;
-
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;

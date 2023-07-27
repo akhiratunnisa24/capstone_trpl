@@ -37,12 +37,14 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "ZKLibrary\\": "vendor/zk-library"
+            "TADPHP\\": "tad/lib/",
+            "TADPHP\\Exceptions\\": "tad/lib/Exceptions/",
+            "TADPHP\\Providers\\": "tad/lib/Providers/",
+            "Test\\Helpers\\": "tad/test/helpers/"
         },
         "files": [
             "app/Helpers/parse.php"
         ]
-
     },
 
     "autoload-dev": {
