@@ -17,6 +17,7 @@ use App\Http\Controllers\admin\AtasanController;
 use App\Http\Controllers\admin\UploadController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\JabatanController;
+use App\Http\Controllers\admin\UserMesinController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\AbsensisController;
 use App\Http\Controllers\admin\KalenderController;
@@ -425,6 +426,12 @@ Route::post('/masterkpi-update/{id}', [MasterkpiController::class, 'update'])->n
 Route::get('/indikator-kpi', [MasterkpiController::class, 'indikator'])->name('indicator.index');
 Route::post('/indikator-kpi', [MasterkpiController::class, 'stores'])->name('indikator.store');
 Route::post('/indikator-kpi-update/{id}', [MasterkpiController::class, 'updates'])->name('indikator.update');
+
+//User Mesin
+Route::get('/user_mesin', [UserMesinController::class, 'index'])->name('jabatan.index');
+Route::post('/user_mesin', [UserMesinController::class, 'store'])->name('jabatan.store');
+Route::put('/user_mesin/update/{id}', [UserMesinController::class, 'update'])->name('jabatan.update');
+Route::get('/user_mesin/delete/{id}', [UserMesinController::class, 'destroy'])->name('jabatan.delete');
 //================================================================================
 //ROLE MANAGER atau SUPERVISOR
 

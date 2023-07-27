@@ -111,7 +111,8 @@
                         <ul class="list-unstyled">
                             <li><a href="/divisi"><i class="fa fa-sitemap"></i><span></span>Divisi</a></li>
                             <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a></li>
-                            <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>  
+                            <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>
+                            <li><a href="/user_mesin"><i class="fa fa-user"></i><span></span>User Mesin</a></li>  
                             <li><a href="/atasan"><i class="mdi mdi-account-star-variant"></i><span></span>Atasan</a></li>  
                             <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
                             <li><a href="jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li>
