@@ -14,10 +14,11 @@ use App\Helpers\AbsensiHelper;
 use App\Helpers\NetworkHelper;
 use App\Imports\AbsensiImport;
 use App\Services\AbsensiClients;
+use App\Imports\AbsensicsvImport;
 use App\Models\SettingOrganisasi;
-use Illuminate\Support\Facades\DB;
 // require_once app_path('Helpers/Parse.php');
 
+use Illuminate\Support\Facades\DB;
 use App\Exports\RekapabsensiExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -370,7 +371,7 @@ class AbsensiController extends Controller
         }
 
         try {
-            $import = new AbsensiImport();
+            $import = new AbsensicsvImport();
             Excel::import($import, $request->file('file'));
 
             $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
