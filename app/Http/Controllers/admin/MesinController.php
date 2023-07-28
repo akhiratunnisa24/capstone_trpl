@@ -45,39 +45,39 @@ class MesinController extends Controller
                         // Cari data di $usermesin berdasarkan PIN
                         $matchedUser = $usermesin->where('pin', $pin)->first();
 
-                        if ($matchedUser) {
-                            // Jika ada data yang cocok, simpan ke dalam tabel absensi
-                            $absensi = new Absensi();
+                        // if ($matchedUser) {
+                        //     // Jika ada data yang cocok, simpan ke dalam tabel absensi
+                        //     $absensi = new Absensi();
         
-                            $absensi->id_karyawan = $matchedUser->id_pegawai;
-                            $absensi->nik = $matchedUser->nik;
-                            $absensi->tanggal = $tanggal;
-                            $absensi->shift = null;
-                            $absensi->jadwal_masuk = '08:00';
-                            $absensi->jadwal_pulang = '17:00';
-                            $absensi->jam_masuk = $matchedUser-
-                            $absensi->jam_keluar = null;
-                            $absensi->normal = '1';
-                            $absensi->riil = '0';
-                            $absensi->terlambat = $tl;
-                            $absensi->plg_cepat = null;
-                            $absensi->absent = null;
-                            $absensi->lembur = null;
-                            $absensi->jml_jamkerja = null;
-                            $absensi->pengecualian = null;
-                            $absensi->hci = 'True';
-                            $absensi->hco = 'True';
-                            $absensi->id_departement = $matchedUser->departemen;
-                            $absensi->h_normal = 0;
-                            $absensi->ap = 0;
-                            $absensi->hl = 0;
-                            $absensi->jam_kerja = $tl;
-                            $absensi->lemhanor = 0;
-                            $absensi->lemakpek = 0;
-                            $absensi->lemhali = 0;
+                        //     $absensi->id_karyawan = $matchedUser->id_pegawai;
+                        //     $absensi->nik = $matchedUser->nik;
+                        //     $absensi->tanggal = $tanggal;
+                        //     $absensi->shift = null;
+                        //     $absensi->jadwal_masuk = '08:00';
+                        //     $absensi->jadwal_pulang = '17:00';
+                        //     $absensi->jam_masuk = $matchedUser-
+                        //     $absensi->jam_keluar = null;
+                        //     $absensi->normal = '1';
+                        //     $absensi->riil = '0';
+                        //     $absensi->terlambat = $tl;
+                        //     $absensi->plg_cepat = null;
+                        //     $absensi->absent = null;
+                        //     $absensi->lembur = null;
+                        //     $absensi->jml_jamkerja = null;
+                        //     $absensi->pengecualian = null;
+                        //     $absensi->hci = 'True';
+                        //     $absensi->hco = 'True';
+                        //     $absensi->id_departement = $matchedUser->departemen;
+                        //     $absensi->h_normal = 0;
+                        //     $absensi->ap = 0;
+                        //     $absensi->hl = 0;
+                        //     $absensi->jam_kerja = $tl;
+                        //     $absensi->lemhanor = 0;
+                        //     $absensi->lemakpek = 0;
+                        //     $absensi->lemhali = 0;
         
-                            $absensi->save();
-                        }
+                        //     $absensi->save();
+                        // }
                     }
                     // Mengembalikan data dalam format JSON
                     return response()->json([$j]);
