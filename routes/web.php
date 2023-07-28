@@ -1,38 +1,19 @@
 <?php
-
-<<<<<<< HEAD
 use App\Models\Lowongan;
 // use Illuminate\Support\Facades\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Route;
-
-
-=======
-use TADPHP\TADFactory;
-// use Illuminate\Support\Facades\Auth\LoginController;
-use App\Models\Lowongan;
-
-use Illuminate\Support\Facades\Auth;
-
-
-use Illuminate\Support\Facades\Route;
->>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
 use App\Http\Controllers\HomeController; 
 use App\Http\Controllers\SetcutiController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\admin\XmlController;
 use App\Http\Controllers\Auth\LoginController;
-<<<<<<< HEAD
-=======
-use App\Http\Controllers\admin\MesinController;
->>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
 use App\Http\Controllers\admin\ShiftController;
 use App\Http\Controllers\admin\AtasanController;
 use App\Http\Controllers\admin\UploadController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\JabatanController;
-<<<<<<< HEAD
 use App\Http\Controllers\admin\UserMesinController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\AbsensisController;
@@ -42,16 +23,6 @@ use App\Http\Controllers\admin\SisacutiController;
 use App\Http\Controllers\RequestAbsensiController;
 
 
-=======
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\admin\AbsensisController;
-
-use App\Http\Controllers\admin\KalenderController;
-
-
-use App\Http\Controllers\admin\SisacutiController;
-use App\Http\Controllers\RequestAbsensiController;
->>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\InformasiController;
 use App\Http\Controllers\admin\IzinAdminController;
@@ -452,15 +423,12 @@ Route::post('/masterkpi-update/{id}', [MasterkpiController::class, 'update'])->n
 Route::get('/indikator-kpi', [MasterkpiController::class, 'indikator'])->name('indicator.index');
 Route::post('/indikator-kpi', [MasterkpiController::class, 'stores'])->name('indikator.store');
 Route::post('/indikator-kpi-update/{id}', [MasterkpiController::class, 'updates'])->name('indikator.update');
-<<<<<<< HEAD
 
 //User Mesin
 Route::get('/user_mesin', [UserMesinController::class, 'index'])->name('jabatan.index');
 Route::post('/user_mesin', [UserMesinController::class, 'store'])->name('jabatan.store');
 Route::put('/user_mesin/update/{id}', [UserMesinController::class, 'update'])->name('jabatan.update');
 Route::get('/user_mesin/delete/{id}', [UserMesinController::class, 'destroy'])->name('jabatan.delete');
-=======
->>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
 //================================================================================
 //ROLE MANAGER atau SUPERVISOR
 
@@ -724,8 +692,14 @@ Route::get('/download-log', [AbsensiController::class, 'downloadLog'])->name('ta
 
 // Route buat tes koneksi ke IP lainnya
 Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
-<<<<<<< HEAD
-=======
+
+
+
+
+
+
+
+
 
 
 
@@ -735,4 +709,3 @@ Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod'
 
 
 Route::post('/tarik-absen', [MesinController::class, 'tarikAbsen'])->name('tarik.absen');
->>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
