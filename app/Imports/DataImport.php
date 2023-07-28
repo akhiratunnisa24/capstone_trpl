@@ -21,11 +21,7 @@ class DataImport
     private $jumlahimporttidakmasuk = 0;
     private $datatidakbisadiimport = 0; //JUMLAH DATA TIDAK DIIMPORT
 
-<<<<<<< HEAD
-     public function importDataExcel(Request $request)
-=======
     public function importDataExcel(Request $request)
->>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
     {
         $file = $request->file('uploaded_file');
         $extension = $file->getClientOriginalExtension();
@@ -201,24 +197,24 @@ class DataImport
                                 'jadwal_pulang' => isset($formatted_jam['Jam Pulang']) ? $formatted_jam['Jam Pulang'] : null,
                                 'jam_masuk'     => isset($formatted_jam['Scan Masuk']) ? $formatted_jam['Scan Masuk'] : null,
                                 'jam_keluar'    => isset($formatted_jam['Scan Pulang']) ? $formatted_jam['Scan Pulang'] : null,
-                                'normal'        => null,
-                                'riil'          => null,
+                                // 'normal'        => null,
+                                // 'riil'          => null,
                                 'terlambat'     => isset($formatted_jam['Terlambat']) ? $formatted_jam['Terlambat'] : null,
                                 'plg_cepat'     => isset($formatted_jam['Plg. Cepat']) ? $formatted_jam['Plg. Cepat'] : null,
                                 'absent'        => null,
                                 'lembur'        => isset($formatted_jam['Lembur']) ? $formatted_jam['Lembur'] : null,
                                 'jml_jamkerja'  => isset($formatted_jam['Jml Jam Kerja']) ? $formatted_jam['Jml Jam Kerja'] : null,
-                                'pengecualian'  => null,
-                                'hci'           => null,
-                                'hco'           => null,
+                                // 'pengecualian'  => null,
+                                // 'hci'           => null,
+                                // 'hco'           => null,
                                 'id_departement'=> $karyawan->divisi,
-                                'h_normal'      => null,
-                                'ap'            => null,
-                                'hl'            => null,
+                                // 'h_normal'      => null,
+                                // 'ap'            => null,
+                                // 'hl'            => null,
                                 'jam_kerja'     => isset($formatted_jam['Jml Kehadiran']) ? $formatted_jam['Jml Kehadiran'] : null,
-                                'lemhanor'      => null,
-                                'lemakpek'      => null,
-                                'lemhali'       => null,                
+                                // 'lemhanor'      => null,
+                                // 'lemakpek'      => null,
+                                // 'lemhali'       => null,                
                             ];
                            
                             $absensi = Absensi::create($data);

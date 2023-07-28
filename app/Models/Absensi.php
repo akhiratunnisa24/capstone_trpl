@@ -13,14 +13,9 @@ class Absensi extends Model
                             'tanggal','shift',
                             'jadwal_masuk','jadwal_pulang',
                             'jam_masuk','jam_keluar',
-                            'normal','riil',
                             'terlambat','plg_cepat',
                             'absent','lembur',
-                            'jml_jamkerja', 'pengecualian',
-                            'hci','hco',
-                            'id_departement','h_normal',
-                            'ap','hl','jam_kerja',
-                            'lemhanor','lemakpek','lemhali'
+                            'jml_jamkerja','id_departement','jam_kerja'                        
                         ];
 
     public function userss(){

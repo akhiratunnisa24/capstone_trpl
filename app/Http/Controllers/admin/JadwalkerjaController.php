@@ -27,7 +27,7 @@ class JadwalkerjaController extends Controller
         {
             $row    = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             // $jadwal = Jadwal::all();
-            $jadwal = Jadwal::with('karyawans')->get();
+            $jadwal = Jadwal::all();
             $karyawan= Karyawan::all();
             $shift= Shift::all();
             // dd($jadwal);
@@ -69,41 +69,25 @@ class JadwalkerjaController extends Controller
                 'tgl_selesai'  => 'required',
             ]);
 
-            // dd($request->all());
-            $karyawan = Karyawan::all();
-            foreach($karyawan as $data)
-            {
-                // $tgl_mulai = Carbon::createFromFormat('d/m/Y', $request->tgl_mulai);
-                // $tgl_selesai = Carbon::createFromFormat('d/m/Y', $request->tgl_selesai);
-
                 $tgl_mulai = Carbon::createFromFormat('d/m/Y', $request->tgl_mulai)->startOfDay();
                 $tgl_selesai = Carbon::createFromFormat('d/m/Y', $request->tgl_selesai)->startOfDay();
-                // dd($tgl_mulai, $tgl_selesai);
+               
                 $tanggal_kerja = array();
-                while($tgl_mulai->lte($tgl_selesai)){
-                    if($tgl_mulai->isWeekday()){
-                        $tanggal_kerja[] = $tgl_mulai->format('Y-m-d');
-                    }
-                    $tgl_mulai->addDay();
-                }
-                // dd($tgl_mulai, $tgl_selesai);
-
-                // Mengecek tanggal kerja yang tidak ada dalam tabel hari libur
-                $tanggal_libur = SettingHarilibur::whereBetween('tanggal', [$request->tgl_mulai, $request->tgl_selesai])->get();
-                foreach ($tanggal_libur as $libur) {
-                    if (in_array($libur->tanggal, $tanggal_kerja)) {
-                        $key = array_search($libur->tanggal, $tanggal_kerja);
-                        if ($key !== false) {
-                            unset($tanggal_kerja[$key]);
+                while ($tgl_mulai->lte($tgl_selesai)) {
+                    if ($tgl_mulai->isWeekday()) {
+                        // Mengecek apakah tanggal ini merupakan hari libur
+                        $is_hari_libur = SettingHarilibur::where('tanggal', $tgl_mulai->format('Y-m-d'))->exists();
+                
+                        if (!$is_hari_libur) {
+                            $tanggal_kerja[] = $tgl_mulai->format('Y-m-d');
                         }
                     }
+                    $tgl_mulai->addDay();
                 }
                 // dd($tanggal_kerja);
                 foreach($tanggal_kerja as $tanggal)
                 {
-
                     $jadwal = Jadwal::firstOrCreate([
-                        'id_pegawai' => $data->id,
                         'tanggal' => $tanggal,
                         'id_shift' => $request->id_shift,
                     ], [
@@ -117,19 +101,16 @@ class JadwalkerjaController extends Controller
                         $pesan = 'Mohon maaf, Data sudah Ada!';
                     }
                 }  
-            }
+            // }
             return redirect('/jadwal')->with('pesan',$pesan);
-            
         }else{
             $request->validate([
-                'id_pegawai'   => 'required',
                 'id_shift'     => 'required',
                 'tanggal'      => 'required',
             ]);
 
             $jadwal = Jadwal::updateOrCreate(
                 [
-                    'id_pegawai' => $request->id_pegawai, 
                     'tanggal'    => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tanggal)->format("Y-m-d"),
                     'id_shift'   => $request->id_shift,
                 ],
@@ -152,14 +133,13 @@ class JadwalkerjaController extends Controller
     public function update(Request $request, $id)
     {
         $jadwal = Jadwal::find($id);
-        $jadwal->id_pegawai = $request->post('id_pegawai');
+        // $jadwal->id_pegawai = $request->post('id_pegawai');
         $jadwal->id_shift = $request->post('id_shift');
         $jadwal->tanggal = \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tanggal'))->format('Y-m-d');
         $jadwal->jadwal_masuk = $request->post('jadwal_masuk');
         $jadwal->jadwal_pulang = $request->post('jadwal_pulang');
 
-        $existingData = Jadwal::where('id_pegawai', $jadwal->id_pegawai)
-                            ->where('id_shift', $jadwal->id_shift)
+        $existingData = Jadwal::where('id_shift', $jadwal->id_shift)
                             ->where('tanggal', $jadwal->tanggal)
                             ->exists();
 

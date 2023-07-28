@@ -17,10 +17,7 @@ use App\Services\AbsensiClients;
 use App\Imports\AbsensicsvImport;
 use App\Models\SettingOrganisasi;
 // require_once app_path('Helpers/Parse.php');
-
 use Illuminate\Support\Facades\DB;
-// require_once app_path('Helpers/Parse.php');
-
 use App\Exports\RekapabsensiExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -29,14 +26,8 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\AbsensiRequest;
 
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\API\AbsensiRequest;
-
-
 class AbsensiController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -347,7 +338,7 @@ class AbsensiController extends Controller
             ]);
         
             $importer = new DataImport();
-            $importer->importDataExcel($request);
+            // $importer->importDataExcel($request);
            
             $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $importer->getJumlahDataDiimport() . "</strong>" . "<br>" .
             "Data diimport ke Tidak Masuk: <strong>" . $importer->getDataImportTidakMasuk() . "</strong>" . "<br>" .
