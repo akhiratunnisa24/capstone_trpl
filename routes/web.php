@@ -9,12 +9,12 @@ use App\Http\Controllers\SetcutiController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\admin\XmlController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\admin\MesinController;
 use App\Http\Controllers\admin\ShiftController;
 use App\Http\Controllers\admin\AtasanController;
 use App\Http\Controllers\admin\UploadController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\JabatanController;
-use App\Http\Controllers\admin\UserMesinController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\AbsensisController;
 use App\Http\Controllers\admin\KalenderController;
@@ -29,6 +29,7 @@ use App\Http\Controllers\admin\IzinAdminController;
 use App\Http\Controllers\admin\JeniscutiController;
 use App\Http\Controllers\admin\JenisizinController;
 use App\Http\Controllers\admin\MasterkpiController;
+use App\Http\Controllers\admin\UserMesinController;
 use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\DepartemenController;
@@ -687,25 +688,18 @@ Route::get('/download-data', [AbsensiController::class, 'downloadLogData'])->nam
 // Route::post('/downloaddata', [XmlController::class, 'download'])->name('tarikdata.download');
 Route::get('/download-logs', [AbsensiController::class, 'showDownloadLog'])->name('tarikdatas');
 Route::get('/download-log', [AbsensiController::class, 'downloadLog'])->name('tarikdatas');
-
-
-
 // Route buat tes koneksi ke IP lainnya
 Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Route::post('/tarik-absen', [MesinController::class, 'tarikAbsen'])->name('tarik.absen');
+
+
+
+
+
+
+
+
+
+
+
+

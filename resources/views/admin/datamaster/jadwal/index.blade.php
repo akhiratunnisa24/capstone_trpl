@@ -40,7 +40,6 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Karyawan</th>
                                         <th>Shift</th>
                                         <th>Tanggal</th>
                                         <th>Jadwal Masuk</th>
@@ -53,7 +52,6 @@
                                     @foreach ($jadwal as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $data->karyawans->nama ?? '' }}</td>
                                             <td>{{ $data->shifts->nama_shift }}</td>
                                             <td>{{ \Carbon\Carbon::parse($data->tanggal)->format('d/m/Y') }}</td>
                                             <td>{{ $data->jadwal_masuk }}</td>

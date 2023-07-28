@@ -10,16 +10,6 @@
                 <form action="/jadwal/update/{{$data->id}}" method="POST">
                     @csrf
                     @method('PUT')
-                    <div class="form-group col-sm" id="pegawai">
-                        <label for="id_pegawai" class="col-form-label">Karyawan</label>
-                        <select name="id_pegawai" id="id_pegawai" class="form-control">
-                            @foreach ($karyawan as $dt)
-                                <option value="{{ $dt->id }}" @if ($data->id_pegawai == $dt->id) selected @endif>
-                                    {{ $dt->nama }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
                     <div class="form-group col-sm">
                         <label for="id_shift" class="col-form-label">Shift</label>
                         <select name="id_shift" id="id_shifts" class="form-control">
