@@ -1335,7 +1335,6 @@
                                         <div id="resultContainer"></div>
                                     </div>
                                     
->>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
                                     <table class="table table-striped m-t-20">
                                         <thead style="text-align: center;">
                                             <tr class="info">
@@ -1346,23 +1345,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-<<<<<<< HEAD
-                                            {{-- @foreach ($absenHarini as $k)
-=======
                                             @foreach ($absenHarini as $k)
->>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $k->karyawans->nama }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($k->total)->format('d/m/Y') }}</td>
                                                     <td>{{ $k->jam_masuk}}</td>
                                                 </tr>
-<<<<<<< HEAD
-                                            @endforeach --}}
-=======
                                             @endforeach
->>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
-
                                         </tbody>
                                     </table>
                                 </div>

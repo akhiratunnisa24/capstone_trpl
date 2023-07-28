@@ -21,11 +21,7 @@ class DataImport
     private $jumlahimporttidakmasuk = 0;
     private $datatidakbisadiimport = 0; //JUMLAH DATA TIDAK DIIMPORT
 
-<<<<<<< HEAD
      public function importDataExcel(Request $request)
-=======
-    public function importDataExcel(Request $request)
->>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
     {
         $file = $request->file('uploaded_file');
         $extension = $file->getClientOriginalExtension();

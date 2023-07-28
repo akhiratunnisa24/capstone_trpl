@@ -5,11 +5,11 @@
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Master Jabatan</h4>
+                <h4 class="pull-left page-title">Master User Mesin</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Human Resources Management System</li>
-                    <li class="active">Master Jabatan</li>
+                    <li class="active">Master User Mesin</li>
                 </ol>
 
                 <div class="clearfix">
@@ -28,7 +28,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                data-target="#AddModal"> Tambah Data Jabatan</a>
+                                data-target="#AddModal"> Tambah Data User Mesin</a>
                         </div>
                         @include('admin.datamaster.jabatan.addJabatan')
                         <div class="panel-body">
@@ -38,7 +38,7 @@
                                     <tr>
                                         <th>No</th>
                                         {{-- <th>Level</th> --}}
-                                        <th>Nama Jabatan</th>
+                                        <th>Nama User</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
