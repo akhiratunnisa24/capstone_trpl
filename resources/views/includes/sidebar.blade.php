@@ -52,7 +52,10 @@
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span class="text-info panel-title">Absensi Karyawan</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
+<<<<<<< HEAD
+=======
                             <li><a href=""><i class=" mdi mdi-account-card-details"></i><span>Manajemen Absensi</span></a></li>
+>>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
                             <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
                             <li><a href="/absensi-tidak-masuk"><i class="mdi mdi-calendar-remove"></i><span>Data Tidak Masuk</span></a></li>
                             <li><a href="/setting-absensi"><i class="fa fa-gear (alias)"></i><span>Setting Absensi</span></a></li>
@@ -112,7 +115,12 @@
                         <ul class="list-unstyled">
                             <li><a href="/divisi"><i class="fa fa-sitemap"></i><span></span>Divisi</a></li>
                             <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a></li>
+<<<<<<< HEAD
+                            <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>
+                            <li><a href="/user_mesin"><i class="fa fa-user"></i><span></span>User Mesin</a></li>  
+=======
                             <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>  
+>>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3
                             <li><a href="/atasan"><i class="mdi mdi-account-star-variant"></i><span></span>Atasan</a></li>  
                             <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
                             <li><a href="jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li>
