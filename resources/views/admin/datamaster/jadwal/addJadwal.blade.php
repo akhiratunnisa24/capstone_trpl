@@ -17,7 +17,7 @@
                             <option value="bulanan">Bulanan</option>
                         </select>
                     </div>
-                    <div class="form-group col-sm" id="pegawai">
+                    {{-- <div class="form-group col-sm" id="pegawai">
                         <label for="id_pegawai" class="col-form-label">Karyawan</label>
                         <select name="id_pegawai" id="id_pegawai" class="form-control">
                             <option>-- Pilih Karyawan --</option>
@@ -27,7 +27,7 @@
                                 </option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="form-group col-sm">
                         <label for="id_shift" class="col-form-label">Shift</label>
                         <select name="id_shift" id="id_shift" class="form-control" required>
@@ -123,7 +123,7 @@
 <script type="text/javascript">
     $(function()
         {
-            $('#pegawai').prop("hidden", true);
+            // $('#pegawai').prop("hidden", true);
             $('#tanggal').prop("hidden", true);
             $('#date_range').prop("hidden", true);
 
@@ -131,13 +131,13 @@
             {
                 if(a.target.value== 'harian')
                 {
-                    $('#pegawai').prop("hidden", false);
+                    // $('#pegawai').prop("hidden", false);
                     $('#tanggal').prop("hidden", false);  
                     $('#date_range').prop("hidden", true);
                 }
                 if(a.target.value== 'bulanan')
                 {
-                    $('#pegawai').prop("hidden", true);
+                    // $('#pegawai').prop("hidden", true);
                     $('#tanggal').prop("hidden", true);
                     $('#date_range').prop("hidden", false);
                 }

@@ -1309,27 +1309,6 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-12">
-<<<<<<< HEAD
-                                    <div class="text-right col-xs-9 m-b-10">
-                                        <a href="download-logs" class="btn btn-info btn-sm">Tes Koneksi</a>
-                                    </div>
-
-                                    {{-- {{ route('download.mesin') }} --}}
-                                    <div class="text-right col-xs-3 m-b-10">
-                                        <form action="" method="post">
-                                            @csrf
-                                            <button type="submit" class="btn btn-sm btn-success">Download Data</button>
-                                        </form>
-                                    </div>
-
-                                    {{-- <div class="text-right col-xs-3 m-b-10">
-                                        <a href="/tarik-data" class="btn btn-info btn-sm">Tarik Data</a>
-                                    </div> --}}
-                                    {{-- <form action="/tarikdatas">
-                                        @csrf
-                                        <input type="Submit" value="Tes Koneksi">
-                                    </form> --}}
-=======
                                     <div class="col-xs-12 m-b-10">
                                         <button id="tarikAbsenBtn" class="btn btn-success btn-sm">Tarik Absen</button>
                                         <div id="resultContainer"></div>
@@ -1345,14 +1324,23 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+<<<<<<< HEAD
                                             @foreach ($absenHarini as $k)
+=======
+                                            {{-- @foreach ($absenHarini as $k)
+>>>>>>> c53c7532b6c608d1df0b036307749a0e40494659
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $k->karyawans->nama }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($k->total)->format('d/m/Y') }}</td>
                                                     <td>{{ $k->jam_masuk}}</td>
                                                 </tr>
+<<<<<<< HEAD
                                             @endforeach
+=======
+                                            @endforeach --}}
+
+>>>>>>> c53c7532b6c608d1df0b036307749a0e40494659
                                         </tbody>
                                     </table>
                                 </div>

@@ -56,7 +56,7 @@
                                                        data-target="#editJabatan{{$data->id}}"><i class="fa fa-edit"></i>
                                                     </a>
 
-                                                    <button class="btn btn-danger btn-sm" onclick="hapus({{ $data->id }})"><i class="fa fa-trash"></i></button>
+                                                    <button class="btn btn-danger btn-sm" onclick="hapus('{{ $data->id}}')"><i class="fa fa-trash"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -119,7 +119,6 @@
                         confirmButtonColor: '#3085d6',
                     })
                     location.href = '<?= '/jabatan/delete/' ?>' + id;
-                    //location.href = '<?= 'http://localhost:8000/jabatan/delete' ?>' + id;
                 }
             })
         }
