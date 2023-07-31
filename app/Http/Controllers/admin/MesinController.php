@@ -10,6 +10,7 @@ use App\Models\Jadwal;
 use TADPHP\TADFactory;
 use App\Models\Absensi;
 use App\Models\Listmesin;
+use App\Models\UserMesin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,7 +35,8 @@ class MesinController extends Controller
                     // $u = $user->get_response(['format' => 'json']);
                     $j = $attendance->get_response(['format' => 'json']);
                     $jArray = json_decode($j, true);
-                    $usermesin = Mesin::where('partner',$partner)->get();
+
+                    $usermesin = UserMesin::where('partner',$partner)->get();
                     // Loop melalui data $jArray untuk mencocokkan nilai PIN
                     foreach ($jArray['Row'] as $data) 
                     {
@@ -42,14 +44,8 @@ class MesinController extends Controller
                         $datetime = Carbon::parse($data['DateTime']);
                         $tanggal = $datetime->format('Y-m-d');
                         $jam = $datetime->format('H:i:s');
-
-                        // Cari data di $usermesin berdasarkan PIN
                         
-                        // dd($usermesin);
-                        $matchedUser = $usermesin->filter(function ($usermesin) use ($pin) {
-                            return $usermesin->noid === $pin;
-                        });
-                        dd($usermesin,$matchedUser);
+                        $matchedUser = $usermesin->where('noid', $pin)->first();
                         if ($matchedUser) 
                         {
                             $jadwals = Jadwal::where('tanggal', $tanggal)->get();
@@ -156,7 +152,6 @@ class MesinController extends Controller
                     }
                     // Mengembalikan data dalam format JSON
                     return response()->json([$j]);
-
                 } else {
                     return "Tidak ada data kehadiran.\n";
                 }

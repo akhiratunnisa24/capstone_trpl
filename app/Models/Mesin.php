@@ -16,7 +16,8 @@ class Mesin extends Model
         'id_pegawai',
         'nik',
         'departemen',
-        'pin',
+        'noid',
+        'partner',
     ];
 
     public function departemens()
