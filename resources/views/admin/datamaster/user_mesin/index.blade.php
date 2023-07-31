@@ -30,37 +30,41 @@
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                 data-target="#AddModal"> Tambah Data User Mesin</a>
                         </div>
-                        @include('admin.datamaster.jabatan.addJabatan')
+                        @include('admin.datamaster.user_mesin.addUserMesin')
                         <div class="panel-body">
                             <table id="datatable-responsive13" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        {{-- <th>Level</th> --}}
-                                        <th>Nama User</th>
-                                        <th>Aksi</th>
+                                        <th>Nama User Mesin</th>
+                                        <th>NIK</th>
+                                        <th>Departemen</th>
+                                        <th>Nomor ID</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($jabatan as $data)
+                                    @foreach ($userMesins as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            {{-- <td>{{ $data->level_jabatan }}</td> --}}
-                                            <td>{{ $data->nama_jabatan }}</td>
+                                            <td>{{ $data->karyawan->nama }}</td>
+                                            <td>{{ $data->nik }}</td>
+                                            <td>{{ $data->karyawan->departemen->nama_departemen }}</td>
+                                            <td>{{ $data->noid }}</td>
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
 
-                                                    <a class="btn btn-success btn-sm editJabatan" data-toggle="modal" 
-                                                       data-target="#editJabatan{{$data->id}}"><i class="fa fa-edit"></i>
+                                                    <a class="btn btn-success btn-sm editUserMesin" data-toggle="modal" 
+                                                       data-target="#editUserMesin{{$data->id}}"><i class="fa fa-edit"></i>
                                                     </a>
 
                                                     <button class="btn btn-danger btn-sm" onclick="hapus('{{ $data->id}}')"><i class="fa fa-trash"></i></button>
                                                 </div>
                                             </td>
                                         </tr>
-                                        @include('admin.datamaster.jabatan.editJabatan')
+                                        @include('admin.datamaster.user_mesin.editUserMesin')
                                     @endforeach
                                 </tbody>
                             </table>
@@ -70,6 +74,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Rest of the JavaScript code remains the same -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
@@ -118,9 +124,43 @@
                         icon: "info",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= '/jabatan/delete/' ?>' + id;
+                    location.href = '<?= '/user_mesin/delete/' ?>' + id;
                 }
             })
         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Ketika dropdown "Nama Karyawan" dipilih, isi kolom "NIK" dan "Departemen" sesuai data karyawan terpilih
+            $('#id_pegawai').change(function () {
+                var selectedKaryawanId = $(this).val();
+                if (selectedKaryawanId) {
+                    $.ajax({
+                        url: '/get_karyawan_info/' + selectedKaryawanId, // Ganti URL ini sesuai dengan route yang digunakan untuk mengambil informasi karyawan
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data) {
+                                $('#nik').val(data.nik);
+                                $('#departemen').val(data.departemen);
+                            }
+                        }
+                    });
+                } else {
+                    $('#nik').val('');
+                    $('#departemen').val('');
+                }
+            });
+        });
+    </script>
+   <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                // Opsi tambahan jika diperlukan
+                placeholder: 'Cari karyawan...',
+                allowClear: true, // Mengaktifkan tombol "clear" untuk menghapus pilihan
+                minimumInputLength: 3 // Minimal jumlah karakter yang harus diinput untuk memulai pencarian
+            });
+        });
     </script>
 @endsection

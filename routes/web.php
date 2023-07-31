@@ -426,10 +426,13 @@ Route::post('/indikator-kpi', [MasterkpiController::class, 'stores'])->name('ind
 Route::post('/indikator-kpi-update/{id}', [MasterkpiController::class, 'updates'])->name('indikator.update');
 
 //User Mesin
-Route::get('/user_mesin', [UserMesinController::class, 'index'])->name('jabatan.index');
-Route::post('/user_mesin', [UserMesinController::class, 'store'])->name('jabatan.store');
-Route::put('/user_mesin/update/{id}', [UserMesinController::class, 'update'])->name('jabatan.update');
-Route::get('/user_mesin/delete/{id}', [UserMesinController::class, 'destroy'])->name('jabatan.delete');
+Route::get('/user_mesin', [UserMesinController::class, 'index'])->name('user_mesin.index');
+Route::post('/user_mesin', [UserMesinController::class, 'store'])->name('user_mesin.store');
+Route::put('/user_mesin/update/{id}', [UserMesinController::class, 'update'])->name('user_mesin.update');
+Route::get('/user_mesin/delete/{id}', [UserMesinController::class, 'destroy'])->name('user_mesin.delete');
+Route::get('/get_karyawan_info/{id}', [UserMesinController::class, 'getKaryawanInfo'])->name('get_karyawan_info');
+Route::get('/search_karyawan', [UserMesinController::class, 'searchKaryawan'])->name('search_karyawan');
+
 //================================================================================
 //ROLE MANAGER atau SUPERVISOR
 

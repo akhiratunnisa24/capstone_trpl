@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('user_mesin', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_pegawai');
-            $table->string('nip')->unique();
+            $table->string('nik')->unique();
             $table->string('pin')->unique();
             $table->string('departemen');
+            $table->string('partner');
             $table->timestamps();
         });
     }
