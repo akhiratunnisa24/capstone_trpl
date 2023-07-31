@@ -12,13 +12,11 @@
                     <div class="form-group col-xs-12">
                         <label class="col-form-label">Nama User Mesin</label>
                         <input type="text" class="form-control m-t-10" name="nama_user_mesin" value="{{ $data->karyawan->nama }}" disabled>
-                        {{-- Tampilkan nama karyawan yang telah dipilih, di-disabled agar tidak bisa diubah --}}
                     </div>
 
                     <div class="form-group col-xs-12">
                         <label class="col-form-label">NIK</label>
                         <input type="text" class="form-control m-t-10" name="nik" value="{{ $data->nik }}" disabled>
-                        {{-- Tampilkan NIK karyawan yang telah dipilih, di-disabled agar tidak bisa diubah --}}
                     </div>
 
                     <div class="form-group col-xs-12">
@@ -26,12 +24,16 @@
                         <input type="text" class="form-control m-t-10" name="departemen" value="{{ $data->karyawan->departemens->nama_departemen }}" disabled>
                         {{-- Tampilkan nama departemen karyawan yang telah dipilih, di-disabled agar tidak bisa diubah --}}
                     </div>
-
-                    <div class="form-group col-xs-12">
-                        <label class="col-form-label">Nomor ID</label>
-                        <input type="text" class="form-control m-t-10" name="noid" value="{{ $data->noid }}" required>
-                    </div>
-
+                    @if (auth()->user()->role == 5)
+                        <div class="form-group col-xs-12">
+                            <label class="col-form-label">Partner</label>
+                            <input type="text" class="form-control m-t-10" name="partner" value="{{ $data->partner }}" required>
+                        </div>
+                    @endif
+                        <div class="form-group col-xs-12">
+                            <label class="col-form-label">Nomor ID</label>
+                            <input type="text" class="form-control m-t-10" name="noid" value="{{ $data->noid }}" required>
+                        </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success waves-effect waves-light" name="submit" value="save">Save</button>

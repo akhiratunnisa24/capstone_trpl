@@ -55,12 +55,14 @@
                                             <td>{{ $data->noid }}</td>
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-
+                                                @if (in_array(auth()->user()->role, [1, 5]))
                                                     <a class="btn btn-success btn-sm editUserMesin" data-toggle="modal" 
-                                                       data-target="#editUserMesin{{$data->id}}"><i class="fa fa-edit"></i>
-                                                    </a>
-
-                                                    <button class="btn btn-danger btn-sm" onclick="hapus('{{ $data->id}}')"><i class="fa fa-trash"></i></button>
+                                                           data-target="#editUserMesin{{$data->id}}"><i class="fa fa-edit"></i></a>
+                                                        <button class="btn btn-danger btn-sm" onclick="hapus('{{ $data->id}}')"><i class="fa fa-trash"></i></button>
+                                                    @else
+                                                    <a class="btn btn-success btn-sm editUserMesin" data-toggle="modal" 
+                                                           data-target="#editUserMesin{{$data->id}}"><i class="fa fa-edit"></i></a>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
@@ -129,9 +131,9 @@
             })
         }
     </script>
-    <script>
+   <script>
         $(document).ready(function () {
-            // Ketika dropdown "Nama Karyawan" dipilih, isi kolom "NIK" dan "Departemen" sesuai data karyawan terpilih
+            // Ketika dropdown "Nama Karyawan" dipilih, isi field "NIK", "Departemen", dan "Partner" sesuai data karyawan terpilih
             $('#id_pegawai').change(function () {
                 var selectedKaryawanId = $(this).val();
                 if (selectedKaryawanId) {
@@ -143,16 +145,19 @@
                             if (data) {
                                 $('#nik').val(data.nik);
                                 $('#departemen').val(data.departemen);
+                                $('#partner').val(data.partner);
                             }
                         }
                     });
                 } else {
                     $('#nik').val('');
                     $('#departemen').val('');
+                    $('#partner').val('');
                 }
             });
         });
     </script>
+
    <script>
         $(document).ready(function() {
             $('.select2').select2({
