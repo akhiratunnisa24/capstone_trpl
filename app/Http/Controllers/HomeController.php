@@ -50,6 +50,7 @@ class HomeController extends Controller
             'email' => $data['emailKaryawan'],
             'password' => Hash::make($data['password']),
             'status_akun' => true,
+            'partner' => $data['partner']
         );
 
         User::insert($data);

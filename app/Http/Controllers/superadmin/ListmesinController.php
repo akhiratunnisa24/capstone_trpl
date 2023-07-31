@@ -32,8 +32,8 @@ class ListmesinController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 5) {
-
+        if ($role == 5) 
+        {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $listmesin = Listmesin::with('partners')->orderBy('id', 'asc')->get();
             $partner = Partner::all();
@@ -97,29 +97,28 @@ class ListmesinController extends Controller
         }
     }
 
-    public function connect($id)
+    public function connect(Request $request, $id)
     {
         try {
-             // $ip ='192.168.1.8';
-            // $com_key = 0;
             $mesin = Listmesin::find($id);
             $ip = $mesin->ip_mesin;
             $com_key = $mesin->comm_key;
-
+    
             $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key]))->get_instance();
             $con = $tad->is_alive();
-
+    
             if ($con) {
                 $mesin->status = 1;
                 $mesin->update();
-                return response()->json(['message' => 'Berhasil terkoneksi ke mesin absensi ' . $ip]);
+                return 'Berhasil terkoneksi ke mesin absensi ' . $ip;
             } else {
-                return response()->json(['message' => 'Koneksi ke ' . $ip . ' Gagal']);
+                return 'Koneksi ke ' . $ip . ' Gagal';
             }
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error: ' . $e->getMessage()]);
+            return "Error: " . $e->getMessage() . "\n";
         }
     }
+    
 
 
     // public function destroy($id)

@@ -15,7 +15,7 @@ class Absensi extends Model
                             'jam_masuk','jam_keluar',
                             'terlambat','plg_cepat',
                             'absent','lembur',
-                            'jml_jamkerja','id_departement','jam_kerja'                        
+                            'jml_jamkerja','id_departement','jam_kerja','partner'                     
                         ];
 
     public function userss(){

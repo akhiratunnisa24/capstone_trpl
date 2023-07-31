@@ -9,15 +9,22 @@ use App\Models\Mesin;
 use App\Models\Jadwal;
 use TADPHP\TADFactory;
 use App\Models\Absensi;
+use App\Models\Listmesin;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class MesinController extends Controller
 {
     public function tarikAbsen()
     {
         try {
-            $ip = '192.168.1.8';
-            $com_key = 0;
+            $listmesin = Listmesin::where('partner',Auth::user()->partner)->first();
+            // $ip = '192.168.1.8';
+            // $com_key = 0;
+            $ip = $listmesin->ip_mesin;
+            $com_key = $listmesin->comm_key;
+            $partner = $listmesin->partner;
+            // dd($ip,$com_key,$partner);
             $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key]))->get_instance();
             $con = $tad->is_alive();
             if ($con) {
@@ -27,8 +34,7 @@ class MesinController extends Controller
                     // $u = $user->get_response(['format' => 'json']);
                     $j = $attendance->get_response(['format' => 'json']);
                     $jArray = json_decode($j, true);
-                    $usermesin = Mesin::all();
-                    
+                    $usermesin = Mesin::where('partner',$partner)->get();
                     // Loop melalui data $jArray untuk mencocokkan nilai PIN
                     foreach ($jArray['Row'] as $data) 
                     {
@@ -38,8 +44,12 @@ class MesinController extends Controller
                         $jam = $datetime->format('H:i:s');
 
                         // Cari data di $usermesin berdasarkan PIN
-                        $matchedUser = $usermesin->where('pin', $pin)->first();
-
+                        
+                        // dd($usermesin);
+                        $matchedUser = $usermesin->filter(function ($usermesin) use ($pin) {
+                            return $usermesin->noid === $pin;
+                        });
+                        dd($usermesin,$matchedUser);
                         if ($matchedUser) 
                         {
                             $jadwals = Jadwal::where('tanggal', $tanggal)->get();
@@ -133,15 +143,12 @@ class MesinController extends Controller
                                          $absensi->id_departement = $matchedUser->departemen;
                                          $absensi->jam_kerja     = null;
                                         $absensi->save();
-                                        
                                     }
                                    
                                 }else{
                                     ///
                                 }
                             }
-                           
-                           
                         }
                         else{
                             //jika data tidak cocok skip

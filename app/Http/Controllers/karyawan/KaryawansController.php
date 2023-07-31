@@ -124,6 +124,7 @@ class KaryawansController extends Controller
                 $karyawan->jumlah_anak          = $request->jumlahAnak;
                 $karyawan->tglkeluar     = $request->tglkeluar;
                 $karyawan->status_kerja  = 'Aktif';
+                $karyawan->partner       = Auth::user()->partner;
 
                 $request->session()->put('karyawan', $karyawan);
 
@@ -174,6 +175,7 @@ class KaryawansController extends Controller
                 $karyawan->jumlah_anak          = $request->jumlahAnak;
                 $karyawan->tglkeluar     = $request->tglkeluar;
                 $karyawan->status_kerja  = 'Aktif';
+                $karyawan->partner       = Auth::user()->partner;
 
                 $request->session()->put('karyawan', $karyawan);
             }
@@ -222,6 +224,7 @@ class KaryawansController extends Controller
                 $karyawan->jumlah_anak          = $request->jumlahAnak;
                 $karyawan->tglkeluar    = $request->tglkeluar;
                 $karyawan->status_kerja = 'Aktif';
+                $karyawan->partner       = Auth::user()->partner;
 
                 $request->session()->put('karyawan', $karyawan);
             } else {
@@ -268,6 +271,7 @@ class KaryawansController extends Controller
                 $karyawan->jumlah_anak          = $request->jumlahAnak;
                 $karyawan->tglkeluar     = $request->tglkeluar;
                 $karyawan->status_kerja  = 'Aktif';
+                $karyawan->partner       = Auth::user()->partner;
 
                 $request->session()->put('karyawan', $karyawan);
             }
@@ -284,7 +288,7 @@ class KaryawansController extends Controller
 
             $karyawan    = $request->session()->get('karyawan');
             $datakeluarga = json_decode(session('datakeluarga', '[]'), true);
-            // dd($datakeluarga);
+            dd($karyawan);
             if (empty($datakeluarga)) {
                 $datakeluarga = [];
                 // dd($datakeluarga);

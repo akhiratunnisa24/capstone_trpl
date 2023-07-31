@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Karyawan;
+use App\Models\Partner;
 
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -35,13 +36,22 @@ class SettingController extends Controller
     public function settinguser(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 5 || $role == 1 || $role == 2) {
+        if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $user = User::all();
+            $user = User::where('partner',Auth::user()->partner)->get();
+            $partner = Partner::all();
 
-            return view('admin.datamaster.user.settingUser', compact('user','row'));
-        } else {
+            return view('admin.datamaster.user.settingUser', compact('user','row','partner','role'));
+        }elseif($role == 5)
+        {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $user = User::all();
+            $partner = Partner::all();
+
+            return view('admin.datamaster.user.settingUser', compact('user','row','partner','role'));
+        }
+        else {
 
             return redirect()->back();
         }
@@ -49,17 +59,39 @@ class SettingController extends Controller
 
     public function editUser(Request $request, $id)
     {
-        $user = User::all();
+        $role = Auth::user()->role;
+        if ($role == 5) 
+        {
+            $user = User::all();
+            User::where('id', $id)->update(
+                [
+                    'partner' => $request->post('partneradmin'),
+                    'role' => $request->post('role'),
+                    'password' => Hash::make($request['password']),
 
-        User::where('id', $id)->update(
-            [
-                'role' => $request->post('role'),
-                'password' => Hash::make($request['password']),
+                ]
+            );
+            return back()->with("status", "Password changed successfully!");
+        }elseif($role == 1 || $role == 2)
+        {
+            $user = User::all();
 
-            ]
-        );
+            User::where('id', $id)->update(
+                [
+                    'partner'=> $request->post('partner'),
+                    'role' => $request->post('role'),
+                    'password' => Hash::make($request['password']),
 
-        return back()->with("status", "Password changed successfully!");
+                ]
+            );
+            return back()->with("status", "Password changed successfully!");
+        }
+        else {
+
+                return redirect()->back();
+        }   
+
+        
     }
     public function hapususer($id)
     {

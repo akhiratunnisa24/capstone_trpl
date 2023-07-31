@@ -67,9 +67,11 @@
                                                         data-target="#editMesin{{ $data->id }}"><i class="fa fa-edit"></i>
                                                     </a>
 
-                                                    <button class="btn btn-primary btn-sm connect" data-id="{{ $data->id }}">
-                                                        CN
-                                                    </button>
+                                                    <form action="{{ route('connect', ['id' => $data->id]) }}" method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-primary btn-sm">CN</button>
+                                                    </form>
+                                                    
                                                 </div>
                                             </td>
                                         </tr>
@@ -137,25 +139,4 @@
             })
         }
     </script>
-
-    <script>
-        $(document).ready(function() {
-            $('.connect').click(function() {
-                var id = $(this).data('id');
-
-                // Kirim permintaan Ajax ke server
-                $.ajax({
-                    url: '/connect/' + id,
-                    method: 'POST',
-                    success: function(response) {
-                        alert(response.message); // Tampilkan pesan hasil koneksi dari server dalam bentuk alert
-                    },
-                    error: function(xhr, status, error) {
-                        alert('Terjadi kesalahan: ' + error); // Tampilkan pesan kesalahan jika ada masalah
-                    }
-                });
-            });
-        });
-    </script>
-
 @endsection

@@ -79,6 +79,22 @@
                         </div>
                     </div>
 
+                    @if($role == 5)
+                        <div class="form-group col-xs-12">
+                            <label class="form-label">Partner</label>
+                            <select class="form-control" name="'partneradmin">
+                                <option value="">Pilih Partner</option>
+                                @foreach ($partner as $k)
+                                    <option value="{{ $k->id }}" {{ $k->id == $data->partner ? 'selected' : '' }}>
+                                        {{ $k->nama_partner }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @elseif($role == 1 || $role == 2)
+                        <input  type="hidden" class="form-control" autocomplete="off" value="{{ $data->partner }}">
+                    @endif
+
                     <div class="col-xs-12">
                         <div class="checkbox checkbox-primary">
                         </div>
