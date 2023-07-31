@@ -27,7 +27,7 @@ class UserMesinController extends Controller
         if ($role == 1 || $role == 2) {
     
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $jabatan = Jabatan::orderBy('id', 'asc')->get();
+            $usermesin = UserMesin::orderBy('id', 'asc')->get();
             $leveljabatan = LevelJabatan::all();
             return view('admin.datamaster.user_mesin.index', compact('jabatan', 'row','leveljabatan'));
         } else {

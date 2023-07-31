@@ -38,7 +38,7 @@
                                 <th>Status Akun</th>
                                 <th>Email</th>
                                 {{-- <th>Password</th> --}}
-                                <th>Action</th>
+                                {{-- <th>Action</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -62,7 +62,7 @@
                                 data-target="#myModal{{ $data->id }}"><i
                                                     class="fa fa-pencil"></i></a>
 
-                                            <button  onclick="hapus_karyawan({{ $data->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                            {{-- <button  onclick="hapus_karyawan({{ $data->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                         </div>
                                     </td>
 

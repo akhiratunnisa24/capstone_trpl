@@ -229,10 +229,18 @@
                 <ul>
                     <li>
                         <a href="#" class="waves-effect"><i class="ti-home"></i><span>Dashboard</span></a>
-                        <a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Managemen User</span></a>
-                        <a href="settingrole" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Setting Role Login</span></a>
-                        <a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a>
-                        <a href="/setting-kalender"><i class="ti-calendar"></i><span>Manajemen Libur</span></a>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span
+                                    class="text-info panel-title">Master Aplikasi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="/partner"><i class="mdi mdi-walk"></i><span>Partner</span></a> </li>
+                                <li><a href="/list-mesin"><i class="mdi mdi-walk"></i><span>List Mesin</span></a> </li>    
+                                <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Managemen User</span></a></li>
+                                <li><a href="settingrole" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Setting Role Login</span></a></li>
+                                <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
+                                <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li>
+                            </ul>
+                        </li>
                     </li>
                 </ul>
             </div>
