@@ -46,7 +46,7 @@ class MesinController extends Controller
                             // dd($data,$matchedUser,$jadwal);
                             foreach ($jadwals as $jadwal) 
                             {
-                                if($jadwal && $jam >= '12:00:00')
+                                if($jadwal)
                                 {
                                     $existingAbsensi = Absensi::where('id_karyawan', $matchedUser->id_pegawai)
                                                     ->where('tanggal', $tanggal)->whereNotNull('jam_masuk')->first();
