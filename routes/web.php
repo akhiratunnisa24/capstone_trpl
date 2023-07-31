@@ -690,15 +690,4 @@ Route::get('/download-logs', [AbsensiController::class, 'showDownloadLog'])->nam
 Route::get('/download-log', [AbsensiController::class, 'downloadLog'])->name('tarikdatas');
 // Route buat tes koneksi ke IP lainnya
 Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
-
-
 Route::post('/tarik-absen', [MesinController::class, 'tarikAbsen'])->name('tarik.absen');
->>>>>>> 001d96e173d1799fd783aa889c8e49b85859c6e3

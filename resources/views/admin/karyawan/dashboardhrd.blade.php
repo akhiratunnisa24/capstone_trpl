@@ -1324,23 +1324,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-<<<<<<< HEAD
                                             @foreach ($absenHarini as $k)
-=======
-                                            {{-- @foreach ($absenHarini as $k)
->>>>>>> c53c7532b6c608d1df0b036307749a0e40494659
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $k->karyawans->nama }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($k->total)->format('d/m/Y') }}</td>
                                                     <td>{{ $k->jam_masuk}}</td>
                                                 </tr>
-<<<<<<< HEAD
                                             @endforeach
-=======
-                                            @endforeach --}}
 
->>>>>>> c53c7532b6c608d1df0b036307749a0e40494659
                                         </tbody>
                                     </table>
                                 </div>
