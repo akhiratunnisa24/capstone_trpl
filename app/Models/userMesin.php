@@ -9,9 +9,7 @@ class UserMesin extends Model
 {
     use HasFactory;
     protected $table='user_mesin';
-    protected $fillable=['id_pegawai','nik','noid','departemen',
-    // 'partner'
-    ]; 
+    protected $fillable=['id_pegawai','nik','noid','departemen','partner']; 
 
     public function departemens()
     {

@@ -28,6 +28,7 @@ class UserMesinController extends Controller
         $request->validate([
             'id_pegawai' => 'required',
             'noid' => 'required',
+            'partner' => 'required', // Tambahkan validasi untuk field "partner"
         ]);
 
         $karyawan = Karyawan::find($request->id_pegawai);
@@ -40,7 +41,7 @@ class UserMesinController extends Controller
             'nik' => $karyawan->nik,
             'noid' => $request->noid,
             'departemen' => $karyawan->departemen->id,
-            // 'partner' => $karyawan->partner,
+            'partner' => $karyawan->partner, // Ambil nilai "partner" dari form
         ]);
 
         $userMesin->save();
@@ -59,7 +60,7 @@ class UserMesinController extends Controller
         return response()->json([
             'nik' => $karyawan->nik,
             'departemen' => $karyawan->departemen->nama_departemen,
-            // 'partner' => $karyawan->partner->nama_patner,
+            'partner' => $karyawan->partner
         ]);
     }
 
@@ -77,28 +78,24 @@ class UserMesinController extends Controller
         $request->validate([
             'id_pegawai' => 'required',
             'noid' => 'required',
-        ]);
+            'partner' => (auth()->user()->role == 5) ? 'nullable' : 'required', // Ubah validasi berdasarkan role user
+        ]);        
 
         $userMesin = UserMesin::find($id);
         if (!$userMesin) {
             return redirect()->route('user_mesin.index')->with('error', 'Data user mesin tidak ditemukan.');
         }
-
+        
         $karyawan = Karyawan::find($request->id_pegawai);
         if (!$karyawan) {
             return redirect()->route('user_mesin.index')->with('error', 'Karyawan tidak ditemukan.');
         }
-
-        $userMesin->update([
-            'id_pegawai' => $request->id_pegawai,
-            'nik' => $karyawan->nik,
-            'noid' => $request->noid,
-            'departemen' => $karyawan->departemens->nama_departemen,
-            // 'partner' => $karyawan->partner->nama_partner,
-        ]);
-
+        
+        // Letakkan kode update data di atas di sini
+        
         return redirect()->route('user_mesin.index')->with('success', 'Data user mesin berhasil diperbarui.');
-    }
+    }        
+
 
     public function destroy($id)
     {
