@@ -18,11 +18,11 @@ use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\AbsensisController;
 use App\Http\Controllers\admin\KalenderController;
+
 use App\Http\Controllers\admin\SisacutiController;
 
+
 use App\Http\Controllers\RequestAbsensiController;
-
-
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\InformasiController;
 use App\Http\Controllers\admin\IzinAdminController;
@@ -47,9 +47,11 @@ use App\Http\Controllers\karyawan\karyawanController;
 use App\Http\Controllers\admin\LeveljabatanController;
 use App\Http\Controllers\karyawan\KaryawansController;
 use App\Http\Controllers\manager\KpimanagerController;
+use App\Http\Controllers\superadmin\PartnerController;
 use App\Http\Controllers\manager\TimKaryawanController;
 use App\Http\Controllers\admin\SettingabsensiController;
 use App\Http\Controllers\karyawan\KpikaryawanController;
+use App\Http\Controllers\superadmin\ListmesinController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
 use App\Http\Controllers\manager\TugasKaryawanController;
@@ -694,3 +696,41 @@ Route::get('/download-log', [AbsensiController::class, 'downloadLog'])->name('ta
 // Route buat tes koneksi ke IP lainnya
 Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
 Route::post('/tarik-absen', [MesinController::class, 'tarikAbsen'])->name('tarik.absen');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//master partnert
+Route::get('/partner', [PartnerController::class, 'index'])->name('partner.index');
+Route::post('/partner', [PartnerController::class, 'store'])->name('partner.store');
+Route::put('/partner/update/{id}', [PartnerController::class, 'update'])->name('partner.update');
+
+//master mesin absensi
+Route::get('/list-mesin', [ListmesinController::class, 'index'])->name('listmesin.index');
+Route::post('/list-mesin', [ListmesinController::class, 'store'])->name('listmesin.store');
+Route::put('/list-mesin/update/{id}', [ListmesinController::class, 'update'])->name('listmesin.update');
+Route::post('/connect/{id}', [ListmesinController::class, 'connect'])->name('connect');
+
+
+
+
+
+
+
+
+
+
+

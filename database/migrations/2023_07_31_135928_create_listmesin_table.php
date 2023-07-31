@@ -13,8 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mesin', function (Blueprint $table) {
+        Schema::create('listmesin', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_mesin',100);
+            $table->string('ip_mesin',30);
+            $table->integer('port');
+            $table->integer('comm_key');
+            $table->integer('partner');
+            $table->boolean('status');
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mesin');
+        Schema::dropIfExists('listmesin');
     }
 };
