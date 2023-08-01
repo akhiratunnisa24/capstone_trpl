@@ -15,11 +15,6 @@ class UserMesin extends Model
     {
         return $this->belongsTo(Departemen::class,'divisi','id');
     }
-
-    public function karyawans()
-    {
-        return $this->belongsTo(Karyawan::class, 'id_karyawan', 'id');
-    }
         
     public function karyawan()
     {

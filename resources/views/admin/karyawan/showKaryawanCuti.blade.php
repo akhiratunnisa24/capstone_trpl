@@ -7,11 +7,11 @@
     <div class="col-sm-12">
 
         <div class="page-header-title">
-            <h4 class="pull-left page-title">Data Cuti dan Izin </h4>
+            <h4 class="pull-left page-title">Data Cuti dan Ijin </h4>
 
             <ol class="breadcrumb pull-right">
                 <li>Human Resources Management System</li>
-                <li class="active">Data Cuti dan Izin </li>
+                <li class="active">Data Cuti dan Ijin </li>
             </ol>
 
             <div class="clearfix">
@@ -31,7 +31,7 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading  col-15 m-b-10">
-                    <h4>Izin Hari Ini</h4>
+                    <h4>Ijin Hari Ini</h4>
 
                     </div>
                     <div class="panel-body" >

@@ -143,7 +143,7 @@ class AlokasicutiController extends Controller
             $alokasicuti->tgl_sekarang = Carbon::parse($request->tgl_sekarang)->format('Y-m-d');
             $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d');
             $alokasicuti->sampai       = Carbon::parse($request->sampai)->format('Y-m-d');
-
+            $alokasicuti->partner      = $request->partner;
             // dd($alokasicuti);
             $alokasicuti->save();
             return redirect()->back()->with('pesan', 'Data berhasil disimpan !');
@@ -166,7 +166,7 @@ class AlokasicutiController extends Controller
             $alokasicuti->tgl_sekarang = NULL;
             $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d');
             $alokasicuti->sampai       = Carbon::parse($request->sampai)->format('Y-m-d');
-
+            $alokasicuti->partner      = $request->partner;
             // dd($alokasicuti);
             $alokasicuti->save();
             // return redirect()->back()->withInput();

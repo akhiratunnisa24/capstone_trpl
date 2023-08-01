@@ -35,12 +35,12 @@ class SettingalokasicutiController extends Controller
         if ($role == 1 || $role == 2) {
 
             $id = Settingalokasi::find('id');
-            $settingalokasi = Settingalokasi::where('status', true)->get();
+            $settingalokasi = Settingalokasi::where('partner',Auth::user()->partner)->where('status', true)->get();
 
             //untuk edit
             $setal = Settingalokasi::find($id);
-            $jeniscuti = Jeniscuti::where('status', true)->get();
-            $departemen = Departemen::all();
+            $jeniscuti = Jeniscuti::where('partner',Auth::user()->partner)->where('status', true)->get();
+            $departemen = Departemen::where('partner',Auth::user()->partner)->get();
 
             return view('admin.settingalokasi.setting_index', compact('settingalokasi', 'jeniscuti', 'setal', 'departemen', 'row'));
         } else {
@@ -62,78 +62,94 @@ class SettingalokasicutiController extends Controller
                 'mode_karyawan' => 'required',
             ]);
 
-            $settingalokasi = new Settingalokasi;
-            $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
-            $settingalokasi->durasi       = $request->durasi;
-            $mode = implode(',', $request->mode_karyawan);
-            $settingalokasi['mode_karyawan']        = $mode;
-            $settingalokasi->cuti_bersama_terhutang = null;
-            $settingalokasi->periode = $year;
-            $settingalokasi->status  = 1;
+            $cek = Settingalokasi::where('id_jeniscuti', $request->id_jeniscuti)
+                ->where('partner', $request->partner)
+                ->whereYear('periode', '=', $year)
+                ->exists();
+            if($cek)
+            {
+                $settingalokasi = new Settingalokasi;
+                $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
+                $settingalokasi->durasi       = $request->durasi;
+                $mode = implode(',', $request->mode_karyawan);
+                $settingalokasi['mode_karyawan']        = $mode;
+                $settingalokasi->cuti_bersama_terhutang = null;
+                $settingalokasi->periode = $year;
+                $settingalokasi->status  = 1;
+                $settingalokasi->partner  = $request->partner;
 
-            $settingalokasi->save();
+                $settingalokasi->save();
 
-            $mode_karyawan_array = $settingalokasi->getModeKaryawanArrayAttribute();
+                $mode_karyawan_array = $settingalokasi->getModeKaryawanArrayAttribute();
 
-            $karyawan = DB::table('karyawan')
-                ->where(function ($query) use ($request, $mode_karyawan_array) {
-                    if (in_array("Perempuan", $mode_karyawan_array) && in_array("Sudah Menikah", $mode_karyawan_array)) {
-                        $query->orWhere(function ($q) {
-                            $q->where('jenis_kelamin', 'Perempuan')
-                                ->where('status_pernikahan', 'Sudah Menikah');
-                        });
-                    }
+                $karyawan = DB::table('karyawan')
+                    ->where('partner', Auth::user()->partner)
+                    ->where(function ($query) use ($request, $mode_karyawan_array) {
+                        if (in_array("Perempuan", $mode_karyawan_array) && in_array("Sudah Menikah", $mode_karyawan_array)) {
+                            $query->orWhere(function ($q) {
+                                $q->where('jenis_kelamin', 'Perempuan')
+                                    ->where('status_pernikahan', 'Sudah Menikah');
+                            });
+                        }
 
-                    if (in_array("Semua Karyawan", $mode_karyawan_array)) {
-                        $query->orWhere(function($q) {
-                            $q->where('jenis_kelamin', 'Laki-Laki')
-                            ->orWhere('jenis_kelamin', 'Perempuan');
-                        });
-                    }
-            })
-            ->select('id', 'jenis_kelamin', 'status_pernikahan','nip','nama_jabatan','divisi')
-            ->get();
-            //  if(in_array("Laki-Laki", $mode_karyawan_array)){
-                //     $query->orWhere('jenis_kelamin', 'Laki-Laki');
-                // }
+                        if (in_array("Semua Karyawan", $mode_karyawan_array)) {
+                            $query->orWhere(function($q) {
+                                $q->where('jenis_kelamin', 'Laki-Laki')
+                                ->orWhere('jenis_kelamin', 'Perempuan');
+                            });
+                        }
+                    })
+                    ->select('id', 'jenis_kelamin', 'status_pernikahan','nip','nama_jabatan','divisi')
+                    ->get();
                 
-                // if(in_array("Belum Menikah", $mode_karyawan_array)){
-                //     $query->orWhere('status_pernikahan', 'Belum Menikah');
-                // }
-            
-                // if(in_array("Duda", $mode_karyawan_array)){
-                //     $query->orWhere('status_pernikahan', 'Duda');
-                // }
-                // if(in_array("Janda", $mode_karyawan_array)){
-                //     $query->orWhere('status_pernikahan', 'Janda');
-                // }
+                 // dd($settingalokasi,$karyawan);
+                // dd($karyawan);
+                //  if(in_array("Laki-Laki", $mode_karyawan_array)){
+                    //     $query->orWhere('jenis_kelamin', 'Laki-Laki');
+                    // }
+                    
+                    // if(in_array("Belum Menikah", $mode_karyawan_array)){
+                    //     $query->orWhere('status_pernikahan', 'Belum Menikah');
+                    // }
+                
+                    // if(in_array("Duda", $mode_karyawan_array)){
+                    //     $query->orWhere('status_pernikahan', 'Duda');
+                    // }
+                    // if(in_array("Janda", $mode_karyawan_array)){
+                    //     $query->orWhere('status_pernikahan', 'Janda');
+                    // }
 
-            // return $karyawan;
-            foreach ($karyawan as $karyawan) {
-                $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)
-                    ->where('id_karyawan', $karyawan->id)
-                    ->whereYear('aktif_dari', '=', $year)
-                    ->exists();
-                if (!$check) {
+                // return $karyawan;
+                foreach ($karyawan as $karyawan) {
+                    $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)
+                        ->where('id_karyawan', $karyawan->id)
+                        ->where('partner', $request->partner)
+                        ->whereYear('aktif_dari', '=', $year)
+                        ->exists();
+                    dd($settingalokasi,$karyawan, $request->partner,$check);
+                    if (!$check) {
 
-                    $alokasicuti = new Alokasicuti;
-                    $alokasicuti->nik              = $karyawan->nip;
-                    $alokasicuti->id_karyawan      = $karyawan->id;
-                    $alokasicuti->jabatan          = $karyawan->nama_jabatan;
-                    $alokasicuti->departemen       = $karyawan->divisi;
-                    $alokasicuti->id_settingalokasi = $settingalokasi->id;
-                    $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
-                    $alokasicuti->durasi           = $request->durasi;
-                    $alokasicuti->status_durasialokasi = null;
-                    $alokasicuti->tgl_masuk        = null;
-                    $alokasicuti->tgl_sekarang     = null;
-                    $alokasicuti->aktif_dari       = $year . '-01-01';
-                    $alokasicuti->sampai           = $year . '-12-31';
-                    $alokasicuti->status           = 1;
-                    $alokasicuti->save();
-                } else {
-                    Log::info('data alokasi cuti sudah ada');
+                        $alokasicuti = new Alokasicuti;
+                        $alokasicuti->nik              = $karyawan->nip;
+                        $alokasicuti->id_karyawan      = $karyawan->id;
+                        $alokasicuti->jabatan          = $karyawan->nama_jabatan;
+                        $alokasicuti->departemen       = $karyawan->divisi;
+                        $alokasicuti->id_settingalokasi= $settingalokasi->id;
+                        $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
+                        $alokasicuti->durasi           = $request->durasi;
+                        $alokasicuti->status_durasialokasi = null;
+                        $alokasicuti->tgl_masuk        = null;
+                        $alokasicuti->tgl_sekarang     = null;
+                        $alokasicuti->aktif_dari       = $year . '-01-01';
+                        $alokasicuti->sampai           = $year . '-12-31';
+                        $alokasicuti->status           = 1;
+                        $alokasicuti->partner          = $settingalokasi->partner;
+                        $alokasicuti->save();
+                    } else {
+                        Log::info('data alokasi cuti sudah ada');
+                    }
                 }
+
             }
             return redirect()->back()->withInput();
         } else 
@@ -152,6 +168,7 @@ class SettingalokasicutiController extends Controller
             $settingalokasi->cuti_bersama_terhutang = $request->cuti_bersama_terhutang;
             $settingalokasi->periode       = $year;
             $settingalokasi->status        = 1;
+            $settingalokasi->partner       = $request->partner;
 
             $settingalokasi->save();
 
@@ -272,6 +289,7 @@ class SettingalokasicutiController extends Controller
                 //     ->exists();
                 $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)
                     ->where('id_karyawan', $karyawan->id)
+                    ->where('partner', Auth::user()->partner)
                     ->where(function ($query) {
                         $query->whereYear('aktif_dari', '=', Carbon::now()->year)
                               ->orWhereNull('aktif_dari');
@@ -300,6 +318,7 @@ class SettingalokasicutiController extends Controller
                     $alokasicuti->aktif_dari        = $aktifdari;
                     $alokasicuti->sampai            = $sampai;
                     $alokasicuti->status            = 1;
+                    $alokasicuti->partner           = $settingalokasi->partner;
 
                     $alokasicuti->save();
 

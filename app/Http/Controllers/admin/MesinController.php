@@ -20,6 +20,7 @@ class MesinController extends Controller
     {
         try {
             $listmesin = Listmesin::where('partner',Auth::user()->partner)->first();
+            //$ip = '192.168.10.175';
             // $ip = '192.168.1.8';
             // $com_key = 0;
             $ip = $listmesin->ip_mesin;
@@ -40,6 +41,7 @@ class MesinController extends Controller
                     // dd($jArray);
 
                     $usermesin = UserMesin::where('partner',$partner)->get();
+                
                     // Loop melalui data $jArray untuk mencocokkan nilai PIN
                     foreach ($jArray['Row'] as $data) 
                     {

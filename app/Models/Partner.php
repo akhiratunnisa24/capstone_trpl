@@ -46,4 +46,9 @@ class Partner extends Model
         return $this->hasMany(Informasi::class, 'partner', 'id');
     }
 
+    public function jeniscutis()
+    {
+        return $this->hasMany(Jeniscuti::class, 'partner', 'id');
+    }
+
 }

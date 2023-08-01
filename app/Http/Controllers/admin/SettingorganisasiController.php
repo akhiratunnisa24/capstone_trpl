@@ -72,6 +72,7 @@ class SettingorganisasiController extends Controller
         $settingorganisasi->alamat = $request->alamat;
         $settingorganisasi->no_telp = $request->no_telp;
         $settingorganisasi->kode_pos = $request->kode_pos;
+        $settingorganisasi->partner = Auth::user()->partner;
 
         // dd($settingorganisasi);
         $settingorganisasi->update();

@@ -21,11 +21,11 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-info">
-                <h4 class="panel-title ">Cuti dan Izin Hari Ini</h4>
+                <h4 class="panel-title ">Cuti dan Ijin Hari Ini</h4>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $cutidanizin }}</b></h3>
-                <p class="text-muted"><b>Total Cuti dan Izin </b> </p>
+                <p class="text-muted"><b>Total Cuti dan Ijin </b> </p>
             </div>
         </div>
     </div>
@@ -72,11 +72,11 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-info">
-                <h4 class="panel-title ">Cuti dan Izin Bulan Ini</h4>
+                <h4 class="panel-title ">Cuti dan Ijin Bulan Ini</h4>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $cutidanizinPerbulan }}</b></h3>
-                <p class="text-muted"><b>Total Cuti dan Izin </b> </p>
+                <p class="text-muted"><b>Total Cuti dan Ijin </b> </p>
             </div>
         </div>
     </div>
@@ -123,11 +123,11 @@
     <div class="col-sm-6 col-lg-3">
         <div class="panel panel-primary text-center">
             <div class="panel-heading btn-info">
-                <h4 class="panel-title">Cuti dan Izin Bulan Lalu</h4>
+                <h4 class="panel-title">Cuti dan Ijin Bulan Lalu</h4>
             </div>
             <div class="panel-body">
                 <h3 class=""><b>{{ $cutidanizibulanlalu }}</b></h3>
-                <p class="text-muted"><b>Total Cuti dan Izin</b> </p>
+                <p class="text-muted"><b>Total Cuti dan Ijin</b> </p>
             </div>
         </div>
     </div>

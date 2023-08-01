@@ -65,21 +65,21 @@
                                                         <div class="form-group">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Nomor Telepon Perusahaan</label>
-                                                                <input type="text" name="no_telp" value="{{ $settingorganisasi->no_telp ?? '' }}" class="form-control" aria-describedby="emailHelp" placeholder="Masukkan Email" autocomplete="off" required>
+                                                                <input type="text" name="no_telp" value="{{ $settingorganisasi->no_telp ?? '' }}" class="form-control" aria-describedby="emailHelp" placeholder="Masukkan No Telp." autocomplete="off" required>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Alamat Perusahaan</label>
-                                                                <input type="text" name="alamat" value="{{ $settingorganisasi->alamat ?? '' }}" class="form-control" aria-describedby="emailHelp" placeholder="Masukkan Email" autocomplete="off" required>
+                                                                <input type="text" name="alamat" value="{{ $settingorganisasi->alamat ?? '' }}" class="form-control" aria-describedby="emailHelp" placeholder="Masukkan Alamat Perusahaan" autocomplete="off" required>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Kode Pos</label>
-                                                                <input type="number" name="kode_pos" value="{{ $settingorganisasi->kode_pos ?? '' }}" class="form-control" aria-describedby="emailHelp" placeholder="Masukkan Email" autocomplete="off" required>
+                                                                <input type="number" name="kode_pos" value="{{ $settingorganisasi->kode_pos ?? '' }}" class="form-control" aria-describedby="emailHelp" placeholder="Masukkan Kode Pos" autocomplete="off" required>
                                                             </div>
                                                         </div>
                         

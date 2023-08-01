@@ -20,7 +20,7 @@ class SetcutiController extends Controller
         $role = Auth::user()->role;        
         if ($role == 1 || $role == 2) 
         { 
-            $setcuti = Jeniscuti::all();
+            $setcuti = Jeniscuti::where('partner',Auth::user()->partner)->get();
             // dd($setcuti);
              return view('admin.kategori.settingkategori', compact('setcuti','row','role'));
         }
