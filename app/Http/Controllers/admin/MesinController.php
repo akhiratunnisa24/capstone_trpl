@@ -32,11 +32,11 @@ class MesinController extends Controller
             if ($con) {
                 $attendance = $tad->get_att_log();
                 if ($attendance) {
-                    // $filtered_attendance = $attendance->filter_by_date(
-                    //     ['start' => '2023-08-01']
-                    // );
-                    // $j = $filtered_attendance->get_response(['format' => 'json']);
-                    $j = $attendance->get_response(['format' => 'json']);
+                    $filtered_attendance = $attendance->filter_by_date(
+                        ['start' => '2023-07-31']
+                    );
+                    $j = $filtered_attendance->get_response(['format' => 'json']);
+                    // $j = $attendance->get_response(['format' => 'json']);
                     $jArray = json_decode($j, true);
                     // dd($jArray);
 
@@ -53,7 +53,7 @@ class MesinController extends Controller
                         $matchedUser = $usermesin->where('noid', $pin)->first();
                         if ($matchedUser) 
                         {
-                            $jadwals = Jadwal::where('tanggal', $tanggal)->get();
+                            $jadwals = Jadwal::where('tanggal', $tanggal)->where('partner', Auth::user()->partner)->get();
                             // dd($data,$matchedUser,$jadwal);
                             foreach ($jadwals as $jadwal) 
                             {
@@ -124,8 +124,14 @@ class MesinController extends Controller
                                         $jam_masuk     = Carbon::createFromFormat('H:i:s', $jam);
                                         //menghitung keterlambatan karyawan
                             
-                                        $telat         = $jam_masuk->diff($jadwal_masuk);
-                                        $terlambat     = $telat->format('%H:%I:%S');
+                                        if($jam_masuk < $jadwal_masuk){
+                                            $telat         = $jam_masuk->diff($jadwal_masuk);
+                                            $terlambat     = $telat->format('%H:%I:%S');
+                                        }
+                                        elseif($jam_masuk > $jadwal_masuk)
+                                        {
+                                            $terlambat     = '00:00:00';
+                                        }
                                         
                                          $absensi = new Absensi();
                                                     
