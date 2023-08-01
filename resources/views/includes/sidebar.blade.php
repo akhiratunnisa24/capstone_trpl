@@ -186,7 +186,7 @@
                                 class="text-info panel-title">Informasi
                                 Pribadi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li>
+                            <!-- <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li> -->
                             <li><a href="/history-absensi" class="waves-effect"><i class="fa fa-history"></i><span>History Absensi</span></a>
                             </li>
                             <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a></li>
