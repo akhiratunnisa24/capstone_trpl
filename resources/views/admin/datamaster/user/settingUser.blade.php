@@ -37,8 +37,10 @@
                                 <th>Role</th>
                                 <th>Status Akun</th>
                                 <th>Email</th>
-                                {{-- <th>Password</th> --}}
-                                <th>Action</th>
+                                @if(Auth::user()->role == 5)
+                                    <th>Partner</th>
+                                @endif
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,14 +57,17 @@
                                         @endif
                                     </td>
                                     <td>{{ $data->email }}</td>
+                                    @if(Auth::user()->role == 5)
+                                        <td>{{ $data->partner }}</td>
+                                    @endif
                                     {{-- <td>{{ $data->password }}</td> --}}
                                     <td>
                                         <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                             <a class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#myModal{{ $data->id }}"><i
+                                                data-target="#myModal{{ $data->id }}"><i
                                                     class="fa fa-pencil"></i></a>
-
-                                            <button  onclick="hapus_karyawan({{ $data->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                            
+                                            {{-- <button  onclick="hapus_karyawan({{ $data->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                         </div>
                                     </td>
 

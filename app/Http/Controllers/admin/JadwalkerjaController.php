@@ -6,6 +6,7 @@ use DateTime;
 use Carbon\Carbon;
 use App\Models\Shift;
 use App\Models\Jadwal;
+use App\Models\Partner;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use App\Models\SettingHarilibur;
@@ -23,17 +24,28 @@ class JadwalkerjaController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
+       
         if ($role == 1 || $role == 2) 
         {
             $row    = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            // $jadwal = Jadwal::all();
+            $jadwal = Jadwal::where('partner',Auth::user()->partner)->get();
+            $karyawan= Karyawan::where('partner',Auth::user()->partner)->get();
+            $shift= Shift::where('partner',Auth::user()->partner)->get();
+            // dd($jadwal);
+            $partner = Partner::where('id',Auth::user()->partner)->get();
+            return view('admin.datamaster.jadwal.index', compact('jadwal','karyawan','role','shift','row','partner'));
+
+        } 
+        elseif($role == 5)
+        {
+            $row    = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $jadwal = Jadwal::all();
             $karyawan= Karyawan::all();
             $shift= Shift::all();
-            // dd($jadwal);
-            return view('admin.datamaster.jadwal.index', compact('jadwal','karyawan','shift','row'));
-
-        } else {
+            $partner = Partner::all();
+            return view('admin.datamaster.jadwal.index', compact('jadwal','karyawan','role','shift','row','partner'));
+        }
+        else {
     
             return redirect()->back();
         }
@@ -60,74 +72,154 @@ class JadwalkerjaController extends Controller
     
     public function store(Request $request)
     {
+        $role = Auth::user()->role;
+       
         // if($request->tipe_jadwal == 'bulanan')
-        if($request->tgl_mulai && $request->tgl_selesai)
+        if($role == 1 || $role == 2) 
         {
-            $request->validate([
-                'id_shift'     => 'required',
-                'tgl_mulai'    => 'required',
-                'tgl_selesai'  => 'required',
-            ]);
+            if($request->tgl_mulai && $request->tgl_selesai)
+            {
+                $request->validate([
+                    'id_shift'     => 'required',
+                    'tgl_mulai'    => 'required',
+                    'tgl_selesai'  => 'required',
+                ]);
 
-                $tgl_mulai = Carbon::createFromFormat('d/m/Y', $request->tgl_mulai)->startOfDay();
-                $tgl_selesai = Carbon::createFromFormat('d/m/Y', $request->tgl_selesai)->startOfDay();
-               
-                $tanggal_kerja = array();
-                while ($tgl_mulai->lte($tgl_selesai)) {
-                    if ($tgl_mulai->isWeekday()) {
-                        // Mengecek apakah tanggal ini merupakan hari libur
-                        $is_hari_libur = SettingHarilibur::where('tanggal', $tgl_mulai->format('Y-m-d'))->exists();
+                    $tgl_mulai = Carbon::createFromFormat('d/m/Y', $request->tgl_mulai)->startOfDay();
+                    $tgl_selesai = Carbon::createFromFormat('d/m/Y', $request->tgl_selesai)->startOfDay();
                 
-                        if (!$is_hari_libur) {
-                            $tanggal_kerja[] = $tgl_mulai->format('Y-m-d');
+                    $tanggal_kerja = array();
+                    while ($tgl_mulai->lte($tgl_selesai)) {
+                        if ($tgl_mulai->isWeekday()) {
+                            // Mengecek apakah tanggal ini merupakan hari libur
+                            $is_hari_libur = SettingHarilibur::where('tanggal', $tgl_mulai->format('Y-m-d'))->exists();
+                    
+                            if (!$is_hari_libur) {
+                                $tanggal_kerja[] = $tgl_mulai->format('Y-m-d');
+                            }
                         }
+                        $tgl_mulai->addDay();
                     }
-                    $tgl_mulai->addDay();
-                }
-                // dd($tanggal_kerja);
-                foreach($tanggal_kerja as $tanggal)
-                {
-                    $jadwal = Jadwal::firstOrCreate([
-                        'tanggal' => $tanggal,
-                        'id_shift' => $request->id_shift,
-                    ], [
-                        'jadwal_masuk' => $request->jadwal_masuk,
+                    // dd($tanggal_kerja);
+                    foreach($tanggal_kerja as $tanggal)
+                    {
+                        $jadwal = Jadwal::firstOrCreate([
+                            'tanggal' => $tanggal,
+                            'id_shift' => $request->id_shift,
+                            'partner' => Auth::user()->partner
+                        ], [
+                            'jadwal_masuk' => $request->jadwal_masuk,
+                            'jadwal_pulang' => $request->jadwal_pulang
+                        ]);
+
+                        if ($jadwal->wasRecentlyCreated) {
+                            $pesan = 'Data berhasil disimpan !';
+                        } else {
+                            $pesan = 'Mohon maaf, Data sudah Ada!';
+                        }
+                    }  
+                // }
+                return redirect('/jadwal')->with('pesan',$pesan);
+            }else{
+                $request->validate([
+                    'id_shift'     => 'required',
+                    'tanggal'      => 'required',
+                ]);
+
+                $jadwal = Jadwal::updateOrCreate(
+                    [
+                        'tanggal'    => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tanggal)->format("Y-m-d"),
+                        'id_shift'   => $request->id_shift,
+                        'partner'    => Auth::user()->partner,
+                    ],
+                    [
+                        'jadwal_masuk'  => $request->jadwal_masuk,
                         'jadwal_pulang' => $request->jadwal_pulang
-                    ]);
+                    ]
+                );
+                // return $jadwal;
+                
+                if ($jadwal->wasRecentlyCreated) {
+                    return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');
+                } else {
+                    return redirect('/jadwal')->with('pesa','Data sudah ada !');
+                }
 
-                    if ($jadwal->wasRecentlyCreated) {
-                        $pesan = 'Data berhasil disimpan !';
-                    } else {
-                        $pesan = 'Mohon maaf, Data sudah Ada!';
+            } 
+        }elseif($role == 5)
+        {
+            if($request->tgl_mulai && $request->tgl_selesai)
+            {
+                $request->validate([
+                    'id_shift'     => 'required',
+                    'tgl_mulai'    => 'required',
+                    'tgl_selesai'  => 'required',
+                ]);
+
+                    $tgl_mulai = Carbon::createFromFormat('d/m/Y', $request->tgl_mulai)->startOfDay();
+                    $tgl_selesai = Carbon::createFromFormat('d/m/Y', $request->tgl_selesai)->startOfDay();
+                
+                    $tanggal_kerja = array();
+                    while ($tgl_mulai->lte($tgl_selesai)) {
+                        if ($tgl_mulai->isWeekday()) {
+                            // Mengecek apakah tanggal ini merupakan hari libur
+                            $is_hari_libur = SettingHarilibur::where('tanggal', $tgl_mulai->format('Y-m-d'))->exists();
+                    
+                            if (!$is_hari_libur) {
+                                $tanggal_kerja[] = $tgl_mulai->format('Y-m-d');
+                            }
+                        }
+                        $tgl_mulai->addDay();
                     }
-                }  
-            // }
-            return redirect('/jadwal')->with('pesan',$pesan);
-        }else{
-            $request->validate([
-                'id_shift'     => 'required',
-                'tanggal'      => 'required',
-            ]);
+                    // dd($tanggal_kerja);
+                    foreach($tanggal_kerja as $tanggal)
+                    {
+                        $jadwal = Jadwal::firstOrCreate([
+                            'tanggal' => $tanggal,
+                            'id_shift' => $request->id_shift,
+                            'partner' => $request->partner
+                        ], [
+                            'jadwal_masuk' => $request->jadwal_masuk,
+                            'jadwal_pulang' => $request->jadwal_pulang
+                        ]);
 
-            $jadwal = Jadwal::updateOrCreate(
-                [
-                    'tanggal'    => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tanggal)->format("Y-m-d"),
-                    'id_shift'   => $request->id_shift,
-                ],
-                [
-                    'jadwal_masuk'  => $request->jadwal_masuk,
-                    'jadwal_pulang' => $request->jadwal_pulang
-                ]
-            );
-            // return $jadwal;
-            
-            if ($jadwal->wasRecentlyCreated) {
-                return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');
-            } else {
-                return redirect('/jadwal')->with('pesa','Data sudah ada !');
+                        if ($jadwal->wasRecentlyCreated) {
+                            $pesan = 'Data berhasil disimpan !';
+                        } else {
+                            $pesan = 'Mohon maaf, Data sudah Ada!';
+                        }
+                    }  
+                // }
+                return redirect('/jadwal')->with('pesan',$pesan);
+            }else{
+                $request->validate([
+                    'id_shift'     => 'required',
+                    'tanggal'      => 'required',
+                ]);
+                $jadwal = Jadwal::updateOrCreate(
+                    [
+                        'tanggal'    => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tanggal)->format("Y-m-d"),
+                        'id_shift'   => $request->id_shift,
+                        'partner'    => $request->partner
+                    ],
+                    [
+                        'jadwal_masuk'  => $request->jadwal_masuk,
+                        'jadwal_pulang' => $request->jadwal_pulang
+                    ]
+                );
+                // return $jadwal;
+                
+                if ($jadwal->wasRecentlyCreated) {
+                    return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');
+                } else {
+                    return redirect('/jadwal')->with('pesa','Data sudah ada !');
+                }
+
             }
-
-        }  
+        }else
+        {
+            return redirect()->back();
+        }
     }
     
     public function update(Request $request, $id)

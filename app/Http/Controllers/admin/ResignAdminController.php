@@ -39,14 +39,22 @@ class ResignAdminController extends Controller
 
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-        $karyawan1 = Karyawan::where('status_kerja','Aktif')
-                      ->whereNotIn('id', function($query){
-                          $query->select('id_karyawan')->from('resign');
-                      })->get();
+        $karyawan1 = Karyawan::where('status_kerja', 'Aktif')
+                     ->where('partner', Auth::user()->partner)
+                     ->whereNotIn('id', function($query) {
+                         $query->select('id_karyawan')->from('resign');
+                     })->get();
+
+        // $karyawan1 = Karyawan::where('status_kerja','Aktif')
+        //               ->whereNotIn('id', function($query){
+        //                   $query->select('id_karyawan')->from('resign');
+        //               })->get();
                       
         $idkaryawan = $request->id_karyawan;
         // dd($karyawan);
-        $resign = Resign::orderBy('created_at', 'desc')->get();
+        $resign = Resign::join('karyawan', 'resign.id_karyawan','karyawan.id')
+            ->where('karyawan.partner',Auth::user()->partner)
+            ->orderBy('resign.created_at', 'desc')->get();
      
         // $tes = Auth::user()->karyawan->departemen->nama_departemen;
 

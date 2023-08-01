@@ -35,6 +35,23 @@
                             </span>
                         </div>
                     </div>
+                    @if($role == 5)
+                        <div class="form-group col-xs-12">
+                            <label class="form-label">Partner</label>
+                            <select class="form-control" name="'partneradmin">
+                                <option value="">Pilih Partner</option>
+                                @foreach ($partner as $k)
+                                    <option value="{{ $k->id }}">
+                                        {{ $k->nama_partner }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @elseif($role == 1 || $role == 2)
+                        <input  type="hidden" class="form-control" autocomplete="off" value="{{ Auth::user()->partner }}">
+                    @endif
+                   
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success waves-effect waves-light" name="submit"

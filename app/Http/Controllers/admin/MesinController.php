@@ -9,26 +9,39 @@ use App\Models\Mesin;
 use App\Models\Jadwal;
 use TADPHP\TADFactory;
 use App\Models\Absensi;
+use App\Models\Listmesin;
+use App\Models\UserMesin;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class MesinController extends Controller
 {
     public function tarikAbsen()
     {
         try {
-            $ip = '192.168.1.8';
-            $com_key = 0;
+            $listmesin = Listmesin::where('partner',Auth::user()->partner)->first();
+            //$ip = '192.168.10.175';
+            // $ip = '192.168.1.8';
+            // $com_key = 0;
+            $ip = $listmesin->ip_mesin;
+            $com_key = $listmesin->comm_key;
+            $partner = $listmesin->partner;
+            // dd($ip,$com_key,$partner);
             $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key]))->get_instance();
             $con = $tad->is_alive();
             if ($con) {
                 $attendance = $tad->get_att_log();
                 if ($attendance) {
-                    $user = $tad->get_user_info();
-                    // $u = $user->get_response(['format' => 'json']);
+                    // $filtered_attendance = $attendance->filter_by_date(
+                    //     ['start' => '2023-08-01']
+                    // );
+                    // $j = $filtered_attendance->get_response(['format' => 'json']);
                     $j = $attendance->get_response(['format' => 'json']);
                     $jArray = json_decode($j, true);
-                    $usermesin = Mesin::all();
-                    
+                    // dd($jArray);
+
+                    $usermesin = UserMesin::where('partner',$partner)->get();
+                
                     // Loop melalui data $jArray untuk mencocokkan nilai PIN
                     foreach ($jArray['Row'] as $data) 
                     {
@@ -36,20 +49,19 @@ class MesinController extends Controller
                         $datetime = Carbon::parse($data['DateTime']);
                         $tanggal = $datetime->format('Y-m-d');
                         $jam = $datetime->format('H:i:s');
-
-                        // Cari data di $usermesin berdasarkan PIN
-                        $matchedUser = $usermesin->where('pin', $pin)->first();
-
+                        
+                        $matchedUser = $usermesin->where('noid', $pin)->first();
                         if ($matchedUser) 
                         {
                             $jadwals = Jadwal::where('tanggal', $tanggal)->get();
                             // dd($data,$matchedUser,$jadwal);
                             foreach ($jadwals as $jadwal) 
                             {
-                                if($jadwal && $jam >= '12:00:00')
+                                if($jadwal)
                                 {
                                     $existingAbsensi = Absensi::where('id_karyawan', $matchedUser->id_pegawai)
-                                                    ->where('tanggal', $tanggal)->whereNotNull('jam_masuk')->first();
+                                                    ->where('tanggal', $tanggal)->where('partner', $matchedUser->partner)
+                                                    ->whereNotNull('jam_masuk')->first();
                                     if($existingAbsensi)
                                     {
                                         $jadwal_masuk  = $jadwal->jadwal_masuk;
@@ -132,24 +144,21 @@ class MesinController extends Controller
                                          $absensi->jml_jamkerja  = null;
                                          $absensi->id_departement = $matchedUser->departemen;
                                          $absensi->jam_kerja     = null;
+                                         $absensi->partner       = $matchedUser->partner;
                                         $absensi->save();
-                                        
                                     }
                                    
                                 }else{
                                     ///
                                 }
                             }
-                           
-                           
                         }
                         else{
                             //jika data tidak cocok skip
                         }
                     }
                     // Mengembalikan data dalam format JSON
-                    return response()->json([$j]);
-
+                    // return response()->json([$j]);
                 } else {
                     return "Tidak ada data kehadiran.\n";
                 }

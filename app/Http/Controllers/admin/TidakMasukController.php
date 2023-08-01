@@ -30,7 +30,7 @@ class TidakMasukController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         
         if ($role == 1 || $role == 2) {
-            $karyawan = Karyawan::all();
+            $karyawan = Karyawan::where('partner',Auth::user()->partner)->get();
             $idkaryawan = $request->id_karyawan;
 
             $bulan = $request->query('bulan',Carbon::now()->format('m'));
@@ -50,6 +50,8 @@ class TidakMasukController extends Controller
             }else
             {
                 $tidakmasuk = Tidakmasuk::with('departemen')
+                ->join('karyawan','tidakmasuk.id_pegawai','=','karyawan.id')
+                ->where('karyawan.partner',Auth::user()->partner)
                 ->orderBy('tanggal','desc')
                 ->get();
             }

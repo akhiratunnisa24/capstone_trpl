@@ -89,6 +89,7 @@
                             </div>
                         </div>
                     </div>
+                    <input id="partner" type="hidden" class="form-control" name="partner" value="{{Auth::user()->partner}}" autocomplete="off" >
 
                     {{-- {{-- <div class="form-group"> --}}
                         <div class="col-xs-12">

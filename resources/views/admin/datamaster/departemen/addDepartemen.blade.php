@@ -15,6 +15,7 @@
                         <input type="text" class="form-control" name="nama_departemen" id="nama_departemen" autocomplete="off"
                             placeholder="Masukkan Nama Divisi" required>
                     </div>
+                    <input id="partner" type="hidden" class="form-control" name="partner" value="{{Auth::user()->partner}}" autocomplete="off" >
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>

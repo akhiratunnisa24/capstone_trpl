@@ -8,11 +8,11 @@
     <div class="col-sm-12">
 
         <div class="page-header-title">
-            <h4 class="pull-left page-title">Transaksi Cuti dan Izin</h4>
+            <h4 class="pull-left page-title">Transaksi Cuti dan Ijin</h4>
 
             <ol class="breadcrumb pull-right">
                 <li>Human Resources Management System</li>
-                <li class="active">Transaksi Cuti dan Izin</li>
+                <li class="active">Transaksi Cuti dan Ijin</li>
             </ol>
 
             <div class="clearfix"></div>
@@ -35,7 +35,7 @@
                 <li class="" id="b">
                     <a id="tab2" href="#izin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
-                        <span class="hidden-xs">Transaksi Izin</span>
+                        <span class="hidden-xs">Transaksi Ijin</span>
                     </a>
                 </li>
             </ul>

@@ -21,15 +21,22 @@ class SettingorganisasiController extends Controller
         if ($role == 1 || $role == 2) 
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $settingorganisasi = SettingOrganisasi::first();
+            $settingorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
             return view('admin.setting.index',compact('settingorganisasi','row'));
-        }else
+        }
+        elseif($role == 5)
+        {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $settingorganisasi = SettingOrganisasi::all();
+            return view('admin.setting.index',compact('settingorganisasi','row'));
+        }
+        else
         {
             return redirect()->back();
         }
     }
 
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
         $data = $this->validate(request(), [
             'nama_perusahaan' => 'nullable|string',
@@ -40,7 +47,7 @@ class SettingorganisasiController extends Controller
             'alamat' =>'nullable|string'
         ]);
 
-        $settingorganisasi = SettingOrganisasi::first();
+        $settingorganisasi = SettingOrganisasi::find($id);
         $fotoLama = $settingorganisasi->logo;
 
         if ($fileFoto = $request->hasFile('logo'))
@@ -65,6 +72,7 @@ class SettingorganisasiController extends Controller
         $settingorganisasi->alamat = $request->alamat;
         $settingorganisasi->no_telp = $request->no_telp;
         $settingorganisasi->kode_pos = $request->kode_pos;
+        $settingorganisasi->partner = Auth::user()->partner;
 
         // dd($settingorganisasi);
         $settingorganisasi->update();

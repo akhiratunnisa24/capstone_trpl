@@ -26,7 +26,7 @@ class JabatanController extends Controller
         if ($role == 1 || $role == 2) {
     
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $jabatan = Jabatan::orderBy('id', 'asc')->get();
+            $jabatan = Jabatan::where('partner',Auth::user()->partner)->orderBy('id', 'asc')->get();
             $leveljabatan = LevelJabatan::all();
             return view('admin.datamaster.jabatan.index', compact('jabatan', 'row','leveljabatan'));
         } else {
@@ -42,9 +42,11 @@ class JabatanController extends Controller
         ]);
 
         $nama_jabatan = $request->nama_jabatan;
+        $partner = $request->partner;
 
-        $jabatan = Jabatan::where(function ($query) use ($nama_jabatan) {
+        $jabatan = Jabatan::where(function ($query) use ($nama_jabatan,$partner) {
             $query->whereRaw('LOWER(nama_jabatan) = ?', [strtolower($nama_jabatan)]);
+            $query->where('partner', $partner);
         })->first();
 
         if ($jabatan) {
@@ -55,6 +57,7 @@ class JabatanController extends Controller
             // Jika data jabatan belum ada, simpan data baru
             $jabatan = new Jabatan;
             $jabatan->nama_jabatan = $nama_jabatan;
+            $jabatan->partner = $partner;
             $jabatan->save();
 
             return redirect('/jabatan')->with('pesan', 'Data berhasil disimpan!');

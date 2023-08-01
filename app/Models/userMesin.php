@@ -9,5 +9,15 @@ class UserMesin extends Model
 {
     use HasFactory;
     protected $table='user_mesin';
-    protected $fillable=['id_pegawai','nip','pin','departemen']; 
+    protected $fillable=['id_pegawai','nik','noid','departemen','partner']; 
+
+    public function departemens()
+    {
+        return $this->belongsTo(Departemen::class,'divisi','id');
+    }
+        
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'id_pegawai', 'id');
+    }
 }

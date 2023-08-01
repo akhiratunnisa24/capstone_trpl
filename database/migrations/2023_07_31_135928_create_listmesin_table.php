@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_mesin', function (Blueprint $table) {
+        Schema::create('listmesin', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_pegawai');
-            $table->string('nip')->unique();
-            $table->string('pin')->unique();
-            $table->string('departemen');
+            $table->string('nama_mesin',100);
+            $table->string('ip_mesin',30);
+            $table->integer('port');
+            $table->integer('comm_key');
+            $table->integer('partner');
+            $table->boolean('status');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_mesin');
+        Schema::dropIfExists('listmesin');
     }
 };

@@ -423,7 +423,7 @@
                                             <tr class="info">
                                                 <th>No</th>
                                                 <th>Karyawan</th>
-                                                <th>Izin</th>
+                                                <th>Ijin</th>
                                                 <th>Tanggal</th>
                                                 {{-- <th>Hari</th> --}}
                                                 {{-- <th>Jam</th> --}}
@@ -1324,14 +1324,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @foreach ($absenHarini as $k)
+                                            @foreach ($absenHarini as $k)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $k->karyawans->nama }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($k->total)->format('d/m/Y') }}</td>
                                                     <td>{{ $k->jam_masuk}}</td>
                                                 </tr>
-                                            @endforeach --}}
+                                            @endforeach
 
                                         </tbody>
                                     </table>
@@ -1448,12 +1448,12 @@
             <div class="panel panel-primary text-center">
                 <div class="panel-heading btn-info">
                     <a href="{{ url('showkaryawancuti') }}" class="panel-title ">
-                        <h4 class="panel-title ">Cuti dan Izin Hari Ini</h4>
+                        <h4 class="panel-title ">Cuti dan Ijin Hari Ini</h4>
                     </a>
                 </div>
                 <div class="panel-body">
                     <h3 class=""><b>{{ $cutidanizin }}</b></h3>
-                    <p class="text-muted"><b>Total Cuti dan Izin </b> </p>
+                    <p class="text-muted"><b>Total Cuti dan Ijin </b> </p>
                 </div>
             </div>
         </div>

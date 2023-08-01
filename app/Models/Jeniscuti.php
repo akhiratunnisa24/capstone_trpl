@@ -10,7 +10,7 @@ class Jeniscuti extends Model
     use HasFactory;
     protected $table ='jeniscuti';
     protected $fillable = [
-                            'jenis_cuti','status'
+                            'jenis_cuti','status','partner'
                         ];
 
     public function cuti()
@@ -26,5 +26,10 @@ class Jeniscuti extends Model
     public function sisacuti()
     {
         return $this->hasMany(Sisacuti::class, 'id');
+    }
+
+    public function partners()
+    {
+        return $this->belongsTo(Partner::class,'partner','id');
     }
 }

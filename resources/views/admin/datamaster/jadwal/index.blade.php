@@ -44,6 +44,10 @@
                                         <th>Tanggal</th>
                                         <th>Jadwal Masuk</th>
                                         <th>Jadwal Pulang</th>
+                                        @if($role == 5)
+                                        <th>Partner</th>
+                                        @endif
+                                        
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -56,6 +60,9 @@
                                             <td>{{ \Carbon\Carbon::parse($data->tanggal)->format('d/m/Y') }}</td>
                                             <td>{{ $data->jadwal_masuk }}</td>
                                             <td>{{ $data->jadwal_pulang}}</td>
+                                            @if($role == 5)
+                                                <td>{{ $data->partner }}</td>
+                                            @endif
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
 

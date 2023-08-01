@@ -40,7 +40,7 @@ class AbsensiController extends Controller
         
         if ($role == 1 || $role == 2 ) {
             //filter data
-            $karyawan = Karyawan::all();
+            $karyawan = Karyawan::where('partner',Auth::user()->partner)->get();
 
             $idkaryawan = $request->id_karyawan;
             $bulan = $request->query('bulan',Carbon::now()->format('m'));
@@ -61,6 +61,7 @@ class AbsensiController extends Controller
             }else
             {
                 $absensi = Absensi::with('karyawans','departemens')
+                ->where('absensi.partner',Auth::user()->partner)
                 ->orderBy('tanggal','desc')
                 ->get();
             }

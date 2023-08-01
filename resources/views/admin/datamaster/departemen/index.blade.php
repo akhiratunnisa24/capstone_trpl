@@ -39,6 +39,9 @@
                                         <th>No</th>
                                         {{-- <th>ID</th> --}}
                                         <th>Nama Divisi</th>
+                                        @if($role == 5)
+                                            <th>Partner</th>
+                                        @endif
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -49,6 +52,9 @@
                                             <td>{{ $loop->iteration }}</td>
                                             {{-- <td>{{ $data->id }}</td> --}}
                                             <td>{{ $data->nama_departemen }}</td>
+                                            @if($role == 5)
+                                                <td>{{ $data->partner }}</td>
+                                            @endif
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                     {{-- <a class="btn btn-info btn-sm" data-toggle="modal" 

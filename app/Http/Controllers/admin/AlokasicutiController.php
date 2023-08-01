@@ -44,7 +44,10 @@ class AlokasicutiController extends Controller
             //     ->select('alokasicuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen')
             //     ->get();
             //$alokasicuti = Alokasicuti::where('alokasicuti.status',1)->whereYear('alokasicuti.sampai', '=', Carbon::now()->year)->get();
-            $alokasicuti = Alokasicuti::where('alokasicuti.status',1)->get();
+            $alokasicuti = Alokasicuti::join('karyawan','alokasicuti.id_karyawan','karyawan.id')
+                        ->where('alokasicuti.status',1)
+                        ->where('karyawan.partner',Auth::user()->partner)
+                        ->get();
             
             return view('admin.alokasicuti.index', compact('alokasicuti','row'));
         } else {
@@ -140,7 +143,7 @@ class AlokasicutiController extends Controller
             $alokasicuti->tgl_sekarang = Carbon::parse($request->tgl_sekarang)->format('Y-m-d');
             $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d');
             $alokasicuti->sampai       = Carbon::parse($request->sampai)->format('Y-m-d');
-
+            $alokasicuti->partner      = $request->partner;
             // dd($alokasicuti);
             $alokasicuti->save();
             return redirect()->back()->with('pesan', 'Data berhasil disimpan !');
@@ -163,7 +166,7 @@ class AlokasicutiController extends Controller
             $alokasicuti->tgl_sekarang = NULL;
             $alokasicuti->aktif_dari   = Carbon::parse($request->aktif_dari)->format('Y-m-d');
             $alokasicuti->sampai       = Carbon::parse($request->sampai)->format('Y-m-d');
-
+            $alokasicuti->partner      = $request->partner;
             // dd($alokasicuti);
             $alokasicuti->save();
             // return redirect()->back()->withInput();

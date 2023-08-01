@@ -10,17 +10,29 @@
                 <form action="/jadwal/update/{{$data->id}}" method="POST">
                     @csrf
                     @method('PUT')
-                    <div class="form-group col-sm">
-                        <label for="id_shift" class="col-form-label">Shift</label>
-                        <select name="id_shift" id="id_shifts" class="form-control">
-                            @foreach ($shift as $d)
-                                <option value="{{ $d->id }}" @if ($data->id_shift == $d->id) selected @endif>
-                                    {{ $d->nama_shift }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    
+                    @if($role == 1 || $role ==2)
+                        <div class="form-group col-sm">
+                            <label for="id_shift" class="col-form-label">Shift</label>
+                            <select name="id_shift" id="id_shifts" class="form-control">
+                                @foreach ($shift as $d)
+                                    <option value="{{ $d->id }}" @if ($data->id_shift == $d->id) selected @endif>
+                                        {{ $d->nama_shift }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @elseif($role == 5)
+                        <div class="form-group col-sm">
+                            <label for="id_shift" class="col-form-label">Shift</label>
+                            <select name="id_shift" id="id_shifts" class="form-control">
+                                @foreach ($shift as $d)
+                                    <option value="{{ $d->id }}" @if ($data->id_shift == $d->id) selected @endif>
+                                        {{ $d->nama_shift }} (Partner {{ $d->partner }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
                     <div class="form-group col-sm" id="tanggal">
                         <label for="tanggal" class="form-label">Tanggal</label>
                         <div class="input-group">
@@ -43,7 +55,19 @@
                             </div>
                         </div>
                     </div>
-
+                    @if($role == 5)
+                        <div class="form-group col-xs-12">
+                            <label class="form-label">Partner</label>
+                            <select class="form-control" name="'partneradmin">
+                                <option value="">Pilih Partner</option>
+                                @foreach ($partner as $k)
+                                    <option value="{{ $k->id }}" {{ $k->id == $data->partner ? 'selected' : '' }}>
+                                        {{ $k->nama_partner }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success waves-effect waves-light" name="submit"

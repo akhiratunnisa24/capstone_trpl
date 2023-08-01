@@ -76,6 +76,8 @@
                                     readonly>
                                 </select>
                             </div>
+                            <input id="partner" type="hidden" class="form-control" name="partner" value="{{Auth::user()->partner}}" autocomplete="off" >
+
                         </div>
                     </div>
                     <div class="modal-footer">
