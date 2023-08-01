@@ -18,7 +18,7 @@ class Alokasicuti extends Model
         'tgl_masuk','tgl_sekarang','aktif_dari','sampai','status',
         'nik','jabatan','departemen','jatuhtempo_awal',
         'jatuhtempo_akhir','jmlhakcuti','cutidimuka','cutiminus',
-        'jmlcutibersama','keterangan'
+        'jmlcutibersama','keterangan','partner','status_durasialokasi'
     ];
 
     public function cuti()

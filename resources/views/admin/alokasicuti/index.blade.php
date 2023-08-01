@@ -99,6 +99,15 @@
             });
         </script>
     @endif
+
+    @if(Session::has('pesa'))
+        <script>
+            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
     <script type="text/javascript">
         function hapus_alokasi(id){
                swal.fire({
