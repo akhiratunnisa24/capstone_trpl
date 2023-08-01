@@ -46,18 +46,18 @@
                                                         <div class="m-t-20">
                                                             <div class="form-group">
                                                                 <label>Karyawan</label>
-        
                                                                 <select name="id_karyawan" id="id_karyawan" class="form-control selectpicker" data-live-search="true" required>
                                                                     <option>-- Pilih Karyawan --</option>
                                                                     @foreach ($karyawan as $data)
-                                                                        <option value="{{ $data->id}}"
-                                                                            @if ($data->id ==request()->id_karyawan)
-                                                                            selected
-                                                                            @endif
-                                                                            >{{ $data->nama }}
-                                                                        </option>
+                                                                        @if ($data->partner == Auth::user()->partner)
+                                                                            <option value="{{ $data->id }}"
+                                                                                @if ($data->id == request()->id_karyawan)
+                                                                                    selected
+                                                                                @endif
+                                                                            >{{ $data->nama }}</option>
+                                                                        @endif
                                                                     @endforeach
-                                                                </select> 
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -435,18 +435,18 @@
                                                 <div class="m-t-20">
                                                     <div class="form-group">
                                                         <label>Karyawan</label>
-    
-                                                        <select name="idpegawai" id="idpegawai" class="form-control selectpicker" data-live-search="true" required>
-                                                            <option>-- Pilih Karyawan --</option>
-                                                            @foreach ($pegawai as $data)
-                                                                <option value="{{ $data->id}}"
-                                                                    @if ($data->id ==request()->id_karyawan)
-                                                                    selected
+                                                            <select name="id_karyawan" id="id_karyawan" class="form-control selectpicker" data-live-search="true" required>
+                                                                <option>-- Pilih Karyawan --</option>
+                                                                    @foreach ($karyawan as $data)
+                                                                        @if ($data->partner == Auth::user()->partner)
+                                                                        <option value="{{ $data->id }}"
+                                                                            @if ($data->id == request()->id_karyawan)
+                                                                                selected
+                                                                            @endif
+                                                                        >{{ $data->nama }}</option>
                                                                     @endif
-                                                                    >{{ $data->nama }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select> 
+                                                                @endforeach
+                                                            </select>
                                                     </div>
                                                 </div>
                                             </div>
