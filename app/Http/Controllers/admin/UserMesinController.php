@@ -75,26 +75,34 @@ class UserMesinController extends Controller
     // ===================================END Dropdown addModal==============================
     public function update(Request $request, $id)
     {
+        
         $request->validate([
             'id_pegawai' => 'required',
             'noid' => 'required',
-            'partner' => (auth()->user()->role == 5) ? 'nullable' : 'required', // Ubah validasi berdasarkan role user
-        ]);        
-
-        $userMesin = UserMesin::find($id);
-        if (!$userMesin) {
-            return redirect()->route('user_mesin.index')->with('error', 'Data user mesin tidak ditemukan.');
-        }
-        
+            'partner' => 'required', // Tambahkan validasi untuk field "partner"
+        ]);
+    
         $karyawan = Karyawan::find($request->id_pegawai);
         if (!$karyawan) {
             return redirect()->route('user_mesin.index')->with('error', 'Karyawan tidak ditemukan.');
         }
+    
+        $userMesin = UserMesin::find($id);
+        if (!$userMesin) {
+            return redirect()->route('user_mesin.index')->with('error', 'Data user mesin tidak ditemukan.');
+        }
+    
+        $userMesin->id_pegawai = $request->id_pegawai;
+        $userMesin->nik = $karyawan->nik;
+        $userMesin->noid = $request->noid;
+        $userMesin->departemen = $karyawan->departemen->id;
+        $userMesin->partner = $karyawan->partner; // Ambil nilai "partner" dari form
         
-        // Letakkan kode update data di atas di sini
-        
+        $userMesin->save();
+    
         return redirect()->route('user_mesin.index')->with('success', 'Data user mesin berhasil diperbarui.');
-    }        
+    }
+    
 
 
     public function destroy($id)
