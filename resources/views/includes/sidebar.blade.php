@@ -235,7 +235,10 @@
                             <ul class="list-unstyled">
                                 <li><a href="/partner"><i class="mdi mdi-walk"></i><span>Partner</span></a> </li>
                                 <li><a href="/list-mesin"><i class="mdi mdi-walk"></i><span>List Mesin</span></a> </li> 
-                                <li><a href="/user_mesin"><i class="fa fa-user"></i><span>User Mesin</span></a></li>  
+                                <li><a href="/user_mesin"><i class="fa fa-user"></i><span>User Mesin</span></a></li> 
+                                <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
+                                <li><a href="/jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li> 
+                                <li><a href="/divisi"><i class="fa fa-sitemap"></i><span></span>Divisi</a></li>
                                 <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Managemen User</span></a></li>
                                 <li><a href="settingrole" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Setting Role Login</span></a></li>
                                 <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>

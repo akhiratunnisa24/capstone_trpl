@@ -22,7 +22,9 @@ class AtasanController extends Controller
         if ($role == 1 || $role == 2) 
         {
             // $atasan = Atasan::all();
-            $atasan = Karyawan::whereIn('jabatan', ['Asistant Manager','Manager','Direksi'])->get();
+            $atasan = Karyawan::whereIn('jabatan', ['Asistant Manager','Manager','Direksi'])
+                    ->where('partner',Auth::user()->partner)
+                    ->get();
             return view('admin.datamaster.atasan.index', compact('atasan','row','role'));
 
         } else {

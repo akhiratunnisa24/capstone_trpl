@@ -12,7 +12,7 @@ class Departemen extends Model
     use HasFactory;
 
     protected $table='departemen';
-    protected $fillable=['nama_departemen']; 
+    protected $fillable=['nama_departemen','partner']; 
 
     public function absensi()
     {
@@ -66,4 +66,10 @@ class Departemen extends Model
     {
         return $this->hasMany(Timkaryawan::class, 'svisi', 'id');
     }
+
+    public function partners()
+    {
+        return $this->belongsTo(Partner::class, 'partner', 'id');
+    }
+
 }

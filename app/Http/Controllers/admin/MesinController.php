@@ -31,10 +31,13 @@ class MesinController extends Controller
             if ($con) {
                 $attendance = $tad->get_att_log();
                 if ($attendance) {
-                    $user = $tad->get_user_info();
-                    // $u = $user->get_response(['format' => 'json']);
+                    // $filtered_attendance = $attendance->filter_by_date(
+                    //     ['start' => '2023-08-01']
+                    // );
+                    // $j = $filtered_attendance->get_response(['format' => 'json']);
                     $j = $attendance->get_response(['format' => 'json']);
                     $jArray = json_decode($j, true);
+                    // dd($jArray);
 
                     $usermesin = UserMesin::where('partner',$partner)->get();
                     // Loop melalui data $jArray untuk mencocokkan nilai PIN
@@ -55,7 +58,8 @@ class MesinController extends Controller
                                 if($jadwal)
                                 {
                                     $existingAbsensi = Absensi::where('id_karyawan', $matchedUser->id_pegawai)
-                                                    ->where('tanggal', $tanggal)->whereNotNull('jam_masuk')->first();
+                                                    ->where('tanggal', $tanggal)->where('partner', $matchedUser->partner)
+                                                    ->whereNotNull('jam_masuk')->first();
                                     if($existingAbsensi)
                                     {
                                         $jadwal_masuk  = $jadwal->jadwal_masuk;
@@ -138,6 +142,7 @@ class MesinController extends Controller
                                          $absensi->jml_jamkerja  = null;
                                          $absensi->id_departement = $matchedUser->departemen;
                                          $absensi->jam_kerja     = null;
+                                         $absensi->partner       = $matchedUser->partner;
                                         $absensi->save();
                                     }
                                    
@@ -151,7 +156,7 @@ class MesinController extends Controller
                         }
                     }
                     // Mengembalikan data dalam format JSON
-                    return response()->json([$j]);
+                    // return response()->json([$j]);
                 } else {
                     return "Tidak ada data kehadiran.\n";
                 }

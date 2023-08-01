@@ -39,7 +39,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20 col-sm-20 col-xs-20">
-                                <form action="/setting-organisasi/update" method="POST" enctype="multipart/form-data">
+                                <form action="/setting-organisasi/update/{{$settingorganisasi->id}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-body">

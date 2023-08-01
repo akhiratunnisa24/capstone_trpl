@@ -50,11 +50,14 @@ class CutiadminController extends Controller
         if ($role == 1 || $role == 2) 
         {
             $type = $request->query('type', 1);
-            $pegawai = Karyawan::all();
+            // $pegawai = Karyawan::all();
+            $pegawai = Karyawan::where('partner',Auth::user()->partner)->get();
             $jeniscuti = Jeniscuti::where('status',1)->get();
 
             //form create cuti untuk karyawan.
-            $karyawan = Karyawan::where('id','!=',Auth::user()->id_pegawai)->get();
+            $karyawan = Karyawan::where('id','!=',Auth::user()->id_pegawai)
+                    ->where('partner',Auth::user()->partner)
+                    ->get();
             if($request->id_karyawan)
             {
                 $type = $request->query('type', 1);
@@ -80,6 +83,7 @@ class CutiadminController extends Controller
                         ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
                         ->leftjoin('departemen','cuti.departemen','=','departemen.id')
                         ->where('cuti.id_karyawan', $idkaryawan)
+                        ->where('karyawan.partner',Auth::user()->partner)
                         ->whereMonth('cuti.tgl_mulai', $bulan)
                         ->whereYear('cuti.tgl_mulai', $tahun)
                         ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
@@ -108,10 +112,11 @@ class CutiadminController extends Controller
                         ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
                         ->leftjoin('departemen','cuti.departemen','=','departemen.id')
                         ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen', 'karyawan.nama','statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                        ->where('karyawan.partner',Auth::user()->partner)
                         ->distinct()
                         ->orderBy('created_at', 'DESC')
                         ->get();
-                        
+                    dd($cuti);   
                     $izin =DB::table('izin')->leftjoin('statuses','izin.status','=','statuses.id')
                         ->leftjoin('datareject','datareject.id_izin','=','izin.id')
                         ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
@@ -161,10 +166,12 @@ class CutiadminController extends Controller
                         ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
                         ->leftjoin('departemen','cuti.departemen','=','departemen.id')
                         ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen', 'karyawan.nama','statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                        ->where('karyawan.partner',Auth::user()->partner)
                         ->distinct()
                         ->orderBy('created_at', 'DESC')
                         ->get();
                     // return $type;
+                    // dd($cuti);  
                     return view('admin.cuti.index', compact('cuti','izin','jeniscuti','type','row','karyawan','pegawai','role'));   
                 }
                 else
@@ -174,10 +181,12 @@ class CutiadminController extends Controller
                         ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
                         ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
                         ->leftjoin('departemen','izin.departemen','=','departemen.id')
-                        ->select('izin.*','statuses.name_status','jenisizin.jenis_izin','departemen.nama_departemen','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
+                        ->select('izin.*','statuses.name_status','karyawan.partner','jenisizin.jenis_izin','departemen.nama_departemen','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
+                        ->where('karyawan.partner',Auth::user()->partner)
                         ->distinct()
                         ->orderBy('created_at','DESC')
                         ->get();
+                    // dd($izin);
                     $cuti = DB::table('cuti')
                         ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                         ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -186,11 +195,12 @@ class CutiadminController extends Controller
                         ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
                         ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
                         ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                        ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen', 'karyawan.nama','statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                        ->select('cuti.*', 'jeniscuti.jenis_cuti','departemen.nama_departemen', 'karyawan.nama','statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                        ->where('karyawan.partner',Auth::user()->partner)
                         ->distinct()
                         ->orderBy('created_at', 'DESC')
                         ->get();
-                        
+                      
                     return view('admin.cuti.index', compact('cuti','izin','jeniscuti','type','row','karyawan','pegawai','role'));
                 };
            

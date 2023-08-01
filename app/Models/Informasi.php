@@ -10,4 +10,9 @@ class Informasi extends Model
     use HasFactory;
     protected $table ='informasi';
     protected $fillable = ['judul','konten','tanggal_aktif','tanggal_berakhir'];
+
+    public function partners()
+    {
+        return $this->belongsTo(Partner::class,'partner','id');
+    }
 }

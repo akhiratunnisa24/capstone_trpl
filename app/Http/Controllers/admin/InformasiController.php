@@ -17,7 +17,7 @@ class InformasiController extends Controller
         if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $informasi = Informasi::orderBy('id', 'asc')->get();
+            $informasi = Informasi::where('partner', Auth::user()->partner)->orderBy('id', 'asc')->get();
             return view('admin.datamaster.informasi.index', compact('informasi', 'row'));
         } else {
 
@@ -38,6 +38,7 @@ class InformasiController extends Controller
         $informasi->konten= $request->konten;
         $informasi->tanggal_aktif    = Carbon::createFromFormat('d/m/Y', $request->tanggal_aktif)->format('Y-m-d');
         $informasi->tanggal_berakhir = Carbon::createFromFormat('d/m/Y', $request->tanggal_berakhir)->format('Y-m-d');
+        $informasi->partner = $request->partner;
         $informasi->save();
 
         return redirect()->back()->with('pesan', 'Data berhasil disimpan!');

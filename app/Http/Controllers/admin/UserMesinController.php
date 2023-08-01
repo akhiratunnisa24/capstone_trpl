@@ -17,9 +17,15 @@ class UserMesinController extends Controller
     
     public function index()
     {
-        $userMesins = UserMesin::with('karyawan')->get();
-        $karyawans = Karyawan::whereNotIn('id', UserMesin::pluck('id_pegawai'))->get();
-        return view('admin.datamaster.user_mesin.index', compact('userMesins', 'karyawans'));
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        // $userMesins = UserMesin::with('karyawan')->get();
+        $userMesins = UserMesin::with('karyawan')
+                       ->where('partner', Auth::user()->partner)
+                       ->get();
+        //$userMesins = UserMesin::with('karyawan')->where('karyawan.partner', Auth::user()->partner)->get();
+        $karyawans = Karyawan::where('partner',Auth::user()->partner)
+                    ->whereNotIn('id', UserMesin::pluck('id_pegawai'))->get();
+        return view('admin.datamaster.user_mesin.index', compact('userMesins', 'karyawans','row'));
     }
 
     

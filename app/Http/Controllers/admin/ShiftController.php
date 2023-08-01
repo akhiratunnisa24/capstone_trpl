@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Shift;
 use App\Models\Jadwal;
+use App\Models\Partner;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,11 +24,20 @@ class ShiftController extends Controller
         if ($role == 1 || $role == 2) 
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $shift = DB::table('shift')->get();
+            $shift = DB::table('shift')->where('partner',Auth::user()->partner)->get();
             // dd($shift);
-            return view('admin.datamaster.shift.index', compact('shift', 'row'));
+            $partner = Partner::all();
+            return view('admin.datamaster.shift.index', compact('shift', 'row','role','partner'));
 
-        } else {
+        }elseif($role == 5)
+        {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $shift = DB::table('shift')->get();
+            $partner = Partner::all();
+            // dd($shift);
+            return view('admin.datamaster.shift.index', compact('shift', 'row','role','partner')); 
+        }
+        else {
     
             return redirect()->back();
         }
@@ -39,17 +49,19 @@ class ShiftController extends Controller
             'nama_shift' => 'required',
             'jam_masuk' => 'required',
             'jam_pulang' => 'required',
+            'partner' => 'required',
         ]);
 
         $nama_shift = $request->nama_shift;
         $jam_masuk = \Carbon\Carbon::parse($request->jam_masuk)->format('H:i:s');
         $jam_pulang = \Carbon\Carbon::parse($request->jam_pulang)->format('H:i:s');
-
+        $partner = $request->partner;
         // Cek apakah data shift sudah ada di dalam database
         $shift = DB::table('shift')
             ->where('nama_shift', $nama_shift)
             ->where('jam_masuk', $jam_masuk)
             ->where('jam_pulang', $jam_pulang)
+            ->where('partner', $partner)
             ->first();
 
         if ($shift) {
@@ -61,7 +73,8 @@ class ShiftController extends Controller
                 'id_pegawai' => NULL,
                 'nama_shift' => $nama_shift,
                 'jam_masuk' => $jam_masuk,
-                'jam_pulang' => $jam_pulang
+                'jam_pulang' => $jam_pulang,
+                'partner' => $partner
             );
             
             DB::table('shift')->insert($shiftData);

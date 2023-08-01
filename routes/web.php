@@ -405,7 +405,7 @@ Route::get('/jadwal/delete/{id}', [JadwalkerjaController::class, 'destroy'])->na
 
 //setting organisasi
 Route::get('/setting-organisasi', [SettingorganisasiController::class, 'index'])->name('organisasi.index');
-Route::put('/setting-organisasi/update', [SettingorganisasiController::class, 'update'])->name('organisasi.update');
+Route::put('/setting-organisasi/update/{id}', [SettingorganisasiController::class, 'update'])->name('organisasi.update');
 
 
 //Absensi Tidak Masuk

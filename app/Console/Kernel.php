@@ -14,6 +14,8 @@ use App\Models\Absensi;
 use App\Models\Karyawan;
 use App\Models\Sisacuti;
 use App\Models\Jeniscuti;
+use App\Models\Listmesin;
+use App\Models\UserMesin;
 use App\Models\Departemen;
 use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
@@ -21,6 +23,7 @@ use App\Mail\SisacutiNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Mail\TidakmasukNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Queue\InteractsWithQueue;
@@ -275,18 +278,20 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () 
         {
             try {
-                $ip = '192.168.1.8';
-                $com_key = 0;
+                // $ip = '192.168.1.8';
+                // $com_key = 0;
+                $listmesin = Listmesin::where('partner',Auth::user()->partner)->first();
+                $ip = $listmesin->ip_mesin;
+                $com_key = $listmesin->comm_key;
+                $partner = $listmesin->partner;
                 $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key]))->get_instance();
                 $con = $tad->is_alive();
                 if ($con) {
                     $attendance = $tad->get_att_log();
                     if ($attendance) {
-                        $user = $tad->get_user_info();
-                        // $u = $user->get_response(['format' => 'json']);
                         $j = $attendance->get_response(['format' => 'json']);
                         $jArray = json_decode($j, true);
-                        $usermesin = Mesin::all();
+                        $usermesin = UserMesin::where('partner',$partner)->get();
                         
                         // Loop melalui data $jArray untuk mencocokkan nilai PIN
                         foreach ($jArray['Row'] as $data) 
@@ -297,7 +302,7 @@ class Kernel extends ConsoleKernel
                             $jam = $datetime->format('H:i:s');
     
                             // Cari data di $usermesin berdasarkan PIN
-                            $matchedUser = $usermesin->where('pin', $pin)->first();
+                            $matchedUser = $usermesin->where('noid', $pin)->first();
     
                             if ($matchedUser) 
                             {
@@ -308,7 +313,8 @@ class Kernel extends ConsoleKernel
                                     if($jadwal)
                                     {
                                         $existingAbsensi = Absensi::where('id_karyawan', $matchedUser->id_pegawai)
-                                                        ->where('tanggal', $tanggal)->whereNotNull('jam_masuk')->first();
+                                                        ->where('tanggal', $tanggal)->where('partner', $matchedUser->partner)
+                                                        ->whereNotNull('jam_masuk')->first();
                                         if($existingAbsensi)
                                         {
                                             $jadwal_masuk  = $jadwal->jadwal_masuk;
@@ -391,6 +397,7 @@ class Kernel extends ConsoleKernel
                                              $absensi->jml_jamkerja  = null;
                                              $absensi->id_departement = $matchedUser->departemen;
                                              $absensi->jam_kerja     = null;
+                                             $absensi->partner       = $matchedUser->partner;
                                             $absensi->save();
                                             
                                         }
