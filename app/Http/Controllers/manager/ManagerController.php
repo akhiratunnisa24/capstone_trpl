@@ -46,7 +46,7 @@ class ManagerController extends Controller
                 $query->where('atasan_pertama', Auth::user()->id_pegawai)
                     ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
             })
-            ->where('partner', $partner) // Tambahkan kondisi partner di sini
+            ->where('partner', $partner)
             ->get();
             // dd($staff);
 
@@ -2282,6 +2282,7 @@ class ManagerController extends Controller
                     ->whereMonth('tanggal', $bulan)
                     ->whereYear('tanggal',$tahun)
                     ->where('id_departement',$middep->id_departement)
+                    ->where('partner', $partner)
                     ->get();
                 // dd($data);
 
@@ -2299,6 +2300,7 @@ class ManagerController extends Controller
             }else{
                 $data = Absensi::with('karyawans','departemens')
                     ->where('id_departement',$middep->id_departement)
+                    ->where('partner', $partner)
                     ->get();
                 if ($data->isEmpty()) 
                 {
@@ -2502,6 +2504,7 @@ class ManagerController extends Controller
         $staff1= Resign::with('departemens','karyawan')
         ->where('departemen',$manager_iddep->divisi)
         ->orderByDesc('created_at')
+        ->where('partner', $partner)
         ->get();
         return view('manager\staff.resignStaff', compact('karyawan','karyawan1','resign','tes','staff1','row','partner'));
     }
