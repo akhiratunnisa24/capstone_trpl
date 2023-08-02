@@ -430,7 +430,7 @@ Route::post('/indikator-kpi-update/{id}', [MasterkpiController::class, 'updates'
 //User Mesin
 Route::get('/user_mesin', [UserMesinController::class, 'index'])->name('user_mesin.index');
 Route::post('/user_mesin', [UserMesinController::class, 'store'])->name('user_mesin.store');
-Route::patch('/user_mesin/update/{id}', [UserMesinController::class, 'update'])->name('user_mesin.update');
+Route::put('/user_mesin/update/{id}', [UserMesinController::class, 'update'])->name('user_mesin.update');
 Route::get('/user_mesin/delete/{id}', [UserMesinController::class, 'destroy'])->name('user_mesin.delete');
 Route::get('/get_karyawan_info/{id}', [UserMesinController::class, 'getKaryawanInfo'])->name('get_karyawan_info');
 Route::get('/search_karyawan', [UserMesinController::class, 'searchKaryawan'])->name('search_karyawan');

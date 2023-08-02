@@ -44,7 +44,7 @@ class UserMesinController extends Controller
 
         $userMesin = new UserMesin([
             'id_pegawai' => $request->id_pegawai,
-            'nik' => $karyawan->nik,
+            'nik' => $karyawan->nip,
             'noid' => $request->noid,
             'departemen' => $karyawan->departemen->id,
             'partner' => $karyawan->partner, // Ambil nilai "partner" dari form
@@ -64,7 +64,7 @@ class UserMesinController extends Controller
 
         // Mengembalikan data karyawan dalam format JSON
         return response()->json([
-            'nik' => $karyawan->nik,
+            'nik' => $karyawan->nip,
             'departemen' => $karyawan->departemen->nama_departemen,
             'partner' => $karyawan->partner
         ]);
@@ -99,7 +99,7 @@ class UserMesinController extends Controller
         }
     
         $userMesin->id_pegawai = $request->id_pegawai;
-        $userMesin->nik = $karyawan->nik;
+        $userMesin->nik = $karyawan->nip;
         $userMesin->noid = $request->noid;
         $userMesin->departemen = $karyawan->departemen->id;
         $userMesin->partner = $karyawan->partner; // Ambil nilai "partner" dari form
