@@ -45,11 +45,11 @@ class KaryawansController extends Controller
         $role = Auth::user()->role;
         if ($role == 1 || $role == 2) {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager','Direksi'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])->get();
+            $departemen     = Departemen::where('partner',Auth::user()->partner)->get();
+            $atasan_pertama = Karyawan::where('partner',Auth::user()->partner)->whereIn('jabatan', ['Asistant Manager', 'Manager','Direksi'])->get();
+            $atasan_kedua   = Karyawan::where('partner',Auth::user()->partner)->whereIn('jabatan', ['Manager','Direksi'])->get();
             $leveljabatan = LevelJabatan::all();
-            $namajabatan = Jabatan::all();
+            $namajabatan = Jabatan::where('partner',Auth::user()->partner)->get();
 
             // dd($atasan_pertama,$atasan_kedua);
 

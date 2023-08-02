@@ -67,54 +67,41 @@ class MesinController extends Controller
                                         $jadwal_masuk  = $jadwal->jadwal_masuk;
                                         $jadwal_pulang = $jadwal->jadwal_pulang;
                                         $jam_keluar    = Carbon::createFromFormat('H:i:s', $jam);
-    
-                                        //menghitung jumlah jam kerja
-                                        $jam_masuk    = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
-                                        $jadwalpulang = Carbon::createFromFormat('H:i:s', $jadwal_pulang);
-                                        $jumkerja     = $jadwalpulang->diff($jam_masuk);
-                                        $jamkerja     = $jumkerja->format('%H:%I:%S');
-    
-                                        //jumlah kehadiran
-                                        $jmlhadir        =  $jam_keluar->diff($jadwal_masuk);
-                                        $jumlahkehadiran = $jmlhadir->format('%H:%I:%S');
-                                        
-    
-                                        
+
                                         //jika data ada lakukan pembaruan data, karena ada absensi yang terdapat 2 record data
                                         $absensi = $existingAbsensi;
                                         $absensi->jam_keluar   = $jam_keluar;
     
-                                        if($jam_keluar < $jadwal_pulang)
-                                        {
-                                            //menghitung plg cepat
-                                            $selisih       = $jam_keluar->diff($jadwal_pulang);
-                                            $plgcepat      = $selisih->format('%H:%I:%S');
-                                            $absensi->plg_cepat = $plgcepat;
+                                        //menghitung jumlah jam kerja
+                                        $jam_masuk    = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
+                                        $jadwal_pulang = Carbon::createFromFormat('H:i:s', $jadwal_pulang);
+
+                                        $jumkerja     = $jadwal_pulang->diff($jam_masuk);
+                                        $absensi->jml_jamkerja = $jumkerja->format('%H:%I:%S');
+                                       
+
+                                        if($jam_masuk < $jadwal_masuk && $jam_keluar >= $jadwal_pulang)
+                                        {//kondisi normal
+                                            $absensi->plg_cepat    = null;
+                                            // $jam_kerja             = $jadwal_pulang->diff($jam_masuk);
+                                            // $jam_kerja             = $jam_kerja->format('%H:%I:%S');
+
+                                            // $absensi->jml_jamkerja = $jam_kerja;
+                                           
+                                            // dd($absensi,$absensi->jml_jamkerja);
                                         }
-                                        elseif($jam_keluar >= $jadwal_pulang)
-                                        {
+                                        elseif($jam_masuk < $jadwal_masuk && $jam_keluar < $jadwal_pulang)
+                                        {//pulangcepat
                                             $absensi->plg_cepat = null;
-                                        }
-                                        else{
-                                            $absensi->plg_cepat = null;
-                                        }
-    
-    
-                                        if($jam_masuk >= $jadwal_masuk)
-                                        {
-                                            $absensi->jml_jamkerja = $jamkerja;
-                                        }
-                                        elseif($jam_masuk < $jadwal_masuk)
-                                        {
                                             $absensi->jml_jamkerja = '09:00:00';
+                                            
+                                            // dd($absensi,$absensi->jml_jamkerja);
                                         }
-                                        else{
-                                            $absensi->jml_jamkerja = null;
-                                        }
-    
-                                        $absensi->jam_kerja    = $jumlahkehadiran;
-                                        
-                                        // dd($absensi);
+
+                                        $jmlhadir           = $jam_keluar->diff($jam_masuk);
+                                        $absensi->jam_kerja =  $jmlhadir->format('%H:%I:%S');
+
+                                        // dd($jmlhadir,$jmlhadi,$absensi);
                                         $absensi->update();
                                     }
                                     else
@@ -130,7 +117,7 @@ class MesinController extends Controller
                                         }
                                         elseif($jam_masuk > $jadwal_masuk)
                                         {
-                                            $terlambat     = '00:00:00';
+                                            $terlambat     = null;
                                         }
                                         
                                          $absensi = new Absensi();

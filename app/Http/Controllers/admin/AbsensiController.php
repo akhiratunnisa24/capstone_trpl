@@ -339,7 +339,7 @@ class AbsensiController extends Controller
             ]);
         
             $importer = new DataImport();
-            // $importer->importDataExcel($request);
+            $importer->importDataExcel($request);
            
             $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $importer->getJumlahDataDiimport() . "</strong>" . "<br>" .
             "Data diimport ke Tidak Masuk: <strong>" . $importer->getDataImportTidakMasuk() . "</strong>" . "<br>" .

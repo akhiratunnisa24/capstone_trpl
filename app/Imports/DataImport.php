@@ -11,6 +11,7 @@ use App\Models\Jenisizin;
 use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class DataImport
@@ -25,7 +26,6 @@ class DataImport
     {
         $file = $request->file('uploaded_file');
         $extension = $file->getClientOriginalExtension();
-        
         $reader = null;
         if ($extension === 'xls') {
             $reader = IOFactory::createReader('Xls');
@@ -62,7 +62,8 @@ class DataImport
                 if(isset($karyawan))
                 {
                     $tgl = \Carbon\Carbon::createFromFormat('d/m/Y', $row['Tanggal'])->format('Y-m-d');
-                    $absensicek = !Absensi::where('id_karyawan',$karyawan->id)->where('tanggal',$tgl)->first();
+                    $absensicek = !Absensi::where('id_karyawan',$karyawan->id)->where('tanggal',$tgl)
+                        ->where('partner',Auth::user()->partner)->first();
                     
                     if($absensicek)
                     {
@@ -78,16 +79,20 @@ class DataImport
                                 ->select('cuti.id as id_cuti','cuti.id_karyawan','cuti.id_jeniscuti','cuti.tgl_mulai','cuti.tgl_selesai','cuti.status')
                                 ->first();
 
-                            $nama = Karyawan::where('id',$karyawan->id)->select('nama','divisi')->first();
+                            $nama = Karyawan::where('id',$karyawan->id)->select('nama','divisi')
+                                ->where('partner',Auth::user()->partner)->first();
                             
                             if($cuti !== NULL) 
                             {
 
-                                $reason = Jeniscuti::where('id',$cuti->id_jeniscuti)->select('jenis_cuti')->first();
+                                $reason = Jeniscuti::where('id',$cuti->id_jeniscuti)
+                                    ->where('partner',Auth::user()->partner)
+                                    ->select('jenis_cuti')->first();
     
                                 for($date = Carbon::parse($cuti->tgl_mulai);$date->lte(Carbon::parse($cuti->tgl_selesai)); $date->addDay())
                                 {
-                                    $cek = Tidakmasuk::where('id_pegawai', $cuti->id_karyawan)->where('tanggal', $date->format('Y-m-d'))->first();
+                                    $cek = Tidakmasuk::where('id_pegawai', $cuti->id_karyawan)
+                                        ->where('tanggal', $date->format('Y-m-d'))->first();
                                     if(!$cek){
                                         $tidakmasuk = new Tidakmasuk;
                                         $tidakmasuk->id_pegawai = $cuti->id_karyawan;
@@ -117,7 +122,8 @@ class DataImport
                                     //selain 5 karena id 5 itu ijin pada jam tertentu
                                     if($izin->id_jenisizin !== 5)
                                     {
-                                        $reason = Jenisizin::where('id',$izin->id_jenisizin)->select('jenis_izin')->first();
+                                        $reason = Jenisizin::where('id',$izin->id_jenisizin)
+                                        ->select('jenis_izin')->first();
     
                                         for($date = Carbon::parse($izin->tgl_mulai);$date->lte(Carbon::parse($izin->tgl_selesai)); $date->addDay())
                                         {
@@ -143,7 +149,9 @@ class DataImport
                                     $cek = Tidakmasuk::where('id_pegawai', $karyawan->id)->where('tanggal',$tgl)->first();
                                     if(!$cek)
                                     {
-                                        $nama = Karyawan::where('nik',$row['NIK'])->first();
+                                        $nama = Karyawan::where('nik',$row['NIK'])
+                                               ->where('partner',Auth::user()->partner)
+                                               ->first();
                                         $tidakmasuk = new Tidakmasuk;
                                         $tidakmasuk->id_pegawai = $nama->id;
                                         $tidakmasuk->nama       = $nama->nama;
@@ -214,9 +222,11 @@ class DataImport
                                 'jam_kerja'     => isset($formatted_jam['Jml Kehadiran']) ? $formatted_jam['Jml Kehadiran'] : null,
                                 // 'lemhanor'      => null,
                                 // 'lemakpek'      => null,
-                                // 'lemhali'       => null,                
+                                // 'lemhali'       => null, 
+                                'partner'       => $karyawan->partner               
                             ];
                            
+                            // dd($data);
                             $absensi = Absensi::create($data);
                             
                             $this->jumlahdatadiimport++;

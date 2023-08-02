@@ -64,7 +64,8 @@ class HomeController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
         // Absen Terlambat Karyawan
-        $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai,)->count('terlambat');
+        $absenTerlambatkaryawan = Absensi::where('partner',Auth::user()->partner)
+        ->where('id_karyawan', Auth::user()->id_pegawai)->count('terlambat');
         // Absen Karyawan Hari Ini
         $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
@@ -124,6 +125,7 @@ class HomeController extends Controller
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereDay('tanggal', '=', Carbon::now())->count('jam_masuk');
         $absenHarini = Absensi::with('karyawans')
+            ->where('partner',Auth::user()->partner)
             ->whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereDay('tanggal', '=', Carbon::now())
@@ -131,11 +133,13 @@ class HomeController extends Controller
         $jumAbsen = $absenHarini->count();
         // dd($absenHarini);
         // Absen Bulan Ini
-        $absenBulanini  = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+        $absenBulanini  = Absensi::where('partner',Auth::user()->partner)
+            ->whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->count('jam_masuk');
         // Absen Bulan Lalu
-        $absenBulanlalu  = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
+        $absenBulanlalu  = Absensi::where('partner',Auth::user()->partner)
+            ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
             ->count('jam_masuk');
 
@@ -160,10 +164,11 @@ class HomeController extends Controller
         
 
         //ambil jumlah Karyawan       
-        $totalKaryawan = karyawan::count('id');
+        $totalKaryawan = karyawan::where('partner',Auth::user()->partner)->count('id');
 
         // ambil jumlah karyawan yang sudah absen
         $totalabsen = DB::table('absensi')
+                    ->where('partner',Auth::user()->partner)
                     ->whereYear('tanggal', '=', Carbon::now()->year)
                     ->whereMonth('tanggal', '=', Carbon::now()->month)
                     ->whereDay('tanggal', '=', Carbon::now())
@@ -199,12 +204,14 @@ class HomeController extends Controller
         // $labelTahun = $getYear->keys();    
         $data = $getLabel->values();
 
-        $absenBulanLalu = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+        $absenBulanLalu = Absensi::where('partner',Auth::user()->partner)
+        ->whereYear('tanggal', '=', Carbon::now()->year)
         ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
         ->count('jam_masuk');
 
         //absen masuk bulan ini    
-        $absenBulanini  = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+        $absenBulanini  = Absensi::where('partner',Auth::user()->partner)
+            ->whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->count('jam_masuk');
 
@@ -285,11 +292,14 @@ class HomeController extends Controller
                     $query->where(function ($q) {
                         $q->where('cuti.status', 1)
                             ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                            ->where('karyawan.partner', Auth::user()->partner)
+
                             ->where('cuti.catatan', '=', NULL);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('cuti.status', [1, 6])
                             ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                            ->where('karyawan.partner', Auth::user()->partner)
                             ->where('cuti.catatan', '=', NULL);
                     });
                 })
@@ -309,11 +319,13 @@ class HomeController extends Controller
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
-                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                             ->where('karyawan.partner', Auth::user()->partner)
+                             ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
-                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                             ->where('karyawan.partner', Auth::user()->partner)
+                             ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     });
                 })
                 ->get();
@@ -332,12 +344,14 @@ class HomeController extends Controller
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->where('izin.status', 1)
-                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                             ->where('karyawan.partner', Auth::user()->partner)
+                             ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                             ->where('izin.catatan', '=', NULL);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('izin.status', [1, 6])
-                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                             ->where('karyawan.partner', Auth::user()->partner)
+                             ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
                             ->where('izin.catatan', '=', NULL);
                     });
                 })
@@ -355,11 +369,13 @@ class HomeController extends Controller
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
-                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                             ->where('karyawan.partner', Auth::user()->partner)
+                             ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
-                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                             ->where('karyawan.partner', Auth::user()->partner)
+                             ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     });
                 })
                 ->get();
@@ -470,16 +486,17 @@ class HomeController extends Controller
                 ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
                 ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
                 ->leftjoin('departemen','cuti.departemen','=','departemen.id')
-                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->select('cuti.*', 'karyawan.partner','jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                 ->distinct()
                 ->where(function ($query) {
-                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    $query->where('karyawan.partner', Auth::user()->partner)
+                        ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                         ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->where('cuti.status', '=', '1')
                 ->where('cuti.catatan','=',NULL)
                 ->get();
-           
+          
             $cutijumlah = $cuti->count();
             
             $cutis = DB::table('cuti')
@@ -493,7 +510,8 @@ class HomeController extends Controller
                 ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                 ->distinct()
                 ->where(function ($query) {
-                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    $query ->where('karyawan.partner', Auth::user()->partner)
+                        ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                         ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
@@ -510,7 +528,8 @@ class HomeController extends Controller
                 ->select('izin.*', 'statuses.name_status','departemen.nama_departemen', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                 ->distinct()
                 ->where(function ($query) {
-                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    $query->where('karyawan.partner', Auth::user()->partner)
+                        ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                         ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->where('izin.status', '=', '1')
@@ -527,7 +546,8 @@ class HomeController extends Controller
                 ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                 ->distinct()
                 ->where(function ($query) {
-                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    $query->where('karyawan.partner', Auth::user()->partner)
+                    ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                         ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->whereIn('izin.catatan',['Mengajukan Pembatalan','Mengajukan Perubahan'])
@@ -547,7 +567,8 @@ class HomeController extends Controller
                 ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','departemen.nama_departemen', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                 ->distinct()
                 ->where(function ($query) {
-                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    $query->where('karyawan.partner', Auth::user()->partner)
+                    ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                         ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->where('cuti.status', '=', '1')
@@ -565,7 +586,8 @@ class HomeController extends Controller
                     ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        $query->where('karyawan.partner', Auth::user()->partner)
+                        ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     })
                     ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
@@ -581,7 +603,8 @@ class HomeController extends Controller
                 ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                 ->distinct()
                 ->where(function ($query) {
-                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    $query->where('karyawan.partner', Auth::user()->partner)
+                    ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                         ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->where('izin.status', '=', '1')
@@ -597,7 +620,8 @@ class HomeController extends Controller
                 ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                 ->distinct()
                 ->where(function ($query) {
-                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    $query->where('karyawan.partner', Auth::user()->partner)
+                    ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                         ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
@@ -619,11 +643,13 @@ class HomeController extends Controller
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->where('cuti.status', 1)
+                        ->where('karyawan.partner', Auth::user()->partner)
                             ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                             ->where('cuti.catatan', '=', NULL);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('cuti.status', [1, 6])
+                        ->where('karyawan.partner', Auth::user()->partner)
                             ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
                             ->where('cuti.catatan', '=', NULL);
                     });
@@ -644,10 +670,12 @@ class HomeController extends Controller
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                            ->where('karyawan.partner', Auth::user()->partner)
                             ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                            ->where('karyawan.partner', Auth::user()->partner)
                             ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     });
                 })
@@ -665,11 +693,13 @@ class HomeController extends Controller
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->where('izin.status', 1)
+                            ->where('karyawan.partner', Auth::user()->partner)
                             ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                             ->where('izin.catatan', '=', NULL);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('izin.status', [1, 6])
+                            ->where('karyawan.partner', Auth::user()->partner)
                             ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
                             ->where('izin.catatan', '=', NULL);
                     });
@@ -687,10 +717,12 @@ class HomeController extends Controller
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                            ->where('karyawan.partner', Auth::user()->partner)
                             ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                            ->where('karyawan.partner', Auth::user()->partner)
                             ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     });
                 })
@@ -710,7 +742,8 @@ class HomeController extends Controller
                     ->select('cuti.*', 'jeniscuti.jenis_cuti', 'karyawan.nama','departemen.nama_departemen', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                     ->distinct()
                     ->where(function ($query) {
-                        $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        $query->where('karyawan.partner', Auth::user()->partner)
+                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                             ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                     })
                     ->whereIn('cuti.status',['1','2'])
@@ -730,7 +763,8 @@ class HomeController extends Controller
                 ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
                 ->distinct()
                 ->where(function ($query) {
-                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    $query->where('karyawan.partner', Auth::user()->partner)
+                        ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                         ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
@@ -746,7 +780,8 @@ class HomeController extends Controller
                 ->select('izin.*', 'statuses.name_status','departemen.nama_departemen', 'jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                 ->distinct()
                 ->where(function ($query) {
-                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    $query->where('karyawan.partner', Auth::user()->partner)
+                        ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                         ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->whereIn('izin.status',['1','2'])
@@ -761,7 +796,8 @@ class HomeController extends Controller
                 ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
                 ->distinct()
                 ->where(function ($query) {
-                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    $query->where('karyawan.partner', Auth::user()->partner)
+                        ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
                         ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
                 })
                 ->whereIn('izin.catatan',['Mengajukan Pembatalan','Mengajukan Perubahan'])
@@ -773,18 +809,33 @@ class HomeController extends Controller
         //     ->where('status', '!=', '5')
         //     ->get();
 
-        $resign = Resign::where(function ($query) {
-            $query->where('status', '=', '1')
-            ->whereHas('karyawan', function ($query) {
-                $query->where('atasan_pertama', Auth::user()->id_pegawai);
-            });
-        })->orWhere(function ($query) {
-            $query->where('status', '=', '6')
-            ->whereHas('karyawan', function ($query) {
-                $query->where('atasan_kedua', Auth::user()->id_pegawai);
-            });
-        })->get();
-        
+        // $resign = Resign::where(function ($query) {
+        //     $query->where('status', '=', '1')
+        //     ->whereHas('karyawan', function ($query) {
+        //         $query->where('atasan_pertama', Auth::user()->id_pegawai);
+        //     });
+        // })->orWhere(function ($query) {
+        //     $query->where('status', '=', '6')
+        //     ->whereHas('karyawan', function ($query) {
+        //         $query->where('atasan_kedua', Auth::user()->id_pegawai);
+        //     });
+        // })->get();
+
+        $resign = Resign::join('karyawan', 'resign.id_karyawan', '=', 'karyawan.id')
+            ->where(function ($query) {
+                $query->where('resign.status', '=', '1')
+                    ->where('karyawan.partner', '=', Auth::user()->partner)
+                    ->where('karyawan.atasan_pertama', '=', Auth::user()->id_pegawai);
+            })
+            ->orWhere(function ($query) {
+                $query->where('resign.status', '=', '6')
+                    ->where('karyawan.partner', '=', Auth::user()->partner)
+                    ->where('karyawan.atasan_kedua', '=', Auth::user()->id_pegawai);
+            })
+            
+            ->select('resign.*','karyawan.partner')
+            ->get();
+       
         $resignjumlah = $resign->count();
 
         // $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->where('status',1)->get();
@@ -802,6 +853,7 @@ class HomeController extends Controller
         $potonguangmakan = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
             ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
             ->where('tidakmasuk.status', '=', 'tanpa keterangan')
+            ->where('karyawan.partner',Auth::user()->partner)
             ->select('tidakmasuk.id_pegawai as id_pegawai','tidakmasuk.status as keterangan','setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
             ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Makan" THEN ' . $pct->jumlah_tidakmasuk . ' END')
             ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai','tidakmasuk.status')
@@ -812,10 +864,12 @@ class HomeController extends Controller
         $potongtransport = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
             ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
             ->where('tidakmasuk.status', '=', 'tanpa keterangan')
-            ->select('tidakmasuk.id_pegawai as id_pegawai', 'setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
+            ->where('karyawan.partner', '=', Auth::user()->partner)
+            ->select('tidakmasuk.id_pegawai as id_pegawai', 'karyawan.partner','setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
             ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Transportasi" THEN ' . $pg->jumlah_tidakmasuk . ' END')
             ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai')
             ->get();
+
         $jpg = $potongtransport->count();
          //data karyawan terlambat
          $tb = Settingabsensi::where('sanksi_terlambat', '=', 'Teguran Biasa')->select('jumlah_terlambat')->first();
@@ -827,14 +881,18 @@ class HomeController extends Controller
              ->select('absensi.id_karyawan as id_karyawan','setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
              ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "Teguran Biasa" THEN ' . $tb->jumlah_terlambat . ' END')
              ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
+             ->where('karyawan.partner',Auth::user()->partner)
              ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
              ->get();
          $jumter = $terlambat->count();
+
          $telat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
              ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
              ->select('absensi.id_karyawan as id_karyawan', 'setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
              ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "SP Pertama" THEN ' . $sp1->jumlah_terlambat . ' END')
-             ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
+             ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)
+             ->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
+             ->where('karyawan.partner',Auth::user()->partner)
              ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
              ->get();
          $jumtel = $telat->count();
@@ -843,6 +901,7 @@ class HomeController extends Controller
              ->select('absensi.id_karyawan as id_karyawan', 'setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
              ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "SP Pertama" THEN ' . $sp2->jumlah_terlambat . ' END')
              ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
+              ->where('karyawan.partner',Auth::user()->partner)
              ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
              ->get();
          $jumdat = $datatelat->count();
