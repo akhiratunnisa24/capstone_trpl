@@ -2321,6 +2321,7 @@ class ManagerController extends Controller
                         ->where('id_departement',$middep->id_departement)
                         ->whereMonth('tanggal', $bulan)
                         ->whereYear('tanggal',$tahun)
+                        ->where('partner', $partner)
                         ->get();
                     // dd($data);
                     $departemen = Departemen::where('id',$middep->id_departement)->first();
@@ -2341,6 +2342,7 @@ class ManagerController extends Controller
 
                     $data = Absensi::where('id_departement', $middep->id_departement)
                         ->whereIn('id_karyawan',$pegawai->pluck('idkaryawan'))
+                        ->where('partner', $partner)
                         ->get();
                     $departemen = Departemen::where('id',$middep->id_departement)->first();
 
