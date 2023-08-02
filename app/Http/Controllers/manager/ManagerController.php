@@ -35,25 +35,30 @@ use App\Exports\AbsensiDepartemenExport;
 class ManagerController extends Controller
 {
     public function dataStaff(Request $request)
-    {
+    {   
+        $partner = Auth::user()->partner;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;        
         if ($role == 3 && $row->jabatan = "Manager") 
         {
             $staff = Karyawan::with('departemens')
-                ->where('atasan_pertama',Auth::user()->id_pegawai)
-                ->orWhere('atasan_kedua',Auth::user()->id_pegawai)
-                ->get();
+            ->where(function ($query) use ($partner) {
+                $query->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->where('partner', $partner) // Tambahkan kondisi partner di sini
+            ->get();
             // dd($staff);
 
-            return view('manager.staff.dataStaff', compact('staff','row'));
+            return view('manager.staff.dataStaff', compact('staff','row','partner'));
         }
         elseif($role == 3 && $row->jabatan = "Asistant Manager")
         {
             //mengambil id_departemen 
             $staff= Karyawan::with('departemens')
-                ->where('atasan_pertama','=',Auth::user()->id_pegawai)->get();
-
+                ->where('atasan_pertama','=',Auth::user()->id_pegawai)
+                ->where('partner', $partner)
+                ->get();
             return view('manager.staff.dataStaff', compact('staff','row'));
         }
         else{
@@ -70,7 +75,8 @@ class ManagerController extends Controller
     }
 
     public function absensiStaff(Request $request)
-    {
+    {   
+        $partner = Auth::user()->partner;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;  
 
@@ -197,7 +203,7 @@ class ManagerController extends Controller
 
     public function cutiStaff(Request $request)
     {
-        
+        $partner = Auth::user()->partner;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role= Auth::user()->role;
 
@@ -2243,7 +2249,8 @@ class ManagerController extends Controller
     //export excel data by filter di bagian manager 
     //DIGUNAKAN
     public function exportToExcel(Request $request)
-    {
+    {   
+        $partner = Auth::user()->partner;
         $role = Auth::user()->role;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();    
         //mengambil id_departemen user
@@ -2478,6 +2485,7 @@ class ManagerController extends Controller
 
     public function resignStaff(Request $request)
     {
+        $partner = Auth::user()->partner;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
         $karyawan1 = Karyawan::all();
@@ -2495,7 +2503,7 @@ class ManagerController extends Controller
         ->where('departemen',$manager_iddep->divisi)
         ->orderByDesc('created_at')
         ->get();
-        return view('manager\staff.resignStaff', compact('karyawan','karyawan1','resign','tes','staff1','row'));
+        return view('manager\staff.resignStaff', compact('karyawan','karyawan1','resign','tes','staff1','row','partner'));
     }
 
 }
