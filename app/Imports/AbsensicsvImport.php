@@ -27,7 +27,7 @@ class AbsensicsvImport implements ToModel,WithHeadingRow
     public function getCsvSettings(): array
      {
          return [
-             'delimiter' => ','
+             'delimiter' => ';'
          ];
      }
 
@@ -37,7 +37,7 @@ class AbsensicsvImport implements ToModel,WithHeadingRow
     private $datatidakbisadiimport = 0; //JUMLAH DATA TIDAK DIIMPORT
     public function model(array $row)
     {
-        dd($row);
+        // dd($row);
         // if(isset($row['nama']) && isset($row['tanggal']) && isset($row['NIK']))
         if(isset($row['nik']) && isset($row['tanggal']))
         {
