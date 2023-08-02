@@ -325,7 +325,7 @@ class TidakMasukController extends Controller
         {
             return redirect()->back()->with('pesa','Tidak Ada Data.');
         } else {
-            $setorganisasi = SettingOrganisasi::find(1);
+            $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
             $pdf = PDF::loadview('admin.tidakmasuk.dataTidakMasukPdf',['tidakmasuk'=>$tidakmasuk, 'idkaryawan'=>$idkaryawan,'setorganisasi'=> $setorganisasi])
             ->setPaper('a4','landscape');
             $pdfName = "Data Absensi Tidak Masuk Bulan ".$nbulan." ".$tidakmasuk->first()->nama.".pdf";

@@ -14,84 +14,57 @@
             </div> 
         
             <div class="modal-body">
-                <form class="input" action="" method="POST" enctype="multipart/form-data">
+                <form class="input" action="{{route('settingabsensi.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="panel-body">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="form-group col-sm" >
-                                    <label class="">Tipe Absensi</label>
-                                    <select name="tipe" id="tipe" class="form-control" required>
-                                        <option value="">Pilih Tipe Absensi</option>
-                                        <option value="Terlambat">Terlambat</option>
-                                        <option value="Tidak Masuk">Tidak Masuk</option>
-                                    </select>
-                                </div>
+                            <div class="form-group col-sm" >
+                                <label class="col-form-label">Tipe Absensi</label>
+                                <select name="tipe" id="tipe" class="form-control" required>
+                                    <option value="">Pilih Tipe Absensi</option>
+                                    <option value="Terlambat">Terlambat</option>
+                                    <option value="Tidak Masuk">Tidak Masuk</option>
+                                </select>
                             </div>
                             <div class="form-group col-sm" id="toleransi">
                                 <label for="id_jeniscuti" class="col-form-label">Toleransi Terlambat</label>
-                                <input type="text" class="form-control" autocomplete="off" name="toleransi_terlambat" placeholder="Masukkan Toleransi Keterlambatan" id="toleransi_terlambat"
-                                required>
+                                <div class="input-group clockpicker pull-center" data-placement="bottom" data-align="top" data-autoclose="true">
+                                    <input type="text" class="form-control" autocomplete="off" name="toleransi_terlambat"  id="toleransi_terlambat">
+                                    <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                </div>
+                                {{-- <input type="text" class="form-control" autocomplete="off" name="toleransi_terlambat" placeholder="Masukkan Toleransi Keterlambatan" id="toleransi_terlambat"> --}}
                             </div>
+                           
                             <div class="form-group" id="jumlah_terlambat">
                                 <label class="col-form-label">Jumlah Terlambat</label>
-                                <input type="number" class="form-control" autocomplete="off" name="jumlah_terlambat" 
-                                    required>
+                                <input type="text" class="form-control" autocomplete="off" name="jumlah_terlambat" >
                             </div>
                             <div class="form-group col-sm"  id="sanksi_terlambat">
                                 <label class="col-form-label">Jenis Sanksi</label>
-                                <select name="sanksi_terlambat" class="form-control" required>
+                                <select name="sanksi_terlambat" class="form-control" >
                                     <option value="">Pilih Jenis Sanksi</option>
-                                    <option value="Teguran Biasa">Terlambat</option>
+                                    <option value="Teguran Biasa">Teguran Biasa</option>
                                     <option value="SP Pertama">SP Pertama</option>
                                     <option value="SP Kedua">SP Kedua</option>
                                     <option value="SP Ketiga">SP Ketiga</option>
+                                    <option value="Lainnya">Lainnya</option>
                                 </select>
                             </div>
                             <div class="form-group"  id="jumlah_tidakmasuk">
                                 <label class="col-form-label">Jumlah Tidak Masuk</label>
-                                <input type="number" class="form-control" autocomplete="off" name="jumlah_tidakmasuk"
-                                    required>
+                                <input type="text" class="form-control" autocomplete="off" name="jumlah_tidakmasuk" >
                             </div>
                             <div class="form-group col-sm"  id="sanksi_tidak_masuk">
                                 <label class="col-form-label">Jenis Sanksi</label>
-                                <select name="sanksi_tidak_masuk" class="form-control" required>
+                                <select name="sanksi_tidak_masuk" class="form-control" >
                                     <option value="">Pilih Jenis Sanksi</option>
                                     <option value="Potong Uang Transportasi">Potong Uang Transportasi</option>
                                     <option value="Potong Uang Makan">Potong Uang Makan</option>
                                 </select>
                             </div>
+                            <input type="hidden" class="form-control" autocomplete="off" name="partner" value="{{Auth::user()->partner}}">
                         </div>
-                    </div>
-                    <div class="form-group col-sm" id="jumlah_terlambat">
-                        <label class="col-form-label">Jumlah Terlambat</label>
-                        <input type="number" class="form-control" autocomplete="off" name="jumlah_terlambat" required>
-                    </div>
-
-                    <div class="form-group col-sm" id="sanksi_terlambat">
-                        <label class="col-form-label">Jenis Sanksi</label>
-                        <select name="sanksi_terlambat" class="form-control" required>
-                            <option value="">Pilih Jenis Sanksi</option>
-                            <option value="Teguran Biasa">Terlambat</option>
-                            <option value="SP Pertama">SP Pertama</option>
-                            <option value="SP Kedua">SP Kedua</option>
-                            <option value="SP Ketiga">SP Ketiga</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-sm" id="jumlah_tidakmasuk">
-                        <label class="col-form-label">Jumlah Tidak Masuk</label>
-                        <input type="number" class="form-control" autocomplete="off" name="jumlah_tidakmasuk" required>
-                    </div>
-
-                    <div class="form-group col-sm"  id="sanksi_tidak_masuk">
-                        <label class="col-form-label">Jenis Sanksi</label>
-                        <select name="sanksi_tidak_masuk" class="form-control" required>
-                            <option value="">Pilih Jenis Sanksi</option>
-                            <option value="Potong Uang Transportasi">Potong Uang Transportasi</option>
-                            <option value="Potong Uang Makan">Potong Uang Makan</option>
-                        </select>
                     </div>
 
                     <div class="modal-footer">
@@ -123,6 +96,13 @@
                     $('#sanksi_terlambat').prop("hidden", false);
                     $('#jumlah_tidakmasuk').prop("hidden", true);
                     $('#sanksi_tidak_masuk').prop("hidden", true);
+
+                    // Set required attributes for Terlambat
+                    $('#toleransi_terlambat').prop('required', true);
+                    $('#jumlah_terlambat').prop('required', true);
+                    $('#sanksi_terlambat').prop('required', true);
+                    $('#jumlah_tidakmasuk').prop('required', false);
+                    $('#sanksi_tidak_masuk').prop('required', false);
                 }
                 if(a.target.value== 'Tidak Masuk')
                 {
@@ -131,6 +111,13 @@
                     $('#sanksi_terlambat').prop("hidden", true);
                     $('#jumlah_tidakmasuk').prop("hidden", false);
                     $('#sanksi_tidak_masuk').prop("hidden", false);
+
+                    // Set required attributes for Tidak Masuk
+                    $('#toleransi_terlambat').prop('required', false);
+                    $('#jumlah_terlambat').prop('required', false);
+                    $('#sanksi_terlambat').prop('required', false);
+                    $('#jumlah_tidakmasuk').prop('required', true);
+                    $('#sanksi_tidak_masuk').prop('required', true);
                 }
             });
         }

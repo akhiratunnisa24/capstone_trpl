@@ -2385,7 +2385,7 @@ class ManagerController extends Controller
         // $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
         // $nbulan    = $namaBulan . ' ' . $tahun;
 
-        $setorganisasi = SettingOrganisasi::find(1);
+        $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
         if($role == 3 && $row->jabatan = "Manager")
         {
             if(isset($idkaryawan) && isset($bulan) && isset($tahun))
