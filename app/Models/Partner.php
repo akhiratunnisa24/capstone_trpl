@@ -51,4 +51,9 @@ class Partner extends Model
         return $this->hasMany(Jeniscuti::class, 'partner', 'id');
     }
 
+    public function settingabsensis()
+    {
+        return $this->hasMany(Settingabsensi::class, 'partner', 'id');
+    }
+
 }

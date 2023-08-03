@@ -120,8 +120,12 @@
         $formatted_date = $now->day . ' ' . $bulan . ' ' . $now->year;
     @endphp
     <div class="row-sm-3">
-        <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
-        {{-- <p id="t">Hormat Kami,</p> --}}
+        @if(Auth::user()->partner == 1)
+            <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
+        @else
+            <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
+        @endif
+
         <p id="tt">(HR Development)</p>
     </div>
 </body>

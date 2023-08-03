@@ -9,5 +9,10 @@ class Settingabsensi extends Model
 {
     use HasFactory;
     protected $table = 'setting_absensi';
-    protected $fillable = ['toleransi_terlambat','jumlah_terlambat','sanksi_terlambat','status_tidakmasuk','jumlah_tidakmasuk','sanksi_tidak_masuk'];
+    protected $fillable = ['toleransi_terlambat','jumlah_terlambat','sanksi_terlambat','status_tidakmasuk','jumlah_tidakmasuk','sanksi_tidak_masuk','partner'];
+
+    public function partners()
+    {
+        return $this->belongsTo(Partner::class, 'partner', 'id');
+    }
 }

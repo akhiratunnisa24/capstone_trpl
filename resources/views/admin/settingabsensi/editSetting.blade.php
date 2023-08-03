@@ -38,6 +38,7 @@
                                 <option value="SP Pertama" @if($data->sanksi_terlambat == "SP Pertama") selected @endif>SP Pertama</option>
                                 <option value="SP Kedua" @if($data->sanksi_terlambat == "SP Kedua") selected @endif>SP Kedua</option>
                                 <option value="SP Ketiga" @if($data->sanksi_terlambat == "SP Ketiga") selected @endif>SP Ketiga</option>
+                                <option value="Lainnya" @if($data->sanksi_terlambat == "Lainnya") selected @endif>lainnya</option>
                             </select>
                         </div>
                     @else

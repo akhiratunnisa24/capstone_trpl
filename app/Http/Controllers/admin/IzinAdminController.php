@@ -488,7 +488,7 @@ class IzinAdminController extends Controller
 
     public function rekapizinpdf(Request $request)
     {
-        $setorganisasi = SettingOrganisasi::find(1);
+        $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
 
         $data = Izin::all();
         // $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
