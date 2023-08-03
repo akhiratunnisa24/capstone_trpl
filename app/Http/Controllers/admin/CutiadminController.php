@@ -1276,7 +1276,7 @@ class CutiadminController extends Controller
 
     public function rekapcutipdf(Request $request)
     {
-        $setorganisasi = SettingOrganisasi::find(1);
+        $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
         $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
 
         $idkaryawan = $request->id_karyawan;

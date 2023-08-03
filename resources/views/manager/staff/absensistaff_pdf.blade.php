@@ -68,8 +68,8 @@
     </style>
 </head>
 <body>
-    <h1 align="center">PT. Global Risk Management (GRM)</h1>
-    <p id="address">Graha GRM Royal Spring Business Park 11, Jl. Ragunan Raya No. 29A, Jakarta Selatan, 12540</p>
+    <h1 align="center">{{$setorganisasi->nama_perusahaan}}</h1>
+    <p id="address">{{{{$setorganisasi->alamat}}}}, {{$setorganisasi->kode_pos}}</p>
     <div class="garis"></div>
     <h3 align="center">Report Absensi Staff Departemen</h3>
 
@@ -119,7 +119,11 @@
         $formatted_date = $now->day . ' ' . $bulan . ' ' . $now->year;
     @endphp
     <div class="row-sm-3">
-        <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
+        @if(Auth::user()->partner == 1)
+            <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
+        @else
+            <p id="ttd">Depok, {{  $formatted_date }}</p>
+        @endif
         <p id="tt">(Departemen Manager)</p>
     </div>
 </body>

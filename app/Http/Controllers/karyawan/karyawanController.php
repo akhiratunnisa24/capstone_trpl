@@ -2287,8 +2287,15 @@ class karyawanController extends Controller
 
     public function importexcel(Request $request)
     {
-        Excel::import(new karyawanImport, request()->file('file'));
-        return redirect()->back();
+        try{
+            Excel::import(new karyawanImport, request()->file('file'));
+            return redirect()->back()->with('pesan','Data Karyawan Berhasil di Import');
+        }
+        catch (\Throwable $th) {
+            // Tangani jika terjadi kesalahan
+            return redirect()->back()->with('pesa', 'Data Sudah Ada / Terjadi kesalahan saat mengimport data.');
+        }
+       
     }
 
     public function exportExcel()
@@ -2490,7 +2497,7 @@ class karyawanController extends Controller
             $prestasi = Rprestasi::where('id_pegawai', $id)->get();
             $keluarga = Keluarga::where('id_pegawai', $id)->get();
             $kontakdarurat = Kdarurat::where('id_pegawai', $id)->get();
-            $setorganisasi = SettingOrganisasi::find(1);
+            $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
 
             $pdf = PDF::loadview('admin.karyawan.downloadpdf', [
                 'data' => $data,

@@ -2321,6 +2321,7 @@ class ManagerController extends Controller
                         ->where('id_departement',$middep->id_departement)
                         ->whereMonth('tanggal', $bulan)
                         ->whereYear('tanggal',$tahun)
+                        ->where('partner', $partner)
                         ->get();
                     // dd($data);
                     $departemen = Departemen::where('id',$middep->id_departement)->first();
@@ -2341,6 +2342,7 @@ class ManagerController extends Controller
 
                     $data = Absensi::where('id_departement', $middep->id_departement)
                         ->whereIn('id_karyawan',$pegawai->pluck('idkaryawan'))
+                        ->where('partner', $partner)
                         ->get();
                     $departemen = Departemen::where('id',$middep->id_departement)->first();
 
@@ -2383,7 +2385,7 @@ class ManagerController extends Controller
         // $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
         // $nbulan    = $namaBulan . ' ' . $tahun;
 
-        $setorganisasi = SettingOrganisasi::find(1);
+        $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
         if($role == 3 && $row->jabatan = "Manager")
         {
             if(isset($idkaryawan) && isset($bulan) && isset($tahun))

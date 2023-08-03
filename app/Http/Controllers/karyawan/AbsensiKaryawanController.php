@@ -130,7 +130,7 @@ class AbsensiKaryawanController extends Controller
     public function absensiPeroranganPdf(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $setorganisasi = SettingOrganisasi::find(1);
+        $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
         $iduser = Auth::user()->id_pegawai;
 
         $nama   = Karyawan::where('id','=', $iduser)->first();

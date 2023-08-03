@@ -18,16 +18,21 @@ class UserMesinController extends Controller
     public function index()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        // $userMesins = UserMesin::with('karyawan')->get();
-        $userMesins = UserMesin::with('karyawan')
-                       ->where('partner', Auth::user()->partner)
-                       ->get();
-        //$userMesins = UserMesin::with('karyawan')->where('karyawan.partner', Auth::user()->partner)->get();
-        $karyawans = Karyawan::where('partner',Auth::user()->partner)
-                    ->whereNotIn('id', UserMesin::pluck('id_pegawai'))->get();
-        return view('admin.datamaster.user_mesin.index', compact('userMesins', 'karyawans','row'));
+        
+        // Jika rolenya adalah 5, maka tampilkan semua data karyawan
+        if (Auth::user()->role == 5) {
+            $userMesins = UserMesin::with('karyawan')->get();
+            $karyawans = Karyawan::whereNotIn('id', UserMesin::pluck('id_pegawai'))->get();
+        } else {
+            // Jika bukan role 5, maka tampilkan data karyawan yang sesuai dengan partner
+            $userMesins = UserMesin::with('karyawan')->where('partner', Auth::user()->partner)->get();
+            $karyawans = Karyawan::where('partner', Auth::user()->partner)
+                        ->whereNotIn('id', UserMesin::pluck('id_pegawai'))->get();
+        }
+        
+        return view('admin.datamaster.user_mesin.index', compact('userMesins', 'karyawans', 'row'));
     }
-
+    
     
     public function store(Request $request)
     {
@@ -80,17 +85,11 @@ class UserMesinController extends Controller
     // ===================================END Dropdown addModal==============================
     public function update(Request $request, $id)
     {
-        
+        // dd($request);
         $request->validate([
-            'id_pegawai' => 'required',
             'noid' => 'required',
-            'partner' => 'required', // Tambahkan validasi untuk field "partner"
+            'partner' => 'required',
         ]);
-    
-        $karyawan = Karyawan::find($request->id_pegawai);
-        if (!$karyawan) {
-            return redirect()->route('user_mesin.index')->with('error', 'Karyawan tidak ditemukan.');
-        }
     
         $userMesin = UserMesin::find($id);
         if (!$userMesin) {
@@ -100,15 +99,13 @@ class UserMesinController extends Controller
         $userMesin->id_pegawai = $request->id_pegawai;
         $userMesin->nik = $karyawan->nip;
         $userMesin->noid = $request->noid;
-        $userMesin->departemen = $karyawan->departemen->id;
-        $userMesin->partner = $karyawan->partner; // Ambil nilai "partner" dari form
+        $userMesin->partner = $request->partner;
+    
         
         $userMesin->save();
     
         return redirect()->route('user_mesin.index')->with('success', 'Data user mesin berhasil diperbarui.');
     }
-    
-
 
     public function destroy($id)
     {

@@ -91,5 +91,23 @@
                 </div>
             </div> <!-- End Row -->
         </div> <!-- container -->
-    </div> <!-- content -->   
+    </div> <!-- content -->  
+    
+    @if(Session::has('pesan'))
+        <script>
+            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
+
+    @if(Session::has('pesa'))
+        <script>
+            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
 @endsection

@@ -27,7 +27,7 @@ class AbsensicsvImport implements ToModel,WithHeadingRow
     public function getCsvSettings(): array
      {
          return [
-             'delimiter' => ','
+             'delimiter' => ';'
          ];
      }
 

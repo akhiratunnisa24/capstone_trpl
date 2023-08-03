@@ -164,7 +164,7 @@ class CutiizinController extends Controller
     public function rekapcutipdf(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $setorganisasi = SettingOrganisasi::find(1);
+        $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
 
         $idkaryawan = $request->id_karyawan;
         $bulan      = $request->query('bulan', Carbon::now()->format('m'));
@@ -301,7 +301,7 @@ class CutiizinController extends Controller
     public function rekapizinpdf(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $setorganisasi = SettingOrganisasi::find(1);
+        $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
         $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
 
         $idpegawai = $request->idpegawai;

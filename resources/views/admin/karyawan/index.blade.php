@@ -36,9 +36,9 @@
 
                             {{-- <a href="/karyawanupload" class="btn btn-sm btn-dark fa fa-upload"> Upload File Digital</a> --}}
 
-                            {{-- <a href="" class="btn btn-sm btn-dark fa fa-cloud-download" data-toggle="modal"
+                            <a href="" class="btn btn-sm btn-dark fa fa-cloud-download" data-toggle="modal"
                                 data-target="#Modal2"> Import Excel</a>
-                            <a href="/exportexcelkaryawan" class="btn btn-sm btn-dark fa fa-cloud-upload "> Export Excel
+                            {{-- <a href="/exportexcelkaryawan" class="btn btn-sm btn-dark fa fa-cloud-upload "> Export Excel
                             </a> --}}
 
                             <a href="karyawancreates" type="button" class="btn btn-sm btn-dark fa fa-user-plus pull-right">
@@ -261,6 +261,15 @@
             });
         </script>
     @endif
+
+    @if(Session::has('pesa'))
+    <script>
+        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+            button:true,
+            button:"OK",
+        });
+    </script>
+@endif
    
 @endsection
 
