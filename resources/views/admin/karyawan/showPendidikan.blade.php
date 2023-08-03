@@ -89,8 +89,9 @@
                                                                     <td>{{ $rpendidikan->jurusan }}</td>
                                                                     {{-- <td>{{ $rpendidikan->tahun_masuk_formal }}</td> --}}
                                                                     {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_formal)->format('d/m/Y') }}</td> --}}
-                                                                    <td>{{ $rpendidikan->tahun_masuk_formal ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_formal)->format('d/m/Y') : '' }}</td>
-                                                                    <td>{{ $rpendidikan->tahun_lulus_formal ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_formal)->format('d/m/Y') : '' }}</td>
+                                                                    <td>{{ $rpendidikan->tahun_masuk_formal->format('d/m/Y') }}</td>
+                                                                    <td>{{ $rpendidikan->tahun_lulus_formal->format('d/m/Y') }}</td>
+                                                         
                                                                     {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_formal)->format('d/m/Y') }}</td> --}}
                                                                     {{-- <td>{{ $rpendidikan->tahun_lulus_formal }}</td> --}}
                                                                     <td>{{ $rpendidikan->kota_pformal }}</td>
@@ -143,9 +144,8 @@
                                                                 {{-- <td>{{ $rpendidikan->tahun_masuk_nonformal }}</td> --}}
                                                                 {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_nonformal)->format('d/m/Y') }}</td>
                                                                 <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_nonformal)->format('d/m/Y') }}</td> --}}
-                                                                <td>{{ $rpendidikan->tahun_masuk_nonformal ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_nonformal)->format('d/m/Y') : '' }}</td>
-                                                                <td>{{ $rpendidikan->tahun_lulus_nonformal ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_nonformal)->format('d/m/Y') : '' }}</td>
-                                                                 
+                                                                <td>{{ $rpendidikan->tahun_masuk_nonformal->format('d/m/Y') }}</td>
+                                                                <td>{{ $rpendidikan->tahun_lulus_nonformal->format('d/m/Y') }}</td>
                                                                 {{-- <td>{{ $rpendidikan->tahun_lulus_nonformal }}</td> --}}
                                                                 <td>{{ $rpendidikan->kota_pnonformal }}</td>
                                                                 <td>{{ $rpendidikan->ijazah_nonformal }}</td>

@@ -81,7 +81,7 @@ class karyawanController extends Controller
             
             //ambil id_karyawan yang belum punya akun
             $user = DB::table('users')->pluck('id_pegawai');
-            $akun = DB::table('karyawan')->whereNotIn("id", $user)->get();
+            $akun = DB::table('karyawan')->where('partner',Auth::user()->partner)->whereNotIn("id", $user)->get();
 
             $role = Role::where('status','1')->get();
 
@@ -2287,15 +2287,8 @@ class karyawanController extends Controller
 
     public function importexcel(Request $request)
     {
-        try{
             Excel::import(new karyawanImport, request()->file('file'));
-            return redirect()->back()->with('pesan','Data Karyawan Berhasil di Import');
-        }
-        catch (\Throwable $th) {
-            // Tangani jika terjadi kesalahan
-            return redirect()->back()->with('pesa', 'Data Sudah Ada / Terjadi kesalahan saat mengimport data.');
-        }
-       
+            return redirect()->back()->with('pesan','Data Berhasil di Import');
     }
 
     public function exportExcel()

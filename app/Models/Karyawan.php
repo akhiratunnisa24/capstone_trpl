@@ -18,6 +18,7 @@ class Karyawan extends Model
         'nik',
         'nama',
         'tgllahir',
+        'tempatlahir',
         'email',
         'agama',
         'gol_darah',
@@ -41,6 +42,7 @@ class Karyawan extends Model
         'gaji',
         'tglmasuk',
         'tglkeluar',
+        'partner'
     ];
     protected $guarded = [];
 

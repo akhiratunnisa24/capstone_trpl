@@ -18,6 +18,7 @@ class Lowongan extends Model
         'jumlah_dibutuhkan',
         'status',
         'persyaratan',
+        'partner'
     ];
     protected $guarded = [];
 

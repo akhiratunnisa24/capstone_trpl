@@ -48,7 +48,7 @@ class RekruitmenController extends Controller
         if ($role == 1 || $role == 2) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $posisi = Lowongan::all()->sortByDesc('created_at');
+            $posisi = Lowongan::where('partner', Auth::user()->partner)->get();
             $metode = MetodeRekruitmen::where('status', '=', 'Aktif')->get();
 
 
@@ -58,9 +58,6 @@ class RekruitmenController extends Controller
             //     ->first();
 
             // dd($alokasicuti);
-
-
-
             return view('admin.rekruitmen.index', compact('row', 'posisi', 'metode'));
         } else {
 
@@ -97,6 +94,7 @@ class RekruitmenController extends Controller
         $user->tgl_selesai      = Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d');
 
         $user->persyaratan = $request->persyaratan;
+        $user->partner = $request->partner;
         $user->save();
 
         $checkbox = $request->tahapan;

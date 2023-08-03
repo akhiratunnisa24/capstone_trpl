@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use Carbon\Carbon;
+use App\Models\Partner;
 use App\Models\Karyawan;
 use App\Models\Kdarurat;
 use App\Models\Keluarga;
@@ -27,11 +28,11 @@ class karyawanImport implements ToModel, WithHeadingRow
      * @return \Illuminate\Database\Eloquent\Model|null
      */
 
-
     public function model(array $row)
     {
         $maxId = Karyawan::max('id');
-        dd($row);
+        $partner = Auth::user()->partner;
+
         if (isset($row['nama']) && isset($row['tanggal_lahir'])) {
 
             $excelDateA = intval($row['tanggal_lahir']); // Convert to an integer (Excel serial number)
@@ -41,7 +42,7 @@ class karyawanImport implements ToModel, WithHeadingRow
             $excelDateB = intval($row['tanggal_masuk']); // Convert to an integer (Excel serial number)
             $carbonDate = Carbon::createFromTimestamp(($excelDateB - 25569) * 86400)->format('Y-m-d');
             $tgl_masuk = $carbonDate;
-            $cek = !Karyawan::where('nik', $row['no_ktp_opsional'])->where('tgllahir',$tgl_lahir)->where('partner',Auth::user()->partner)->exists();
+            $cek = !Karyawan::where('nik', $row['no_ktp'])->where('tgllahir',$tgl_lahir)->where('partner',$partner)->exists();
             if($cek)
             {
                 $karyawan = [
@@ -50,7 +51,7 @@ class karyawanImport implements ToModel, WithHeadingRow
                     'nama'          => $row['nama'] ?? null,
                     'tgllahir'      => $tgl_lahir,
                     'tempatlahir'   => $row['tempat_lahir'] ?? null,
-                    'email'         => $row['email'] ?? null,
+                    'email'         => $row['e_mail'] ?? null,
                     'agama'         => null,
                     'gol_darah'     => null,
                     'jenis_kelamin' => null,
@@ -81,16 +82,15 @@ class karyawanImport implements ToModel, WithHeadingRow
                     'tglmasuk'      => $tgl_masuk,
                     'tglkeluar'     => null,
                     'foto'          => null,
-                    'partner'       => Auth::user()->partner,
+                    'partner'       => $partner,
                 ];
-
+               
                 Karyawan::create($karyawan);
                 // Keluarga::create($keluarga);
                 // Kdarurat::create($kdarurat);
                 // Rpendidikan::create($rpendidikan);
                 // Rpekerjaan::create($rpekerjaan);
             } else {
-                return $row;
                 Log::info('id karyawan dan tanggal absensi sudah ada');
             }
         } else {

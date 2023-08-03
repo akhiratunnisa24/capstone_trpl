@@ -103,8 +103,9 @@ class ListmesinController extends Controller
             $mesin = Listmesin::find($id);
             $ip = $mesin->ip_mesin;
             $com_key = $mesin->comm_key;
+            $port = $mesin->port;
     
-            $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key]))->get_instance();
+            $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key,'soap_port' => $port]))->get_instance();
             $con = $tad->is_alive();
     
             if ($con) {
