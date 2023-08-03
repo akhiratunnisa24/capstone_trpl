@@ -190,7 +190,7 @@ Route::get('/get-persyaratan/{id}', function ($id) {
     return response()->json(['persyaratan' => $lowongan->persyaratan]);
 });
 
-Route::get('Form-Rekruitmen-RYNEST', [FormPelamarController::class, 'create'], function () {
+Route::get('Form-Rekruitmen-RYNEST/{partner}', [FormPelamarController::class, 'create'], function () {
     return view('admin.rekruitmen.formPelamar');
 });
 
