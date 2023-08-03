@@ -867,7 +867,7 @@ class HomeController extends Controller
             ->where('karyawan.partner', '=', Auth::user()->partner)
             ->select('tidakmasuk.id_pegawai as id_pegawai', 'karyawan.partner','setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
             ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Transportasi" THEN ' . $pg->jumlah_tidakmasuk . ' END')
-            ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai')
+            ->groupBy('setting_absensi.jumlah_tidakmasuk','karyawan.partner', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai')
             ->get();
 
         $jpg = $potongtransport->count();

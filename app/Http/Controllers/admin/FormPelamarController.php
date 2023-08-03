@@ -114,6 +114,7 @@ class FormPelamarController extends Controller
             $pelamar->cv = $namaFile;
             $pelamar->status_lamaran = '1';
             $pelamar->tanggal_tahapan = Carbon::now();
+            $pelamar->partner;
 
             $request->session()->put('pelamar', $pelamar);
         } else {
@@ -146,6 +147,7 @@ class FormPelamarController extends Controller
             $pelamar->cv = $namaFile;
             $pelamar->status_lamaran = '1';
             $pelamar->tanggal_tahapan = Carbon::now();
+            $pelamar->partner;
 
             $request->session()->put('pelamar', $pelamar);
         }
