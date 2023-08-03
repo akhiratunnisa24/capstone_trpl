@@ -106,12 +106,21 @@
         }
     </style>
 
-    <script>
-        document.getElementById("share-button").addEventListener("click", function() {
-            navigator.clipboard.writeText("{{ url('/Form-Rekruitmen-RYNEST') }}");
-            alert("Link berhasil di salin");
-        });
-    </script>
+   
+<script>
+    document.getElementById("share-button").addEventListener("click", function() {
+        @if (auth()->user()->partner == 1)
+            var url = "{{ route('Form-Rekruitmen-RTI') }}";
+            var partnerName = "RTI";
+        @elseif (auth()->user()->partner == 2)
+            var url = "{{ route('Form-Rekruitmen-GRM') }}";
+            var partnerName = "GRM";
+        @endif
+
+        navigator.clipboard.writeText(url);
+        alert("Link untuk form Rekruitmen " + partnerName + " berhasil disalin.");
+    });
+</script>
 
     <script>
         function hapus_karyawan(id) {
