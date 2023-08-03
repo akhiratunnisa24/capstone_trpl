@@ -6,7 +6,7 @@
                 <h4 class="modal-title text-center" id="myModalLabel">Edit User Mesin</h4>
             </div>
             <div class="modal-body">
-                <form action="{{ route('user_mesin.update', ['id' => $data->id]) }}" method="POST">
+                <form action="/user_mesin/update/{{$data->id}}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group col-xs-12">
@@ -29,7 +29,10 @@
                             <label class="col-form-label">Partner</label>
                             <input type="text" class="form-control m-t-10" name="partner" value="{{ $data->partner }}" required>
                         </div>
+                    @else
+                             <input type="hidden" class="form-control m-t-10" name="partner" value="{{ $data->partner }}" required>
                     @endif
+
                     <div class="form-group col-xs-12">
                         <label class="col-form-label">Nomor ID</label>
                         <input type="text" class="form-control m-t-10" name="noid" value="{{ $data->noid }}" required>
