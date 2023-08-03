@@ -274,7 +274,7 @@ class HomeController extends Controller
         
         $tahun = Carbon::now()->year;
 
-        $posisi = Lowongan::all()->where('status', '=', 'Aktif');
+        $posisi = Lowongan::where('partner',Auth::user()->partner)->where('status', '=', 'Aktif')->get();
 
         if($role->role == 3 && $row->jabatan == "Manager")
         {
@@ -906,7 +906,7 @@ class HomeController extends Controller
              ->get();
          $jumdat = $datatelat->count();
 
-        $rekruitmen = Lowongan::where('status','Aktif');
+        $rekruitmen = Lowongan::where('status','Aktif')->where('partner',Auth::user()->partner)->get();
         $rekruitmenjumlah = $rekruitmen->count();
         // dd($potongcuti);
         $karyawan = Karyawan::groupBy('nama_jabatan')

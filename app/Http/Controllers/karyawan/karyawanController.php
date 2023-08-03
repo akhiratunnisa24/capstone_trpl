@@ -74,7 +74,7 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan = karyawan::all()->sortByDesc('created_at');
 
-            $posisi = Lowongan::all()->where('status', '=', 'Aktif')->where('tgl_selesai', '<', Carbon::now());
+            $posisi = Lowongan::where('partner',Auth::user()->partner)->where('status', '=', 'Aktif')->where('tgl_selesai', '<', Carbon::now())->get();
 
             $query = $request->input('query');
             $results = Karyawan::where('nama', 'LIKE', '%' . $query . '%')->get();
@@ -1054,10 +1054,10 @@ class karyawanController extends Controller
                 ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
           
 
-            $posisi = Lowongan::all()->sortByDesc('created_at');
+            $posisi = Lowongan::where('partner',Auth::user()->partner)->sortByDesc('created_at')->get();
             $resign = Resign::orderBy('created_at', 'desc')->get();
             $resignjumlah = $resign->count();
-            $rekruitmen = Rekruitmen::orderBy('created_at', 'desc')->get();
+            $rekruitmen = Rekruitmen::where('partner',Auth::user()->partner)->orderBy('created_at', 'desc')->get();
             $rekruitmenjumlah = $rekruitmen->count();
 
             $currentDate = Carbon::now()->toDateString();

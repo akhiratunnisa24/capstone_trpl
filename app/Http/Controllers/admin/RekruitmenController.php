@@ -206,7 +206,13 @@ class RekruitmenController extends Controller
             // Show data Kanidat di Tahap 1
             $dataId1 = Rekruitmen::where('id_lowongan', $id)
             ->where('status_lamaran', '=', '1')
+            ->where('partner',Auth::user()->partner)
             ->get();
+
+            // $dataId2 = Rekruitmen::where('id_lowongan', $id)
+            // ->where('status_lamaran', '=', '2')
+            // ->where('partner',Auth::user()->partner)
+            // ->get();
 
             $dataId5 = Rekruitmen::where('id_lowongan', $id)
                 ->where('status_lamaran', '=', '5')
@@ -253,6 +259,7 @@ class RekruitmenController extends Controller
             ->get();
 
             $dataId18 = Rekruitmen::where('id_lowongan', $id)
+            ->where('partner',Auth::user()->partner)
             ->where('status_lamaran', '=', '18')
             ->get();
 
@@ -367,13 +374,14 @@ class RekruitmenController extends Controller
         $data = Rekruitmen::findOrFail($id);
         // Email Pelamar
         $tujuan = $data->email;
+        // return $tujuan;
         // Isian Email untuk pelamar
         $email = new RekruitmenNotification($data);
         // Isian Email untuk pelamar yang Diterima
         $emaillolos = new RekruitmenDiterimaNotification($data);
         // Email HRD
-        $hrd1 = 'hrd@gmail.com';
-        $hrd2 = 'hrd2@gmail.com';
+        $hrd1 = 'akhiratunnisahasanah0917@gmail.com';
+        $hrd2 = 'andiny700@gmail.com';
 
         if ($data->status_lamaran != '18'){
             Mail::to($tujuan)->send($email);

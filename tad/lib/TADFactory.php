@@ -56,7 +56,7 @@ class TADFactory
         $this->set_options($this->get_default_options(), $options);
 
         $soap_options = [
-            'location' => "http://192.168.1.8:90/iWsService",
+            'location' => "http://{$options['ip']}/iWsService",
             'uri' => 'http://www.zksoftware/Service/message/',
             'connection_timeout' => $options['connection_timeout'],
             'exceptions' => false,
@@ -79,12 +79,12 @@ class TADFactory
      */
     private function get_default_options()
     {
-        $default_options['ip'] = '1';
+        $default_options['ip'] = '192.168.100.51';
         $default_options['internal_id'] = 1;
         $default_options['com_key'] = 0;
         $default_options['description'] = 'N/A';
         $default_options['connection_timeout'] = 20;
-        $default_options['soap_port'] = 90;
+        $default_options['soap_port'] = 80;
         $default_options['udp_port'] = 4370;
         $default_options['encoding'] = 'iso8859-1';
 
