@@ -20,4 +20,9 @@ class UserMesin extends Model
     {
         return $this->belongsTo(Karyawan::class, 'id_pegawai', 'id');
     }
+
+    public function partners()
+    {
+        return $this->belongsTo(Partner::class, 'partner', 'id');
+    }
 }

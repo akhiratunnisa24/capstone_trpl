@@ -18,19 +18,19 @@ class UserMesinController extends Controller
     public function index()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        
+        $role = Auth::user()->role;
         // Jika rolenya adalah 5, maka tampilkan semua data karyawan
-        if (Auth::user()->role == 5) {
-            $userMesins = UserMesin::with('karyawan')->get();
+        if ($role == 5) {
+            $userMesins = UserMesin::with('karyawan','partners')->get();
             $karyawans = Karyawan::whereNotIn('id', UserMesin::pluck('id_pegawai'))->get();
         } else {
             // Jika bukan role 5, maka tampilkan data karyawan yang sesuai dengan partner
-            $userMesins = UserMesin::with('karyawan')->where('partner', Auth::user()->partner)->get();
+            $userMesins = UserMesin::with('karyawan','partners')->where('partner', Auth::user()->partner)->get();
             $karyawans = Karyawan::where('partner', Auth::user()->partner)
                         ->whereNotIn('id', UserMesin::pluck('id_pegawai'))->get();
         }
         
-        return view('admin.datamaster.user_mesin.index', compact('userMesins', 'karyawans', 'row'));
+        return view('admin.datamaster.user_mesin.index', compact('userMesins', 'karyawans', 'row','role'));
     }
     
     
@@ -53,9 +53,8 @@ class UserMesinController extends Controller
             'noid' => $request->noid,
             'noid2'=>$request->noid2,
             'departemen' => $karyawan->departemen->id,
-            'partner' => $karyawan->partner, // Ambil nilai "partner" dari form
+            'partner' => $karyawan->partner,
         ]);
-
         $userMesin->save();
 
         return redirect()->route('user_mesin.index')->with('success', 'Data user mesin berhasil ditambahkan.');
@@ -97,7 +96,6 @@ class UserMesinController extends Controller
         if (!$userMesin) {
             return redirect()->route('user_mesin.index')->with('error', 'Data user mesin tidak ditemukan.');
         }
-       
     
         // $userMesin->noid = $request->noid;
         $userMesin->noid2 = $request->noid2;
