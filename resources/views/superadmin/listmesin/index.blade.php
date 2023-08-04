@@ -42,7 +42,7 @@
                                         <th>Comm Key</th>
                                         <th>Partner</th>
                                         <th>Status</th>
-                                        <th>Aksi</th>
+                                        <th style="width: 150px;">Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -54,6 +54,7 @@
                                             <td>{{ $data->port}}</td>
                                             <td>{{ $data->comm_key }}</td>
                                             <td>{{ $data->partners->nama_partner}}</td>
+
                                             <td>
                                                 @if ($data->status == 1)
                                                    <span class="badge badge-success">Sukses</span>
@@ -62,16 +63,16 @@
                                                 @endif
                                             </td>
                                             <td class="">
-                                                <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                <div class="btn-group" role="group" aria-label="Basic example">
                                                     <a href="" class="btn btn-success btn-sm editmesin" data-toggle="modal"
                                                         data-target="#editMesin{{ $data->id }}"><i class="fa fa-edit"></i>
                                                     </a>
-
+                                                    <a href="" class="btn btn-dark btn-sm">Get Data</a>
+                                                    
                                                     <form action="{{ route('connect', ['id' => $data->id]) }}" method="POST">
                                                         @csrf
                                                         <button type="submit" class="btn btn-primary btn-sm">CN</button>
                                                     </form>
-                                                    
                                                 </div>
                                             </td>
                                         </tr>

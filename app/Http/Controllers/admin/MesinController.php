@@ -32,8 +32,9 @@ class MesinController extends Controller
             if ($con) {
                 $attendance = $tad->get_att_log();
                 if ($attendance) {
+                    $today = Carbon::now()->format('Y-m-d');
                     $filtered_attendance = $attendance->filter_by_date(
-                        ['start' => '2023-07-31']
+                        ['start' => $today]
                     );
                     $j = $filtered_attendance->get_response(['format' => 'json']);
                     // $j = $attendance->get_response(['format' => 'json']);

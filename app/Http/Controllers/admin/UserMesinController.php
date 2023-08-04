@@ -18,19 +18,19 @@ class UserMesinController extends Controller
     public function index()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        
+        $role = Auth::user()->role;
         // Jika rolenya adalah 5, maka tampilkan semua data karyawan
-        if (Auth::user()->role == 5) {
-            $userMesins = UserMesin::with('karyawan')->get();
+        if ($role == 5) {
+            $userMesins = UserMesin::with('karyawan','partners')->get();
             $karyawans = Karyawan::whereNotIn('id', UserMesin::pluck('id_pegawai'))->get();
         } else {
             // Jika bukan role 5, maka tampilkan data karyawan yang sesuai dengan partner
-            $userMesins = UserMesin::with('karyawan')->where('partner', Auth::user()->partner)->get();
+            $userMesins = UserMesin::with('karyawan','partners')->where('partner', Auth::user()->partner)->get();
             $karyawans = Karyawan::where('partner', Auth::user()->partner)
                         ->whereNotIn('id', UserMesin::pluck('id_pegawai'))->get();
         }
         
-        return view('admin.datamaster.user_mesin.index', compact('userMesins', 'karyawans', 'row'));
+        return view('admin.datamaster.user_mesin.index', compact('userMesins', 'karyawans', 'row','role'));
     }
     
     
@@ -51,6 +51,7 @@ class UserMesinController extends Controller
             'id_pegawai' => $request->id_pegawai,
             'nik' => $karyawan->nip,
             'noid' => $request->noid,
+            'noid2'=>$request->noid2,
             'departemen' => $karyawan->departemen->id,
             'partner' => $karyawan->partner,
         ]);
@@ -87,7 +88,7 @@ class UserMesinController extends Controller
     {
         // dd($request);
         $request->validate([
-            'noid' => 'required',
+            'noid2' => 'nullable',
             'partner' => 'required',
         ]);
     
@@ -96,9 +97,8 @@ class UserMesinController extends Controller
             return redirect()->route('user_mesin.index')->with('error', 'Data user mesin tidak ditemukan.');
         }
     
-        $userMesin->id_pegawai = $request->id_pegawai;
-        $userMesin->nik = $karyawan->nip;
-        $userMesin->noid = $request->noid;
+        // $userMesin->noid = $request->noid;
+        $userMesin->noid2 = $request->noid2;
         $userMesin->partner = $request->partner;
     
         

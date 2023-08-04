@@ -35,7 +35,11 @@
 
                     <div class="form-group col-xs-12">
                         <label class="col-form-label">Nomor ID</label>
-                        <input type="text" class="form-control m-t-10" name="noid" value="{{ $data->noid }}" required>
+                        <input type="text" class="form-control m-t-10" name="noid" value="{{ $data->noid }}" readonly>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label class="col-form-label">Nomor ID 2</label>
+                        <input type="text" class="form-control m-t-10" name="noid2" value="{{ $data->noid2 }}">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
