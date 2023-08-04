@@ -96,8 +96,10 @@ class UserMesinController extends Controller
             return redirect()->route('user_mesin.index')->with('error', 'Data user mesin tidak ditemukan.');
         }
     
-        $userMesin->id_pegawai = $request->id_pegawai;
-        $userMesin->nik = $karyawan->nip;
+       
+
+
+        
         $userMesin->noid = $request->noid;
         $userMesin->partner = $request->partner;
     
