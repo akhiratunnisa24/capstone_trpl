@@ -51,6 +51,7 @@ class UserMesinController extends Controller
             'id_pegawai' => $request->id_pegawai,
             'nik' => $karyawan->nip,
             'noid' => $request->noid,
+            'noid2'=>$request->noid2,
             'departemen' => $karyawan->departemen->id,
             'partner' => $karyawan->partner,
         ]);
@@ -87,7 +88,7 @@ class UserMesinController extends Controller
     {
         // dd($request);
         $request->validate([
-            'noid' => 'required',
+            'noid2' => 'nullable',
             'partner' => 'required',
         ]);
     
@@ -96,11 +97,8 @@ class UserMesinController extends Controller
             return redirect()->route('user_mesin.index')->with('error', 'Data user mesin tidak ditemukan.');
         }
     
-       
-
-
-        
-        $userMesin->noid = $request->noid;
+        // $userMesin->noid = $request->noid;
+        $userMesin->noid2 = $request->noid2;
         $userMesin->partner = $request->partner;
     
         

@@ -41,6 +41,7 @@
                                         <th>NIK</th>
                                         <th>Departemen</th>
                                         <th>Nomor ID</th>
+                                        <th>Nomor ID 2</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -53,6 +54,7 @@
                                             <td>{{ $data->nik }}</td>
                                             <td>{{ $data->karyawan->departemen->nama_departemen }}</td>
                                             <td>{{ $data->noid }}</td>
+                                            <td>{{ $data->noid2 }}</td>
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                 @if (in_array(auth()->user()->role, [1, 5]))

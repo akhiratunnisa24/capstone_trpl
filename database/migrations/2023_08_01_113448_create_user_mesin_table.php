@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_pegawai');
             $table->string('nik')->unique();
             $table->string('noid');
+            $table->string('noid2')->nullable();
             $table->integer('departemen');
             $table->integer('partner');
             $table->timestamps();
