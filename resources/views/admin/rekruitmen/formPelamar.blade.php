@@ -55,9 +55,6 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-sm-6 col-xs-12">
-
-
-
                                             <div class="form-group" id="posisi">
                                                 <label class="form-label">Posisi <span style="color: red;">*</span></label>
                                                 <select class="form-control" name="posisiPelamar" required
@@ -327,8 +324,7 @@
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Nama Bank
                                                             </label>
-                                                        <select class="form-control selectpicker" name="nama_bank"
-                                                            required>
+                                                        <select class="form-control selectpicker" name="nama_bank">
                                                             <option value="">Pilih Bank</option>
                                                             <option value="Bank ANZ Indonesia"
                                                                 {{ $karyawan->nama_bank ?? '' == 'Bank ANZ Indonesia' ? 'selected' : '' }}>
@@ -423,10 +419,11 @@
                                                             value="{{ $pelamar->cv ?? '' }}" required>
                                                     </div>
                                                 </div>
-
+                                                <input type="hidden" name="partner" value="{{ $partner }}">
                                             </div>
                                         </div>
 
+                                        
 
                                     </div>
                                 </div>
