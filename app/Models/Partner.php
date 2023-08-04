@@ -56,4 +56,9 @@ class Partner extends Model
         return $this->hasMany(Settingabsensi::class, 'partner', 'id');
     }
 
+    public function usermesins()
+    {
+        return $this->hasMany(UserMesin::class, 'partner', 'id');
+    }
+
 }
