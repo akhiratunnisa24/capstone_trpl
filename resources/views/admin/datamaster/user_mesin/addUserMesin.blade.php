@@ -36,7 +36,12 @@
                     <div class="form-group">
                         <label for="noid" class="col-form-label">No ID</label>
                         <input type="text" class="form-control" name="noid" id="noid" autocomplete="off"
-                            placeholder="Masukkan No ID" required>
+                            placeholder="Masukkan No ID / PIN1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="noid" class="col-form-label">No ID 2</label>
+                        <input type="text" class="form-control" name="noid2" id="noid2" autocomplete="off"
+                            placeholder="Masukkan No ID 2 / PIN2">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
