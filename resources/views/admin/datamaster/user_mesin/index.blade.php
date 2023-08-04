@@ -18,7 +18,11 @@
         </div>
     </div>
     <!-- Close Header -->
-
+    @if ($errorMessage)
+        <div class="alert alert-danger">
+            {{ $errorMessage }}
+        </div>
+    @endif
     <!-- Start content -->
     <?php session_start(); ?>
     <div class="content">

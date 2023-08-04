@@ -5,6 +5,9 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\UserMesin;
 use App\Models\Karyawan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -18,6 +21,7 @@ class UserMesinController extends Controller
     public function index()
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $errorMessage = Session::get('errorMessage');
         
         // Jika rolenya adalah 5, maka tampilkan semua data karyawan
         if (Auth::user()->role == 5) {
@@ -30,7 +34,7 @@ class UserMesinController extends Controller
                         ->whereNotIn('id', UserMesin::pluck('id_pegawai'))->get();
         }
         
-        return view('admin.datamaster.user_mesin.index', compact('userMesins', 'karyawans', 'row'));
+        return view('admin.datamaster.user_mesin.index', compact('userMesins', 'karyawans', 'row','errorMessage'));
     }
     
     
@@ -39,25 +43,38 @@ class UserMesinController extends Controller
         $request->validate([
             'id_pegawai' => 'required',
             'noid' => 'required',
+            'noid2' => 'nullable', // Hapus validasi unique untuk noid2
             'partner' => 'required', // Tambahkan validasi untuk field "partner"
         ]);
-
+    
+        // Cek apakah data dengan noid2 sudah ada dengan karyawan lain
+        $existingUserMesin = UserMesin::where('noid2', $request->noid2)
+            ->where('id_pegawai', '!=', $request->id_pegawai)
+            ->first();
+    
+            if ($existingUserMesin) {
+                $errorMessage = 'Data dengan Nomor ID 2 tersebut sudah ada dengan karyawan lain.';
+                Session::flash('errorMessage', $errorMessage);
+                return redirect()->route('user_mesin.index')->withInput();
+            }
+    
+        // Proses penyimpanan data jika tidak ada data yang sama dengan noid2 pada karyawan lain
         $karyawan = Karyawan::find($request->id_pegawai);
         if (!$karyawan) {
-            return redirect()->route('user_mesin.index')->with('error', 'Karyawan tidak ditemukan.');
+            return back()->withErrors(['id_pegawai' => 'Karyawan tidak ditemukan.'])->withInput();
         }
-
+    
         $userMesin = new UserMesin([
             'id_pegawai' => $request->id_pegawai,
             'nik' => $karyawan->nip,
             'noid' => $request->noid,
-            'noid2'=>$request->noid2,
+            'noid2' => $request->noid2,
             'departemen' => $karyawan->departemen->id,
-            'partner' => $karyawan->partner, // Ambil nilai "partner" dari form
+            'partner' => $karyawan->partner,
         ]);
-
+    
         $userMesin->save();
-
+    
         return redirect()->route('user_mesin.index')->with('success', 'Data user mesin berhasil ditambahkan.');
     }
     // =====================================Dropdown addModal=============================
@@ -89,10 +106,20 @@ class UserMesinController extends Controller
     {
         // dd($request);
         $request->validate([
-            'noid2' => 'nullable',
+            'noid2' => 'nullable|unique:user_mesin,noid2,'.$id.',id',
             'partner' => 'required',
         ]);
+        
+        if ($request->noid2) {
+            $existingUserMesin = UserMesin::where('noid2', $request->noid2)
+                ->where('id', '!=', $id)
+                ->first();
     
+            if ($existingUserMesin) {
+                return redirect()->back()->with('error', 'Nilai Nomor ID 2 sudah digunakan oleh orang lain.');
+            }
+        }
+
         $userMesin = UserMesin::find($id);
         if (!$userMesin) {
             return redirect()->route('user_mesin.index')->with('error', 'Data user mesin tidak ditemukan.');

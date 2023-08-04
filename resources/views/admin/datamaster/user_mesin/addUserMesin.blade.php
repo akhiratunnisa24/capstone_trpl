@@ -40,8 +40,11 @@
                     </div>
                     <div class="form-group">
                         <label for="noid" class="col-form-label">No ID 2</label>
-                        <input type="text" class="form-control" name="noid2" id="noid2" autocomplete="off"
+                        <input type="text" class="form-control" name="noid2" id="noid2" value="{{ old('noid2') }}" autocomplete="off"
                             placeholder="Masukkan No ID 2 / PIN2">
+                            @error('noid2')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
