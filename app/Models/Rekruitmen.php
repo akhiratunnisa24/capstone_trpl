@@ -26,6 +26,7 @@ class Rekruitmen extends Model
         'no_kk',
         'tipe_karyawan',
         'gaji',
+        'partner'
     ];
     protected $guarded = [];
 

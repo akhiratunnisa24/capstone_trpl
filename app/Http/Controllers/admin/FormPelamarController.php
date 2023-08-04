@@ -67,6 +67,50 @@ class FormPelamarController extends Controller
         return view('admin.rekruitmen.viewTidakAdaLowongan');
     }
 
+    public function createRTI(Request $request)
+    {   
+        $partner = 1;
+        $posisi = Lowongan::where('status', '=', 'Aktif')
+        ->where('jumlah_dibutuhkan', '>', 0)
+        ->where('tgl_selesai','>',Carbon::now())
+        ->where('partner', $partner) // Filter posisi berdasarkan partner
+        ->get();
+
+        $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
+
+        $pelamar = $request->session()->get('pelamar');
+        if (!$pelamar) {
+            $pelamar = new Rekruitmen;
+        }
+
+        if ($openRekruitmen->count() > 0) {
+            return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
+        }
+        return view('admin.rekruitmen.formPelamar')->with('partner', 1);
+    }
+    
+    public function createGRM(Request $request)
+    {
+        $partner = 2;
+        $posisi = Lowongan::where('status', '=', 'Aktif')
+        ->where('jumlah_dibutuhkan', '>', 0)
+        ->where('tgl_selesai','>',Carbon::now())
+        ->where('partner', $partner) // Filter posisi berdasarkan partner
+        ->get();
+
+        $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
+
+        $pelamar = $request->session()->get('pelamar');
+        if (!$pelamar) {
+            $pelamar = new Rekruitmen;
+        }
+
+        if ($openRekruitmen->count() > 0) {
+            return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
+        }
+        return view('admin.rekruitmen.formPelamar')->with('partner', 2);
+    }    
+
     // Create Data Identitas Pelamar
     public function store(Request $request)
     {
@@ -76,6 +120,7 @@ class FormPelamarController extends Controller
         $posisi = Rekruitmen::with('lowongan')
             ->get();
         // dd($posisi);
+        $partnerValue = $request->input('partner');
 
 
         // Simpan file ke folder public/pdf
@@ -114,6 +159,7 @@ class FormPelamarController extends Controller
             $pelamar->cv = $namaFile;
             $pelamar->status_lamaran = '1';
             $pelamar->tanggal_tahapan = Carbon::now();
+            $pelamar->partner = $partnerValue;
 
             $request->session()->put('pelamar', $pelamar);
         } else {
@@ -146,6 +192,7 @@ class FormPelamarController extends Controller
             $pelamar->cv = $namaFile;
             $pelamar->status_lamaran = '1';
             $pelamar->tanggal_tahapan = Carbon::now();
+            $pelamar->partner = $partnerValue;
 
             $request->session()->put('pelamar', $pelamar);
         }

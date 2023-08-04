@@ -74,14 +74,14 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan = karyawan::all()->sortByDesc('created_at');
 
-            $posisi = Lowongan::all()->where('status', '=', 'Aktif')->where('tgl_selesai', '<', Carbon::now());
+            $posisi = Lowongan::where('partner',Auth::user()->partner)->where('status', '=', 'Aktif')->where('tgl_selesai', '<', Carbon::now())->get();
 
             $query = $request->input('query');
             $results = Karyawan::where('nama', 'LIKE', '%' . $query . '%')->get();
             
             //ambil id_karyawan yang belum punya akun
             $user = DB::table('users')->pluck('id_pegawai');
-            $akun = DB::table('karyawan')->whereNotIn("id", $user)->get();
+            $akun = DB::table('karyawan')->where('partner',Auth::user()->partner)->whereNotIn("id", $user)->get();
 
             $role = Role::where('status','1')->get();
 
@@ -1054,10 +1054,10 @@ class karyawanController extends Controller
                 ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
           
 
-            $posisi = Lowongan::all()->sortByDesc('created_at');
+            $posisi = Lowongan::where('partner',Auth::user()->partner)->sortByDesc('created_at')->get();
             $resign = Resign::orderBy('created_at', 'desc')->get();
             $resignjumlah = $resign->count();
-            $rekruitmen = Rekruitmen::orderBy('created_at', 'desc')->get();
+            $rekruitmen = Rekruitmen::where('partner',Auth::user()->partner)->orderBy('created_at', 'desc')->get();
             $rekruitmenjumlah = $rekruitmen->count();
 
             $currentDate = Carbon::now()->toDateString();
@@ -2287,15 +2287,8 @@ class karyawanController extends Controller
 
     public function importexcel(Request $request)
     {
-        try{
             Excel::import(new karyawanImport, request()->file('file'));
-            return redirect()->back()->with('pesan','Data Karyawan Berhasil di Import');
-        }
-        catch (\Throwable $th) {
-            // Tangani jika terjadi kesalahan
-            return redirect()->back()->with('pesa', 'Data Sudah Ada / Terjadi kesalahan saat mengimport data.');
-        }
-       
+            return redirect()->back()->with('pesan','Data Berhasil di Import');
     }
 
     public function exportExcel()

@@ -55,11 +55,8 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-sm-6 col-xs-12">
-
-
-
                                             <div class="form-group" id="posisi">
-                                                <label class="form-label">Posisi</label>
+                                                <label class="form-label">Posisi <span style="color: red;">*</span></label>
                                                 <select class="form-control" name="posisiPelamar" required
                                                     onchange="getPersyaratan(this.value)">
                                                     <option value="">Pilih Posisi</option>
@@ -80,7 +77,7 @@
 
                                             <div class="form-group">
                                                 <div class="mb-3">
-                                                    <label class="form-label">NO. KTP</label>
+                                                    <label class="form-label">NO. KTP <span style="color: red;">*</span></label>
                                                     <input type="number" name="nikPelamar" class="form-control"
                                                         placeholder="Masukkan No. KTP   "
                                                         value="{{ $pelamar->nik ?? '' }}" required>
@@ -89,7 +86,7 @@
 
                                             <div class="form-group">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Nama Lengkap</label>
+                                                    <label class="form-label">Nama Lengkap <span style="color: red;">*</span></label>
                                                     <input type="text" name="namaPelamar" class="form-control"
                                                         placeholder="Masukkan Nama Lengkap" autocomplete="off"
                                                         value="{{ $pelamar->nama ?? '' }}" required>
@@ -99,7 +96,7 @@
 
                                             <div class="form-group">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Tanggal Lahir</label>
+                                                    <label class="form-label">Tanggal Lahir <span style="color: red;">*</span></label>
                                                     <div class="input-group">
                                                         <input id="datepicker-autoclose-format" type="text"
                                                             class="form-control" placeholder="dd/mm/yyyy"
@@ -113,7 +110,7 @@
 
                                             <div class="form-group">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Tempat Lahir</label>
+                                                    <label class="form-label">Tempat Lahir <span style="color: red;">*</span></label>
                                                     <input type="text" name="tempatlahirPelamar"
                                                         class="form-control" placeholder="Masukkan Tempat Lahir"
                                                         autocomplete="off" value="{{ $pelamar->tempatlahir ?? '' }}">
@@ -123,7 +120,7 @@
 
                                             <div class="form-group">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Jenis Kelamin</label>
+                                                    <label class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>
                                                     <select class="form-control" name="jenis_kelaminPelamar" required>
                                                         <option value="">Pilih Jenis Kelamin</option>
                                                         <option value="Laki-Laki"
@@ -155,7 +152,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="form-label">Alamat</label>
+                                                <label class="form-label">Alamat <span style="color: red;">*</span></label>
                                                 <textarea class="form-control" autocomplete="off" name="alamatPelamar" rows="5">{{ $pelamar->alamat ?? '' }}</textarea>
                                             </div>
 
@@ -185,7 +182,7 @@
                                             <div class="form-group">
                                                 <div class="mb-3">
                                                     <label for="exampleInputEmail1" class="form-label">Jumlah Anak
-                                                        *</label>
+                                                        </label>
                                                     <input type="number" name="jumlahAnak" class="form-control"
                                                         autocomplete="off" placeholder="Masukkan Jumlah Anak"
                                                         value="{{ $pelamar->jumlah_anak ?? '' }}">
@@ -203,7 +200,7 @@
 
                                                 <div class="form-group">
                                                     <div class="mb-3">
-                                                        <label class="form-label">No. Handphone</label>
+                                                        <label class="form-label">No. Handphone <span style="color: red;">*</span></label>
                                                         <input type="number" name="no_hpPelamar"
                                                             class="form-control"
                                                             placeholder="Masukkan Nomor Handphone"
@@ -213,7 +210,7 @@
 
                                                 <div class="form-group">
                                                     <div class="mb-3">
-                                                        <label class="form-label">Email</label>
+                                                        <label class="form-label">Email <span style="color: red;">*</span></label>
                                                         <input type="text" name="emailPelamar"
                                                             class="form-control" placeholder="Masukkan Email"
                                                             autocomplete="off" value="{{ $pelamar->email ?? '' }}"
@@ -224,7 +221,7 @@
 
                                                 <div class="form-group">
                                                     <div class="mb-3">
-                                                        <label class="form-label">Agama</label>
+                                                        <label class="form-label">Agama <span style="color: red;">*</span></label>
                                                         <select class="form-control" name="agamaPelamar" required>
                                                             <option value="">Pilih Agama</option>
                                                             <option value="Islam"
@@ -251,7 +248,7 @@
 
                                                 <div class="form-group">
                                                     <div class="mb-3">
-                                                        <label class="form-label">No. Kartu Keluarga *</label>
+                                                        <label class="form-label">No. Kartu Keluarga </label>
                                                         <input type="number" name="no_kkPelamar"
                                                             class="form-control" value="{{ $pelamar->no_kk ?? '' }}"
                                                             placeholder="Masukkan Nomor Kartu Keluarga">
@@ -261,7 +258,7 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">No. NPWP
-                                                            *</label>
+                                                            </label>
                                                         <input type="text" name="nonpwpPelamar"
                                                             class="form-control"
                                                             value="{{ $pelamar->no_npwp ?? '' }}"
@@ -272,7 +269,7 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">No. BPJS
-                                                            Ketenagakerjaan *</label>
+                                                            Ketenagakerjaan </label>
                                                         <input type="number" name="nobpjsketPelamar"
                                                             class="form-control"
                                                             value="{{ $pelamar->no_bpjs_ket ?? '' }}"
@@ -283,7 +280,7 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">No.
-                                                            BPJSKesehatan *</label>
+                                                            BPJSKesehatan </label>
                                                         <input type="number" name="nobpjskesPelamar"
                                                             class="form-control"
                                                             value="{{ $pelamar->no_bpjs_kes ?? '' }}"
@@ -294,7 +291,7 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">No.
-                                                            Asuransi AKDHK *</label>
+                                                            Asuransi AKDHK </label>
                                                         <input type="number" name="noAkdhk" class="form-control"
                                                             value="{{ $pelamar->no_akdhk ?? '' }}"
                                                             placeholder="Masukkan No. AKDHK">
@@ -304,7 +301,7 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">No. Program
-                                                            Pensiun *</label>
+                                                            Pensiun </label>
                                                         <input type="number" name="noprogramPensiun"
                                                             class="form-control"
                                                             value="{{ $pelamar->no_program_pensiun ?? '' }}"
@@ -315,7 +312,7 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">No. Program
-                                                            ASKES *</label>
+                                                            ASKES </label>
                                                         <input type="number" name="noprogramAskes"
                                                             class="form-control"
                                                             value="{{ $pelamar->no_program_askes ?? '' }}"
@@ -326,9 +323,8 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Nama Bank
-                                                            *</label>
-                                                        <select class="form-control selectpicker" name="nama_bank"
-                                                            required>
+                                                            </label>
+                                                        <select class="form-control selectpicker" name="nama_bank">
                                                             <option value="">Pilih Bank</option>
                                                             <option value="Bank ANZ Indonesia"
                                                                 {{ $karyawan->nama_bank ?? '' == 'Bank ANZ Indonesia' ? 'selected' : '' }}>
@@ -397,7 +393,7 @@
                                                 <div class="form-group">
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">No.
-                                                            Rekening *</label>
+                                                            Rekening </label>
                                                         <input type="number" name="norekPelamar"
                                                             class="form-control" value="{{ $pelamar->no_rek ?? '' }}"
                                                             placeholder="Masukkan No. Rekening">
@@ -418,15 +414,16 @@
 
                                                 <div class="form-group">
                                                     <div class="mb-3">
-                                                        <label class="form-label">Upload CV</label>
+                                                        <label class="form-label">Upload CV <span style="color: red;">*</span></label>
                                                         <input type="file" name="pdfPelamar" class="form-control"
                                                             value="{{ $pelamar->cv ?? '' }}" required>
                                                     </div>
                                                 </div>
-
+                                                <input type="hidden" name="partner" value="{{ $partner }}">
                                             </div>
                                         </div>
 
+                                        
 
                                     </div>
                                 </div>

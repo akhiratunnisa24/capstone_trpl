@@ -80,6 +80,7 @@
                         <label class="form-label">Persyaratan</label>
                         <textarea type="text" class="form-control " rows="9" name="persyaratan" placeholder="Masukkan Persyaratan"
                             required></textarea>
+                        <input type="hidden" class="form-control " name="partner" value="{{Auth::user()->partner}}">
                     </div>
 
 

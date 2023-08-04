@@ -190,9 +190,13 @@ Route::get('/get-persyaratan/{id}', function ($id) {
     return response()->json(['persyaratan' => $lowongan->persyaratan]);
 });
 
-Route::get('Form-Rekruitmen-RYNEST', [FormPelamarController::class, 'create'], function () {
-    return view('admin.rekruitmen.formPelamar');
-});
+// Route::get('Form-Rekruitmen-RYNEST/{partner}', [FormPelamarController::class, 'create'], function () {
+//     return view('admin.rekruitmen.formPelamar');
+// });
+Route::get('Form-Rekruitmen-RTI', [FormPelamarController::class, 'createRTI'])->name('Form-Rekruitmen-RTI');
+Route::get('Form-Rekruitmen-GRM', [FormPelamarController::class, 'createGRM'])->name('Form-Rekruitmen-GRM');
+
+
 
 Route::get('Form-DataKaryawan-RYNEST', [FormPelamarController::class, 'create_karyawan_baru'], function () {
     return view('admin.rekruitmen.formPelamar');
