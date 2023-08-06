@@ -67,7 +67,10 @@
                                                     <a href="" class="btn btn-success btn-sm editmesin" data-toggle="modal"
                                                         data-target="#editMesin{{ $data->id }}"><i class="fa fa-edit"></i>
                                                     </a>
-                                                    <a href="" class="btn btn-dark btn-sm">Get Data</a>
+                                                    <form action="{{ route('listmesin.tarikdata', ['id' => $data->id]) }}" method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-dark btn-sm">Get Data</button>
+                                                    </form>
                                                     
                                                     <form action="{{ route('connect', ['id' => $data->id]) }}" method="POST">
                                                         @csrf
