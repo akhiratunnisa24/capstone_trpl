@@ -39,9 +39,15 @@
                                         <th>No</th>
                                         <th>Nama User Mesin</th>
                                         <th>NIK</th>
-                                        <th>Departemen</th>
-                                        <th>Nomor ID</th>
-                                        <th>Nomor ID 2</th>
+                                        @if($role == 1 || $role ==2)
+                                            <th>Departemen</th>
+                                            <th>Nomor ID</th>
+                                            <th>Nomor ID 2</th>
+                                        @elseif($role ==5)
+                                            <th>Nomor ID</th>
+                                            <th>Nomor ID 2</th>
+                                            <th>Partner</th>
+                                        @endif
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -52,9 +58,14 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $data->karyawan->nama }}</td>
                                             <td>{{ $data->nik }}</td>
-                                            <td>{{ $data->karyawan->departemen->nama_departemen }}</td>
+                                            @if($role == 1 || $role == 2)
+                                                <td>{{ $data->karyawan->departemen->nama_departemen }}</td>
+                                            @endif
                                             <td>{{ $data->noid }}</td>
                                             <td>{{ $data->noid2 }}</td>
+                                            @if($role == 5)
+                                                <td>{{ $data->partners->nama_partner }}</td>
+                                            @endif
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                 @if (in_array(auth()->user()->role, [1, 5]))
