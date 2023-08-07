@@ -69,28 +69,6 @@ class FormPelamarController extends Controller
 
     public function createRTI(Request $request)
     {   
-        $partner = 1;
-        $posisi = Lowongan::where('status', '=', 'Aktif')
-        ->where('jumlah_dibutuhkan', '>', 0)
-        ->where('tgl_selesai','>',Carbon::now())
-        ->where('partner', $partner) // Filter posisi berdasarkan partner
-        ->get();
-
-        $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
-
-        $pelamar = $request->session()->get('pelamar');
-        if (!$pelamar) {
-            $pelamar = new Rekruitmen;
-        }
-
-        if ($openRekruitmen->count() > 0) {
-            return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
-        }
-        return view('admin.rekruitmen.formPelamar')->with('partner', 1);
-    }
-    
-    public function createGRM(Request $request)
-    {
         $partner = 2;
         $posisi = Lowongan::where('status', '=', 'Aktif')
         ->where('jumlah_dibutuhkan', '>', 0)
@@ -109,6 +87,28 @@ class FormPelamarController extends Controller
             return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
         }
         return view('admin.rekruitmen.formPelamar')->with('partner', 2);
+    }
+    
+    public function createGRM(Request $request)
+    {
+        $partner = 1;
+        $posisi = Lowongan::where('status', '=', 'Aktif')
+        ->where('jumlah_dibutuhkan', '>', 0)
+        ->where('tgl_selesai','>',Carbon::now())
+        ->where('partner', $partner) // Filter posisi berdasarkan partner
+        ->get();
+
+        $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
+
+        $pelamar = $request->session()->get('pelamar');
+        if (!$pelamar) {
+            $pelamar = new Rekruitmen;
+        }
+
+        if ($openRekruitmen->count() > 0) {
+            return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
+        }
+        return view('admin.rekruitmen.formPelamar')->with('partner', 1);
     }    
 
     // Create Data Identitas Pelamar

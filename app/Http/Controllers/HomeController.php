@@ -164,7 +164,7 @@ class HomeController extends Controller
         
 
         //ambil jumlah Karyawan       
-        $totalKaryawan = karyawan::where('partner',Auth::user()->partner)->count('id');
+        $totalKaryawan = Karyawan::where('partner',Auth::user()->partner)->count('id');
 
         // ambil jumlah karyawan yang sudah absen
         $totalabsen = DB::table('absensi')
@@ -174,11 +174,12 @@ class HomeController extends Controller
                     ->whereDay('tanggal', '=', Carbon::now())
                     ->count('id_karyawan');
 
-        $totalTidakAbsenHariIni = $totalKaryawan - $totalabsen ;
+        $totalTidakAbsenHariIni = $totalKaryawan - $totalabsen;
         $tidakMasukHariIni = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereDay('tanggal', '=', Carbon::now())
             ->count('nama');
+        // dd($totalKaryawan);
         $tidakMasukBulanIni = Tidakmasuk::whereYear('tanggal', '=',Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->count('nama');
