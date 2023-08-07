@@ -115,8 +115,8 @@
     <div class="row-sm-3">
         @if(Auth::user()->partner == 1)
             <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
-        @else
-            <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
+        @elseif(Auth::user()->partner == 2)
+            <p id="ttd">Depok, {{  $formatted_date }}</p>
         @endif
         {{-- <p id="t">Hormat Kami,</p> --}}
         <p id="tt">(HR Development)</p>

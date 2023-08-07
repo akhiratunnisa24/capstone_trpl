@@ -131,5 +131,22 @@
 <script src="assets/js/jquery.min.js"></script>
 <!-- Datatable init js -->
 <script src="assets/pages/datatables.init.js"></script>
+@if(Session::has('pesan'))
+<script>
+    swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+        button:true,
+        button:"OK",
+    });
+</script>
+@endif
+
+@if(Session::has('pesa'))
+<script>
+    swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+        button:true,
+        button:"OK",
+    });
+</script>
+@endif
 {{-- <script src="assets/js/app.js"></script> --}}
 @endsection

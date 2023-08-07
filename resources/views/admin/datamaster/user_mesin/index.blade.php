@@ -47,7 +47,7 @@
                                             <th>Departemen</th>
                                             <th>Nomor ID</th>
                                             <th>Nomor ID 2</th>
-                                        @elseif($role ==5)
+                                        @elseif($role == 5)
                                             <th>Nomor ID</th>
                                             <th>Nomor ID 2</th>
                                             <th>Partner</th>
