@@ -142,6 +142,25 @@
         }
     </script>
 
+
+    @if(Session::has('pesan'))
+        <script>
+            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
+
+    @if(Session::has('pesa'))
+        <script>
+        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+            button:true,
+            button:"OK",
+        });
+        </script>
+    @endif
+
     <?php if(@$_SESSION['sukses']){ ?>
     <script>
         swal.fire("Good job!", "<?php echo $_SESSION['sukses']; ?>", "success");
