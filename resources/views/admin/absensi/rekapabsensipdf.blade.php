@@ -123,7 +123,7 @@
         @if(Auth::user()->partner == 1)
             <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
         @else
-            <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
+            <p id="ttd">Depok, {{  $formatted_date }}</p>
         @endif
 
         <p id="tt">(HR Development)</p>

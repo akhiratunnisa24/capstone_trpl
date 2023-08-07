@@ -22,7 +22,7 @@
                                         <label>Karyawan</label>
 
                                         <select name="id_karyawan" id="id_karyawan" class="form-control selectpicker" data-live-search="true" required>
-                                            <option>-- Pilih Karyawan --</option>
+                                            <option>Semua</option>
                                             @foreach ($karyawan as $data)
                                                 <option value="{{ $data->id}}"
                                                     @if ($data->id ==request()->id_karyawan)

@@ -47,24 +47,41 @@ class AbsensiController extends Controller
             $tahun = $request->query('tahun',Carbon::now()->format('Y'));
 
             // simpan session
-            $request->session()->put('idkaryawan', $request->id_karyawan);
+            $request->session()->put('idkaryawan',$idkaryawan);
             $request->session()->put('bulan', $bulan);
             $request->session()->put('tahun', $tahun);
-    
-            if(isset($idkaryawan) && isset($bulan) && isset($tahun))
+
+            if($idkaryawan !=="Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
             {
                 $absensi = Absensi::with('karyawans','departemens')
                 ->where('id_karyawan', $idkaryawan)
                 ->whereMonth('tanggal', $bulan)
                 ->whereYear('tanggal',$tahun)
                 ->get();
-            }else
+            }
+            else if($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
+            {
+                $absensi = Absensi::whereHas('karyawans', function ($query) {
+                    $query->where('absensi.partner', Auth::user()->partner)
+                        ->whereHas('departemens', function ($subQuery) {
+                            $subQuery->where('absensi.partner', Auth::user()->partner);
+                        });
+                })
+                ->whereMonth('tanggal', $bulan)
+                ->whereYear('tanggal', $tahun)
+                ->get();
+            }
+            else
             {
                 $absensi = Absensi::with('karyawans','departemens')
                 ->where('absensi.partner',Auth::user()->partner)
                 ->orderBy('tanggal','desc')
                 ->get();
             }
+
+           
+
+
             return view('admin.absensi.index',compact('absensi','karyawan','row','role'));
         
             //menghapus filter data
@@ -394,7 +411,7 @@ class AbsensiController extends Controller
     public function rekapabsensipdf(Request $request)
     {
         $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
-        $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
+        // $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
 
         $idkaryawan = $request->id_karyawan;
         $bulan      = $request->query('bulan',Carbon::now()->format('m'));
@@ -406,26 +423,51 @@ class AbsensiController extends Controller
         $tahun      = $request->session()->get('tahun');
 
         $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
-        $nbulan    = $namaBulan . ' ' . $tahun;
-
+       
         // dd($idkaryawan,$bulan,$tahun );
     
-        if(isset($idkaryawan) && isset($bulan) && isset($tahun))
+        if($idkaryawan !== "Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
             $data = Absensi::where('id_karyawan', $idkaryawan)
                 ->with('karyawans','departemens')
                 ->whereMonth('tanggal', $bulan)
                 ->whereYear('tanggal',$tahun)
                 ->get();
-        }else{
-            $data = Absensi::with('departemens','karyawans') ->where('absensi.partner',Auth::user()->partner)->get();
+
+            $nbulan    = $namaBulan . ' ' . $tahun;
+            $pdfName = "Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf";
+
+        }
+        else{
+            $data = Absensi::with('departemens','karyawans')->where('absensi.partner',Auth::user()->partner)
+            ->orderBy('id_karyawan','asc')->get();
+            $nbulan    = "-";
+            $pdfName = "Rekap Absensi Semua Karyawan.pdf";
+        }
+
+        if($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
+        {
+            $data = Absensi::whereHas('karyawans', function ($query) {
+                $query->where('absensi.partner', Auth::user()->partner)
+                    ->whereHas('departemens', function ($subQuery) {
+                        $subQuery->where('absensi.partner', Auth::user()->partner);
+                    });
+            })
+            ->whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal', $tahun)
+            ->orderBy('id_karyawan','asc')
+            ->get();
+
+            $nbulan    = $namaBulan . ' ' . $tahun;
+            $pdfName = "Rekap Absensi Bulan ". $nbulan .".pdf";
+
         }
 
         if ($data->isEmpty()) 
         {
             return redirect()->back()->with('pesa','Tidak Data Ada.');
         } else {
-            $pdfName = "Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf";
+           
             $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
             ->setPaper('a4','landscape');
             // return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
@@ -435,7 +477,6 @@ class AbsensiController extends Controller
 
     public function rekapabsensiExcel(Request $request)
     {
-        $nbulan = $request->query('bulan',Carbon::now()->format('M Y'));
 
         $idkaryawan = $request->id_karyawan;
         $bulan      = $request->query('bulan',Carbon::now()->format('m'));
@@ -446,24 +487,41 @@ class AbsensiController extends Controller
         $bulan      = $request->session()->get('bulan');
         $tahun      = $request->session()->get('tahun',);
     
-        if(isset($idkaryawan) && isset($bulan) && isset($tahun))
+        // dd($idkaryawan,$bulan,$tahun );
+    
+        if($idkaryawan !=="Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
             $data = Absensi::with('karyawans','departemens')
             ->where('id_karyawan', $idkaryawan)
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal',$tahun)
             ->get();
-            // dd($data);
+            
+            $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
+            $nbulan    = $namaBulan . ' ' . $tahun;
+            
             if ($data->isEmpty()) 
             {
                 return redirect()->back()->with('pesa','Tidak Ada Data');
             } else {
                 return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".xlsx");
             }  
-        }else
+        }elseif($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
         {
-            $data = Absensi::with('karyawans','departemens')->where('absensi.partner',Auth::user()->partner)
-            ->orderBy('id_karyawan', 'asc')->get();
+            $data = Absensi::whereHas('karyawans', function ($query) {
+                $query->where('absensi.partner', Auth::user()->partner)
+                    ->whereHas('departemens', function ($subQuery) {
+                        $subQuery->where('absensi.partner', Auth::user()->partner);
+                    });
+            })
+            ->whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal', $tahun)
+            ->orderBy('id_karyawan','asc')
+            ->get();
+
+            $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
+            $nbulan    = $namaBulan . ' ' . $tahun;
+            $pdfName = "Rekap Absensi Bulan ". $nbulan .".pdf";
 
             if ($data->isEmpty()) 
             {
@@ -471,7 +529,22 @@ class AbsensiController extends Controller
             } else {
                 return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan " . $nbulan .".xlsx");
             }  
+
         }
+        else
+        {
+            $data = Absensi::with('karyawans','departemens')->where('absensi.partner',Auth::user()->partner)
+            ->orderBy('id_karyawan', 'asc')->get();
+            $nbulan = "-";
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } else {
+                return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan " . $nbulan .".xlsx");
+            }  
+        }
+
+       
     }
 
     public function storeTidakmasuk(Request $data)
