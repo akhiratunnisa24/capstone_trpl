@@ -109,10 +109,10 @@
    
 <script>
     document.getElementById("share-button").addEventListener("click", function() {
-        @if (auth()->user()->partner == 1)
+        @if (auth()->user()->partner ==2)
             var url = "{{ route('Form-Rekruitmen-RTI') }}";
             var partnerName = "RTI";
-        @elseif (auth()->user()->partner == 2)
+        @elseif (auth()->user()->partner == 1)
             var url = "{{ route('Form-Rekruitmen-GRM') }}";
             var partnerName = "GRM";
         @endif
