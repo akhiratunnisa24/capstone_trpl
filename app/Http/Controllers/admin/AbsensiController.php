@@ -72,43 +72,47 @@ class AbsensiController extends Controller
             $request->session()->forget('bulan');
             $request->session()->forget('tahun');
 
-        }elseif(($role == 1) || $role == 2)
-        {
-            $karyawan = Karyawan::all();
-
-            $idkaryawan = $request->id_karyawan;
-            $bulan = $request->query('bulan',Carbon::now()->format('m'));
-            $tahun = $request->query('tahun',Carbon::now()->format('Y'));
-
-            // simpan session
-            $request->session()->put('idkaryawan', $request->id_karyawan);
-            $request->session()->put('bulan', $bulan);
-            $request->session()->put('tahun', $tahun);
-    
-            if(isset($idkaryawan) && isset($bulan) && isset($tahun))
-            {
-                $absensi = Absensi::with('karyawans','departemens')->where('id_karyawan', $idkaryawan)
-                ->whereMonth('tanggal', $bulan)
-                ->whereYear('tanggal',$tahun)
-                ->get();
-            }else
-            {
-                $absensi = Absensi::with('karyawans','departemens')
-                ->orderBy('tanggal','desc')
-                ->get();
-            }
-            return view('admin.absensi.index',compact('absensi','karyawan','row','role'));
-        
-            //menghapus filter data
-            $request->session()->forget('id_karyawan');
-            $request->session()->forget('bulan');
-            $request->session()->forget('tahun');
         }
         else
          {
         
             return redirect()->back(); 
         }
+
+        //   elseif(($role == 1) || $role == 2)
+        // {
+        //     $karyawan = Karyawan::all();
+
+        //     $idkaryawan = $request->id_karyawan;
+        //     $bulan = $request->query('bulan',Carbon::now()->format('m'));
+        //     $tahun = $request->query('tahun',Carbon::now()->format('Y'));
+
+        //     // simpan session
+        //     $request->session()->put('idkaryawan', $request->id_karyawan);
+        //     $request->session()->put('bulan', $bulan);
+        //     $request->session()->put('tahun', $tahun);
+    
+        //     if(isset($idkaryawan) && isset($bulan) && isset($tahun))
+        //     {
+        //         $absensi = Absensi::with('karyawans','departemens')->where('id_karyawan', $idkaryawan)
+        //         ->where('absensi.partner',Auth::user()->partner)
+        //         ->whereMonth('tanggal', $bulan)
+        //         ->whereYear('tanggal',$tahun)
+        //         ->get();
+        //     }else
+        //     {
+        //         $absensi = Absensi::with('karyawans','departemens')
+        //         ->where('absensi.partner',Auth::user()->partner)
+        //         ->orderBy('tanggal','desc')
+        //         ->get();
+        //     }
+        //     return view('admin.absensi.index',compact('absensi','karyawan','row','role'));
+        
+        //     //menghapus filter data
+        //     $request->session()->forget('id_karyawan');
+        //     $request->session()->forget('bulan');
+        //     $request->session()->forget('tahun');
+        // }
     }
 
     public function create()
@@ -414,7 +418,7 @@ class AbsensiController extends Controller
                 ->whereYear('tanggal',$tahun)
                 ->get();
         }else{
-            $data = Absensi::with('departemens','karyawans')->get();
+            $data = Absensi::with('departemens','karyawans') ->where('absensi.partner',Auth::user()->partner)->get();
         }
 
         if ($data->isEmpty()) 
@@ -456,9 +460,10 @@ class AbsensiController extends Controller
             } else {
                 return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".xlsx");
             }  
-        }else{
-            $data = Absensi::with('karyawans','departemens')
-            ->get();
+        }else
+        {
+            $data = Absensi::with('karyawans','departemens')->where('absensi.partner',Auth::user()->partner)
+            ->orderBy('id_karyawan', 'asc')->get();
 
             if ($data->isEmpty()) 
             {

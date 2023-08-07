@@ -77,7 +77,7 @@ class karyawanController extends Controller
             $posisi = Lowongan::where('partner',Auth::user()->partner)->where('status', '=', 'Aktif')->where('tgl_selesai', '<', Carbon::now())->get();
 
             $query = $request->input('query');
-            $results = Karyawan::where('nama', 'LIKE', '%' . $query . '%')->get();
+            $results = Karyawan::where('nama', 'LIKE', '%' . $query . '%')->where('partner',Auth::user()->partner)->get();
             
             //ambil id_karyawan yang belum punya akun
             $user = DB::table('users')->pluck('id_pegawai');
