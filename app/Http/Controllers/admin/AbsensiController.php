@@ -432,7 +432,6 @@ class AbsensiController extends Controller
                 ->with('karyawans','departemens')
                 ->whereMonth('tanggal', $bulan)
                 ->whereYear('tanggal',$tahun)
-                ->orderBy('id_karyawan','asc')
                 ->get();
 
             $nbulan    = $namaBulan . ' ' . $tahun;
@@ -496,7 +495,6 @@ class AbsensiController extends Controller
             ->where('id_karyawan', $idkaryawan)
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal',$tahun)
-            ->orderBy('id_karyawan', 'asc')
             ->get();
             
             $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
@@ -537,7 +535,7 @@ class AbsensiController extends Controller
         {
             $data = Absensi::with('karyawans','departemens')->where('absensi.partner',Auth::user()->partner)
             ->orderBy('id_karyawan', 'asc')->get();
-
+            $nbulan = "-";
             if ($data->isEmpty()) 
             {
                 return redirect()->back()->with('pesa','Tidak Ada Data');
