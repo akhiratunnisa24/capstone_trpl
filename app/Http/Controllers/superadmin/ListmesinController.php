@@ -151,7 +151,7 @@ class ListmesinController extends Controller
                     // dd($jArray);
 
                     $usermesin = UserMesin::where('partner',$partner)->get();
-                   
+                    // dd($usermesin);
                     // Loop melalui data $jArray untuk mencocokkan nilai PIN
                     foreach ($jArray['Row'] as $data) 
                     {
@@ -161,6 +161,7 @@ class ListmesinController extends Controller
                         $jam = $datetime->format('H:i:s');
 
                         $matchedUser = $usermesin->where('noid', $pin)->first();
+                        dd($matchedUser);
                         if (isset($matchedUser)) 
                         {
                             $jadwals = Jadwal::where('tanggal', $tanggal)->where('partner', Auth::user()->partner)->get();
