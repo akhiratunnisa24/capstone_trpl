@@ -416,9 +416,13 @@ class AbsensiController extends Controller
                 ->with('karyawans','departemens')
                 ->whereMonth('tanggal', $bulan)
                 ->whereYear('tanggal',$tahun)
+                ->orderBy('id_karyawan','asc')
                 ->get();
         }else{
-            $data = Absensi::with('departemens','karyawans') ->where('absensi.partner',Auth::user()->partner)->get();
+            $data = Absensi::with('departemens','karyawans')
+                ->where('absensi.partner',Auth::user()->partner)
+                ->orderBy('id_karyawan','asc')
+                ->get();
         }
 
         if ($data->isEmpty()) 
@@ -452,6 +456,7 @@ class AbsensiController extends Controller
             ->where('id_karyawan', $idkaryawan)
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal',$tahun)
+            ->orderBy('id_karyawan', 'asc')
             ->get();
             // dd($data);
             if ($data->isEmpty()) 
@@ -462,8 +467,9 @@ class AbsensiController extends Controller
             }  
         }else
         {
-            $data = Absensi::with('karyawans','departemens')->where('absensi.partner',Auth::user()->partner)
-            ->orderBy('id_karyawan', 'asc')->get();
+            $data = Absensi::with('karyawans','departemens')
+                ->where('absensi.partner',Auth::user()->partner)
+                ->orderBy('id_karyawan', 'asc')->get();
 
             if ($data->isEmpty()) 
             {
