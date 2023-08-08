@@ -11,13 +11,13 @@
                     <li>Human Resources Management System</li>
                     <li class="active">Ajukan Resign</li>
                 </ol>
-                <div class="clearfix"></div>               
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
     <!-- Close Header -->
-    
-               
+
+
                     <!-- Start content -->
                     <div class="content">
                         <div class="container">
@@ -26,11 +26,11 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
                                             <strong>List Resign Staff</strong>
-                                            {{-- <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                                data-target="#Modal"> Form Ajukan Resign</a> --}}
+                                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
+                                                data-target="#Modal"> Form Ajukan Resign</a>
                                         </div>
                                         <!-- modals tambah data cuti -->
-                                        {{-- @include('admin.resign.addresign') --}}
+                                        @include('admin.resign.addresign')
 
                                         <div class="panel-body m-b-5">
                                             <div class="row">
@@ -61,12 +61,12 @@
                                                                 {{-- <td>{{ $r->tipe_resign }}</td> --}}
                                                                 <td>
                                                                   <span
-                                                                  class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'warning' : 'danger'))) }}">
+                                                                  class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'danger' : 'danger'))) }}">
                                                                   {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 6 ? $r->statuses->name_status : ($r->status == 7 ? $r->statuses->name_status : ($r->status == 5 ? $r->statuses->name_status : 'Ditolak'))) }}
                                                               </span>
                                                                 </td>
                                                                     {{-- <td class="text-center d-flex justify-content-between">
-                                                                    @if ($r->status === 1)
+                                                                    @if ($r->status == 1)
                                                                     <form action="{{ route('resign_approved_manager', $r->id) }}" method="POST">
                                                                         @csrf
                                                                         <input type="hidden" name="status" value=2 hidden>
@@ -82,7 +82,7 @@
                                                                           <i class="fa fa-times"></i>
                                                                         </button>
                                                                       </form>
-                                                                    @endif  
+                                                                    @endif
                                                                       <form action="" method="POST">
                                                                         <a class="btn btn-info btn-sm mx-1" data-toggle="modal" data-target="#Showresign{{ $r->id }}">
                                                                           <i class="fa fa-eye"></i>
@@ -92,13 +92,11 @@
 
                                                                     <td id="b" class="text-center">
                                                                         <div class="btn-group" role="group">
-                                                                            @if ($r->status === 8)
-                                                                            <form action="{{ route('resign_approved_manager', $r->id) }}" method="POST">
-                                                                              @csrf
-                                                                              <input type="hidden" name="status" value="2" class="form-control" hidden>
-                                                                              <button type="submit" class="btn btn-success btn-sm">
-                                                                                <i class="fa fa-check"></i>
-                                                                              </button>
+                                                                            @if ($r->status == 1)
+                                                                              <form action="{{ route('resign_approved_manager', $r->id) }}" method="POST">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status" value="1">
+                                                                                <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>
                                                                             </form>
                                                                             <form action="{{ route('resignreject', $r->id) }}" method="POST">
                                                                               @csrf
@@ -129,7 +127,7 @@
                     </div> <!-- content -->
                 </div>
 
-             
+
 
             </div>
         </div>
@@ -140,7 +138,7 @@
 
     {{-- <script type="text/javascript">
     let tp = '{{$tipe}}';
-    
+
         if(tp == 1) {
             $('#tab1').click();
         } else {
