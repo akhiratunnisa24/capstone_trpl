@@ -22,7 +22,7 @@
                                     <div class="form-group">
                                         <label>Karyawan</label>
                                         <select name="id_karyawan" id="id_karyawan" class="form-control selectpicker" data-live-search="true" required>
-                                            <option>-- Pilih Karyawan --</option>
+                                            <option>-- Semua --</option>
                                             @foreach ($karyawan as $data)
                                                 @if ($data->partner == Auth::user()->partner)
                                                     <option value="{{ $data->id }}"
