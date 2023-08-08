@@ -41,7 +41,7 @@ class IzinAdminController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role; 
-        if ($role == 1) 
+        if ($role == 1 || $role == 2) 
         {
             $type = $request->query('type', 1);
 
@@ -109,6 +109,15 @@ class IzinAdminController extends Controller
         {
             return redirect()->back(); 
         }
+
+            $request->session()->forget('id_karyawan');
+            $request->session()->forget('bulan');
+            $request->session()->forget('tahun');
+
+             //menghapus filter data
+            $request->session()->forget('idpegawai');
+            $request->session()->forget('month');
+            $request->session()->forget('year');
     }
     
     public function show($id)
@@ -448,7 +457,7 @@ class IzinAdminController extends Controller
         $month     = $request->session()->get('month');
         $year      = $request->session()->get('year');
 
-        if (isset($idpegawai) && isset($month) && isset($year))
+        if ($idpegawai !== "Semua" && isset($idpegawai) && isset($month) && isset($year))
         {
             $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
                 ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
@@ -467,11 +476,32 @@ class IzinAdminController extends Controller
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
                 return Excel::download(new IzinExport($data, $idpegawai), "Rekap Ijin dan Sakit Bulan " . $nbulan . " " . ucwords(strtolower($data->first()->karyawans->nama)) . ".xlsx");
             }
-        } else {
+        }elseif($idpegawai == "Semua" && isset($month) && isset($year))
+        {
+            $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+            ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+            ->leftjoin('departemen','izin.departemen','=','departemen.id')
+            ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+            ->whereMonth('izin.tgl_mulai', $month)
+            ->whereYear('izin.tgl_mulai', $year)
+            ->where('karyawan.partner', Auth::user()->partner)
+            ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
+           
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } 
+            else {
+                $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
+                return Excel::download(new IzinExport($data, $idpegawai), "Rekap Ijin dan Sakit Bulan " . $nbulan . " " . ".xlsx");
+            }
+        }
+         else {
             $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
                 ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
                 ->leftjoin('departemen','izin.departemen','=','departemen.id')
                 ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                ->where('karyawan.partner', Auth::user()->partner)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
             
            
@@ -507,7 +537,7 @@ class IzinAdminController extends Controller
 
         // dd($idkaryawan,$bulan,$tahun );
 
-        if (isset($idpegawai) && isset($month) && isset($year)) {
+        if ($idpegawai !== "Semua" && isset($idpegawai) && isset($month) && isset($year)) {
             $data = Izin::join('statuses', 'izin.status', '=', 'statuses.id')
                 ->join('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
                 ->join('departemen','izin.departemen','=','departemen.id')
@@ -528,7 +558,29 @@ class IzinAdminController extends Controller
                 return $pdf->stream($pdfName);
             }
 
-        } else {
+        } elseif($idpegawai == "Semua" && isset($month) && isset($year))
+        {
+            $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+            ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+            ->leftjoin('departemen','izin.departemen','=','departemen.id')
+            ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+            ->whereMonth('izin.tgl_mulai', $month)
+            ->whereYear('izin.tgl_mulai', $year)
+            ->where('karyawan.partner', Auth::user()->partner)
+            ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
+
+                if ($data->isEmpty()) 
+                {
+                    return redirect()->back()->with('pesa','Tidak Ada Data');
+                } 
+                else {
+                    $pdfName = "Rekap Ijin dan Sakit Karyawan.pdf";
+                    $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai,'setorganisasi'=> $setorganisasi])
+                    ->setPaper('a4', 'landscape');
+                    return $pdf->stream($pdfName);
+                }
+        }
+        else {
             $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
                 ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
                 ->leftjoin('departemen','izin.departemen','=','departemen.id')

@@ -19,9 +19,11 @@
         }
         
         #absensi {
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: Arial, Helvetica, sans-serif,'Times New Roman', Times,serif;
         border-collapse: collapse;
         width: 100%;
+        font-size: 14px;
+
         }
 
         #address {
@@ -40,11 +42,11 @@
         #absensi tr:hover {background-color: #ddd;}
     
         #absensi th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: center;
-        background-color: #3eb1d4;
-        color: white;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: center;
+            background-color: #3eb1d4;
+            color: white;
         }
 
         #ttd {

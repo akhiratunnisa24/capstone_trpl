@@ -47,15 +47,15 @@ use Carbon\Carbon;
                         {{ \Carbon\Carbon::parse($data->tgl_permohonan)->format("d/m/Y") }}
                 </td>
                 <td>
-                    @if($data->alokasi->tgl_masuk !== NULL)
-                    {{ carbon::parse($data->alokasi->tgl_masuk)->format("d/m/Y")}}
+                    @if($data->tgl_masuk !== NULL)
+                    {{ carbon::parse($data->tgl_masuk)->format("d/m/Y")}}
                     @else
                         -
                     @endif
                 </td>
                 <td>
-                    @if($data->alokasi->jatuhtempo_awal != NULL)
-                        {{ Carbon::parse($data->alokasi->jatuhtempo_awal)->format("d/m/Y")}} s.d  {{Carbon::parse($data->alokasi->jatuhtempo_akhir)->format("d/m/Y")}}
+                    @if($data->jatuhtempo_awal != NULL)
+                        {{ Carbon::parse($data->jatuhtempo_awal)->format("d/m/Y")}} s.d  {{Carbon::parse($data->jatuhtempo_akhir)->format("d/m/Y")}}
                     @else
                         -
                     @endif
