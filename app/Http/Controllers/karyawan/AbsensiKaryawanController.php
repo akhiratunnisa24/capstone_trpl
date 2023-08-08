@@ -120,7 +120,8 @@ class AbsensiKaryawanController extends Controller
             $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
             $nbulan    = $namaBulan . ' ' . $tahun;
             // dd($data);
-        }else{
+        }
+        else{
             $data = Absensi::with('karyawans', 'departemens')
                 ->where('id_karyawan', $iduser)
                 ->get();

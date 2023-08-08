@@ -69,7 +69,7 @@
 </head>
 <body>
     <h1 align="center">{{$setorganisasi->nama_perusahaan}}</h1>
-    <p id="address">{{{{$setorganisasi->alamat}}}}, {{$setorganisasi->kode_pos}}</p>
+    <p id="address">{{$setorganisasi->alamat}}, {{$setorganisasi->kode_pos}}</p>
     <div class="garis"></div>
     <h3 align="center">Report Absensi Staff Departemen</h3>
 

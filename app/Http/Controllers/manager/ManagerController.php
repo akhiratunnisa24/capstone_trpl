@@ -104,19 +104,27 @@ class ManagerController extends Controller
             $request->session()->put('tahun', $tahun);
         
             //mengambil data sesuai dengan filter yang dipilih
-            if(isset($idkaryawan) && isset($bulan) && isset($tahun))
+            if($idkaryawan !== "Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
             {
                 $absensi = Absensi::with('karyawans','departemens')
                     ->where('id_karyawan', $idkaryawan)
                     ->whereMonth('tanggal', $bulan)
                     ->whereYear('tanggal',$tahun)
                     ->get();
-            }else
+            }
+            else
             {
                 $manager_iddep = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
                 ->select('divisi')->first();
 
-                $absensi= Absensi::where('id_departement',$manager_iddep->divisi)->whereIn('id_karyawan',$pegawai->pluck('idkaryawan'))->get();
+                // $absensi= Absensi::where('id_departement',$manager_iddep->divisi)
+                // ->whereIn('id_karyawan',$pegawai->pluck('idkaryawan'))
+                // ->get();
+
+                $absensi= Absensi::with('karyawans','departemens')
+                ->where('absensi.id_departement',$manager_iddep->divisi)
+                ->where('absensi.partner', Auth::user()->partner)
+                ->get();
             }
             return view('manager.staff.absensiStaff', compact('absensi','karyawan','row'));
 
