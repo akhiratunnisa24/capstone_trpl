@@ -215,6 +215,7 @@ class CutiadminController extends Controller
                         ->where('karyawan.partner',Auth::user()->partner)
                         ->whereMonth('izin.tgl_mulai', $month)
                         ->whereYear('izin.tgl_mulai', $year)
+                        ->where('karyawan.divisi',$row->divisi)
                         ->select('izin.*','statuses.name_status','departemen.nama_departemen','jenisizin.jenis_izin','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
                         ->distinct()
                         ->orderBy('created_at','DESC')
@@ -245,6 +246,7 @@ class CutiadminController extends Controller
                         ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
                         ->leftjoin('departemen','izin.departemen','=','departemen.id')
                         ->where('karyawan.partner',Auth::user()->partner)
+                        ->where('karyawan.divisi',$row->divisi)
                         ->select('izin.*','statuses.name_status','karyawan.partner','jenisizin.jenis_izin','departemen.nama_departemen','datareject.alasan as alasan','datareject.id_izin as id_izin','karyawan.atasan_pertama','karyawan.nama')
                         ->distinct()
                         ->orderBy('created_at','DESC')
@@ -1344,6 +1346,7 @@ class CutiadminController extends Controller
                 ->leftjoin('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
                 ->leftjoin('alokasicuti', 'cuti.id_alokasi', '=', 'alokasicuti.id')
                 ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->where('karyawan.partner', Auth::user()->partner)
                 ->get(['cuti.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','alokasicuti.tgl_masuk','alokasicuti.jatuhtempo_awal','alokasicuti.jatuhtempo_akhir']);
             // return $data;
             if ($data->isEmpty()) 
@@ -1426,7 +1429,7 @@ class CutiadminController extends Controller
 
         }
         else {
-            $data = Cuti::all();
+            $data = Cuti::leftjoin('karyawan','cuti.id_karyawan','karyawan.id')->where('karyawan.partner', Auth::user()->partner)->get();
 
             if ($data->isEmpty()) 
             {
