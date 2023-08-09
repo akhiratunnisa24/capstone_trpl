@@ -14,13 +14,13 @@
                   <form method="POST" action="{{ route('resign.store') }}" method="POST" enctype="multipart/form-data">
                       @csrf
                       @method('POST')
-                      <div class="form-group col-xs-15">        
+                      <div class="form-group col-xs-15">
                         <label for="namaKaryawan" class="form-label">Nama</label>
                         <select name="namaKaryawan" id="user-select" class="form-control selectpicker"
                             data-live-search="true" required>
-                            <option>-- Pilih Karyawan --</option>
+                            <option value="">-- Pilih Karyawan --</option>
                             @foreach ($karyawan1 as $data)
-                                <option value="{{ $data->id }}" @if ($data->id == request()->nama) selected @endif>
+                                <option value="{{ $data->id }}" @if ($data->id == request('namaKaryawan')) selected @endif>
                                     {{ $data->nama }}
                                 </option>
                             @endforeach
@@ -60,7 +60,7 @@
                               <option value="">Pilih Tipe Resign</option>
 
                               <option value="Normal Resign">Normal Resign</option>
-                              <option value="Fired from a company">Fired from a company</option>
+                              <option value="Fired from a company">Dipecat</option>
                           </select>
                       </div>
 
@@ -68,10 +68,11 @@
                           <label for="alasan" class="form-label">Alasan Resign</label>
                           <textarea id="alasan" type="text" class="form-control" name="alasan" autocomplete="off"
                               placeholder="Alasan Resign" required></textarea>
-                      </div>        
+                      </div>
                       <div class="form-group col-xs-15">
                           <input id="status" type="hidden" class="form-control" name="status" value='1' hidden>
-                      </div>                   
+                          {{-- <input type="hidden" name="partner" value="{{ Auth::user()->partner }}"> --}}
+                      </div>
                       {{-- <div class="col-xs-12">
                           <div class="checkbox checkbox-primary">
 
@@ -90,7 +91,7 @@
                           </div>
                       </div>
 
-                     
+
 
                   </form>
 

@@ -67,7 +67,7 @@ class karyawanController extends Controller
      */
 
     public function index(Request $request)
-    {   
+    {
         $role = Auth::user()->role;
         if ($role == 1 || $role == 2) {
 
@@ -78,7 +78,7 @@ class karyawanController extends Controller
 
             $query = $request->input('query');
             $results = Karyawan::where('nama', 'LIKE', '%' . $query . '%')->where('partner',Auth::user()->partner)->get();
-            
+
             //ambil id_karyawan yang belum punya akun
             $user = DB::table('users')->pluck('id_pegawai');
             $akun = DB::table('karyawan')->where('partner',Auth::user()->partner)->whereNotIn("id", $user)->get();
@@ -163,17 +163,17 @@ class karyawanController extends Controller
                 ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)
                 ->select('sisacuti.jenis_cuti as jenis_cuti','jeniscuti.jenis_cuti as jeniscutis','alokasicuti.id as id_alokasi', 'settingalokasi.id as id_settingalokasi', 'sisacuti.sisa_cuti','alokasicuti.id_karyawan')
                 ->first();
-           
+
             if(!$getSisacuti) {
                 throw new \Exception('Data not found');
             }
             return response()->json($getSisacuti,200);
-            
+
         } catch (\Exception $e){
             return response()->json([
                 'message' =>$e->getMessage()
             ], 500);
-        } 
+        }
     }
 
     public function storeSisacuti(Request $request)
@@ -210,7 +210,7 @@ class karyawanController extends Controller
         $atasan = Karyawan::where('id',$idatasan->atasan_pertama)
             ->select('email as email','nama as nama','nama_jabatan as jabatan')
             ->first();
-        
+
         //atasan kedua
         $idatasan2 = DB::table('karyawan')
             ->join('cuti','karyawan.id','=','cuti.id_karyawan')
@@ -251,8 +251,8 @@ class karyawanController extends Controller
     public function karyawanDashboard()
     {
         $role = Auth::user()->role;
-       
-        if ($role == 2 or 3) 
+
+        if ($role == 2 or 3)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
@@ -265,13 +265,13 @@ class karyawanController extends Controller
                 ->whereTime('jam_masuk', '>', '08:00:00')
                 ->count();
 
-            //absen masuk bulan ini    
+            //absen masuk bulan ini
             $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->count('jam_masuk');
 
-            //absen masuk bulan lalu    
+            //absen masuk bulan lalu
             $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
@@ -299,7 +299,7 @@ class karyawanController extends Controller
             //     ->where('id_jeniscuti','=',1)
             //     ->first();
                 // return $alokasicuti;
-            
+
 
             $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])
                 ->where('status',1)
@@ -307,7 +307,7 @@ class karyawanController extends Controller
                 ->whereDate('dari', '<=', Carbon::now())
                 ->whereDate('sampai', '>=', Carbon::now())
                 ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
-            
+
 
             $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Makan')->select('jumlah_tidakmasuk')->first();
             $potonguangmakan = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
@@ -326,10 +326,10 @@ class karyawanController extends Controller
                 ->where('karyawan.partner',Auth::user()->partner)
                 ->select('tidakmasuk.id_pegawai as id_pegawai','karyawan.partner', 'setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
                 ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Transportasi" THEN ' . $pg->jumlah_tidakmasuk . ' END')
-                ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai')
+                ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai','karyawan.partner')
                 ->get();
-           
-          
+
+
             $jpg = $potongtransport->count();
              //data karyawan terlambat
             $tb = Settingabsensi::where('sanksi_terlambat', '=', 'Teguran Biasa')->select('jumlah_terlambat')->first();
@@ -386,7 +386,7 @@ class karyawanController extends Controller
                     // ->where('cuti.catatan', '=', NULL)
                     // ->get();
 
-                
+
                 // $cutis = DB::table('cuti')
                 //     ->leftJoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                 //     ->leftJoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -403,7 +403,7 @@ class karyawanController extends Controller
                 //     ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
                 //     ->distinct()
                 //     ->get();
-    
+
                 $cuti = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -505,7 +505,7 @@ class karyawanController extends Controller
                     })
                     ->get();
                 $jumizin = $ijin->count();
-            } 
+            }
             elseif($role == 1 && $row->jabatan == "Manager")
             {
                 $cuti = DB::table('cuti')
@@ -609,7 +609,7 @@ class karyawanController extends Controller
                     ->get();
                 $jumizin = $ijin->count();
 
-            }   
+            }
             elseif($role == 3 && $row->jabatan == "Asistant Manager")
             {
                 $cuti = DB::table('cuti')
@@ -630,9 +630,9 @@ class karyawanController extends Controller
                     ->where('cuti.status', '=', '1')
                     ->where('cuti.catatan','=',NULL)
                     ->get();
-               
+
                 $cutijumlah = $cuti->count();
-                
+
                 $cutis = DB::table('cuti')
                     ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                     ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -966,7 +966,7 @@ class karyawanController extends Controller
                     ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
                     ->get();
                 $jumct = $cutis->count();
-                
+
                 $izin = DB::table('izin')
                     ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
                     ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
@@ -1000,7 +1000,7 @@ class karyawanController extends Controller
                     ->get();
                 $jumizin = $ijin->count();
             }
-           
+
             // return $row->jabatan;
             // // dd($cutijumlah);
             // return $role;
@@ -1016,7 +1016,7 @@ class karyawanController extends Controller
                     $query->where('atasan_kedua', Auth::user()->id_pegawai);
                 });
             })->get();
-            
+
             $resignjumlah = $resign->count();
             $rekruitmen = Rekruitmen::orderBy('created_at', 'desc')->get();
             $rekruitmenjumlah = $rekruitmen->count();
@@ -1027,7 +1027,7 @@ class karyawanController extends Controller
                 ->where('status', '=', 1)
                 ->where('id_jeniscuti','=',1)
                 ->first();
-                
+
             $currentDate = Carbon::now()->toDateString();
             $informasi = Informasi::whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
                 // return $informasi;
@@ -1075,13 +1075,13 @@ class karyawanController extends Controller
                 ->whereTime('jam_masuk', '>', '08:00:00')
                 ->count();
 
-            //absen masuk bulan ini    
+            //absen masuk bulan ini
             $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->count('jam_masuk');
 
-            //absen masuk bulan lalu    
+            //absen masuk bulan lalu
             $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
@@ -1114,7 +1114,7 @@ class karyawanController extends Controller
                 ->whereDate('dari', '<=', Carbon::now())
                 ->whereDate('sampai', '>=', Carbon::now())
                 ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
-          
+
 
             $posisi = Lowongan::where('partner',Auth::user()->partner)->sortByDesc('created_at')->get();
             $resign = Resign::orderBy('created_at', 'desc')->get();
@@ -1163,7 +1163,7 @@ class karyawanController extends Controller
             $departemen     = Departemen::where('partner',Auth::user()->partner)->get();
             $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager','Direksi'])->where('partner',Auth::user()->partner)->get();
             $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])->where('partner',Auth::user()->partner)->get();
-    
+
             $output = [
                 'row' => $row,
                 'departemen' => $departemen,
@@ -1198,9 +1198,9 @@ class karyawanController extends Controller
             $user->agama = $request->agamaKaryawan;
             $user->nik = $request->nikKaryawan;
             $user->gol_darah = $request->gol_darahKaryawan;
-            
+
             $user->foto = $namaFile;
-            
+
             $user->jabatan = $request->jabatanKaryawan;
             $user->tglmasuk = $request->tglmasukKaryawan;
             $user->atasan_pertama = $request->atasan_pertama;
@@ -1354,7 +1354,7 @@ class karyawanController extends Controller
             $user = new Karyawan;
             $user->nama = $request->namaKaryawan;
             $user->tgllahir = $request->tgllahirKaryawan;
-            $user->jenis_kelamin = $request->jenis_kelaminKaryawan; 
+            $user->jenis_kelamin = $request->jenis_kelaminKaryawan;
             $user->alamat = $request->alamatKaryawan;
             $user->no_hp = $request->no_hpKaryawan;
             $user->email = $request->emailKaryawan;
@@ -1482,7 +1482,7 @@ class karyawanController extends Controller
                 'updated_at' => new \DateTime(),
             );
 
-            
+
             // Karyawan::insert($data);
             Keluarga::insert($data_keluarga);
             Kdarurat::insert($data_kdarurat);
@@ -1539,7 +1539,7 @@ class karyawanController extends Controller
 
         $fotoLama = $karyawan->foto;
 
-        if ($file = $request->file('foto')) 
+        if ($file = $request->file('foto'))
         {
             // hapus foto lama dari storage
             if($fotoLama !== null){
@@ -1579,7 +1579,7 @@ class karyawanController extends Controller
             );
 
             $data_keluarga = array(
-                // 'id_pegawai' => $maxId + 1 , 
+                // 'id_pegawai' => $maxId + 1 ,
 
                 'status_pernikahan' => $request->post('status_pernikahan'),
 
@@ -1676,7 +1676,7 @@ class karyawanController extends Controller
             // dd($data);
 
             $data_keluarga = array(
-                // 'id_pegawai' => $maxId + 1 , 
+                // 'id_pegawai' => $maxId + 1 ,
 
                 'status_pernikahan' => $request->post('status_pernikahan'),
 
@@ -1742,7 +1742,7 @@ class karyawanController extends Controller
             $id_kdarurat = $request->post('id_kdarurat');
 
             //update ke tabel cuti
-            
+
             Karyawan::where('id', $idKaryawan)->update($data);
             Keluarga::where('id', $idKeluarga)->update($data_keluarga);
             Rpendidikan::where('id', $idPendidikan)->update($r_pendidikan);
@@ -1810,7 +1810,7 @@ class karyawanController extends Controller
             $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])->get();
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::all();
-            
+
             $output = [
                 'row' => $row,
                 'karyawan' => $karyawan,
@@ -1932,17 +1932,17 @@ class karyawanController extends Controller
             // if ($jabatan) {
             //     // Update tabel alokasicuti
             //     AlokasiCuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
-            
+
             //     // Update tabel atasan
             //     Atasan::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
-            
+
             //     // Update tabel cuti
             //     Cuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
-            
+
             //     // Update tabel izin
             //     Izin::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
             // }
-            
+
             return redirect()->back();
         } else {
 
@@ -1993,13 +1993,13 @@ class karyawanController extends Controller
             // if ($jabatan) {
             //     // Update tabel alokasicuti
             //     AlokasiCuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
-            
+
             //     // Update tabel atasan
             //     Atasan::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
-            
+
             //     // Update tabel cuti
             //     Cuti::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
-            
+
             //     // Update tabel izin
             //     Izin::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
             // }
@@ -2081,7 +2081,7 @@ class karyawanController extends Controller
 
                 'tahun_masuk_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d'),
                 'tahun_lulus_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusNonFormal'))->format('Y-m-d'),
-                
+
                 // 'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
                 'ijazah_nonformal' => $request->post('noijazahPnonformal'),
                 'created_at' => new \DateTime(),
@@ -2257,7 +2257,7 @@ class karyawanController extends Controller
         return redirect()->back();
     }
 
-    
+
 
     // show 1 page non aktif
     public function showkaryawan($id)
@@ -2271,7 +2271,7 @@ class karyawanController extends Controller
         {
             $atasan_kedua_nama = $karyawan->atasan_keduab->nama;
         }
-       
+
         $keluarga = Keluarga::where('id_pegawai', $id)->get();
         $kdarurat = Kdarurat::where('id_pegawai', $id)->get();
         $rpendidikan = Rpendidikan::where('id_pegawai', $id)->get();
@@ -2503,10 +2503,10 @@ class karyawanController extends Controller
         $role = Auth::user()->role;
 
         //ambil id_karyawan yang udah absen
-        
+
 
         if ($role == 1 || $role == 2) {
- 
+
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             // $karyawanSudahAbsen = DB::table('absensi')->pluck('id_karyawan');
@@ -2531,7 +2531,7 @@ class karyawanController extends Controller
             $tidakMasukBulanLalu = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
                 ->get();
-            
+
             // dd($tidakMasukBulanLalu);
 
             $output = [
@@ -2563,7 +2563,7 @@ class karyawanController extends Controller
                 'keluarga' => $keluarga,
                 'kontakdarurat' => $kontakdarurat,
                 'setorganisasi' => $setorganisasi,
-                
+
                 ])
             ->setPaper('a4', 'landscape');
             return $pdf->stream("Data Karyawan "  . $data->nama . ".pdf");
@@ -2635,7 +2635,7 @@ class karyawanController extends Controller
             $digital->ktp = $namaKtp;
             // $digital->save();
         }
-        
+
 
         // $kkLama = $digital->kk;
         if ($file = $request->file('fotoKK')) {
@@ -2863,7 +2863,7 @@ class karyawanController extends Controller
             $digital->surat_alih_tugas = $namaalihTugas;
         }
 
-        
+
         $digital->save();
         return redirect()->back();
     }

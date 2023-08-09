@@ -67,7 +67,7 @@
                                                   {{-- <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td> --}}
                                                   <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}</td>
                                                   <td>{{ $r->tipe_resign }}</td>
-                                          
+
                                                   <!-- data for status -->
                                                   <td>
                                                     <span class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'danger': 'danger'))) }}">
@@ -82,14 +82,14 @@
                                                         <i class="fa fa-eye"></i>
                                                       </a>
                                                     </form>
-                                                    @if($r->status == 8)
-                                                    <form action="" method="POST">                                                            
-                                                      <a href="resigndelete{{ $r->id }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan resign ini?')"><i class="fa fa-trash"></i></a>                                                                                                                       
+                                                    @if($r->status == 1)
+                                                    <form action="" method="POST">
+                                                      <a href="resigndelete{{ $r->id }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan resign ini?')"><i class="fa fa-trash"></i></a>
                                                     @endif
-                                                    </form>                          
+                                                    </form>
                                                     </div>
                                                   </td>
-                                          
+
                                                   {{-- <td class="text-center">
                                                     <form action="" method="POST">
                                                       <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#Showresign{{ $r->id }}">
@@ -97,8 +97,8 @@
                                                       </a>
                                                     </form>
                                                     @if($r->status == 8)
-                                                    <form action="" method="POST">                                                            
-                                                      <a href="resigndelete{{ $r->id }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan resign ini?')"><i class="fa fa-trash"></i></a>                                                                                                                       
+                                                    <form action="" method="POST">
+                                                      <a href="resigndelete{{ $r->id }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan resign ini?')"><i class="fa fa-trash"></i></a>
                                                     @endif
                                                     </form>
                                                   </td> --}}
@@ -133,7 +133,7 @@
       </script> --}}
     {{-- <script type="text/javascript">
     let tp = '{{$tipe}}';
-    
+
         if(tp == 1) {
             $('#tab1').click();
         } else {
