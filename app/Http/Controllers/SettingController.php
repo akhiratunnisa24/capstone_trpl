@@ -74,11 +74,11 @@ class SettingController extends Controller
             return back()->with("status", "Password changed successfully!");
         }elseif($role == 1 || $role == 2)
         {
-            $user = User::all();
+            $user = User::find($id);
 
             User::where('id', $id)->update(
                 [
-                    'partner'=> $request->post('partner'),
+                    'partner'=> $user->partner,
                     'role' => $request->post('role'),
                     'password' => Hash::make($request['password']),
 
