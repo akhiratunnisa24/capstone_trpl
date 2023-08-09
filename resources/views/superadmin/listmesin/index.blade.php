@@ -69,7 +69,12 @@
                                                     </a>
                                                     <form action="{{ route('listmesin.tarikdata', ['id' => $data->id]) }}" method="POST">
                                                         @csrf
-                                                        <button type="submit" class="btn btn-dark btn-sm">Get Data</button>
+                                                        <button type="submit" class="btn btn-dark btn-sm">GA</button>
+                                                    </form>
+
+                                                    <form action="{{ route('listmesin.getuser', ['id' => $data->id]) }}" method="POST">
+                                                        @csrf
+                                                        <button id="getUserButton" type="submit" class="btn btn-warning btn-sm">GU</button>
                                                     </form>
                                                     
                                                     <form action="{{ route('connect', ['id' => $data->id]) }}" method="POST">
@@ -83,6 +88,8 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            
+                            <div id="resultContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -100,6 +107,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
+    {{-- <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const getUserButton = document.getElementById("getUserButton");
+            const userTable = document.getElementById("userTable");
+    
+            getUserButton.addEventListener("click", function () {
+                userTable.style.display = "block"; // Tampilkan tabel saat tombol diklik
+            });
+        });
+    </script> --}}
+
+    <script>
+        $(document).ready(function() {
+            // Tangkap event klik tombol "Tarik Absen"
+            $('#getUserButton').click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url('/list-mesin/daftar-user/{id}') }}", // Rute untuk pemrosesan data
+                    data: {
+                        _token: "{{ csrf_token() }}", // CSRF token
+                    },
+                    success: function(response) {
+                        // Tampilkan respons dari server pada elemen dengan id "resultContainer"
+                        $('#resultContainer').html(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script> 
+    
+    
     @if(Session::has('pesan'))
         <script>
             swal("Selamat","{{ Session::get('pesan')}}", 'success', {

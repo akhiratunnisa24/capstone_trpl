@@ -1499,32 +1499,15 @@
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
-
-
     <div class="row">
-
-
-
     </div> <!-- End Row -->
-
-
-
     </div> <!-- container -->
-
     </div> <!-- content -->
-
     </div>
     <!-- End Right content here -->
-
     </div>
     <!-- END wrapper -->
-
-
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
 
@@ -1532,12 +1515,30 @@
     <script src="assets/plugins/morris/morris.min.js"></script>
     <script src="assets/plugins/raphael/raphael-min.js"></script>
     <script src="assets/pages/morris.init.js"></script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
     <!--Chart JS-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @if(Session::has('pesan'))
+        <script>
+            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
 
+    @if(Session::has('pesa'))
+        <script>
+            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
 
     <script>
         var users2 = {{ Js::from($data) }};
