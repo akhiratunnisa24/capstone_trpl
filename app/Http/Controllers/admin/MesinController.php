@@ -20,17 +20,15 @@ class MesinController extends Controller
     {
         try {
             $listmesin = Listmesin::where('partner',Auth::user()->partner)->first();
-            //$ip = '192.168.10.175';
-            // $ip = '192.168.1.8';
-            // $com_key = 0;
             $ip = $listmesin->ip_mesin;
             $com_key = $listmesin->comm_key;
             $partner = $listmesin->partner;
-            // dd($ip,$com_key,$partner);
-            $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key]))->get_instance();
+            $port = $listmesin->port;
+            $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key,'soap_port' => $port]))->get_instance();
             $con = $tad->is_alive();
             if ($con) {
                 $attendance = $tad->get_att_log();
+                // return $attendance;
                 if ($attendance) {
                     $today = Carbon::now()->format('Y-m-d');
                     $filtered_attendance = $attendance->filter_by_date(
@@ -63,7 +61,8 @@ class MesinController extends Controller
                                 {
                                     $existingAbsensi = Absensi::where('id_karyawan', $matchedUser->id_pegawai)
                                                     ->where('tanggal', $tanggal)->where('partner', $matchedUser->partner)
-                                                    ->whereNotNull('jam_masuk')->first();
+                                                    ->whereNotNull('jam_masuk')
+                                                    ->first();
                                     if($existingAbsensi)
                                     {
                                         $jadwal_masuk  = $jadwal->jadwal_masuk;
@@ -153,7 +152,9 @@ class MesinController extends Controller
                             // dd($matchedUser);
                             if (isset($matchedUser)) 
                             {
-                                $jadwals = Jadwal::where('tanggal', $tanggal)->where('partner', Auth::user()->partner)->get();
+                                $jadwals = Jadwal::where('tanggal', $tanggal)
+                                    ->where('partner', Auth::user()
+                                    ->partner)->get();
                                 // dd($data,$matchedUser,$jadwal);
                                 foreach ($jadwals as $jadwal) 
                                 {
@@ -161,7 +162,8 @@ class MesinController extends Controller
                                     {
                                         $existingAbsensi = Absensi::where('id_karyawan', $matchedUser->id_pegawai)
                                                         ->where('tanggal', $tanggal)->where('partner', $matchedUser->partner)
-                                                        ->whereNotNull('jam_masuk')->first();
+                                                        ->whereNotNull('jam_masuk')
+                                                        ->first();
                                         if($existingAbsensi)
                                         {
                                             $jadwal_masuk  = $jadwal->jadwal_masuk;
@@ -179,7 +181,6 @@ class MesinController extends Controller
                                             $jumkerja     = $jadwal_pulang->diff($jam_masuk);
                                             $absensi->jml_jamkerja = $jumkerja->format('%H:%I:%S');
                                         
-
                                             if($jam_masuk < $jadwal_masuk && $jam_keluar >= $jadwal_pulang)
                                             {//kondisi normal
                                                 $absensi->plg_cepat    = null;
