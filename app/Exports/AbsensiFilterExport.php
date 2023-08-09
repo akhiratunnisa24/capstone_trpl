@@ -18,7 +18,7 @@ class AbsensiFilterExport implements FromView, ShouldAutoSize
     function __construct($data, $idkaryawan, $middep) {
         $this->data = $data;
         $this->idkaryawan = $idkaryawan;
-        $this->middep = $middep->id_departement;
+        $this->middep = $middep->divisi;
         // dd($data);
     }
 
