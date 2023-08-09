@@ -32,7 +32,7 @@ class CutiizinController extends Controller
         $bulan      = $request->session()->get('bulan');
         $tahun      = $request->session()->get('tahun');
 
-        if (isset($idkaryawan) && isset($bulan) && isset($tahun)) 
+        if ($idkaryawan !=="Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun)) 
         {
             $data = Cuti::join('statuses', 'cuti.status', '=', 'statuses.id')
                 ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
@@ -65,7 +65,40 @@ class CutiizinController extends Controller
                 return Excel::download(new CutiExpor($data, $idkaryawan), "Rekap Cuti Bulan " . $nbulan . " " . ucwords(strtolower($data->first()->karyawans->nama)) . ".xlsx");
             }
            
-        } else {
+        }elseif($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
+        {
+            $data = Cuti::join('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('jeniscuti','cuti.id_jeniscuti','jeniscuti.id')
+                ->leftjoin('karyawan','cuti.id_karyawan','karyawan.id')
+                ->leftjoin('alokasicuti','cuti.id_alokasi','alokasicuti.id')
+                ->leftjoin('settingalokasi','cuti.id_settingalokasi','settingalokasi.id')
+                ->leftjoin('departemen','cuti.departemen','departemen.id')
+                ->where(function($query){
+                    $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                    ->orWhere(function($query) {
+                        $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
+                    });    
+                })
+                ->whereMonth('cuti.tgl_mulai', $bulan)
+                ->whereYear('cuti.tgl_mulai', $tahun)
+                ->select('cuti.*', 'jeniscuti.jenis_cuti','statuses.name_status', 'karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','statuses.name_status')
+                ->distinct()
+                ->orderBy('cuti.id', 'desc')
+                ->get();
+            // dd($data);
+
+            if ($data->isEmpty()) 
+            {
+                // dd($data);
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } 
+            else {
+                $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
+                return Excel::download(new CutiExpor($data, $idkaryawan), "Rekap Cuti Karyawan Bulan " . $nbulan . ".xlsx");
+            }
+           
+        }
+         else {
             $data = DB::table('cuti')
             ->leftjoin('alokasicuti', 'cuti.id_alokasi', 'alokasicuti.id')
             ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -177,7 +210,8 @@ class CutiizinController extends Controller
 
         // dd($idkaryawan,$bulan,$tahun );
 
-        if (isset($idkaryawan) && isset($bulan) && isset($tahun)) {
+        if ($idkaryawan !=="Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun)) 
+        {
             $data = Cuti::where('id_karyawan', $idkaryawan)
                 ->whereMonth('tgl_mulai', $bulan)
                 ->whereYear('tgl_mulai', $tahun)
@@ -194,6 +228,39 @@ class CutiizinController extends Controller
                 return $pdf->stream($pdfName);
             } 
         } 
+        elseif($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
+        {
+            $data = Cuti::join('statuses', 'cuti.status', '=', 'statuses.id')
+            ->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
+            ->join('jeniscuti', 'cuti.id_jeniscuti', '=', 'jeniscuti.id')
+            ->join('departemen','cuti.departemen','=','departemen.id')
+            ->where(function($query) use ($row){
+                $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                ->orWhere(function($query) use ($row){
+                    $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
+                });    
+            })
+            ->whereMonth('tgl_mulai', $bulan)
+            ->whereYear('tgl_mulai', $tahun)
+            ->where('karyawan.partner',Auth::user()->partner)
+            ->where('karyawan.divisi',$row->divisi)
+            ->get(['cuti.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
+            // dd($data);
+
+            if ($data->isEmpty()) 
+            {
+                // dd($data);
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } 
+            else {
+                $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
+                $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan,'setorganisasi'=> $setorganisasi])
+                ->setPaper('a4', 'landscape');
+                $pdfName = "Rekap Cuti Karyawan Bulan ".$nbulan. " ". ".pdf";
+                return $pdf->stream($pdfName);
+            }
+           
+        }
         else 
         {
             $data = Cuti::join('statuses', 'cuti.status', '=', 'statuses.id')
@@ -206,6 +273,8 @@ class CutiizinController extends Controller
                         $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
                     });    
                 })
+                ->where('karyawan.partner',Auth::user()->partner)
+                ->where('karyawan.divisi',$row->divisi)
                 ->get(['cuti.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
 
             // $data = Cuti::all();
@@ -246,7 +315,8 @@ class CutiizinController extends Controller
         $month     = $request->session()->get('month');
         $year      = $request->session()->get('year');
 
-        if (isset($idpegawai) && isset($month) && isset($year))
+
+        if ($idpegawai !== "Semua" && isset($idpegawai) && isset($month) && isset($year))
         {
             $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
                 ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
@@ -259,6 +329,7 @@ class CutiizinController extends Controller
                     });    
                 })
                 ->where('izin.id_karyawan', $idpegawai)
+                ->where('karyawan.partner',Auth::user()->partner)
                 ->whereMonth('izin.tgl_mulai', $month)
                 ->whereYear('izin.tgl_mulai', $year)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
@@ -272,7 +343,34 @@ class CutiizinController extends Controller
                 return Excel::download(new IzinExpor($data, $idpegawai), "Rekap Ijin dan Sakit Bulan " . $nbulan . " " . ucwords(strtolower($data->first()->nama)) . ".xlsx");
             }
                 
-        } else {
+        }elseif($idpegawai == "Semua" && isset($month) && isset($year))
+        {
+            $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+            ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+            ->leftjoin('departemen','izin.departemen','=','departemen.id')
+            ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+            ->where(function($query) use ($row){
+                $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                ->orWhere(function($query) use ($row){
+                    $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
+                });    
+            })
+            ->where('karyawan.partner',Auth::user()->partner)
+            ->where('karyawan.divisi',$row->divisi)
+            ->whereMonth('izin.tgl_mulai', $month)
+            ->whereYear('izin.tgl_mulai', $year)
+            ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
+           
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } 
+            else {
+                $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
+                return Excel::download(new IzinExpor($data, $idpegawai), "Rekap Ijin dan Sakit Karyawan Bulan " . $nbulan. ".xlsx");
+            }
+        }
+        else {
             $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
                 ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
                 ->leftjoin('departemen','izin.departemen','=','departemen.id')
@@ -315,7 +413,8 @@ class CutiizinController extends Controller
 
         // dd($idkaryawan,$bulan,$tahun );
 
-        if (isset($idpegawai) && isset($month) && isset($year)) {
+        if ($idpegawai !== "Semua" && isset($idpegawai) && isset($month) && isset($year)) 
+        {
             $data = Izin::join('statuses', 'izin.status', '=', 'statuses.id')
                 ->join('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
                 ->join('departemen','izin.departemen','=','departemen.id')
@@ -328,6 +427,7 @@ class CutiizinController extends Controller
                         $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
                     });    
                 })
+                ->where('karyawan.partner',Auth::user()->partner)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
             
             if ($data->isEmpty()) 
@@ -341,7 +441,37 @@ class CutiizinController extends Controller
                 ->setPaper('a4', 'landscape');
                 return $pdf->stream($pdfName);
             }
-        } else {
+        }elseif($idpegawai == "Semua" && isset($month) && isset($year))
+        {
+            $data = Izin::join('statuses', 'izin.status', '=', 'statuses.id')
+            ->join('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+            ->join('departemen','izin.departemen','=','departemen.id')
+            ->whereMonth('izin.tgl_mulai', $month)
+            ->whereYear('izin.tgl_mulai', $year)
+            ->where(function($query) use ($row){
+                $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
+                ->orWhere(function($query) use ($row){
+                    $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
+                });    
+            })
+            ->where('karyawan.partner',Auth::user()->partner)
+            ->where('karyawan.divisi',$row->divisi)
+            ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
+
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } 
+            else {
+                $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
+                $pdfName = "Rekap Ijin dan Sakit Karyawan.pdf";
+                $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai,'setorganisasi'=> $setorganisasi])
+                ->setPaper('a4', 'landscape');
+                return $pdf->stream($pdfName);
+            }
+        
+        }
+         else {
             $data = Izin::join('statuses', 'izin.status', '=', 'statuses.id')
                 ->join('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
                 ->join('departemen','izin.departemen','=','departemen.id')

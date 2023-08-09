@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Input;
 
 class ResignAdminController extends Controller
-{   
+{
     /**
      * Create a new controller instance.
      *
@@ -49,13 +49,13 @@ class ResignAdminController extends Controller
         //               ->whereNotIn('id', function($query){
         //                   $query->select('id_karyawan')->from('resign');
         //               })->get();
-                      
+
         $idkaryawan = $request->id_karyawan;
         // dd($karyawan);
         $resign = Resign::join('karyawan', 'resign.id_karyawan','karyawan.id')
             ->where('karyawan.partner',Auth::user()->partner)
             ->orderBy('resign.created_at', 'desc')->get();
-     
+
         // $tes = Auth::user()->karyawan->departemen->nama_departemen;
 
 
@@ -78,25 +78,26 @@ class ResignAdminController extends Controller
     public function store(Request $request)
     {
         // $karyawan = Auth::user()->id_pegawai;
-        // $status = Status::find(4);  
+        // $status = Status::find(4);
         // $tes = DB::table('karyawan')
         //     ->join('departemen','karyawan.divisi','=','departemen.id')
         //     ->where('karyawan.id', )
         //     ->select('departemen.id as id_dep')
         //     ->first();
-             
+
         //     $resign = New Resign;
         //     $resign->id_karyawan = $request->namaKaryawan;
         //     $resign->departemen = $request->departemen;
         //     $resign->tgl_masuk = Carbon::parse($request->tgl_masuk)->format("Y-m-d");
         //     $resign->tgl_resign  = Carbon::parse($request->tgl_resign)->format("Y-m-d");
         //     $resign->tipe_resign = $request->tipe_resign;
-        //     $resign->alasan      = $request->alasan;          
+        //     $resign->alasan      = $request->alasan;
         //     $resign->status      = $status->id;
 
         //     $resign->save();
         //     return redirect()->back();
 
+        // $partner = Auth::user()->partner;
         // mendapatkan id karyawan yang sedang login
         $karyawan = Auth::user()->id_pegawai;
 
@@ -120,11 +121,12 @@ class ResignAdminController extends Controller
         $resign->id_karyawan = $request->namaKaryawan;
         $resign->departemen = $request->departemen;
         $resign->tgl_masuk = Carbon::createFromFormat('d/m/Y', $request->tgl_masuk)->format("Y-m-d");
-        $resign->tgl_resign = Carbon::createFromFormat('d/m/Y', $request->tgl_resign)->format("Y-m-d");        
+        $resign->tgl_resign = Carbon::createFromFormat('d/m/Y', $request->tgl_resign)->format("Y-m-d");
         $resign->tipe_resign = $request->tipe_resign;
-        $resign->alasan      = $request->alasan;          
+        $resign->alasan      = $request->alasan;
         $resign->status      = 1;
         $resign->filepdf     = $filename; // menyimpan nama file di kolom filepdf
+        // $resign->partner     = $partner;
 
         $resign->save();
         return redirect()->back();
@@ -133,7 +135,7 @@ class ResignAdminController extends Controller
 
     public function show($id)
     {
-        
+
         $resign = Resign::findOrFail($id);
         return view('admin.resign.index',compact('resign','karyawan'));
     }
@@ -144,7 +146,7 @@ class ResignAdminController extends Controller
         Resign::where('id',$id)->update([
             'status' => 6,
         ]);
- 
+
         $sk = Karyawan::where('id',$resign->id_karyawan);
         $resign1 = Resign::where('id',$id)->first();
         // dd($resign1);
@@ -154,12 +156,13 @@ class ResignAdminController extends Controller
         return redirect()->back();
     }
 
-    public function approvedmanager( $id)
+    public function approvedmanager($id)
     {
         $resign = Resign::where('id',$id)->first();
         Resign::where('id',$id)->update([
             'status' => 7,
         ]);
+        // dd($resign);
         return redirect()->back();
     }
 

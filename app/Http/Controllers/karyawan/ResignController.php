@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ResignController extends Controller
-{   
+{
     /**
      * Create a new controller instance.
      *
@@ -46,22 +46,22 @@ class ResignController extends Controller
             }
         }
 
-        
+
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
         // dd($karyawan);
         $resign = Resign::orderBy('created_at', 'desc')->get();
 
-      
-     
+
+
         // $tes = Auth::user()->karyawan->divisi;
         $tes = DB::table('karyawan')
             ->join('departemen','karyawan.divisi','=','departemen.id')
             ->where('karyawan.id', Auth::user()->id_pegawai)
             ->select('departemen.id as id_dep','departemen.nama_departemen as departemen')
-            ->first(); 
+            ->first();
 
-            
-     
+
+
             return view('karyawan.resign.index', compact('karyawan','tes','resign','row','status0', 'status1','jumlah_resign'));
     }
 
@@ -87,7 +87,7 @@ class ResignController extends Controller
         //     ->where('karyawan.id', Auth::user()->id_pegawai)
         //     ->select('departemen.id as id_dep')
         //     ->first();
-    
+
         // $resign = New Resign;
         // $resign->id_karyawan = $karyawan;
         // $resign->departemen = $tes->id_dep;
@@ -96,21 +96,21 @@ class ResignController extends Controller
         // $resign->tipe_resign = $request->tipe_resign;
         // $resign->alasan      = $request->alasan;
         // $resign->status      = $status->id;
-    
+
         // // Upload file PDF
         // if ($request->hasFile('filepdf')) {
         //     $file = $request->file('filepdf');
         //     $filename = time() . '.' . $file->getClientOriginalExtension();
         //     $path = public_path('pdf/' . $filename);
         //     $file->move('pdf/', $filename);
-        
+
         //     $resign->filepdf = $filename;
         // }
-    
+
         // $resign->save();
         // return redirect()->back();
-        
 
+        // $partner = Auth::user()->partner;
         // mendapatkan id karyawan yang sedang login
         $karyawan = Auth::user()->id_pegawai;
 
@@ -134,11 +134,12 @@ class ResignController extends Controller
         $resign->id_karyawan = $karyawan;
         $resign->departemen = $tes->id_dep;
         $resign->tgl_masuk = Carbon::createFromFormat('d/m/Y', $request->tgl_masuk)->format("Y-m-d");
-        $resign->tgl_resign = Carbon::createFromFormat('d/m/Y', $request->tgl_resign)->format("Y-m-d");       
+        $resign->tgl_resign = Carbon::createFromFormat('d/m/Y', $request->tgl_resign)->format("Y-m-d");
         $resign->tipe_resign = $request->tipe_resign;
         $resign->alasan      = $request->alasan;
         $resign->status      = 1;
         $resign->filepdf     = $filename; // menyimpan nama file di kolom filepdf
+        // $resign->partner     = $partner;
 
         $resign->save();
         return redirect()->back();
@@ -147,7 +148,7 @@ class ResignController extends Controller
 
     public function show($id)
     {
-        
+
         $resign = Resign::findOrFail($id);
         // $karyawan = Auth::user()->id_pegawai;
 
@@ -158,6 +159,6 @@ class ResignController extends Controller
         {
             Resign::destroy($id);
             return redirect()->back();
-            
+
         }
 }

@@ -276,7 +276,7 @@ class DirekturController extends Controller
                         ->first();
     
                   //    return $datacuti;
-                    if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai  && $row->jabatan = "Manager")
+                    if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai  && $row->jabatan == "Manager")
                     {
                         // return $datacuti->atasan_pertama;
                         $status = Status::find(6);
@@ -456,7 +456,7 @@ class DirekturController extends Controller
                 ->first();
                 if($datacuti && $row->jabatan == "Direksi" && $role == 3)
                 {
-                        if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai && $row->jabatan = "Manager")
+                        if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai && $row->jabatan == "Manager")
                         {
                             // return $datacuti->atasan_pertama;
                             $status = Status::find(6);

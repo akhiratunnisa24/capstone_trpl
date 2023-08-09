@@ -561,13 +561,13 @@ class IzinAdminController extends Controller
         } elseif($idpegawai == "Semua" && isset($month) && isset($year))
         {
             $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
-            ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
-            ->leftjoin('departemen','izin.departemen','=','departemen.id')
-            ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
-            ->whereMonth('izin.tgl_mulai', $month)
-            ->whereYear('izin.tgl_mulai', $year)
-            ->where('karyawan.partner', Auth::user()->partner)
-            ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
+                ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
+                ->whereMonth('izin.tgl_mulai', $month)
+                ->whereYear('izin.tgl_mulai', $year)
+                ->where('karyawan.partner', Auth::user()->partner)
+                ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
 
                 if ($data->isEmpty()) 
                 {
@@ -584,6 +584,7 @@ class IzinAdminController extends Controller
             $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
                 ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
                 ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->where('karyawan.partner', Auth::user()->partner)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
             
             if ($data->isEmpty()) 

@@ -4,7 +4,7 @@ use App\Models\Lowongan;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController; 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SetcutiController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\admin\XmlController;
@@ -78,9 +78,9 @@ Auth::routes();
 
 // Dashboard
 Route::get('/', [HomeController::class, 'index'])->name('dashboard');
-Route::post('/registrasi', [HomeController::class, 'registrasi'])->name('registrasi');   
+Route::post('/registrasi', [HomeController::class, 'registrasi'])->name('registrasi');
 
-// Role HRD 
+// Role HRD
 
 Route::prefix('/karyawan')->name('karyawan.')->group(function () {
 
@@ -298,7 +298,7 @@ Route::post('/getalokasi', [CutiadminController::class, 'getAlokasiCuti'])->name
 Route::post('/permintaan_cutis', [CutiadminController::class, 'storeCuti'])->name('cuti.stores');
 Route::get('/rekapcutiExcel', [CutiadminController::class, 'rekapcutiExcel'])->name('rekapcutiExcel');
 Route::get('/rekapcutipdf', [CutiadminController::class, 'rekapcutipdf'])->name('rekapcutipdf');
-//izin 
+//izin
 Route::get('/permintaan_izin', [IzinadminController::class, 'index'])->name('permintaanizin.index');
 Route::post('/permintaanizin/{id}', [IzinAdminController::class, 'approved'])->name('izinapproved');
 Route::post('/permintaanizinreject/{id}', [IzinAdminController::class, 'reject'])->name('izinreject');
@@ -587,7 +587,7 @@ Route::post('/storepnformal', [karyawansController::class, 'storepformal'])->nam
 Route::post('/updatependidikan', [KaryawansController::class, 'updaterPendidikan'])->name('updatePendidikan');
 Route::delete('/delete-pendidikan', [KaryawansController::class, 'deletePendidikan'])->name('deletependidikan');
 
-    // Show Pendidikan Karyawan 
+    // Show Pendidikan Karyawan
     Route::get('showpendidikan{id}', [karyawanController::class, 'showpendidikan'])->name('showpendidikan');
     // Update saat data sudah di database
     Route::put('/updatePendidikan/{id}', [karyawansController::class, 'updatePendidikan'])->name('updatePendidikan');
@@ -597,7 +597,7 @@ Route::delete('/delete-pendidikan', [KaryawansController::class, 'deletePendidik
     Route::post('/storespnformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
     // Delete Pendidikan
     Route::get('/destroyPendidikan{id}', [karyawanController::class, 'destroyPendidikan'])->name('destroyPendidikan');
-    
+
 
 
 //form data pekerjaan
@@ -653,7 +653,7 @@ Route::post('/storeData', [KaryawansController::class, 'storetoDatabase'])->name
 Route::put('/updateIdentitas/{id}', [karyawansController::class, 'update'])->name('identitas.update');
 
 //store setelah show data
-Route::post('/storespformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');   
+Route::post('/storespformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
 Route::post('/storespekerjaan/{id}', [karyawansController::class, 'storespekerjaan'])->name('storespekerjaan');
 
 Route::get('/delete-pekerjaan/{id}', [karyawansController::class, 'destroy'])->name('destroy.pekerjaan');

@@ -25,9 +25,11 @@
         }
 
         #absensi {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Arial, Helvetica, sans-serif,'Times New Roman', Times,serif;
             border-collapse: collapse;
             width: 100%;
+            font-size: 13px;
+
         }
 
         #address {
