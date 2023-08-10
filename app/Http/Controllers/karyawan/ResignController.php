@@ -8,8 +8,12 @@ use App\Models\Departemen;
 use App\Models\Resign;
 use App\Models\Karyawan;
 use App\Models\Status;
+use App\Mail\ResignNotification;
+use App\Mail\ResignApproveNotification;
+use App\Mail\ResignAtasan2Notification;
 use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -146,7 +150,7 @@ class ResignController extends Controller
         ->join('karyawan', 'resign.id_karyawan', '=', 'karyawan.id')
         ->join('departemen', 'resign.departemen', '=', 'departemen.id')
         ->where('resign.id_karyawan', '=', $resign->id_karyawan)
-        ->select('karyawan.email', 'karyawan.nama', 'resign.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
+        ->select('karyawan.email','karyawan.nip', 'karyawan.nama', 'resign.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
         ->first();
     // dd($emailkry);
     $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
@@ -168,16 +172,17 @@ class ResignController extends Controller
         'noregistrasi' => $resign->id,
         'title'  => 'NOTIFIKASI PERSETUJUAN FORMULIR RESIGN KARYAWAN',
         'subtitle' => '',
-        'tgl_permohonan' => Carbon::parse($resign->created_at)->format("d/m/Y"),
-        'nik' => $emailkry->nik,
-        'namakaryawan' => ucwords(strtolower($emailkry->nama)),
+        'tgl_permohonan' => Carbon::parse($resign->tgl_resign)->format("d/m/Y"),
+        'nik' => $emailkry->nip,
+        'namakaryawan' => $emailkry->nama,
         'jabatankaryawan' => $emailkry->nama_jabatan,
         'departemen' => $emailkry->nama_departemen,
         'karyawan_email' =>  $emailkry->email,
         // 'id_jeniscuti' => $jeniscuti->jenis_cuti,
         'alasan' => $resign->alasan,
+        'tgl_persetujuan' => Carbon::parse($resign->updated_at)->format("d/m/Y"),
         // 'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d/m/Y"),
-        'tgl_resign' => Carbon::parse($resign->tgl_resign)->format("d/m/Y"),
+        // 'tgl_resign' => Carbon::parse($resign->tgl_resign)->format("d/m/Y"),
         // 'jml_cuti' => $cuti->jml_cuti,
         // 'status' => $status->name_status,
         'jabatan' => $atasan->jabatan,
@@ -186,8 +191,9 @@ class ResignController extends Controller
     if($atasan2 !== NULL){
         $data['atasan2'] = $atasan2->email;
     }
+    //  dd($data);
+
     Mail::to($tujuan)->send(new ResignNotification($data));
-    // dd($data);
 
     return redirect()->back()->with('pesan', 'Permohonan Resign Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim');
         // return redirect()->back();

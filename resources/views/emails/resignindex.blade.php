@@ -157,14 +157,14 @@
 					<p class="title">Nama Karyawan</p><label class="value">: <strong>{{$data['namakaryawan']}}</strong></label>
 					<p class="title">Jabatan</p><label class="value">: <strong>{{$data['jabatankaryawan']}}</strong></label><br>
 					<p class="title">Departemen/Divisi</p><label class="value">: <strong>{{$data['departemen']}}</strong></label><br>
-					<p class="title">Tanggal Resign</p><label class="value">: <strong>{{$data['tgl_resign']}}</strong></label><br>
+					{{-- <p class="title">Tanggal Resign</p><label class="value">: <strong>{{$data['tgl_resign']}}</strong></label><br> --}}
 					{{-- <p class="title">Status Ketidakhadiran</p><label class="value">: <strong>{{$data['id_jeniscuti']}}</strong></label><br> --}}
 					<p class="title">Alasan</p><label class="value">: <strong>{{$data['alasan']}}</strong></label><br>
 					<p class="title">Tanggal Persetujuan</p><label class="value">:</label>
-					<ul>
+					{{-- <ul>
 						<li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: -</label></li>
 						<li><label class="value">Pimpinan Unit Kerja : -</label></li>
-					</ul>
+					</ul> --}}
 
 				<p>Karyawan Pemohon,<br>
 				<p>Ttd.<br><br></p>

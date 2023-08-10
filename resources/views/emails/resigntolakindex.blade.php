@@ -151,21 +151,21 @@
 				<p class="title">Nama Karyawan</p><label class="value">: <strong>{{$data['namakaryawan']}}</strong></label>
 				<p class="title">Jabatan</p><label class="value">: <strong>{{$data['jabatankaryawan']}}</strong></label><br>
 				<p class="title">Departemen/Divisi</p><label class="value">: <strong>{{$data['departemen']}}</strong></label><br>
-				<p class="title">Tanggal Pelaksanaan</p><label class="value">: <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_selesai'] != NULL) s/d <strong>{{$data['tgl_selesai']}}</strong> @endif</label><br>
-				<p class="title">Status Ketidakhadiran</p><label class="value">: <strong>{{$data['kategori']}}</strong></label><br>
-				<p class="title">Keterangan</p><label class="value">: <strong>{{$data['keperluan']}}</strong></label><br>
-				<p class="title">Tanggal Persetujuan</p><label class="value">:</label>
-				<ul>
-                    @if($data['status'] == "Pending Atasan")
-                        <li><label class="value">Permohonan Ditolak: {{$data['tglditolak']}} WIB</label></li>
+				{{-- <p class="title">Tanggal Pelaksanaan</p><label class="value">: <strong>{{$data['tgl_mulai']}}</strong> @if($data['tgl_selesai'] != NULL) s/d <strong>{{$data['tgl_selesai']}}</strong> @endif</label><br> --}}
+				{{-- <p class="title">Status Ketidakhadiran</p><label class="value">: <strong>{{$data['kategori']}}</strong></label><br> --}}
+				<p class="title">Alasan</p><label class="value">: <strong>{{$data['alasan']}}</strong></label><br>
+				<p class="title">Tanggal Penolakan</p><label class="value">: <strong>{{$data['tglditolak']}}</strong></label><br>
+				{{-- <ul>
+                    @if($data['status'] == "Pending")
+                        <li><label class="value">Permohonan Ditolak: {{$data['tglditolak']}}</label></li>
                         <li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$data['tglditolak']}} WIB</label></li>
-                    @elseif($data['status'] == "Pending Pimpinan")
+                    @elseif($data['status'] == "Disetujui Atasan")
                         <li><label class="value">Atasan Karyawan&nbsp;&nbsp;&nbsp;: {{$data['tgldisetujuiatasan']}} WIB</label></li>
-                        <li><label class="value">Permohonan Ditolak: {{$data['tglditolak']}} WIB</label></li>
+                        <li><label class="value">Permohonan Ditolak: {{$data['tglditolak']}}</label></li>
                         <li><label class="value">Departemen HRD&nbsp;&nbsp;&nbsp;: {{$data['tglditolak']}} WIB</label></li>
                     @else
                     @endif
-				</ul>
+				</ul> --}}
             </div>
         </div>
 		<div class="footer">

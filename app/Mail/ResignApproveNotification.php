@@ -40,7 +40,7 @@ class ResignApproveNotification extends Mailable
         //         $email->cc($this->data['atasan2'], 'Atasan Kedua');
         //     }
         // }else{
-            $email = $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+            $email = $this->from('no-reply@rynest.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['atasan1'], 'Atasan Pertama')
                 ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
