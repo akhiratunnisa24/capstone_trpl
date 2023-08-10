@@ -5,10 +5,10 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-header-title">
-            <h4 class="pull-left page-title">History Absensi Anda</h4>
+            <h4 class="pull-left page-title">Riwayat Absensi Anda</h4>
             <ol class="breadcrumb pull-right">
-                <li><a href="#">Human Resources Management System</a></li>
-                <li class="active">History Absensi</li>
+                <li><a href="#">Rynest Employees Management System</a></li>
+                <li class="active">Riwayat Absensi</li>
             </ol>
             <div class="clearfix"></div>
             <div class="panel-body">
@@ -63,7 +63,7 @@
                                     <label></label>
                                     <div>
                                         <button type="submit" id="search" class="btn btn-md btn-success fa fa-filter"> Filter</button>
-                                        <a href="{{ route('history.absen') }}" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
+                                        <a href="{{ route('riwayat.absen') }}" class="btn btn-md btn-success fa fa-refresh"> Reset</a>
                                     </div>
                                 </div>
                             </div>
@@ -81,8 +81,8 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <a href="/export-absensi" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                        <a href="/export-absensi-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Export PDF</a>
+                        <a href="/export-absensi" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Ekspor Excel</a>
+                        <a href="/export-absensi-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Ekspor PDF</a>
                     </div>
                     <div class="panel-body m-b-5">
                         <div class="row">

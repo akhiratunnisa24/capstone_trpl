@@ -6,7 +6,7 @@
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Setting Absensi</h4>
                 <ol class="breadcrumb pull-right">
-                    <li><a href="#">Human Resources Management System</a></li>
+                    <li><a href="#">Rynest Employees Management System</a></li>
                     <li class="active">Setting Absensi</li>
                 </ol>
                 <div class="clearfix"></div>

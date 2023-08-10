@@ -23,7 +23,7 @@
                 <h4 class="pull-left page-title ">Detail Karyawan</h4>
 
                 <ol class="breadcrumb pull-right">
-                    <li>Human Resources Management System</li>
+                    <li>Rynest Employees Management System</li>
                     <li class="active">Detail Karyawan</li>
                 </ol>
 

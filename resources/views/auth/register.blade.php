@@ -44,7 +44,7 @@
 <html>
 <head>
         <meta charset="utf-8" />
-        <title>Human Resources Management System</title>
+        <title>Rynest Employees Management System</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta content="Admin Dashboard" name="description" />
         <meta content="ThemeDesign" name="author" />

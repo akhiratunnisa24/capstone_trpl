@@ -9,7 +9,7 @@
             <h4 class="pull-left page-title">Sisa Cuti Tahun Sebelumnya</h4>
             
             <ol class="breadcrumb pull-right">
-                <li>Human Resources Management System</li>
+                <li>Rynest Employees Management System</li>
                 <li class="active">Sisa Cuti Tahunan</li>
             </ol>
            

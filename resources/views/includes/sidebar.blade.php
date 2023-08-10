@@ -39,7 +39,7 @@
                         <ul class="list-unstyled">
                             {{-- <li><a href="/absensi-karyawan"><i class="mdi mdi-account-check"></i><span>Absensi</span></a>
                             </li> --}}
-                            <li><a href="/history-absensi"><i class="fa fa-history"></i><span>History
+                            <li><a href="/riwayat-absensi"><i class="fa fa-history"></i><span>Riwayat
                                         Absensi</span></a></li>
                             <li><a href="/alokasi-cuti"><i class="mdi mdi-walk"></i><span>Alokasi Cuti</span></a> </li>
                             <li><a href="/cuti-karyawan"><i class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a>
@@ -64,7 +64,7 @@
                                 class="text-info panel-title">Cuti & Sakit/Ijin</span><span class="pull-right"><i
                                     class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Transaksi Cuti & Ijin</span></a>
+                            <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Ijin</span></a>
                             </li>
                             <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti &
                                         Ijin</span></a></li>
@@ -107,7 +107,7 @@
 
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-database"></i><span
-                                class="text-info panel-title">Data Master</span><span class="pull-right"><i
+                                class="text-info panel-title">Data Pokok</span><span class="pull-right"><i
                                     class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/divisi"><i class="fa fa-sitemap"></i><span></span>Divisi</a></li>
@@ -131,7 +131,7 @@
 
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-server"></i><span
-                                class="text-info panel-title">Data Master KPI</span><span class="pull-right"><i
+                                class="text-info panel-title">Data Pokok KPI</span><span class="pull-right"><i
                                     class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/masterkpi"><i class="fa fa-tasks"></i><span></span>Master KPI</a></li>
@@ -165,7 +165,7 @@
                     <li><a href="/karyawandashboard" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>
                     <li><a href="kalender"><i class="fa fa-calendar"></i><span>Kalender</span></a></li>
                     {{-- <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li> --}}
-                    <li><a href="/history-absensi" class="waves-effect"><i class="fa fa-history"></i><span>History Absensi</span></a></li>
+                    <li><a href="/riwayat-absensi" class="waves-effect"><i class="fa fa-history"></i><span>Riwayat Absensi</span></a></li>
                     <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a></li>
                     <li><a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
                 </ul>
@@ -187,7 +187,7 @@
                                 Pribadi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <!-- <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li> -->
-                            <li><a href="/history-absensi" class="waves-effect"><i class="fa fa-history"></i><span>History Absensi</span></a>
+                            <li><a href="/riwayat-absensi" class="waves-effect"><i class="fa fa-history"></i><span>Riwayat Absensi</span></a>
                             </li>
                             <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a></li>
                             <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
@@ -202,9 +202,9 @@
                             </li>
                             @if($row->jabatan == "Manager" || $row->jabatan == "Asistant Manager")
                                 <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi</span></a></li>
-                                <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Transaksi Cuti</span></a></li>
+                                <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti</span></a></li>
                             @elseif($row->jabatan == "Direksi")
-                                <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Transaksi Cuti</span></a></li>
+                                <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti</span></a></li>
                             @else
                             @endif
                             <li><a href="/resign_manager" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Data Resign</span></a></li>

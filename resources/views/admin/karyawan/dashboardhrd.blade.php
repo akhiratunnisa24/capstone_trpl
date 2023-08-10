@@ -7,7 +7,7 @@
                 <h4 class="pull-left page-title">Dashboard</h4>
 
                 <ol class="breadcrumb pull-right">
-                    <li>Human Resources Management System</li>
+                    <li>Rynest Employees Management System</li>
                     <li class="active">Dashboard</li>
                 </ol>
 
@@ -842,7 +842,7 @@
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-8" href="#14" aria-expanded="false"
                                 class="dropdown-toggle waves-effect waves-light collapsed">
-                                Number of Employee
+                                Jumlah Karyawan
                             </a>
                         </h4>
                     </div>
@@ -855,8 +855,8 @@
                                         <thead style="text-align: center;">
                                             <tr class="info">
                                                 <th>No</th>
-                                                <th>Management</th>
-                                                <th>Head Count</th>
+                                                <th>Divisi</th>
+                                                <th>Jumlah</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1293,7 +1293,7 @@
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-8" href="#15" aria-expanded="false"
                                 class="dropdown-toggle waves-effect waves-light collapsed">
-                                Transaksi Kehadiran Kerja Karyawan
+                                Data Kehadiran Kerja Karyawan
                                 {{-- @if (isset($jumAbsen))
                                     <span class="badge badge badge-danger"
                                         style="background-color:red">@php  echo $jumAbsen; @endphp</span>

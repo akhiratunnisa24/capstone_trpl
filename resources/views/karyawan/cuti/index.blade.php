@@ -8,7 +8,7 @@
                 <h4 class="pull-left page-title">Ajukan Cuti & Izin</h4>
 
                 <ol class="breadcrumb pull-right">
-                    <li>Human Resources Management System</li>
+                    <li>Rynest Employees Management System</li>
                     <li class="active">Ajukan Cuti & Izin</li>
                 </ol>
                 <div class="clearfix"></div>               
