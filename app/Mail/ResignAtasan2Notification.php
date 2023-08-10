@@ -19,7 +19,7 @@ class ResignAtasan2Notification extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
         $this->data = $data;
     }
@@ -31,7 +31,7 @@ class ResignAtasan2Notification extends Mailable
      */
     public function build()
     {
-        return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+        return $this->from('no-reply@rynest.com')
             ->subject($this->data['subject'])
             ->cc($this->data['karyawan_email'], 'Karyawan')
             ->view('emails.resign2index')->with('data',$this->data);

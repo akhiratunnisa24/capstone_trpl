@@ -86,7 +86,7 @@
 
                                                 @elseif($r->karyawan->atasan_kedua == Auth::user()->id_pegawai && $r->status == 6)
 
-                                                <form action="{{ route('resignapproved', $r->id) }}" method="POST">
+                                                <form action="{{ route('resign_approved', $r->id) }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="status" value=1 class="form-control" hidden>
                                                     <button type="submit" class="btn btn-success btn-sm">
