@@ -18,7 +18,7 @@
     {{-- <php
         use App\Models\Karyawan;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->select('jabatan')->first();
-            
+
     ?> --}}
 
     @if (Auth::check() && Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 3)
@@ -32,7 +32,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#1" aria-expanded="false"
                                     class="dropdown-toggle waves-effect waves-light collapsed">
                                     Permintaan Cuti Karyawan
-                                    
+
                                     @if($cutijumlah)
                                         <span class="badge badge badge-danger" style="background-color:red">{{$cutijumlah}}</span>
                                     @endif
@@ -76,7 +76,7 @@
 
                                                             <td>
                                                                 <div class="row">
-                                                                    
+
                                                                     @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Manager")
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
@@ -92,9 +92,9 @@
                                                                                 </a>
                                                                             </form>
                                                                         </div>
-                                                                    
+
                                                                     @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Asistant Manager")
-                                                                    
+
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
                                                                                 @csrf
@@ -109,9 +109,9 @@
                                                                                 </a>
                                                                             </form>
                                                                         </div>
-                                                                    
+
                                                                     @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Direksi")
-                                                                
+
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('leave.approved', $data->id) }}" method="POST">
                                                                                 @csrf
@@ -128,9 +128,9 @@
                                                                         </div>
                                                                         @include('direktur.cuti.cutiReject')
 
-                                                
+
                                                                     @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Asistant Manager")
-                                                                    
+
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
                                                                                 @csrf
@@ -145,7 +145,7 @@
                                                                                 </a>
                                                                             </form>
                                                                         </div>
-                                                                    
+
                                                                     @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Manager")
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
@@ -245,7 +245,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#7" aria-expanded="false"
                                     class="dropdown-toggle waves-effect waves-light collapsed">
                                     Pembatalan dan Perubahan Cuti Karyawan
-                                    
+
                                     @if($jumct)
                                         <span class="badge badge badge-danger" style="background-color:red">{{$jumct}}</span>
                                     @endif
@@ -270,18 +270,18 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($cutis as $data)
-                                                   
+
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
                                                             <td>{{ $data->nama }}</td>
                                                             <td>{{ $data->jenis_cuti }}</td>
                                                             <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}</td>
-                                            
+
                                                             <td> {{$data->catatan}}</td>
 
                                                             <td>
                                                                 <div class="row">
-                                                                    
+
                                                                     @if ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manager")
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('batal.approved', $data->id) }}" method="POST">
@@ -343,7 +343,7 @@
                                                                             </form>
                                                                         </div>
                                                                     @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asistant Manager")
-                                                                    
+
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('batal.approved', $data->id) }}" method="POST">
                                                                                 @csrf
@@ -359,7 +359,7 @@
                                                                             </form>
                                                                         </div>
                                                                     @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asistant Manager")
-                                                                    
+
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
                                                                                 @csrf
@@ -374,7 +374,7 @@
                                                                                 <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                             </form>
                                                                         </div>
-                                                                   
+
                                                                     @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Direksi")
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('batal.approved', $data->id) }}" method="POST">
@@ -449,7 +449,7 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                    
+
                                                     {{-- modal show cuti --}}
                                                     @include('admin.cuti.showcuti')
                                                     @include('manager.staff.cutiReject')
@@ -470,7 +470,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#3" class="collapsed"
                                     aria-expanded="false">
                                     Permintaan Resign Karyawan
-                                    
+
                                     @if ($resignjumlah)
                                         <span class="badge badge badge-danger" style="background-color:red">{{ $resignjumlah }}</span>
 
@@ -513,7 +513,7 @@
                                                         <td id="b" class="text-center">
                                                             <div class="btn-group" role="group">
                                                                 @if($r->karyawan->atasan_pertama == Auth::user()->id_pegawai && $r->status == 1)
-                                                                    <form action="{{ route('resignapproved', $r->id) }}"
+                                                                    <form action="{{ route('resign_approved_manager', $r->id) }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         <input type="hidden" name="status" value="1"  class="form-control" hidden>
@@ -529,7 +529,7 @@
                                                                         </button>
                                                                     </form>
                                                                 @elseif($r->karyawan->atasan_kedua == Auth::user()->id_pegawai && $r->status == 6)
-                                                                    <form action="{{ route('resign_approved_manager', $r->id) }}"
+                                                                    <form action="{{ route('resignapproved', $r->id) }}"
                                                                             method="POST">
                                                                             @csrf
                                                                             <input type="hidden" name="status" value="1" class="form-control" hidden>
@@ -564,7 +564,7 @@
 
                         </div>
                     </div>
-  
+
                 </div>
             </div>
 
@@ -577,7 +577,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#2" class="collapsed"
                                     aria-expanded="false">
                                     Permintaan Sakit/Ijin/Dinas/lain-lain
-                                    
+
                                     @if ($izinjumlah)
                                         <span class="badge badge badge-danger" style="background-color:red">{{ $izinjumlah }}</span>
                                     @elseif(!$izinjumlah)
@@ -620,9 +620,9 @@
                                                             </td>
                                                         @endif
 
-                                                    
+
                                                         <td>
-                                                           
+
                                                             <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : 'secondary' ))))))))) }}">
                                                                 {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status : ''))))))))) }}
                                                             </span>
@@ -647,7 +647,7 @@
                                                                     </div>
                                                                     @include('admin.cuti.izinReject')
                                                                 @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Asistant Manager")
-                                                            
+
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approved', $data->id) }}"
                                                                             method="POST">
@@ -665,7 +665,7 @@
                                                                     </div>
                                                                     @include('manager.staff.izinReject')
                                                                 @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Direksi")
-                                                            
+
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approv', $data->id) }}"
                                                                             method="POST">
@@ -681,9 +681,9 @@
                                                                             </a>
                                                                         </form>
                                                                     </div>
-                                                                    @include('direktur.cuti.izinReject')    
+                                                                    @include('direktur.cuti.izinReject')
                                                                 @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Asistant Manager")
-                                                                
+
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approved', $data->id) }}"
                                                                             method="POST">
@@ -700,7 +700,7 @@
                                                                         </form>
                                                                     </div>
                                                                     @include('manager.staff.izinReject')
-                                                            
+
                                                                 @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Manager")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approved', $data->id) }}"
@@ -734,7 +734,7 @@
                                                                         </a>
                                                                     </form>
                                                                 </div>
-                                                                @include('direktur.cuti.izinReject')    
+                                                                @include('direktur.cuti.izinReject')
                                                                 @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6  && $row->jabatan == "Direksi")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approv', $data->id) }}"
@@ -751,7 +751,7 @@
                                                                             </a>
                                                                         </form>
                                                                     </div>
-                                                                    @include('direktur.cuti.izinReject')    
+                                                                    @include('direktur.cuti.izinReject')
                                                                 @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6 && $row->jabatan == "Manager")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('izin.approved', $data->id) }}"
@@ -768,7 +768,7 @@
                                                                             </a>
                                                                         </form>
                                                                     </div>
-                                                                    @include('manager.staff.izinReject')    
+                                                                    @include('manager.staff.izinReject')
                                                                 @else
                                                                 @endif
 
@@ -803,8 +803,8 @@
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#8" class="collapsed"
                                     aria-expanded="false">
-                                    Pembatalan/Perubahan Sakit/Ijin 
-                                    
+                                    Pembatalan/Perubahan Sakit/Ijin
+
                                     @if ($jumizin)
                                         <span class="badge badge badge-danger" style="background-color:red">{{ $jumizin }}</span>
                                     @endif
@@ -843,14 +843,14 @@
                                                             <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/M/Y') }}
                                                             </td>
                                                         @endif
-                                                        
+
                                                         <td>{{$data->catatan}}</td>
 
                                                         <td>
                                                             <div class="row">
                                                                 {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
                                                                 <div class="row">
-                                                                    
+
                                                                     @if ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manager")
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
@@ -972,7 +972,7 @@
                                                                             </form>
                                                                         </div>
                                                                     @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asistant Manager")
-                                                                    
+
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
                                                                                 @csrf
@@ -988,7 +988,7 @@
                                                                             </form>
                                                                         </div>
                                                                     @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asistant Manager")
-                                                                    
+
                                                                         <div class="col-sm-3">
                                                                             <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
                                                                                 @csrf
@@ -1004,8 +1004,8 @@
                                                                             </form>
                                                                         </div>
                                                                     @endif
-                                                                    
-                                    
+
+
                                                                 </div>
                                                                 <div class="col-sm-3" style="margin-left:5px">
                                                                     <form action="" method="POST">
@@ -1064,14 +1064,14 @@
                                                                 </td>
                                                             </tr>
                                                         @endforeach
-            
+
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
-            
-            
+
+
                                 </div>
                             </div>
                         </div>
@@ -1109,16 +1109,16 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
-    
+
                                             </tbody>
-                                        </table> 
+                                        </table>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    
+
 
                 @if (Auth::check() && Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 2)
                     <div class="panel panel-default">
@@ -1166,7 +1166,7 @@
                         </div>
                     </div>
                 @endif
-                    
+
                 </div>
             </div>
         </div> <!-- end row -->
@@ -1183,7 +1183,7 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#1" aria-expanded="false"
                                 class="dropdown-toggle waves-effect waves-light collapsed">
                                 Permintaan Cuti Karyawan
-                                
+
                                 @if($cutijumlah)
                                     <span class="badge badge badge-danger" style="background-color:red">{{$cutijumlah}}</span>
                                 @endif
@@ -1227,7 +1227,7 @@
 
                                                         <td>
                                                             <div class="row">
-                                                                
+
                                                                 @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Manager")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
@@ -1243,9 +1243,9 @@
                                                                             </a>
                                                                         </form>
                                                                     </div>
-                                                                
+
                                                                 @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Asistant Manager")
-                                                                
+
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
                                                                             @csrf
@@ -1260,9 +1260,9 @@
                                                                             </a>
                                                                         </form>
                                                                     </div>
-                                                                
+
                                                                 @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Direksi")
-                                                            
+
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('leave.approved', $data->id) }}" method="POST">
                                                                             @csrf
@@ -1279,9 +1279,9 @@
                                                                     </div>
                                                                     @include('direktur.cuti.cutiReject')
 
-                                            
+
                                                                 @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Asistant Manager")
-                                                                
+
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
                                                                             @csrf
@@ -1296,7 +1296,7 @@
                                                                             </a>
                                                                         </form>
                                                                     </div>
-                                                                
+
                                                                 @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Manager")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('cuti.approved', $data->id) }}" method="POST">
@@ -1396,7 +1396,7 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#7" aria-expanded="false"
                                 class="dropdown-toggle waves-effect waves-light collapsed">
                                 Pembatalan dan Perubahan Cuti Karyawan
-                                
+
                                 @if($jumct)
                                     <span class="badge badge badge-danger" style="background-color:red">{{$jumct}}</span>
                                 @endif
@@ -1421,18 +1421,18 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($cutis as $data)
-                                               
+
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $data->nama }}</td>
                                                         <td>{{ $data->jenis_cuti }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }}</td>
-                                        
+
                                                         <td> {{$data->catatan}}</td>
 
                                                         <td>
                                                             <div class="row">
-                                                                
+
                                                                 @if ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manager")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('batal.approved', $data->id) }}" method="POST">
@@ -1494,7 +1494,7 @@
                                                                         </form>
                                                                     </div>
                                                                 @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asistant Manager")
-                                                                
+
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('batal.approved', $data->id) }}" method="POST">
                                                                             @csrf
@@ -1510,7 +1510,7 @@
                                                                         </form>
                                                                     </div>
                                                                 @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asistant Manager")
-                                                                
+
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('ubah.approved', $data->id) }}" method="POST">
                                                                             @csrf
@@ -1525,7 +1525,7 @@
                                                                             <button type="submit" class="fa fa-times btn-danger  btn-sm"></button>
                                                                         </form>
                                                                     </div>
-                                                               
+
                                                                 @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Direksi")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('batal.approved', $data->id) }}" method="POST">
@@ -1600,7 +1600,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                
+
                                                 {{-- modal show cuti --}}
                                                 @include('admin.cuti.showcuti')
                                                 @include('manager.staff.cutiReject')
@@ -1621,7 +1621,7 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#3" class="collapsed"
                                 aria-expanded="false">
                                 Permintaan Resign Karyawan
-                                
+
                                 @if ($resignjumlah)
                                     <span class="badge badge badge-danger" style="background-color:red">{{ $resignjumlah }}</span>
 
@@ -1728,7 +1728,7 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#2" class="collapsed"
                                 aria-expanded="false">
                                 Permintaan Sakit/Ijin/Dinas/lain-lain
-                                
+
                                 @if ($izinjumlah)
                                     <span class="badge badge badge-danger" style="background-color:red">{{ $izinjumlah }}</span>
                                 @elseif(!$izinjumlah)
@@ -1771,9 +1771,9 @@
                                                         </td>
                                                     @endif
 
-                                                
+
                                                     <td>
-                                                       
+
                                                         <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : 'secondary' ))))))))) }}">
                                                             {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status : ''))))))))) }}
                                                         </span>
@@ -1798,7 +1798,7 @@
                                                                 </div>
                                                                 @include('admin.cuti.izinReject')
                                                             @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Asistant Manager")
-                                                        
+
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('izin.approved', $data->id) }}"
                                                                         method="POST">
@@ -1816,7 +1816,7 @@
                                                                 </div>
                                                                 @include('manager.staff.izinReject')
                                                             @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == "Direksi")
-                                                        
+
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('izin.approv', $data->id) }}"
                                                                         method="POST">
@@ -1832,9 +1832,9 @@
                                                                         </a>
                                                                     </form>
                                                                 </div>
-                                                                @include('direktur.cuti.izinReject')    
+                                                                @include('direktur.cuti.izinReject')
                                                             @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Asistant Manager")
-                                                            
+
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('izin.approved', $data->id) }}"
                                                                         method="POST">
@@ -1851,7 +1851,7 @@
                                                                     </form>
                                                                 </div>
                                                                 @include('manager.staff.izinReject')
-                                                        
+
                                                             @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == "Manager")
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('izin.approved', $data->id) }}"
@@ -1885,7 +1885,7 @@
                                                                     </a>
                                                                 </form>
                                                             </div>
-                                                            @include('direktur.cuti.izinReject')    
+                                                            @include('direktur.cuti.izinReject')
                                                             @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6  && $row->jabatan == "Direksi")
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('izin.approv', $data->id) }}"
@@ -1902,7 +1902,7 @@
                                                                         </a>
                                                                     </form>
                                                                 </div>
-                                                                @include('direktur.cuti.izinReject')    
+                                                                @include('direktur.cuti.izinReject')
                                                             @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 6 && $row->jabatan == "Manager")
                                                                 <div class="col-sm-3">
                                                                     <form action="{{ route('izin.approved', $data->id) }}"
@@ -1919,7 +1919,7 @@
                                                                         </a>
                                                                     </form>
                                                                 </div>
-                                                                @include('manager.staff.izinReject')    
+                                                                @include('manager.staff.izinReject')
                                                             @else
                                                             @endif
 
@@ -1954,8 +1954,8 @@
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#8" class="collapsed"
                                 aria-expanded="false">
-                                Pembatalan/Perubahan Sakit/Ijin 
-                                
+                                Pembatalan/Perubahan Sakit/Ijin
+
                                 @if ($jumizin)
                                     <span class="badge badge badge-danger" style="background-color:red">{{ $jumizin }}</span>
                                 @endif
@@ -1994,14 +1994,14 @@
                                                         <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/M/Y') }}
                                                         </td>
                                                     @endif
-                                                    
+
                                                     <td>{{$data->catatan}}</td>
 
                                                     <td>
                                                         <div class="row">
                                                             {{-- @if ($data->status == 'Pending' || $data->status == 'Disetujui Manager') --}}
                                                             <div class="row">
-                                                                
+
                                                                 @if ($data->atasan_kedua == Auth::user()->id_pegawai && $data->catatan == "Pembatalan Disetujui Atasan" && $row->jabatan == "Manager")
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
@@ -2123,7 +2123,7 @@
                                                                         </form>
                                                                     </div>
                                                                 @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Pembatalan" && $row->jabatan == "Asistant Manager")
-                                                                
+
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('batal.setuju', $data->id) }}" method="POST">
                                                                             @csrf
@@ -2139,7 +2139,7 @@
                                                                         </form>
                                                                     </div>
                                                                 @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->catatan == "Mengajukan Perubahan" && $row->jabatan == "Asistant Manager")
-                                                                
+
                                                                     <div class="col-sm-3">
                                                                         <form action="{{ route('ubah.setuju', $data->id) }}" method="POST">
                                                                             @csrf
@@ -2155,8 +2155,8 @@
                                                                         </form>
                                                                     </div>
                                                                 @endif
-                                                                
-                                
+
+
                                                             </div>
                                                             <div class="col-sm-3" style="margin-left:5px">
                                                                 <form action="" method="POST">
@@ -2215,14 +2215,14 @@
                                                             </td>
                                                         </tr>
                                                     @endforeach
-        
+
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-        
-        
+
+
                             </div>
                         </div>
                     </div>
@@ -2262,14 +2262,14 @@
                                             @endforeach
 
                                         </tbody>
-                                    </table> 
+                                    </table>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                
+
 
             @if (Auth::check() && Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 2)
                 <div class="panel panel-default">
@@ -2317,13 +2317,13 @@
                     </div>
                 </div>
             @endif
-                
+
             </div>
         </div>
     </div> <!-- end row -->
 @endif
 
-    
+
 
     <!-- baris kedua -->
     <div class="row">
@@ -2394,7 +2394,7 @@
                                             {{-- <td>{{ \Carbon\Carbon::parse($alokasi->sampai)->format('d/m/Y') }}</td> --}}
                                         </tr>
                                     @endforeach
-    
+
                                     <!-- mencari jumlah cuti -->
                                     @php
                                         $jml = 0;
@@ -2429,14 +2429,14 @@
                 <?php
                     use Illuminate\Support\Facades\Auth;
                     use App\Models\Absensi;
-                    if ($absenKaryawan == 1 ) { 
+                    if ($absenKaryawan == 1 ) {
                 ?>
                 <div class="panel-body">
                     <h3 class=""><b class="text text-success">Sukses</b></h3>
                     <p class="text-muted"><b>Anda Sudah Berhasil Absen</b></p>
                 </div>
                 <?php
-                    } else { 
+                    } else {
                 ?>
                 <div class="panel-body">
                     <h3 class=""><a href="{{url("absensi-karyawan")}}"><b class="text text-danger">Belum Absen</b></a></h3>
@@ -2445,13 +2445,13 @@
                 <?php } ?>
             </div>
         </div>
-        
+
     </div> <!-- End Row -->
 
     <!-- baris kedua -->
     <div class="row">
 
-       
+
          <div class="col-sm-6 col-lg-3">
             <div id="a" class="panel panel-teal text-center">
                 <div class="panel-heading btn-success">
@@ -2477,7 +2477,7 @@
             </div>
         </div>
 
-        
+
         <div class="col-sm-6 col-lg-3">
             <div id="a" class="panel panel-primary text-center">
                 <div class="panel-heading btn-warning">
@@ -2489,7 +2489,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-sm-6 col-lg-3">
             <div id="a" class="panel panel-teal text-center">
                 <div class="panel-heading btn-warning">
@@ -2501,8 +2501,8 @@
                 </div>
             </div>
         </div>
-        
-       
+
+
 
     </div>
 

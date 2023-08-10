@@ -142,7 +142,55 @@ class ResignController extends Controller
         // $resign->partner     = $partner;
 
         $resign->save();
-        return redirect()->back();
+        $emailkry = DB::table('resign')
+        ->join('karyawan', 'resign.id_karyawan', '=', 'karyawan.id')
+        ->join('departemen', 'resign.departemen', '=', 'departemen.id')
+        ->where('resign.id_karyawan', '=', $resign->id_karyawan)
+        ->select('karyawan.email', 'karyawan.nama', 'resign.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
+        ->first();
+    // dd($emailkry);
+    $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
+        ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
+        ->first();
+
+    $atasan2 = NULL;
+    if($emailkry->atasan_kedua != NULL)
+    {
+        $atasan2 = Karyawan::where('id', $emailkry->atasan_kedua)
+            ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
+            ->first();
+    }
+    $tujuan = $atasan->email;
+    // dd($tujuan);
+
+    $data = [
+        'subject' => 'Notifikasi Permohonan ' . ' ' . '#' . $resign->id . ' ' . ucwords(strtolower($emailkry->nama)),
+        'noregistrasi' => $resign->id,
+        'title'  => 'NOTIFIKASI PERSETUJUAN FORMULIR RESIGN KARYAWAN',
+        'subtitle' => '',
+        'tgl_permohonan' => Carbon::parse($resign->created_at)->format("d/m/Y"),
+        'nik' => $emailkry->nik,
+        'namakaryawan' => ucwords(strtolower($emailkry->nama)),
+        'jabatankaryawan' => $emailkry->nama_jabatan,
+        'departemen' => $emailkry->nama_departemen,
+        'karyawan_email' =>  $emailkry->email,
+        // 'id_jeniscuti' => $jeniscuti->jenis_cuti,
+        'alasan' => $resign->alasan,
+        // 'tgl_mulai' => Carbon::parse($cuti->tgl_mulai)->format("d/m/Y"),
+        'tgl_resign' => Carbon::parse($resign->tgl_resign)->format("d/m/Y"),
+        // 'jml_cuti' => $cuti->jml_cuti,
+        // 'status' => $status->name_status,
+        'jabatan' => $atasan->jabatan,
+        'nama_atasan' => $atasan->nama,
+    ];
+    if($atasan2 !== NULL){
+        $data['atasan2'] = $atasan2->email;
+    }
+    Mail::to($tujuan)->send(new ResignNotification($data));
+    // dd($data);
+
+    return redirect()->back()->with('pesan', 'Permohonan Resign Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim');
+        // return redirect()->back();
 
     }
 
