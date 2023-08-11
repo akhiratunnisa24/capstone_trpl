@@ -1540,6 +1540,13 @@
         </script>
     @endif
 
+    @if(Session::has('message'))
+        <div class="alert alert-success">
+            {{ Session::get('message') }}
+        </div>
+    @endif
+
+
     <script>
         var users2 = {{ Js::from($data) }};
         var labelBulan = {{ Js::from($labelBulan) }}

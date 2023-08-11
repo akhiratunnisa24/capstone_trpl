@@ -77,46 +77,95 @@ class MesinController extends Controller
                                         $jam_masuk    = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
                                         $jadwal_pulang = Carbon::createFromFormat('H:i:s', $jadwal_pulang);
 
-                                        $jumkerja     = $jadwal_pulang->diff($jam_masuk);
-                                        $absensi->jml_jamkerja = $jumkerja->format('%H:%I:%S');
-                                       
+                                        $jmlhadir           = $jam_keluar->diff($jam_masuk);
+                                        $total_jmlhadir     = ($jmlhadir->h * 60) + $jmlhadir->i;
+                                        $absensi->jam_kerja =  $jmlhadir->format('%H:%I:%S');
 
-                                        if($jam_masuk < $jadwal_masuk && $jam_keluar >= $jadwal_pulang)
-                                        {//kondisi normal
-                                            $absensi->plg_cepat    = null;
-                                            // $jam_kerja             = $jadwal_pulang->diff($jam_masuk);
-                                            // $jam_kerja             = $jam_kerja->format('%H:%I:%S');
+                                        if($jam_keluar < $jadwal_pulang)
+                                        {
+                                            $plgcpt = $jadwal_pulang->diff($jam_keluar);
 
-                                            // $absensi->jml_jamkerja = $jam_kerja;
-                                           
-                                            // dd($absensi,$absensi->jml_jamkerja);
+                                            $telatMinutes = ($plgcpt->h * 60) + $plgcpt->i; // Konversi jam ke menit
+
+                                            if ($telatMinutes > 0) {
+                                                $plgcpt  = $plgcpt->format('%H:%I:%S');
+                                            } else {
+                                                $plgcpt = null;
+                                            }
+                                        }
+                                        elseif($jam_keluar > $jadwal_pulang)
+                                        {
+                                            $plgcpt     = null;
+                                        }
+
+                                        $absensi->plg_cepat = $plgcpt;
+
+                                        if($jam_masuk <= $jadwal_masuk && $jam_keluar >= $jadwal_pulang)
+                                        {
+
+                                            $jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
+                                            $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
+                                            
+                                            //lembur 
+                                            $lembur = $jam_keluar->diff($jadwal_pulang);
+                                            $absensi->lembur = $lembur->format('%H:%I:%S');
                                         }
                                         elseif($jam_masuk < $jadwal_masuk && $jam_keluar < $jadwal_pulang)
                                         {//pulangcepat
-                                            $absensi->plg_cepat = null;
-                                            $absensi->jml_jamkerja = '09:00:00';
-                                            
-                                            // dd($absensi,$absensi->jml_jamkerja);
+                                            $jml_jamkerja = $jam_keluar->diff($jam_masuk);
+                                            $total_minutes = ($jml_jamkerja->h * 60) + $jml_jamkerja->i;
+
+                                            if ($total_minutes < 540 || $total_jmlhadir < $total_minutes) { // 9 jam = 540 menit
+                                                $jml_jamkerja = $absensi->jam_kerja;
+                                            } else {
+                                                $jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
+                                            }
+
+                                            $absensi->jml_jamkerja = $jml_jamkerja;
+                                            $absensi->lembur = null;   
+                                        }
+                                        elseif($jam_masuk > $jadwal_masuk && $jam_keluar < $jadwal_pulang)
+                                        {
+                                            $jml_jamkerja = $jadwal_pulang->diff($jam_masuk);
+                                            $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
+
+                                            $absensi->lembur = null;
+                                           
+                                        }
+                                        elseif($jam_masuk > $jadwal_masuk && $jam_keluar > $jadwal_pulang)
+                                        {
+                                            $lembur = $jam_keluar->diff($jadwal_pulang);
+                                            $absensi->lembur = $lembur->format('%H:%I:%S');
+
+                                            $jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
+                                            $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
+                                        
                                         }
 
-                                        $jmlhadir           = $jam_keluar->diff($jam_masuk);
-                                        $absensi->jam_kerja =  $jmlhadir->format('%H:%I:%S');
-
-                                        // dd($jmlhadir,$jmlhadi,$absensi);
                                         $absensi->update();
+
                                     }
                                     else
                                     {
                                         $jadwal_masuk  = $jadwal->jadwal_masuk;
+                                        $jadwal_masuk     = Carbon::createFromFormat('H:i:s', $jadwal_masuk);
+
                                         $jadwal_pulang = $jadwal->jadwal_pulang;
                                         $jam_masuk     = Carbon::createFromFormat('H:i:s', $jam);
-                                        //menghitung keterlambatan karyawan
                             
-                                        if($jam_masuk < $jadwal_masuk){
-                                            $telat         = $jam_masuk->diff($jadwal_masuk);
-                                            $terlambat     = $telat->format('%H:%I:%S');
+                                        if($jam_masuk > $jadwal_masuk)
+                                        {
+                                            $telat = $jadwal_masuk->diff($jam_masuk);
+
+                                            $telatMinutes = ($telat->h * 60) + $telat->i; // Konversi jam ke menit
+
+                                            if ($telatMinutes > 0) {
+                                                $terlambat  = $telat->format('%H:%I:%S');
+                                            } else {
+                                                $terlambat = null;
+                                            }
                                         }
-                                        elseif($jam_masuk > $jadwal_masuk)
+                                        elseif($jam_masuk < $jadwal_masuk)
                                         {
                                             $terlambat     = null;
                                         }
@@ -147,7 +196,8 @@ class MesinController extends Controller
                                 }
                             }
                         }
-                        else{
+                        else
+                        {
                             $matchedUser = $usermesin->where('noid2', $pin)->first();
                             // dd($matchedUser);
                             if (isset($matchedUser)) 
@@ -178,45 +228,99 @@ class MesinController extends Controller
                                             $jam_masuk    = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
                                             $jadwal_pulang = Carbon::createFromFormat('H:i:s', $jadwal_pulang);
 
-                                            $jumkerja     = $jadwal_pulang->diff($jam_masuk);
-                                            $absensi->jml_jamkerja = $jumkerja->format('%H:%I:%S');
-                                        
-                                            if($jam_masuk < $jadwal_masuk && $jam_keluar >= $jadwal_pulang)
-                                            {//kondisi normal
-                                                $absensi->plg_cepat    = null;
-                                                // $jam_kerja             = $jadwal_pulang->diff($jam_masuk);
-                                                // $jam_kerja             = $jam_kerja->format('%H:%I:%S');
+                                            $jmlhadir           = $jam_keluar->diff($jam_masuk);
+                                            $total_jmlhadir     = ($jmlhadir->h * 60) + $jmlhadir->i;
+                                            $absensi->jam_kerja =  $jmlhadir->format('%H:%I:%S');
 
-                                                // $absensi->jml_jamkerja = $jam_kerja;
-                                            
-                                                // dd($absensi,$absensi->jml_jamkerja);
+                                            if($jam_keluar < $jadwal_pulang)
+                                            {
+                                                $plgcpt = $jadwal_pulang->diff($jam_keluar);
+
+                                                $telatMinutes = ($plgcpt->h * 60) + $plgcpt->i; // Konversi jam ke menit
+
+                                                if ($telatMinutes > 0) {
+                                                    $plgcpt  = $plgcpt->format('%H:%I:%S');
+                                                } else {
+                                                    $plgcpt = null;
+                                                }
+                                            }
+                                            elseif($jam_keluar > $jadwal_pulang)
+                                            {
+                                                $plgcpt     = null;
+                                            }
+
+                                            $absensi->plg_cepat = $plgcpt;
+    
+                                            if($jam_masuk <= $jadwal_masuk && $jam_keluar >= $jadwal_pulang)
+                                            {
+    
+                                                $jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
+                                                $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
+                                                
+                                                //lembur 
+                                                $lembur = $jam_keluar->diff($jadwal_pulang);
+                                                $absensi->lembur = $lembur->format('%H:%I:%S');
+
+
                                             }
                                             elseif($jam_masuk < $jadwal_masuk && $jam_keluar < $jadwal_pulang)
                                             {//pulangcepat
-                                                $absensi->plg_cepat = null;
-                                                $absensi->jml_jamkerja = '09:00:00';
+                                                $jml_jamkerja = $jam_keluar->diff($jam_masuk);
+                                                $total_minutes = ($jml_jamkerja->h * 60) + $jml_jamkerja->i;
+
+                                                if ($total_jmlhadir < $total_minutes) { // 9 jam = 540 menit
+                                                    $jml_jamkerja = $absensi->jam_kerja;
+                                                } else {
+                                                    $jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
+                                                }
+                                                $absensi->jml_jamkerja = $jml_jamkerja;
+                                                $absensi->lembur = null;
                                                 
                                                 // dd($absensi,$absensi->jml_jamkerja);
                                             }
+                                            elseif($jam_masuk > $jadwal_masuk && $jam_keluar < $jadwal_pulang)
+                                            {
+                                                $jml_jamkerja = $jadwal_pulang->diff($jam_masuk);
+                                                $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
 
-                                            $jmlhadir           = $jam_keluar->diff($jam_masuk);
-                                            $absensi->jam_kerja =  $jmlhadir->format('%H:%I:%S');
+                                                $absensi->lembur = null;
+                                               
+                                            }
+                                            elseif($jam_masuk > $jadwal_masuk && $jam_keluar > $jadwal_pulang)
+                                            {
+                                                $lembur = $jam_keluar->diff($jadwal_pulang);
+                                                $absensi->lembur = $lembur->format('%H:%I:%S');
 
-                                            // dd($jmlhadir,$jmlhadi,$absensi);
+                                                $jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
+                                                $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
+                                            
+                                            }
+
                                             $absensi->update();
                                         }
                                         else
                                         {
                                             $jadwal_masuk  = $jadwal->jadwal_masuk;
+                                            $jadwal_masuk     = Carbon::createFromFormat('H:i:s', $jadwal_masuk);
+
                                             $jadwal_pulang = $jadwal->jadwal_pulang;
                                             $jam_masuk     = Carbon::createFromFormat('H:i:s', $jam);
+                                          
                                             //menghitung keterlambatan karyawan
                                 
-                                            if($jam_masuk < $jadwal_masuk){
-                                                $telat         = $jam_masuk->diff($jadwal_masuk);
-                                                $terlambat     = $telat->format('%H:%I:%S');
+                                            if($jam_masuk > $jadwal_masuk)
+                                            {
+                                                $telat = $jadwal_masuk->diff($jam_masuk);
+
+                                                $telatMinutes = ($telat->h * 60) + $telat->i; // Konversi jam ke menit
+
+                                                if ($telatMinutes > 0) {
+                                                    $terlambat  = $telat->format('%H:%I:%S');
+                                                } else {
+                                                    $terlambat = null;
+                                                }
                                             }
-                                            elseif($jam_masuk > $jadwal_masuk)
+                                            elseif($jam_masuk < $jadwal_masuk)
                                             {
                                                 $terlambat     = null;
                                             }
