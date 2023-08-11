@@ -25,18 +25,16 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading clearfix">
-                          <a href="#" class="btn btn-sm btn-dark fa fa-plus pull-right"
-                            @if ($status0 == 5 && $status1 == 8)
-                                onclick="alert('Kamu tidak bisa mengajukan resign lagi')" class="alert-button"
+                            <a href="#" class="btn btn-sm btn-dark fa fa-plus pull-right"
+                                @if ($status0 == 5 && $status1 == 1) onclick="alert('Kamu tidak bisa mengajukan resign lagi')" class="alert-button"
                             @elseif ($jumlah_resign > 0 && $status0 != 5)
                                 onclick="alert('Kamu tidak bisa mengajukan resign lagi')" class="alert-button"
                             @else
-                                data-toggle="modal" data-target="#Modal"
-                            @endif>
-                            Form Ajukan Resign
-                        </a>
+                                data-toggle="modal" data-target="#Modal" @endif>
+                                Form Ajukan Resign
+                            </a>
 
-                          </div>
+                        </div>
                         <!-- modals resign -->
                         @include('karyawan.resign.addresign')
 
@@ -60,53 +58,59 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($resign as $r)
-                                              @if ($r->id_karyawan == Auth::user()->id_pegawai)
-                                                <tr>
-                                                  <td>{{ $r->karyawans->nama }}</td>
-                                                  <td>{{ $r->departemens->nama_departemen }}</td>
-                                                  {{-- <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td> --}}
-                                                  <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}</td>
-                                                  <td>{{ $r->tipe_resign }}</td>
+                                                @if ($r->id_karyawan == Auth::user()->id_pegawai)
+                                                    <tr>
+                                                        <td>{{ $r->karyawans->nama }}</td>
+                                                        <td>{{ $r->departemens->nama_departemen }}</td>
+                                                        {{-- <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td> --}}
+                                                        <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}
+                                                        </td>
+                                                        <td>{{ $r->tipe_resign }}</td>
 
-                                                  <!-- data for status -->
-                                                  <td>
-                                                    <span class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'danger': 'danger'))) }}">
-                                                      {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 6 ? $r->statuses->name_status : ($r->status == 7 ? $r->statuses->name_status : ($r->status == 5 ? $r->statuses->name_status : 'Ditolak'))) }}
-                                                    </span>
-                                                  </td>
+                                                        <!-- data for status -->
+                                                        <td>
+                                                            <span
+                                                                class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'danger' : 'danger'))) }}">
+                                                                {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 6 ? $r->statuses->name_status : ($r->status == 7 ? $r->statuses->name_status : ($r->status == 5 ? $r->statuses->name_status : 'Ditolak'))) }}
+                                                            </span>
+                                                        </td>
 
-                                                  <td id="b" class="text-center">
-                                                    <div class="btn-group" role="group">
-                                                      <form action="" method="POST">
+                                                        <td id="b" class="text-center">
+                                                            <div class="btn-group" role="group">
+                                                                <form action="" method="POST">
+                                                                    <a class="btn btn-info btn-sm" data-toggle="modal"
+                                                                        data-target="#Showresign{{ $r->id }}">
+                                                                        <i class="fa fa-eye"></i>
+                                                                    </a>
+                                                                </form>
+                                                                @if ($r->status == 1)
+                                                                    <form action="" method="POST">
+                                                                        <a href="resigndelete{{ $r->id }}"
+                                                                            class="btn btn-danger btn-sm"
+                                                                            onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan resign ini?')"><i
+                                                                                class="fa fa-trash"></i></a>
+                                                                @endif
+                                                                </form>
+                                                            </div>
+                                                        </td>
+
+                                                        {{-- <td class="text-center">
+                                                    <form action="" method="POST">
                                                       <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#Showresign{{ $r->id }}">
                                                         <i class="fa fa-eye"></i>
                                                       </a>
                                                     </form>
-                                                    @if($r->status == 1)
-                                                    <form action="" method="POST">
-                                                      <a href="resigndelete{{ $r->id }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan resign ini?')"><i class="fa fa-trash"></i></a>
-                                                    @endif
-                                                    </form>
-                                                    </div>
-                                                  </td>
-
-                                                  {{-- <td class="text-center">
-                                                    <form action="" method="POST">
-                                                      <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#Showresign{{ $r->id }}">
-                                                        <i class="fa fa-eye"></i>
-                                                      </a>
-                                                    </form>
-                                                    @if($r->status == 8)
+                                                    @if ($r->status == 8)
                                                     <form action="" method="POST">
                                                       <a href="resigndelete{{ $r->id }}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan resign ini?')"><i class="fa fa-trash"></i></a>
                                                     @endif
                                                     </form>
                                                   </td> --}}
-                                                </tr>
-                                                @include('karyawan.resign.showresign')
-                                              @endif
+                                                    </tr>
+                                                    @include('karyawan.resign.showresign')
+                                                @endif
                                             @endforeach
-                                          </tbody>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
