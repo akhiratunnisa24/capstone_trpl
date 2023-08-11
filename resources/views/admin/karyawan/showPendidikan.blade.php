@@ -23,7 +23,7 @@
                 <h4 class="pull-left page-title ">Detail Karyawan</h4>
 
                 <ol class="breadcrumb pull-right">
-                    <li>Human Resources Management System</li>
+                    <li>Rynest Employees Management System</li>
                     <li class="active">Detail Karyawan</li>
                 </ol>
 
@@ -81,21 +81,26 @@
 
                                                     <tbody>
                                                         @foreach ($pendidikan as $rpendidikan)
-                                                            @if ($rpendidikan->tingkat != null)
+                                                        
+                                                            @if ($rpendidikan->tingkat !== null)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $rpendidikan->tingkat }}</td>
                                                                     <td>{{ $rpendidikan->nama_sekolah }}</td>
                                                                     <td>{{ $rpendidikan->jurusan }}</td>
-                                                                    {{-- <td>{{ $rpendidikan->tahun_masuk_formal }}</td> --}}
-                                                                    {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_formal)->format('d/m/Y') }}</td> --}}
-                                                                    <td>{{ $rpendidikan->tahun_masuk_formal->format('d/m/Y') }}</td>
-                                                                    <td>{{ $rpendidikan->tahun_lulus_formal->format('d/m/Y') }}</td>
-                                                         
-                                                                    {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_formal)->format('d/m/Y') }}</td> --}}
-                                                                    {{-- <td>{{ $rpendidikan->tahun_lulus_formal }}</td> --}}
+                                                                    @if($rpendidikan->tahun_masuk_formal !== null)
+                                                                        <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_masuk_formal)->format('d/m/Y') }}</td>
+                                                                    @else
+                                                                        <td></td>
+                                                                    @endif
+                                                                    @if($rpendidikan->tahun_lulus_formal !== null)
+                                            
+                                                                        <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y')}}</td>
+                                                                    @else
+                                                                        <td></td>
+                                                                    @endif
+                                                                  
                                                                     <td>{{ $rpendidikan->kota_pformal }}</td>
-                                                                    {{-- <td>{{ $rpendidikan->tahun_lulus_formal }}</td> --}}
                                                                     <td>{{ $rpendidikan->ijazah_formal }}</td>
                                                                     <td class="">
                                                                         <a class="btn btn-sm btn-primary editPformal "
@@ -141,12 +146,18 @@
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $rpendidikan->jenis_pendidikan }}</td>
                                                                 <td>{{ $rpendidikan->nama_lembaga }}</td>
-                                                                {{-- <td>{{ $rpendidikan->tahun_masuk_nonformal }}</td> --}}
-                                                                {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_nonformal)->format('d/m/Y') }}</td>
-                                                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_nonformal)->format('d/m/Y') }}</td> --}}
-                                                                <td>{{ $rpendidikan->tahun_masuk_nonformal->format('d/m/Y') }}</td>
-                                                                <td>{{ $rpendidikan->tahun_lulus_nonformal->format('d/m/Y') }}</td>
-                                                                {{-- <td>{{ $rpendidikan->tahun_lulus_nonformal }}</td> --}}
+                                                                @if($rpendidikan->tahun_masuk_nonformal !==NULL)
+                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_nonformal)->format('d/m/Y') }}</td>
+                                                                @else
+                                                                    <td></td>
+                                                                @endif
+
+                                                                @if($rpendidikan->tahun_lulus_nonformal !== NULL)
+                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_nonformal)->format('d/m/Y') }}</td>
+                                                                @else
+                                                                    <td></td>
+                                                                @endif
+                                                                
                                                                 <td>{{ $rpendidikan->kota_pnonformal }}</td>
                                                                 <td>{{ $rpendidikan->ijazah_nonformal }}</td>
                                                                 <td class="">

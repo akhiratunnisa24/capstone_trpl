@@ -8,11 +8,11 @@
     <div class="col-sm-12">
 
         <div class="page-header-title">
-            <h4 class="pull-left page-title">Transaksi Cuti dan Ijin</h4>
+            <h4 class="pull-left page-title">Data Cuti dan Ijin</h4>
 
             <ol class="breadcrumb pull-right">
-                <li>Human Resources Management System</li>
-                <li class="active">Transaksi Cuti dan Ijin</li>
+                <li>Rynest Employees Management System</li>
+                <li class="active">Data Cuti dan Ijin</li>
             </ol>
 
             <div class="clearfix"></div>
@@ -29,13 +29,13 @@
                 <li class="active" id="a">
                     <a id="tab1" href="#cuti" data-toggle="tab" aria-expanded="false">
                         <span class="visible-xs"><i class="fa fa-home"></i></span>
-                        <span class="hidden-xs">Transaksi Cuti</span>
+                        <span class="hidden-xs">Data Cuti</span>
                     </a>
                 </li>
                 <li class="" id="b">
                     <a id="tab2" href="#izin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
-                        <span class="hidden-xs">Transaksi Ijin</span>
+                        <span class="hidden-xs">Data Ijin</span>
                     </a>
                 </li>
             </ul>
@@ -151,8 +151,8 @@
                                     <div class="panel panel-primary">
                                         {{-- <div class="panel-heading"  style="height:35px"> --}}
                                             <div class="panel-heading clearfix">
-                                                <a href="/rekapcutiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                                                <a href="/rekapcutipdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
+                                                <a href="/rekapcutiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Ekspor Excel</a>
+                                                <a href="/rekapcutipdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Ekspor PDF</a>
                                                 
                                                 <a class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                                     data-target="#Modals"> Tambah Cuti Karyawan</a>
@@ -388,8 +388,8 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
                                             {{-- /rekapizinExcel --}}
-                                            <a href="/rekapizinExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                                            <a href="/rekapizinpdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
+                                            <a href="/rekapizinExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Ekspor Excel</a>
+                                            <a href="/rekapizinpdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Ekspor PDF</a>
                                         </div>
                                         <div class="panel-body m-b-5">
                                             <div class="row">

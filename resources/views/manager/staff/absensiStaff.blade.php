@@ -9,7 +9,7 @@
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Data Absensi</h4>
                 <ol class="breadcrumb pull-right">
-                    <li><a href="#">Human Resources Management System</a></li>
+                    <li><a href="#">Rynest Employees Management System</a></li>
                     <li class="active">Data Absensi Staff</li>
                 </ol>
                 <div class="clearfix"></div>
@@ -105,8 +105,8 @@
                         <div class="panel-heading">
                             {{-- <a href="/export-all-excel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export All to Excel</a>
                             <a href="/export-pdf" class="btn btn-dark btn-sm fa fa-file-pdf-o"> Export All to PDF</a> --}}
-                                <a href="/export-to-excel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                                <a href="/export-to-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Export PDF</a>
+                                <a href="/export-to-excel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Ekspor Excel</a>
+                                <a href="/export-to-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Ekspor PDF</a>
                         </div>
                         <div class="panel-body m-b-5">
                             <div class="row">

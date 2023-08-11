@@ -221,7 +221,9 @@ Route::get('/exportexcelkaryawan', [karyawanController::class, 'exportExcel'])->
 Route::post('/getemail', [karyawanController::class, 'getEmail'])->name('getEmail');
 Route::post('/getemail2', [karyawanController::class, 'getEmail2'])->name('getEmail2');
 Route::post('/tidakmasuk', [AbsensiController::class, 'storeTidakmasuk'])->name('tidakmasuk');
-
+Route::put('/update-pendidikan/{id}', [karyawanController::class, 'updatePendidikan'])->name('update.Pendidikan');
+Route::post('/tambah-pendidikan/{id}', [karyawanController::class, 'addPendidikan'])->name('add.pendidikan');
+Route::post('/tambah-pendidikann/{id}', [karyawanController::class, 'tambahPendidikan'])->name('tambahPendidikan');
 //download data absensi ke mesin absen
 Route::post('/import-absensi', [AbsensiController::class, 'mesinabsen'])->name('download.mesin');
 
@@ -231,7 +233,7 @@ Route::post('/import-absensi', [AbsensiController::class, 'mesinabsen'])->name('
 //HALAMAN KARYAWAN
 //cuti
 Route::get('/absensi-karyawan', [AbsensiController::class, 'create'])->name('absensi_karyawan');
-Route::get('/history-absensi', [AbsensiKaryawanController::class, 'index'])->name('history.absen');
+Route::get('/riwayat-absensi', [AbsensiKaryawanController::class, 'index'])->name('riwayat.absen');
 Route::get('/cuti-karyawan', [CutikaryawanController::class, 'index'])->name('cuti_karyawan');
 Route::get('/getlibur', [CutikaryawanController::class, 'getLibur'])->name('getlibur');
 Route::get('/getliburs', [CutikaryawanController::class, 'getLibur'])->name('getliburs');
@@ -473,8 +475,8 @@ Route::get('/rekapizinPdf', [CutiizinController::class, 'rekapizinpdf'])->name('
 
 Route::get('/resign_manager', [ManagerController::class, 'resignStaff'])->name('resignstaff');
 Route::get('/resignmanager/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
-// Route::post('/permintaan_resign/{id}', [ResignAdminController::class, 'approved'])->name('resign_approved');
-Route::post('/permintaan_resign_manager/{id}', [ResignAdminController::class, 'approvedmanager'])->name('resign_approved_manager');
+Route::post('/permintaan_resign/{id}', [ResignAdminController::class, 'approve_atasan2'])->name('resign_approved');
+Route::post('/permintaan_resign_manager/{id}', [ResignAdminController::class, 'approve_atasan1'])->name('resign_approved_manager');
 Route::post('/permintaanresign_reject/{id}', [ResignAdminController::class, 'reject'])->name('resign_reject');
 
 //KPI

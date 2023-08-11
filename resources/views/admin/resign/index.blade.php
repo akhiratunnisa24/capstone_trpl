@@ -6,7 +6,7 @@
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Resign</h4>
                 <ol class="breadcrumb pull-right">
-                    <li>Human Resources Management System</li>
+                    <li>Rynest Employees Management System</li>
                     <li class="active">Resign</li>
                 </ol>
                 <div class="clearfix"></div>
@@ -45,7 +45,7 @@
                                                 <th>Tanggal Resign</th>
                                                 {{-- <th>Tipe Resign</th> --}}
                                                 <th>Status</th>
-                                                <th>Aksi</th> 
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -68,7 +68,7 @@
                                                 {{-- @if ($r->status == 2 || $r->status == 4) --}}
                                                 @if($r->karyawan->atasan_pertama == Auth::user()->id_pegawai && $r->status == 1)
 
-                                                  <form action="{{ route('resignapproved', $r->id) }}" method="POST">
+                                                  <form action="{{ route('resign_approved_manager', $r->id) }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="status" value=1 class="form-control" hidden>
                                                     <button type="submit" class="btn btn-success btn-sm">
@@ -86,7 +86,7 @@
 
                                                 @elseif($r->karyawan->atasan_kedua == Auth::user()->id_pegawai && $r->status == 6)
 
-                                                <form action="{{ route('resign_approved_manager', $r->id) }}" method="POST">
+                                                <form action="{{ route('resign_approved', $r->id) }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="status" value=1 class="form-control" hidden>
                                                     <button type="submit" class="btn btn-success btn-sm">
@@ -110,7 +110,7 @@
                                             </td>
                                           </tr>
                                           @include('karyawan.resign.showresign')
-                                          @endforeach                                          
+                                          @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -125,7 +125,7 @@
 
     {{-- <script type="text/javascript">
     let tp = '{{$tipe}}';
-    
+
         if(tp == 1) {
             $('#tab1').click();
         } else {

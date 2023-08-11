@@ -259,7 +259,6 @@ class ListmesinController extends Controller
                                         $absensi->save();
                                     }
                                    
-                                }else{
                                 }
                             }
                         }
@@ -359,12 +358,10 @@ class ListmesinController extends Controller
                                             $absensi->save();
                                         }
                                     
-                                    }else{
-                                        ///
-                                    }
+                                    }   ///
                                 }
                             }else{
-                                //
+                               return "tidak ada data kehadiran";
                             }
 
                         }

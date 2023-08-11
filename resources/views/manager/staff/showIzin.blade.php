@@ -4,7 +4,7 @@
         <div class="col-md-12 modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-center" id="Showcuti">DETAIL TRANSAKSI IJIN</h4>
+                <h4 class="modal-title text-center" id="Showcuti">DETAIL DATA IJIN</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group row">

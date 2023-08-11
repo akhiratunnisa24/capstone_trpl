@@ -307,13 +307,20 @@
             <label class="" width="100%"><h4>D. RIWAYAT PENDIDIKAN</h4></label><br>
             <table class="table table-striped">
                 <label class="text-white badge bg-info">Pendidikan Formal</label>
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
+                    data-target="#addPformal" style="margin-right:10px;margin-bottom:10px"> <i class="fa fa-plus"> <strong>Tambah Data</strong></i>
+                </a>
+                @include('karyawan.addPformal')
                 <thead class="alert alert-info">
                    <tr>
                         <th>Tingkat Pendidikan</th>
                         <th>Nama Sekolah</th>
                         <th>Jurusan</th>
+                        <th>Tahun Masuk</th>
                         <th>Tahun Lulus</th>
                         <th>Alamat</th>
+                        <th>Nomor Ijazah</th>
+                        <th>Aksi</th>
                     </tr> 
                 </thead>
                 <tbody>
@@ -323,32 +330,81 @@
                                 <td>{{$rpendidikan->tingkat}}</td>
                                 <td>{{$rpendidikan->nama_sekolah}}</td>
                                 <td>{{$rpendidikan->jurusan}}</td>
-                                <td>{{$rpendidikan->tahun_lulus_formal}}</td>
+                                @if($rpendidikan->tahun_masuk_formal !== null)
+                                    <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_masuk_formal)->format('d/m/Y') }}</td>
+                                @else
+                                    <td></td>
+                                @endif
+                                @if($rpendidikan->tahun_lulus_formal !== null)       
+                                    <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y')}}</td>
+                                @else
+                                     <td></td>
+                                @endif
                                 <td>{{$rpendidikan->kota_pformal}}</td>
+                                <td>{{$rpendidikan->ijazah_formal}}</td>
+                                <td class="">
+                                    <a class="btn btn-sm btn-primary editPformal "
+                                    data-toggle="modal"
+                                    data-target="#editPformal{{ $rpendidikan->id }}"
+                                    style="margin-right:10px">
+                                    <i class="fa fa-edit"></i>
+                                </a>
                             </tr>
                         @endif
+                        @include('karyawan.editPformal')
                     @endforeach
                 </tbody>
             </table>
         </div>
         <div class="modal-body" style="margin-left:15px;margin-right:15px;">
             <label class="text-white badge bg-info">Pendidikan Non Formal</label>
+            <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
+                    data-target="#addPnformal" style="margin-right:10px;margin-bottom:10px"><i class="fa fa-plus"> <strong>Tambah Data</strong></i>
+            </a>
+            @include('karyawan.addPnformal')
             <table class="table table-striped">
                 <thead class="alert alert-info">
                    <tr>
-                        <th>Jenis/Bidang Pendidikan</th>
-                        <th>Alamat</th>
+                        <th>No</th>
+                        <th>Bidang/Jenis</th>
+                        <th>Lembaga Pendidikan</th>
+                        <th>Tahun Mulai</th>
                         <th>Tahun Lulus</th>
+                        <th>Alamat</th>
+                        <th>Nomor Ijazah</th>
+                        <th>Aksi</th>
                     </tr> 
                 </thead>
                 <tbody>
                     @forelse($pendidikan as $pendidikan)
                         @if($pendidikan->jenis_pendidikan != null)
                             <tr>
-                                <td>{{$pendidikan->jenis_pendidikan}}</td>
-                                <td>{{$pendidikan->kota_pnonformal}}</td>
-                                <td>{{$pendidikan->tahun_lulus_nonformal}}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $pendidikan->jenis_pendidikan }}</td>
+                                <td>{{ $pendidikan->nama_lembaga }}</td>
+                                @if($pendidikan->tahun_masuk_nonformal !==NULL)
+                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $pendidikan->tahun_masuk_nonformal)->format('d/m/Y') }}</td>
+                                @else
+                                    <td></td>
+                                @endif
+
+                                @if($pendidikan->tahun_lulus_nonformal !== NULL)
+                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $pendidikan->tahun_lulus_nonformal)->format('d/m/Y') }}</td>
+                                @else
+                                    <td></td>
+                                @endif
+                                
+                                <td>{{ $pendidikan->kota_pnonformal }}</td>
+                                <td>{{ $pendidikan->ijazah_nonformal }}</td>
+                                <td class="">
+                                    <a class="btn btn-sm btn-primary editPnformal"
+                                        data-toggle="modal"
+                                        data-target="#editPnformal{{ $pendidikan->id }}"
+                                        style="margin-right:10px">
+                                        <i class="fa fa-edit"></i>
+                                </td>
                             </tr>
+                            @include('karyawan.editPnformal')
                         @endif
                     @empty
                         <td>No data available on table</td>

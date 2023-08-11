@@ -9,7 +9,7 @@
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Data Tidak Masuk Karyawan</h4>
                 <ol class="breadcrumb pull-right">
-                    <li><a href="#">Human Resources Management System</a></li>
+                    <li><a href="#">Rynest Employees Management System</a></li>
                     <li class="active">Data Tidak Masuk</li>
                 </ol>
                 <div class="clearfix"></div>
@@ -103,8 +103,8 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 m-b-10">
-                            <a href="/absensi-tidak-masuk-excel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Export Excel</a>
-                            <a href="/absensi-tidak-masuk-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Export PDF</a>
+                            <a href="/absensi-tidak-masuk-excel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Ekspor Excel</a>
+                            <a href="/absensi-tidak-masuk-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Ekspor PDF</a>
                         </div>
                         <div class="panel-body m-b-5">
                             <div class="row">
