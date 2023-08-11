@@ -7,12 +7,13 @@
                 <h4 class="modal-title text-center" id="myLargeModalLabel">Tambah Pendidikan Non Formal</h4>
             </div>
             <div class="modal-body">
-                <form id="" action="tambahPendidikan/{{$karyawan->id}}" method="POST" enctype="multipart/form-data">
+                <form id="" action="/tambah-pendidikan/{{$karyawan->id}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="hidden" name="id_pendidikan">
+                            
+                            <input type="" name="hidden" autocomplete="off" value="{{$karyawan->id}}" class="form-control">
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label>Bidang / Jenis Pendidikan</label>
