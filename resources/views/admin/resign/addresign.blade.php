@@ -4,34 +4,35 @@
   <div id="Modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-center" id="addresign">Form Resign</h4>
-            </div>
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title text-center" id="addresign">Form Resign</h4>
+              </div>
 
               <div class="modal-body">
 
-                  <form method="POST" action="{{ route('resign.store') }}" method="POST" enctype="multipart/form-data">
+                  <form method="POST" action="{{ route('resign.store') }}" method="POST"
+                      enctype="multipart/form-data">
                       @csrf
                       @method('POST')
                       <div class="form-group col-xs-15">
-                        <label for="namaKaryawan" class="form-label">Nama</label>
-                        <select name="namaKaryawan" id="user-select" class="form-control selectpicker"
-                            data-live-search="true" required>
-                            <option value="">-- Pilih Karyawan --</option>
-                            @foreach ($karyawan1 as $data)
-                                <option value="{{ $data->id }}" @if ($data->id == request('namaKaryawan')) selected @endif>
-                                    {{ $data->nama }}
-                                </option>
-                            @endforeach
-                        </select>
+                          <label for="namaKaryawan" class="form-label">Nama</label>
+                          <select name="namaKaryawan" id="user-select" class="form-control selectpicker"
+                              data-live-search="true" required>
+                              <option value="">-- Pilih Karyawan --</option>
+                              @foreach ($karyawan1 as $data)
+                                  <option value="{{ $data->id }}" @if ($data->id == request('namaKaryawan')) selected @endif>
+                                      {{ $data->nama }}
+                                  </option>
+                              @endforeach
+                          </select>
                       </div>
 
                       <div class="form-group col-xs-15">
-                        <label for="departemen1" class="form-label">Departemen</label>
-                        <input id="departemen1" class="form-control" name="departemen1" autocomplete="off"
-                            placeholder="" readonly>
-                    </div>
+                          <label for="departemen1" class="form-label">Departemen</label>
+                          <input id="departemen1" class="form-control" name="departemen1" autocomplete="off"
+                              placeholder="" readonly>
+                      </div>
                       <div class="form-group col-xs-15"hidden>
                           <label for="departemen" class="form-label">Departemen</label>
                           <input id="departemen" class="form-control" name="departemen" autocomplete="off"
@@ -59,7 +60,7 @@
                           <select class="form-control" name="tipe_resign" required>
                               <option value="">Pilih Tipe Resign</option>
 
-                              <option value="Normal Resign">Normal Resign</option>
+                              <option value="Normal Resign">Mengundurkan Diri</option>
                               <option value="Fired from a company">Dipecat</option>
                           </select>
                       </div>
@@ -70,7 +71,8 @@
                               placeholder="Alasan Resign" required></textarea>
                       </div>
                       <div class="form-group col-xs-15">
-                          <input id="status" type="hidden" class="form-control" name="status" value='1' hidden>
+                          <input id="status" type="hidden" class="form-control" name="status" value='1'
+                              hidden>
                           {{-- <input type="hidden" name="partner" value="{{ Auth::user()->partner }}"> --}}
                       </div>
                       {{-- <div class="col-xs-12">
@@ -80,9 +82,9 @@
                       </div> --}}
 
                       <div class="form-group">
-                        <label for="filepdf">File PDF</label>
-                        <input type="file" name="filepdf" id="filepdf" accept="application/pdf" required>
-                    </div>
+                          <label for="filepdf">File PDF</label>
+                          <input type="file" name="filepdf" id="filepdf" accept="application/pdf" required>
+                      </div>
 
                       <div class="form-group text-center m-t-20">
                           <div class="col-xs-15">
@@ -191,14 +193,15 @@
                       $('#departemen').val(user.departemen.id);
                       $('#departemen1').val(user.departemen.nama_departemen);
                       $('#tgl_masuk').val(formatDate(user.tglmasuk));
-                    //   $('#tgl_masuk').val(user.tglmasuk);
+                      //   $('#tgl_masuk').val(user.tglmasuk);
                   }
               });
           });
       });
+
       function formatDate(dateString) {
-        var dateParts = dateString.split("-");
-        var formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
-        return formattedDate;
-    }
+          var dateParts = dateString.split("-");
+          var formattedDate = dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0];
+          return formattedDate;
+      }
   </script>

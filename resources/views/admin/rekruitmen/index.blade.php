@@ -35,38 +35,50 @@
 
                         <div class="panel-body">
                             <div class="row">
+
                                 @foreach ($posisi as $k)
                                     <div class="col-sm-3">
-                                        <div class="panel panel-primary">
+                                        {{-- <div class="col-sm-3"> --}}
+                                        <div class="panel panel-primary panel-rekruitmen"
+                                            style="width: 240px; height: 280px;">
 
-                                            @if ($k->status == 'Aktif' && $k->tgl_selesai > Carbon\Carbon::now() && $k->jumlah_dibutuhkan > 0 )
+                                            @if ($k->status == 'Aktif' && $k->tgl_selesai > Carbon\Carbon::now() && $k->jumlah_dibutuhkan > 0)
                                                 <div class="panel-heading btn-success">
                                                     <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
                                                         <h4 class="panel-title">{{ $k->status }}</h4>
                                                     </a>
                                                 @else
                                                     <div class="panel-heading btn-danger">
-                                                         <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
-                                                        <h4 class="panel-title">Tidak Aktif</h4>
-                                                    </a>
+                                                        <a href="show_rekrutmen{{ $k->id }}" class="panel-title ">
+                                                            <h4 class="panel-title">Tidak Aktif</h4>
+                                                        </a>
                                             @endif
 
                                         </div>
 
-
-
+                                        <div class="panel-rekruitmen" style="width: 190px; height: 64px; margin-left:10px">
+                                            <h4><b>
+                                                    @if (strlen($k->posisi) > 30)
+                                                        {!! nl2br(e(substr($k->posisi, 0, 30) . '...')) !!}
+                                                    @else
+                                                        {!! nl2br(e($k->posisi)) !!}
+                                                        <br> <!-- Add <br> tag if $k->posisi is one line -->
+                                                    @endif
+                                                </b></h4>
+                                        </div>
                                         <div class="panel-body">
-                                            <h3 class=""><b>{{ $k->posisi }}</b></h3>
-                                            {{-- @if ()
-                                                
-                                            @endif --}}
-                                            <p class="text-muted"><b>Dibutuhkan {{ $k->jumlah_dibutuhkan }} Orang</b>
-                                            </p>
+                                            <p class="text-muted"><b>Dibutuhkan {{ $k->jumlah_dibutuhkan }} Orang</b></p>
                                             @if ($k->tgl_selesai < Carbon\Carbon::now())
-                                                <p class="text-muted"><b>Lowongan sudah kadaluarsa sejak tanggal <span class="text-danger"> {{ Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y') }}</span></b></p>
+                                                <p class="text-muted">
+                                                    <b>Lowongan sudah kadaluarsa sejak tanggal<br>
+                                                        <span class="text-danger">
+                                                            {{ Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y') }}</span></b>
+                                                </p>
                                             @elseif ($k->jumlah_dibutuhkan == 0)
                                                 <p class="text-danger"><b>Lowongan sudah terisi</b></p>
                                             @endif
+                                        </div>
+                                        <div class="panel-footer-rekruitmen" style="padding:10px">
                                             <button onclick="hapus_karyawan({{ $k->id }})"
                                                 class="btn btn-danger btn-sm">
                                                 <i class="fa fa-trash" hidden></i>
@@ -80,14 +92,9 @@
                             </div>
                             @include('admin.rekruitmen.editLowonganModal')
                             @endforeach
-
                         </div>
-
                         {{-- <a href="{{ url('Form-Rekruitmen-RYNEST') }}">Apply</a> --}}
                         {{-- <a href="#" id="share-button">Salin Link Form Rekruitmen</a> --}}
-
-
-
                     </div>
                 </div>
             </div>
@@ -104,23 +111,49 @@
             flex: 0 0 25%;
             max-width: 25%;
         }
+
+        .panel-footer-rekruitmen {
+            /* background: #fafafa; */
+            border-top: 0;
+            position: absolute;
+            bottom: 0;
+
+        }
+
+        .panel-rekruitmen {
+            padding: 10px;
+            float: left;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+            border-radius: 0px;
+            border: none;
+            box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0);
+        }
     </style>
 
-   
-<script>
-    document.getElementById("share-button").addEventListener("click", function() {
-        @if (auth()->user()->partner ==2)
-            var url = "{{ route('Form-Rekruitmen-RTI') }}";
-            var partnerName = "RTI";
-        @elseif (auth()->user()->partner == 1)
-            var url = "{{ route('Form-Rekruitmen-GRM') }}";
-            var partnerName = "GRM";
-        @endif
 
-        navigator.clipboard.writeText(url);
-        alert("Link untuk form Rekruitmen " + partnerName + " berhasil disalin.");
-    });
-</script>
+    <script>
+        document.getElementById("share-button").addEventListener("click", function() {
+            @if (auth()->user()->partner == 2)
+                var url = "{{ route('Form-Rekruitmen-RTI') }}";
+                var partnerName = "Rynest Technology Indomedia";
+            @elseif (auth()->user()->partner == 1)
+                var url = "{{ route('Form-Rekruitmen-GRM') }}";
+                var partnerName = "Global Risk Management";
+            @elseif (auth()->user()->partner == 3)
+                var url = "{{ route('Form-Rekruitmen-RFT') }}";
+                var partnerName = "RFT";
+            @elseif (auth()->user()->partner == 4)
+                var url = "{{ route('Form-Rekruitmen-QST') }}";
+                var partnerName = "Qonstanta";
+            @endif
+
+            navigator.clipboard.writeText(url);
+            alert("Link untuk form Rekruitmen " + partnerName + " berhasil disalin.");
+        });
+    </script>
 
     <script>
         function hapus_karyawan(id) {

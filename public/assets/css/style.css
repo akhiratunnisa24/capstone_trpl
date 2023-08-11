@@ -3539,7 +3539,7 @@ input[type=number] {
         cursor: pointer;
         margin-top: 20px;
       }
-      
+
       .alert-button:hover {
         background-color: #3e8e41;
       }
@@ -3549,4 +3549,3 @@ input[type=number] {
         justify-content: space-between;
       }
 
-      
