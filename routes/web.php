@@ -195,6 +195,8 @@ Route::get('/get-persyaratan/{id}', function ($id) {
 // });
 Route::get('Form-Rekruitmen-RTI', [FormPelamarController::class, 'createRTI'])->name('Form-Rekruitmen-RTI');
 Route::get('Form-Rekruitmen-GRM', [FormPelamarController::class, 'createGRM'])->name('Form-Rekruitmen-GRM');
+Route::get('Form-Rekruitmen-RFT', [FormPelamarController::class, 'createRFT'])->name('Form-Rekruitmen-RFT');
+Route::get('Form-Rekruitmen-QST', [FormPelamarController::class, 'createQST'])->name('Form-Rekruitmen-QST');
 
 
 

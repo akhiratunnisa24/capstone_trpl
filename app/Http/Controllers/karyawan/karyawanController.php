@@ -2926,34 +2926,13 @@ class karyawanController extends Controller
                 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
             );
-
+            dd($r_pendidikan);
             Rpendidikan::insert($r_pendidikan);
             return redirect()->back()->withInput();
-        } else {
-            $r_pendidikan = array(
-                'id_pegawai' => $idk->id,
-                'tingkat' => null,
-                'nama_sekolah' => null,
-                'kota_pformal' => null,
-                'jurusan' => null,
-                'tahun_lulus_formal' => null,
-
-
-                'nama_lembaga' => $request->post('namaLembaga'),
-                'jenis_pendidikan' => $request->post('jenis_pendidikan'),
-                'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-
-                'tahun_masuk_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d'),
-                'tahun_lulus_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusNonFormal'))->format('Y-m-d'),
-
-                // 'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
-                'ijazah_nonformal' => $request->post('noijazahPnonformal'),
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
-
-            Rpendidikan::insert($r_pendidikan);
-            return redirect()->back()->withInput();
+        } 
+        else 
+        {
+           return redirect()->back();
         }
     }
 
@@ -2961,27 +2940,8 @@ class karyawanController extends Controller
     {
         $idk = Karyawan::findorFail($id);
         $nilaiNull = null;
-        if ($request->tingkat_pendidikan) {
-            $r_pendidikan = array(
-                'id_pegawai' => $idk->id,
-                'tingkat' => $request->post('tingkat_pendidikan'),
-                'nama_sekolah' => $request->post('nama_sekolah'),
-                'kota_pformal' => $request->post('kotaPendidikanFormal'),
-                'jurusan' => $request->post('jurusan'),
-                'tahun_masuk_formal' => $request->post('tahun_masukFormal'),
-                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
-                'ijazah_formal' => $request->post('noijazahPformal'),
-
-                'jenis_pendidikan' => null,
-                'kota_pnonformal' => null,
-                'tahun_lulus_nonformal' => null,
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
-
-            Rpendidikan::insert($r_pendidikan);
-            return redirect()->back()->withInput();
-        } else {
+        if ($request->tingkat_pendidikan) 
+        {
             $r_pendidikan = array(
                 'id_pegawai' => $idk->id,
                 'tingkat' => null,
@@ -2994,8 +2954,6 @@ class karyawanController extends Controller
                 'nama_lembaga' => $request->post('namaLembaga'),
                 'jenis_pendidikan' => $request->post('jenis_pendidikan'),
                 'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-                // 'tahun_masuk_nonformal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d'),
-                // 'tahun_lulus_nonformal'       => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d'),
                 'tahun_masuk_nonformal' => $request->tahun_masukNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d') : $nilaiNull,
                 'tahun_lulus_nonformal' => $request->tahun_lulusNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d') : $nilaiNull,
 
@@ -3003,7 +2961,7 @@ class karyawanController extends Controller
                 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
             );
-
+            dd($r_pendidikan);
             Rpendidikan::insert($r_pendidikan);
             return redirect()->back()->withInput();
         }

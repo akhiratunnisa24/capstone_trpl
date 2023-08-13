@@ -8,54 +8,61 @@
 
             <div class="modal-body">
 
-                <form method="POST" action="{{ route('resignkaryawan.store')}}" method="POST" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('resignkaryawan.store') }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="form-group col-xs-15" id="namaKaryawan">
                         <label for="id_karyawan" class="form-label">Nama</label>
-                        <input id="id_karyawan" type="text" class="form-control" value="{{Auth::user()->name}}" name="nama"
-                            autocomplete="off" placeholder="Nama Karyawan" readonly>
+                        <input id="id_karyawan" type="text" class="form-control" value="{{ Auth::user()->name }}"
+                            name="nama" autocomplete="off" placeholder="Nama Karyawan" readonly>
 
                     </div>
 
 
                     <div class="form-group col-xs-15" id="departemen">
                         <label for="departemen" class="form-label">Departemen</label>
-                        <input id="departemen" class="form-control" value="{{$tes->departemen}} " name="departemen" autocomplete="off" placeholder="Nama Karyawan" readonly>
-                        
-                    
+                        <input id="departemen" class="form-control" value="{{ $tes->departemen }} " name="departemen"
+                            autocomplete="off" placeholder="Nama Karyawan" readonly>
+
+
                     </div>
                     <div class="form-group col-xs-15">
                         <label for="tgl_masuk" class="form-label">Tanggal Bergabung</label>
-                        <input value="{{\Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y')}}" id="tgl_masuk" type="text" class="form-control" name="tgl_masuk"
-                            autocomplete="off" placeholder="" readonly>
+                        <input value="{{ \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') }}" id="tgl_masuk"
+                            type="text" class="form-control" name="tgl_masuk" autocomplete="off" placeholder=""
+                            readonly>
 
                     </div>
 
                     <div class="form-group col-xs-15">
                         <label for="tgl_resign" class="form-label">Tanggal Resign</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose23" name="tgl_resign" onchange=(tgl_resign()) autocomplete="off">
-                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
+                            <input type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                id="datepicker-autoclose23" name="tgl_resign" onchange=(tgl_resign())
+                                autocomplete="off">
+                            <span class="input-group-addon bg-custom b-0"><i
+                                    class="mdi mdi-calendar text-white"></i></span>
                         </div>
                     </div>
 
                     <div class="form-group col-xs-15">
-                        <label for="tipe_resign" class="form-label" >Tipe Resign</label>
-                        <input id="tipe_resign" class="form-control" value="Normal Resign" name="tipe_resign" autocomplete="off" readonly>
+                        <label for="tipe_resign" class="form-label">Tipe Resign</label>
+                        <input id="tipe_resign" class="form-control" value="Mengundurkan Diri" name="tipe_resign"
+                            autocomplete="off" readonly>
                         {{-- <select class="form-control"
                         name="tipe_resign" required>
                             <option value="">Pilih Tipe Resign</option>
-                            
+
                                 <option value="Normal Resign">Normal Resign</option>
                                 <option value="Fired from a company">Fired from a company</option>
                         </select> --}}
                     </div>
-                    
+
                     <div class="form-group col-xs-15">
                         <label for="alasan" class="form-label">Alasan Resign</label>
-                        <textarea id="alasan" type="text" class="form-control" name="alasan"
-                            autocomplete="off" placeholder="Alasan Resign"></textarea>
+                        <textarea id="alasan" type="text" class="form-control" name="alasan" autocomplete="off"
+                            placeholder="Alasan Resign"></textarea>
 
                     </div>
 
@@ -65,16 +72,15 @@
                     </div>
 
                     {{-- {{-- <div class="form-group"> --}}
-                        <div class="col-xs-12">
-                            <div class="checkbox checkbox-primary">
+                    <div class="col-xs-12">
+                        <div class="checkbox checkbox-primary">
 
                         </div>
-                    </div> 
+                    </div>
 
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
-                            <button class="btn btn-primary w-md waves-effect waves-light"
-                                type="submit">Ajukan</button>
+                            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Ajukan</button>
                         </div>
                     </div>
 
@@ -126,6 +132,7 @@
     #toggle-password4 i {
         cursor: pointer;
     }
+
     #toggle-password5 i {
         cursor: pointer;
     }

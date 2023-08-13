@@ -129,6 +129,7 @@ class HomeController extends Controller
             ->whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereDay('tanggal', '=', Carbon::now())
+            ->orderBy('tanggal','asc')
             ->get();
         $jumAbsen = $absenHarini->count();
         // dd($absenHarini);

@@ -68,7 +68,7 @@ class FormPelamarController extends Controller
     }
 
     public function createRTI(Request $request)
-    {   
+    {
         $partner = 2;
         $posisi = Lowongan::where('status', '=', 'Aktif')
         ->where('jumlah_dibutuhkan', '>', 0)
@@ -88,7 +88,7 @@ class FormPelamarController extends Controller
         }
         return view('admin.rekruitmen.formPelamar')->with('partner', 2);
     }
-    
+
     public function createGRM(Request $request)
     {
         $partner = 1;
@@ -109,7 +109,52 @@ class FormPelamarController extends Controller
             return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
         }
         return view('admin.rekruitmen.formPelamar')->with('partner', 1);
-    }    
+    }
+
+    public function createRFT(Request $request)
+    {
+        $partner = 3;
+        $posisi = Lowongan::where('status', '=', 'Aktif')
+        ->where('jumlah_dibutuhkan', '>', 0)
+        ->where('tgl_selesai','>',Carbon::now())
+        ->where('partner', $partner) // Filter posisi berdasarkan partner
+        ->get();
+
+        $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
+
+        $pelamar = $request->session()->get('pelamar');
+        if (!$pelamar) {
+            $pelamar = new Rekruitmen;
+        }
+
+        if ($openRekruitmen->count() > 0) {
+            return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
+        }
+        return view('admin.rekruitmen.formPelamar')->with('partner', 3);
+    }
+
+    public function createQST(Request $request)
+    {
+        $partner = 4;
+        $posisi = Lowongan::where('status', '=', 'Aktif')
+        ->where('jumlah_dibutuhkan', '>', 0)
+        ->where('tgl_selesai','>',Carbon::now())
+        ->where('partner', $partner) // Filter posisi berdasarkan partner
+        ->get();
+
+        $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
+
+        $pelamar = $request->session()->get('pelamar');
+        if (!$pelamar) {
+            $pelamar = new Rekruitmen;
+        }
+
+        if ($openRekruitmen->count() > 0) {
+            return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
+        }
+        return view('admin.rekruitmen.formPelamar')->with('partner', 4);
+    }
+
 
     // Create Data Identitas Pelamar
     public function store(Request $request)
@@ -208,7 +253,7 @@ class FormPelamarController extends Controller
                 $datakeluarga = [];
             }
             return view('admin.rekruitmen.createDakel', compact('pelamar', 'datakeluarga'));
-        
+
     }
 
     public function storedk(Request $request)
@@ -229,7 +274,7 @@ class FormPelamarController extends Controller
         session()->put('datakeluarga', json_encode($datakeluarga));
         return redirect()->back();
         // return view('admin.rekruitmen.createDakel');
-         
+
     }
 
     //update data pada form Pelamar
@@ -264,7 +309,7 @@ class FormPelamarController extends Controller
                 $kontakdarurat = [];
             }
             return view('admin.rekruitmen.createKonrat', compact('pelamar', 'datakeluarga', 'kontakdarurat'));
-        
+
     }
 
     public function storekd(Request $request)
@@ -430,7 +475,7 @@ class FormPelamarController extends Controller
         $datakeluarga[$index]['tgl_selesai'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d');
         $pekerjaan[$index]['alasan_berhenti'] = $request->alasanBerhenti;
         $pekerjaan[$index]['gaji']           = $request->gajiRpekerjaan;
-        
+
         session()->put('pekerjaan', json_encode($pekerjaan));
         return redirect()->back();
     }
@@ -465,7 +510,7 @@ class FormPelamarController extends Controller
             // 'tgl_mulai'     => Carbon::parse($request->tglmulai)->format('Y-m-d'),
             // 'tgl_selesai'   => Carbon::parse($request->tglselesai)->format('Y-m-d'),
             'tgl_mulai'     => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d'),
-            'tgl_selesai'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d'),    
+            'tgl_selesai'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d'),
             'jabatan'     => $request->jabatanRorganisasi,
             'no_sk'   => $request->noSKorganisasi,
         ];
@@ -529,7 +574,7 @@ class FormPelamarController extends Controller
             'nama_instansi' => $request->namaInstansi,
             'alamat'        => $request->alamatInstansi,
             'no_surat'      => $request->noSurat,
-            'tanggal_surat'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d'),    
+            'tanggal_surat'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d'),
         ];
 
         $prestasi[] = $prestasiBaru;
