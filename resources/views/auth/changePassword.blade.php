@@ -10,7 +10,6 @@
 
                 <div class="panel-body">
                     <h3 class="text-center m-t-0 m-b-20">
-                        {{-- <span class=""><img src="assets/images/logo_dark2.png" alt="logo" height="130" width="130"></span> --}}
                         <span class="btn btn-lg"><i class="fa fa-key fa-4x fa-rotate-270"></i></span>
                     </h3>
                     <h4 class="text-muted text-center m-t-0 m-b-30"><b>Ganti Password</b></h4>

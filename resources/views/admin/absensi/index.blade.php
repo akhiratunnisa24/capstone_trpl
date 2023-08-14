@@ -8,7 +8,7 @@
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Data Absensi</h4>
                 <ol class="breadcrumb pull-right">
-                    <li><a href="#">Rynest Employees Management System</a></li>
+                    <li><a href="#">Rynest Employee Management System</a></li>
                     <li class="active">Data Absensi</li>
                 </ol>
                 <div class="clearfix"></div>
@@ -105,11 +105,11 @@
                             <a href="/rekapabsensiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Ekspor Excel</a>
                             <a href="{{ route('rekapabsensipdf')}}"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank" > Ekspor PDF</a>
                             @if($role == 1 || $role == 2)
-                                {{-- <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Import Excel</a> --}}
-                                <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Import CSV</a>
-                                <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modalss"> Import Excel</a>
-                                {{-- <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modals"> Import Excel</a>
-                                <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smalModal"> Import CSV</a> --}}
+                                {{-- <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modal"> Impor Excel</a> --}}
+                                <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smallModal"> Impor CSV</a>
+                                <a href="" class="btn btn-dark btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modalss"> Impor Excel</a>
+                                {{-- <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#Modals"> Impor Excel</a>
+                                <a href="" class="btn btn-warning btn-sm fa fa-cloud-download" data-toggle="modal" data-target="#smalModal"> Impor CSV</a> --}}
                             @endif
                         </div>
                         <div class="panel-body m-b-5">
@@ -152,13 +152,13 @@
         </div> <!-- container -->
     </div> <!-- content -->
 
-    {{-- Modal Import Data Excel --}}
+    {{-- Modal Impor Data Excel --}}
     <div class="modal fade" id="Modal" data-backdrop="-1" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Import Excel</h4>
+                    <h4 class="modal-title" id="myModalLabel">Impor Excel</h4>
                 </div>
                 <form action="{{ route('importexcel') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -170,8 +170,8 @@
                         </div> 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Import Data</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Impor Data</button>
                     </div>
                 </form>
             </div>
@@ -183,9 +183,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Import Excel</h4>
+                    <h4 class="modal-title" id="myModalLabel">Impor Excel</h4>
                 </div>
-                <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('Impor.excel') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -195,21 +195,21 @@
                         </div> 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Import Data</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Impor Data</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    {{-- Modal Import Data CSV--}}
+    {{-- Modal Impor Data CSV--}}
     <div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Import CSV</h4>
+                    <h4 class="modal-title" id="myModalLabel">Impor CSV</h4>
                 </div>
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -228,21 +228,21 @@
                         </div> 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Import Data</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Impor Data</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    {{-- Modal Import Data CSV--}}
+    {{-- Modal Impor Data CSV--}}
     <div class="modal fade" id="smalModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Import CSV</h4>
+                    <h4 class="modal-title" id="myModalLabel">Impor CSV</h4>
                 </div>
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -261,21 +261,21 @@
                         </div> 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Import Data</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Impor Data</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    {{-- import data dengan spreadsheet --}}
+    {{-- Impor data dengan spreadsheet --}}
     <div class="modal fade" id="Modalss" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Import Data Excel</h4>
+                    <h4 class="modal-title" id="myModalLabel">Impor Data Excel</h4>
                 </div>
                 <form action="importdata" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -289,8 +289,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Import Data</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Impor Data</button>
                     </div>
                 </form>
             </div>

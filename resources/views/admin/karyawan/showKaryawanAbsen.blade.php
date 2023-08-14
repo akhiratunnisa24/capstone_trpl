@@ -10,7 +10,7 @@
             <h4 class="pull-left page-title">Data Absen Masuk </h4>
 
             <ol class="breadcrumb pull-right">
-                <li>Rynest Employees Management System</li>
+                <li>Rynest Employee Management System</li>
                 <li class="active">Data Absen Masuk </li>
             </ol>
 

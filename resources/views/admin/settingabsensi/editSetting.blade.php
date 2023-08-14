@@ -61,7 +61,7 @@
                         </div>
                     @endif
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-success" name="submit" value="save">Update</button>
                     </div>
                 </form>

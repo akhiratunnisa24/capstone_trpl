@@ -5,7 +5,7 @@
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Tindak Lanjut Ketidakhadiran Karyawan</h4>
                     <ol class="breadcrumb pull-right">
-                    <li>Rynest Employees Management System</li>
+                    <li>Rynest Employee Management System</li>
                     <li class="active">Tindak Lanjut Ketidakhadiran Karyawan</li>
                 </ol>
 

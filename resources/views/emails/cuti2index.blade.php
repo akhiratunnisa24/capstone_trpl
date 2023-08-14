@@ -163,7 +163,7 @@
             </div>
         </div>
 		<div class="footer">
-			<p><em>Email ini dikirim secara otomatis kepada yang berkepentingan. Email ini tidak perlu dibalas (no-reply) dan apabila ada kendala harap hubungi administrator-HRMS melalui email ke Departemen HR.</em></p>
+			<p><em>Email ini dikirim secara otomatis kepada yang berkepentingan. Email ini tidak perlu dibalas (no-reply) dan apabila ada kendala harap hubungi administrator-REMS melalui email ke Departemen HR.</em></p>
 		</div>
     </div>
 	{{-- <div>

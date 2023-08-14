@@ -6,12 +6,12 @@
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="text-center">
-                        <a href="/" class="logo"><img src="assets/images/logo_white_3.png" height="135" width="195"></a>
+                        <a href="/" class="logo"><img src="assets/images/remss.png" height="40" width="100"></a>
                         {{-- <img src="{{ asset('images/' . SettingHelper::getSetting()->logo) }}" alt="Logo"> --}}
                         {{-- <img src="{{ asset('images/' . SettingOrganisasiLogo()) }}" alt="Logo" width="100%">
                         <img src="{{ asset('images/' . SettingOrganisasiLogo()) }}" alt="Logo"> --}}
 
-                        <a href="/" class="logo-sm"><img src="assets/images/logo_sm2.png" height="36"></a>
+                        <a href="/" class="logo-sm"><img src="assets/images/remss.png" height="20"  width="50"></a>
                     </div>
                 </div>
                 <!-- Button mobile view to collapse sidebar menu -->

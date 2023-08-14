@@ -47,7 +47,7 @@
                     
                     <div class="modal-footer">
                         <button class="btn btn-primary w-md waves-effect waves-light"type="submit">Submit</button>
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Tutup</button>
                     </div>
 
                 </form>

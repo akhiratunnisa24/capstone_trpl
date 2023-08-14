@@ -6,7 +6,7 @@
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Data Cuti dan Ijin Karyawan</h4>
                 <ol class="breadcrumb pull-right">
-                    <li><a href="#">Rynest Employees Management System</a></li>
+                    <li><a href="#">Rynest Employee Management System</a></li>
                     <li class="active">Data Cuti & Izin</li>
                 </ol>
                 <div class="clearfix"></div>

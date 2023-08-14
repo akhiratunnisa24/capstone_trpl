@@ -44,7 +44,7 @@
     <br><br>
 
     <p>Salam Sejahtera!</p>
-    <p>HRMS ingin memberitahu bahwa ada seorang pelamar yang telah mengisi formulir lamaran pekerjaan melalui website
+    <p>REMS ingin memberitahu bahwa ada seorang pelamar yang telah mengisi formulir lamaran pekerjaan melalui website
         perusahaan dan telah memenuhi syarat untuk dipertimbangkan sebagai calon karyawan di perusahaan.</p>
 
     <p>Berikut ini adalah informasi pelamar:</p>

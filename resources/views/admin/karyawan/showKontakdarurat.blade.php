@@ -23,7 +23,7 @@
                 <h4 class="pull-left page-title ">Detail Karyawan</h4>
 
                 <ol class="breadcrumb pull-right">
-                    <li>Rynest Employees Management System</li>
+                    <li>Rynest Employee Management System</li>
                     <li class="active">Detail Karyawan</li>
                 </ol>
 
@@ -55,7 +55,7 @@
                                                     <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
                                                         data-target="#addKontak"
                                                         style="margin-right:10px;margin-bottom:10px">
-                                                        <i class="fa fa-plus"> <strong> Add Data Kontak Darurat</strong></i>
+                                                        <i class="fa fa-plus"> <strong> Tambah Data Kontak Darurat</strong></i>
                                                     </a>
                                                     @include('admin.karyawan.addKontak')
                                                     <table class="table table-bordered table-striped">

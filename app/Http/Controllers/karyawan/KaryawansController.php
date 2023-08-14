@@ -288,7 +288,7 @@ class KaryawansController extends Controller
 
             $karyawan    = $request->session()->get('karyawan');
             $datakeluarga = json_decode(session('datakeluarga', '[]'), true);
-            dd($karyawan);
+            // dd($karyawan);
             if (empty($datakeluarga)) {
                 $datakeluarga = [];
                 // dd($datakeluarga);
