@@ -107,8 +107,7 @@
                                                                     <td class="">
                                                                         <a class="btn btn-sm btn-primary editPformal"
                                                                         data-toggle="modal"
-                                                                        data-target="#editPformal{{ $rpendidikan->id }}"
-                                                                        style="margin-right:10px">
+                                                                        data-target="#editPformal{{ $rpendidikan->id }}" style="margin-right:10px">
                                                                         <i class="fa fa-edit"></i>
                                                                     </a>
                                                                     <button onclick="hapus_karyawan({{ $rpendidikan->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>

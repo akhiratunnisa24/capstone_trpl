@@ -12,6 +12,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Users;
 use App\Models\Atasan;
+use App\Models\Jadwal;
 use App\Models\Resign;
 use App\Models\Status;
 use App\Models\Absensi;
@@ -36,8 +37,8 @@ use App\Mail\CutiNotification;
 use App\Models\Settingabsensi;
 use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
-use App\Models\SettingOrganisasi;
 // use Illuminate\Support\Facades\File;
+use App\Models\SettingOrganisasi;
 use App\Events\AbsenKaryawanEvent;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -2479,17 +2480,20 @@ class karyawanController extends Controller
             ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->whereDay('tanggal', '=', Carbon::now())
+                ->where('partner',Auth::user()->partner)
                 ->get();
 
             $absenBulanIni = Absensi::with('karyawan')
-            ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->where('partner',Auth::user()->partner)
                 ->get();
 
-            $absenBulanLalu = Absensi::with('karyawan',)
-            ->whereYear('tanggal', '=', Carbon::now()->year)
-            ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-            ->get();
+            $absenBulanLalu = Absensi::with('karyawan')
+                ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->where('partner',Auth::user()->partner)  
+                ->get();
 
             $output = [
                 'row' => $row,
@@ -2509,24 +2513,52 @@ class karyawanController extends Controller
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-            $terlambat = Absensi::with('karyawan',)
-            ->whereYear('tanggal', '=', Carbon::now()->year)
-                ->whereMonth('tanggal', '=', Carbon::now()->month)
-                ->whereDay('tanggal', '=', Carbon::now())
-                ->whereTime('jam_masuk', '>', '08:00:00')
-                ->get();
+            // $terlambat = Absensi::with('karyawan')
+            //     ->whereYear('tanggal', '=', Carbon::now()->year)
+            //     ->whereMonth('tanggal', '=', Carbon::now()->month)
+            //     ->whereDay('tanggal', '=', Carbon::now())
+            //     ->where('partner',Auth::user()->partner)
+            //     ->whereTime('jam_masuk', '>', '08:00:00')
+            //     ->get();
+    
+                $jdwl = Jadwal::where('partner',Auth::user()->partner)->whereDay('tanggal', '=', Carbon::now())->first();
+                $terlambat = Absensi::with('karyawan')
+                    ->whereYear('tanggal', '=', Carbon::now()->year)
+                    ->whereMonth('tanggal', '=', Carbon::now()->month)
+                    ->whereDay('tanggal', '=', Carbon::now())
+                    ->where('partner', Auth::user()->partner)
+                    ->where('jam_masuk', '>', $jdwl->jadwal_masuk)
+                    ->get();
 
-            $terlambatBulanIni = Absensi::with('karyawan')
-            ->whereYear('tanggal', '=', Carbon::now()->year)
-                ->whereMonth('tanggal', '=', Carbon::now()->month)
-                ->whereTime('jam_masuk', '>', '08:00:00')
-                ->get();
+                $jadwal = Jadwal::where('partner',Auth::user()->partner)
+                    ->whereYear('tanggal', '=', Carbon::now()->year)
+                    ->whereMonth('tanggal', '=', Carbon::now()->month)
+                    ->get();
 
-            $terlambatBulanLalu = Absensi::with('karyawan',)
-            ->whereYear('tanggal', '=', Carbon::now()->year)
-                ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-                ->whereTime('jam_masuk', '>', '08:00:00')
-                ->get();
+                foreach($jadwal as $jadwal)
+                {
+                    $terlambatBulanIni = Absensi::with('karyawan')
+                        ->whereYear('tanggal', '=', Carbon::now()->year)
+                        ->whereMonth('tanggal', '=', Carbon::now()->month)
+                        ->where('partner',Auth::user()->partner)
+                        ->where('jam_masuk', '>', $jadwal->jadwal_masuk)
+                        ->get();
+                }
+
+                $jad = Jadwal::where('partner',Auth::user()->partner)
+                    ->whereYear('tanggal', '=', Carbon::now()->year)
+                    ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                    ->get();
+
+                foreach($jad as $jadwal)
+                {
+                    $terlambatBulanLalu = Absensi::with('karyawan',)
+                        ->whereYear('tanggal', '=', Carbon::now()->year)
+                        ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                        ->where('jam_masuk', '>', $jadwal->jadwal_masuk)
+                        ->where('partner',Auth::user()->partner)
+                        ->get();
+                }
 
             $output = [
                 'row' => $row,
@@ -2557,19 +2589,28 @@ class karyawanController extends Controller
             // ->whereNotIn('id', $karyawanSudahAbsen)
             // ->get();
 
-            $tidakMasuk = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
-                ->whereMonth('tanggal', '=', Carbon::now()->month)
-                ->whereDay('tanggal', '=', Carbon::now())
+            $tidakMasuk = Tidakmasuk::join('karyawan','tidakmasuk.id_pegawai','=','karyawan.id')
+                ->whereYear('tidakmasuk.tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tidakmasuk.tanggal', '=', Carbon::now()->month)
+                ->whereDay('tidakmasuk.tanggal', '=', Carbon::now())
+                ->where('karyawan.partner',Auth::user()->partner)
+                ->select('tidakmasuk.*')
                 ->get();
             // dd($tidakMasuk);
 
-            $tidakMasukBulanIni = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
-                ->whereMonth('tanggal', '=', Carbon::now()->month)
+            $tidakMasukBulanIni = Tidakmasuk::join('karyawan','tidakmasuk.id_pegawai','=','karyawan.id')
+                ->whereYear('tidakmasuk.tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tidakmasuk.tanggal', '=', Carbon::now()->month)
+                ->where('karyawan.partner',Auth::user()->partner)
+                ->select('tidakmasuk.*')
                 ->get();
             // dd($tidakMasukBulanIni);
 
-            $tidakMasukBulanLalu = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
-                ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+            $tidakMasukBulanLalu = Tidakmasuk::join('karyawan','tidakmasuk.id_pegawai','=','karyawan.id')
+                ->whereYear('tidakmasuk.tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tidakmasuk.tanggal', '=', Carbon::now()->subMonth()->month)
+                ->where('karyawan.partner',Auth::user()->partner)
+                ->select('tidakmasuk.*')
                 ->get();
 
             // dd($tidakMasukBulanLalu);
