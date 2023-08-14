@@ -79,7 +79,7 @@
                                                                     <label  class="form-label">Tanggal Lahir</label>
                                                                     <div class="input-group">
                                                                         <input id="datepicker-autoclose-format" type="text" class="form-control" placeholder="dd/mm/yyyy" id="4"
-                                                                            name="tgllahirKaryawan" value="{{ \Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y') }}"autocomplete="off" rows="10" required><br>
+                                                                            name="tgllahirKaryawan" value="{{ $karyawan->tgllahir ? \Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y') : '' }}" autocomplete="off" rows="10" required><br>
                                                                         <span class="input-group-addon bg-custom b-0"><i  class="mdi mdi-calendar text-white"></i></span>
                                                                     </div><!-- input-group -->
                                                                 </div>
@@ -265,7 +265,7 @@
                                                                         <label class="form-label">Tanggal Masuk</label>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose-format2" type="text" class="form-control" placeholder="dd/mm/yyyy" 
-                                                                                name="tglmasukKaryawan" value="{{ \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') }}" autocomplete="off"  rows="10"  required>
+                                                                                name="tglmasukKaryawan"  value="{{ $karyawan->tglmasuk ? \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') : '' }}" autocomplete="off"  rows="10"  required>
                                                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                         </div>
                                                                     </div>
