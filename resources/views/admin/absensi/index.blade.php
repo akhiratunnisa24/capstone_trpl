@@ -185,7 +185,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">Impor Excel</h4>
                 </div>
-                <form action="{{ route('Impor.excel') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
