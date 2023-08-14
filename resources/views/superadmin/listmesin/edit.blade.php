@@ -44,9 +44,9 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-success waves-effect waves-light" name="submit"
-                            value="save">Save</button>
+                            value="save">Simpan</button>
                     </div>
                 </form>
             </div>

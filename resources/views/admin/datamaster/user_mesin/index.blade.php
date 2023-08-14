@@ -8,7 +8,7 @@
                 <h4 class="pull-left page-title">Master User Mesin</h4>
 
                 <ol class="breadcrumb pull-right">
-                    <li>Rynest Employees Management System</li>
+                    <li>Rynest Employee Management System</li>
                     <li class="active">Master User Mesin</li>
                 </ol>
 

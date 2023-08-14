@@ -297,11 +297,11 @@ class Kernel extends ConsoleKernel
                     if ($con) 
                     {
                        
-                        $attendance = $tad->get_att_log(['pin'=> '12412']);
+                        $attendance = $tad->get_att_log();
                         if ($attendance) 
                         {
                             $j = $attendance->get_response(['format' => 'json']);
-                            $today = Carbon::now()->format('Y-m-d');
+                            // $today = Carbon::now()->format('Y-m-d');
                             // $filtered_attendance = $attendance->filter_by_date(
                             //     ['start' => '2023-08-']
                             // );
@@ -322,7 +322,6 @@ class Kernel extends ConsoleKernel
                                 $matchedUser = $usermesin->where('noid', $pin)->where('partner', $partner)->first();
                                 if ($matchedUser) 
                                 {
-                                  
                                     $jadwals = Jadwal::where('tanggal', $tanggal)->where('partner',$matchedUser->partner)->get();
                                     // dd($data,$matchedUser,$jadwal);
                                     foreach ($jadwals as $jadwal) 
@@ -330,7 +329,8 @@ class Kernel extends ConsoleKernel
                                         if($jadwal)
                                         {
                                             $existingAbsensi = Absensi::where('id_karyawan', $matchedUser->id_pegawai)
-                                                            ->where('tanggal', $tanggal)->where('partner', $matchedUser->partner)
+                                                            ->where('tanggal', $tanggal)
+                                                            ->where('partner', $matchedUser->partner)
                                                             ->whereNotNull('jam_masuk')
                                                             ->first();
 
@@ -482,8 +482,8 @@ class Kernel extends ConsoleKernel
                                             if($jadwal)
                                             {
                                                 $existingAbsensi = Absensi::where('id_karyawan', $matchedUser->id_pegawai)
-                                                                ->where('tanggal', $tanggal)->where('partner', $matchedUser->partner)
-                                                                ->where('jam_masuk', '!=', $jam)
+                                                                ->where('tanggal', $tanggal)
+                                                                ->where('partner', $matchedUser->partner)
                                                                 ->whereNotNull('jam_masuk')
                                                                 ->first();
                                                 if($existingAbsensi)

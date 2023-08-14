@@ -6,7 +6,7 @@
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Resign</h4>
                 <ol class="breadcrumb pull-right">
-                    <li>Rynest Employees Management System</li>
+                    <li>Rynest Employee Management System</li>
                     <li class="active">Resign</li>
                 </ol>
                 <div class="clearfix"></div>

@@ -88,7 +88,7 @@
 
 
                 <div class="modal-footer">
-                    {{-- <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button> --}}
+                    {{-- <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Tutup</button> --}}
                     <!-- <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Register</button> -->
                 </div>
 

@@ -9,7 +9,7 @@
                 <h4 class="pull-left page-title">Data Karyawan</h4>
 
                 <ol class="breadcrumb pull-right">
-                    <li>Rynest Employees Management System</li>
+                    <li>Rynest Employee Management System</li>
                     <li class="active">Data Karyawan</li>
                 </ol>
 
@@ -37,7 +37,7 @@
                             {{-- <a href="/karyawanupload" class="btn btn-sm btn-dark fa fa-upload"> Upload File Digital</a> --}}
 
                             <a href="" class="btn btn-sm btn-dark fa fa-cloud-download" data-toggle="modal"
-                                data-target="#Modal2"> Import Excel</a>
+                                data-target="#Modal2"> Impor Excel</a>
                             {{-- <a href="/exportexcelkaryawan" class="btn btn-sm btn-dark fa fa-cloud-upload "> Export Excel
                             </a> --}}
 
@@ -188,7 +188,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title text-center" id="myModalLabel">Import Excel</h4>
+                    <h4 class="modal-title text-center" id="myModalLabel">Impor Excel</h4>
                 </div>
                 <form action="/import_excel" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -200,7 +200,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-primary">Import Data</button>
                     </div>
                 </form>

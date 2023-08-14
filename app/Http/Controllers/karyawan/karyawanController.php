@@ -2093,15 +2093,55 @@ class karyawanController extends Controller
         }
     }
 
+    //hapus pendidikan formal
     public function destroyPendidikan(Request $request, $id)
     {
-        // $rpendidikan = Rpendidikan::where('id_pegawai', $id)->find($id);
-        //     dd($rpendidikan);
-        Rpendidikan::destroy($id);
+        $rpendidikan = Rpendidikan::where('id', $id)->find($id);
+        if($rpendidikan->jenis_pendidikan !== NULL)
+        {
+            $rpendidikan = $rpendidikan->update(
+                [
+                    "tingkat"      => null,
+                    "nama_sekolah" => null,
+                    "kota_pformal" => null,
+                    "jurusan"      => null,
+                    "tahun_masuk_formal" => null,
+                    "tahun_lulus_formal" => null,
+                    "ijazah_formal"      => null
+                ]
+            );
+            return redirect()->back()->with('pesan','Data sudah dihapus');
+        }
+        else
+        {
+            Rpendidikan::destroy($id);
+            return redirect()->back()->with('pesan','Data sudah dihapus');
+        }
+    }
 
-        // $rpendidikan->delete();
-
-        return redirect()->back();
+     //hapus pendidikan non formal
+    public function deletePendidikan(Request $request, $id)
+    {
+        $rpendidikan = Rpendidikan::where('id', $id)->find($id);
+        if($rpendidikan->tingkat !== NULL)
+        {
+            $rpendidikan = $rpendidikan->update(
+                [
+                    "jenis_pendidikan" => null,
+                    'nama_lembaga'     => null,
+                    'kota_pnonformal'  => null,
+                    "tahun_masuk_nonformal" => null,
+                    "tahun_lulus_nonformal" => null,
+                    "ijazah_nonformal"      => null,
+                ]
+            );
+            return redirect()->back()->with('pesan','Data sudah dihapus');
+        }
+        else
+        {
+            Rpendidikan::destroy($id);
+            return redirect()->back()->with('pesan','Data sudah dihapus');
+        }
     }
 
     public function showpekerjaan($id)
@@ -2906,64 +2946,53 @@ class karyawanController extends Controller
         $idk = Karyawan::findorFail($id);
         $nilaiNull = null;
 
-        if ($request->tingkat_pendidikan) {
-            $r_pendidikan = array(
-                'id_pegawai' => $idk->id,
-                'tingkat' => $request->post('tingkat_pendidikan'),
-                'nama_sekolah' => $request->post('nama_sekolah'),
-                'kota_pformal' => $request->post('kotaPendidikanFormal'),
-                'jurusan' => $request->post('jurusan'),
-                // 'tahun_masuk_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d'),
-                // 'tahun_lulus_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusFormal'))->format('Y-m-d'),
-                'tahun_masuk_formal' => $request->tahun_masukFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : $nilaiNull,
-                'tahun_lulus_formal' => $request->tahun_lulusFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : $nilaiNull,
+        $r_pendidikan = array(
+            'id_pegawai' => $idk->id,
+            'tingkat' => $request->post('tingkat_pendidikan'),
+            'nama_sekolah' => $request->post('nama_sekolah'),
+            'kota_pformal' => $request->post('kotaPendidikanFormal'),
+            'jurusan' => $request->post('jurusan'),
+            // 'tahun_masuk_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d'),
+            // 'tahun_lulus_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusFormal'))->format('Y-m-d'),
+            'tahun_masuk_formal' => $request->tahun_masukFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : $nilaiNull,
+            'tahun_lulus_formal' => $request->tahun_lulusFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : $nilaiNull,
 
 
-                'ijazah_formal' => $request->post('noijazahPformal'),
-                'jenis_pendidikan' => null,
-                'kota_pnonformal' => null,
-                'tahun_lulus_nonformal' => null,
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
-            dd($r_pendidikan);
-            Rpendidikan::insert($r_pendidikan);
-            return redirect()->back()->withInput();
-        } 
-        else 
-        {
-           return redirect()->back();
-        }
+            'ijazah_formal' => $request->post('noijazahPformal'),
+            'jenis_pendidikan' => null,
+            'kota_pnonformal' => null,
+            'tahun_lulus_nonformal' => null,
+            'created_at' => new \DateTime(),
+            'updated_at' => new \DateTime(),
+        );
+        Rpendidikan::insert($r_pendidikan);
+        return redirect()->back()->withInput();
     }
 
     public function tambahPendidikan(Request $request, $id)
     {
         $idk = Karyawan::findorFail($id);
         $nilaiNull = null;
-        if ($request->tingkat_pendidikan) 
-        {
-            $r_pendidikan = array(
-                'id_pegawai' => $idk->id,
-                'tingkat' => null,
-                'nama_sekolah' => null,
-                'kota_pformal' => null,
-                'jurusan' => null,
-                'tahun_lulus_formal' => null,
+       
+        $r_pendidikan = array(
+            'id_pegawai' => $idk->id,
+            'tingkat' => null,
+            'nama_sekolah' => null,
+            'kota_pformal' => null,
+            'jurusan' => null,
+            'tahun_lulus_formal' => null,
 
+            'nama_lembaga' => $request->post('namaLembaga'),
+            'jenis_pendidikan' => $request->post('jenis_pendidikan'),
+            'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
+            'tahun_masuk_nonformal' => $request->tahun_masukNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d') : $nilaiNull,
+            'tahun_lulus_nonformal' => $request->tahun_lulusNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d') : $nilaiNull,
 
-                'nama_lembaga' => $request->post('namaLembaga'),
-                'jenis_pendidikan' => $request->post('jenis_pendidikan'),
-                'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-                'tahun_masuk_nonformal' => $request->tahun_masukNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d') : $nilaiNull,
-                'tahun_lulus_nonformal' => $request->tahun_lulusNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d') : $nilaiNull,
-
-                'ijazah_nonformal' => $request->post('noijazahPnonformal'),
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
-            dd($r_pendidikan);
-            Rpendidikan::insert($r_pendidikan);
-            return redirect()->back()->withInput();
-        }
+            'ijazah_nonformal' => $request->post('noijazahPnonformal'),
+            'created_at' => new \DateTime(),
+            'updated_at' => new \DateTime(),
+        );
+        Rpendidikan::insert($r_pendidikan);
+        return redirect()->back()->withInput();
     }
 }

@@ -12,7 +12,7 @@
             <h4 class="pull-left page-title">Master Alokasi Cuti Karyawan</h4>
 
             <ol class="breadcrumb pull-right">
-                <li>Rynest Employees Management System</li>
+                <li>Rynest Employee Management System</li>
                 <li class="active">Master Alokasi Cuti</li>
             </ol>
            
@@ -26,7 +26,7 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
-                        <a href="" class="btn btn-dark btn-sm fa fa-cloud-download pull-left" data-toggle="modal" data-target="#ModalImport"> Import Excel</a>
+                        <a href="" class="btn btn-dark btn-sm fa fa-cloud-download pull-left" data-toggle="modal" data-target="#ModalImport"> Impor Excel</a>
                     </div>
                     @include('admin.alokasicuti.importexcel')
                     <div class="panel-body m-b-5">

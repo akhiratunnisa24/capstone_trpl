@@ -7,7 +7,7 @@
                 <h4 class="pull-left page-title ">Edit File Digital</h4>
 
                 <ol class="breadcrumb pull-right">
-                    <li>Rynest Employees Management System</li>
+                    <li>Rynest Employee Management System</li>
                     <li class="active">Edit File Digital</li>
                 </ol>
 

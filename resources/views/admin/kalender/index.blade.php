@@ -24,7 +24,7 @@
             <div class="page-header-title">
                 <h4 class="pull-left page-title">Kalender Kerja</h4>
                 <ol class="breadcrumb pull-right">
-                    <li>Rynest Employees Management System</li>
+                    <li>Rynest Employee Management System</li>
                     <li class="active">Kalender Kerja</li>
                 </ol>
                 <div class="clearfix">

@@ -224,8 +224,8 @@ Route::post('/getemail', [karyawanController::class, 'getEmail'])->name('getEmai
 Route::post('/getemail2', [karyawanController::class, 'getEmail2'])->name('getEmail2');
 Route::post('/tidakmasuk', [AbsensiController::class, 'storeTidakmasuk'])->name('tidakmasuk');
 Route::put('/update-pendidikan/{id}', [karyawanController::class, 'updatePendidikan'])->name('update.Pendidikan');
-Route::post('/tambah-pendidikan/{id}', [karyawanController::class, 'addPendidikan'])->name('add.pendidikan');
-Route::post('/tambah-pendidikann/{id}', [karyawanController::class, 'tambahPendidikan'])->name('tambahPendidikan');
+Route::post('/tambah-pendidikan{id}', [karyawanController::class, 'addPendidikan'])->name('add.pendidikan');
+Route::post('/tambah-pendidikan/{id}', [karyawanController::class, 'tambahPendidikan'])->name('tambahPendidikan');
 //download data absensi ke mesin absen
 Route::post('/import-absensi', [AbsensiController::class, 'mesinabsen'])->name('download.mesin');
 
@@ -601,6 +601,7 @@ Route::delete('/delete-pendidikan', [KaryawansController::class, 'deletePendidik
     Route::post('/storespnformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
     // Delete Pendidikan
     Route::get('/destroyPendidikan{id}', [karyawanController::class, 'destroyPendidikan'])->name('destroyPendidikan');
+    Route::get('/deletePendidikan{id}', [karyawanController::class, 'deletePendidikan'])->name('deletePendidikan');
 
 
 

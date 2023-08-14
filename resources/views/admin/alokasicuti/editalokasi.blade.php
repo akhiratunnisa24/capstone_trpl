@@ -110,7 +110,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                             {{-- <button type="submit" class="btn btn-info" name="submit" value="submit"
                                 id="update_data">Update</button> --}}
                             <button onclick="window.location.reload();" type="button" class="btn btn-success" name="submit"

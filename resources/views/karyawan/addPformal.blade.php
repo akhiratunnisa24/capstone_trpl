@@ -13,10 +13,10 @@
                     @method('POST')
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="hidden" name="idpegawai" autocomplete="off" value="{{$karyawan->id}}" class="form-control">
+                            <input type="hidden" name="id_pegawai" autocomplete="off" value="{{$karyawan->id}}" class="form-control">
                             <div class="form-group">
-                                <label for="exampleInputEmail1" class="form-label">Tingkat Pendidikan</label>
-                                <select class="form-control selectpicker" name="tingkat_pendidikan">
+                                <label for="exampleInputEmail1" name="tingkat_pendidikan" class="form-label">Tingkat Pendidikan</label>
+                                <select class="form-control" name="tingkat_pendidikan">
                                     <option value="">Pilih Tingkat Pendidikan</option>
                                     <option value="SD">SD</option>
                                     <option value="SMP">SMP</option>
@@ -84,8 +84,8 @@
 
                     <div class="modal-footer">
                         <input type="hidden" name="id" id="id">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
                     </div>
                 </form>
             </div>

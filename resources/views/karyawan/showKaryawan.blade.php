@@ -278,6 +278,10 @@
     <div id="kontak-darurat">
         <div class="modal-body" style="margin-left:15px;margin-right:15px;">
             <label><h4>C. KONTAK DARURAT </h4></label>
+            <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
+            data-target="#addKontak" style="margin-right:10px;margin-bottom:10px"> <i class="fa fa-plus"> <strong>Tambah Data</strong></i>
+            </a>
+            @include('karyawan.addKontak')
             <table class="table table-striped">
                 <thead class="alert alert-info">
                     <tr>
@@ -285,6 +289,7 @@
                         <th>Hubungan</th>
                         <th>Nomor Handphone</th>
                         <th>Alamat</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody> 
@@ -294,8 +299,13 @@
                             <td>{{$kdarurat->hubungan}}</td>
                             <td>{{$kdarurat->no_hp}}</td>
                             <td>{{$kdarurat->alamat}}</td>
-
+                            <td class=""><a class="btn btn-sm btn-primary editPformal" data-toggle="modal"
+                                    data-target="#editDarurat{{ $kdarurat->id }}"
+                                    style="margin-right:10px">
+                                    <i class="fa fa-edit"></i>
+                                </a>
                         </tr>
+                        @include('karyawan.editKontakdarurat')
                     @endforeach
                 </tbody>
             </table>

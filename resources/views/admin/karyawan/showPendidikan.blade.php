@@ -23,7 +23,7 @@
                 <h4 class="pull-left page-title ">Detail Karyawan</h4>
 
                 <ol class="breadcrumb pull-right">
-                    <li>Rynest Employees Management System</li>
+                    <li>Rynest Employee Management System</li>
                     <li class="active">Detail Karyawan</li>
                 </ol>
 
@@ -59,8 +59,7 @@
 
                                                 <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
                                                     data-target="#addPformal" style="margin-right:10px;margin-bottom:10px">
-                                                    <i class="fa fa-plus"> <strong> Add Pendidikan
-                                                            Formal</strong></i>
+                                                    <i class="fa fa-plus"> <strong> Tambah Pendidikan Formal</strong></i>
                                                 </a>
                                                 @include('admin.karyawan.addPformal')
                                                 <table class="table table-bordered table-striped">
@@ -80,11 +79,14 @@
                                                     </thead>
 
                                                     <tbody>
+                                                        @php
+                                                          $no = 1;
+                                                        @endphp
+
                                                         @foreach ($pendidikan as $rpendidikan)
-                                                        
                                                             @if ($rpendidikan->tingkat !== null)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $no++}}</td>
                                                                     <td>{{ $rpendidikan->tingkat }}</td>
                                                                     <td>{{ $rpendidikan->nama_sekolah }}</td>
                                                                     <td>{{ $rpendidikan->jurusan }}</td>
@@ -103,13 +105,13 @@
                                                                     <td>{{ $rpendidikan->kota_pformal }}</td>
                                                                     <td>{{ $rpendidikan->ijazah_formal }}</td>
                                                                     <td class="">
-                                                                        <a class="btn btn-sm btn-primary editPformal "
+                                                                        <a class="btn btn-sm btn-primary editPformal"
                                                                         data-toggle="modal"
                                                                         data-target="#editPformal{{ $rpendidikan->id }}"
                                                                         style="margin-right:10px">
                                                                         <i class="fa fa-edit"></i>
                                                                     </a>
-                                                                    <button onclick="hapus_karyawan({{ $rpendidikan->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                                                    <button onclick="hapus_karyawan({{ $rpendidikan->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                                                     </td>
                                                                 </tr>
                                                                 @include('admin.karyawan.editPformal')
@@ -121,9 +123,8 @@
                                                   <span class=""><strong> 2. PENDIDIKAN NON FORMAL</strong></span>
 
                                                     <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
-                                                        data-target="#addPnformal"
-                                                        style="margin-right:10px;margin-bottom:10px">
-                                                        <i class="fa fa-plus"> <strong> Add Pend. Non Formal</strong></i>
+                                                        data-target="#addPnformal" style="margin-right:10px;margin-bottom:10px">
+                                                        <i class="fa fa-plus"> <strong> Tambah Pend. Non Formal</strong></i>
                                                     </a>
 
                                                 @include('admin.karyawan.addPnformal')
@@ -141,12 +142,15 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                         @php
+                                                          $nom = 1;
+                                                        @endphp
                                                         @foreach ($nonformal as $rpendidikan)
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $nom++ }}</td>
                                                                 <td>{{ $rpendidikan->jenis_pendidikan }}</td>
                                                                 <td>{{ $rpendidikan->nama_lembaga }}</td>
-                                                                @if($rpendidikan->tahun_masuk_nonformal !==NULL)
+                                                                @if($rpendidikan->tahun_masuk_nonformal !== NULL)
                                                                     <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_nonformal)->format('d/m/Y') }}</td>
                                                                 @else
                                                                     <td></td>
@@ -167,7 +171,7 @@
                                                                         style="margin-right:10px">
                                                                         <i class="fa fa-edit"></i>
                                                                     </a>
-                                                                        <button onclick="hapus_karyawan({{ $rpendidikan->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                                                        <button onclick="hapus_karyawans({{ $rpendidikan->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
                                                             @include('admin.karyawan.editPnformal')
@@ -226,7 +230,36 @@
             </div>
         </div>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+
+
+    @if(Session::has('pesan'))
         <script>
+            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
+
+    @if(Session::has('pesa'))
+        <script>
+            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+                button:true,
+                button:"OK",
+            });
+        </script>
+    @endif
+
+    {{-- //delete pendidikan formal --}}
+    <script>
         function hapus_karyawan(id) {
             swal.fire({
                 title: "Apakah anda yakin ?",
@@ -246,6 +279,32 @@
                         confirmButtonColor: '#3085d6',
                     })
                     location.href = '<?= '/destroyPendidikan' ?>' + id;
+                }
+            })
+        }
+    </script>
+
+    {{-- delete pendidikan non formal --}}
+    <script>
+        function hapus_karyawans(id) {
+            swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swal.fire({
+                        title: "Terhapus!",
+                        text: "Data berhasil di hapus..",
+                        icon: "success",
+                        confirmButtonColor: '#3085d6',
+                    })
+                    location.href = '<?= '/deletePendidikan' ?>' + id;
                 }
             })
         }
