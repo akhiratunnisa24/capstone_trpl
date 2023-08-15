@@ -16,7 +16,6 @@ class Kdarurat extends Model
         'id_pegawai',
         'nama',
         'alamat',
-        'no_hp',
         'hubungan',
     ];
 

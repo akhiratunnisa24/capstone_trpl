@@ -38,13 +38,13 @@
                             <div class="form-group ">
                                 <div class="mb-3 ">
                                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                    <input class="form-control" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat"></input>
+                                    <input class="form-control" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
-                                    <input type="number" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
+                                    <input type="number" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone">
                                 </div>
                             </div>
                         </div>
