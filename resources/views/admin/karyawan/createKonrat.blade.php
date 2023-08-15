@@ -134,7 +134,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
-                                                                        <input type="number" name="no_hpKdarurat" value="{{ $kontakdarurat->no_hp ?? '' }}" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" autocomplete="off" required>
+                                                                        <input type="number" name="no_hpKdarurat" value="{{ $kontakdarurat->no_hp ?? '' }}" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" autocomplete="off">
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -194,14 +194,14 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3 ">
                                                                         <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                                                                        <input class="form-control" id="alamatKdarurat" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat" required></input>
+                                                                        <input class="form-control" id="alamatKdarurat" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat" required>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
-                                                                        <input type="number" id="no_hpKdarurat" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone" required>
+                                                                        <input type="number" id="no_hpKdarurat" name="no_hpKdarurat" class="form-control" id="no_hp" placeholder="Masukkan Nomor Handphone">
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
