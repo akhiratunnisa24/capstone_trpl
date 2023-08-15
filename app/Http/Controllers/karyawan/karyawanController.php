@@ -257,14 +257,14 @@ class karyawanController extends Controller
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-                ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
+                ->whereDay('created_at', '=', Carbon::now())
+                ->count('jam_masuk');
 
             // Absen Terlambat untuk hari ini
             $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
-                ->whereTime('jam_masuk', '>', '08:00:00')
-                ->count();
+                ->count('terlambat');
 
             //absen masuk bulan ini
             $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
@@ -276,14 +276,16 @@ class karyawanController extends Controller
             $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->where('partner',$row->partner)
                 ->count('jam_masuk');
 
             //absen terlambat bulan lalu
-            $absenTerlambatbulanlalu = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-                ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
+            $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-                ->count('terlambat');
-
+                ->where('partner',$row->partner)
+                ->where('terlambat', '!=',null)
+                ->count();
+           
             $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
@@ -292,6 +294,19 @@ class karyawanController extends Controller
                 ->whereYear('sampai', '=', Carbon::now()->year)
                 ->where('status', '=', 1)
                 ->get();
+
+            $absenHariini = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->whereDay('tanggal', '=', Carbon::now())
+                ->where('partner',Auth::user()->partner)
+                ->count('jam_masuk');
+            $absenHarini = Absensi::with('karyawans')
+                ->where('partner',Auth::user()->partner)
+                ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->whereDay('tanggal', '=', Carbon::now())
+                ->get();
+            $jumAbsen = $absenHarini->count(); 
 
             // $alokasi = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
             //     ->whereYear('aktif_dari', '=', Carbon::now()->year)
@@ -309,62 +324,120 @@ class karyawanController extends Controller
                 ->whereDate('sampai', '>=', Carbon::now())
                 ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
 
+            $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Makan')
+                ->where('partner',Auth::user()->partner)
+                ->select('jumlah_tidakmasuk')
+                ->first();
 
-            $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Makan')->select('jumlah_tidakmasuk')->first();
-            $potonguangmakan = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
-                ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
-                ->where('tidakmasuk.status', '=', 'tanpa keterangan')
-                ->where('karyawan.partner',Auth::user()->partner)
-                ->select('tidakmasuk.id_pegawai as id_pegawai','tidakmasuk.status as keterangan','setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
-                ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Makan" THEN ' . $pct->jumlah_tidakmasuk . ' END')
-                ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai','tidakmasuk.status')
-                ->get();
-            $jpc = $potonguangmakan->count();
-            $pg = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Transportasi')->select('jumlah_tidakmasuk')->first();
-            $potongtransport = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
-                ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
-                ->where('tidakmasuk.status', '=', 'tanpa keterangan')
-                ->where('karyawan.partner',Auth::user()->partner)
-                ->select('tidakmasuk.id_pegawai as id_pegawai','karyawan.partner', 'setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
-                ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Transportasi" THEN ' . $pg->jumlah_tidakmasuk . ' END')
-                ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai','karyawan.partner')
-                ->get();
+            if($pct)
+            {
+                $potonguangmakan = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+                    ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
+                    ->where('tidakmasuk.status', '=', 'tanpa keterangan')
+                    ->where('karyawan.partner',Auth::user()->partner)
+                    ->where('setting_absensi.partner',$pct->partner)
+                    ->whereMonth('tidakmasuk.tanggal', '=', Carbon::now()->month)
+                    ->select('tidakmasuk.id_pegawai as id_pegawai','tidakmasuk.status as keterangan','setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
+                    ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Makan" THEN ' . $pct->jumlah_tidakmasuk . ' END')
+                    ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai','tidakmasuk.status')
+                    ->get();
+                $jpc = $potonguangmakan->count();
+            }else
+            {
+                $potonguangmakan = collect();
+                $jpc = 0;
+            }
 
+            $pg = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Transportasi')
+                ->where('partner',Auth::user()->partner)
+                ->select('jumlah_tidakmasuk')
+                ->first();
 
-            $jpg = $potongtransport->count();
+            if($pg)
+            {
+                $potongtransport = Tidakmasuk::leftJoin('setting_absensi', 'tidakmasuk.status', '=', 'setting_absensi.status_tidakmasuk')
+                    ->leftJoin('karyawan', 'tidakmasuk.id_pegawai', '=', 'karyawan.id')
+                    ->where('tidakmasuk.status', '=', 'tanpa keterangan')
+                    ->where('karyawan.partner',Auth::user()->partner)
+                    ->where('setting_absensi.partner',$pct->partner)
+                    ->whereMonth('tidakmasuk.tanggal', '=', Carbon::now()->month)
+                    ->select('tidakmasuk.id_pegawai as id_pegawai','karyawan.partner', 'setting_absensi.jumlah_tidakmasuk as jumlah', 'setting_absensi.sanksi_tidak_masuk as sanksi', DB::raw('COUNT(tidakmasuk.id_pegawai) as total'))
+                    ->havingRaw('COUNT(tidakmasuk.id_pegawai) = CASE WHEN setting_absensi.sanksi_tidak_masuk = "Potong Uang Transportasi" THEN ' . $pg->jumlah_tidakmasuk . ' END')
+                    ->groupBy('setting_absensi.jumlah_tidakmasuk', 'setting_absensi.sanksi_tidak_masuk', 'tidakmasuk.id_pegawai','karyawan.partner')
+                    ->get();
+
+                $jpg = $potongtransport->count();
+            }
+            else
+            {
+                $potongtransport = collect();
+                $jpg = 0;
+            }
              //data karyawan terlambat
-            $tb = Settingabsensi::where('sanksi_terlambat', '=', 'Teguran Biasa')->select('jumlah_terlambat')->first();
-            $sp1 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Pertama')->select('jumlah_terlambat')->first();
-            $sp2 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Kedua')->select('jumlah_terlambat')->first();
-            $sp3 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Ketiga')->select('jumlah_terlambat')->first();
-            $terlambat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
-             ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
-             ->select('absensi.id_karyawan as id_karyawan','setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
-             ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "Teguran Biasa" THEN ' . $tb->jumlah_terlambat . ' END')
-             ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
-              ->where('karyawan.partner',Auth::user()->partner)
-             ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
-             ->get();
-            $jumter = $terlambat->count();
-            $telat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
-                ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
-                ->select('absensi.id_karyawan as id_karyawan', 'setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
-                ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "SP Pertama" THEN ' . $sp1->jumlah_terlambat . ' END')
-                ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
-                 ->where('karyawan.partner',Auth::user()->partner)
-                ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
-                ->get();
-            $jumtel = $telat->count();
-            $datatelat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
-                ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
-                ->select('absensi.id_karyawan as id_karyawan', 'setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
-                ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "SP Pertama" THEN ' . $sp2->jumlah_terlambat . ' END')
-                ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
-                 ->where('karyawan.partner',Auth::user()->partner)
-                ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
-                ->get();
-            $jumdat = $datatelat->count();
+            $tb = Settingabsensi::where('sanksi_terlambat', '=', 'Teguran Biasa')
+                ->where('partner',Auth::user()->partner)
+                ->select('jumlah_terlambat')
+                ->first();
+            $sp1 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Pertama')
+                ->where('partner',Auth::user()->partner)
+                ->select('jumlah_terlambat')
+                ->first();
+            $sp2 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Kedua')
+                ->where('partner',Auth::user()->partner)
+                ->select('jumlah_terlambat')
+                ->first();
+            $sp3 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Ketiga')
+                ->where('partner',Auth::user()->partner)
+                ->select('jumlah_terlambat')
+                ->first();
 
+             if($tb)
+            {
+                $terlambat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
+                    ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
+                    ->select('absensi.id_karyawan as id_karyawan','setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
+                    ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "Teguran Biasa" THEN ' . $tb->jumlah_terlambat . ' END')
+                    ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
+                    ->where('karyawan.partner',Auth::user()->partner)
+                    ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
+                    ->get();
+                $jumter = $terlambat->count();
+            }else{
+                $terlambat = collect();
+                $jumter = 0;
+            }
+
+            if($sp1)
+            {
+                $telat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
+                    ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
+                    ->select('absensi.id_karyawan as id_karyawan', 'setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
+                    ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "SP Pertama" THEN ' . $sp1->jumlah_terlambat . ' END')
+                    ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
+                    ->where('karyawan.partner',Auth::user()->partner)
+                    ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
+                    ->get();
+                $jumtel = $telat->count();
+            }else{
+                $telat= collect();
+                $jumtel = 0;
+            }
+
+            if($sp2)
+            {
+                $datatelat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
+                    ->leftJoin('karyawan', 'absensi.id_karyawan', '=', 'karyawan.id')
+                    ->select('absensi.id_karyawan as id_karyawan', 'setting_absensi.jumlah_terlambat as jumlah', 'setting_absensi.sanksi_terlambat as sanksi', DB::raw('COUNT(absensi.id_karyawan) as total'))
+                    ->havingRaw('COUNT(absensi.id_karyawan) = CASE WHEN setting_absensi.sanksi_terlambat = "SP Pertama" THEN ' . $sp2->jumlah_terlambat . ' END')
+                    ->whereYear('absensi.tanggal', '=', Carbon::now()->subMonth()->year)->whereMonth('absensi.tanggal', '=',Carbon::now()->subMonth()->month)
+                    ->where('karyawan.partner',Auth::user()->partner)
+                    ->groupBy('setting_absensi.jumlah_terlambat', 'setting_absensi.sanksi_terlambat', 'absensi.id_karyawan')
+                    ->get();
+                $jumdat = $datatelat->count();
+            }else{
+                $datatelat = collect();
+                $jumdat = 0;
+            }
             $posisi = Lowongan::all()->sortByDesc('created_at');
 
             if($role == 3 && $row->jabatan == "Manager")
@@ -1058,6 +1131,9 @@ class karyawanController extends Controller
                 'posisi' => $posisi,
                 'sisacutis' =>$sisacutis,
                 'rekruitmenjumlah' => $rekruitmenjumlah,
+                'absenHariini' =>  $absenHariini,
+                'absenHarini' => $absenHarini,
+                'jumAbsen' =>  $jumAbsen
 
             ];
             return view('karyawan.dashboardKaryawan', $output);
@@ -1761,7 +1837,6 @@ class karyawanController extends Controller
         if ($role == 1) {
 
             $karyawan = karyawan::findOrFail($id);
-            // Memuat nama atasan pertama dan atasan kedua
             $status = Keluarga::where('id_pegawai', $id)->first();
             $keluarga = Keluarga::where('id_pegawai', $id)->get();
             $kdarurat = Kdarurat::where('id_pegawai', $id)->get();

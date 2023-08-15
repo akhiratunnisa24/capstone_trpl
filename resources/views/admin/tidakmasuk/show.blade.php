@@ -16,6 +16,7 @@
     </div>
     <!-- Header -->
     @if(isset($potonguangmakan))
+        {{-- @php dd($potonguangmakan); @endphp --}}
         <div class="content" id="">
             <div class="container">
                 <div class="row">

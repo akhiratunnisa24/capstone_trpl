@@ -29,11 +29,11 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix" style="height:35px">
-                            <form action="{{route('atasan.store')}}" method="POST" align="center">
+                            {{-- <form action="{{route('atasan.store')}}" method="POST" align="center">
                                 @csrf
                                 @method('POST')
                                 <button type="submit" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Generate Atasan</button>
-                            </form>
+                            </form> --}}
                         </div>
                         
                         <div class="panel-body">
@@ -54,7 +54,7 @@
                                     @foreach ($atasan as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $data->nik }}</td>
+                                            <td>{{ $data->nip }}</td>
                                             <td>{{ $data->nama }}</td>
                                             <td>{{ $data->jabatan }}</td>
                                             <td>{{ $data->nama_jabatan }}</td>
