@@ -565,6 +565,11 @@
                         </div>
                     </div>
 
+
+                    <div class="panel panel-default">
+
+                </div>
+
                 </div>
             </div>
 
@@ -1083,7 +1088,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#13" aria-expanded="false"
                                     class="dropdown-toggle waves-effect waves-light collapsed">
                                     Informasi HRD
-                                    @if (isset($jmlinfo))
+                                    @if ($jmlinfo != 0)
                                         <span class="badge badge badge-danger"
                                             style="background-color:red">{{ $jmlinfo }}</span>
                                     @endif
@@ -1615,112 +1620,6 @@
 
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#3" class="collapsed"
-                                aria-expanded="false">
-                                Permintaan Resign Karyawan
-
-                                @if ($resignjumlah)
-                                    <span class="badge badge badge-danger" style="background-color:red">{{ $resignjumlah }}</span>
-
-                                @endif
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="3" class="panel-collapse collapse">
-
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr class="info">
-                                                <th>No</th>
-                                                <th>Karyawan</th>
-                                                <th>Departemen</th>
-                                                <th>Tanggal</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($resign as $r)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $r->karyawan->nama }}</td>
-                                                    <td>{{ $r->departemens->nama_departemen ?? ' ' }}</td>
-                                                    {{-- <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td> --}}
-                                                    <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}</td>
-                                                    {{-- <td>{{ $r->tipe_resign }}</td> --}}
-                                                    <!-- data for status -->
-                                                    <td>
-                                                        <span
-                                                            class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'warning' : 'danger'))) }}">
-                                                            {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 6 ? $r->statuses->name_status : ($r->status == 7 ? $r->statuses->name_status : ($r->status == 5 ? $r->statuses->name_status : 'Ditolak'))) }}
-                                                        </span>
-                                                    </td>
-                                                    <td id="b" class="text-center">
-                                                        <div class="btn-group" role="group">
-                                                            @if($r->karyawan->atasan_pertama == Auth::user()->id_pegawai && $r->status == 1)
-                                                                <form action="{{ route('resignapproved', $r->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    <input type="hidden" name="status" value="1"  class="form-control" hidden>
-                                                                    <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i>
-                                                                    </button>
-                                                                </form>
-                                                                <form action="{{ route('resignreject', $r->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('POST')
-                                                                    <input type="hidden" name="status" value="5" class="form-control" hidden>
-                                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-times"></i>
-                                                                    </button>
-                                                                </form>
-                                                            @elseif($r->karyawan->atasan_kedua == Auth::user()->id_pegawai && $r->status == 6)
-                                                                <form action="{{ route('resign_approved_manager', $r->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        <input type="hidden" name="status" value="1" class="form-control" hidden>
-                                                                        <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                    <form action="{{ route('resignreject', $r->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('POST')
-                                                                        <input type="hidden" name="status" value="5"  class="form-control" hidden>
-                                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-times"></i>
-                                                                        </button>
-                                                                    </form>
-                                                            @endif
-                                                            <a class="btn btn-info btn-sm" data-toggle="modal"
-                                                                data-target="#Showresign{{ $r->id }}">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                @include('karyawan.resign.showresign')
-                                            @endforeach
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="panel-group" id="accordion-test-2">
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -2183,6 +2082,113 @@
 
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="panel-group" id="accordion-test-2">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#3" class="collapsed"
+                                aria-expanded="false">
+                                Permintaan Resign Karyawan
+
+                                @if ($resignjumlah)
+                                    <span class="badge badge badge-danger" style="background-color:red">{{ $resignjumlah }}</span>
+
+                                @endif
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="3" class="panel-collapse collapse">
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr class="info">
+                                                <th>No</th>
+                                                <th>Karyawan</th>
+                                                <th>Departemen</th>
+                                                <th>Tanggal</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($resign as $r)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $r->karyawan->nama }}</td>
+                                                    <td>{{ $r->departemens->nama_departemen ?? ' ' }}</td>
+                                                    {{-- <td>{{ \Carbon\Carbon::parse($r->tgl_masuk)->format('d/m/Y') }}</td> --}}
+                                                    <td>{{ \Carbon\Carbon::parse($r->tgl_resign)->format('d/m/Y') }}</td>
+                                                    {{-- <td>{{ $r->tipe_resign }}</td> --}}
+                                                    <!-- data for status -->
+                                                    <td>
+                                                        <span
+                                                            class="badge badge-{{ $r->status == 1 ? 'warning' : ($r->status == 6 ? 'info' : ($r->status == 7 ? 'success' : ($r->status == 5 ? 'warning' : 'danger'))) }}">
+                                                            {{ $r->status == 1 ? $r->statuses->name_status : ($r->status == 6 ? $r->statuses->name_status : ($r->status == 7 ? $r->statuses->name_status : ($r->status == 5 ? $r->statuses->name_status : 'Ditolak'))) }}
+                                                        </span>
+                                                    </td>
+                                                    <td id="b" class="text-center">
+                                                        <div class="btn-group" role="group">
+                                                            @if($r->karyawan->atasan_pertama == Auth::user()->id_pegawai && $r->status == 1)
+                                                                <form action="{{ route('resignapproved', $r->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <input type="hidden" name="status" value="1"  class="form-control" hidden>
+                                                                    <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i>
+                                                                    </button>
+                                                                </form>
+                                                                <form action="{{ route('resignreject', $r->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <input type="hidden" name="status" value="5" class="form-control" hidden>
+                                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-times"></i>
+                                                                    </button>
+                                                                </form>
+                                                            @elseif($r->karyawan->atasan_kedua == Auth::user()->id_pegawai && $r->status == 6)
+                                                                <form action="{{ route('resign_approved_manager', $r->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="status" value="1" class="form-control" hidden>
+                                                                        <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                    <form action="{{ route('resignreject', $r->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('POST')
+                                                                        <input type="hidden" name="status" value="5"  class="form-control" hidden>
+                                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-times"></i>
+                                                                        </button>
+                                                                    </form>
+                                                            @endif
+                                                            <a class="btn btn-info btn-sm" data-toggle="modal"
+                                                                data-target="#Showresign{{ $r->id }}">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                @include('karyawan.resign.showresign')
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
                 {{-- <div class="col-lg-6">
                     <div class="panel-group" id="accordion-test-7">
                         <div class="panel panel-default ">
@@ -2234,7 +2240,7 @@
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#13" aria-expanded="false"
                                 class="dropdown-toggle waves-effect waves-light collapsed">
                                 Informasi HRD
-                                @if (isset($jmlinfo))
+                                @if ($jmlinfo != 0)
                                     <span class="badge badge badge-danger"
                                         style="background-color:red">{{ $jmlinfo }}</span>
                                 @endif
@@ -2306,6 +2312,59 @@
                                                     <td>{{ \Carbon\Carbon::parse($k->tgl_mulai)->format('d/m/Y') }}
                                                     </td>
                                                     <td>{{ \Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y') }}</td>
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default ">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion-test-8" href="#16" aria-expanded="false"
+                                class="dropdown-toggle waves-effect waves-light collapsed">
+                                Data Kehadiran Kerja Karyawan
+                                {{-- @if (isset($jumAbsen))
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">@php  echo $jumAbsen; @endphp</span>
+                                @endif --}}
+                                @if ($jumAbsen != 0)
+                                    <span class="badge badge badge-danger"
+                                        style="background-color:red">{{ $jumAbsen }}</span>
+                                @endif
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="16" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="col-xs-12 m-b-10">
+                                        <button id="tarikAbsenBtn" class="btn btn-success btn-sm">Tarik Absen</button>
+                                        <div id="resultContainer"></div>
+                                    </div>
+                                    
+                                    <table class="table table-striped m-t-20">
+                                        <thead style="text-align: center;">
+                                            <tr class="info">
+                                                <th>No</th>
+                                                <th>Nama</th>
+                                                <th>Tanggal</th>
+                                                <th>Jam Masuk</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($absenHarini as $k)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $k->karyawans->nama }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($k->total)->format('d/m/Y') }}</td>
+                                                    <td>{{ $k->jam_masuk}}</td>
                                                 </tr>
                                             @endforeach
 
@@ -2501,9 +2560,6 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
 
     <style>
