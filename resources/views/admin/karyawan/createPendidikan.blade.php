@@ -74,8 +74,9 @@
                                                     <td>{{$p['jurusan'] }}</td>
                                                     {{-- <td>{{$p['tahun_masuk_formal'] }}</td>
                                                     <td>{{$p['tahun_lulus_formal'] }}</td> --}}
-                                                    <td>{{ \Carbon\Carbon::parse($p['tahun_masuk_formal'])->format('d/m/Y') }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($p['tahun_lulus_formal'])->format('d/m/Y') }}</td>
+                                                    <td>{{ $p['tahun_masuk_formal'] ? \Carbon\Carbon::parse($p['tahun_masuk_formal'])->format('d/m/Y') : '' }}</td>
+                                                    <td>{{ $p['tahun_lulus_formal'] ? \Carbon\Carbon::parse($p['tahun_lulus_formal'])->format('d/m/Y') : '' }}</td>
+
 
                                                     {{-- <td></td> --}}
                                                     <td>{{$p['kota_pformal'] }}</td>
@@ -129,8 +130,9 @@
                                                     <td>{{ $nf['nama_lembaga'] }}</td>
                                                     {{-- <td>{{ $nf['tahun_masuk_nonformal'] }}</td>
                                                     <td>{{ $nf['tahun_lulus_nonformal'] }}</td> --}}
-                                                    <td>{{ \Carbon\Carbon::parse($nf['tahun_masuk_nonformal'])->format('d/m/Y') }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($nf['tahun_lulus_nonformal'])->format('d/m/Y') }}</td>
+                                                    <td>{{ $nf['tahun_masuk_nonformal'] ? \Carbon\Carbon::parse($nf['tahun_masuk_nonformal'])->format('d/m/Y') : '' }}</td>
+                                                    <td>{{ $nf['tahun_lulus_nonformal'] ? \Carbon\Carbon::parse($nf['tahun_lulus_nonformal'])->format('d/m/Y') : '' }}</td>
+                                                    
                                                     <td>{{ $nf['kota_pnonformal'] }}</td>
                                                     <td>{{ $nf['ijazah_nonformal'] }}</td>
                                                     <td class="text-center">
@@ -547,23 +549,28 @@
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
                     // $('#tahun_masukFormal').val(data.tahun_masuk_formal);
                     // $('#tahun_lulusFormal').val(data.tahun_lulus_formal);
-                    var tanggal = new Date(data.tahun_masuk_formal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_masukFormal').val(tanggalFormatted);
-                    var tanggal = new Date(data.tahun_lulus_formal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_lulusFormal').val(tanggalFormatted);
+
+                    var tanggal = data.tahun_masuk_formal ? new Date(data.tahun_masuk_formal) : null;
+                    var tanggallFormatted = tanggal ? ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear() : '';
+                    $('#tahun_masukFormal').val(tanggallFormatted);
+
+                    var tanggalLulus = data.tahun_lulus_formal ? new Date(data.tahun_lulus_formal) : null;
+                    var tanggalLulusFormatted = tanggalLulus ? ("0" + tanggalLulus.getDate()).slice(-2) + '/' + ("0" + (tanggalLulus.getMonth() + 1)).slice(-2) + '/' + tanggalLulus.getFullYear() : '';
+                    $('#tahun_lulusFormal').val(tanggallulusFormatted);
+
                     $('#ijazahFormal').val(data.ijazah_formal);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
                     // $('#tahun_masukNonFormal').val(data.tahun_masuk_nonformal);
                     // $('#tahun_lulusNonFormal').val(data.tahun_lulus_nonformal);
-                    var tanggal = new Date(data.tahun_masuk_nonformal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_masukNonFormal').val(tanggalFormatted);
-                    var tanggal = new Date(data.tahun_lulus_nonformal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_lulusNonFormal').val(tanggalFormatted);
+
+                    var tanggalMasukNonFormal = data.tahun_masuk_nonformal ? new Date(data.tahun_masuk_nonformal) : null;
+                    var tanggalMasukNonFormalFormatted = tanggalMasukNonFormal ? ("0" + tanggalMasukNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalMasukNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalMasukNonFormal.getFullYear() : '';
+                    $('#tahun_masukNonFormal').val(tanggalMasukNonFormalFormatted);
+
+                    var tanggalLulusNonFormal = data.tahun_lulus_nonformal ? new Date(data.tahun_lulus_nonformal) : null;
+                    var tanggalLulusNonFormalFormatted = tanggalLulusNonFormal ? ("0" + tanggalLulusNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalLulusNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalLulusNonFormal.getFullYear() : '';
+                    $('#tahun_lulusNonFormal').val(tanggalLulusNonFormalFormatted);
 
                     $('#noijazahPnonformal').val(data.ijazah_nonformal);
         
@@ -599,24 +606,28 @@
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
                     // $('#tahun_masukFormal').val(data.tahun_masuk_formal);
                     // $('#tahun_lulusFormal').val(data.tahun_lulus_formal);
-                    var tanggal = new Date(data.tahun_masuk_formal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_masukFormal').val(tanggalFormatted);
-                    var tanggal = new Date(data.tahun_lulus_formal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_lulusFormal').val(tanggalFormatted);
+                    var tanggalMasukFormal = data.tahun_masuk_formal ? new Date(data.tahun_masuk_formal) : null;
+                    var tanggalMasukFormalFormatted = tanggalMasukFormal ? ("0" + tanggalMasukFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalMasukFormal.getMonth() + 1)).slice(-2) + '/' + tanggalMasukFormal.getFullYear() : '';
+                    $('#tahun_masukFormal').val(tanggalMasukFormalFormatted);
+
+                    var tanggalLulusFormal = data.tahun_lulus_formal ? new Date(data.tahun_lulus_formal) : null;
+                    var tanggalLulusFormalFormatted = tanggalLulusFormal ? ("0" + tanggalLulusFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalLulusFormal.getMonth() + 1)).slice(-2) + '/' + tanggalLulusFormal.getFullYear() : '';
+                    $('#tahun_lulusFormal').val(tanggalLulusFormalFormatted);
+
 
                     $('#ijazahFormal').val(data.ijazah_formal);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
                     // $('#tahun_masukNonFormal').val(data.tahun_masuk_nonformal);
                     // $('#tahun_lulusNonFormal').val(data.tahun_lulus_nonformal);
-                    var tanggal = new Date(data.tahun_masuk_nonformal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_masukNonFormal').val(tanggalFormatted);
-                    var tanggal = new Date(data.tahun_lulus_nonformal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_lulusNonFormal').val(tanggalFormatted);
+              
+                    var tanggalMasukNonFormal = data.tahun_masuk_nonformal ? new Date(data.tahun_masuk_nonformal) : null;
+                    var tanggalMasukNonFormalFormatted = tanggalMasukNonFormal ? ("0" + tanggalMasukNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalMasukNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalMasukNonFormal.getFullYear() : '';
+                    $('#tahun_masukNonFormal').val(tanggalMasukNonFormalFormatted);
+
+                    var tanggalLulusNonFormal = data.tahun_lulus_nonformal ? new Date(data.tahun_lulus_nonformal) : null;
+                    var tanggalLulusNonFormalFormatted = tanggalLulusNonFormal ? ("0" + tanggalLulusNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalLulusNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalLulusNonFormal.getFullYear() : '';
+                    $('#tahun_lulusNonFormal').val(tanggalLulusNonFormalFormatted);
 
                     $('#noijazahPnonformal').val(data.ijazah_nonformal);
             });

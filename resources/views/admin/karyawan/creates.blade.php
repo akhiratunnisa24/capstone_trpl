@@ -179,6 +179,7 @@
                                                                         <option value="B" {{ $karyawan->gol_darah == 'B' ? 'selected' : '' }}>B</option>
                                                                         <option value="AB" {{ $karyawan->gol_darah == 'AB' ? 'selected' : '' }}>AB</option>
                                                                         <option value="O" {{ $karyawan->gol_darah == 'O' ? 'selected' : '' }}>O</option>
+                                                                        <option value="Nihil" {{ $karyawan->gol_darah == 'Nihil' ? 'selected' : '' }}>Nihil</option>
                                                                     </select>
                                                                 </div>
                         

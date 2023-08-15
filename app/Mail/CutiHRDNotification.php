@@ -31,7 +31,7 @@ class CutiHRDNotification extends Mailable
      */
     public function build()
     {
-        return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+        return $this->from('no-reply@rynest.com')
         ->subject($this->data['subject'])
         ->view('emails.cutiHrd')->with('data',$this->data);
     }

@@ -28,7 +28,7 @@ class PerubahanNotification extends Mailable
     {
        if($this->data['status'] == "Mengajukan Perubahan")
        {
-            return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+            return $this->from('no-reply@rynest.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['karyawan_email'], 'Karyawan')
                 ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '','Pimpinan Unit Kerja')
@@ -37,14 +37,14 @@ class PerubahanNotification extends Mailable
        }
        elseif($this->data['status'] == "Perubahan Disetujui Atasan")
        {
-            return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+            return $this->from('no-reply@rynest.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['karyawan_email'], 'Karyawan')
                 ->view('emails.cutibatal')->with('data',$this->data);  
        }
        elseif($this->data['status'] == "Perubahan Disetujui")
        {
-            return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+            return $this->from('no-reply@rynest.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['atasan1'], 'Atasan')
                 ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '','Pimpinan Unit Kerja')
@@ -53,7 +53,7 @@ class PerubahanNotification extends Mailable
        }
        elseif($this->data['status'] == "Pending Atasan")
        {
-            return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+            return $this->from('no-reply@rynest.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['atasan1'], 'Atasan')
                 ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '','Pimpinan Unit Kerja')
@@ -62,7 +62,7 @@ class PerubahanNotification extends Mailable
        }
        else
        {
-            return $this->from('raddicacomp2@gmail.com','no-reply@grm.com')
+            return $this->from('no-reply@rynest.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['atasan1'], 'Atasan')
                 ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '','Pimpinan Unit Kerja')
