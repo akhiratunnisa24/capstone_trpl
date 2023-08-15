@@ -492,16 +492,19 @@ class KaryawansController extends Controller
         $pendidikan[$index]['nama_lembaga']         = $request->namaLembaga;
         $pendidikan[$index]['kota_pformal']         = $request->kotaPendidikanFormal;
         $pendidikan[$index]['jurusan']              = $request->jurusan;
-        // $pendidikan[$index]['tahun_masuk_formal']   = $request->tahun_masukFormal;
-        // $pendidikan[$index]['tahun_lulus_formal']   = $request->tahun_lulusFormal;
-        $pendidikan[$index]['tahun_masuk_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d');
-        $pendidikan[$index]['tahun_lulus_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d');
+    
+        // $pendidikan[$index]['tahun_masuk_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d');
+        // $pendidikan[$index]['tahun_lulus_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d');
+        $pendidikan[$index]['tahun_masuk_formal'] = $request->tahun_masukFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : null;
+        $pendidikan[$index]['tahun_lulus_formal'] = $request->tahun_lulusFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : null;
+
         $pendidikan[$index]['jenis_pendidikan']     = $request->jenis_pendidikan;
         $pendidikan[$index]['kota_pnonformal']      = $request->kotaPendidikanNonFormal;
-        // $pendidikan[$index]['tahun_masuk_nonformal'] = $request->tahun_masukNonFormal;
-        // $pendidikan[$index]['tahun_lulus_nonformal'] = $request->tahun_lulusNonFormal;
-        $pendidikan[$index]['tahun_masuk_nonformal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d');
-        $pendidikan[$index]['tahun_lulus_nonformal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d');
+        // $pendidikan[$index]['tahun_masuk_nonformal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d');
+        // $pendidikan[$index]['tahun_lulus_nonformal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d');
+        $pendidikan[$index]['tahun_masuk_nonformal'] = $request->tahun_masukNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d') : null;
+        $pendidikan[$index]['tahun_lulus_nonformal'] = $request->tahun_lulusNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d') : null;
+
         $pendidikan[$index]['ijazah_formal'] = $request->noijazahPformal;
         $pendidikan[$index]['ijazah_nonformal'] = $request->noijazahPnonformal;
 
@@ -777,7 +780,7 @@ class KaryawansController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $karyawan = $request->session()->get('karyawan');
         $atasan_pertama_nama = $karyawan->atasan_pertamaa->nama ?? null;
-        $atasan_kedua_nama = $karyawan->atasan_kedua;
+        $atasan_kedua_nama = $karyawan->atasan_kedua ?? null;
         if (!$atasan_kedua_nama) {
             $atasan_kedua_nama = "-";
         } else {

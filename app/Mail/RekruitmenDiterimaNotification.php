@@ -47,7 +47,7 @@ class RekruitmenDiterimaNotification extends Mailable
         // ->view('emails.cutiindex')->with('data', $this->data);
 
         return $this
-            ->from('yasoyahyaa@gmail.com', 'no-reply@grm.com')
+            ->from('no-reply@rynest.com')
             ->subject('Pemberitahuan Penerimaan di Perusahaan Global Risk Management')
             ->view('emails.RekruitmenDiterimaNotif')
             ->with('data', $this->data)
