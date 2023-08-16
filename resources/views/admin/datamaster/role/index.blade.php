@@ -19,8 +19,8 @@
 
     <div class="panel panel-primary">
         <div class="panel-heading clearfix">
-            {{-- <a type="button" class="btn btn-sm btn-dark fa fa-sign-in" data-toggle="modal" data-target="#myModal"> Tambah
-                Role Login</a> --}}
+            <a type="button" class="btn btn-sm btn-dark fa fa-sign-in" data-toggle="modal" data-target="#myModal"> Tambah
+                Role Login</a>
         </div>
         @include('admin.datamaster.role.addRoleModal')
 
