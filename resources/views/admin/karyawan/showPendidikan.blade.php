@@ -80,37 +80,43 @@
 
                                                     <tbody>
                                                         @php
-                                                          $no = 1;
+                                                            $no = 1;
                                                         @endphp
 
                                                         @foreach ($pendidikan as $rpendidikan)
                                                             @if ($rpendidikan->tingkat !== null)
                                                                 <tr>
-                                                                    <td>{{ $no++}}</td>
+                                                                    <td>{{ $no++ }}</td>
                                                                     <td>{{ $rpendidikan->tingkat }}</td>
                                                                     <td>{{ $rpendidikan->nama_sekolah }}</td>
                                                                     <td>{{ $rpendidikan->jurusan }}</td>
-                                                                    @if($rpendidikan->tahun_masuk_formal !== null)
-                                                                        <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_masuk_formal)->format('d/m/Y') }}</td>
+                                                                    @if ($rpendidikan->tahun_masuk_formal !== null)
+                                                                        <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_masuk_formal)->format('d/m/Y') }}
+                                                                        </td>
                                                                     @else
                                                                         <td></td>
                                                                     @endif
-                                                                    @if($rpendidikan->tahun_lulus_formal !== null)
-                                            
-                                                                        <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y')}}</td>
+                                                                    @if ($rpendidikan->tahun_lulus_formal !== null)
+                                                                        <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y') }}
+                                                                        </td>
                                                                     @else
                                                                         <td></td>
                                                                     @endif
-                                                                  
+
                                                                     <td>{{ $rpendidikan->kota_pformal }}</td>
                                                                     <td>{{ $rpendidikan->ijazah_formal }}</td>
                                                                     <td class="">
                                                                         <a class="btn btn-sm btn-primary editPformal"
-                                                                        data-toggle="modal"
-                                                                        data-target="#editPformal{{ $rpendidikan->id }}" style="margin-right:10px">
-                                                                        <i class="fa fa-edit"></i>
-                                                                    </a>
-                                                                    <button onclick="hapus_karyawan({{ $rpendidikan->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                                                            data-toggle="modal"
+                                                                            data-target="#editPformal{{ $rpendidikan->id }}"
+                                                                            style="margin-right:10px">
+                                                                            <i class="fa fa-edit" title="Edit"></i>
+                                                                        </a>
+                                                                        <button
+                                                                            onclick="hapus_karyawan({{ $rpendidikan->id }})"
+                                                                            class="btn btn-danger btn-sm"><i
+                                                                                class="fa fa-trash"
+                                                                                title="Hapus"></i></button>
                                                                     </td>
                                                                 </tr>
                                                                 @include('admin.karyawan.editPformal')
@@ -119,12 +125,12 @@
                                                     </tbody>
                                                 </table>
 
-                                                  <span class=""><strong> 2. PENDIDIKAN NON FORMAL</strong></span>
+                                                <span class=""><strong> 2. PENDIDIKAN NON FORMAL</strong></span>
 
-                                                    <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
-                                                        data-target="#addPnformal" style="margin-right:10px;margin-bottom:10px">
-                                                        <i class="fa fa-plus"> <strong> Tambah Pend. Non Formal</strong></i>
-                                                    </a>
+                                                <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
+                                                    data-target="#addPnformal" style="margin-right:10px;margin-bottom:10px">
+                                                    <i class="fa fa-plus"> <strong> Tambah Pend. Non Formal</strong></i>
+                                                </a>
 
                                                 @include('admin.karyawan.addPnformal')
                                                 <table class="table table-bordered table-striped">
@@ -141,26 +147,28 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                         @php
-                                                          $nom = 1;
+                                                        @php
+                                                            $nom = 1;
                                                         @endphp
                                                         @foreach ($nonformal as $rpendidikan)
                                                             <tr>
                                                                 <td>{{ $nom++ }}</td>
                                                                 <td>{{ $rpendidikan->jenis_pendidikan }}</td>
                                                                 <td>{{ $rpendidikan->nama_lembaga }}</td>
-                                                                @if($rpendidikan->tahun_masuk_nonformal !== NULL)
-                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_nonformal)->format('d/m/Y') }}</td>
+                                                                @if ($rpendidikan->tahun_masuk_nonformal !== null)
+                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_nonformal)->format('d/m/Y') }}
+                                                                    </td>
                                                                 @else
                                                                     <td></td>
                                                                 @endif
 
-                                                                @if($rpendidikan->tahun_lulus_nonformal !== NULL)
-                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_nonformal)->format('d/m/Y') }}</td>
+                                                                @if ($rpendidikan->tahun_lulus_nonformal !== null)
+                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_nonformal)->format('d/m/Y') }}
+                                                                    </td>
                                                                 @else
                                                                     <td></td>
                                                                 @endif
-                                                                
+
                                                                 <td>{{ $rpendidikan->kota_pnonformal }}</td>
                                                                 <td>{{ $rpendidikan->ijazah_nonformal }}</td>
                                                                 <td class="">
@@ -168,9 +176,12 @@
                                                                         data-toggle="modal"
                                                                         data-target="#editPnformal{{ $rpendidikan->id }}"
                                                                         style="margin-right:10px">
-                                                                        <i class="fa fa-edit"></i>
+                                                                        <i class="fa fa-edit" title="Edit"></i>
                                                                     </a>
-                                                                        <button onclick="hapus_karyawans({{ $rpendidikan->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                                                    <button
+                                                                        onclick="hapus_karyawans({{ $rpendidikan->id }})"
+                                                                        class="btn btn-danger btn-sm"><i class="fa fa-trash"
+                                                                            title="Hapus"></i></button>
                                                                 </td>
                                                             </tr>
                                                             @include('admin.karyawan.editPnformal')
@@ -229,84 +240,83 @@
             </div>
         </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
 
-    @if(Session::has('pesan'))
+        @if (Session::has('pesan'))
+            <script>
+                swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+                    button: true,
+                    button: "OK",
+                });
+            </script>
+        @endif
+
+        @if (Session::has('pesa'))
+            <script>
+                swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+                    button: true,
+                    button: "OK",
+                });
+            </script>
+        @endif
+
+        {{-- //delete pendidikan formal --}}
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
-                button:true,
-                button:"OK",
-            });
+            function hapus_karyawan(id) {
+                swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: "Ya, hapus!",
+                    closeOnConfirm: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        swal.fire({
+                            title: "Terhapus!",
+                            text: "Data berhasil di hapus..",
+                            icon: "success",
+                            confirmButtonColor: '#3085d6',
+                        })
+                        location.href = '<?= '/destroyPendidikan' ?>' + id;
+                    }
+                })
+            }
         </script>
-    @endif
 
-    @if(Session::has('pesa'))
+        {{-- delete pendidikan non formal --}}
         <script>
-            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
-                button:true,
-                button:"OK",
-            });
+            function hapus_karyawans(id) {
+                swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: "Ya, hapus!",
+                    closeOnConfirm: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        swal.fire({
+                            title: "Terhapus!",
+                            text: "Data berhasil di hapus..",
+                            icon: "success",
+                            confirmButtonColor: '#3085d6',
+                        })
+                        location.href = '<?= '/deletePendidikan' ?>' + id;
+                    }
+                })
+            }
         </script>
-    @endif
-
-    {{-- //delete pendidikan formal --}}
-    <script>
-        function hapus_karyawan(id) {
-            swal.fire({
-                title: "Apakah anda yakin ?",
-                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: "Ya, hapus!",
-                closeOnConfirm: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    swal.fire({
-                        title: "Terhapus!",
-                        text: "Data berhasil di hapus..",
-                        icon: "success",
-                        confirmButtonColor: '#3085d6',
-                    })
-                    location.href = '<?= '/destroyPendidikan' ?>' + id;
-                }
-            })
-        }
-    </script>
-
-    {{-- delete pendidikan non formal --}}
-    <script>
-        function hapus_karyawans(id) {
-            swal.fire({
-                title: "Apakah anda yakin ?",
-                text: "Data yang sudah terhapus tidak dapat dikembalikan kembali.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: "Ya, hapus!",
-                closeOnConfirm: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    swal.fire({
-                        title: "Terhapus!",
-                        text: "Data berhasil di hapus..",
-                        icon: "success",
-                        confirmButtonColor: '#3085d6',
-                    })
-                    location.href = '<?= '/deletePendidikan' ?>' + id;
-                }
-            })
-        }
-    </script>
-
     @endsection

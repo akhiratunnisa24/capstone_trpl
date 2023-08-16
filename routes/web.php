@@ -111,6 +111,7 @@ Route::get('showorganisasi{id}', [karyawanController::class, 'showorganisasi'])-
 Route::get('showprestasi{id}', [karyawanController::class, 'showprestasi'])->name('showprestasi');
 Route::get('showkeluarga{id}', [karyawanController::class, 'showkeluarga'])->name('showkeluarga');
 Route::get('showkontakdarurat{id}', [karyawanController::class, 'showkontakdarurat'])->name('showkontakdarurat');
+Route::get('showinformasigaji{id}', [karyawanController::class, 'showinformasigaji'])->name('showinformasigaji');
 
 // Edit Data Karyawan Vesi Baru
 

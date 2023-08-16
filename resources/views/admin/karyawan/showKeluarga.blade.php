@@ -51,7 +51,7 @@
                                                             <label class="text-white m-b-10">F. DATA KELUARGA</label>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
                                                         data-target="#addKeluarga"
                                                         style="margin-right:10px;margin-bottom:10px">
@@ -80,7 +80,8 @@
                                                                     <td>{{ $kel->nama }}</td>
                                                                     <td>{{ $kel->jenis_kelamin }}</td>
                                                                     {{-- <td>{{ \Carbon\carbon::parse($kel->tgllahir)->format('d/m/Y') }}</td> --}}
-                                                                    <td>{{ $kel->tgllahir ? \Carbon\Carbon::createFromFormat('Y-m-d', $kel->tgllahir)->format('d/m/Y') : '' }}</td>
+                                                                    <td>{{ $kel->tgllahir ? \Carbon\Carbon::createFromFormat('Y-m-d', $kel->tgllahir)->format('d/m/Y') : '' }}
+                                                                    </td>
                                                                     <td>{{ $kel->tempatlahir }}</td>
                                                                     <td>{{ $kel->pendidikan_terakhir }}</td>
                                                                     <td>{{ $kel->pekerjaan }}</td>
@@ -89,9 +90,13 @@
                                                                             data-toggle="modal"
                                                                             data-target="#editKeluarga{{ $kel->id }}"
                                                                             style="margin-right:10px">
-                                                                            <i class="fa fa-edit"></i>
+                                                                            <i class="fa fa-edit" title="Edit"></i>
                                                                         </a>
-                                                                        <button onclick="hapus_karyawan({{ $kel->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                                                        <button
+                                                                            onclick="hapus_karyawan({{ $kel->id }})"
+                                                                            class="btn btn-danger btn-sm"><i
+                                                                                class="fa fa-trash"
+                                                                                title="Hapus"></i></button>
                                                                     </td>
                                                                 </tr>
                                                                 @include('admin.karyawan.editKeluarga')
@@ -103,10 +108,11 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                 <a href="showprestasi{{ $karyawan->id }}" class="btn btn-sm btn-info"
+                                                <a href="showprestasi{{ $karyawan->id }}" class="btn btn-sm btn-info"
                                                     type="button">Sebelumnya <i class="fa fa-backward"></i></a>
-                                                <a href="showkontakdarurat{{ $karyawan->id }}" class="btn btn-sm btn-success"
-                                                    type="button">Selanjutnya <i class="fa fa-forward"></i></a>
+                                                <a href="showkontakdarurat{{ $karyawan->id }}"
+                                                    class="btn btn-sm btn-success" type="button">Selanjutnya <i
+                                                        class="fa fa-forward"></i></a>
                                             </div>
                                     </div>
                                 </div>
@@ -119,7 +125,7 @@
         </div>
     </div>
 
-      <script>
+    <script>
         function hapus_karyawan(id) {
             swal.fire({
                 title: "Apakah anda yakin ?",

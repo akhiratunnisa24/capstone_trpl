@@ -50,35 +50,35 @@
 
                                 <tbody>
                                     @foreach ($metode as $k)
-                                            {{-- @if ($k->id == '18' )
+                                        {{-- @if ($k->id == '18')
 
                                             @else --}}
                                         <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $k->nama_tahapan }}</td>
-                                                <td>
-                                            <div >
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $k->nama_tahapan }}</td>
+                                            <td>
+                                                <div>
 
-                                                {{-- @if ($k->id == '6') --}}
+                                                    {{-- @if ($k->id == '6') --}}
                                                     {{-- @elseif($k->id == '1') --}}
-                                                {{-- @else --}}
+                                                    {{-- @else --}}
                                                     <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal"
                                                         data-target="#editmetode{{ $k->id }}">
-                                                        <i class="fa fa-edit"></i>
+                                                        <i class="fa fa-edit" title="Edit"></i>
                                                     </a>
-                                                {{-- @endif --}}
+                                                    {{-- @endif --}}
 
-                                                {{-- <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal"
+                                                    {{-- <a class="btn btn-sm btn-success btn-editalokasi" data-toggle="modal"
                                                     data-alokasi="{{$data->id}}" data-target="#editalokasi">
                                                     <i class="fa fa-edit"></i> --}}
 
 
-                                                {{-- <button onclick="hapus_karyawan({{ $k->id }})"
+                                                    {{-- <button onclick="hapus_karyawan({{ $k->id }})"
                                                         class="btn btn-danger btn-sm">
                                                         <i class="fa fa-trash"></i>
                                                     </button> --}}
-                                            </div>
-                                            <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
+                                                </div>
+                                                <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
                                             </td>
                                             {{-- @endif --}}
 

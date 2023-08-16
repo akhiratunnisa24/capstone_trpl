@@ -21,13 +21,16 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 m-b-10" style="height:45px">
-                            <a href="" class="pull-right btn btn-dark btn-sm fa fa-plus" data-toggle="modal" data-target="#add"> Tambah Setting</a>
+                            <a href="" class="pull-right btn btn-dark btn-sm fa fa-plus" data-toggle="modal"
+                                data-target="#add"> Tambah Setting</a>
                             @include('admin.settingabsensi.addSetting')
                         </div>
                         <div class="panel-body m-b-5">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <table id="datatable-responsive22" class="table table-responsive dt-responsive table-striped table-bordered" width="100%">
+                                    <table id="datatable-responsive22"
+                                        class="table table-responsive dt-responsive table-striped table-bordered"
+                                        width="100%">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -41,37 +44,40 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($settingabsensi as $data)
+                                            @foreach ($settingabsensi as $data)
                                                 <tr>
-                                                    <td>{{$loop->iteration}}</td>
-                                                    @if($data->toleransi_terlambat !=NULL)
-                                                        <td>{{\Carbon\Carbon::parse($data->toleransi_terlambat)->format('i')}} menit</td>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    @if ($data->toleransi_terlambat != null)
+                                                        <td>{{ \Carbon\Carbon::parse($data->toleransi_terlambat)->format('i') }}
+                                                            menit</td>
                                                     @else
                                                         <td></td>
                                                     @endif
-                                                    @if($data->jumlah_terlambat !=NULL)
-                                                        <td>{{$data->jumlah_terlambat}} kali</td>
+                                                    @if ($data->jumlah_terlambat != null)
+                                                        <td>{{ $data->jumlah_terlambat }} kali</td>
                                                     @else
                                                         <td></td>
                                                     @endif
-                                                   
-                                                    <td>{{$data->sanksi_terlambat}}</td>
 
-                                                    @if($data->jumlah_tidakmasuk !=NULL)
-                                                        <td>{{$data->jumlah_tidakmasuk}} kali</td>
+                                                    <td>{{ $data->sanksi_terlambat }}</td>
+
+                                                    @if ($data->jumlah_tidakmasuk != null)
+                                                        <td>{{ $data->jumlah_tidakmasuk }} kali</td>
                                                     @else
                                                         <td></td>
                                                     @endif
-                                                    @if($data->status_tidakmasuk != NULL)
-                                                        <td>{{$data->status_tidakmasuk}}</td>
+                                                    @if ($data->status_tidakmasuk != null)
+                                                        <td>{{ $data->status_tidakmasuk }}</td>
                                                     @else
                                                         <td></td>
                                                     @endif
-                                                    <td>{{$data->sanksi_tidak_masuk}}</td>
+                                                    <td>{{ $data->sanksi_tidak_masuk }}</td>
                                                     <td class="text-center">
-                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                            <a id="bs" class="btn btn-sm btn-success"  data-toggle="modal"  data-target="#edit{{$data->id}}">
-                                                                <i class="fa fa-edit"></i></a>
+                                                        <div class="d-grid gap-2 " role="group"
+                                                            aria-label="Basic example">
+                                                            <a id="bs" class="btn btn-sm btn-success"
+                                                                data-toggle="modal" data-target="#edit{{ $data->id }}">
+                                                                <i class="fa fa-edit" title="Edit"></i></a>
                                                             @csrf
                                                             @method('DELETE')
                                                             {{-- <button onclick="izin({{$data->id}})" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i></button> --}}
@@ -91,22 +97,22 @@
                 </div>
             </div> <!-- End Row -->
         </div> <!-- container -->
-    </div> <!-- content -->  
-    
-    @if(Session::has('pesan'))
+    </div> <!-- content -->
+
+    @if (Session::has('pesan'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
-                button:true,
-                button:"OK",
+            swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+                button: true,
+                button: "OK",
             });
         </script>
     @endif
 
-    @if(Session::has('pesa'))
+    @if (Session::has('pesa'))
         <script>
-            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
-                button:true,
-                button:"OK",
+            swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+                button: true,
+                button: "OK",
             });
         </script>
     @endif
