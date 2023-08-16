@@ -109,7 +109,7 @@
                                                                             <a href="showidentitas{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye" style="font-size: 15px;"></i></a>
                                                                             <a href="showfile{{ $k->id }}" class="btn btn-success btn-sm " ><i class="fa fa fa-file-photo-o (alias)" style="font-size: 15px;"></i></a>
                                                                             <a href="downloadpdf{{ $k->id }}" class="btn btn-dark btn-sm " target="_blank" ><i class="fa fa fa-download" style="font-size: 15px;"></i></a>
-                                                                            {{-- <a href="" class="btn btn-warning btn-sm "><i class="mdi mdi-cash-multiple" style="font-size: 15px;"></i></a> --}}
+                                                                            <a href="" class="btn btn-warning btn-sm "><i class="mdi mdi-cash-multiple" style="font-size: 15px;"></i></a>
                                                                             {{-- <button  onclick="hapus_karyawan({{ $k->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                                                         </div>
                                                                         <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->

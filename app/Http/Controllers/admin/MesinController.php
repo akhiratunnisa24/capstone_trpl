@@ -28,7 +28,6 @@ class MesinController extends Controller
             $con = $tad->is_alive();
             if ($con) {
                 $attendance = $tad->get_att_log();
-                // return $attendance;
                 if ($attendance) {
                     // $today = Carbon::now()->format('Y-m-d');
                     // $filtered_attendance = $attendance->filter_by_date(
@@ -49,19 +48,22 @@ class MesinController extends Controller
                         $tanggal = $datetime->format('Y-m-d');
                         $jam = $datetime->format('H:i:s');
                          
-                        $matchedUser = $usermesin->where('noid', $pin)->first();
+                        $matchedUser = $usermesin->where('noid', $pin)->where('partner', $partner)->first();
                        
                         if (isset($matchedUser)) 
                         {
-                            $jadwals = Jadwal::where('tanggal', $tanggal)->where('partner', Auth::user()->partner)->get();
+                            $jadwals = Jadwal::where('tanggal', $tanggal)
+                                ->where('partner', Auth::user()->partner)
+                                ->get();
                             // dd($data,$matchedUser,$jadwal);
                             foreach ($jadwals as $jadwal) 
                             {
                                 if($jadwal)
                                 {
                                     $existingAbsensi = Absensi::where('id_karyawan', $matchedUser->id_pegawai)
-                                                    ->where('tanggal', $tanggal)->where('partner', $matchedUser->partner)
-                                                    ->whereNotNull('jam_masuk')
+                                                    ->where('tanggal', $tanggal)
+                                                    ->where('partner', $matchedUser->partner)
+                                                    ->where('jam_masuk','!=',$jam)
                                                     ->first();
                                     if($existingAbsensi)
                                     {
@@ -87,9 +89,15 @@ class MesinController extends Controller
 
                                             $telatMinutes = ($plgcpt->h * 60) + $plgcpt->i; // Konversi jam ke menit
 
-                                            if ($telatMinutes > 0) {
+                                            if ($telatMinutes > 0)
+                                            {
                                                 $plgcpt  = $plgcpt->format('%H:%I:%S');
-                                            } else {
+                                            }
+                                            elseif($jam_keluar < "12:00:00")
+                                            {
+                                                $plgcpt = null;
+                                            }
+                                            else {
                                                 $plgcpt = null;
                                             }
                                         }
