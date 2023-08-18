@@ -11,7 +11,7 @@
                     <li>Rynest Employee Management System</li>
                     <li class="active">Ajukan Cuti & Izin</li>
                 </ol>
-                <div class="clearfix"></div>               
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
@@ -75,7 +75,7 @@
                                                                         {{-- <td>{{$data->jabatan}}</td> --}}
                                                                         <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} s.d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}</td>
                                                                         <td>{{$data->jenis_cuti}}</td>
-                                                
+
                                                                         <td>
                                                                             {{-- <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : 'secondary' ))))))))) }}">
                                                                                 {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status : ''))))))))) }}
@@ -83,32 +83,32 @@
                                                                             <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : ($data->status == 14 ? 'warning' :($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
                                                                                 {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status :  ($data->status == 14 ?  $data->name_status :  ($data->status == 15 ?  $data->name_status :  ($data->status == 16 ?  $data->name_status : '')))))))))))) }}
                                                                             </span>
-                                                             
-                                                                        </td> 
+
+                                                                        </td>
                                                                         <td>
                                                                             {{ $data->catatan ?? ''}}
                                                                             {{-- {{ ($data->catatan >= 9 && $data->catatan <= 16) ? $data->name_status : '' }} --}}
-                                                                        </td>       
+                                                                        </td>
                                                                         <td class="text-center">
                                                                             {{-- @if($data->status == ) --}}
                                                                                 <form action="" method="POST">
                                                                                     <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#Showcuti{{ $data->id }}">
-                                                                                        <i class="fa fa-eye"></i>
+                                                                                        <i class="fa fa-eye" title="Lihat Detail"></i>
                                                                                     </a>
                                                                                 </form>
                                                                                 <form action="" method="POST">
                                                                                     <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#Editcuti{{ $data->id }}">
-                                                                                        <i class="fa fa-edit"></i>
+                                                                                        <i class="fa fa-edit" title="Edit"></i>
                                                                                     </a>
                                                                                 </form>
                                                                                 {{-- {{ route('cuti.batal', $data->id) }}" --}}
-                                                                              
+
                                                                                 <form action="" method="POST">
                                                                                     <a class="btn btn-warning btn-sm"  data-toggle="modal" data-target="#Batalcuti{{ $data->id }}">
-                                                                                        <i class="fa fa-undo"></i>
+                                                                                        <i class="fa fa-undo" title="Batal"></i>
                                                                                     </a>
                                                                                 </form>
-                                                                           
+
                                                                         </td>
                                                                     </tr>
                                                                     {{-- modal show cuti --}}
@@ -173,7 +173,7 @@
                                                                         <td>{{ \Carbon\Carbon::parse($data->tgl_permohonan)->format('d/m/Y') }}</td>
                                                                         <td>{{ $data->nama }}</td>
                                                                         <td>
-                                                                            {{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }} @if($data->tgl_selesai !== NULL) s/d 
+                                                                            {{ \Carbon\Carbon::parse($data->tgl_mulai)->format('d/m/Y') }} @if($data->tgl_selesai !== NULL) s/d
                                                                             {{ \Carbon\Carbon::parse($data->tgl_selesai)->format('d/m/Y') }} @endif
                                                                         </td>
                                                                         <td>{{ $data->jenis_izin }}</td>
@@ -181,7 +181,7 @@
                                                                             <span class="badge badge-{{ $data->status == 1 ? 'warning' : ($data->status == 2 ? 'info' : ($data->status == 5 ? 'danger' : ($data->status == 6 ? 'secondary' : ($data->status == 7 ? 'success' : ($data->status == 9 ? 'danger' : ($data->status == 10 ? 'danger' : ($data->status == 11 ? 'warning' : ($data->status == 12 ? 'secondary' : ($data->status == 13 ? 'success' : ($data->status == 14 ? 'warning' :($data->status == 15 ? 'primary' : ($data->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
                                                                                 {{ $data->status == 1 ? $data->name_status : ($data->status == 2 ?  $data->name_status : ($data->status == 5 ?  $data->name_status : ($data->status == 6 ?  $data->name_status : ($data->status == 7 ?  $data->name_status : ($data->status == 9 ?  $data->name_status : ($data->status == 10 ?  $data->name_status : ($data->status == 11 ?  $data->name_status : ($data->status == 12 ?  $data->name_status : ($data->status == 13 ?  $data->name_status :  ($data->status == 14 ?  $data->name_status :  ($data->status == 15 ?  $data->name_status :  ($data->status == 16 ?  $data->name_status : '')))))))))))) }}
                                                                             </span>
-                                                             
+
                                                                         </td>
                                                                         <td>{{ $data->catatan }}</td>
                                                                         <td class="text-center">
@@ -189,21 +189,21 @@
                                                                                 <a class="btn btn-info btn-sm"
                                                                                     data-toggle="modal"
                                                                                     data-target="#Showizin{{ $data->id }}">
-                                                                                    <i class="fa fa-eye"></i>
+                                                                                    <i class="fa fa-eye" title="Lihat Detail"></i>
                                                                                 </a>
                                                                             </form>
                                                                             <form action="" method="POST">
                                                                                     <a class="btn btn-success btn-sm"
                                                                                         data-toggle="modal"data-target="#Editizin{{ $data->id }}">
-                                                                                        <i class="fa fa-edit"></i>
+                                                                                        <i class="fa fa-edit" title="Edit"></i>
                                                                                     </a>
                                                                                 </form>
                                                                                 {{-- {{ route('cuti.batal', $data->id) }}" --}}
-                                                                              
+
                                                                                 <form action="" method="POST">
                                                                                     <a class="btn btn-warning btn-sm"
                                                                                         data-toggle="modal" data-target="#Batalizin{{ $data->id }}">
-                                                                                        <i class="fa fa-undo"></i>
+                                                                                        <i class="fa fa-undo" title="Batal"></i>
                                                                                     </a>
                                                                                 </form>
                                                                         </td>
@@ -261,7 +261,7 @@
 
 <script type="text/javascript">
     let tp = '{{$tipe}}';
-    
+
         if(tp == 1) {
             $('#tab1').click();
             $('#tab1').addClass('active');

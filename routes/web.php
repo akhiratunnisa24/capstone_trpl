@@ -14,14 +14,15 @@ use App\Http\Controllers\admin\ShiftController;
 use App\Http\Controllers\admin\AtasanController;
 use App\Http\Controllers\admin\UploadController;
 use App\Http\Controllers\admin\AbsensiController;
+use App\Http\Controllers\admin\BenefitController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\AbsensisController;
+
 use App\Http\Controllers\admin\KalenderController;
 
+
 use App\Http\Controllers\admin\SisacutiController;
-
-
 use App\Http\Controllers\RequestAbsensiController;
 use App\Http\Controllers\admin\CutiadminController;
 use App\Http\Controllers\admin\InformasiController;
@@ -52,6 +53,7 @@ use App\Http\Controllers\manager\TimKaryawanController;
 use App\Http\Controllers\admin\SettingabsensiController;
 use App\Http\Controllers\karyawan\KpikaryawanController;
 use App\Http\Controllers\superadmin\ListmesinController;
+use App\Http\Controllers\admin\KategoriBenefitController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
 use App\Http\Controllers\manager\TugasKaryawanController;
@@ -111,6 +113,7 @@ Route::get('showorganisasi{id}', [karyawanController::class, 'showorganisasi'])-
 Route::get('showprestasi{id}', [karyawanController::class, 'showprestasi'])->name('showprestasi');
 Route::get('showkeluarga{id}', [karyawanController::class, 'showkeluarga'])->name('showkeluarga');
 Route::get('showkontakdarurat{id}', [karyawanController::class, 'showkontakdarurat'])->name('showkontakdarurat');
+Route::get('showinformasigaji{id}', [karyawanController::class, 'showinformasigaji'])->name('showinformasigaji');
 
 // Edit Data Karyawan Vesi Baru
 
@@ -722,7 +725,6 @@ Route::post('/tarik-absen', [MesinController::class, 'tarikAbsen'])->name('tarik
 
 
 
-
 //master partnert
 Route::get('/partner', [PartnerController::class, 'index'])->name('partner.index');
 Route::post('/partner', [PartnerController::class, 'store'])->name('partner.store');
@@ -735,6 +737,18 @@ Route::put('/list-mesin/update/{id}', [ListmesinController::class, 'update'])->n
 Route::post('/connect/{id}', [ListmesinController::class, 'connect'])->name('connect');
 Route::post('/list-mesin/tarikdata/{id}', [ListmesinController::class, 'tarikAbsen'])->name('listmesin.tarikdata');
 Route::post('/list-mesin/daftar-user/{id}', [ListmesinController::class, 'getuser'])->name('listmesin.getuser');
+
+//master benefit
+Route::get('/kategori-benefit', [KategoriBenefitController::class, 'index'])->name('kategoribenefit.index');
+Route::post('/kategori-benefit', [KategoriBenefitController::class, 'store'])->name('kategori.benefit');
+Route::put('/kategori-update/{id}', [KategoriBenefitController::class, 'update'])->name('kategoribenefit.update');
+Route::get('/kategori-delete/{id}', [KategoriBenefitController::class, 'destroy'])->name('kategoribenefit.delete');
+
+//benefit
+Route::get('/benefit', [BenefitController::class, 'index'])->name('benefit');
+Route::post('/benefit', [BenefitController::class, 'store'])->name('benefit.store');
+Route::put('/benefi/update/{id}', [BenefitController::class, 'update'])->name('benefit.update');
+Route::get('/benefit/delete/{id}', [BenefitController::class, 'destroy'])->name('benefit.delete');
 
 
 

@@ -86,7 +86,7 @@
                                                                         <a class="btn btn-danger btn-sm" style="height:26px"
                                                                             data-toggle="modal"
                                                                             data-target="#cuReject{{ $data->id }}">
-                                                                            <i class="fa fa-times fa-md"></i>
+                                                                            <i class="fa fa-times fa-md" title="Tolak"></i>
                                                                         </a>
                                                                     </form>
                                                                 </div>
@@ -107,7 +107,7 @@
                                                                         <a class="btn btn-danger btn-sm" style="height:26px"
                                                                             data-toggle="modal"
                                                                             data-target="#cuReject{{ $data->id }}">
-                                                                            <i class="fa fa-times fa-md"></i>
+                                                                            <i class="fa fa-times fa-md" title="Tolak"></i>
                                                                         </a>
                                                                     </form>
                                                                 </div>
@@ -128,7 +128,7 @@
                                                                         <a class="btn btn-danger btn-sm" style="height:26px"
                                                                             data-toggle="modal"
                                                                             data-target="#cuReject{{ $data->id }}">
-                                                                            <i class="fa fa-times fa-md"></i>
+                                                                            <i class="fa fa-times fa-md" title="Tolak"></i>
                                                                         </a>
                                                                     </form>
                                                                 </div>
@@ -151,7 +151,7 @@
                                                                     <a class="btn btn-info btn-sm" style="height:26px"
                                                                         data-toggle="modal"
                                                                         data-target="#Showcuti{{ $data->id }}">
-                                                                        <i class="fa fa-eye"></i>
+                                                                        <i class="fa fa-eye" title="Lihat Detail"></i>
                                                                     </a>
                                                                 </form>
                                                             </div>
@@ -179,8 +179,8 @@
                 <div class="panel panel-default ">
                     <div class="panel-heading ">
                         <h4 class="panel-title ">
-                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#8" aria-expanded="false"
-                                class="dropdown-toggle waves-effect waves-light collapsed">
+                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#8"
+                                aria-expanded="false" class="dropdown-toggle waves-effect waves-light collapsed">
                                 Pembatalan dan Perubahan Cuti Karyawan
 
                                 @if ($jumct)
@@ -375,7 +375,7 @@
                                                                     <a class="btn btn-info btn-sm" style="height:26px"
                                                                         data-toggle="modal"
                                                                         data-target="#Showcuti{{ $data->id }}">
-                                                                        <i class="fa fa-eye"></i>
+                                                                        <i class="fa fa-eye" title="Lihat Detail"></i>
                                                                     </a>
                                                                 </form>
                                                             </div>
@@ -486,7 +486,8 @@
                                                                         <a class="btn btn-danger btn-sm"
                                                                             style="height:26px" data-toggle="modal"
                                                                             data-target="#izReject{{ $data->id }}">
-                                                                            <i class="fa fa-times fa-md"></i>
+                                                                            <i class="fa fa-times fa-md"
+                                                                                title="Tolak"></i>
                                                                         </a>
                                                                     </form>
                                                                 </div>
@@ -506,7 +507,8 @@
                                                                         <a class="btn btn-danger btn-sm"
                                                                             style="height:26px" data-toggle="modal"
                                                                             data-target="#izReject{{ $data->id }}">
-                                                                            <i class="fa fa-times fa-md"></i>
+                                                                            <i class="fa fa-times fa-md"
+                                                                                title="Tolak"></i>
                                                                         </a>
                                                                     </form>
                                                                 </div>
@@ -518,7 +520,8 @@
                                                                     <a class="btn btn-info btn-sm" style="height:26px"
                                                                         data-toggle="modal"
                                                                         data-target="#Showizinadmin{{ $data->id }}">
-                                                                        <i class="fa fa-eye fa-md"></i>
+                                                                        <i class="fa fa-eye fa-md"
+                                                                            title="Lihat Detail"></i>
                                                                     </a>
                                                                 </form>
                                                             </div>
@@ -771,7 +774,8 @@
                                                                     <a class="btn btn-info btn-sm" style="height:26px"
                                                                         data-toggle="modal"
                                                                         data-target="#Showizinm{{ $data->id }}">
-                                                                        <i class="fa fa-eye fa-md"></i>
+                                                                        <i class="fa fa-eye fa-md"
+                                                                            title="Lihat Detail"></i>
                                                                     </a>
                                                                 </form>
                                                             </div>
@@ -795,8 +799,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#12" aria-expanded="false"
-                                class="dropdown-toggle waves-effect waves-light collapsed">
+                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#12"
+                                aria-expanded="false" class="dropdown-toggle waves-effect waves-light collapsed">
                                 Susunan Pengurus dan Manajemen
                             </a>
                         </h4>
@@ -832,7 +836,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -840,8 +844,8 @@
 
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion-test-8" href="#14" aria-expanded="false"
-                                class="dropdown-toggle waves-effect waves-light collapsed">
+                            <a data-toggle="collapse" data-parent="#accordion-test-8" href="#14"
+                                aria-expanded="false" class="dropdown-toggle waves-effect waves-light collapsed">
                                 Jumlah Karyawan
                             </a>
                         </h4>
@@ -957,7 +961,7 @@
                                 aria-expanded="false">
                                 Permintaan Resign Karyawan
                                 {{-- @php
-                                        
+
                                         dd($resign);
                                     @endphp --}}
 
@@ -1016,7 +1020,7 @@
                                                                     <input type="hidden" name="status" value=1
                                                                         class="form-control" hidden>
                                                                     <button type="submit" class="btn btn-success btn-sm">
-                                                                        <i class="fa fa-check"></i>
+                                                                        <i class="fa fa-check" title="Setuju"></i>
                                                                     </button>
                                                                 </form>
                                                                 <form action="{{ route('resignreject', $r->id) }}"
@@ -1026,7 +1030,7 @@
                                                                     <input type="hidden" name="status" value=5
                                                                         class="form-control" hidden>
                                                                     <button type="submit" class="btn btn-danger btn-sm">
-                                                                        <i class="fa fa-times"></i>
+                                                                        <i class="fa fa-times" title="Tolak"></i>
                                                                     </button>
                                                                 </form>
                                                             @elseif($r->karyawan->atasan_kedua == Auth::user()->id_pegawai && $r->status == 6)
@@ -1037,7 +1041,7 @@
                                                                     <input type="hidden" name="status" value=1
                                                                         class="form-control" hidden>
                                                                     <button type="submit" class="btn btn-success btn-sm">
-                                                                        <i class="fa fa-check"></i>
+                                                                        <i class="fa fa-check" title="Setuju"></i>
                                                                     </button>
                                                                 </form>
                                                                 <form action="{{ route('resignreject', $r->id) }}"
@@ -1047,13 +1051,13 @@
                                                                     <input type="hidden" name="status" value=5
                                                                         class="form-control" hidden>
                                                                     <button type="submit" class="btn btn-danger btn-sm">
-                                                                        <i class="fa fa-times"></i>
+                                                                        <i class="fa fa-times" title="Tolak"></i>
                                                                     </button>
                                                                 </form>
                                                             @endif
                                                             <a class="btn btn-info btn-sm" data-toggle="modal"
                                                                 data-target="#Showresign{{ $r->id }}">
-                                                                <i class="fa fa-eye"></i>
+                                                                <i class="fa fa-eye" title="Lihat Detail"></i>
                                                             </a>
                                                         </div>
                                                     </td>
@@ -1291,8 +1295,8 @@
 
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion-test-8" href="#15" aria-expanded="false"
-                                class="dropdown-toggle waves-effect waves-light collapsed">
+                            <a data-toggle="collapse" data-parent="#accordion-test-8" href="#15"
+                                aria-expanded="false" class="dropdown-toggle waves-effect waves-light collapsed">
                                 Data Kehadiran Kerja Karyawan
                                 {{-- @if (isset($jumAbsen))
                                     <span class="badge badge badge-danger"
@@ -1313,7 +1317,7 @@
                                         <button id="tarikAbsenBtn" class="btn btn-success btn-sm">Tarik Absen</button>
                                         <div id="resultContainer"></div>
                                     </div>
-                                    
+
                                     <table class="table table-striped m-t-20">
                                         <thead style="text-align: center;">
                                             <tr class="info">
@@ -1329,7 +1333,7 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $k->karyawans->nama }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($k->total)->format('d/m/Y') }}</td>
-                                                    <td>{{ $k->jam_masuk}}</td>
+                                                    <td>{{ $k->jam_masuk }}</td>
                                                 </tr>
                                             @endforeach
 
@@ -1343,8 +1347,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#11" aria-expanded="false"
-                                class="dropdown-toggle waves-effect waves-light collapsed">
+                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#11"
+                                aria-expanded="false" class="dropdown-toggle waves-effect waves-light collapsed">
                                 Status Hak Cuti Tahunan
                             </a>
                         </h4>
@@ -1359,27 +1363,27 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($alokasi as $key => $k)
-                                                @php 
+                                                @php
                                                     $jmlcuti = $k->jmlhakcuti;
                                                     $durasi = $k->durasi;
                                                     $sisa = $jmlcuti - $durasi;
                                                 @endphp
                                                 <tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Jumlah Hak Cuti Tahun 2023</td>
-                                                        <td>{{ $k->jmlhakcuti }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Hak Cuti Yang Sudah Diambil</td>
-                                                        <td>{{$sisa}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>Sisa Hak Cuti</td>
-                                                        <td>{{ $k->durasi }}</td>
-                                                    </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Jumlah Hak Cuti Tahun 2023</td>
+                                                    <td>{{ $k->jmlhakcuti }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Hak Cuti Yang Sudah Diambil</td>
+                                                    <td>{{ $sisa }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Sisa Hak Cuti</td>
+                                                    <td>{{ $k->durasi }}</td>
+                                                </tr>
                                                 </tr>
                                             @endforeach
 
@@ -1400,8 +1404,8 @@
                 <div class="panel panel-default ">
                     <div class="panel-heading ">
                         <h4 class="panel-title ">
-                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#13" aria-expanded="false"
-                                class="dropdown-toggle waves-effect waves-light collapsed">
+                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#13"
+                                aria-expanded="false" class="dropdown-toggle waves-effect waves-light collapsed">
                                 Informasi HRD
                                 {{-- @if (isset($jmlinfo))
                                     <span class="badge badge badge-danger"
@@ -1410,7 +1414,7 @@
                                 @if ($jmlinfo != 0)
                                     <span class="badge badge badge-danger"
                                         style="background-color:red">{{ $jmlinfo }}</span>
-                                @endif 
+                                @endif
                             </a>
                         </h4>
                     </div>
@@ -1424,9 +1428,9 @@
                                         <tbody>
                                             @foreach ($informasi as $key => $k)
                                                 <tr>
-                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>
-                                                        <b>{{$k->judul}}</b> <br><br>
+                                                        <b>{{ $k->judul }}</b> <br><br>
                                                         <p>{!! nl2br(html_entity_decode($k->konten)) !!}</p>
                                                     </td>
                                                 </tr>
@@ -1522,25 +1526,25 @@
 
     <!--Chart JS-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    @if(Session::has('pesan'))
+    @if (Session::has('pesan'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
-                button:true,
-                button:"OK",
+            swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+                button: true,
+                button: "OK",
             });
         </script>
     @endif
 
-    @if(Session::has('pesa'))
+    @if (Session::has('pesa'))
         <script>
-            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
-                button:true,
-                button:"OK",
+            swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+                button: true,
+                button: "OK",
             });
         </script>
     @endif
 
-    @if(Session::has('message'))
+    @if (Session::has('message'))
         <div class="alert alert-success">
             {{ Session::get('message') }}
         </div>
@@ -1578,8 +1582,8 @@
         );
     </script>
 
-     <!-- Script AJAX untuk pemrosesan data -->
-     <script>
+    <!-- Script AJAX untuk pemrosesan data -->
+    <script>
         $(document).ready(function() {
             // Tangkap event klik tombol "Tarik Absen"
             $('#tarikAbsenBtn').click(function() {
@@ -1599,6 +1603,6 @@
                 });
             });
         });
-    </script> 
+    </script>
 
 @endsection

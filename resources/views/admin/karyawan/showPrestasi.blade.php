@@ -81,15 +81,20 @@
                                                                     <td>{{ $pres->no_surat }}</td>
                                                                     {{-- <td>{{ $pres->tanggal_surat }}</td> --}}
                                                                     {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $pres->tanggal_surat)->format('d/m/Y') }}</td> --}}
-                                                                    <td>{{ $pres->tanggal_surat ? \Carbon\Carbon::createFromFormat('Y-m-d', $pres->tanggal_surat)->format('d/m/Y') : '' }}</td>
+                                                                    <td>{{ $pres->tanggal_surat ? \Carbon\Carbon::createFromFormat('Y-m-d', $pres->tanggal_surat)->format('d/m/Y') : '' }}
+                                                                    </td>
                                                                     <td class="">
                                                                         <a class="btn btn-sm btn-primary"
                                                                             data-toggle="modal"
                                                                             data-target="#editPrestasi{{ $pres->id }}"
                                                                             style="margin-right:10px">
-                                                                            <i class="fa fa-edit"></i>
+                                                                            <i class="fa fa-edit" title="Edit"></i>
                                                                         </a>
-                                                                       <button onclick="hapus_karyawan({{ $pres->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                                                        <button
+                                                                            onclick="hapus_karyawan({{ $pres->id }})"
+                                                                            class="btn btn-danger btn-sm"><i
+                                                                                class="fa fa-trash"
+                                                                                title="Hapus"></i></button>
                                                                     </td>
                                                                 </tr>
                                                                 @include('admin.karyawan.editPrestasi')
@@ -97,11 +102,11 @@
                                                         </tbody>
                                                     </table>
 
-                                                    
+
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                 <a href="showorganisasi{{ $karyawan->id }}" class="btn btn-sm btn-info"
+                                                <a href="showorganisasi{{ $karyawan->id }}" class="btn btn-sm btn-info"
                                                     type="button">Sebelumnya <i class="fa fa-backward"></i></a>
                                                 <a href="showkeluarga{{ $karyawan->id }}" class="btn btn-sm btn-success"
                                                     type="button">Selanjutnya <i class="fa fa-forward"></i></a>
@@ -117,7 +122,7 @@
         </div>
     </div>
 
-      <script>
+    <script>
         function hapus_karyawan(id) {
             swal.fire({
                 title: "Apakah anda yakin ?",
@@ -141,5 +146,4 @@
             })
         }
     </script>
-
 @endsection

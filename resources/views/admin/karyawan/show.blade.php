@@ -1,32 +1,31 @@
 @extends('layouts.default')
 
 @section('content')
+    <!-- Header -->
+    <div class="row">
+        <div class="col-sm-12">
 
-<!-- Header -->
-<div class="row">
-    <div class="col-sm-12">
+            <div class="page-header-title">
+                <h4 class="pull-left page-title ">Detail Karyawan</h4>
 
-        <div class="page-header-title">
-            <h4 class="pull-left page-title ">Detail Karyawan</h4>
+                <ol class="breadcrumb pull-right">
+                    <li>Rynest Employee Management System</li>
+                    <li class="active">Detail Karyawan</li>
+                </ol>
 
-            <ol class="breadcrumb pull-right">
-                <li>Rynest Employee Management System</li>
-                <li class="active">Detail Karyawan</li>
-            </ol>
-
-            <div class="clearfix">
+                <div class="clearfix">
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="panel panel-primary">
-    <div class=" col-sm-0 m-b-0">
+    <div class="panel panel-primary">
+        <div class=" col-sm-0 m-b-0">
 
-    </div>
+        </div>
 
-    {{-- karyawan/update/{{$karyawan->id}} --}}
-    {{-- <form action="" method="POST"> --}}
+        {{-- karyawan/update/{{$karyawan->id}} --}}
+        {{-- <form action="" method="POST"> --}}
         {{-- @csrf
         @method('put') --}}
 
@@ -34,30 +33,33 @@
             <table class="table table-bordered table-striped" style="width:100%">
                 <tbody class="col-sm-20">
                     <div class="row">
-                        <label class="m-l-10"><h4> A. IDENTITAS </h4></label>
-                        <a class="btn btn-sm btn-primary editIdentitas pull-right" data-toggle="modal" data-target="#editIdentitas{{$karyawan->id}}" style="margin-right:10px;margin-top:10px">
+                        <label class="m-l-10">
+                            <h4> A. IDENTITAS </h4>
+                        </label>
+                        <a class="btn btn-sm btn-primary editIdentitas pull-right" data-toggle="modal"
+                            data-target="#editIdentitas{{ $karyawan->id }}" style="margin-right:10px;margin-top:10px">
                             <i class="fa fa-edit"> <strong>Edit Identitas Diri</strong></i>
                         </a>
                     </div>
                     @include('admin.karyawan.editIdentitas')
                     <tr>
                         <td style="width: 40%"><strong><label>Nama Lengkap</label></strong></td>
-                        <td style="width: 60%"><label>{{$karyawan->nama}}</label></td>
+                        <td style="width: 60%"><label>{{ $karyawan->nama }}</label></td>
                         <td rowspan="6" colspan="2" class="text-center">
-                            <img src="{{ asset('Foto_Profile/' . $karyawan->foto)}}" alt="" style="width:280px;">
+                            <img src="{{ asset('Foto_Profile/' . $karyawan->foto) }}" alt="" style="width:280px;">
                         </td>
                     </tr>
                     <tr>
                         <td><label>Nomor KTP / NIK</label></td>
-                        <td><label>{{$karyawan->nik}} </label></td>
+                        <td><label>{{ $karyawan->nik }} </label></td>
                     </tr>
                     <tr>
                         <td><label>Tanggal Lahir</label></td>
-                        <td><label>{{\Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y')}}</label></td>
+                        <td><label>{{ \Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y') }}</label></td>
                     </tr>
                     <tr>
                         <td><label>Jenis Kelamin</label></td>
-                        @if($karyawan->jenis_kelamin == 'P')
+                        @if ($karyawan->jenis_kelamin == 'P')
                             <td><label>Perempuan</label></td>
                         @else
                             <td><label>Laki-Laki</label></td>
@@ -65,40 +67,44 @@
                     </tr>
                     <tr>
                         <td><label>Alamat</label></td>
-                        <td><label>{{$karyawan->alamat}}</label></td>
+                        <td><label>{{ $karyawan->alamat }}</label></td>
                     </tr>
                     <tr>
                         <td><label>Nomor Handphone</label></td>
-                        <td><label>{{$karyawan->no_hp}}</label></td>
+                        <td><label>{{ $karyawan->no_hp }}</label></td>
                     </tr>
                     <tr>
                         <td><label>Golongan Darah</label></td>
-                        <td><label>{{$karyawan->gol_darah}} </label></td><tr></tr>
+                        <td><label>{{ $karyawan->gol_darah }} </label></td>
+                    <tr></tr>
                     </tr>
                     <tr>
                         <td><label>Email</label></td>
-                        <td><label>{{$karyawan->email}}</label></td>
+                        <td><label>{{ $karyawan->email }}</label></td>
                     </tr>
                     <tr>
                         <td><label>Jabatan</label></td>
-                        <td><label>{{$karyawan->jabatan}} </label></td>
+                        <td><label>{{ $karyawan->jabatan }} </label></td>
                     </tr>
                     <tr>
                         <td><label>Agama</label></td>
-                        <td><label>{{$karyawan->agama}}</label></td>
+                        <td><label>{{ $karyawan->agama }}</label></td>
                     </tr>
                     <tr>
                         <td><label>Status Pernikahan</label></td>
-                        <td><label>{{ $status->status_pernikahan}}</label></td>
+                        <td><label>{{ $status->status_pernikahan }}</label></td>
                     </tr>
                 </tbody>
             </table>
 
-           
+
             {{-- DATA KELUARGA --}}
             <div class="row">
-                <label class="m-l-10"><h4>B. KELUARGA </h4></label>
-                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addKeluarga" style="margin-right:10px;margin-top:10px">
+                <label class="m-l-10">
+                    <h4>B. KELUARGA </h4>
+                </label>
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addKeluarga"
+                    style="margin-right:10px;margin-top:10px">
                     <i class="fa fa-plus"> <strong> Tambah Data Keluarga</strong></i>
                 </a>
                 @include('admin.karyawan.addKeluarga')
@@ -117,18 +123,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($keluarga as $keluarga)
+                    @foreach ($keluarga as $keluarga)
                         <tr>
-                            <td>{{$loop->iteration }}</td>
-                            <td>{{$keluarga->nama }}</td>
-                            <td>{{\Carbon\Carbon::parse($keluarga->tgllahir)->format('d/m/Y')}}</td>
-                            <td>{{$keluarga->hubungan }}</td> 
-                            <td>{{$keluarga->alamat }}</td>
-                            <td>{{$keluarga->pendidikan_terakhir }}</td>
-                            <td>{{$keluarga->pekerjaan}}</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $keluarga->nama }}</td>
+                            <td>{{ \Carbon\Carbon::parse($keluarga->tgllahir)->format('d/m/Y') }}</td>
+                            <td>{{ $keluarga->hubungan }}</td>
+                            <td>{{ $keluarga->alamat }}</td>
+                            <td>{{ $keluarga->pendidikan_terakhir }}</td>
+                            <td>{{ $keluarga->pekerjaan }}</td>
                             <td class="">
-                                <a class="btn btn-sm btn-primary editKeluarga pull-right" data-toggle="modal" data-target="#editKeluarga{{$keluarga->id}}" style="margin-right:10px">
-                                    <i class="fa fa-edit"></i>
+                                <a class="btn btn-sm btn-primary editKeluarga pull-right" data-toggle="modal"
+                                    data-target="#editKeluarga{{ $keluarga->id }}" style="margin-right:10px">
+                                    <i class="fa fa-edit" title="Edit"></i>
                                 </a>
                             </td>
                         </tr>
@@ -140,8 +147,11 @@
 
             {{-- KONTAK DARURAT --}}
             <div class="row">
-                <label class="" width="50%"><h4>C. KONTAK DARURAT </h4></label>
-                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addKontak" style="margin-right:10px;margin-top:10px">
+                <label class="" width="50%">
+                    <h4>C. KONTAK DARURAT </h4>
+                </label>
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addKontak"
+                    style="margin-right:10px;margin-top:10px">
                     <i class="fa fa-plus"> <strong> Tambah Kontak Darurat</strong></i>
                 </a>
                 @include('admin.karyawan.addKontak')
@@ -159,16 +169,17 @@
                 </thead>
 
                 <tbody>
-                    @foreach($kdarurat as $kdarurat)
+                    @foreach ($kdarurat as $kdarurat)
                         <tr>
-                            <td>{{$loop->iteration }}</td>
-                            <td>{{$kdarurat->nama }}</td>
-                            <td>{{$kdarurat->hubungan }}</td>
-                            <td>{{$kdarurat->alamat }}</td>
-                            <td>{{$kdarurat->no_hp}}</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $kdarurat->nama }}</td>
+                            <td>{{ $kdarurat->hubungan }}</td>
+                            <td>{{ $kdarurat->alamat }}</td>
+                            <td>{{ $kdarurat->no_hp }}</td>
                             <td class="">
-                                <a class="btn btn-sm btn-primary editDarurat pull-right" data-toggle="modal" data-target="#editDarurat{{$kdarurat->id}}" style="margin-right:10px">
-                                    <i class="fa fa-edit"></i>
+                                <a class="btn btn-sm btn-primary editDarurat pull-right" data-toggle="modal"
+                                    data-target="#editDarurat{{ $kdarurat->id }}" style="margin-right:10px">
+                                    <i class="fa fa-edit" title="Edit"></i>
                                 </a>
                             </td>
                         </tr>
@@ -179,10 +190,13 @@
             {{-- END KONTAK DARURAT --}}
 
             {{-- RIWAYAT PENDIDIKAN --}}
-            <label class="" width="50%"><h4>D. RIWAYAT PENDIDIKAN </h4></label><br>
+            <label class="" width="50%">
+                <h4>D. RIWAYAT PENDIDIKAN </h4>
+            </label><br>
             <div class="row">
                 <td style="width:25%"><label class="text-white badge bg-info">1. Pendidikan Formal </label></td>
-                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPformal" style="margin-right:10px;margin-bottom:10px">
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPformal"
+                    style="margin-right:10px;margin-bottom:10px">
                     <i class="fa fa-plus"> <strong> Tambah Pendidikan Formal</strong></i>
                 </a>
                 @include('admin.karyawan.addPformal')
@@ -201,18 +215,19 @@
                 </thead>
 
                 <tbody>
-                    @foreach($rpendidikan as $rpendidikan)
-                        @if($rpendidikan->tingkat != null)
+                    @foreach ($rpendidikan as $rpendidikan)
+                        @if ($rpendidikan->tingkat != null)
                             <tr>
-                                <td>{{$loop->iteration }}</td>
-                                <td>{{$rpendidikan->tingkat}}</td>
-                                <td>{{$rpendidikan->nama_sekolah}}</td>
-                                <td>{{$rpendidikan->kota_pformal}}</td>
-                                <td>{{$rpendidikan->jurusan}}</td>
-                                <td>{{$rpendidikan->tahun_lulus_formal}}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $rpendidikan->tingkat }}</td>
+                                <td>{{ $rpendidikan->nama_sekolah }}</td>
+                                <td>{{ $rpendidikan->kota_pformal }}</td>
+                                <td>{{ $rpendidikan->jurusan }}</td>
+                                <td>{{ $rpendidikan->tahun_lulus_formal }}</td>
                                 <td class="">
-                                    <a class="btn btn-sm btn-primary editPformal pull-right" data-toggle="modal" data-target="#editPformal{{$rpendidikan->id}}" style="margin-right:10px">
-                                        <i class="fa fa-edit"></i>
+                                    <a class="btn btn-sm btn-primary editPformal pull-right" data-toggle="modal"
+                                        data-target="#editPformal{{ $rpendidikan->id }}" style="margin-right:10px">
+                                        <i class="fa fa-edit" title="Edit"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -224,7 +239,8 @@
 
             <div class="row">
                 <td style="width:25%"><label class="text-white badge bg-info"> Pendidikan Non Formal </label></td>
-                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPnformal" style="margin-right:10px;margin-bottom:10px">
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPnformal"
+                    style="margin-right:10px;margin-bottom:10px">
                     <i class="fa fa-plus"> <strong> Tambah Pend. Non Formal</strong></i>
                 </a>
             </div>
@@ -240,15 +256,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($nonformal as $rpendidikan)
+                    @foreach ($nonformal as $rpendidikan)
                         <tr>
-                            <td>{{$loop->iteration }}</td>
-                            <td>{{$rpendidikan->jenis_pendidikan}}</td>
-                            <td>{{$rpendidikan->kota_pnonformal}}</td>
-                            <td>{{$rpendidikan->tahun_lulus_nonformal}}</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $rpendidikan->jenis_pendidikan }}</td>
+                            <td>{{ $rpendidikan->kota_pnonformal }}</td>
+                            <td>{{ $rpendidikan->tahun_lulus_nonformal }}</td>
                             <td class="">
-                                <a class="btn btn-sm btn-primary editPnformal pull-right" data-toggle="modal" data-target="#editPnformal{{$rpendidikan->id}}" style="margin-right:10px">
-                                    <i class="fa fa-edit"></i>
+                                <a class="btn btn-sm btn-primary editPnformal pull-right" data-toggle="modal"
+                                    data-target="#editPnformal{{ $rpendidikan->id }}" style="margin-right:10px">
+                                    <i class="fa fa-edit" title="Edit"></i>
                                 </a>
                             </td>
                         </tr>
@@ -260,8 +277,11 @@
 
             {{-- RIWAYAT PEKERJAAN --}}
             <div class="row m-t-10">
-                <label class="" width="50%"><h4>E. RIWAYAT PEKERJAAN </h4></label>
-                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPekerjaan" style="margin-right:10px;margin-bottom:10px">
+                <label class="" width="50%">
+                    <h4>E. RIWAYAT PEKERJAAN </h4>
+                </label>
+                <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPekerjaan"
+                    style="margin-right:10px;margin-bottom:10px">
                     <i class="fa fa-plus"> <strong> Tambah Data Pekerjaan</strong></i>
                 </a>
                 @include('admin.karyawan.addPekerjaan')
@@ -281,19 +301,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($rpekerjaan as $rpekerjaan)
+                    @foreach ($rpekerjaan as $rpekerjaan)
                         <tr>
-                            <td>{{$loop->iteration }}</td>
-                            <td>{{$rpekerjaan->nama_perusahaan}}</td>
-                            <td>{{$rpekerjaan->nama_atasan}}</td>
-                            <td>{{$rpekerjaan->nama_direktur}}</td>
-                            <td>{{$rpekerjaan->jabatan}}</td>
-                            <td>{{$rpekerjaan->lama_kerja}}</td>
-                            <td>Rp. {{$rpekerjaan->gaji}},-</td>
-                            <td>{{$rpekerjaan->alasan_berhenti}}</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $rpekerjaan->nama_perusahaan }}</td>
+                            <td>{{ $rpekerjaan->nama_atasan }}</td>
+                            <td>{{ $rpekerjaan->nama_direktur }}</td>
+                            <td>{{ $rpekerjaan->jabatan }}</td>
+                            <td>{{ $rpekerjaan->lama_kerja }}</td>
+                            <td>Rp. {{ $rpekerjaan->gaji }},-</td>
+                            <td>{{ $rpekerjaan->alasan_berhenti }}</td>
                             <td class="">
-                                <a class="btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#editPekerjaan{{$rpekerjaan->id}}" style="margin-right:10px">
-                                    <i class="fa fa-edit"></i>
+                                <a class="btn btn-sm btn-primary pull-right" data-toggle="modal"
+                                    data-target="#editPekerjaan{{ $rpekerjaan->id }}" style="margin-right:10px">
+                                    <i class="fa fa-edit" title="Edit"></i>
                                 </a>
                                 {{-- <button onclick="pekerjaan({{$$rpekerjaan->id}})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                             </td>
@@ -304,17 +325,16 @@
             </table>
             {{-- </div> --}}
         </div>
-    {{-- </form> --}}
+        {{-- </form> --}}
 
-    <div class="modal-footer">
-        {{-- <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a> --}}
-        <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
+        <div class="modal-footer">
+            {{-- <a href="karyawanedit{{$karyawan->id}}" type="button" class="btn btn-sm btn-primary ">Edit Karyawan</a> --}}
+            <a href="karyawan" class="btn btn-sm btn-danger">Kembali</a>
+        </div>
     </div>
-</div>
-
 @endsection
 
-    {{-- <div class="col-md-6">
+{{-- <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <label class="" width="50%"><h4>B. KELUARGA </h4></label>
@@ -349,7 +369,7 @@
                         </tbody>
                     </table>
                 </div> --}}
-                {{-- <div class="col-md-6">
+{{-- <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <label class="" width="50%"><h4>C. KONTAK DARURAT </h4></label>
@@ -376,10 +396,10 @@
                         </tbody>
                     </table>
                 </div> --}}
-            {{-- </div>
+{{-- </div>
 
             <div class="row"> --}}
-                {{-- <div class="col-md-6">
+{{-- <div class="col-md-6">
                     <table class="table table-bordered table-striped">
                         <tbody>
                             <label class="" width="100%"><h4>D. RIWAYAT PENDIDIKAN </h4></label>
@@ -401,7 +421,7 @@
                             <tr>
                                 <td><label>Jurusan</label></td>
                                 <td><label>{{$rpendidikan->jurusan}}</label></td>
-        
+
                             </tr>
                             <tr>
                                 <td><label for="bpjsket_number">Lulus Tahun</label></td>

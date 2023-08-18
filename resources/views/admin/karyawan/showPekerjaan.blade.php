@@ -82,8 +82,10 @@
                                                                     <td>{{ $rpekerjaan->alamat }}</td>
                                                                     {{-- <td>{{ $rpekerjaan->tgl_mulai }}</td>
                                                                     <td>{{ $rpekerjaan->tgl_selesai }}</td> --}}
-                                                                    <td>{{ $rpekerjaan->tgl_mulai ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpekerjaan->tgl_mulai)->format('d/m/Y') : '' }}</td>
-                                                                    <td>{{ $rpekerjaan->tgl_selesai ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpekerjaan->tgl_selesai)->format('d/m/Y') : '' }}</td>
+                                                                    <td>{{ $rpekerjaan->tgl_mulai ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpekerjaan->tgl_mulai)->format('d/m/Y') : '' }}
+                                                                    </td>
+                                                                    <td>{{ $rpekerjaan->tgl_selesai ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpekerjaan->tgl_selesai)->format('d/m/Y') : '' }}
+                                                                    </td>
                                                                     <td>{{ $rpekerjaan->jabatan }}</td>
                                                                     <td>{{ $rpekerjaan->level }}</td>
                                                                     <td>Rp. {{ $rpekerjaan->gaji }},-</td>
@@ -93,9 +95,13 @@
                                                                             data-toggle="modal"
                                                                             data-target="#editPekerjaan{{ $rpekerjaan->id }}"
                                                                             style="margin-right:10px">
-                                                                            <i class="fa fa-edit"></i>
+                                                                            <i class="fa fa-edit" title="Edit"></i>
                                                                         </a>
-                                                                        <button onclick="hapus_karyawan({{ $rpekerjaan->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                                                        <button
+                                                                            onclick="hapus_karyawan({{ $rpekerjaan->id }})"
+                                                                            class="btn btn-danger btn-sm"><i
+                                                                                class="fa fa-trash"
+                                                                                title="Hapus"></i></button>
                                                                     </td>
                                                                 </tr>
                                                                 @include('admin.karyawan.editPekerjaan')
@@ -183,5 +189,4 @@
             })
         }
     </script>
-
 @endsection

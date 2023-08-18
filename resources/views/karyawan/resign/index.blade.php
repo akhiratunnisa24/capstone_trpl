@@ -80,7 +80,7 @@
                                                                 <form action="" method="POST">
                                                                     <a class="btn btn-info btn-sm" data-toggle="modal"
                                                                         data-target="#Showresign{{ $r->id }}">
-                                                                        <i class="fa fa-eye"></i>
+                                                                        <i class="fa fa-eye" title="Lihat Detail"></i>
                                                                     </a>
                                                                 </form>
                                                                 @if ($r->status == 1)
@@ -88,7 +88,7 @@
                                                                         <a href="resigndelete{{ $r->id }}"
                                                                             class="btn btn-danger btn-sm"
                                                                             onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan resign ini?')"><i
-                                                                                class="fa fa-trash"></i></a>
+                                                                                class="fa fa-trash" title="Hapus"></i></a>
                                                                 @endif
                                                                 </form>
                                                             </div>

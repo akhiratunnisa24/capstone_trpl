@@ -347,7 +347,6 @@ class Kernel extends ConsoleKernel
                     $con = $tad->is_alive();
                     if ($con) 
                     {
-                       
                         $attendance = $tad->get_att_log();
                         if ($attendance) 
                         {
@@ -373,7 +372,9 @@ class Kernel extends ConsoleKernel
                                 $matchedUser = $usermesin->where('noid', $pin)->where('partner', $partner)->first();
                                 if ($matchedUser) 
                                 {
-                                    $jadwals = Jadwal::where('tanggal', $tanggal)->where('partner',$matchedUser->partner)->get();
+                                    $jadwals = Jadwal::where('tanggal', $tanggal)
+                                        ->where('partner',$matchedUser->partner)
+                                        ->get();
                                     // dd($data,$matchedUser,$jadwal);
                                     foreach ($jadwals as $jadwal) 
                                     {

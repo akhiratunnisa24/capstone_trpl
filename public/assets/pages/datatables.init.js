@@ -31,7 +31,7 @@
         //creating demo tabels
         // $('#datatable').dataTable();
         // $('#datatable-keytable').DataTable({keys: true});
-        $('#datatable-responsive').DataTable(); 
+        $('#datatable-responsive').DataTable();
         $('#datatable-responsive1').DataTable();
         $('#datatable-responsive2').DataTable();
         $('#datatable-responsive3').DataTable();

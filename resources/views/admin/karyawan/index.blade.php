@@ -52,14 +52,17 @@
                                     <div class="col-md-7">
                                         <div>
                                             <label>Nama Karyawan</label>
-                                            <input type="text" name="query" class="form-control" placeholder="Cari karyawan...">
+                                            <input type="text" name="query" class="form-control"
+                                                placeholder="Cari karyawan...">
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div style="margin-top:5px">
                                             <label></label>
                                             <div>
-                                                <button type="submit" id="search" class="btn btn-md btn-success fa fa-search" style="height: 37px;"> Cari </button>
+                                                <button type="submit" id="search"
+                                                    class="btn btn-md btn-success fa fa-search" style="height: 37px;"> Cari
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -68,64 +71,81 @@
                             </form>
 
                             {{-- <div class="container"> --}}
-                                @if ($query)
-                                    <h4 class="text-center"  style="margin-top:10px;">Hasil Pencarian untuk "{{ $query }}"</h4>
-                                    @if ($results->isEmpty())
-                                        <p>Tidak ada hasil yang ditemukan.</p>
-                                    @else
-                                        <div class="panel-body" style="padding:1%">
-                                            <div class="row" style="margin-top:40px ">
-                                                <div class="col-md-12">
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                            <tr class="info">
-                                                                <th>No</th>
-                                                                <th>Nama</th>
-                                                                <th>Departemen</th>
-                                                                <th>Tanggal Lahir</th>
-                                                                <th>L / P</th>
-                                                                <th>Alamat</th>
-                                                                <th>Email</th>
-                                                                <th>Agama</th>
-                                                                <th>Aksi</th>
+                            @if ($query)
+                                <h4 class="text-center" style="margin-top:10px;">Hasil Pencarian untuk "{{ $query }}"
+                                </h4>
+                                @if ($results->isEmpty())
+                                    <p>Tidak ada hasil yang ditemukan.</p>
+                                @else
+                                    <div class="panel-body" style="padding:1%">
+                                        <div class="row" style="margin-top:40px ">
+                                            <div class="col-md-12">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr class="info">
+                                                            <th>No</th>
+                                                            <th>Nama</th>
+                                                            <th>Departemen</th>
+                                                            <th>Tanggal Lahir</th>
+                                                            <th>L / P</th>
+                                                            <th>Alamat</th>
+                                                            <th>Email</th>
+                                                            <th>Agama</th>
+                                                            <th>Aksi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($results as $k)
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $k->nama }}</td>
+                                                                <td>{{ $k->departemen->nama_departemen ?? '' }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}
+                                                                </td>
+                                                                <td>{{ $k->jenis_kelamin }}</td>
+                                                                <td>{{ $k->alamat }}</td>
+                                                                <td>{{ $k->email }}</td>
+                                                                <td>{{ $k->agama }}</td>
+                                                                <td>
+                                                                    <div class="d-grid gap-2 " role="group"
+                                                                        aria-label="Basic example">
+                                                                        {{-- <a href="karyawanshow{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a> --}}
+
+                                                                        <a href="showidentitas{{ $k->id }}"
+                                                                            class="btn btn-info btn-sm"
+                                                                            title="Lihat Identitas"><i class="fa fa-eye"
+                                                                                style="font-size: 15px;"></i></a>
+                                                                        <a href="showfile{{ $k->id }}"
+                                                                            class="btn btn-success btn-sm "
+                                                                            title="Open Digital File"><i
+                                                                                class="fa fa fa-file-photo-o (alias)"
+                                                                                style="font-size: 15px;"></i></a>
+                                                                        <a href="downloadpdf{{ $k->id }}"
+                                                                            class="btn btn-dark btn-sm "
+                                                                            title="Download PDF" target="_blank"><i
+                                                                                class="fa fa fa-download"
+                                                                                style="font-size: 15px;"></i></a>
+                                                                        <a href="showinformasigaji{{ $k->id }}"
+                                                                            class="btn btn-warning btn-sm "
+                                                                            title="Informasi Gaji"><i
+                                                                                class="mdi mdi-cash-multiple"
+                                                                                style="font-size: 15px;"></i></a>
+                                                                        {{-- <button  onclick="hapus_karyawan({{ $k->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
+                                                                    </div>
+                                                                    <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
+                                                                </td>
+
                                                             </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($results as $k)
-                                                                <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $k->nama }}</td>
-                                                                    <td>{{ $k->departemen->nama_departemen ?? '' }}</td>
-                                                                    <td>{{ \Carbon\Carbon::parse($k->tgllahir)->format('d/m/Y') }}
-                                                                    </td>
-                                                                    <td>{{ $k->jenis_kelamin }}</td>
-                                                                    <td>{{ $k->alamat }}</td>
-                                                                    <td>{{ $k->email }}</td>
-                                                                    <td>{{ $k->agama }}</td>
-                                                                    <td>
-                                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                                            {{-- <a href="karyawanshow{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a> --}}
+                                                        @endforeach
 
-                                                                            <a href="showidentitas{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye" style="font-size: 15px;"></i></a>
-                                                                            <a href="showfile{{ $k->id }}" class="btn btn-success btn-sm " ><i class="fa fa fa-file-photo-o (alias)" style="font-size: 15px;"></i></a>
-                                                                            <a href="downloadpdf{{ $k->id }}" class="btn btn-dark btn-sm " target="_blank" ><i class="fa fa fa-download" style="font-size: 15px;"></i></a>
-                                                                            {{-- <a href="" class="btn btn-warning btn-sm "><i class="mdi mdi-cash-multiple" style="font-size: 15px;"></i></a> --}}
-                                                                            {{-- <button  onclick="hapus_karyawan({{ $k->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
-                                                                        </div>
-                                                                        <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->
-                                                                    </td>
-
-                                                                </tr>
-                                                            @endforeach
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                    @endif
-                                @else
+                                    </div>
                                 @endif
+                            @else
+                            @endif
                             {{-- </div> --}}
 
 
@@ -208,9 +228,11 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
     <!-- jangan lupa menambahkan script js sweet alert di bawah ini  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
@@ -253,23 +275,22 @@
         }
     </script>
 
-    @if(Session::has('pesan'))
+    @if (Session::has('pesan'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
-                button:true,
-                button:"OK",
+            swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+                button: true,
+                button: "OK",
             });
         </script>
     @endif
 
-    @if(Session::has('pesa'))
-    <script>
-        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
-            button:true,
-            button:"OK",
-        });
-    </script>
-@endif
-   
-@endsection
+    @if (Session::has('pesa'))
+        <script>
+            swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+                button: true,
+                button: "OK",
+            });
+        </script>
+    @endif
 
+@endsection

@@ -142,7 +142,7 @@
 
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
 
@@ -243,7 +243,7 @@
                                             <td>
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-3">
@@ -300,12 +300,12 @@
                                             <td>{{ $k->email }}</td>
                                             <td>{{ $k->jenis_kelamin }}</td>
                                             <td>{{ $k->alamat }}</td>
-                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? ''}}</td>
+                                            <td>{{ $k->mrekruitmen->nama_tahapan ?? '' }}</td>
                                             <td>{{ $k->tanggal_tahapan }}</td>
                                             <td>
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-3">
@@ -324,8 +324,8 @@
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
                                                             class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"
+                                                            title="Tolak"></button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -371,7 +371,7 @@
 
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
 
@@ -415,8 +415,8 @@
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
                                                             class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"
+                                                            title="Tolak"></button>
                                                     </form>
                                                 </div>
                                                 {{-- @endif --}}
@@ -462,7 +462,7 @@
                                             <td>
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-3">
@@ -480,8 +480,8 @@
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
                                                             class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"
+                                                            title="Tolak"></button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -522,7 +522,7 @@
                                             <td>
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-3">
@@ -582,7 +582,7 @@
                                             <td>
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-3">
@@ -642,7 +642,7 @@
                                             <td>
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-3">
@@ -660,8 +660,8 @@
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
                                                             class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"
+                                                            title="Tolak"></button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -702,7 +702,7 @@
                                             <td>
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-3">
@@ -720,8 +720,8 @@
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
                                                             class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"
+                                                            title="Tolak"></button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -762,7 +762,7 @@
                                             <td>
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-3">
@@ -780,8 +780,8 @@
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
                                                             class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"
+                                                            title="Tolak"></button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -822,7 +822,7 @@
                                             <td>
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-3">
@@ -840,8 +840,8 @@
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
                                                             class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"
+                                                            title="Tolak"></button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -882,7 +882,7 @@
                                             <td>
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-3">
@@ -900,8 +900,8 @@
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
                                                             class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"
+                                                            title="Tolak"></button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -942,7 +942,7 @@
                                             <td>
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-3">
@@ -960,8 +960,8 @@
                                                         @method('POST')
                                                         <input type="hidden" name="status" value="Ditolak"
                                                             class="form-control" hidden>
-                                                        <button type="submit"
-                                                            class="fa fa-times btn-danger btn-sm"></button>
+                                                        <button type="submit" class="fa fa-times btn-danger btn-sm"
+                                                            title="Tolak"></button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -1010,10 +1010,10 @@
 
                                                 <div class="col-md-3">
                                                     <a href="showkanidat{{ $k->id }}">
-                                                        <i class="fa fa-eye btn-info btn-sm "></i>
+                                                        <i class="fa fa-eye btn-info btn-sm " title="Lihat Detail"></i>
                                                     </a>
                                                 </div>
-                                                
+
                                                 {{-- <div class="col-md-3">
                                                     @csrf
                                                     <a href="#" data-toggle="modal"

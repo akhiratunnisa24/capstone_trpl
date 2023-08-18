@@ -67,7 +67,8 @@
                                                         <td>{{ $data['nama'] }}</td>
                                                         <td>{{ $data['jenis_kelamin'] }}</td>
                                                         {{-- <td>{{ $data['tgllahir'] }}</td> --}}
-                                                        <td>{{ \Carbon\Carbon::parse($data['tgllahir'])->format('d/m/Y') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($data['tgllahir'])->format('d/m/Y') }}
+                                                        </td>
                                                         <td>{{ $data['tempatlahir'] }}</td>
                                                         <td>{{ $data['pendidikan_terakhir'] }}</td>
                                                         <td>{{ $data['pekerjaan'] }}</td>
@@ -76,7 +77,7 @@
                                                                 aria-label="Basic example">
                                                                 <a class="btn btn-sm btn-info" id="editKeluarga"
                                                                     data-key="{{ $key }}">
-                                                                    <i class="fa fa-edit"></i>
+                                                                    <i class="fa fa-edit" title="Edit"></i>
                                                                 </a>
                                                                 {{-- <form class="pull-right"
                                                                     action="/delete-keluarga/{{ $key }}"
@@ -160,7 +161,8 @@
                                                                     <div class="mb-3">
                                                                         <label class="form-label">Tanggal Lahir</label>
                                                                         <div class="input-group">
-                                                                            <input id="datepicker-autoclose-format" type="text" class="form-control"
+                                                                            <input id="datepicker-autoclose-format"
+                                                                                type="text" class="form-control"
                                                                                 placeholder="dd/mm/yyyy"
                                                                                 autocomplete="off"
                                                                                 name="tgllahirPasangan" required>
@@ -207,7 +209,8 @@
                                                                             class="form-control"
                                                                             id="pekerjaanPasangan"
                                                                             aria-describedby="emailHelp"
-                                                                            placeholder="Masukkan Pekerjaan" autocomplete="off">
+                                                                            placeholder="Masukkan Pekerjaan"
+                                                                            autocomplete="off">
                                                                         <div id="emailHelp" class="form-text"></div>
                                                                     </div>
                                                                 </div>
@@ -236,8 +239,8 @@
                                             {{-- </div> --}}
                                         </form>
                                         {{-- /updatedatakeluarga  --}}
-                                        <form action="/update_data_keluarga" method="POST" id="formUpdateDatakeluarga"
-                                            enctype="multipart/form-data">
+                                        <form action="/update_data_keluarga" method="POST"
+                                            id="formUpdateDatakeluarga" enctype="multipart/form-data">
                                             @csrf
                                             @method('post')
                                             <div class="modal-body">
@@ -311,7 +314,8 @@
                                                                     <div class="mb-3">
                                                                         <label class="form-label">Tanggal Lahir</label>
                                                                         <div class="input-group">
-                                                                            <input id="datepicker-autoclose-format2" type="text" class="form-control"
+                                                                            <input id="datepicker-autoclose-format2"
+                                                                                type="text" class="form-control"
                                                                                 placeholder="dd/mm/yyyy"
                                                                                 id="tgllahirPasangan"
                                                                                 autocomplete="off"
@@ -425,7 +429,8 @@
                 $('#nama').val(data.nama);
                 $('#datepicker-autoclose-format2').val(data.tgllahir);
                 var tanggal = new Date(data.tgllahir);
-                var bulan = ("0" + (tanggal.getMonth() + 1)).slice(-2); // Menambahkan 0 di depan jika bulan < 10
+                var bulan = ("0" + (tanggal.getMonth() + 1)).slice(-
+                2); // Menambahkan 0 di depan jika bulan < 10
                 var tanggalFormatted = tanggal.getDate() + '/' + bulan + '/' + tanggal.getFullYear();
                 $('#datepicker-autoclose-format2').val(tanggalFormatted);
                 $('#hubungankeluargaa').val(data.hubungan);
@@ -455,6 +460,6 @@
         });
     </script>
     <!-- datepicker  -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="assets/pages/form-advanced.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/pages/form-advanced.js"></script>
