@@ -113,12 +113,23 @@
                             <li><a href="/divisi"><i class="fa fa-sitemap"></i><span></span>Divisi</a></li>
                             <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a></li>
                             <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>
-                            <li><a href="/user_mesin"><i class="fa fa-user"></i><span></span>User Mesin</a></li>  
-                            <li><a href="/atasan"><i class="mdi mdi-account-star-variant"></i><span></span>Atasan</a></li>  
-                            <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
-                            <li><a href="jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li>
+                            <li><a href="/atasan"><i class="mdi mdi-account-star-variant"></i><span></span>Atasan</a></li> 
                             <li><a href="/informasi"><i class="fa fa-exclamation-circle"></i><span></span>Informasi</a></li>
-                            <li><a href=""><i class="mdi mdi-stethoscope"></i><span></span>Master Benefit</a></li>
+                            <li><a href="/user_mesin"><i class="fa fa-user"></i><span></span>User Mesin</a></li>  
+                            <li class="has_sub">
+                                <a href=""><i class="mdi mdi-calendar-clock"></i><span></span>Jadwal Karyawan<span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="/shift"><i class="mdi mdi-calendar"></i><span></span>Shift</a></li>
+                                    <li><a href="jadwal"><i class="mdi mdi-calendar-multiple-check"></i><span></span>Jadwal</a></li>
+                                </ul>
+                            </li> 
+                            {{-- <li class="has_sub">
+                                <a href=""><i class="mdi mdi-stethoscope"></i><span></span>Master Benefit<span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="/kategori-benefit"><i class="fa fa-reorder (alias)"></i><span></span>Kategori Benefit</a></li>
+                                    <li><a href="/benefit"><i class="mdi mdi-clipboard-text"></i><span></span>Data Benefit</a></li>
+                                </ul>
+                            </li> --}}
                             <li><a href="/manajemen-harilibur"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li>
                             {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li> --}}
                             {{-- <li><a href="#"><i class="fa fa-institution (alias)"></i><span></span>Setting

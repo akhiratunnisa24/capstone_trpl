@@ -16,6 +16,16 @@ class Partner extends Model
         return $this->hasMany(Listmesin::class, 'partner', 'id');
     }
 
+    public function benefits()
+    {
+        return $this->hasMany(Benefit::class, 'partner', 'id');
+    }
+
+    public function kategoribenefits()
+    {
+        return $this->hasMany(Kategoribenefit::class, 'partner', 'id');
+    }
+
     public function users()
     {
         return $this->hasMany(User::class, 'partner', 'id');
