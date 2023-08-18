@@ -28,7 +28,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                data-target="#Add"> Tambah Data Benefit</a>
+                                data-target="#Add"> Tambah Kategori</a>
                         </div>
                         @include('admin.datamaster.benefit.kategori.add')
                         <div class="panel-body">
