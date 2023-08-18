@@ -123,13 +123,13 @@
                                     <li><a href="jadwal"><i class="mdi mdi-calendar-multiple-check"></i><span></span>Jadwal</a></li>
                                 </ul>
                             </li> 
-                            {{-- <li class="has_sub">
+                            <li class="has_sub">
                                 <a href=""><i class="mdi mdi-stethoscope"></i><span></span>Master Benefit<span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="/kategori-benefit"><i class="fa fa-reorder (alias)"></i><span></span>Kategori Benefit</a></li>
                                     <li><a href="/benefit"><i class="mdi mdi-clipboard-text"></i><span></span>Data Benefit</a></li>
                                 </ul>
-                            </li> --}}
+                            </li>
                             <li><a href="/manajemen-harilibur"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li>
                             {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li> --}}
                             {{-- <li><a href="#"><i class="fa fa-institution (alias)"></i><span></span>Setting
