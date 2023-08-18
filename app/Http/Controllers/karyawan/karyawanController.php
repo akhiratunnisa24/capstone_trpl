@@ -285,7 +285,7 @@ class karyawanController extends Controller
                 ->where('partner',$row->partner)
                 ->where('terlambat', '!=',null)
                 ->count();
-           
+
             $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
@@ -306,7 +306,7 @@ class karyawanController extends Controller
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->whereDay('tanggal', '=', Carbon::now())
                 ->get();
-            $jumAbsen = $absenHarini->count(); 
+            $jumAbsen = $absenHarini->count();
 
             // $alokasi = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
             //     ->whereYear('aktif_dari', '=', Carbon::now()->year)
@@ -2567,7 +2567,7 @@ class karyawanController extends Controller
             $absenBulanLalu = Absensi::with('karyawan')
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-                ->where('partner',Auth::user()->partner)  
+                ->where('partner',Auth::user()->partner)
                 ->get();
 
             $output = [
@@ -2595,7 +2595,7 @@ class karyawanController extends Controller
             //     ->where('partner',Auth::user()->partner)
             //     ->whereTime('jam_masuk', '>', '08:00:00')
             //     ->get();
-    
+
                 $jdwl = Jadwal::where('partner',Auth::user()->partner)->whereDay('tanggal', '=', Carbon::now())->first();
                 $terlambat = Absensi::with('karyawan')
                     ->whereYear('tanggal', '=', Carbon::now()->year)
@@ -3089,7 +3089,7 @@ class karyawanController extends Controller
     {
         $idk = Karyawan::findorFail($id);
         $nilaiNull = null;
-       
+
         $r_pendidikan = array(
             'id_pegawai' => $idk->id,
             'tingkat' => null,
@@ -3110,5 +3110,28 @@ class karyawanController extends Controller
         );
         Rpendidikan::insert($r_pendidikan);
         return redirect()->back()->withInput();
+    }
+    public function showinformasigaji($id)
+    {
+        $role = Auth::user()->role;
+
+        if ($role == 1 || $role == 2) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+
+            $karyawan = karyawan::findOrFail($id);
+            $file = File::where('id_pegawai', $id)->first();
+
+            $output = [
+                'row' => $row,
+                'karyawan' => $karyawan,
+                'file' => $file,
+            ];
+
+            return view('admin.karyawan.showInformasigaji', $output);
+        } else {
+
+            return redirect()->back();
+        }
     }
 }

@@ -21,16 +21,16 @@
 </head>
 
 <div class="container">
-        <!-- Page-Title -->
-        <div class="row" style="margin-top: 30px">
-            <div class="col-sm-12">
-                <div class="page-header-title">
-                    <h4 class="pull-left page-title">Form Penerimaan Rekruitmen</h4>
+    <!-- Page-Title -->
+    <div class="row" style="margin-top: 30px">
+        <div class="col-sm-12">
+            <div class="page-header-title">
+                <h4 class="pull-left page-title">Form Penerimaan Rekruitmen</h4>
 
-                    <div class="clearfix"></div>
-                </div>
+                <div class="clearfix"></div>
             </div>
         </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">
@@ -65,14 +65,16 @@
                                                 {{-- <td>{{ $pek['tgl_mulai'] }}</td>
                                                 <td>{{ $pek['tgl_selesai'] }}</td> --}}
                                                 <td>{{ \Carbon\Carbon::parse($pek['tgl_mulai'])->format('d/m/Y') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_selesai'])->format('d/m/Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_selesai'])->format('d/m/Y') }}
+                                                </td>
                                                 <td>{{ $pek['jabatan'] }}</td>
                                                 <td>{{ $pek['no_sk'] }}</td>
                                                 <td class="text-center">
-                                                    <div class="row d-grid gap-2" role="group" aria-label="Basic example">
+                                                    <div class="row d-grid gap-2" role="group"
+                                                        aria-label="Basic example">
                                                         <a href="#formUpdateOrganisasi" class="btn btn-sm btn-info"
                                                             id="editOrganisasi" data-key="{{ $key }}">
-                                                            <i class="fa fa-edit"></i>
+                                                            <i class="fa fa-edit" title="Edit"></i>
                                                         </a>
                                                         {{-- /delete-pekerjaan/{{$key}} --}}
                                                         {{-- <form class="pull-right" action="" method="POST"
@@ -120,7 +122,8 @@
                                                                     <label class="form-label">Alamat </label>
                                                                     <input type="text" name="alamatOrganisasi"
                                                                         class="form-control" id="alamat"
-                                                                        placeholder="Masukkan Alamat" autocomplete="off">
+                                                                        placeholder="Masukkan Alamat"
+                                                                        autocomplete="off">
                                                                 </div>
                                                             </div>
 
@@ -131,11 +134,13 @@
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range">
                                                                             <input type="text" class="form-control"
-                                                                                name="tglmulai" autocomplete="off" placeholder="dd/mm/yyyy" />
+                                                                                name="tglmulai" autocomplete="off"
+                                                                                placeholder="dd/mm/yyyy" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tglselesai"  autocomplete="off" placeholder="dd/mm/yyyy" />
+                                                                                name="tglselesai" autocomplete="off"
+                                                                                placeholder="dd/mm/yyyy" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -152,7 +157,8 @@
                                                                     <label for="exampleInputEmail1"
                                                                         class="form-label">Jabatan Terakhir</label>
                                                                     <input type="text" name="jabatanRorganisasi"
-                                                                        class="form-control" placeholder="Masukkan Jabatan"
+                                                                        class="form-control"
+                                                                        placeholder="Masukkan Jabatan"
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
@@ -160,26 +166,31 @@
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
-                                                                        class="form-label">No. Surat Keterangan / SK</label>
+                                                                        class="form-label">No. Surat Keterangan /
+                                                                        SK</label>
                                                                     <input type="text" name="noSKorganisasi"
-                                                                        class="form-control" placeholder="Masukkan Nomor SK"
+                                                                        class="form-control"
+                                                                        placeholder="Masukkan Nomor SK"
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
 
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="pull-left">
-                                                        <a href="/create_data_pekerjaan" class="btn btn-sm btn-info"><i
-                                                                class="fa fa-backward"></i> Sebelumnya</a>
+                                                        <a href="/create_data_pekerjaan"
+                                                            class="btn btn-sm btn-info"><i class="fa fa-backward"></i>
+                                                            Sebelumnya</a>
                                                     </div>
                                                     <div class="pull-right">
                                                         <button type="submit" name="submit"
                                                             class="btn btn-sm btn-dark"> Simpan</button>
-                                                            <a href="/create_data_prestasi" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
+                                                        <a href="/create_data_prestasi"
+                                                            class="btn btn-sm btn-success">Selanjutnya <i
+                                                                class="fa fa-forward"></i></a>
                                                         {{-- <a href="/preview-data-karyawan"
                                                             class="btn btn-sm btn-primary">Lihat Data <i
                                                                 class="fa fa-forward"></i></a> --}}
@@ -195,82 +206,84 @@
                                     @method('post')
                                     <div class="modal-body">
                                         {{-- <table class="table table-bordered table-striped"> --}}
-                                        <input type="text" name="nomor_index" id="nomor_index_update" value="" hidden>
+                                        <input type="text" name="nomor_index" id="nomor_index_update"
+                                            value="" hidden>
                                         <div class="col-md-12">
                                             <div class="row">
-                                                        <div>
-                                                            <div
-                                                                class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                                <label class="text-white m-b-10">F. RIWAYAT
-                                                                    ORGANISASI</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 m-t-10">
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Nama Organisasi</label>
-                                                                    <input type="text" name="namaOrganisasi" id="namaOrganisasi"
-                                                                        class="form-control"
-                                                                        placeholder="Masukkan Nama Perusahaan"
-                                                                        autocomplete="off">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Alamat </label>
-                                                                    <input type="text" name="alamatOrganisasi"
-                                                                        class="form-control" id="alamatOrganisasi"
-                                                                        placeholder="Masukkan Alamat">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Lama Bertugas</label>
-                                                                    <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range2">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tglmulai" id="tglmulai" autocomplete="off" />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tglselesai" id="tglselesai" autocomplete="off" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                        {{-- KANAN --}}
-                                                        <div class="col-md-6 m-t-10">
-
-
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1"
-                                                                        class="form-label">Jabatan Terakhir</label>
-                                                                    <input type="text" name="jabatanRorganisasi" id="jabatanRorganisasi"
-                                                                        class="form-control" placeholder="Masukkan Jabatan"
-                                                                        autocomplete="off">
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label for="exampleInputEmail1"
-                                                                        class="form-label">No. Surat Keterangan / SK</label>
-                                                                    <input type="text" name="noSKorganisasi" id="noSKorganisasi"
-                                                                        class="form-control" placeholder="Masukkan Nomor SK"
-                                                                        autocomplete="off">
-                                                                </div>
-                                                            </div>
-
-                                                            
+                                                <div>
+                                                    <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
+                                                        <label class="text-white m-b-10">F. RIWAYAT
+                                                            ORGANISASI</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 m-t-10">
+                                                    <div class="form-group">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Nama Organisasi</label>
+                                                            <input type="text" name="namaOrganisasi"
+                                                                id="namaOrganisasi" class="form-control"
+                                                                placeholder="Masukkan Nama Perusahaan"
+                                                                autocomplete="off">
                                                         </div>
                                                     </div>
+
+                                                    <div class="form-group">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Alamat </label>
+                                                            <input type="text" name="alamatOrganisasi"
+                                                                class="form-control" id="alamatOrganisasi"
+                                                                placeholder="Masukkan Alamat">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Lama Bertugas</label>
+                                                            <div>
+                                                                <div class="input-daterange input-group"
+                                                                    id="date-range2">
+                                                                    <input type="text" class="form-control"
+                                                                        name="tglmulai" id="tglmulai"
+                                                                        autocomplete="off" />
+                                                                    <span
+                                                                        class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                    <input type="text" class="form-control"
+                                                                        name="tglselesai" id="tglselesai"
+                                                                        autocomplete="off" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                {{-- KANAN --}}
+                                                <div class="col-md-6 m-t-10">
+
+
+                                                    <div class="form-group">
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputEmail1" class="form-label">Jabatan
+                                                                Terakhir</label>
+                                                            <input type="text" name="jabatanRorganisasi"
+                                                                id="jabatanRorganisasi" class="form-control"
+                                                                placeholder="Masukkan Jabatan" autocomplete="off">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="mb-3">
+                                                            <label for="exampleInputEmail1" class="form-label">No.
+                                                                Surat Keterangan / SK</label>
+                                                            <input type="text" name="noSKorganisasi"
+                                                                id="noSKorganisasi" class="form-control"
+                                                                placeholder="Masukkan Nomor SK" autocomplete="off">
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="pull-left">
@@ -278,9 +291,12 @@
                                                         class="fa fa-backward"></i> Sebelumnya</a>
                                             </div>
                                             <div class="pull-right">
-                                                <button type="submit" name="submit" class="btn btn-sm btn-dark"> Update
+                                                <button type="submit" name="submit" class="btn btn-sm btn-dark">
+                                                    Update
                                                     Data</button>
-                                                            <a href="/create_data_prestasi" class="btn btn-sm btn-success">Selanjutnya <i class="fa fa-forward"></i></a>
+                                                <a href="/create_data_prestasi"
+                                                    class="btn btn-sm btn-success">Selanjutnya <i
+                                                        class="fa fa-forward"></i></a>
                                                 {{-- <a href="/preview-data-karyawan" class="btn btn-sm btn-primary">Lihat Data
                                                     <i class="fa fa-forward"></i></a> --}}
                                             </div>
@@ -324,12 +340,14 @@
                 // $('#datepicker-autoclose33').val(data.tgl_mulai);
                 // $('#datepicker-autoclose34').val(data.tgl_selesai);
                 var tanggal = new Date(data.tgl_mulai);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tglmulai').val(tanggalFormatted);
+                var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
+                .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                $('#tglmulai').val(tanggalFormatted);
 
-                    var tanggal = new Date(data.tgl_selesai);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tglselesai').val(tanggalFormatted);
+                var tanggal = new Date(data.tgl_selesai);
+                var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
+                .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                $('#tglselesai').val(tanggalFormatted);
 
                 $('#jabatanRorganisasi').val(data.jabatan);
                 $('#noSKorganisasi').val(data.no_sk);
@@ -338,6 +356,6 @@
     </script>
 
     <!-- datepicker  -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="assets/pages/form-advanced.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/pages/form-advanced.js"></script>

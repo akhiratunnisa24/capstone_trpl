@@ -55,7 +55,8 @@
                                                     <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
                                                         data-target="#addKontak"
                                                         style="margin-right:10px;margin-bottom:10px">
-                                                        <i class="fa fa-plus"> <strong> Tambah Data Kontak Darurat</strong></i>
+                                                        <i class="fa fa-plus"> <strong> Tambah Data Kontak
+                                                                Darurat</strong></i>
                                                     </a>
                                                     @include('admin.karyawan.addKontak')
                                                     <table class="table table-bordered table-striped">
@@ -82,9 +83,13 @@
                                                                             data-toggle="modal"
                                                                             data-target="#editDarurat{{ $kondar->id }}"
                                                                             style="margin-right:10px">
-                                                                            <i class="fa fa-edit"></i>
+                                                                            <i class="fa fa-edit" title="Edit"></i>
                                                                         </a>
-                                                                        <button onclick="hapus_karyawan({{ $kondar->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                                                        <button
+                                                                            onclick="hapus_karyawan({{ $kondar->id }})"
+                                                                            class="btn btn-danger btn-sm"><i
+                                                                                class="fa fa-trash"
+                                                                                title="Hapus"></i></button>
                                                                     </td>
                                                                 </tr>
                                                                 @include('admin.karyawan.editKontakdarurat')
@@ -96,10 +101,10 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                 <a href="showkeluarga{{ $karyawan->id }}" class="btn btn-sm btn-info"
+                                                <a href="showkeluarga{{ $karyawan->id }}" class="btn btn-sm btn-info"
                                                     type="button">Sebelumnya <i class="fa fa-backward"></i></a>
-                                                <a href="karyawan" class="btn btn-sm btn-danger"
-                                                    type="button">Kembali <i class="fa fa-home"></i></a>
+                                                <a href="karyawan" class="btn btn-sm btn-danger" type="button">Kembali <i
+                                                        class="fa fa-home"></i></a>
                                             </div>
                                     </div>
                                 </div>

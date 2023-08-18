@@ -81,8 +81,10 @@
                                                                     {{-- <td>{{ $org->tgl_mulai }}</td> --}}
                                                                     {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_mulai)->format('d/m/Y') }}</td>
                                                                     <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_selesai)->format('d/m/Y') }}</td> --}}
-                                                                    <td>{{ $org->tgl_mulai ? \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_mulai)->format('d/m/Y') : '' }}</td>
-                                                                    <td>{{ $org->tgl_selesai ? \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_selesai)->format('d/m/Y') : '' }}</td>
+                                                                    <td>{{ $org->tgl_mulai ? \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_mulai)->format('d/m/Y') : '' }}
+                                                                    </td>
+                                                                    <td>{{ $org->tgl_selesai ? \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_selesai)->format('d/m/Y') : '' }}
+                                                                    </td>
 
                                                                     {{-- <td>{{ $org->tgl_selesai }}</td> --}}
                                                                     <td>{{ $org->jabatan }}</td>
@@ -92,9 +94,13 @@
                                                                             data-toggle="modal"
                                                                             data-target="#editPekerjaan{{ $org->id }}"
                                                                             style="margin-right:10px">
-                                                                            <i class="fa fa-edit"></i>
+                                                                            <i class="fa fa-edit" title="Edit"></i>
                                                                         </a>
-                                                                        <button onclick="hapus_karyawan({{ $org->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                                                        <button
+                                                                            onclick="hapus_karyawan({{ $org->id }})"
+                                                                            class="btn btn-danger btn-sm"><i
+                                                                                class="fa fa-trash"
+                                                                                title="Hapus"></i></button>
                                                                     </td>
                                                                 </tr>
                                                                 @include('admin.karyawan.editOrganisasi')
@@ -102,11 +108,11 @@
                                                         </tbody>
                                                     </table>
 
-                                                    
+
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                 <a href="showpekerjaan{{ $karyawan->id }}" class="btn btn-sm btn-info"
+                                                <a href="showpekerjaan{{ $karyawan->id }}" class="btn btn-sm btn-info"
                                                     type="button">Sebelumnya <i class="fa fa-backward"></i></a>
                                                 <a href="showprestasi{{ $karyawan->id }}" class="btn btn-sm btn-success"
                                                     type="button">Selanjutnya <i class="fa fa-forward"></i></a>
@@ -122,7 +128,7 @@
         </div>
     </div>
 
-       <script>
+    <script>
         function hapus_karyawan(id) {
             swal.fire({
                 title: "Apakah anda yakin ?",
@@ -146,6 +152,4 @@
             })
         }
     </script>
-
-
 @endsection

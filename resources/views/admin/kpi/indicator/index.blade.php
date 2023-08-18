@@ -27,13 +27,17 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
-                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#addIndikator"> Tambah Indikator</a>
-                            <a href="" class="btn btn-sm btn-dark fa fa-edit pull-right" data-toggle="modal" data-target="#editIndikator">  Edit Indikator</a>
+                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
+                                data-target="#addIndikator"> Tambah Indikator</a>
+                            <a href="" class="btn btn-sm btn-dark fa fa-edit pull-right" data-toggle="modal"
+                                data-target="#editIndikator"> Edit Indikator</a>
                         </div>
                         @include('admin.kpi.indicator.addIndikator')
                         @include('admin.kpi.indicator.editIndikator')
                         <div class="panel-body">
-                            <table id="datatable-responsive13" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                            <table id="datatable-responsive13"
+                                class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
+                                width="100%">
 
                                 <thead>
                                     <tr>
@@ -51,19 +55,22 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $data->id_master }}</td>
-                                            <td>{{ $data->indikator}}</td>
-                                            <td>{{ $data->bobot}}</td>
+                                            <td>{{ $data->indikator }}</td>
+                                            <td>{{ $data->bobot }}</td>
                                             <td>{{ $data->target }}</td>
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                    <a class="btn btn-success btn-sm editJob" data-toggle="modal" 
-                                                       data-target="#editJob{{$data->id}}"><i class="fa fa-edit"></i>
+                                                    <a class="btn btn-success btn-sm editJob" data-toggle="modal"
+                                                        data-target="#editJob{{ $data->id }}"><i class="fa fa-edit"
+                                                            title="Edit"></i>
                                                     </a>
 
-                                                    <button class="btn btn-danger btn-sm" onclick="hapus({{ $data->id }})"><i class="fa fa-trash"></i></button>
+                                                    <button class="btn btn-danger btn-sm"
+                                                        onclick="hapus({{ $data->id }})"><i class="fa fa-trash"
+                                                            title="Hapus"></i></button>
                                                 </div>
                                             </td>
-                                        </tr> 
+                                        </tr>
                                         {{-- @include('admin.kpi.job.editJob') --}}
                                     @endforeach
                                 </tbody>
@@ -77,26 +84,26 @@
 
     <!-- sweet alert -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
 
-    @if(Session::has('pesan'))
+    @if (Session::has('pesan'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
-                button:true,
-                button:"OK",
+            swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+                button: true,
+                button: "OK",
             });
         </script>
     @endif
 
-    @if(Session::has('pesa'))
+    @if (Session::has('pesa'))
         <script>
-            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
-                button:true,
-                button:"OK",
+            swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+                button: true,
+                button: "OK",
             });
         </script>
     @endif
