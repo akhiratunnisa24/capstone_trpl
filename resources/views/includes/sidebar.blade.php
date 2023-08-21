@@ -60,8 +60,7 @@
                     </li>
 
                     <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-walk"></i><span
-                                class="text-info panel-title">Cuti & Sakit/Ijin</span><span class="pull-right"><i
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-walk"></i><span class="text-info panel-title">Cuti & Sakit/Ijin</span><span class="pull-right"><i
                                     class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Ijin</span></a>
@@ -90,8 +89,23 @@
                         </ul>
                     </li> --}}
 
-                    <li><a href="/data_rekrutmen" class="waves-effect"><i class="fa fa-user-plus"></i><span
-                                class="text-info panel-title">Rekruitmen</span></a></li>
+                    <li><a href="/data_rekrutmen" class="waves-effect"><i class="fa fa-user-plus"></i><span class="text-info panel-title">Rekruitmen</span></a></li>
+                    
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-card-details"></i><span class="text-info panel-title">Benefit</span><span class="pull-right"><i
+                            class="mdi mdi-plus"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li class="has_sub">
+                                <a href="#"><i class="mdi mdi-stethoscope"></i><span>Benefit </span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="/kategori-benefit"><i class="fa fa-reorder (alias)"></i><span>Kategori Benefit</span></a></li>
+                                    <li><a href="/benefit"><i class="mdi mdi-clipboard-text"></i><span></span>Data Benefit</a></li>
+                                    <li><a href="/benefit-karyawan"><i class="mdi mdi-account-star-variant"></i><span></span>Benefit Karyawan</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/"><i class="mdi mdi-cash-usd"></i><span></span>Kompensasi</a></li>
+                        </ul>
+                    </li>
                     <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span
                                 class="text-info panel-title">Managemen User</span></a></li>
 
@@ -123,13 +137,6 @@
                                     <li><a href="jadwal"><i class="mdi mdi-calendar-multiple-check"></i><span></span>Jadwal</a></li>
                                 </ul>
                             </li> 
-                            <li class="has_sub">
-                                <a href=""><i class="mdi mdi-stethoscope"></i><span></span>Master Benefit<span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
-                                <ul class="list-unstyled">
-                                    <li><a href="/kategori-benefit"><i class="fa fa-reorder (alias)"></i><span></span>Kategori Benefit</a></li>
-                                    <li><a href="/benefit"><i class="mdi mdi-clipboard-text"></i><span></span>Data Benefit</a></li>
-                                </ul>
-                            </li>
                             <li><a href="/manajemen-harilibur"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li>
                             {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li> --}}
                             {{-- <li><a href="#"><i class="fa fa-institution (alias)"></i><span></span>Setting

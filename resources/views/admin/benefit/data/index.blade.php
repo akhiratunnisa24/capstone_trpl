@@ -67,36 +67,37 @@
                                             @endif
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                    <a class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#show{{$data->id}}"><i class="fa fa-eye"></i>
+                                                    </a>
                                                     <a class="btn btn-success btn-sm editDepartmen" data-toggle="modal" 
                                                        data-target="#edit{{$data->id}}"><i class="fa fa-edit"></i>
                                                     </a>
-
-                                                    <a class="btn btn-success btn-sm" data-toggle="modal" 
-                                                       data-target="#show{{$data->id}}"><i class="fa fa-eye"></i>
-                                                    </a>
-                                        
-                                                
+                                                    
                                                 @if($role == 5)
                                                     <button class="btn btn-danger btn-sm" onclick="hapus({{ $data->id }})"><i class="fa fa-trash"></i></button>
                                                 @endif
                                                 </div>
                                             </td>
                                         </tr>
-                                        @include('admin.datamaster.benefit.data.edit')
-                                       
+                                        @include('admin.datamaster.benefit.data.edit')  
                                     @endforeach
-                                     {{-- @include('admin.datamaster.benefit.data.show') --}}
                                 </tbody>
                             </table>
                         </div>
                         @include('admin.datamaster.benefit.data.add')
+                       
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+
+    @foreach ($benefit as $data)
+        @include('admin.datamaster.benefit.data.view')
+    @endforeach
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>

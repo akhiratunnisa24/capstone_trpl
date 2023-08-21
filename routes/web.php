@@ -53,6 +53,7 @@ use App\Http\Controllers\manager\TimKaryawanController;
 use App\Http\Controllers\admin\SettingabsensiController;
 use App\Http\Controllers\karyawan\KpikaryawanController;
 use App\Http\Controllers\superadmin\ListmesinController;
+use App\Http\Controllers\admin\BenefitkaryawanController;
 use App\Http\Controllers\admin\KategoriBenefitController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
@@ -750,6 +751,7 @@ Route::post('/benefit', [BenefitController::class, 'store'])->name('benefit.stor
 Route::put('/benefi/update/{id}', [BenefitController::class, 'update'])->name('benefit.update');
 Route::get('/benefit/delete/{id}', [BenefitController::class, 'destroy'])->name('benefit.delete');
 
+Route::get('/benefit-karyawan', [BenefitkaryawanController::class, 'index'])->name('benefitkaryawan');
 
 
 
