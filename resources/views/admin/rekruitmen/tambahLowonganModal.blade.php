@@ -39,7 +39,7 @@
                         <label for="roles">Pilih Tahapan</label>
                         <label for="urutan" class="pull-right">Urutan</label>
                         <div class="clearfix"></div>
-                        @foreach ($metode as $m)    
+                        @foreach ($metode as $m)
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -68,9 +68,11 @@
                         <label class="form-label">Periode Lamaran</label>
                         <div>
                             <div class="input-daterange input-group" id="date-range">
-                                <input type="text" class="form-control" name="tglmulai" autocomplete="off" required/>
+                                <input type="text" class="form-control" name="tglmulai" autocomplete="off"
+                                    required />
                                 <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                <input type="text" class="form-control" name="tglselesai" autocomplete="off" required/>
+                                <input type="text" class="form-control" name="tglselesai" autocomplete="off"
+                                    required />
                             </div>
                         </div>
                     </div>
@@ -80,7 +82,7 @@
                         <label class="form-label">Persyaratan</label>
                         <textarea type="text" class="form-control " rows="9" name="persyaratan" placeholder="Masukkan Persyaratan"
                             required></textarea>
-                        <input type="hidden" class="form-control " name="partner" value="{{Auth::user()->partner}}">
+                        <input type="hidden" class="form-control " name="partner" value="{{ Auth::user()->partner }}">
                     </div>
 
 

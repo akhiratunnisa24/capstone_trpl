@@ -15,7 +15,7 @@ class DetailSalaryStructure extends Model
         'id',
         'id_salary_structure',
         'id_benefit',
-    ]
+    ];
     protected $guarded = [];
 
     public function salary()

@@ -17,7 +17,7 @@ class SalaryStructure extends Model
         'partner',
         'parent',
         'reference',
-    ]
+    ];
     protected $guarded = [];
 
     public function partners()
@@ -27,6 +27,6 @@ class SalaryStructure extends Model
 
     public function detail_salary()
     {
-        return $this->hasMany(DetailSalaryStructure::class, 'id_salary_structure','id');
+        return $this->hasMany(DetailSalaryStructure::class, 'id_salary_structure');
     }
 }

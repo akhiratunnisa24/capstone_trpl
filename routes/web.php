@@ -758,7 +758,7 @@ Route::post('/kategori-salary', [KategoriSalaryController::class, 'store'])->nam
 Route::put('/kategori-update/{id}', [KategoriSalaryController::class, 'update'])->name('kategorisalary.update');
 Route::get('/kategori-delete/{id}', [KategoriSalaryController::class, 'destroy'])->name('kategorisalary.delete');
 
-//benefit
+//Salary
 Route::get('/salary', [SalaryController::class, 'index'])->name('salary');
 Route::post('/salary', [SalaryController::class, 'store'])->name('salary.store');
 Route::put('/salary/update/{id}', [SalaryController::class, 'update'])->name('salary.update');
