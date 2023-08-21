@@ -1,5 +1,13 @@
 @extends('layouts.default')
 @section('content')
+    <style>
+        .checkbox-group 
+        {
+            display: flex; /* Mengatur elemen-elemen dalam baris */
+            align-items: center; /* Menyelaraskan elemen secara vertikal */
+            gap: 20px; /* Jarak antara elemen-elemen */
+        }
+    </style>
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
@@ -59,11 +67,14 @@
                                             @endif
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                @if($data->partner !== 0)
                                                     <a class="btn btn-success btn-sm editDepartmen" data-toggle="modal" 
                                                        data-target="#edit{{$data->id}}"><i class="fa fa-edit"></i>
                                                     </a>
-                                                @endif 
+
+                                                    <a class="btn btn-success btn-sm" data-toggle="modal" 
+                                                       data-target="#show{{$data->id}}"><i class="fa fa-eye"></i>
+                                                    </a>
+                                        
                                                 
                                                 @if($role == 5)
                                                     <button class="btn btn-danger btn-sm" onclick="hapus({{ $data->id }})"><i class="fa fa-trash"></i></button>
@@ -72,7 +83,9 @@
                                             </td>
                                         </tr>
                                         @include('admin.datamaster.benefit.data.edit')
+                                       
                                     @endforeach
+                                     {{-- @include('admin.datamaster.benefit.data.show') --}}
                                 </tbody>
                             </table>
                         </div>

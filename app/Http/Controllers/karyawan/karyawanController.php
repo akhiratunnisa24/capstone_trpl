@@ -3111,6 +3111,7 @@ class karyawanController extends Controller
         Rpendidikan::insert($r_pendidikan);
         return redirect()->back()->withInput();
     }
+    
     public function showinformasigaji($id)
     {
         $role = Auth::user()->role;

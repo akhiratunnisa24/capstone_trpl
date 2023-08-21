@@ -72,7 +72,7 @@
                                                                 <label class="form-label col-sm-5 text-end">Tanggal
                                                                     Masuk</label>
                                                                 <div class="col-sm-7">
-                                                                    : {{ date('d F Y', strtotime($karyawan->tglmasuk)) }}
+                                                                    :  {{ \Carbon\carbon::parse($karyawan->tglmasuk)->format('d/m/Y') }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -97,7 +97,7 @@
                                                                 <div class="col-sm-7">
                                                                     @if ($karyawan->tglkeluar)
                                                                         :
-                                                                        {{ date('d F Y', strtotime($karyawan->tglkeluar)) }}
+                                                                        {{ \Carbon\carbon::parse($karyawan->tglkeluar)->format('d/m/Y') }}
                                                                     @else
                                                                         : -
                                                                     @endif

@@ -1,6 +1,5 @@
-{{-- FORM TAMBAH KATEGORI CUTI --}}
 <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -17,11 +16,7 @@
                                     <label class="col-form-label">Nama</label>
                                     <input type="text" class="form-control" name="nama_benefit" placeholder="Masukkan Nama Benefit"  autocomplete="off">
                                 </div>
-                                <div class="form-group col-sm">
-                                    <label class="col-form-label">Kode</label>
-                                    <input type="text" class="form-control" name="kode" placeholder="Masukkan Kode" autocomplete="off">
-                                </div>
-                                <div class="form-group col-sm">
+                                <div class="form-group col-sm" id="kategori_benefit">
                                     <label  class="col-form-label">Kategori Benefit</label>
                                     <select name="id_kategori" id="id_kategori" class="form-control selectpicker" data-live-search="true" required>
                                         <option>-- Pilih Kategori Benefit --</option>
@@ -32,44 +27,76 @@
                                         @endforeach
                                     </select> 
                                 </div>
-                                <div class="form-group col-sm">
-                                    <div class="checkbox-group">
-                                        <label class="col-form-label">Status</label>
-                                        <div class="checkboxes">
-                                            <input type="checkbox" name="aktif" value="Aktif"> Aktif
-                                        </div>
-                                    </div>
+                                
+                                <div class="form-group col-sm"  id="siklus_pembayaran">
+                                    <label  class="col-form-label">Tipe Pembayaran</label>
+                                    <select name="siklus_pembayaran" class="form-control selectpicker" data-live-search="true" required>
+                                        <option value="">-- Pilih Siklus --</option>
+                                        <option value="Bulan">Bulan</option>
+                                        <option value="Minggu">Minggu</option>
+                                        <option value="Hari">Hari</option>
+                                        <option value="THR">THR</option>
+                                        <option value="Bonus">Bonus</option>
+                                    </select> 
+                                </div>
+                                <div class="form-group col-sm" id="besaran_bulanan">
+                                    <label class="col-form-label">Nominal / Bulan</label>
+                                    <input type="text" class="form-control"  name="besaran_bulanan" placeholder="Masukkan Nominal" autocomplete="off">
+                                </div>
+                                <div class="form-group col-sm" id="besaran_mingguan">
+                                    <label class="col-form-label">Nominal / Minggu</label>
+                                    <input type="text" class="form-control"  name="besaran_mingguan" placeholder="Masukkan Nominal" autocomplete="off">
+                                </div>
+                                <div class="form-group col-sm"  id="besaran_harian">
+                                    <label class="col-form-label">Nominal / Hari</label>
+                                    <input type="text" class="form-control" name="besaran_harian" placeholder="Masukkan Nominal" autocomplete="off">
+                                </div>
+                                <div class="form-group col-sm" id="besaran">
+                                    <label class="col-form-label">Nominal </label>
+                                    <input type="text" class="form-control"  name="besaran" placeholder="Masukkan Nominal" autocomplete="off">
                                 </div>
                                
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group col-sm">
-                                    <label  class="col-form-label">Siklus Pembayaran</label>
-                                    <select name="siklus_pembayaran" class="form-control selectpicker" data-live-search="true" required>
-                                        <option value="">-- Pilih Siklus --</option>
-                                        <option value="Bulanan">Bulanan</option>
-                                        <option value="Mingguan">Mingguan</option>
-                                        <option value="Harian">Harian</option>
-                                    </select> 
+                                    <label class="col-form-label">Kode</label>
+                                    <input type="text" class="form-control" name="kode" placeholder="Masukkan Kode" autocomplete="off" required>
+                                </div>
+                                <div class="form-group col-sm">
+                                    <div class="checkbox-group">
+                                        <label class="col-form-label">Status</label>
+                                        <div class="checkboxes">
+                                            <input type="checkbox" name="aktif" value="Aktif" style="margin-left:98px"> Aktif
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group col-sm">
                                     <div class="checkbox-group">
                                         <label class="col-form-label">Dikenakan Pajak </label>
                                         <div class="checkboxes">
-                                            <input type="checkbox" name="dikenakan_pajak" value="Ya"> Ya
+                                            <input type="checkbox" name="dikenakan_pajak" value="Ya" style="margin-left:35px"> Ya
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-sm m-t-30">
+                                <div class="form-group col-sm">
                                     <label  class="col-form-label">Kelas Pajak </label>
-                                    <select name="kelas_pajak" class="form-control selectpicker" data-live-search="true" required>
+                                    <select name="kelas_pajak" class="form-control selectpicker" data-live-search="true">
                                         <option value="">-- Pilih Kelas Pajak --</option>
                                         <option value="Penghasilan Teratur">Penghasilan Teratur</option>
                                         <option value="Penghasilan Tidak Teratur">Penghasilan Tidak Teratur</option>
                                     </select> 
                                 </div>
                                 <div class="form-group col-sm">
+                                    <label  class="col-form-label">Tipe</label>
+                                    <select name="tipe" class="form-control selectpicker" data-live-search="true">
+                                        <option value="">-- Pilih Tipe --</option>
+                                        <option value="Komponen Tetap">Komponen Tetap</option>
+                                        <option value="Komponen Tidak Tetap">Komponen Tidak Tetap</option>
+                                    </select> 
+                                </div>
+                                
+                                <div class="form-group col-sm m-b-30">
                                     <div class="checkbox-group">
                                         <label class="col-form-label">Muncul Di Penggajian</label>
                                         <div class="checkboxes">
@@ -77,11 +104,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                
                             </div>
 
                             <input id="partner" type="hidden" class="form-control" name="partner" value="{{Auth::user()->partner}}" autocomplete="off" >
-                    <div class="modal-footer">
+                    <div class="modal-footer m-t-30">
                         <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-success waves-effect waves-light" name="submit"
                             value="save">Simpan</button>
@@ -91,3 +117,89 @@
         </div>
     </div>
 </div>
+
+<script src="assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#besaran_bulanan').prop("hidden", true);
+        $('#besaran_mingguan').prop("hidden", true);
+        $('#besaran_harian').prop("hidden", true);
+        $('#besaran').prop("hidden", true);
+
+        $('#kategori_benefit').on('change', function(a) 
+        {
+            if(a.target.value !== '1' || a.target.value !== '2' || a.target.value !== '3') 
+            {
+                $('#siklus_pembayaran').on('change', function(e) 
+                {
+                    if (e.target.value == "Bulan") 
+                    {
+                        $('#besaran_bulanan').prop("hidden", false);
+                        $('#besaran_mingguan').prop("hidden", true);
+                        $('#besaran_harian').prop("hidden", true);
+                        $('#besaran').prop("hidden", true);
+
+                        $('#besaran_bulanan input').prop("required", true);
+                        $('#besaran_mingguan input').prop("required", false);
+                        $('#besaran_harian input').prop("required", false);
+                        $('#besaran input').prop("required", false);
+                    } 
+                    else if (e.target.value == "Minggu") 
+                    {
+                        $('#besaran_bulanan').prop("hidden", true);
+                        $('#besaran_mingguan').prop("hidden", false);
+                        $('#besaran_harian').prop("hidden", true);
+                        $('#besaran').prop("hidden", true);
+
+                        $('#besaran_bulanan input').prop("required", false);
+                        $('#besaran_mingguan input').prop("required", true);
+                        $('#besaran_harian input').prop("required", false);
+                        $('#besaran input').prop("required", false);
+                    } 
+                    else if (e.target.value == "Hari") 
+                    {
+                        $('#besaran_bulanan').prop("hidden", true);
+                        $('#besaran_mingguan').prop("hidden", true);
+                        $('#besaran_harian').prop("hidden", false);
+                        $('#besaran').prop("hidden", true);
+
+                        $('#besaran_bulanan input').prop("required", false);
+                        $('#besaran_mingguan input').prop("required", false);
+                        $('#besaran_harian input').prop("required", true);
+                        $('#besaran input').prop("required", false);
+                    } 
+                    else 
+                    {
+                        $('#besaran_bulanan').prop("hidden", true);
+                        $('#besaran_mingguan').prop("hidden", true);
+                        $('#besaran_harian').prop("hidden", true);
+                        $('#besaran').prop("hidden", false);
+
+                        $('#besaran_bulanan input').prop("required", false);
+                        $('#besaran_mingguan input').prop("required", false);
+                        $('#besaran_harian input').prop("required", false);
+                        $('#besaran input').prop("required", true);
+                    }
+                });
+            }
+            else
+            {
+                $('#siklus_pembayaran').on('change', function(e) 
+                {
+                   
+                        $('#besaran_bulanan').prop("hidden", true);
+                        $('#besaran_mingguan').prop("hidden", true);
+                        $('#besaran_harian').prop("hidden", true);
+                        $('#besaran').prop("hidden", true);
+
+                        $('#besaran_bulanan input').prop("required", false);
+                        $('#besaran_mingguan input').prop("required", false);
+                        $('#besaran_harian input').prop("required", false);
+                        $('#besaran input').prop("required", false);
+                    
+                });
+            }
+               
+        });
+    });
+</script>
