@@ -1,5 +1,5 @@
 <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -35,25 +35,30 @@
                                         <option value="Bulan">Bulan</option>
                                         <option value="Minggu">Minggu</option>
                                         <option value="Hari">Hari</option>
+                                        <option value="Jam">Jam</option>
                                         <option value="THR">THR</option>
                                         <option value="Bonus">Bonus</option>
                                     </select> 
                                 </div>
                                 <div class="form-group col-sm" id="besaran_bulanan">
                                     <label class="col-form-label">Nominal / Bulan</label>
-                                    <input type="text" class="form-control"  name="besaran_bulanan" placeholder="Masukkan Nominal" autocomplete="off">
+                                    <input type="text" class="form-control input-format"  name="besaran_bulanan" placeholder="Masukkan Nominal" autocomplete="off">
                                 </div>
                                 <div class="form-group col-sm" id="besaran_mingguan">
                                     <label class="col-form-label">Nominal / Minggu</label>
-                                    <input type="text" class="form-control"  name="besaran_mingguan" placeholder="Masukkan Nominal" autocomplete="off">
+                                    <input type="text" class="form-control input-format"  name="besaran_mingguan" placeholder="Masukkan Nominal" autocomplete="off">
                                 </div>
                                 <div class="form-group col-sm"  id="besaran_harian">
                                     <label class="col-form-label">Nominal / Hari</label>
-                                    <input type="text" class="form-control" name="besaran_harian" placeholder="Masukkan Nominal" autocomplete="off">
+                                    <input type="text" class="form-control input-format" name="besaran_harian" placeholder="Masukkan Nominal" autocomplete="off">
+                                </div>
+                                <div class="form-group col-sm"  id="besaran_jam">
+                                    <label class="col-form-label">Nominal / Jam</label>
+                                    <input type="text" class="form-control input-format" name="besaran_jam" placeholder="Masukkan Nominal" autocomplete="off">
                                 </div>
                                 <div class="form-group col-sm" id="besaran">
                                     <label class="col-form-label">Nominal </label>
-                                    <input type="text" class="form-control"  name="besaran" placeholder="Masukkan Nominal" autocomplete="off">
+                                    <input type="text" class="form-control input-format"  name="besaran" placeholder="Masukkan Nominal" autocomplete="off">
                                 </div>
                                
                             </div>
@@ -119,87 +124,102 @@
 </div>
 
 <script src="assets/js/jquery.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputFormats = document.querySelectorAll('.input-format');
+    
+        inputFormats.forEach(input => {
+            input.addEventListener('input', function() {
+                const value = parseFloat(this.value.replace(/\./g, '').replace(/,/g, ''));
+                if (!isNaN(value)) {
+                    const formattedValue = new Intl.NumberFormat('id-ID').format(value);
+                    this.value = formattedValue;
+                }
+            });
+        });
+    });
+</script>    
+
 <script type="text/javascript">
-    $(function() {
+
+    $(document).ready(function(){
         $('#besaran_bulanan').prop("hidden", true);
         $('#besaran_mingguan').prop("hidden", true);
         $('#besaran_harian').prop("hidden", true);
+        $('#besaran_jam').prop("hidden", true);
         $('#besaran').prop("hidden", true);
-
-        $('#kategori_benefit').on('change', function(a) 
+        $('#siklus_pembayaran').on('change', function(e) 
         {
-            if(a.target.value !== '1' || a.target.value !== '2' || a.target.value !== '3') 
+            if (e.target.value == "Bulan") 
             {
-                $('#siklus_pembayaran').on('change', function(e) 
-                {
-                    if (e.target.value == "Bulan") 
-                    {
-                        $('#besaran_bulanan').prop("hidden", false);
-                        $('#besaran_mingguan').prop("hidden", true);
-                        $('#besaran_harian').prop("hidden", true);
-                        $('#besaran').prop("hidden", true);
+                $('#besaran_bulanan').prop("hidden", false);
+                $('#besaran_mingguan').prop("hidden", true);
+                $('#besaran_harian').prop("hidden", true);
+                $('#besaran_jam').prop("hidden", true);
+                $('#besaran').prop("hidden", true);
 
-                        $('#besaran_bulanan input').prop("required", true);
-                        $('#besaran_mingguan input').prop("required", false);
-                        $('#besaran_harian input').prop("required", false);
-                        $('#besaran input').prop("required", false);
-                    } 
-                    else if (e.target.value == "Minggu") 
-                    {
-                        $('#besaran_bulanan').prop("hidden", true);
-                        $('#besaran_mingguan').prop("hidden", false);
-                        $('#besaran_harian').prop("hidden", true);
-                        $('#besaran').prop("hidden", true);
-
-                        $('#besaran_bulanan input').prop("required", false);
-                        $('#besaran_mingguan input').prop("required", true);
-                        $('#besaran_harian input').prop("required", false);
-                        $('#besaran input').prop("required", false);
-                    } 
-                    else if (e.target.value == "Hari") 
-                    {
-                        $('#besaran_bulanan').prop("hidden", true);
-                        $('#besaran_mingguan').prop("hidden", true);
-                        $('#besaran_harian').prop("hidden", false);
-                        $('#besaran').prop("hidden", true);
-
-                        $('#besaran_bulanan input').prop("required", false);
-                        $('#besaran_mingguan input').prop("required", false);
-                        $('#besaran_harian input').prop("required", true);
-                        $('#besaran input').prop("required", false);
-                    } 
-                    else 
-                    {
-                        $('#besaran_bulanan').prop("hidden", true);
-                        $('#besaran_mingguan').prop("hidden", true);
-                        $('#besaran_harian').prop("hidden", true);
-                        $('#besaran').prop("hidden", false);
-
-                        $('#besaran_bulanan input').prop("required", false);
-                        $('#besaran_mingguan input').prop("required", false);
-                        $('#besaran_harian input').prop("required", false);
-                        $('#besaran input').prop("required", true);
-                    }
-                });
-            }
-            else
+                $('#besaran_bulanan input').prop("required", true);
+                $('#besaran_mingguan input').prop("required", false);
+                $('#besaran_harian input').prop("required", false);
+                $('#besaran_jam input').prop("required", false);
+                $('#besaran input').prop("required", false);
+            } 
+            else if (e.target.value == "Minggu") 
             {
-                $('#siklus_pembayaran').on('change', function(e) 
-                {
-                   
-                        $('#besaran_bulanan').prop("hidden", true);
-                        $('#besaran_mingguan').prop("hidden", true);
-                        $('#besaran_harian').prop("hidden", true);
-                        $('#besaran').prop("hidden", true);
+                $('#besaran_bulanan').prop("hidden", true);
+                $('#besaran_mingguan').prop("hidden", false);
+                $('#besaran_harian').prop("hidden", true);
+                $('#besaran_jam').prop("hidden", true);
+                $('#besaran').prop("hidden", true);
 
-                        $('#besaran_bulanan input').prop("required", false);
-                        $('#besaran_mingguan input').prop("required", false);
-                        $('#besaran_harian input').prop("required", false);
-                        $('#besaran input').prop("required", false);
-                    
-                });
+                $('#besaran_bulanan input').prop("required", false);
+                $('#besaran_mingguan input').prop("required", true);
+                $('#besaran_harian input').prop("required", false);
+                $('#besaran_jam input').prop("required", false);
+                $('#besaran input').prop("required", false);
+            } 
+            else if (e.target.value == "Hari") 
+            {
+                $('#besaran_bulanan').prop("hidden", true);
+                $('#besaran_mingguan').prop("hidden", true);
+                $('#besaran_harian').prop("hidden", false);
+                $('#besaran_jam').prop("hidden", true);
+                $('#besaran').prop("hidden", true);
+
+                $('#besaran_bulanan input').prop("required", false);
+                $('#besaran_mingguan input').prop("required", false);
+                $('#besaran_harian input').prop("required", true);
+                $('#besaran_jam input').prop("required", false);
+                $('#besaran input').prop("required", false);
             }
-               
+            else if (e.target.value == "Jam") 
+            {
+                $('#besaran_bulanan').prop("hidden", true);
+                $('#besaran_mingguan').prop("hidden", true);
+                $('#besaran_harian').prop("hidden", true);
+                $('#besaran_jam').prop("hidden", false);
+                $('#besaran').prop("hidden", true);
+
+                $('#besaran_bulanan input').prop("required", false);
+                $('#besaran_mingguan input').prop("required", false);
+                $('#besaran_harian input').prop("required", false);
+                $('#besaran_jam input').prop("required", true);
+                $('#besaran input').prop("required", false);
+            }  
+            else 
+            {
+                $('#besaran_bulanan').prop("hidden", true);
+                $('#besaran_mingguan').prop("hidden", true);
+                $('#besaran_harian').prop("hidden", true);
+                $('#besaran_jam').prop("hidden", true);
+                $('#besaran').prop("hidden", false);
+
+                $('#besaran_bulanan input').prop("required", false);
+                $('#besaran_mingguan input').prop("required", false);
+                $('#besaran_harian input').prop("required", false);
+                $('#besaran_jam input').prop("required", false);
+                $('#besaran input').prop("required", true);
+            }
         });
     });
 </script>

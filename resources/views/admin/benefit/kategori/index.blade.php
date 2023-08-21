@@ -30,7 +30,7 @@
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                 data-target="#Add"> Tambah Kategori</a>
                         </div>
-                        @include('admin.datamaster.benefit.kategori.add')
+                        @include('admin.benefit.kategori.add')
                         <div class="panel-body">
                             <table id="datatable-responsive44" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
@@ -69,7 +69,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        @include('admin.datamaster.benefit.kategori.edit')
+                                        @include('admin.benefit.kategori.edit')
                                     @endforeach
                                 </tbody>
                             </table>

@@ -19,7 +19,10 @@ class Benefit extends Model
         'tipe',
         'muncul_dipenggajian',
         'siklus_pembayaran',
-       
+        'besaran_bulanan',
+        'besaran_mingguan',
+        'besaran_jam',
+        'besaran',
         'partner'
     ];
 

@@ -54,6 +54,7 @@ use App\Http\Controllers\manager\TimKaryawanController;
 use App\Http\Controllers\admin\SettingabsensiController;
 use App\Http\Controllers\karyawan\KpikaryawanController;
 use App\Http\Controllers\superadmin\ListmesinController;
+use App\Http\Controllers\admin\BenefitkaryawanController;
 use App\Http\Controllers\admin\KategoriBenefitController;
 use App\Http\Controllers\admin\KategoriSalaryController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
