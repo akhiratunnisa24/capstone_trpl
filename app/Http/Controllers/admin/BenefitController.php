@@ -34,7 +34,7 @@ class BenefitController extends Controller
                     })
                     ->get();
 
-            return view('admin.datamaster.benefit.data.index',compact('kategori','benefit','row','role'));
+            return view('admin.benefit.data.index',compact('kategori','benefit','row','role'));
         }
         else
         {

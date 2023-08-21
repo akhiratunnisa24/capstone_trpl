@@ -36,13 +36,13 @@ class KategoriBenefitController extends Controller
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $kategori = Kategoribenefit::where('partner', Auth::user()->partner)->orWhere('partner', 0)->orderBy('id', 'asc')->get();
-            return view('admin.datamaster.benefit.kategori.index', compact('kategori', 'row','role'));
+            return view('admin.benefit.kategori.index', compact('kategori', 'row','role'));
         } elseif ($role == 5) 
         {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $kategori = Kategoribenefit::orderBy('id', 'asc')->get();
-            return view('admin.datamaster.benefit.kategori.index', compact('kategori', 'row','role'));
+            return view('admin.benefit.kategori.index', compact('kategori', 'row','role'));
         }
         else {
 

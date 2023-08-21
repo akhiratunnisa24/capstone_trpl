@@ -80,12 +80,12 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        @include('admin.datamaster.benefit.data.edit')  
+                                        @include('admin.benefit.data.edit')  
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        @include('admin.datamaster.benefit.data.add')
+                        @include('admin.benefit.data.add')
                        
                     </div>
                 </div>
@@ -94,7 +94,7 @@
     </div>
 
     @foreach ($benefit as $data)
-        @include('admin.datamaster.benefit.data.view')
+        @include('admin.benefit.data.view')
     @endforeach
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
