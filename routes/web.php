@@ -15,6 +15,7 @@ use App\Http\Controllers\admin\AtasanController;
 use App\Http\Controllers\admin\UploadController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\BenefitController;
+use App\Http\Controllers\admin\SalaryController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\AbsensisController;
@@ -55,6 +56,7 @@ use App\Http\Controllers\karyawan\KpikaryawanController;
 use App\Http\Controllers\superadmin\ListmesinController;
 use App\Http\Controllers\admin\BenefitkaryawanController;
 use App\Http\Controllers\admin\KategoriBenefitController;
+use App\Http\Controllers\admin\KategoriSalaryController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
 use App\Http\Controllers\manager\TugasKaryawanController;
@@ -751,7 +753,19 @@ Route::post('/benefit', [BenefitController::class, 'store'])->name('benefit.stor
 Route::put('/benefi/update/{id}', [BenefitController::class, 'update'])->name('benefit.update');
 Route::get('/benefit/delete/{id}', [BenefitController::class, 'destroy'])->name('benefit.delete');
 
-Route::get('/benefit-karyawan', [BenefitkaryawanController::class, 'index'])->name('benefitkaryawan');
+//master Salary
+Route::get('/kategori-salary', [KategoriSalaryController::class, 'index'])->name('kategorisalary.index');
+Route::post('/kategori-salary', [KategoriSalaryController::class, 'store'])->name('kategori.salary');
+Route::put('/kategori-update/{id}', [KategoriSalaryController::class, 'update'])->name('kategorisalary.update');
+Route::get('/kategori-delete/{id}', [KategoriSalaryController::class, 'destroy'])->name('kategorisalary.delete');
+
+//Salary
+Route::get('/salary', [SalaryController::class, 'index'])->name('salary');
+Route::post('/salary', [SalaryController::class, 'store'])->name('salary.store');
+Route::put('/salary/update/{id}', [SalaryController::class, 'update'])->name('salary.update');
+Route::get('/salary/delete/{id}', [SalaryController::class, 'destroy'])->name('salary.delete');
+
+
 
 
 

@@ -35,4 +35,8 @@ class Benefit extends Model
     {
         return $this->belongsTo(Kategoribenefit::class,'id_kategori','id');
     }
+    public function detail_salarys()
+    {
+        return $this->hasMany(DetailSalaryStructure::class, 'id_benefit','id');
+    }
 }

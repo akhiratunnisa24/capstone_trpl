@@ -14,7 +14,9 @@
             $id = Auth::user()->id_pegawai;
             $user = Auth::user()->name;
             $role = Auth::user()->role;
-            $row = Karyawan::where('id', Auth::user()->id_pegawai)->select('jabatan')->first();
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)
+                ->select('jabatan')
+                ->first();
             
             ?>
 
@@ -27,11 +29,13 @@
         </div>
 
         {{-- Role HRD Manager --}}
-        @if (Auth::check() && Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 2)
+        @if ((Auth::check() && Auth::user()->role == 1) || (Auth::check() && Auth::user()->role == 2))
             <div id="sidebar-menu">
                 <ul>
-                    <li><a href="/" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>
-                    <li><a href="/kalender" class="waves-effect"><i class="fa fa-calendar"></i><span class="text-info panel-title">Kalender</span></a></li>
+                    <li><a href="/" class="waves-effect"><i class="ti-home"></i><span
+                                class="text-info panel-title">Dashboard</span></a></li>
+                    <li><a href="/kalender" class="waves-effect"><i class="fa fa-calendar"></i><span
+                                class="text-info panel-title">Kalender</span></a></li>
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span
                                 class="text-info panel-title">Informasi Pribadi</span><span class="pull-right"><i
@@ -42,20 +46,28 @@
                             <li><a href="/riwayat-absensi"><i class="fa fa-history"></i><span>Riwayat
                                         Absensi</span></a></li>
                             <li><a href="/alokasi-cuti"><i class="mdi mdi-walk"></i><span>Alokasi Cuti</span></a> </li>
-                            <li><a href="/cuti-karyawan"><i class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a>
-                            <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
+                            <li><a href="/cuti-karyawan"><i class="mdi mdi-walk"></i><span>Permohonan Cuti &
+                                        Sakit/Ijin</span></a>
+                            <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan
+                                        Resign</span></a>
                             </li>
                         </ul>
                     </li>
 
-                    <li><a href="{{ route('karyawan.index') }}" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title">Data Karyawan</span></a></li>
+                    <li><a href="{{ route('karyawan.index') }}" class="waves-effect"><i
+                                class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title">Data
+                                Karyawan</span></a></li>
                     <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span class="text-info panel-title">Absensi Karyawan</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span
+                                class="text-info panel-title">Absensi Karyawan</span><span class="pull-right"><i
+                                    class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             {{-- <li><a href=""><i class=" mdi mdi-account-card-details"></i><span>Manajemen Absensi</span></a></li> --}}
                             <li><a href="/absensi"><i class="ion-compose"></i><span>Data Absensi</span></a></li>
-                            <li><a href="/absensi-tidak-masuk"><i class="mdi mdi-calendar-remove"></i><span>Data Tidak Masuk</span></a></li>
-                            <li><a href="/setting-absensi"><i class="fa fa-gear (alias)"></i><span>Setting Absensi</span></a></li>
+                            <li><a href="/absensi-tidak-masuk"><i class="mdi mdi-calendar-remove"></i><span>Data Tidak
+                                        Masuk</span></a></li>
+                            <li><a href="/setting-absensi"><i class="fa fa-gear (alias)"></i><span>Setting
+                                        Absensi</span></a></li>
                         </ul>
                     </li>
 
@@ -69,9 +81,11 @@
                                         Ijin</span></a></li>
                             <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a>
                             </li>
-                            <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc"></i><span>Master Alokasi Cuti</span></a>
+                            <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc"></i><span>Master Alokasi
+                                        Cuti</span></a>
                             </li>
-                            <li><a href="/settingcuti"><i class="fa fa-gear (alias)"></i><span>Setting Cuti Tahunan</span></a>
+                            <li><a href="/settingcuti"><i class="fa fa-gear (alias)"></i><span>Setting Cuti
+                                        Tahunan</span></a>
                             </li>
                             <li><a href="/sisacuti"><i class="fa fa-hourglass-2"></i><span>Sisa Cuti</span></a></li>
                         </ul>
@@ -113,10 +127,10 @@
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-off"></i><span
                                 class="text-info panel-title">Data Resign</span><span class="pull-right"><i
                                     class="mdi mdi-plus"></i></span></a>
-                                <ul class="list-unstyled">
-                                    <li><a href="/resign_admin"><i class="fa fa-server"></i><span>Resign Karyawan</span></a>
-                                    </li>
-                                </ul>
+                        <ul class="list-unstyled">
+                            <li><a href="/resign_admin"><i class="fa fa-server"></i><span>Resign Karyawan</span></a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="has_sub">
@@ -125,19 +139,47 @@
                                     class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <li><a href="/divisi"><i class="fa fa-sitemap"></i><span></span>Divisi</a></li>
-                            <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a></li>
+                            <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a>
+                            </li>
                             <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>
-                            <li><a href="/atasan"><i class="mdi mdi-account-star-variant"></i><span></span>Atasan</a></li> 
-                            <li><a href="/informasi"><i class="fa fa-exclamation-circle"></i><span></span>Informasi</a></li>
-                            <li><a href="/user_mesin"><i class="fa fa-user"></i><span></span>User Mesin</a></li>  
+                            <li><a href="/atasan"><i class="mdi mdi-account-star-variant"></i><span></span>Atasan</a>
+                            </li>
+                            <li><a href="/informasi"><i
+                                        class="fa fa-exclamation-circle"></i><span></span>Informasi</a></li>
+                            <li><a href="/user_mesin"><i class="fa fa-user"></i><span></span>User Mesin</a></li>
                             <li class="has_sub">
-                                <a href=""><i class="mdi mdi-calendar-clock"></i><span></span>Jadwal Karyawan<span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <a href=""><i class="mdi mdi-calendar-clock"></i><span></span>Jadwal
+                                    Karyawan<span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="/shift"><i class="mdi mdi-calendar"></i><span></span>Shift</a></li>
-                                    <li><a href="jadwal"><i class="mdi mdi-calendar-multiple-check"></i><span></span>Jadwal</a></li>
+                                    <li><a href="jadwal"><i
+                                                class="mdi mdi-calendar-multiple-check"></i><span></span>Jadwal</a>
+                                    </li>
                                 </ul>
-                            </li> 
-                            <li><a href="/manajemen-harilibur"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li>
+                            </li>
+                            <li class="has_sub">
+                                <a href=""><i class="mdi mdi-stethoscope"></i><span></span>Master Benefit<span
+                                        class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="/kategori-benefit"><i
+                                                class="fa fa-reorder (alias)"></i><span></span>Kategori Benefit</a>
+                                    </li>
+                                    <li><a href="/benefit"><i class="mdi mdi-clipboard-text"></i><span></span>Data
+                                            Benefit</a></li>
+                                </ul>
+                            </li>
+                            <li class="has_sub">
+                                <a href=""><i class="mdi mdi-stethoscope"></i><span></span>Master Salary<span
+                                        class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="/kategori-salary"><i
+                                                class="fa fa-reorder (alias)"></i><span></span>Kategori Salary</a></li>
+                                    <li><a href="/salary"><i class="mdi mdi-clipboard-text"></i><span></span>Data
+                                            Salary</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/manajemen-harilibur"><i class="ti-calendar"></i><span>Manajemen
+                                        Libur</span></a></li>
                             {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li> --}}
                             {{-- <li><a href="#"><i class="fa fa-institution (alias)"></i><span></span>Setting
                                     Organisasi</a></li> --}}
@@ -167,7 +209,8 @@
                             {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Setting Role</a></li> --}}
                             {{-- <li><a href="settinguser"><i class="fa fa-group (alias)"></i><span></span>Managemen
                                     User</a></li> --}}
-                            <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
+                            <li><a href="/setting-organisasi"><i
+                                        class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
                             {{-- <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li> --}}
                         </ul>
                     </li>
@@ -180,12 +223,16 @@
         @if (Auth::check() && Auth::user()->role == 4)
             <div id="sidebar-menu">
                 <ul>
-                    <li><a href="/karyawandashboard" class="waves-effect"><i class="ti-home"></i><span class="text-info panel-title">Dashboard</span></a></li>
+                    <li><a href="/karyawandashboard" class="waves-effect"><i class="ti-home"></i><span
+                                class="text-info panel-title">Dashboard</span></a></li>
                     <li><a href="kalender"><i class="fa fa-calendar"></i><span>Kalender</span></a></li>
                     {{-- <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li> --}}
-                    <li><a href="/riwayat-absensi" class="waves-effect"><i class="fa fa-history"></i><span>Riwayat Absensi</span></a></li>
-                    <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a></li>
-                    <li><a href="/resign-karyawan" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
+                    <li><a href="/riwayat-absensi" class="waves-effect"><i class="fa fa-history"></i><span>Riwayat
+                                Absensi</span></a></li>
+                    <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Permohonan
+                                Cuti & Sakit/Ijin</span></a></li>
+                    <li><a href="/resign-karyawan" class="waves-effect"><i
+                                class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
                 </ul>
             </div>
         @endif
@@ -195,9 +242,9 @@
             <div id="sidebar-menu">
                 <ul>
                     <li><a href="/karyawandashboard" class="waves-effect"><i class="ti-home"></i><span
-                        class="text-info panel-title">Dashboard</span></a></li>
-                    <li><a href="kalender"  class="waves-effect"><i class="fa fa-calendar"></i><span
-                        class="text-info panel-title">Kalender</span></a></li>
+                                class="text-info panel-title">Dashboard</span></a></li>
+                    <li><a href="kalender" class="waves-effect"><i class="fa fa-calendar"></i><span
+                                class="text-info panel-title">Kalender</span></a></li>
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i
                                 class="mdi mdi-book-open-page-variant"></i><span
@@ -205,27 +252,36 @@
                                 Pribadi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
                             <!-- <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li> -->
-                            <li><a href="/riwayat-absensi" class="waves-effect"><i class="fa fa-history"></i><span>Riwayat Absensi</span></a>
+                            <li><a href="/riwayat-absensi" class="waves-effect"><i
+                                        class="fa fa-history"></i><span>Riwayat Absensi</span></a>
                             </li>
-                            <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a></li>
-                            <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
+                            <li><a href="/cuti-karyawan" class="waves-effect"><i
+                                        class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a></li>
+                            <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan
+                                        Resign</span></a>
                         </ul>
                     </li>
 
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book"></i><span
-                                class="text-info panel-title">Data Staff</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                class="text-info panel-title">Data Staff</span><span class="pull-right"><i
+                                    class="mdi mdi-plus"></i></span></a>
                         <ul class="list-unstyled">
-                            <li> <a href="/data-staff" class="waves-effect"><i class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
+                            <li> <a href="/data-staff" class="waves-effect"><i
+                                        class="mdi mdi-account-multiple-plus"></i><span>Data Staff</span></a>
                             </li>
-                            @if($row->jabatan == "Manager" || $row->jabatan == "Asistant Manager")
-                                <li><a href="/absensi-staff" class="waves-effect"><i class="ion-compose"></i><span>Absensi</span></a></li>
-                                <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti</span></a></li>
-                            @elseif($row->jabatan == "Direksi")
-                                <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Data Cuti</span></a></li>
+                            @if ($row->jabatan == 'Manager' || $row->jabatan == 'Asistant Manager')
+                                <li><a href="/absensi-staff" class="waves-effect"><i
+                                            class="ion-compose"></i><span>Absensi</span></a></li>
+                                <li><a href="/cuti-staff" class="waves-effect"><i class="fa fa-server"></i><span>Data
+                                            Cuti</span></a></li>
+                            @elseif($row->jabatan == 'Direksi')
+                                <li><a href="/cutistaff" class="waves-effect"><i class="fa fa-server"></i><span>Data
+                                            Cuti</span></a></li>
                             @else
                             @endif
-                            <li><a href="/resign_manager" class="waves-effect"><i class="mdi mdi-account-off"></i><span>Data Resign</span></a></li>
+                            <li><a href="/resign_manager" class="waves-effect"><i
+                                        class="mdi mdi-account-off"></i><span>Data Resign</span></a></li>
                         </ul>
                     </li>
                     {{-- <li class="has_sub">
@@ -247,22 +303,29 @@
                 <ul>
                     <li>
                         <a href="#" class="waves-effect"><i class="ti-home"></i><span>Dashboard</span></a>
-                        <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span
-                                    class="text-info panel-title">Master Aplikasi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
-                            <ul class="list-unstyled">
-                                <li><a href="/partner"><i class="mdi mdi-walk"></i><span>Partner</span></a> </li>
-                                <li><a href="/list-mesin"><i class="mdi mdi-walk"></i><span>List Mesin</span></a> </li> 
-                                <li><a href="/user_mesin"><i class="fa fa-user"></i><span>User Mesin</span></a></li> 
-                                <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
-                                <li><a href="/jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li> 
-                                <li><a href="/divisi"><i class="fa fa-sitemap"></i><span></span>Divisi</a></li>
-                                <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Managemen User</span></a></li>
-                                <li><a href="settingrole" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span>Setting Role Login</span></a></li>
-                                <li><a href="/setting-organisasi"><i class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
-                                <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li>
-                            </ul>
-                        </li>
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i
+                                class="mdi mdi-account-circle"></i><span class="text-info panel-title">Master
+                                Aplikasi</span><span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li><a href="/partner"><i class="mdi mdi-walk"></i><span>Partner</span></a> </li>
+                            <li><a href="/list-mesin"><i class="mdi mdi-walk"></i><span>List Mesin</span></a> </li>
+                            <li><a href="/user_mesin"><i class="fa fa-user"></i><span>User Mesin</span></a></li>
+                            <li><a href="/shift"><i class="fa fa-calendar-check-o"></i><span></span>Shift</a></li>
+                            <li><a href="/jadwal"><i class="fa fa-calendar-check-o"></i><span></span>Jadwal</a></li>
+                            <li><a href="/divisi"><i class="fa fa-sitemap"></i><span></span>Divisi</a></li>
+                            <li><a href="settinguser" class="waves-effect"><i
+                                        class="mdi mdi-account-settings-variant"></i><span>Managemen User</span></a>
+                            </li>
+                            <li><a href="settingrole" class="waves-effect"><i
+                                        class="mdi mdi-account-settings-variant"></i><span>Setting Role
+                                        Login</span></a></li>
+                            <li><a href="/setting-organisasi"><i
+                                        class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
+                            <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Manajemen
+                                        Libur</span></a></li>
+                        </ul>
+                    </li>
                     </li>
                 </ul>
             </div>
@@ -272,7 +335,3 @@
     </div> <!-- end sidebarinner -->
 </div>
 <div class="content-page">
-
-
-
-
