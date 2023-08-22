@@ -13,17 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('benefit', function (Blueprint $table) {
+        Schema::create('benefit_karyawan', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_benefit');
-            $table->integer('id_kategori');
-            $table->string('kode');
-            $table->string('aktif');
-            $table->string('dikenakan_pajak');
-            $table->string('kelas_pajak');
-            $table->string('tipe');
-            $table->boolean('muncul_dipenggajian');
-            $table->string('siklus_pembayaran');
+            $table->integer('id_karyawan');
+            $table->integer('id_struktur_gaji');
+            $table->integer('id_detailstrukturgaji');
             $table->integer('partner');
             $table->timestamps();
         });
@@ -36,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('benefit');
+        Schema::dropIfExists('benefit_karyawan');
     }
 };

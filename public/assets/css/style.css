@@ -1483,6 +1483,7 @@ File: Components
     margin-bottom: 0;
     margin-top: 0;
     font-family: "Prompt", sans-serif;
+    font-size: 13px;
 }
 .panel-footer {
     background: #fafafa;

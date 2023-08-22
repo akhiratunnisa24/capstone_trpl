@@ -19,6 +19,10 @@ class Benefit extends Model
         'tipe',
         'muncul_dipenggajian',
         'siklus_pembayaran',
+        'besaran_bulanan',
+        'besaran_mingguan',
+        'besaran_jam',
+        'besaran',
         'partner'
     ];
 
@@ -30,5 +34,9 @@ class Benefit extends Model
     public function kategoribenefits()
     {
         return $this->belongsTo(Kategoribenefit::class,'id_kategori','id');
+    }
+    public function detail_salarys()
+    {
+        return $this->hasMany(DetailSalaryStructure::class, 'id_benefit','id');
     }
 }

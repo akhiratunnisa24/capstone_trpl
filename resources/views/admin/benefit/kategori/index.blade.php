@@ -5,11 +5,11 @@
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Benefit</h4>
+                <h4 class="pull-left page-title">Kategori Benefit</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Rynest Employee Management System</li>
-                    <li class="active">Benefit</li>
+                    <li class="active">Kategori Benefit</li>
                 </ol>
 
                 <div class="clearfix">
@@ -28,18 +28,17 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                data-target="#Modal"> Tambah Data Benefit</a>
+                                data-target="#Add"> Tambah Kategori</a>
                         </div>
-                      
+                        @include('admin.benefit.kategori.add')
                         <div class="panel-body">
                             <table id="datatable-responsive44" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama</th>
+                                        <th>Nama Benefit</th>
                                         <th>Kode</th>
-                                        <th>Kategori</th>
                                         @if($role == 5)
                                             <th>Partner</th>
                                         @endif
@@ -48,12 +47,11 @@
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($benefit as $data)
+                                    @foreach ($kategori as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $data->nama_benefit }}</td>
+                                            <td>{{ $data->nama_kategori }}</td>
                                             <td>{{ $data->kode }}</td>
-                                            <td>{{ $data->kategoribenefits->nama_kategori }}</td>
                                             @if($role == 5)
                                                 <td>{{ $data->partner }}</td>
                                             @endif
@@ -71,12 +69,11 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        @include('admin.datamaster.benefit.data.edit')
+                                        @include('admin.benefit.kategori.edit')
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        @include('admin.datamaster.benefit.data.add')
                     </div>
                 </div>
             </div>
@@ -130,7 +127,7 @@
                         icon: "info",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= '/benefit/delete' ?>' + id;
+                    location.href = '<?= '/kategori-benefit/delete' ?>' + id;
                 }
             })
         }

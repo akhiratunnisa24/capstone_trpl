@@ -71,4 +71,8 @@ class Partner extends Model
         return $this->hasMany(UserMesin::class, 'partner', 'id');
     }
 
+    public function benefitkaryawans()
+    {
+        return $this->hasMany(Benefitkaryawan::class, 'partner', 'id');
+    }
 }
