@@ -47,13 +47,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-sm m-b-30">
-                                    <div class="checkbox-group">
-                                        <label class="col-form-label">Urutan</label>
-                                        <div class="checkboxes">
-                                            <input type="text" class="form-control" name="urutan" autocomplete="off" required>
-                                        </div>
-                                    </div>
+                                <div class="form-group col-sm">
+                                    <label class="col-form-label">Urutan</label>
+                                    <input type="text" id="urutan" class="form-control" name="urutan" autocomplete="off" readonly>
                                 </div>
                             </div>
 
@@ -138,7 +134,30 @@
 </div>
 
 <script src="assets/js/jquery.min.js"></script>
-<script>
+
+<script type="text/javascript">
+   $('#id_kategori').on('change', function(e) {
+        var id_kategori = e.target.value;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: '{{ route('getUrutanPotongan') }}',
+            data: {
+                'id_kategori': id_kategori
+            },
+            success: function(data) {
+                $('#urutan').val(data.urutan);
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         const inputFormats = document.querySelectorAll('.input-format');
     

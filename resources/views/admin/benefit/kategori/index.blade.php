@@ -26,9 +26,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-primary">
-                        <div class="panel-heading  clearfix">
+                        <div class="panel-heading  clearfix" style="height:35px">
+                        @if($role == 5)
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                 data-target="#Add"> Tambah Kategori</a>
+                        @endif
                         </div>
                         @include('admin.benefit.kategori.add')
                         <div class="panel-body">
@@ -41,8 +43,9 @@
                                         <th>Kode</th>
                                         @if($role == 5)
                                             <th>Partner</th>
+                                            <th>Aksi</th>
                                         @endif
-                                        <th>Aksi</th>
+                                        
                                     </tr>
                                 </thead>
 
@@ -54,20 +57,21 @@
                                             <td>{{ $data->kode }}</td>
                                             @if($role == 5)
                                                 <td>{{ $data->partner }}</td>
+                                           
+                                                <td class="text-center">
+                                                    <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                    @if($data->partner !== 0)
+                                                        <a class="btn btn-success btn-sm editDepartmen" data-toggle="modal" 
+                                                        data-target="#edit{{$data->id}}"><i class="fa fa-edit"></i>
+                                                        </a>
+                                                    @endif 
+                                                    
+                                                    @if($role == 5)
+                                                        <button class="btn btn-danger btn-sm" onclick="hapus({{ $data->id }})"><i class="fa fa-trash"></i></button>
+                                                    @endif
+                                                    </div>
+                                                </td>
                                             @endif
-                                            <td class="text-center">
-                                                <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                @if($data->partner !== 0)
-                                                    <a class="btn btn-success btn-sm editDepartmen" data-toggle="modal" 
-                                                       data-target="#edit{{$data->id}}"><i class="fa fa-edit"></i>
-                                                    </a>
-                                                @endif 
-                                                
-                                                @if($role == 5)
-                                                    <button class="btn btn-danger btn-sm" onclick="hapus({{ $data->id }})"><i class="fa fa-trash"></i></button>
-                                                @endif
-                                                </div>
-                                            </td>
                                         </tr>
                                         @include('admin.benefit.kategori.edit')
                                     @endforeach

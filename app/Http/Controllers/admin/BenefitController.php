@@ -33,7 +33,6 @@ class BenefitController extends Controller
                             ->whereNotIn('id', [1, 2, 3]);
                     })
                     ->get();
-
             return view('admin.benefit.data.index',compact('kategori','benefit','row','role'));
         }
         else
@@ -41,6 +40,72 @@ class BenefitController extends Controller
             return redirect()->back(); 
         }
     }
+
+    public function getUrutan(Request $request)
+    {
+        try {
+            $getTunjangan = Benefit::where('id_kategori',4)
+                ->where('partner', Auth::user()->partner)
+                ->where('urutan', '<',100)
+                ->max('urutan');
+
+            if (!$getTunjangan) {
+                $getTunjangan = 2;
+            }
+            return response()->json($getTunjangan, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getPotongan(Request $request)
+    {
+        try {
+            $getPotongan = Benefit::where('id_kategori',[4,5])
+                ->where('partner', Auth::user())
+                ->whereBetween('urutan', [101, 199])
+                ->max('urutan');
+
+            if (!$getPotongan) {
+                $getPotongan = 101; 
+            }
+            return response()->json($getPotongan, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getUrutanPotongan(Request $request)
+    {
+        try {
+            $id_kategori = $request->input('id_kategori');
+            $defaultUrutan = ($id_kategori == 4) ? 2 : (($id_kategori >= 5 && $id_kategori <= 6) ? 101 : null);
+
+            $getUrutanPotongan = Benefit::where(function ($query) use ($id_kategori) {
+                if ($id_kategori == 4) {
+                    $query->where('id_kategori', 4)
+                        ->where('urutan', '<', 100);
+                } elseif ($id_kategori >= 5 && $id_kategori <= 6) {
+                    $query->whereIn('id_kategori', [4, 5])
+                        ->where('partner', Auth::user()->partner)
+                        ->whereBetween('urutan', [101, 199]);
+                }
+            })->max('urutan');
+
+            if (!$getUrutanPotongan) {
+                $getUrutanPotongan = $defaultUrutan;
+            }
+
+            return response()->json(['urutan' => $getUrutanPotongan], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
 
     public function store(Request $request)
     {
