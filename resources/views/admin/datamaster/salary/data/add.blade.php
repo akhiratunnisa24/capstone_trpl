@@ -20,6 +20,24 @@
                     </div>
 
                     <div class="form-group col-xs-12">
+                        <label for="level_jabatan">Level Jabatan</label>
+                        <select class="form-control" name="level_jabatan"required>
+                            @foreach ($levelJabatanOptions as $value => $label)
+                                <option value="{{ $value }}">{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group col-xs-12">
+                        <label for="status_karyawan">Jenis Status Karyawan</label>
+                        <select class="form-control" name="status_karyawan"required>
+                            @foreach ($statusKaryawanOptions as $value => $label)
+                                <option value="{{ $value }}">{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group col-xs-12">
                         <label for="benefits">Pilih Benefit</label>
                         @foreach ($benefits as $benefit)
                             <div class="checkbox checkbox-success">
