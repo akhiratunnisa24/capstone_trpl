@@ -7,6 +7,7 @@ use App\Models\Partner;
 use App\Models\Karyawan;
 use App\Models\Kdarurat;
 use App\Models\Keluarga;
+use App\Models\Departemen;
 use App\Models\Rpekerjaan;
 use App\Models\Rpendidikan;
 use Illuminate\Support\Collection;
@@ -42,11 +43,20 @@ class karyawanImport implements ToModel, WithHeadingRow
             $excelDateB = intval($row['tanggal_masuk']); // Convert to an integer (Excel serial number)
             $carbonDate = Carbon::createFromTimestamp(($excelDateB - 25569) * 86400)->format('Y-m-d');
             $tgl_masuk = $carbonDate;
+
+            $atasanpertama = Karyawan::whereRaw('LOWER(nama) = ?', [strtolower($row['atasan_langsung'])])
+                ->where('partner',Auth::user()->partner)
+                ->select('id')->first();
+            $atasankedua = Karyawan::whereRaw('LOWER(nama) = ?', [strtolower($row['atasan_kedua'])])
+                ->where('partner',Auth::user()->partner)
+                ->select('id')->first();
+            $divisi = Departemen::whereRaw('LOWER(nama_departemen) = ?', [strtolower($row['divisi'])])->select('id')->first();
             $cek = !Karyawan::where('nik', $row['no_ktp'])->where('tgllahir',$tgl_lahir)->where('partner',$partner)->exists();
+            // dd($cek,$tgl_lahir,$tgl_masuk);
             if($cek)
             {
                 $karyawan = [
-                    'nip'           => null,
+                    'nip'           => $row['no_induk_karyawan'] ?? null,
                     'nik'           => $row['no_ktp'] ?? null,
                     'nama'          => $row['nama'] ?? null,
                     'tgllahir'      => $tgl_lahir,
@@ -54,31 +64,31 @@ class karyawanImport implements ToModel, WithHeadingRow
                     'email'         => $row['e_mail'] ?? null,
                     'agama'         => null,
                     'gol_darah'     => null,
-                    'jenis_kelamin' => null,
+                    'jenis_kelamin' => $row['jenis_kelamin'] ?? null,
                     'alamat'        => $row['alamat'] ?? null,
                     'no_hp'         => $row['nomor_hp'] ?? null,
-                    'status_karyawan'=> null,
+                    'status_karyawan'=> $row['status_karyawan'] ?? null,
                     'tipe_karyawan' => null,
-                    'atasan_pertama'=>  null,
-                    'atasan_kedua'  =>  null,
+                    'atasan_pertama'=>  $atasanpertama->id ?? null,
+                    'atasan_kedua'  =>  $atasankedua->id ?? null,
                     'no_kk'         =>  null,
-                    'status_kerja'  =>  null,
+                    'status_kerja'  =>  $row['status_kerja'] ?? null, 
                     'cuti_tahunan'  =>  null,
-                    'divisi'        =>  null,
-                    'no_rek'        =>  null,
+                    'divisi'        =>  $divisi->id ?? null,
+                    'no_rek'        =>  $row['nomor_rekening'] ?? null,
                     'no_bpjs_kes'   => null,
                     'no_npwp'       => null,
                     'no_bpjs_ket'   => null,
                     'no_akdhk'      => null,
                     'no_program_pensiun' => null,
                     'no_program_askes' => null,
-                    'nama_bank'     =>  null,
+                    'nama_bank'     => $row['nama_bank'] ?? null,
                     'kontrak'       => null,
-                    'jabatan'       =>  null,
-                    'nama_jabatan'  => null,
+                    'jabatan'       => $row['level_jabatan'] ?? null,
+                    'nama_jabatan'  => $row['jabatan'] ?? null,
                     'gaji'          => null,
-                    'status_pernikahan' => null,
-                    'jumlah_anak'   => null,
+                    'status_pernikahan' => $row['status_pernikahan'] ?? null,
+                    'jumlah_anak'   => $row['jumlah_anak'] ?? null,
                     'tglmasuk'      => $tgl_masuk,
                     'tglkeluar'     => null,
                     'foto'          => null,

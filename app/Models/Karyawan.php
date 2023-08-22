@@ -42,7 +42,9 @@ class Karyawan extends Model
         'gaji',
         'tglmasuk',
         'tglkeluar',
-        'partner'
+        'partner',
+        'status_pernikahan',
+        'jumlah_anak'
     ];
     protected $guarded = [];
 
