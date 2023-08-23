@@ -13,7 +13,8 @@ class Benefit extends Model
     protected $fillable = [
         'nama_benefit',
         'id_kategori',
-        'kode','aktif',
+        'kode',
+        'aktif',
         'dikenakan_pajak',
         'kelas_pajak',
         'tipe',
@@ -21,9 +22,15 @@ class Benefit extends Model
         'siklus_pembayaran',
         'besaran_bulanan',
         'besaran_mingguan',
+        'besaran_harian',
         'besaran_jam',
         'besaran',
-        'partner'
+        'partner',
+        'jumlah',
+        'urutan',
+        'dibayarkan_oleh',
+        'gaji_minimum',
+        'gaji_maksimum'
     ];
 
     public function partners()

@@ -753,7 +753,6 @@ Route::post('/benefit', [BenefitController::class, 'store'])->name('benefit.stor
 Route::put('/benefi/update/{id}', [BenefitController::class, 'update'])->name('benefit.update');
 Route::get('/benefit/delete/{id}', [BenefitController::class, 'destroy'])->name('benefit.delete');
 Route::post('/get-urutan', [BenefitController::class, 'getUrutanPotongan'])->name('getUrutanPotongan');
-Route::post('/get-potongan', [BenefitController::class, 'getPotongan'])->name('getPotongan');
 
 //master Salary
 Route::get('/kategori-salary', [KategoriSalaryController::class, 'index'])->name('kategorisalary.index');

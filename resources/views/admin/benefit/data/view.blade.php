@@ -99,7 +99,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <div class="row">
                                     <label class="form-label col-sm-5 text-end">Dikenakan Pajak</label>
                                     <div class="col-sm-7">
@@ -114,10 +114,10 @@
                                         : {{$data->kelas_pajak}}
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="mb-3">
                                 <div class="row">
-                                    <label class="form-label col-sm-5 text-end">Tipe</label>
+                                    <label class="form-label col-sm-5 text-end">Tipe Kondisi</label>
                                     <div class="col-sm-7">
                                         : {{$data->tipe}}
                                     </div>
@@ -131,6 +131,35 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mb-3">
+                                <div class="row">
+                                    <label class="form-label col-sm-5 text-end">Jumlah</label>
+                                    <div class="col-sm-7">
+                                        : {{$data->jumlah}}
+                                    </div>
+                                </div>
+                            </div>
+                            @if($data->tipe == "Interval Gaji")
+                            
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <label class="form-label col-sm-5 text-end">Interval Gaji</label>
+                                        <div class="col-sm-7">
+                                            : Rp. {{ number_format($data->gaji_minimum, 0, ',', '.') }} - {{ number_format($data->gaji_maksimum, 0, ',', '.') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($data->id_kategori == 5)
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <label class="form-label col-sm-5 text-end">Dibayar Oleh</label>
+                                        <div class="col-sm-7">
+                                            : {{$data->dibayarkan_oleh}}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
