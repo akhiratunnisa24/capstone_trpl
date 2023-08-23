@@ -117,14 +117,15 @@ class SalaryController extends Controller
         $selectedBenefits = [1, 2, 3]; // Tambahkan ID benefit yang ingin di-set otomatis tercentang
         $benefits = $request->input('benefits');
 
-        // Gabungkan dengan benefit yang dipilih dari form
-        $benefits = array_merge($selectedBenefits, $benefits);
-
+        if ($benefits) {
+            $benefits = array_merge($selectedBenefits, $benefits);
+        } else {
+            $benefits = $selectedBenefits;
+        }
         $benefits = Benefit::whereIn('id', $benefits)->get();
         $salaryStructure->benefits()->sync($benefits);
 
-        return redirect()->back()->with('pesan', 'Data berhasil disimpan.');
-        return redirect()->back()->with (compact('benefits','selectedBenefits','salaryStructures','salaryStructure','levelJabatanOptions','statusKaryawanOptions'));
+        return redirect()->back()->with('pesan', 'Data berhasil disimpan.',compact('benefits','selectedBenefits','salaryStructures','salaryStructure','levelJabatanOptions','statusKaryawanOptions'));
     }
 
     public function destroy($id)

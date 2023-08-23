@@ -50,7 +50,7 @@
                             <div class="checkbox checkbox-success">
                                 <input type="checkbox" id="checkbox{{ $benefit->id }}" class="form-check-input"
                                     name="benefits[]" value="{{ $benefit->id }}"
-                                    {{ in_array($benefit->id, $selectedBenefits) ? 'checked' : '' }}
+                                    {{ in_array($benefit->id, $selectedBenefits) || $salaryStructure->benefits->contains($benefit->id) ? 'checked' : '' }}
                                     {{ in_array($benefit->id, $selectedBenefits) ? 'disabled' : '' }}>
                                 <label for="checkbox{{ $benefit->id }}">
                                     {{ $benefit->nama_benefit }}
@@ -58,8 +58,6 @@
                             </div>
                         @endforeach
                     </div>
-
-
 
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs">
