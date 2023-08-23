@@ -21,35 +21,35 @@ class SalaryController extends Controller
     }
 
     public function index()
-{
-    $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-    $role = Auth::user()->role;
-    $userPartner = Auth::user()->partner;
+    {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $role = Auth::user()->role;
+        $userPartner = Auth::user()->partner;
 
-    // Dapatkan benefit yang sesuai dengan partner user
-    $benefits = Benefit::where(function ($query) use ($userPartner) {
-        $query->where('partner', 0)
-              ->orWhere('partner', $userPartner);
-    })->get();
+        // Dapatkan benefit yang sesuai dengan partner user
+        $benefits = Benefit::where(function ($query) use ($userPartner) {
+            $query->where('partner', 0)
+                ->orWhere('partner', $userPartner);
+        })->get();
 
-    $salaryStructures = SalaryStructure::with('level_jabatans')
-                                       ->where('partner', $userPartner)
-                                       ->get();
+        $salaryStructures = SalaryStructure::with('level_jabatans')
+                                        ->where('partner', $userPartner)
+                                        ->get();
 
-    $levelJabatanOptions = LevelJabatan::all()->pluck('nama_level', 'id');
-    $statusKaryawanOptions = [
-        '' => 'Pilih Status',
-        'Pengurus' => 'Pengurus',
-        'Karyawan Kontrak' => 'Karyawan Kontrak',
-        'Karyawan Tetap' => 'Karyawan Tetap',
-        'Probation' => 'Probation'
-    ];
-    $selectedBenefits = [1, 2, 3];
-    return view('admin.datamaster.salary.data.index', compact(
-        'row', 'benefits', 'role', 'selectedBenefits', 'salaryStructures',
-        'levelJabatanOptions', 'statusKaryawanOptions'
-    ));
-}
+        $levelJabatanOptions = LevelJabatan::all()->pluck('nama_level', 'id');
+        $statusKaryawanOptions = [
+            '' => 'Pilih Status',
+            'Pengurus' => 'Pengurus',
+            'Kontrak' => 'Kontrak',
+            'Tetap' => 'Tetap',
+            'Probation' => 'Probation'
+        ];
+        $selectedBenefits = [1, 2, 3];
+        return view('admin.datamaster.salary.data.index', compact(
+            'row', 'benefits', 'role', 'selectedBenefits', 'salaryStructures',
+            'levelJabatanOptions', 'statusKaryawanOptions'
+        ));
+    }
 
 
     public function store(Request $request)

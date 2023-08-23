@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="form-group col-xs-12">
-                        <label for="benefits">Pilih Benefit</label>
+                        <label for="benefits">Komponen Penggajian</label>
                         @foreach ($benefits as $benefit)
                             <div class="checkbox checkbox-success">
                                 <input type="checkbox" id="checkbox{{ $benefit->id }}" class="form-check-input"
