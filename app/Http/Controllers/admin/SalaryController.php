@@ -40,8 +40,8 @@ class SalaryController extends Controller
     $statusKaryawanOptions = [
         '' => 'Pilih Status',
         'Pengurus' => 'Pengurus',
-        'Karyawan Kontrak' => 'Karyawan Kontrak',
-        'Karyawan Tetap' => 'Karyawan Tetap',
+        'Kontrak' => 'Kontrak',
+        'Tetap' => 'Tetap',
         'Probation' => 'Probation'
     ];
     $selectedBenefits = [1, 2, 3];
