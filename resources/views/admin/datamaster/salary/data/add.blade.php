@@ -20,8 +20,9 @@
                     </div>
 
                     <div class="form-group col-xs-12">
-                        <label for="level_jabatan">Level Jabatan</label>
-                        <select class="form-control" name="level_jabatan"required>
+                        <label for="id_level_jabatan">Level Jabatan</label>
+                        <select class="form-control" name="id_level_jabatan"required>
+                            <option value="" disabled selected>Pilih Level Jabatan</option>
                             @foreach ($levelJabatanOptions as $value => $label)
                                 <option value="{{ $value }}">{{ $label }}</option>
                             @endforeach
@@ -42,13 +43,15 @@
                         @foreach ($benefits as $benefit)
                             <div class="checkbox checkbox-success">
                                 <input type="checkbox" id="checkbox{{ $benefit->id }}" class="form-check-input"
-                                    name="benefits[]" value="{{ $benefit->id }}">
+                                    name="benefits[]" value="{{ $benefit->id }}"
+                                    {{ in_array($benefit->id, $selectedBenefits) ? 'checked disabled' : '' }}>
                                 <label for="checkbox{{ $benefit->id }}">
                                     {{ $benefit->nama_benefit }}
                                 </label>
                             </div>
                         @endforeach
                     </div>
+
                     <input id="partner" type="hidden" class="form-control" name="partner"
                         value="{{ Auth::user()->partner }}" autocomplete="off">
                     <!-- ... (lanjutkan dengan bagian lain dari form) ... -->

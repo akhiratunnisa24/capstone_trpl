@@ -63,6 +63,11 @@
                                             @endif
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                    <button class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#showModal{{ $salaryStructure->id }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+
                                                     @if ($salaryStructure->partner !== 0)
                                                         <a class="btn btn-success btn-sm" data-toggle="modal"
                                                             data-target="#edit{{ $salaryStructure->id }}"><i
@@ -70,14 +75,15 @@
                                                         </a>
                                                     @endif
 
-                                                    {{-- @if ($role == 5) --}}
-                                                    <button class="btn btn-danger btn-sm"
-                                                        onclick="hapus({{ $salaryStructure->id }})"><i
-                                                            class="fa fa-trash"></i></button>
-                                                    {{-- @endif --}}
+                                                    @if ($role == 5)
+                                                        <button class="btn btn-danger btn-sm"
+                                                            onclick="hapus({{ $salaryStructure->id }})"><i
+                                                                class="fa fa-trash"></i></button>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
+                                        @include('admin.datamaster.salary.data.view')
                                         @include('admin.datamaster.salary.data.edit')
                                     @endforeach
                                 </tbody>
@@ -101,6 +107,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
 
     @if (Session::has('pesan'))
         <script>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SalaryStructure;
 use App\Models\DetailSalaryStructure;
 use App\Models\Benefit;
+use App\Models\Karyawan;
 use App\Models\LevelJabatan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,24 +21,36 @@ class SalaryController extends Controller
     }
 
     public function index()
-    {
-        $role = Auth::user()->role;
-        $userPartner = Auth::user()->partner;
-        $benefits = Benefit::where(function ($query) use ($userPartner) {
-            $query->where('partner', 0)
-                  ->orWhere('partner', $userPartner);
-        })->get();
+{
+    $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+    $role = Auth::user()->role;
+    $userPartner = Auth::user()->partner;
 
-        $salaryStructures = SalaryStructure::with('level_jabatans')
-                                           ->where('partner', $userPartner)
-                                           ->get();
+    // Dapatkan benefit yang sesuai dengan partner user
+    $benefits = Benefit::where(function ($query) use ($userPartner) {
+        $query->where('partner', 0)
+              ->orWhere('partner', $userPartner);
+    })->get();
 
-        $levelJabatanOptions = LevelJabatan::all()->pluck('nama_level', 'id')->prepend('Pilih Level Jabatan', '');
-        $statusKaryawanOptions = ['' => 'Pilih Status','Karyawan Kontrak' => 'Karyawan Kontrak', 'Karyawan Tetap' => 'Karyawan Tetap', 'Probation' => 'Probation'];
-        $salaryStructures = SalaryStructure::with('level_jabatans')->get();
+    $salaryStructures = SalaryStructure::with('level_jabatans')
+                                       ->where('partner', $userPartner)
+                                       ->get();
 
-        return view('admin.datamaster.salary.data.index', compact('benefits', 'role','salaryStructures','levelJabatanOptions','statusKaryawanOptions'));
-    }
+    $levelJabatanOptions = LevelJabatan::all()->pluck('nama_level', 'id');
+    $statusKaryawanOptions = [
+        '' => 'Pilih Status',
+        'Pengurus' => 'Pengurus',
+        'Karyawan Kontrak' => 'Karyawan Kontrak',
+        'Karyawan Tetap' => 'Karyawan Tetap',
+        'Probation' => 'Probation'
+    ];
+    $selectedBenefits = [1, 2, 3];
+    return view('admin.datamaster.salary.data.index', compact(
+        'row', 'benefits', 'role', 'selectedBenefits', 'salaryStructures',
+        'levelJabatanOptions', 'statusKaryawanOptions'
+    ));
+}
+
 
     public function store(Request $request)
     {
@@ -50,7 +63,15 @@ class SalaryController extends Controller
 
         $salaryStructure->save();
 
+        $selectedBenefits = [1, 2, 3]; // Tambahkan ID benefit yang ingin di-set otomatis tercentang
         $benefits = $request->input('benefits');
+
+        if ($benefits) {
+            $benefits = array_merge($selectedBenefits, $benefits);
+        } else {
+            $benefits = $selectedBenefits;
+        }
+        // $benefits = $request->input('benefits');
         $detailData = [];
         foreach ($benefits as $benefitId) {
             $detailData[] = [
@@ -61,19 +82,16 @@ class SalaryController extends Controller
 
         DB::table('detail_salary_structure')->insert($detailData);
 
-        return redirect()->back();
+        return redirect()->back()->with('pesan', 'Data berhasil disimpan.');
     }
 
     public function update(Request $request, $id)
     {
         $salaryStructure = SalaryStructure::findOrFail($id);
-        // $salaryStructures = SalaryStructure::all();
         $salaryStructures = SalaryStructure::with('benefits')->get();
         $salaryStructure = SalaryStructure::with('benefits')->find($id);
-        // $benefits = Benefit::all();
-        // $levelJabatanOptions = LevelJabatan::all()->pluck('nama_level', 'id')->prepend('Pilih Level Jabatan', '');
-        // $statusKaryawanOptions = ['' => 'Pilih Status','Karyawan Kontrak' => 'Karyawan Kontrak', 'Karyawan Tetap' => 'Karyawan Tetap', 'Probation' => 'Probation'];
         $salaryStructures = SalaryStructure::with('level_jabatans')->get();
+        $selectedBenefits = $salaryStructure->benefits->pluck('id')->toArray();
         $role = Auth::user()->role;
         $userPartner = Auth::user()->partner;
         $benefits = Benefit::where(function ($query) use ($userPartner) {
@@ -89,22 +107,24 @@ class SalaryController extends Controller
         $statusKaryawanOptions = ['' => 'Pilih Status','Karyawan Kontrak' => 'Karyawan Kontrak', 'Karyawan Tetap' => 'Karyawan Tetap', 'Probation' => 'Probation'];
         $salaryStructures = SalaryStructure::with('level_jabatans')->get();
 
-
-
-
-        // Update the attributes
         $salaryStructure->update([
             'nama' => $request->input('nama'),
             'level_jabatan_id' => $request->input('level_jabatan'),
             'status_karyawan' => $request->input('status_karyawan'),
-            // Update data lainnya sesuai kebutuhan
         ]);
 
-        $benefits = Benefit::whereIn('id', $request->input('benefits', []))->get();
+        // Simpan data benefit yang dipilih
+        $selectedBenefits = [1, 2, 3]; // Tambahkan ID benefit yang ingin di-set otomatis tercentang
+        $benefits = $request->input('benefits');
+
+        // Gabungkan dengan benefit yang dipilih dari form
+        $benefits = array_merge($selectedBenefits, $benefits);
+
+        $benefits = Benefit::whereIn('id', $benefits)->get();
         $salaryStructure->benefits()->sync($benefits);
 
-
-        return view('admin.datamaster.salary.data.index', compact('benefits','salaryStructures','salaryStructure','levelJabatanOptions','statusKaryawanOptions'));
+        return redirect()->back()->with('pesan', 'Data berhasil disimpan.');
+        return redirect()->back()->with (compact('benefits','selectedBenefits','salaryStructures','salaryStructure','levelJabatanOptions','statusKaryawanOptions'));
     }
 
     public function destroy($id)
