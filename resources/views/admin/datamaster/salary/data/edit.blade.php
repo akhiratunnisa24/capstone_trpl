@@ -21,7 +21,7 @@
                     <div class="form-group col-xs">
                         <label for="level_jabatan">Level Jabatan</label>
                         <select class="form-control" name="level_jabatan" required>
-                            <option value="" disabled selected>Pilih Level Jabatan</option>
+                            {{-- <option value="" disabled selected>Pilih Level Jabatan</option> --}}
                             @foreach ($levelJabatanOptions as $value => $label)
                                 <option value="{{ $value }}"
                                     {{ $value == $salaryStructure->id_level_jabatan ? 'selected' : '' }}>
@@ -44,13 +44,14 @@
                         </select>
                     </div>
 
-                    <div class="form-group col-xs">
+                    <div class="form-group col-xs-12">
                         <label for="benefits">Pilih Benefit</label>
                         @foreach ($benefits as $benefit)
                             <div class="checkbox checkbox-success">
                                 <input type="checkbox" id="checkbox{{ $benefit->id }}" class="form-check-input"
                                     name="benefits[]" value="{{ $benefit->id }}"
-                                    {{ $salaryStructure->benefits ? ($salaryStructure->benefits->contains($benefit->id) ? 'checked' : '') : '' }}>
+                                    {{ in_array($benefit->id, $selectedBenefits) ? 'checked' : '' }}
+                                    {{ in_array($benefit->id, $selectedBenefits) ? 'disabled' : '' }}>
                                 <label for="checkbox{{ $benefit->id }}">
                                     {{ $benefit->nama_benefit }}
                                 </label>
@@ -59,7 +60,6 @@
                     </div>
 
 
-                    <!-- ... (lanjutkan dengan bagian lain dari form) ... -->
 
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs">
