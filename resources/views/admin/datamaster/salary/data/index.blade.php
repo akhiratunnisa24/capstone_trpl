@@ -5,11 +5,11 @@
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Penggajian</h4>
+                <h4 class="pull-left page-title">Struktur Penggajian</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Rynest Employee Management System</li>
-                    <li class="active">Penggajian</li>
+                    <li class="active">Struktur Penggajian</li>
                 </ol>
 
                 <div class="clearfix">
@@ -28,7 +28,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                data-target="#myModal"> Tambah Data Penggajian</a>
+                                data-target="#myModal"> Tambah Struktur Penggajian</a>
                         </div>
                         @include('admin.datamaster.salary.data.add')
                         <div class="panel-body">
