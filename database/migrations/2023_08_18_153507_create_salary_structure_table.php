@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->integer('partner');
-            $table->string('parent')->nullable();
-            $table->string('reference')->nullable();
+            $table->integer('id_level_jabatan');
+            $table->string('status_karyawan');
             $table->timestamps();
 
         });

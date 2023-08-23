@@ -41,9 +41,11 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Komponen Gaji</th>
-                                        @if ($role == 5)
+                                        @if (Auth::user()->role == 5)
                                             <th>Partner</th>
                                         @endif
+                                        <th>Level Jabatan</th>
+                                        <th>Jenis Karyawan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -54,24 +56,29 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $salaryStructure->nama }}</td>
                                             <td>{{ $salaryStructure->detail_salary->count() }}</td>
-                                            {{-- <td class="text-center">
+                                            <td>{{ $salaryStructure->level_jabatans->nama_level }}</td>
+                                            <td>{{ $salaryStructure->status_karyawan }}</td>
+                                            @if (Auth::user()->role == 5)
+                                                <td>{{ $salaryStructure->partner }}</td>
+                                            @endif
+                                            <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                    @if ($data->partner !== 0)
-                                                        <a class="btn btn-success btn-sm editDepartmen" data-toggle="modal"
-                                                            data-target="#edit{{ $data->id }}"><i
+                                                    @if ($salaryStructure->partner !== 0)
+                                                        <a class="btn btn-success btn-sm" data-toggle="modal"
+                                                            data-target="#edit{{ $salaryStructure->id }}"><i
                                                                 class="fa fa-edit"></i>
                                                         </a>
                                                     @endif
 
-                                                    @if ($role == 5)
-                                                        <button class="btn btn-danger btn-sm"
-                                                            onclick="hapus({{ $data->id }})"><i
-                                                                class="fa fa-trash"></i></button>
-                                                    @endif
+                                                    {{-- @if ($role == 5) --}}
+                                                    <button class="btn btn-danger btn-sm"
+                                                        onclick="hapus({{ $salaryStructure->id }})"><i
+                                                            class="fa fa-trash"></i></button>
+                                                    {{-- @endif --}}
                                                 </div>
-                                            </td> --}}
+                                            </td>
                                         </tr>
-                                        {{-- @include('admin.datamaster.salary.data.edit') --}}
+                                        @include('admin.datamaster.salary.data.edit')
                                     @endforeach
                                 </tbody>
                             </table>
@@ -132,7 +139,7 @@
                         icon: "info",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= '/salary/delete' ?>' + id;
+                    location.href = '{{ route('salary.delete', '') }}' + '/' + id;
                 }
             })
         }
