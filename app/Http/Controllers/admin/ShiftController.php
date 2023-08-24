@@ -17,11 +17,11 @@ class ShiftController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2) 
+        if ($role == 1 || $role == 2)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $shift = DB::table('shift')->where('partner',Auth::user()->partner)->get();
@@ -29,20 +29,20 @@ class ShiftController extends Controller
             $partner = Partner::all();
             return view('admin.datamaster.shift.index', compact('shift', 'row','role','partner'));
 
-        }elseif($role == 5)
+        }elseif(($role == 5)||$role == 7)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $shift = DB::table('shift')->get();
             $partner = Partner::all();
             // dd($shift);
-            return view('admin.datamaster.shift.index', compact('shift', 'row','role','partner')); 
+            return view('admin.datamaster.shift.index', compact('shift', 'row','role','partner'));
         }
         else {
-    
+
             return redirect()->back();
         }
     }
-    
+
     public function store(Request $request)
     {
         $request->validate([
@@ -76,13 +76,13 @@ class ShiftController extends Controller
                 'jam_pulang' => $jam_pulang,
                 'partner' => $partner
             );
-            
+
             DB::table('shift')->insert($shiftData);
 
             return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
         }
     }
-    
+
     public function update(Request $request, $id)
     {
         // $shift = Shift::find($id);
@@ -96,7 +96,7 @@ class ShiftController extends Controller
         DB::table('shift')->where('id',$id)->update($shift);
         return redirect()->back()->with('pesan','Data berhasil diupdate !');;
     }
-    
+
     public function destroy($id)
     {
         $shift = Shift::find($id);

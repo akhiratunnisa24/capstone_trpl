@@ -36,7 +36,7 @@ class ListmesinController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 5) 
+        if (($role == 5)||$role == 7)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $listmesin = Listmesin::with('partners')->orderBy('id', 'asc')->get();
@@ -60,7 +60,7 @@ class ListmesinController extends Controller
 
         // Cek apakah data Listmesin sudah ada di dalam database
         $listmesin = Listmesin::where('ip_mesin',$request->ip_mesin)->first();
-    
+
         if ($listmesin) {
             // Jika data Listmesin sudah ada, kembalikan pesan bahwa data sudah ada
             return redirect()->back()->with('pesa', 'Data List Mesin dengan IP :  ' . $request->ip_mesin . ' sudah ada !');
@@ -74,7 +74,7 @@ class ListmesinController extends Controller
             $listmesin->partner     = $request->partner;
             $listmesin->status      = 0;
             $listmesin->save();
-    
+
             return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
         }
     }
@@ -82,10 +82,10 @@ class ListmesinController extends Controller
     public function update(Request $request, $id)
     {
         $role = Auth::user()->role;
-        if ($role == 5) 
+        if (($role == 5)||$role == 7)
         {
             $listmesin = Listmesin::find($id);
-            
+
             $listmesin->nama_mesin  = $request->nama_mesin;
             $listmesin->ip_mesin    = $request->ip_mesin;
             $listmesin->port        = $request->port;
@@ -108,16 +108,16 @@ class ListmesinController extends Controller
             $ip = $mesin->ip_mesin;
             $com_key = $mesin->comm_key;
             $soap_port = $mesin->port;
-    
+
             $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key,'soap_port' => $soap_port]))->get_instance();
             $con = $tad->is_alive();
 
-            if ($con) 
+            if ($con)
             {
                 $mesin->status = 1;
                 $mesin->update();
                 return redirect()->back()->with('pesan','Berhasil terkoneksi ke mesin absensi ' . $ip);
-            } else 
+            } else
             {
                 $mesin->status = 0;
                 $mesin->update();
@@ -126,7 +126,7 @@ class ListmesinController extends Controller
         } catch (\Exception $e) {
             return "Error: " . $e->getMessage() . "\n";
         }
-        
+
     }
 
     public function tarikAbsen($id)
@@ -140,25 +140,25 @@ class ListmesinController extends Controller
 
             $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key,'soap_port' => $soap_port]))->get_instance();
             $con = $tad->is_alive();
-           
-            if ($con) 
+
+            if ($con)
             {
                 $attendance = $tad->get_att_log();
-               
-                if ($attendance) 
+
+                if ($attendance)
                 {
                     $filtered_attendance = $attendance->filter_by_date(
                         ['start' => '2023-02-28']
                     );
-                    
+
                     $j = $filtered_attendance->get_response(['format' => 'json']);
                     // $j = $attendance->get_response(['format' => 'json']);
                     $jArray = json_decode($j, true);
-                   
+
                     $usermesin = UserMesin::where('partner',$partner)->get();
                     // dd($usermesin);
                     // Loop melalui data $jArray untuk mencocokkan nilai PIN
-                    foreach ($jArray['Row'] as $data) 
+                    foreach ($jArray['Row'] as $data)
                     {
                         // return $data;
                         $pin = $data['PIN'];
@@ -168,11 +168,11 @@ class ListmesinController extends Controller
 
                         $matchedUser = $usermesin->where('noid', $pin)->first();
                         // dd($matchedUser);
-                        if (isset($matchedUser)) 
+                        if (isset($matchedUser))
                         {
                             $jadwals = Jadwal::where('tanggal', $tanggal)->where('partner', Auth::user()->partner)->get();
                             // dd($data,$matchedUser,$jadwal);
-                            foreach ($jadwals as $jadwal) 
+                            foreach ($jadwals as $jadwal)
                             {
                                 if($jadwal)
                                 {
@@ -189,14 +189,14 @@ class ListmesinController extends Controller
                                         //jika data ada lakukan pembaruan data, karena ada absensi yang terdapat 2 record data
                                         $absensi = $existingAbsensi;
                                         $absensi->jam_keluar   = $jam_keluar;
-    
+
                                         //menghitung jumlah jam kerja
                                         $jam_masuk    = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
                                         $jadwal_pulang = Carbon::createFromFormat('H:i:s', $jadwal_pulang);
 
                                         $jumkerja     = $jadwal_pulang->diff($jam_masuk);
                                         $absensi->jml_jamkerja = $jumkerja->format('%H:%I:%S');
-                                       
+
 
                                         if($jam_masuk < $jadwal_masuk && $jam_keluar >= $jadwal_pulang)
                                         {//kondisi normal
@@ -205,14 +205,14 @@ class ListmesinController extends Controller
                                             // $jam_kerja             = $jam_kerja->format('%H:%I:%S');
 
                                             // $absensi->jml_jamkerja = $jam_kerja;
-                                           
+
                                             // dd($absensi,$absensi->jml_jamkerja);
                                         }
                                         elseif($jam_masuk < $jadwal_masuk && $jam_keluar < $jadwal_pulang)
                                         {//pulangcepat
                                             $absensi->plg_cepat = null;
                                             $absensi->jml_jamkerja = '09:00:00';
-                                            
+
                                             // dd($absensi,$absensi->jml_jamkerja);
                                         }
 
@@ -228,7 +228,7 @@ class ListmesinController extends Controller
                                         $jadwal_pulang = $jadwal->jadwal_pulang;
                                         $jam_masuk     = Carbon::createFromFormat('H:i:s', $jam);
                                         //menghitung keterlambatan karyawan
-                            
+
                                         if($jam_masuk < $jadwal_masuk){
                                             $telat         = $jam_masuk->diff($jadwal_masuk);
                                             $terlambat     = $telat->format('%H:%I:%S');
@@ -237,9 +237,9 @@ class ListmesinController extends Controller
                                         {
                                             $terlambat     = null;
                                         }
-                                        
+
                                          $absensi = new Absensi();
-                                                    
+
                                          $absensi->id_karyawan   = $matchedUser->id_pegawai;
                                          $absensi->nik           = $matchedUser->nik;
                                          $absensi->tanggal       = $tanggal;
@@ -258,20 +258,20 @@ class ListmesinController extends Controller
                                          $absensi->partner       = $matchedUser->partner;
                                         $absensi->save();
                                     }
-                                   
+
                                 }
                             }
                         }
                         else{
                             $matchedUser = $usermesin->where('noid2', $pin)->first();
                             // dd($matchedUser);
-                            if (isset($matchedUser)) 
+                            if (isset($matchedUser))
                             {
                                 $jadwals = Jadwal::where('tanggal', $tanggal)
                                     ->where('partner', Auth::user()
                                     ->partner)->get();
                                 // dd($data,$matchedUser,$jadwal);
-                                foreach ($jadwals as $jadwal) 
+                                foreach ($jadwals as $jadwal)
                                 {
                                     if($jadwal)
                                     {
@@ -288,14 +288,14 @@ class ListmesinController extends Controller
                                             //jika data ada lakukan pembaruan data, karena ada absensi yang terdapat 2 record data
                                             $absensi = $existingAbsensi;
                                             $absensi->jam_keluar   = $jam_keluar;
-        
+
                                             //menghitung jumlah jam kerja
                                             $jam_masuk    = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
                                             $jadwal_pulang = Carbon::createFromFormat('H:i:s', $jadwal_pulang);
 
                                             $jumkerja     = $jadwal_pulang->diff($jam_masuk);
                                             $absensi->jml_jamkerja = $jumkerja->format('%H:%I:%S');
-                                        
+
 
                                             if($jam_masuk < $jadwal_masuk && $jam_keluar >= $jadwal_pulang)
                                             {//kondisi normal
@@ -304,14 +304,14 @@ class ListmesinController extends Controller
                                                 // $jam_kerja             = $jam_kerja->format('%H:%I:%S');
 
                                                 // $absensi->jml_jamkerja = $jam_kerja;
-                                            
+
                                                 // dd($absensi,$absensi->jml_jamkerja);
                                             }
                                             elseif($jam_masuk < $jadwal_masuk && $jam_keluar < $jadwal_pulang)
                                             {//pulangcepat
                                                 $absensi->plg_cepat = null;
                                                 $absensi->jml_jamkerja = '09:00:00';
-                                                
+
                                                 // dd($absensi,$absensi->jml_jamkerja);
                                             }
 
@@ -327,7 +327,7 @@ class ListmesinController extends Controller
                                             $jadwal_pulang = $jadwal->jadwal_pulang;
                                             $jam_masuk     = Carbon::createFromFormat('H:i:s', $jam);
                                             //menghitung keterlambatan karyawan
-                                
+
                                             if($jam_masuk < $jadwal_masuk){
                                                 $telat         = $jam_masuk->diff($jadwal_masuk);
                                                 $terlambat     = $telat->format('%H:%I:%S');
@@ -336,9 +336,9 @@ class ListmesinController extends Controller
                                             {
                                                 $terlambat     = null;
                                             }
-                                            
+
                                             $absensi = new Absensi();
-                                                        
+
                                             $absensi->id_karyawan   = $matchedUser->id_pegawai;
                                             $absensi->nik           = $matchedUser->nik;
                                             $absensi->tanggal       = $tanggal;
@@ -357,7 +357,7 @@ class ListmesinController extends Controller
                                             $absensi->partner       = $matchedUser->partner;
                                             $absensi->save();
                                         }
-                                    
+
                                     }   ///
                                 }
                             }else{
@@ -370,7 +370,7 @@ class ListmesinController extends Controller
                     }
                     // Mengembalikan data dalam format JSON
                     // return response()->json([$j]);
-                
+
                 } else {
                     return "Tidak ada data kehadiran.\n";
                 }
@@ -393,10 +393,10 @@ class ListmesinController extends Controller
 
             $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key,'soap_port' => $soap_port]))->get_instance();
             $con = $tad->is_alive();
-            if ($con) 
+            if ($con)
             {
                 $user = $tad->get_all_user_info();
-                if ($user) 
+                if ($user)
                 {
                     $u = $user->get_response(['format' => 'json']);
                     $uArray = json_decode($u, true);
@@ -405,7 +405,7 @@ class ListmesinController extends Controller
                     $usermesin = UserMesin::where('partner',$partner)->get();
                     $registeredUsers = [];
                     $unregisteredUsers = [];
-                    foreach ($uArray['Row'] as $data) 
+                    foreach ($uArray['Row'] as $data)
                     {
                         $pin = $data['PIN'];
                         $pin2 = $data['PIN2'];
@@ -413,13 +413,13 @@ class ListmesinController extends Controller
                         $kartu = $data['Card'];
 
                         $matchedUser = $usermesin->where('noid', $pin)->first();
-                        if (isset($matchedUser)) 
+                        if (isset($matchedUser))
                         {
                             $registeredUsers[] = $data;
                         }
                         else{
                             $matchedUser = $usermesin->where('noid2', $pin2)->first();
-                            if (isset($matchedUser)) 
+                            if (isset($matchedUser))
                             {
                                 $registeredUsers[] = $data;
                             }
@@ -428,12 +428,12 @@ class ListmesinController extends Controller
                             }
 
                         }
-                        
+
                     }
                     $registeredUsersJSON = json_encode($registeredUsers);
                     $unregisteredUsersJSON = json_encode($unregisteredUsers);
                     return redirect()->back()->with(compact('registeredUsers', 'unregisteredUsers'));
-                
+
                 } else {
                     return "Tidak ada data user.\n";
                 }
@@ -444,14 +444,14 @@ class ListmesinController extends Controller
             return "Error: " . $e->getMessage() . "\n";
         }
     }
-    
-}  
+
+}
 
 
     // public function destroy($id)
     // {
     //     $listmesin = Listmesin::find($id);
-    
+
     //     // Cek data ke tabel "karyawan"
     //     $karyawan = Karyawan::where('Listmesin', $listmesin->id)->first();
     //     if ($karyawan !== null) {

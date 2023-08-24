@@ -21,7 +21,7 @@
 
     ?> --}}
 
-    @if ((Auth::check() && Auth::user()->role == 1) || (Auth::check() && Auth::user()->role == 3))
+    @if (Auth::check() && (Auth::user()->role == 1 || Auth::user()->role == 3 || Auth::user()->role == 7))
         {{-- @php dd($row->jabatan, Auth::user()->role) @endphp --}}
         <div class="row">
             <div class="col-lg-6">

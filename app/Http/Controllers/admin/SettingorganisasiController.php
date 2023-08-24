@@ -18,13 +18,13 @@ class SettingorganisasiController extends Controller
     public function index()
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2) 
+        if ($role == 1 || $role == 2)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $settingorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
             return view('admin.setting.index',compact('settingorganisasi','row'));
         }
-        elseif($role == 5)
+        elseif($role == 5 || $role == 7)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $settingorganisasi = SettingOrganisasi::all();
@@ -66,7 +66,7 @@ class SettingorganisasiController extends Controller
 
             $settingorganisasi->logo = $namaFile;
         }
-    
+
         $settingorganisasi->nama_perusahaan = $request->nama_perusahaan;
         $settingorganisasi->email = $request->email;
         $settingorganisasi->alamat = $request->alamat;
@@ -79,5 +79,5 @@ class SettingorganisasiController extends Controller
 
         return redirect('/setting-organisasi')->with('pesan','Data Organisasi berhasil diperbaharui !');
     }
-    
+
 }

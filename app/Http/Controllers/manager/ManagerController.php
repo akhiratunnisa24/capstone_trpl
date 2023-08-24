@@ -38,34 +38,44 @@ class ManagerController extends Controller
     {
         $partner = Auth::user()->partner;
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $role = Auth::user()->role;        
-        if ($role == 3 && $row->jabatan == "Manager") 
+        $role = Auth::user()->role;
+
+        if ($role == 3 && $row->jabatan == "Manager")
         {
             $staff = Karyawan::with('departemens')
-            ->where(function ($query) use ($partner) {
-                $query->where('atasan_pertama', Auth::user()->id_pegawai)
-                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
-            })
-            ->where('partner', $partner)
-            ->where('divisi', $row->divisi)
-            ->get();
-            // dd($staff);
-
-            return view('manager.staff.dataStaff', compact('staff','row','partner'));
-        }
-        elseif($role == 3 && $row->jabatan == "Asistant Manager")
-        {
-            //mengambil id_departemen
-            $staff= Karyawan::with('departemens')
-                ->where('atasan_pertama','=',Auth::user()->id_pegawai)
+                ->where(function ($query) use ($partner) {
+                    $query->where('atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+                })
                 ->where('partner', $partner)
                 ->where('divisi', $row->divisi)
                 ->get();
+
             return view('manager.staff.dataStaff', compact('staff','row','partner'));
         }
-        else{
+        elseif ($role == 3 && $row->jabatan == "Asistant Manager")
+        {
+            $staff = Karyawan::with('departemens')
+                ->where('atasan_pertama', Auth::user()->id_pegawai)
+                ->where('partner', $partner)
+                ->where('divisi', $row->divisi)
+                ->get();
+
+            return view('manager.staff.dataStaff', compact('staff','row','partner'));
+        }
+        elseif ($role == 7) // Role 7 condition
+        {
+            $staff = Karyawan::where('partner', $partner)
+                // ->where('divisi', $row->divisi)
+                ->get();
+
+            return view('manager.staff.dataStaff', compact('staff', 'row', 'partner'));
+        }
+        else {
             return redirect()->back();
-        };
+        }
+
+
         // elseif($role == 1 && $row->jabatan == "Asistant Manager")
         // {
         //     $staff= Karyawan::with('departemens')
@@ -161,7 +171,7 @@ class ManagerController extends Controller
 
             $spv = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
             ->select('divisi')->first();
-             //untuk filter data 
+             //untuk filter data
             $idkaryawan = $request->id_karyawan;
             $bulan = $request->query('bulan',Carbon::now()->format('m'));
             $tahun = $request->query('tahun',Carbon::now()->format('Y'));
@@ -202,7 +212,7 @@ class ManagerController extends Controller
                     ->where('id_departement', $spv->divisi)
                     ->where('partner', Auth::user()->partner)
                     ->get();
-                
+
             }
             return view('manager.staff.absensiStaff', compact('absensi','karyawan','row','role'));
             //menghapus filter data
@@ -214,7 +224,7 @@ class ManagerController extends Controller
         else{
             return redirect()->back();
         }
-       
+
         // elseif($role == 2 && $row->jabatan = "Asistant Manager")
         // {
         //     $spv = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
@@ -296,7 +306,7 @@ class ManagerController extends Controller
                 $request->session()->put('bulan', $bulan);
                 $request->session()->put('tahun', $tahun);
 
-                if ($idkaryawan !== "Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun)) 
+                if ($idkaryawan !== "Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
                 {
                     $tp = $request->query('tp',1);
                     $cutistaff = DB::table('cuti')
@@ -340,7 +350,7 @@ class ManagerController extends Controller
                         ->distinct()
                         ->get();
                     return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','karyawan','pegawai'));
-                }elseif ($idkaryawan == "Semua" && isset($bulan) && isset($tahun)) 
+                }elseif ($idkaryawan == "Semua" && isset($bulan) && isset($tahun))
                 {
                     $tp = $request->query('tp',1);
                     $cutistaff = DB::table('cuti')
@@ -355,7 +365,7 @@ class ManagerController extends Controller
                             $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
                             ->orWhere(function($query) {
                                 $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
-                            });    
+                            });
                         })
                         ->where('karyawan.partner',Auth::user()->partner)
                         ->where('karyawan.divisi',$atasan->divisi)
@@ -377,7 +387,7 @@ class ManagerController extends Controller
                             $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
                             ->orWhere(function($query){
                                 $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
-                            });    
+                            });
                         })
                         ->where('karyawan.partner',Auth::user()->partner)
                         ->select('izin.*','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','jenisizin.jenis_izin','statuses.name_status','datareject.alasan as alasan','departemen.nama_departemen')
@@ -440,7 +450,7 @@ class ManagerController extends Controller
                 $request->session()->put('year', $year);
 
 
-                if($idpegawai !== "Semua" && isset($idpegawai) && isset($month) && isset($year)) 
+                if($idpegawai !== "Semua" && isset($idpegawai) && isset($month) && isset($year))
                 {
                     $tp = $request->query('tp',2);
                     $izinstaff = DB::table('izin')
@@ -496,7 +506,7 @@ class ManagerController extends Controller
                             $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
                             ->orWhere(function($query){
                                 $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
-                            });    
+                            });
                         })
                         ->whereMonth('izin.tgl_mulai', $month)
                         ->whereYear('izin.tgl_mulai', $year)
@@ -518,7 +528,7 @@ class ManagerController extends Controller
                             $query->where('karyawan.atasan_pertama',Auth::user()->id_pegawai)
                             ->orWhere(function($query) {
                                 $query->where('karyawan.atasan_kedua',Auth::user()->id_pegawai);
-                            });    
+                            });
                         })
                         ->where('karyawan.partner',Auth::user()->partner)
                         ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen', 'karyawan.nama','statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
@@ -526,7 +536,7 @@ class ManagerController extends Controller
                         ->orderBy('cuti.id', 'DESC')
                         ->get();
                     return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','karyawan','pegawai'));
-                } 
+                }
                 else
                 {
                     $cutistaff = DB::table('cuti')
@@ -578,7 +588,7 @@ class ManagerController extends Controller
 
             }
         }
-        elseif($role == 3 && $row->jabatan == "Direksi")
+        elseif(($role == 3 && $row->jabatan == "Direksi") || $role == 7)
         {
             $tp = $request->query('tp',1);
             if($request->id_karyawan)
@@ -802,7 +812,7 @@ class ManagerController extends Controller
             if($request->id_karyawan)
             {
                 $tp = $request->query('tp',1);
-                if ($idkaryawan !== "Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun)) 
+                if ($idkaryawan !== "Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
                 {
                     $tp = $request->query('tp',1);
                     $cutistaff = DB::table('cuti')
@@ -913,7 +923,7 @@ class ManagerController extends Controller
                 $request->session()->put('month', $month);
                 $request->session()->put('year', $year);
 
-                if($idpegawai !== "Semua" && isset($idpegawai) && isset($month) && isset($year)) 
+                if($idpegawai !== "Semua" && isset($idpegawai) && isset($month) && isset($year))
                 {
                     $tp = $request->query('tp',2);
                     $izinstaff = DB::table('izin')
@@ -940,8 +950,8 @@ class ManagerController extends Controller
                         ->orderBy('cuti.id', 'desc')
                         ->get();
                     return view('manager.staff.cutiStaff', compact('cutistaff','row','tp','izinstaff','karyawan'));
-        
-                }elseif($idpegawai == "Semua" && isset($month) && isset($year)) 
+
+                }elseif($idpegawai == "Semua" && isset($month) && isset($year))
                 {
                     $izinstaff = DB::table('izin')
                         ->leftjoin('karyawan','izin.id_karyawan','karyawan.id')
@@ -1003,7 +1013,7 @@ class ManagerController extends Controller
                 }
 
             }
-           
+
             //menghapus filter data
             $request->session()->forget('idpegawai');
             $request->session()->forget('month');
@@ -2520,7 +2530,7 @@ class ManagerController extends Controller
 
         // Menentukan nama bulan berdasarkan nilai bulan yang diberikan
 
-        if ($role == 3 && $row->jabatan == "Manager") 
+        if ($role == 3 && $row->jabatan == "Manager")
         {
             if($idkaryawan !== "Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
             {
@@ -2532,17 +2542,17 @@ class ManagerController extends Controller
                     ->get();
                 // dd($data);
 
-              
+
                 $departemen = Departemen::where('id',$middep->divisi)->first();
-    
-                if ($data->isEmpty()) 
+
+                if ($data->isEmpty())
                 {
                     return redirect()->back()->with('pesa','Tidak Ada Data');
                 } else {
                     $nbulan = \Carbon\Carbon::parse($data->first()->tanggal)->format('M Y');
                     return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), "Rekap Absensi Bulan ".$nbulan." ". ucwords(strtolower($data->first()->karyawans->nama)) ." Departemen ". ucwords(strtolower($departemen->nama_departemen)) .".xlsx");
-                }  
-               
+                }
+
             }elseif($idkaryawan == "Semua" && isset($bulan) && isset($tahun))
             {
                 $data = Absensi::with('karyawans','departemens')
@@ -2553,18 +2563,18 @@ class ManagerController extends Controller
                     ->orderBy('id_karyawan','asc')
                     ->get();
                 // dd($data);
-              
+
                 $departemen = Departemen::where('id',$middep->divisi)->first();
-    
-                if ($data->isEmpty()) 
+
+                if ($data->isEmpty())
                 {
                     return redirect()->back()->with('pesa','Tidak Ada Data');
                 } else {
                     $departemen = Departemen::where('id',$middep->divisi)->first();
                     $nbulan    = $namaBulan . ' ' . $tahun;
                     return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), "Rekap Absensi Departemen ". ucwords(strtolower($departemen->nama_departemen)) . " ". $nbulan .".xlsx");
-                }  
-               
+                }
+
             }
             else{
                 $data = Absensi::with('karyawans','departemens')
@@ -2582,7 +2592,7 @@ class ManagerController extends Controller
 
             };
         }
-        elseif ($role == 3 && $row->jabatan == "Asistant Manager") 
+        elseif ($role == 3 && $row->jabatan == "Asistant Manager")
             {
                 if($idkaryawan !== "Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
                 {
@@ -2621,14 +2631,14 @@ class ManagerController extends Controller
                     // dd($data);
                     $departemen = Departemen::where('id',$middep->divisi)->first();
 
-                    if ($data->isEmpty()) 
+                    if ($data->isEmpty())
                     {
                         return redirect()->back()->with('pesa','Tidak Ada Data');
                     } else {
                         $nbulan = \Carbon\Carbon::parse($data->first()->tanggal)->format('M Y');
-                        return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep), 
+                        return Excel::download(new AbsensiFilterExport($data,$idkaryawan,$middep),
                         "Rekap Absensi Bulan ".$nbulan." " . "Departemen ". ucwords(strtolower($departemen->nama_departemen)) .".xlsx");
-                    }  
+                    }
 
                 }
                 else{
@@ -2703,8 +2713,8 @@ class ManagerController extends Controller
                     $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen, 'nbulan'=>$nbulan,'setorganisasi' => $setorganisasi])
                                     ->setPaper('A4','landscape');
                     return $pdf->stream($pdfName);
-                } 
-        
+                }
+
             }
             elseif($idkaryawan == "Semua" && isset($bulan) && isset($tahun))
             {
@@ -2715,10 +2725,10 @@ class ManagerController extends Controller
                     ->whereYear('tanggal',$tahun)
                     ->orderBy('id_karyawan','asc')
                     ->get();
-              
+
                 $departemen = Departemen::where('id',$middep->divisi)->first();
                 $nama = "";
-                if ($data->isEmpty()) 
+                if ($data->isEmpty())
                 {
                     return redirect()->back()->with('pesa','Tidak Ada Data');
                 } else {
@@ -2729,7 +2739,7 @@ class ManagerController extends Controller
                     ->setPaper('A4','landscape');
                     return $pdf->stream($pdfName);
                 }
-               
+
             }else
             {
                 $data = Absensi::with('karyawans','departemens')
@@ -2739,8 +2749,8 @@ class ManagerController extends Controller
                     ->get();
                 $nama = "";
                 $departemen = Departemen::where('id',$middep->divisi)->first();
-            
-                if ($data->isEmpty()) 
+
+                if ($data->isEmpty())
                 {
                     return redirect()->back()->with('pesa','Tidak Ada Data');
                 } else {
@@ -2777,8 +2787,8 @@ class ManagerController extends Controller
                         $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data'=>$data,'idkaryawan'=>$idkaryawan,'nama' => $nama,'departemen'=>$departemen, 'nbulan'=>$nbulan,'setorganisasi' => $setorganisasi])
                                         ->setPaper('A4','landscape');
                         return $pdf->stream($pdfName);
-                    } 
-                
+                    }
+
                 }elseif($idkaryawan == "Semua" && isset($bulan) && isset($tahun))
                 {
                     $data = Absensi::with('karyawans','departemens')
@@ -2793,7 +2803,7 @@ class ManagerController extends Controller
                         ->get();
                     $departemen = Departemen::where('id',$middep->divisi)->first();
                     $nama = "";
-                    if ($data->isEmpty()) 
+                    if ($data->isEmpty())
                     {
                         return redirect()->back()->with('pesa','Tidak Ada Data');
                     } else {
@@ -2898,7 +2908,7 @@ class ManagerController extends Controller
 //         ->select('cuti.*','karyawan.atasan_kedua')
 //         ->where('karyawan.atasan_kedua', '=', Auth::user()->id_pegawai)
 //         ->first();
-    
+
 //     if($role == 3 && $row->jabatan == "Manager")
 //     {
 
@@ -3049,7 +3059,7 @@ class ManagerController extends Controller
     //         $data = Absensi::with(['karyawans' => function($query) {
     //             $query->select('id,nama')->where('jabatan','=', 'Staff');
     //         }])->where('id_departement',$middep->divisi)->get();
-            
+
     //         $pdf  = PDF::loadview('manager.staff.absensistaff_pdf',['data',$data],compact('data'))
     //         ->setPaper('A4','landscape');
 
