@@ -1138,7 +1138,8 @@ class karyawanController extends Controller
             ];
             return view('karyawan.dashboardKaryawan', $output);
 
-        }elseif($role == 4){
+        }elseif($role == 4)
+        {
             // return $role;
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
