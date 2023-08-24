@@ -46,7 +46,7 @@
                                         @endif
                                         <th>Level Jabatan</th>
                                         <th>Jenis Karyawan</th>
-                                        <th>Aksi</th>
+                                        <th style="width: 13%;">Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -61,27 +61,25 @@
                                             @if (Auth::user()->role == 5)
                                                 <td>{{ $salaryStructure->partner }}</td>
                                             @endif
-                                            <td class="text-center">
-                                                <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                    <button class="btn btn-info btn-sm" data-toggle="modal"
-                                                        data-target="#showModal{{ $salaryStructure->id }}">
-                                                        <i class="fa fa-eye"></i>
-                                                    </button>
+                                             <td class="text-center">
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <button class="btn btn-info btn-sm" title="Detail Struktur Gaji" data-toggle="modal" data-target="#showModal{{ $salaryStructure->id }}"><i class="fa fa-eye"></i></button>
 
                                                     @if ($salaryStructure->partner !== 0)
-                                                        <a class="btn btn-success btn-sm" data-toggle="modal"
-                                                            data-target="#edit{{ $salaryStructure->id }}"><i
-                                                                class="fa fa-edit"></i>
-                                                        </a>
+                                                        <a class="btn btn-success btn-sm" title="Edit Struktur Gaji" data-toggle="modal" data-target="#edit{{ $salaryStructure->id }}"><i class="fa fa-edit"></i></a>
                                                     @endif
 
+                                                    <form action="" method="POST">
+                                                        @csrf
+                                                        <button title="Generate Informasi Gaji" type="submit" class="btn btn-dark btn-sm"><i class="fa fa-refresh"></i></button>
+                                                    </form>
+
                                                     @if ($role == 5)
-                                                        <button class="btn btn-danger btn-sm"
-                                                            onclick="hapus({{ $salaryStructure->id }})"><i
-                                                                class="fa fa-trash"></i></button>
+                                                        <button class="btn btn-danger btn-sm" title="Hapus Struktur Gaji" onclick="hapus({{ $salaryStructure->id }})"><i class="fa fa-trash"></i></button>
                                                     @endif
                                                 </div>
                                             </td>
+                                            
                                         </tr>
                                         @include('admin.datamaster.salary.data.view')
                                         @include('admin.datamaster.salary.data.edit')

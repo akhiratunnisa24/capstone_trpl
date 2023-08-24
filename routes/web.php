@@ -761,10 +761,10 @@ Route::put('/kategori-update/{id}', [KategoriSalaryController::class, 'update'])
 Route::get('/kategori-delete/{id}', [KategoriSalaryController::class, 'destroy'])->name('kategorisalary.delete');
 
 //Salary
-Route::get('/salary', [SalaryController::class, 'index'])->name('salary');
-Route::post('/salary', [SalaryController::class, 'store'])->name('salary.store');
-Route::put('/salary/update/{id}', [SalaryController::class, 'update'])->name('salary.update');
-Route::get('/salary/delete/{id}', [SalaryController::class, 'destroy'])->name('salary.delete');
+Route::get('/struktur-penggajian', [SalaryController::class, 'index'])->name('salary');
+Route::post('/struktur-penggajian', [SalaryController::class, 'store'])->name('salary.store');
+Route::put('/struktur-penggajian/update/{id}', [SalaryController::class, 'update'])->name('salary.update');
+Route::get('/struktur-penggajian/delete/{id}', [SalaryController::class, 'destroy'])->name('salary.delete');
 
 
 

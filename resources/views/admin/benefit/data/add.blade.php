@@ -139,10 +139,10 @@
                         
                     </div>
                     <div class="modal-footer m-t-30">
-                            <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-success waves-effect waves-light" name="submit"
+                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-success waves-effect waves-light" name="submit"
                                 value="save">Simpan</button>
-                        </div>
+                    </div>
                 </form>
             </div>
         </div>

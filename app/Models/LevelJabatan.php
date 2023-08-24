@@ -10,4 +10,9 @@ class LevelJabatan extends Model
     use HasFactory;
     protected $table='level_jabatan';
     protected $fillable=['nama_level'];
+
+    public function informasigajis()
+    {
+        return $this->hasMany(Informasigaji::class, 'level_jabatan','id');
+    }
 }

@@ -19,7 +19,6 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-secondary">
-                <div class="panel-heading"></div>
                 <div class="content">
                     <div class="container">
                         <div class="row">
@@ -31,18 +30,8 @@
                                     <div class="control-group after-add-more">
 
                                         <div class="modal-body">
-                                            <table class="table table-bordered table-striped">
+                                            <table>
                                                 <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div>
-                                                            <div
-                                                                class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
                                                     <div class="col-md-6 m-t-10">
                                                         <div class="mb-3">
                                                             <div class="row">
