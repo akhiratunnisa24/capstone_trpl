@@ -104,7 +104,13 @@ class SalaryController extends Controller
                                            ->get();
 
         $levelJabatanOptions = LevelJabatan::all()->pluck('nama_level', 'id')->prepend('Pilih Level Jabatan', '');
-        $statusKaryawanOptions = ['' => 'Pilih Status','Karyawan Kontrak' => 'Karyawan Kontrak', 'Karyawan Tetap' => 'Karyawan Tetap', 'Probation' => 'Probation'];
+        $statusKaryawanOptions = [
+            '' => 'Pilih Status',
+            'Pengurus' => 'Pengurus',
+            'Kontrak' => 'Kontrak',
+            'Tetap' => 'Tetap',
+            'Probation' => 'Probation'
+        ];
         $salaryStructures = SalaryStructure::with('level_jabatans')->get();
 
         $salaryStructure->update([
