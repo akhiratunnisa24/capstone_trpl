@@ -31,12 +31,12 @@ class DepartemenController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2) 
+        if ($role == 1 || $role == 2)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen = Departemen::where('partner', Auth::user()->partner)->orderBy('id', 'asc')->get();
             return view('admin.datamaster.departemen.index', compact('departemen', 'row','role'));
-        } elseif ($role == 5) 
+        } elseif (($role == 5)||$role == 7)
         {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
@@ -65,7 +65,7 @@ class DepartemenController extends Controller
             $query->whereRaw('LOWER(nama_departemen) = ?', [strtolower($nama_departemen)]);
             $query->where('partner', $partner);
         })->first();
-    
+
         if ($departemen) {
             // Jika data departemen sudah ada, kembalikan pesan bahwa data sudah ada
             return redirect()->back()->with('pesa', 'Data Divisi ' . $nama_departemen . ' sudah ada !');
@@ -75,7 +75,7 @@ class DepartemenController extends Controller
             $departemen->nama_departemen = $nama_departemen;
             $departemen->partner = $partner;
             $departemen->save();
-    
+
             return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
         }
     }
@@ -83,7 +83,7 @@ class DepartemenController extends Controller
     public function update(Request $request, $id)
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2) 
+        if ($role == 1 || $role == 2)
         {
             $departemen = Departemen::find($id);
             $departemen->nama_departemen = $request->nama_departemen;
@@ -98,7 +98,7 @@ class DepartemenController extends Controller
     public function destroy($id)
     {
         $departemen = Departemen::find($id);
-    
+
         // Cek data ke tabel "karyawan"
         $karyawan = Karyawan::where('divisi', $departemen->id)->first();
         if ($karyawan !== null) {

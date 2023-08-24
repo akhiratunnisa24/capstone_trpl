@@ -30,7 +30,7 @@ class PartnerController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 5) {
+        if (($role == 5)||$role == 7) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $partner = Partner::orderBy('id', 'asc')->get();
@@ -52,7 +52,7 @@ class PartnerController extends Controller
         $partner = Partner::where(function ($query) use ($nama_partner) {
             $query->whereRaw('LOWER(nama_partner) = ?', [strtolower($nama_partner)]);
         })->first();
-    
+
         if ($partner) {
             // Jika data partner sudah ada, kembalikan pesan bahwa data sudah ada
             return redirect()->back()->with('pesa', 'Data Partner ' . $nama_partner . ' sudah ada !');
@@ -61,7 +61,7 @@ class PartnerController extends Controller
             $partner = new Partner;
             $partner->nama_partner = $nama_partner;
             $partner->save();
-    
+
             return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
         }
     }
@@ -69,7 +69,7 @@ class PartnerController extends Controller
     public function update(Request $request, $id)
     {
         $role = Auth::user()->role;
-        if ($role == 5) 
+        if (($role == 5)||$role == 7)
         {
             $partner = Partner::find($id);
             $partner->nama_partner = $request->nama_partner;
@@ -84,7 +84,7 @@ class PartnerController extends Controller
     // public function destroy($id)
     // {
     //     $partner = Partner::find($id);
-    
+
     //     // Cek data ke tabel "karyawan"
     //     $karyawan = Karyawan::where('Partner', $partner->id)->first();
     //     if ($karyawan !== null) {
