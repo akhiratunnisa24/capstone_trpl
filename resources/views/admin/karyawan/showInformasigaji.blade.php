@@ -58,8 +58,7 @@
                                                     <div class="col-md-6 m-t-10">
                                                         <div class="mb-3">
                                                             <div class="row">
-                                                                <label class="form-label col-sm-5 text-end">Tanggal
-                                                                    Masuk</label>
+                                                                <label class="form-label col-sm-5 text-end">Tanggal Masuk</label>
                                                                 <div class="col-sm-7">
                                                                     :  {{ \Carbon\carbon::parse($karyawan->tglmasuk)->format('d/m/Y') }}
                                                                 </div>
@@ -72,7 +71,7 @@
                                                             <div class="row">
                                                                 <label class="form-label col-sm-5 text-end">Jabatan</label>
                                                                 <div class="col-sm-7">
-                                                                    : {{ $karyawan->jabatan }}
+                                                                    : {{ $karyawan->nama_jabatan }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -81,8 +80,7 @@
                                                     <div class="col-md-6 m-t-10">
                                                         <div class="mb-3">
                                                             <div class="row">
-                                                                <label class="form-label col-sm-5 text-end">Tanggal
-                                                                    Keluar</label>
+                                                                <label class="form-label col-sm-5 text-end">Tanggal Keluar</label>
                                                                 <div class="col-sm-7">
                                                                     @if ($karyawan->tglkeluar)
                                                                         :
@@ -94,14 +92,23 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-6 m-t-10">
+                                                        <div class="mb-3">
+                                                            <div class="row">
+                                                                <label class="form-label col-sm-5 text-end">Level Jabatan</label>
+                                                                <div class="col-sm-7">
+                                                                    : {{$karyawan->jabatan}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
                                                     <div class="col-md-6 m-t-10">
                                                         <div class="mb-3">
                                                             <div class="row">
-                                                                <label class="form-label col-sm-5 text-end">Tipe
-                                                                    Kontrak</label>
+                                                                <label class="form-label col-sm-5 text-end">Status Karyawan</label>
                                                                 <div class="col-sm-7">
-                                                                    : Kontrak / Pekerja Tetap
+                                                                    : {{$karyawan->status_karyawan}}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -113,11 +120,12 @@
                                                                 <label class="form-label col-sm-5 text-end">Struktur
                                                                     Gaji</label>
                                                                 <div class="col-sm-7">
-                                                                    : Bulanan/Mingguan/Harian
+                                                                    : {{$struktur->nama}}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    
 
                                                 </div>
                                         </div>

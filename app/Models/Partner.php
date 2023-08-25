@@ -75,4 +75,9 @@ class Partner extends Model
     {
         return $this->hasMany(Informasigaji::class, 'partner', 'id');
     }
+
+    public function settingorganisasis()
+    {
+        return $this->hasMany(SettingOrganisasi::class, 'partner', 'id');
+    }
 }

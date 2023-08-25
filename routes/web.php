@@ -12,10 +12,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\admin\MesinController;
 use App\Http\Controllers\admin\ShiftController;
 use App\Http\Controllers\admin\AtasanController;
+use App\Http\Controllers\admin\SalaryController;
 use App\Http\Controllers\admin\UploadController;
 use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\BenefitController;
-use App\Http\Controllers\admin\SalaryController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\admin\AbsensisController;
@@ -50,13 +50,14 @@ use App\Http\Controllers\admin\LeveljabatanController;
 use App\Http\Controllers\karyawan\KaryawansController;
 use App\Http\Controllers\manager\KpimanagerController;
 use App\Http\Controllers\superadmin\PartnerController;
+use App\Http\Controllers\admin\InformasigajiController;
 use App\Http\Controllers\manager\TimKaryawanController;
+use App\Http\Controllers\admin\KategoriSalaryController;
 use App\Http\Controllers\admin\SettingabsensiController;
 use App\Http\Controllers\karyawan\KpikaryawanController;
 use App\Http\Controllers\superadmin\ListmesinController;
 use App\Http\Controllers\admin\BenefitkaryawanController;
 use App\Http\Controllers\admin\KategoriBenefitController;
-use App\Http\Controllers\admin\KategoriSalaryController;
 use App\Http\Controllers\karyawan\CutikaryawanController;
 use App\Http\Controllers\karyawan\IzinkaryawanController;
 use App\Http\Controllers\manager\TugasKaryawanController;
@@ -66,6 +67,7 @@ use App\Http\Controllers\admin\SettingalokasicutiController;
 use App\Http\Controllers\karyawan\AbsensiKaryawanController;
 use App\Http\Controllers\admin\NotifMailRekruitmenController;
 use App\Http\Controllers\manager\PembatalanPerubahanController;
+use App\Http\Controllers\superadmin\SettingorganisasiSAController;
 
 /*
 |--------------------------------------------------------------------------
@@ -713,34 +715,6 @@ Route::get('/download-log', [AbsensiController::class, 'downloadLog'])->name('ta
 Route::get('/test-connection', [AbsensiController::class, 'someControllerMethod']);
 Route::post('/tarik-absen', [MesinController::class, 'tarikAbsen'])->name('tarik.absen');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//master partnert
-Route::get('/partner', [PartnerController::class, 'index'])->name('partner.index');
-Route::post('/partner', [PartnerController::class, 'store'])->name('partner.store');
-Route::put('/partner/update/{id}', [PartnerController::class, 'update'])->name('partner.update');
-
-//master mesin absensi
-Route::get('/list-mesin', [ListmesinController::class, 'index'])->name('listmesin.index');
-Route::post('/list-mesin', [ListmesinController::class, 'store'])->name('listmesin.store');
-Route::put('/list-mesin/update/{id}', [ListmesinController::class, 'update'])->name('listmesin.update');
-Route::post('/connect/{id}', [ListmesinController::class, 'connect'])->name('connect');
-Route::post('/list-mesin/tarikdata/{id}', [ListmesinController::class, 'tarikAbsen'])->name('listmesin.tarikdata');
-Route::post('/list-mesin/daftar-user/{id}', [ListmesinController::class, 'getuser'])->name('listmesin.getuser');
-
 //master benefit
 Route::get('/kategori-benefit', [KategoriBenefitController::class, 'index'])->name('kategoribenefit.index');
 Route::post('/kategori-benefit', [KategoriBenefitController::class, 'store'])->name('kategori.benefit');
@@ -765,9 +739,27 @@ Route::get('/struktur-penggajian', [SalaryController::class, 'index'])->name('sa
 Route::post('/struktur-penggajian', [SalaryController::class, 'store'])->name('salary.store');
 Route::put('/struktur-penggajian/update/{id}', [SalaryController::class, 'update'])->name('salary.update');
 Route::get('/struktur-penggajian/delete/{id}', [SalaryController::class, 'destroy'])->name('salary.delete');
+Route::post('/informasigaji/{id}', [InformasigajiController::class, 'store'])->name('informasigaji');
 
+//===============================================================================
+//ROLE SUPER ADMIN
+//master partnert
+Route::get('/partner', [PartnerController::class, 'index'])->name('partner.index');
+Route::post('/partner', [PartnerController::class, 'store'])->name('partner.store');
+Route::put('/partner/update/{id}', [PartnerController::class, 'update'])->name('partner.update');
 
+//master mesin absensi
+Route::get('/list-mesin', [ListmesinController::class, 'index'])->name('listmesin.index');
+Route::post('/list-mesin', [ListmesinController::class, 'store'])->name('listmesin.store');
+Route::put('/list-mesin/update/{id}', [ListmesinController::class, 'update'])->name('listmesin.update');
+Route::post('/connect/{id}', [ListmesinController::class, 'connect'])->name('connect');
+Route::post('/list-mesin/tarikdata/{id}', [ListmesinController::class, 'tarikAbsen'])->name('listmesin.tarikdata');
+Route::post('/list-mesin/daftar-user/{id}', [ListmesinController::class, 'getuser'])->name('listmesin.getuser');
 
+//setting organisasi
+Route::get('/settingorganisasi', [SettingorganisasiSAController::class, 'index'])->name('organisasiindex');
+Route::post('/settingorganisasi', [SettingorganisasiSAController::class, 'store'])->name('organisasistore');
+Route::put('/settingorganisasi/update/{id}', [SettingorganisasiSAController::class, 'update'])->name('organisasiupdate');
 
 
 

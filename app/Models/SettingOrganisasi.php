@@ -10,7 +10,11 @@ class SettingOrganisasi extends Model
     use HasFactory;
     protected $table= 'setting_organisasi';
     protected $fillable = [
-        'nama_perusahaan','email','alamat','no_telp','kode_pos','logo'
+        'nama_perusahaan','email','alamat','no_telp','kode_pos','logo','partner'
     ];
 
+    public function partners()
+    {
+        return $this->belongsTo(Partner::class,'partner','id');
+    }
 }

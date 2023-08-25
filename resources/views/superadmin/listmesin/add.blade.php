@@ -1,4 +1,3 @@
-{{-- FORM TAMBAH DATA List Mesin --}}
 <div class="modal fade" id="AddMesin" tabindex="-1" role="dialog" aria-labelledby="AddModal" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">

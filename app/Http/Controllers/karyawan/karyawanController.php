@@ -38,6 +38,7 @@ use App\Models\Settingabsensi;
 use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
 // use Illuminate\Support\Facades\File;
+use App\Models\SalaryStructure;
 use App\Models\SettingOrganisasi;
 use App\Events\AbsenKaryawanEvent;
 use Illuminate\Support\Facades\DB;
@@ -3222,13 +3223,16 @@ class karyawanController extends Controller
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-            $karyawan = karyawan::findOrFail($id);
+            $karyawan = karyawan::with('informasigajis')->where('karyawan.id',$id)->first();
+            $idStrukturgaji = $karyawan['informasigajis'][0]['id_strukturgaji'];
+            $struktur = SalaryStructure::where('id',$idStrukturgaji)->first();
             $file = File::where('id_pegawai', $id)->first();
-
+        
             $output = [
                 'row' => $row,
                 'karyawan' => $karyawan,
                 'file' => $file,
+                'struktur' => $struktur
             ];
 
             return view('admin.karyawan.showInformasigaji', $output);

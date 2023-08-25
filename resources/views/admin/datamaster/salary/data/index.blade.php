@@ -69,7 +69,7 @@
                                                         <a class="btn btn-success btn-sm" title="Edit Struktur Gaji" data-toggle="modal" data-target="#edit{{ $salaryStructure->id }}"><i class="fa fa-edit"></i></a>
                                                     @endif
 
-                                                    <form action="" method="POST">
+                                                    <form action="/informasigaji/{{$salaryStructure->id}}" method="POST">
                                                         @csrf
                                                         <button title="Generate Informasi Gaji" type="submit" class="btn btn-dark btn-sm"><i class="fa fa-refresh"></i></button>
                                                     </form>
