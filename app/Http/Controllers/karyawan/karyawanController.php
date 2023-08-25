@@ -32,12 +32,13 @@ use App\Models\Alokasicuti;
 use App\Models\Rorganisasi;
 use App\Models\Rpendidikan;
 use Illuminate\Http\Request;
+use App\Models\Informasigaji;
 use App\Models\LevelJabatan ;
 use App\Mail\CutiNotification;
 use App\Models\Settingabsensi;
 use App\Exports\KaryawanExport;
-use App\Imports\karyawanImport;
 // use Illuminate\Support\Facades\File;
+use App\Imports\karyawanImport;
 use App\Models\SalaryStructure;
 use App\Models\SettingOrganisasi;
 use App\Events\AbsenKaryawanEvent;
@@ -47,6 +48,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\DetailSalaryStructure;
 use Illuminate\Support\Facades\Storage;
 
 class karyawanController extends Controller
@@ -3219,20 +3221,52 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1 || $role == 2) {
-
+        if ($role == 1 || $role == 2) 
+        {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-            $karyawan = karyawan::with('informasigajis')->where('karyawan.id',$id)->first();
-            $idStrukturgaji = $karyawan['informasigajis'][0]['id_strukturgaji'];
-            $struktur = SalaryStructure::where('id',$idStrukturgaji)->first();
+            $karyawan = karyawan::where('id',$id)->first();
+            $departemen = Departemen::where('partner',$row->partner)->get();
+            $namajabatan = Jabatan::where('partner',$row->partner)->get();
+            $leveljabatan = Leveljabatan::all();
+            //  return $karyawan;
+            $informasigaji = Informasigaji::where('id_karyawan',$id)->first();
+            if ($informasigaji === null) 
+            {
+                $informasigaji = null;
+                $alertMessage = 'Karyawan memiliki sejumlah data yang belum lengkap. Silakan lengkapi data karyawan, struktur gaji dan informasi gaji untuk karyawan ini.';
+                $idStrukturgaji = null; // Atau berikan nilai default yang sesua
+                $struktur = null;
+                $detailstruktur = null;
+            } 
+            else 
+            {
+                $informasigaji = $informasigaji;
+                $alertMessage ='';
+                $idStrukturgaji = $informasigaji->id_strukturgaji;
+                $struktur = SalaryStructure::where('id',$idStrukturgaji)->first();
+                $detailstruktur = DetailSalaryStructure::with('benefit')
+                ->where('id_salary_structure', $struktur->id)
+                ->whereHas('benefit', function ($query) use ($karyawan) {
+                    $query->where('partner', $karyawan->partner);
+                })
+                ->get();
+            }
+            
+            
             $file = File::where('id_pegawai', $id)->first();
         
             $output = [
                 'row' => $row,
                 'karyawan' => $karyawan,
                 'file' => $file,
-                'struktur' => $struktur
+                'struktur' => $struktur,
+                'detailstruktur' => $detailstruktur,
+                'informasigaji' => $informasigaji,
+                'alertMessage' => $alertMessage,
+                'departemen' => $departemen,
+                'namajabatan' => $namajabatan,
+                'leveljabatan' => $leveljabatan
             ];
 
             return view('admin.karyawan.showInformasigaji', $output);
@@ -3240,5 +3274,23 @@ class karyawanController extends Controller
 
             return redirect()->back();
         }
+    }
+
+    public function updateidentita(Request $request, $id)
+    {
+        $karyawan = Karyawan::find($id);
+        return $request->all();
+        $data = array(
+            'nama' => $request->post('namaKaryawan'),
+            'divisi' => $request->post('divisi'),
+            'nama_jabatan' => $request->post('namaJabatan'),
+            'jabatan' => $request->post('leveljabatanKaryawan'),
+            'gaji' => $request->post('gajiKaryawan'),
+            'status_karyawan' => $request->post('statusKaryawan'),
+            'tglmasuk' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmasukKaryawan)->format('Y-m-d'),
+        );
+        Karyawan::where('id', $id)->update($data);
+
+        return redirect()->back();
     }
 }

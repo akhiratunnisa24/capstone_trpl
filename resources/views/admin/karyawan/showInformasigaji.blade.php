@@ -1,6 +1,13 @@
 @extends('layouts.default')
 @section('content')
     <!-- Header -->
+    <style>
+        .alert-info1
+        {
+            color: #000;
+            background-color: rgba(24, 186, 226, 0.2); 
+        }
+    </style>
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
@@ -16,6 +23,14 @@
             </div>
         </div>
     </div>
+    @if ($informasigaji === null)
+        @if(isset($alertMessage))
+            <div class="alert alert-info1">
+                {{ $alertMessage }}
+                {{-- <a href="" class="btn btn-sm btn-primary"> Lengkapi Data Karyawan</a> --}}
+            </div>
+        @endif
+    @endif
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-secondary">
@@ -23,131 +38,148 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20 col-sm-20 col-xs-20">
-                                <form action="/storeupload" method="POST" enctype="multipart/form-data"
-                                    onsubmit="myFunction()">
+                                <form action="" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('post')
                                     <div class="control-group after-add-more">
-
-                                        <div class="modal-body">
-                                            <table>
+                                        <div class="panel-body">
                                                 <div class="col-md-12">
                                                     <div class="col-md-6 m-t-10">
-                                                        <div class="mb-3">
+                                                        <div class="form-group col-sm">
                                                             <div class="row">
-                                                                <label class="form-label col-sm-5 text-end">Nama</label>
-                                                                <div class="col-sm-7">
-                                                                    : {{ $karyawan->nama }}
+                                                                <label class="form-label col-sm-3 text-end">Nama</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" autocomplete="off" value="{{$informasigaji ? $informasigaji->karyawans->nama : $karyawan->nama}}" readonly>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 m-t-10">
-                                                        <div class="mb-3">
+                                                        <div class="form-group col-sm">
                                                             <div class="row">
-                                                                <label
-                                                                    class="form-label col-sm-5 text-end">Departemen</label>
-                                                                <div class="col-sm-7">
-                                                                    : {{ $karyawan->departemen->nama_departemen }}
+                                                                <label class="form-label col-sm-3 text-end">Tanggal Masuk</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" autocomplete="off" value="{{ \Carbon\carbon::parse($karyawan->tglmasuk)->format('d/m/Y') }}" readonly>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 m-t-10">
-                                                        <div class="mb-3">
+                                                        <div class="form-group col-sm">
                                                             <div class="row">
-                                                                <label class="form-label col-sm-5 text-end">Tanggal Masuk</label>
-                                                                <div class="col-sm-7">
-                                                                    :  {{ \Carbon\carbon::parse($karyawan->tglmasuk)->format('d/m/Y') }}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 m-t-10">
-                                                        <div class="mb-3">
-                                                            <div class="row">
-                                                                <label class="form-label col-sm-5 text-end">Jabatan</label>
-                                                                <div class="col-sm-7">
-                                                                    : {{ $karyawan->nama_jabatan }}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 m-t-10">
-                                                        <div class="mb-3">
-                                                            <div class="row">
-                                                                <label class="form-label col-sm-5 text-end">Tanggal Keluar</label>
-                                                                <div class="col-sm-7">
+                                                                <label class="form-label col-sm-3 text-end">Tanggal Keluar</label>
+                                                                <div class="col-sm-9">
                                                                     @if ($karyawan->tglkeluar)
-                                                                        :
-                                                                        {{ \Carbon\carbon::parse($karyawan->tglkeluar)->format('d/m/Y') }}
+                                                                    <input type="text" class="form-control" autocomplete="off" value="{{ \Carbon\carbon::parse($karyawan->tglkeluar)->format('d/m/Y') }}" readonly>
                                                                     @else
-                                                                        : -
+                                                                    <input type="text" class="form-control" autocomplete="off" value="-" readonly>
                                                                     @endif
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6 m-t-10">
-                                                        <div class="mb-3">
+                                                        <div class="form-group col-sm">
                                                             <div class="row">
-                                                                <label class="form-label col-sm-5 text-end">Level Jabatan</label>
-                                                                <div class="col-sm-7">
-                                                                    : {{$karyawan->jabatan}}
+                                                                <label class="form-label col-sm-3 text-end">Status Karyawan</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" autocomplete="off" value="{{$karyawan->status_karyawan ? $karyawan->status_karyawan : 'Masukkan Status Karyawan'}}" readonly>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-sm">
+                                                            <div class="row">
+                                                                <label class="form-label col-sm-3 text-end">Gaji Pokok</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" autocomplete="off" value="{{ $karyawan->gaji ? number_format($karyawan->gaji, 0, ',', '.')  : 'Masukkan Gaji Pokok'}}" readonly>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6 m-t-10">
-                                                        <div class="mb-3">
+                                                        <div class="form-group col-sm">
                                                             <div class="row">
-                                                                <label class="form-label col-sm-5 text-end">Status Karyawan</label>
-                                                                <div class="col-sm-7">
-                                                                    : {{$karyawan->status_karyawan}}
+                                                                <label
+                                                                    class="form-label col-sm-3 text-end">Departemen</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" autocomplete="off"
+                                                                    placeholder="" value="{{$karyawan->departemen->nama_departemen}}" readonly>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 m-t-10">
-                                                        <div class="mb-3">
+                                                        <div class="form-group col-sm">
                                                             <div class="row">
-                                                                <label class="form-label col-sm-5 text-end">Struktur
-                                                                    Gaji</label>
-                                                                <div class="col-sm-7">
-                                                                    : {{$struktur->nama}}
+                                                                <label class="form-label col-sm-3 text-end">Jabatan</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" autocomplete="off" value="{{$karyawan->nama_jabatan ? $karyawan->nama_jabatan : 'Masukkan Level Jabatan'}}" readonly>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    
+                                                        <div class="form-group col-md">
+                                                            <div class="row">
+                                                                <label class="form-label col-sm-3 text-end">Level Jabatan</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" name="level_jabatan" id="level_jabatan" autocomplete="off"
+                                                                    placeholder="Masukkan Level Jabatan" value="{{$karyawan->jabatan ? $karyawan->jabatan : 'Masukkan Level Jabatan'}}" readonly>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
+                                                        <div class="form-group col-md">
+                                                            <div class="row">
+                                                                <label class="form-label col-sm-3 text-end">Struktur Gaji</label>
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" class="form-control" name="id_strukturgaji" id="id_strukturgaji" autocomplete="off"
+                                                                        placeholder="Masukkan Struktur Gaji" value="{{ $struktur ? $struktur->nama : '' }}"                                                                        readonly>
+                                            
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <table id="datatable-responsive48" class="table dt-responsive nowrap table-striped" cellpadding="0" style="margin: auto; width:500px; margin-bottom:15px;">
+                                                            <thead style="background-color: #a1cee6;">
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Benefit</th>
+                                                                    <th>Nominal</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if($detailstruktur !== NULL)
+                                                                @foreach ($detailstruktur as $data)
+                                                                    <tr>
+                                                                        <td>{{ $loop->iteration }}</td>
+                                                                        <td>{{ $data->benefit->nama_benefit}}</td>
+                                                                        @if($data->benefit->siklus_pembayaran === "Bulan")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran_bulanan, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
+                                                                        @elseif($data->benefit->siklus_pembayaran === "Minggu")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran_mingguan, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
+                                                                        @elseif($data->benefit->siklus_pembayaran === "Hari")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran_harian, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
+                                                                        @elseif($data->benefit->siklus_pembayaran === "Jam")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran_jam, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
+                                                                        @elseif($data->benefit->siklus_pembayaran === "THR")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td> 
+                                                                        @elseif($data->benefit->siklus_pembayaran === "Bonus")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td> 
+                                                                        @endif      
+                                                                    </tr>
+                                                                @endforeach
+                                                                @endif
+                                                            </tbody>
+                        
+                                                        </table>
+                                                    </div>
                                                 </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            {{-- <a href="editfile{{ $karyawan->id }}" class="btn btn-sm btn-primary" type="button">Edit Data <i class="fa fa-edit"></i></a> --}}
-                                            {{-- @if (!isset($file))
-                                                <a href="/karyawanupload{{ $karyawan->id }}" class="btn btn-sm btn-success">
-                                                    Upload Data <i class="fa fa-upload"></i> </a>
-                                            @elseif (isset($file))
-                                                <a href="editfile{{ $karyawan->id }}" class="btn btn-sm btn-primary"
-                                                    type="button">Edit Data <i class="fa fa-edit"></i></a>
-                                            @endif --}}
-                                            {{-- @if (!empty($file->surat_pengangkatan_kartap)) --}}
-                                            {{-- <a href="editfile{{ $karyawan->id }}" class="btn btn-sm btn-primary" type="button" <?php echo $file === null ? 'disabled' : ''; ?>>Edit Data <i class="fa fa-edit"></i></a> --}}
-                                            <a href="karyawan" class="btn btn-sm btn-danger" type="button">Kembali <i
-                                                    class="fa fa-home"></i></a>
-                                        </div>
-
-                                        </table>
                                     </div>
+
+                                
+                                    <div class="modal-footer">
+                                        @if($informasigaji !== NULL)
+                                        <a href="" class="btn btn-sm btn-success" type="button">Edit Informasi Gaji <i class="fa fa-money"></i></a>
+                                        @endif
+                                        <a class="btn btn-sm btn-info"  title="Edit Data Karyawan" data-toggle="modal" data-target="#editDatakaryawan{{ $karyawan->id }}">Edit Data Karyawan <i class="fa fa-user"></i></a>
+                                        <a href="karyawan" class="btn btn-sm btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
+                                    </div>
+                                </form>
+                                @include('admin.karyawan.editdatashowinformasi')
                             </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -155,4 +187,36 @@
         </div>
     </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+
+    @if (Session::has('pesan'))
+        <script>
+            swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+                button: true,
+                button: "OK",
+            });
+        </script>
+    @endif
+
+    @if (Session::has('pesa'))
+        <script>
+            swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+                button: true,
+                button: "OK",
+            });
+        </script>
+    @endif
 @endsection
+

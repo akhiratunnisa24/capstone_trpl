@@ -32,7 +32,7 @@
                         </div>
                         @include('admin.datamaster.salary.kategori.add')
                         <div class="panel-body">
-                            <table id="datatable-responsive44"
+                            <table id="datatable-responsive47"
                                 class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
                                 width="100%">
 
