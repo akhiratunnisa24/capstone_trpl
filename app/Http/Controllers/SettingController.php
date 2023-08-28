@@ -21,8 +21,8 @@ class SettingController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 5) {
-            
+        if (($role == 5)||$role == 7) {
+
             $output = [
 
             ];
@@ -43,7 +43,7 @@ class SettingController extends Controller
             $partner = Partner::all();
 
             return view('admin.datamaster.user.settingUser', compact('user','row','partner','role'));
-        }elseif($role == 5)
+        }elseif(($role == 5)||$role == 7)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $user = User::all();
@@ -60,7 +60,7 @@ class SettingController extends Controller
     public function editUser(Request $request, $id)
     {
         $role = Auth::user()->role;
-        if ($role == 5) 
+        if ($role == 5 || $role == 7)
         {
             $user = User::all();
             User::where('id', $id)->update(
@@ -72,7 +72,7 @@ class SettingController extends Controller
                 ]
             );
             return back()->with("status", "Password changed successfully!");
-        }elseif($role == 1 || $role == 2)
+        }elseif($role == 1 || $role == 2 || $role == 7)
         {
             $user = User::find($id);
 
@@ -89,9 +89,9 @@ class SettingController extends Controller
         else {
 
                 return redirect()->back();
-        }   
+        }
 
-        
+
     }
     public function hapususer($id)
     {
@@ -100,13 +100,13 @@ class SettingController extends Controller
         $user->delete();
 
         return redirect()->back();
-        // return redirect('karyawan'); 
+        // return redirect('karyawan');
     }
 
     public function settingrole(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 5 || $role == 1) 
+        if ($role == 5 || $role == 1 || $role == 7)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $user = Role::all();
@@ -120,7 +120,7 @@ class SettingController extends Controller
     public function storerole(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 5 || $role == 1) 
+        if ($role == 5 || $role == 1 || $role == 7)
         {
 
             $user = new Role;
@@ -152,6 +152,19 @@ class SettingController extends Controller
         $role->delete();
 
         return redirect()->back();
-        // return redirect('karyawan'); 
+        // return redirect('karyawan');
+    }
+
+    public function setPartner($id)
+    {
+        if (Auth::user()->role == 7) {
+            $user = User::findOrFail(Auth::user()->id);
+            $user->partner = $id;
+            $user->save();
+
+            return redirect()->back()->with('success', 'Partner berhasil diupdate.');
+        } else {
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk melakukan aksi ini.');
+        }
     }
 }

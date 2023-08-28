@@ -5,11 +5,11 @@
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Kategori Struktur Penggajian</h4>
+                <h4 class="pull-left page-title">Setting Organisasi</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Rynest Employee Management System</li>
-                    <li class="active">Kategori Struktur Penggajian</li>
+                    <li class="active">Setting Organisasi</li>
                 </ol>
 
                 <div class="clearfix">
@@ -28,51 +28,43 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                data-target="#Add"> Tambah Data Struktur Penggajian</a>
+                                data-target="#Add"> Tambah Data Organisasi</a>
                         </div>
-                        @include('admin.datamaster.salary.kategori.add')
+                        @include('superadmin.setting.add')
                         <div class="panel-body">
-                            <table id="datatable-responsive47"
-                                class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
-                                width="100%">
+                            <table id="datatable-responsive42" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama Struktur Penggajian</th>
-                                        {{-- @if ($role == 5) --}}
-                                        <th>Partner</th>
-                                        {{-- @endif --}}
-                                        <th>Aksi</th>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>No Telp</th>
+                                        {{-- <th>Partner</th> --}}
+                                        <th style="width: 150px;">Aksi</th>
                                     </tr>
                                 </thead>
 
-                                {{-- <tbody>
-                                    @foreach ($kategori as $data)
+                                <tbody>
+                                    @foreach ($settingorganisasi as $data)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $data->nama_kategori }}</td>
-                                            <td>{{ $data->kode }}</td>
-                                            @if ($role == 5)
-                                                <td>{{ $data->partner }}</td>
-                                            @endif
-                                            <td class="text-center">
-                                                <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                @if ($data->partner !== 0)
-                                                    <a class="btn btn-success btn-sm editDepartmen" data-toggle="modal"
-                                                       data-target="#edit{{$data->id}}"><i class="fa fa-edit"></i>
+                                            <td>{{ $data->nama_perusahaan }}</td>
+                                            <td>{{ $data->email}}</td>
+                                            <td>{{ $data->no_telp }}</td>
+                                            {{-- <td>{{ $data->partners->nama_partner}}</td> --}}
+                                            <td class="">
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <a href="" class="btn btn-success btn-sm" data-toggle="modal"
+                                                        data-target="#edit{{ $data->id }}"><i class="fa fa-edit"></i>
                                                     </a>
-                                                @endif
 
-                                                @if ($role == 5)
-                                                    <button class="btn btn-danger btn-sm" onclick="hapus({{ $data->id }})"><i class="fa fa-trash"></i></button>
-                                                @endif
                                                 </div>
                                             </td>
                                         </tr>
-                                        @include('admin.datamaster.benefit.kategori.edit')
+                                        @include('superadmin.setting.edit')
                                     @endforeach
-                                </tbody> --}}
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -80,33 +72,31 @@
             </div>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
     <!-- jangan lupa menambahkan script js sweet alert di bawah ini  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
-
-    @if (Session::has('pesan'))
+    
+    @if(Session::has('pesan'))
         <script>
-            swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
-                button: true,
-                button: "OK",
+            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                button:true,
+                button:"OK",
             });
         </script>
     @endif
 
-    @if (Session::has('pesa'))
+    @if(Session::has('pesa'))
         <script>
-            swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
-                button: true,
-                button: "OK",
+            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+                button:true,
+                button:"OK",
             });
         </script>
     @endif
@@ -126,11 +116,12 @@
                 if (result.isConfirmed) {
                     swal.fire({
                         title: "Mohon Menunggu",
-                        text: "Data Struktur Penggajian sedang diperiksa.",
+                        text: "Data List Mesin sedang diperiksa.",
                         icon: "info",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= '/kategori-salary/delete' ?>' + id;
+                    location.href = '<?= '/listmesin/delete' ?>' + id;
+                    // location.href = '<?= 'http://localhost:8000/List Mesin/delete' ?>' + id;
                 }
             })
         }

@@ -34,6 +34,24 @@ class KategoriBenefitSeeder extends Seeder
                 'kode' => 'GB',
                 'partner' => 0,
             ],
+            [
+                'id' => 4,
+                'nama_kategori' => 'Tunjangan',
+                'kode' => 'TUNJ',
+                'partner' => 0,
+            ],
+            [
+                'id' => 5,
+                'nama_kategori' => 'Asuransi',
+                'kode' => 'ASURANSI',
+                'partner' => 0,
+            ],
+            [
+                'id' => 6,
+                'nama_kategori' => 'Potongan',
+                'kode' => 'POTONGAN',
+                'partner' => 0,
+            ],
         ];
 
         DB::table('kategoribenefit')->insert($kategoriBenefit);

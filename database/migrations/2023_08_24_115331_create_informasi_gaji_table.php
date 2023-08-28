@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('benefit_karyawan', function (Blueprint $table) {
+        Schema::create('informasi_gaji', function (Blueprint $table) {
             $table->id();
             $table->integer('id_karyawan');
-            $table->integer('id_struktur_gaji');
-            $table->integer('id_detailstrukturgaji');
+            $table->integer('id_strukturgaji');
+            $table->string('status_karyawan');
+            $table->integer('level_jabatan');
+            $table->decimal('gaji_pokok',10,2);
             $table->integer('partner');
             $table->timestamps();
         });
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('benefit_karyawan');
+        Schema::dropIfExists('informasi_gaji');
     }
 };

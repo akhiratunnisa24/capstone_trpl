@@ -44,15 +44,8 @@ class karyawanImport implements ToModel, WithHeadingRow
             $carbonDate = Carbon::createFromTimestamp(($excelDateB - 25569) * 86400)->format('Y-m-d');
             $tgl_masuk = $carbonDate;
 
-            $atasanpertama = Karyawan::whereRaw('LOWER(nama) = ?', [strtolower($row['atasan_langsung'])])
-                ->where('partner',Auth::user()->partner)
-                ->select('id')->first();
-            $atasankedua = Karyawan::whereRaw('LOWER(nama) = ?', [strtolower($row['atasan_kedua'])])
-                ->where('partner',Auth::user()->partner)
-                ->select('id')->first();
             $divisi = Departemen::whereRaw('LOWER(nama_departemen) = ?', [strtolower($row['divisi'])])->select('id')->first();
             $cek = !Karyawan::where('nik', $row['no_ktp'])->where('tgllahir',$tgl_lahir)->where('partner',$partner)->exists();
-            // dd($cek,$tgl_lahir,$tgl_masuk);
             if($cek)
             {
                 $karyawan = [
@@ -69,12 +62,12 @@ class karyawanImport implements ToModel, WithHeadingRow
                     'no_hp'         => $row['nomor_hp'] ?? null,
                     'status_karyawan'=> $row['status_karyawan'] ?? null,
                     'tipe_karyawan' => null,
-                    'atasan_pertama'=>  $atasanpertama->id ?? null,
-                    'atasan_kedua'  =>  $atasankedua->id ?? null,
+                    'atasan_pertama'=>  $row['atasan_langsung'] ?? null,
+                    'atasan_kedua'  =>  $row['atasan_kedua'] ?? null,
                     'no_kk'         =>  null,
                     'status_kerja'  =>  $row['status_kerja'] ?? null, 
                     'cuti_tahunan'  =>  null,
-                    'divisi'        =>  $divisi->id ?? null,
+                    'divisi'        =>  $divisi ?? null,
                     'no_rek'        =>  $row['nomor_rekening'] ?? null,
                     'no_bpjs_kes'   => null,
                     'no_npwp'       => null,

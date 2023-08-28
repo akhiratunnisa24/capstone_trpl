@@ -32,12 +32,14 @@ use App\Models\Alokasicuti;
 use App\Models\Rorganisasi;
 use App\Models\Rpendidikan;
 use Illuminate\Http\Request;
+use App\Models\Informasigaji;
 use App\Models\LevelJabatan ;
 use App\Mail\CutiNotification;
 use App\Models\Settingabsensi;
 use App\Exports\KaryawanExport;
-use App\Imports\karyawanImport;
 // use Illuminate\Support\Facades\File;
+use App\Imports\karyawanImport;
+use App\Models\SalaryStructure;
 use App\Models\SettingOrganisasi;
 use App\Events\AbsenKaryawanEvent;
 use Illuminate\Support\Facades\DB;
@@ -46,6 +48,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\DetailSalaryStructure;
 use Illuminate\Support\Facades\Storage;
 
 class karyawanController extends Controller
@@ -253,7 +256,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 2 or 3)
+        if ($role == 2 or 3 or 7)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
@@ -937,6 +940,107 @@ class karyawanController extends Controller
                     ->get();
                 $jumizin = $ijin->count();
             }
+            elseif($role == 7)
+            {
+                $cuti = DB::table('cuti')
+                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                    ->distinct()
+                    ->where(function ($query) {
+                        $query->where(function ($q) {
+                            $q->where('cuti.status', 1)
+                            ->where('karyawan.partner', Auth::user()->partner)
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                                ->where('cuti.catatan', '=', NULL);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('cuti.status', [1, 6])
+                            ->where('karyawan.partner', Auth::user()->partner)
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                                ->where('cuti.catatan', '=', NULL);
+                        });
+                    })
+                    ->get();
+                $cutijumlah = $cuti->count();
+
+                $cutis = DB::table('cuti')
+                    ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                    ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                    ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                    ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                    ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                    ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                    ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                    ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                    ->distinct()
+                    ->where(function ($query) {
+                        $query->where(function ($q) {
+                            $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                                ->where('karyawan.partner', Auth::user()->partner)
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                                ->where('karyawan.partner', Auth::user()->partner)
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        });
+                    })
+                    ->get();
+                $jumct = $cutis->count();
+
+                $izin = DB::table('izin')
+                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                    ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin','departemen.nama_departemen', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                    ->distinct()
+                    ->where(function ($query) {
+                        $query->where(function ($q) {
+                            $q->where('izin.status', 1)
+                                ->where('karyawan.partner', Auth::user()->partner)
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                                ->where('izin.catatan', '=', NULL);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('izin.status', [1, 6])
+                                ->where('karyawan.partner', Auth::user()->partner)
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                                ->where('izin.catatan', '=', NULL);
+                        });
+                    })
+                    ->get();
+                $izinjumlah = $izin->count();
+                $ijin =DB::table('izin')
+                    ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                    ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                    ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                    ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                    ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                    ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                    ->distinct()
+                    ->where(function ($query) {
+                        $query->where(function ($q) {
+                            $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                                ->where('karyawan.partner', Auth::user()->partner)
+                                ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                        })
+                        ->orWhere(function ($q) {
+                            $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                                ->where('karyawan.partner', Auth::user()->partner)
+                                ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                        });
+                    })
+                    ->get();
+                $jumizin = $ijin->count();
+            }
             elseif($role == 2)
             {
                 $cuti = DB::table('cuti')
@@ -1138,7 +1242,8 @@ class karyawanController extends Controller
             ];
             return view('karyawan.dashboardKaryawan', $output);
 
-        }elseif($role == 4){
+        }elseif($role == 4)
+        {
             // return $role;
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -3111,22 +3216,57 @@ class karyawanController extends Controller
         Rpendidikan::insert($r_pendidikan);
         return redirect()->back()->withInput();
     }
-    
+
     public function showinformasigaji($id)
     {
         $role = Auth::user()->role;
 
-        if ($role == 1 || $role == 2) {
-
+        if ($role == 1 || $role == 2) 
+        {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-            $karyawan = karyawan::findOrFail($id);
+            $karyawan = karyawan::where('id',$id)->first();
+            $departemen = Departemen::where('partner',$row->partner)->get();
+            $namajabatan = Jabatan::where('partner',$row->partner)->get();
+            $leveljabatan = Leveljabatan::all();
+            //  return $karyawan;
+            $informasigaji = Informasigaji::where('id_karyawan',$id)->first();
+            if ($informasigaji === null) 
+            {
+                $informasigaji = null;
+                $alertMessage = 'Karyawan memiliki sejumlah data yang belum lengkap. Silakan lengkapi data karyawan, struktur gaji dan informasi gaji untuk karyawan ini.';
+                $idStrukturgaji = null; // Atau berikan nilai default yang sesua
+                $struktur = null;
+                $detailstruktur = null;
+            } 
+            else 
+            {
+                $informasigaji = $informasigaji;
+                $alertMessage ='';
+                $idStrukturgaji = $informasigaji->id_strukturgaji;
+                $struktur = SalaryStructure::where('id',$idStrukturgaji)->first();
+                $detailstruktur = DetailSalaryStructure::with('benefit')
+                ->where('id_salary_structure', $struktur->id)
+                ->whereHas('benefit', function ($query) use ($karyawan) {
+                    $query->where('partner', $karyawan->partner);
+                })
+                ->get();
+            }
+            
+            
             $file = File::where('id_pegawai', $id)->first();
-
+        
             $output = [
                 'row' => $row,
                 'karyawan' => $karyawan,
                 'file' => $file,
+                'struktur' => $struktur,
+                'detailstruktur' => $detailstruktur,
+                'informasigaji' => $informasigaji,
+                'alertMessage' => $alertMessage,
+                'departemen' => $departemen,
+                'namajabatan' => $namajabatan,
+                'leveljabatan' => $leveljabatan
             ];
 
             return view('admin.karyawan.showInformasigaji', $output);
@@ -3134,5 +3274,24 @@ class karyawanController extends Controller
 
             return redirect()->back();
         }
+    }
+
+    public function updateidentita(Request $request, $id)
+    {
+        $karyawan = Karyawan::find($id);
+        $gaji = preg_replace('/[^0-9]/', '', $request->gajiKaryawan);
+        $gajiKaryawan = (float) $gaji;
+        $data = array(
+            'nama' => $request->post('namaKaryawan'),
+            'divisi' => $request->post('divisi'),
+            'nama_jabatan' => $request->post('namaJabatan'),
+            'jabatan' => $request->post('leveljabatanKaryawan'),
+            'gaji' => $gaji,
+            'status_karyawan' => $request->post('statusKaryawan'),
+            'tglmasuk' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmasukKaryawan)->format('Y-m-d'),
+        );
+        Karyawan::where('id', $id)->update($data);
+
+        return redirect()->back();
     }
 }

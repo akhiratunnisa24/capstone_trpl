@@ -812,11 +812,23 @@ class KaryawansController extends Controller
         // }
        
         //Jika NIP tidak ditemukan, simpan data ke database
-        if ($request->session()->has('karyawan')) {
-
+        if ($request->session()->has('karyawan')) 
+        {
             $karyawan = $request->session()->get('karyawan');
+
+            //pengecekan agar tidak ada duplikasi data
+            $existingKaryawan = Karyawan::where('email', $karyawan->email)
+                ->orWhere('nik', $karyawan->nik)
+                ->first();
+
+            if ($existingKaryawan) 
+            {
+                return redirect()->back()->with('pesa', 'Email atau NIK sudah terdaftar pada sistem');
+            }
+            
             $karyawan->save();
-            $idKaryawan = $karyawan->id;  
+            $idKaryawan = $karyawan->id; 
+            $namakaryawan = $karyawan->nama; 
         }
 
         if ($request->session()->has('datakeluarga')) {
@@ -888,7 +900,7 @@ class KaryawansController extends Controller
         $request->session()->forget('prestasi');
 
 
-        return redirect('/karyawan');
+        return redirect('/karyawan')->with('pesan','Data '.$namakaryawan . ' Berhasil disimpan.');
     }
 
     //===================================================================================

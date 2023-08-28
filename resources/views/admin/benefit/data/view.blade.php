@@ -1,4 +1,4 @@
-<div class="modal fade" id="show{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="show" aria-hidden="true">
+<div class="modal fade" id="show{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="show" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -17,18 +17,17 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="mb-3">
+                            <div class="mb-3">
                                 <div class="row">
                                     <label class="form-label col-sm-5 text-end">Kategori</label>
                                     <div class="col-sm-7">
-                                        :  {{ $data->kategoribenefits->nama_kategori }}
+                                        : {{ $data->kategoribenefits->nama_kategori }}
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <div class="row">
-                                    <label
-                                        class="form-label col-sm-5 text-end">Kode</label>
+                                    <label class="form-label col-sm-5 text-end">Kode</label>
                                     <div class="col-sm-7">
                                         : {{ $data->kode }}
                                     </div>
@@ -42,7 +41,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if($data->siklus_pembayaran == "Bulan")
+                            @if ($data->siklus_pembayaran == 'Bulan')
                                 <div class="mb-3">
                                     <div class="row">
                                         <label class="form-label col-sm-5 text-end">Nominal/Bulan</label>
@@ -51,7 +50,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @elseif($data->siklus_pembayaran == "Minggu")
+                            @elseif($data->siklus_pembayaran == 'Minggu')
                                 <div class="mb-3">
                                     <div class="row">
                                         <label class="form-label col-sm-5 text-end">Nominal/Minggu</label>
@@ -60,7 +59,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @elseif($data->siklus_pembayaran == "Hari")
+                            @elseif($data->siklus_pembayaran == 'Hari')
                                 <div class="mb-3">
                                     <div class="row">
                                         <label class="form-label col-sm-5 text-end">Nominal/Hari</label>
@@ -69,7 +68,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @elseif($data->siklus_pembayaran == "Jam")
+                            @elseif($data->siklus_pembayaran == 'Jam')
                                 <div class="mb-3">
                                     <div class="row">
                                         <label class="form-label col-sm-5 text-end">Nominal/Jam</label>
@@ -95,15 +94,15 @@
                                 <div class="row">
                                     <label class="form-label col-sm-5 text-end">Status</label>
                                     <div class="col-sm-7">
-                                        : {{$data->aktif}}
+                                        : {{ $data->aktif }}
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <div class="row">
                                     <label class="form-label col-sm-5 text-end">Dikenakan Pajak</label>
                                     <div class="col-sm-7">
-                                        : {{$data->dikenakan_pajak}}
+                                        : {{ $data->dikenakan_pajak }}
                                     </div>
                                 </div>
                             </div>
@@ -111,15 +110,15 @@
                                 <div class="row">
                                     <label class="form-label col-sm-5 text-end">Kelas Pajak</label>
                                     <div class="col-sm-7">
-                                        : {{$data->kelas_pajak}}
+                                        : {{ $data->kelas_pajak }}
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="mb-3">
                                 <div class="row">
-                                    <label class="form-label col-sm-5 text-end">Tipe</label>
+                                    <label class="form-label col-sm-5 text-end">Tipe Kondisi</label>
                                     <div class="col-sm-7">
-                                        : {{$data->tipe}}
+                                        : {{ $data->tipe }}
                                     </div>
                                 </div>
                             </div>
@@ -127,10 +126,39 @@
                                 <div class="row">
                                     <label class="form-label col-sm-5 text-end">Muncul di Penggajian</label>
                                     <div class="col-sm-7">
-                                        : {{$data->muncul_dipenggajian}}
+                                        : {{ $data->muncul_dipenggajian }}
                                     </div>
                                 </div>
                             </div>
+                            <div class="mb-3">
+                                <div class="row">
+                                    <label class="form-label col-sm-5 text-end">Jumlah</label>
+                                    <div class="col-sm-7">
+                                        : {{$data->jumlah}}
+                                    </div>
+                                </div>
+                            </div>
+                            @if($data->tipe == "Interval Gaji")
+                            
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <label class="form-label col-sm-5 text-end">Interval Gaji</label>
+                                        <div class="col-sm-7">
+                                            : Rp. {{ number_format($data->gaji_minimum, 0, ',', '.') }} - {{ number_format($data->gaji_maksimum, 0, ',', '.') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($data->id_kategori == 5)
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <label class="form-label col-sm-5 text-end">Dibayar Oleh</label>
+                                        <div class="col-sm-7">
+                                            : {{$data->dibayarkan_oleh}}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

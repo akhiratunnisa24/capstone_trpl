@@ -76,17 +76,17 @@ class HomeController extends Controller
 
         // Absen Tidak Masuk
         $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-            ->where('partner',Auth::user()->partner)   
+            ->where('partner',Auth::user()->partner)
             ->whereMonth('created_at', '=', Carbon::now()->month)
             ->count('jam_masuk');
 
-        // Data Cuti dan Izin Hari ini 
+        // Data Cuti dan Izin Hari ini
         // $dataIzinHariini = Izin::whereYear('tgl_mulai', '=', Carbon::now()->year)
         //     ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
         //     ->whereDay('tgl_mulai', '=', Carbon::now())
         //     ->where('status','=',7)
         //     ->count('jml_hari');
-    
+
         // $cutiHariini     = Cuti::whereYear('tgl_mulai', '=', Carbon::now()->year)
         // ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
         // ->whereDay('tgl_mulai', '=', Carbon::now())
@@ -119,7 +119,7 @@ class HomeController extends Controller
             ->count('jml_cuti');
              // Total
         $cutidanizin     = $dataIzinHariini + $cutiHariini;
-        // Data Cuti dan Izin Bulan ini 
+        // Data Cuti dan Izin Bulan ini
         $dataIzinPerbulan   = Izin::whereYear('created_at', '=', Carbon::now()->year)
             ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
             ->count('jml_hari');
@@ -150,8 +150,8 @@ class HomeController extends Controller
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereDay('tanggal', '=', Carbon::now())
             ->get();
-        $jumAbsen = $absenHarini->count(); 
-       
+        $jumAbsen = $absenHarini->count();
+
         // dd($absenHarini);
         // Absen Bulan Ini
         $absenBulanini  = Absensi::where('partner',Auth::user()->partner)
@@ -183,9 +183,9 @@ class HomeController extends Controller
 
         // DATA KARYAWAN TIDAK MASUK
 
-        
 
-        //ambil jumlah Karyawan       
+
+        //ambil jumlah Karyawan
         $totalKaryawan = Karyawan::where('partner',Auth::user()->partner)->count('id');
 
         // ambil jumlah karyawan yang sudah absen
@@ -205,7 +205,7 @@ class HomeController extends Controller
         $tidakMasukBulanIni = Tidakmasuk::whereYear('tanggal', '=',Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->count('nama');
-    
+
 
 
 
@@ -223,8 +223,8 @@ class HomeController extends Controller
             ->orderBy(DB::raw("MONTH(tgl_mulai)"))
             ->pluck('jumlah', 'month_name');
 
-        $labelBulan = $getLabel->keys();    
-        // $labelTahun = $getYear->keys();    
+        $labelBulan = $getLabel->keys();
+        // $labelTahun = $getYear->keys();
         $data = $getLabel->values();
 
         $absenBulanLalu = Absensi::where('partner',Auth::user()->partner)
@@ -232,7 +232,7 @@ class HomeController extends Controller
         ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
         ->count('jam_masuk');
 
-        //absen masuk bulan ini    
+        //absen masuk bulan ini
         $absenBulanini  = Absensi::where('partner',Auth::user()->partner)
             ->whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
@@ -272,7 +272,7 @@ class HomeController extends Controller
 
         //untuk mencari sisa cuti karyawan
         $sisacuti = DB::table('alokasicuti')
-            ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti') 
+            ->join('cuti','alokasicuti.id_jeniscuti','cuti.id_jeniscuti')
             ->where('alokasicuti.id_karyawan',Auth::user()->id_pegawai)
             ->where('cuti.id_karyawan',Auth::user()->id_pegawai)
             ->where('cuti.status','=',7)
@@ -295,7 +295,7 @@ class HomeController extends Controller
         $absenTidakmasuk = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
             ->whereMonth('created_at', '=', Carbon::now()->month)
             ->count('jam_masuk');
-        
+
         $tahun = Carbon::now()->year;
 
         $posisi = Lowongan::where('partner',Auth::user()->partner)->where('status', '=', 'Aktif')->get();
@@ -404,7 +404,7 @@ class HomeController extends Controller
                 })
                 ->get();
             $jumizin = $ijin->count();
-        } 
+        }
         elseif($role->role == 1 && $row->jabatan == "Manager")
         {
             $cuti = DB::table('cuti')
@@ -499,7 +499,7 @@ class HomeController extends Controller
                 ->get();
             $jumizin = $ijin->count();
 
-        } 
+        }
         elseif($role->role == 3 && $row->jabatan == "Asistant Manager")
         {
             $cuti = DB::table('cuti')
@@ -520,9 +520,9 @@ class HomeController extends Controller
                 ->where('cuti.status', '=', '1')
                 ->where('cuti.catatan','=',NULL)
                 ->get();
-          
+
             $cutijumlah = $cuti->count();
-            
+
             $cutis = DB::table('cuti')
                 ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
                 ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
@@ -814,7 +814,108 @@ class HomeController extends Controller
                 ->whereIn('izin.catatan',['Mengajukan Pembatalan','Mengajukan Perubahan'])
                 ->get();
             $jumizin = $ijin->count();
-        
+
+        }
+        elseif($role->role == 7)
+        {
+            $cuti = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where(function ($q) {
+                        $q->where('cuti.status', 1)
+                        ->where('karyawan.partner', Auth::user()->partner)
+                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                            ->where('cuti.catatan', '=', NULL);
+                    })
+                    ->orWhere(function ($q) {
+                        $q->whereIn('cuti.status', [1, 6])
+                        ->where('karyawan.partner', Auth::user()->partner)
+                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                            ->where('cuti.catatan', '=', NULL);
+                    });
+                })
+                ->get();
+            $cutijumlah = $cuti->count();
+
+            $cutis = DB::table('cuti')
+                ->leftjoin('alokasicuti', 'cuti.id_jeniscuti', 'alokasicuti.id_jeniscuti')
+                ->leftjoin('settingalokasi', 'cuti.id_jeniscuti', 'settingalokasi.id_jeniscuti')
+                ->leftjoin('jeniscuti', 'cuti.id_jeniscuti', 'jeniscuti.id')
+                ->leftjoin('karyawan', 'cuti.id_karyawan', 'karyawan.id')
+                ->leftjoin('statuses', 'cuti.status', '=', 'statuses.id')
+                ->leftjoin('departemen','cuti.departemen','=','departemen.id')
+                ->leftjoin('datareject', 'datareject.id_cuti', '=', 'cuti.id')
+                ->select('cuti.*', 'jeniscuti.jenis_cuti', 'departemen.nama_departemen','karyawan.nama', 'statuses.name_status', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'datareject.alasan as alasan', 'datareject.id_cuti as id_cuti')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where(function ($q) {
+                        $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                            ->where('karyawan.partner', Auth::user()->partner)
+                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                    })
+                    ->orWhere(function ($q) {
+                        $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                            ->where('karyawan.partner', Auth::user()->partner)
+                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                    });
+                })
+                ->get();
+            $jumct = $cutis->count();
+
+            $izin = DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status', 'jenisizin.jenis_izin','departemen.nama_departemen', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where(function ($q) {
+                        $q->where('izin.status', 1)
+                            ->where('karyawan.partner', Auth::user()->partner)
+                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                            ->where('izin.catatan', '=', NULL);
+                    })
+                    ->orWhere(function ($q) {
+                        $q->whereIn('izin.status', [1, 6])
+                            ->where('karyawan.partner', Auth::user()->partner)
+                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                            ->where('izin.catatan', '=', NULL);
+                    });
+                })
+                ->get();
+            $izinjumlah = $izin->count();
+            $ijin =DB::table('izin')
+                ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
+                ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
+                ->leftjoin('karyawan', 'izin.id_karyawan', 'karyawan.id')
+                ->leftjoin('jenisizin', 'izin.id_jenisizin', '=', 'jenisizin.id')
+                ->leftjoin('departemen','izin.departemen','=','departemen.id')
+                ->select('izin.*', 'statuses.name_status', 'departemen.nama_departemen','jenisizin.jenis_izin', 'datareject.alasan as alasan', 'datareject.id_izin as id_izin', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama')
+                ->distinct()
+                ->where(function ($query) {
+                    $query->where(function ($q) {
+                        $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
+                            ->where('karyawan.partner', Auth::user()->partner)
+                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                    })
+                    ->orWhere(function ($q) {
+                        $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
+                            ->where('karyawan.partner', Auth::user()->partner)
+                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                    });
+                })
+                ->get();
+            $jumizin = $ijin->count();
         }
         else
         {
@@ -857,7 +958,7 @@ class HomeController extends Controller
                 ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
                 ->get();
             $jumct = $cutis->count();
-            
+
             $izin = DB::table('izin')
                 ->leftjoin('statuses', 'izin.status', '=', 'statuses.id')
                 ->leftjoin('datareject', 'datareject.id_izin', '=', 'izin.id')
@@ -919,10 +1020,10 @@ class HomeController extends Controller
                     ->where('karyawan.partner', '=', Auth::user()->partner)
                     ->where('karyawan.atasan_kedua', '=', Auth::user()->id_pegawai);
             })
-            
+
             ->select('resign.*','karyawan.partner')
             ->get();
-       
+
         $resignjumlah = $resign->count();
 
         // $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])->where('status',1)->get();
@@ -935,8 +1036,8 @@ class HomeController extends Controller
 
 
         //NOTIFIKASI DATA TINDAKAN TERHADAPA KARYAWAN TIDAK MASUK
-       
-        $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Makan')            
+
+        $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Makan')
             ->where('partner',Auth::user()->partner)
             ->select('jumlah_tidakmasuk','partner')
             ->first();
@@ -958,7 +1059,7 @@ class HomeController extends Controller
         {
             $potonguangmakan = collect();
             $jpc = 0;
-        }   
+        }
 
         $pg = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Transportasi')
             ->where('partner',Auth::user()->partner)
@@ -985,10 +1086,10 @@ class HomeController extends Controller
             $potongtransport = collect();
             $jpg = 0;
         }
-       
+
          //data karyawan terlambat
 
-        
+
          $tb = Settingabsensi::where('sanksi_terlambat', '=', 'Teguran Biasa')
             ->where('partner',Auth::user()->partner)
             ->select('jumlah_terlambat','partner')->first();
@@ -1002,7 +1103,7 @@ class HomeController extends Controller
             ->select('jumlah_terlambat','partner')->first();
 
          $sp3 = Settingabsensi::where('sanksi_terlambat', '=', 'SP Ketiga')->select('jumlah_terlambat')->first();
-        
+
         if($tb)
         {
             $terlambat = Absensi::leftJoin('setting_absensi', 'absensi.terlambat', '>', 'setting_absensi.toleransi_terlambat')
@@ -1072,7 +1173,7 @@ class HomeController extends Controller
         $jumlahKaryawanPerJabatan2 = Karyawan::whereIn('jabatan', $jabatan)
         ->count();
 
-        
+
 
         // Role Admin
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1086,10 +1187,10 @@ class HomeController extends Controller
             ];
             return view('admin.datamaster.user.dashboardAdmin', $output);
 
-        } 
+        }
         elseif ($role->role == 1)
         {
-            
+
             $output = [
                 'row' => $row,
                 'cutiPerbulan' => $cutiPerbulan,
@@ -1112,7 +1213,7 @@ class HomeController extends Controller
                 'cutibulanlalu' => $cutibulanlalu,
                 'cutidanizibulanlalu' => $cutidanizibulanlalu,
                 'tahun' => $tahun,
-                'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,    
+                'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,
                 'tidakMasukBulanIni' => $tidakMasukBulanIni,
                 'tidakMasukHariIni' => $tidakMasukHariIni,
                 'alokasicuti' => $alokasicuti,
@@ -1181,7 +1282,7 @@ class HomeController extends Controller
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
-        
+
         } elseif ($role->role == 2) {
 
             $output = [
@@ -1327,7 +1428,56 @@ class HomeController extends Controller
             ];
             return view('karyawan.dashboardKaryawan', $output);
         }
-        else 
+        elseif($role->role == 7)
+        {
+
+            $output = [
+                'informasi' =>$informasi,
+                'jmlinfo' => $jmlinfo,
+                'row' => $row,
+                'role' => $role,
+                'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
+                'absenKaryawan' => $absenKaryawan,
+                'absenTidakmasuk' => $absenTidakmasuk,
+                'alokasicuti' => $alokasicuti,
+                'sisacuti' => $sisacuti,
+                'absenBulanini' => $absenBulanini,
+                'absenBulanlalu'=> $absenBulanlalu,
+                'absenTerlambatbulanlalu'=> $absenTerlambatbulanlalu,
+                'data' => $data,
+                'labelBulan' => $labelBulan,
+                'absenTerlambatHariIni' => $absenTerlambatHariIni,
+                'dataIzinHariini' => $dataIzinHariini,
+                'cutidanizin' => $cutidanizin,
+                'dataIzinPerbulan' => $dataIzinPerbulan,
+                'cutidanizinPerbulan' => $cutidanizinPerbulan,
+                'dataIzinbulanlalu' => $dataIzinbulanlalu,
+                'cutibulanlalu' => $cutibulanlalu,
+                'cutidanizibulanlalu' => $cutidanizibulanlalu,
+                'tahun' => $tahun,
+                'totalTidakAbsenHariIni' => $totalTidakAbsenHariIni,
+                'tidakMasukBulanIni' => $tidakMasukBulanIni,
+                'tidakMasukHariIni' => $tidakMasukHariIni,
+                'alokasicuti' => $alokasicuti,
+                'absenKaryawan' => $absenKaryawan,
+                'alokasicuti2' => $alokasicuti2,
+                'posisi' => $posisi,
+                'cuti' => $cuti,
+                'cutijumlah' => $cutijumlah,
+                'cutis' => $cutis,
+                'jumct' => $jumct,
+                'izin' => $izin,
+                'izinjumlah' => $izinjumlah,
+                'ijin' => $ijin,
+                'jumizin' => $jumizin,
+                'resign' => $resign,
+                'resignjumlah' => $resignjumlah,
+                'sisacutis' => $sisacutis,
+                // 'cekSisacuti' => $cekSisacuti,
+            ];
+            return view('karyawan.dashboardKaryawan', $output);
+        }
+        else
         {
 
             $output = [

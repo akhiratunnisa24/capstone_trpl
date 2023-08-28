@@ -5,11 +5,11 @@
         <div class="col-sm-12">
 
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Penggajian</h4>
+                <h4 class="pull-left page-title">Struktur Penggajian</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Rynest Employee Management System</li>
-                    <li class="active">Penggajian</li>
+                    <li class="active">Struktur Penggajian</li>
                 </ol>
 
                 <div class="clearfix">
@@ -28,12 +28,11 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                data-target="#myModal"> Tambah Data Penggajian</a>
+                                data-target="#myModal"> Tambah Struktur Penggajian</a>
                         </div>
                         @include('admin.datamaster.salary.data.add')
                         <div class="panel-body">
-                            <table id="datatable-responsive44"
-                                class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
+                            <table id="datatable-responsive46" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
                                 width="100%">
 
                                 <thead>
@@ -41,10 +40,12 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Komponen Gaji</th>
-                                        @if ($role == 5)
+                                        @if (Auth::user()->role == 5)
                                             <th>Partner</th>
                                         @endif
-                                        <th>Aksi</th>
+                                        <th>Level Jabatan</th>
+                                        <th>Jenis Karyawan</th>
+                                        <th style="width: 13%;">Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -54,24 +55,33 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $salaryStructure->nama }}</td>
                                             <td>{{ $salaryStructure->detail_salary->count() }}</td>
-                                            {{-- <td class="text-center">
-                                                <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                    @if ($data->partner !== 0)
-                                                        <a class="btn btn-success btn-sm editDepartmen" data-toggle="modal"
-                                                            data-target="#edit{{ $data->id }}"><i
-                                                                class="fa fa-edit"></i>
-                                                        </a>
+                                            <td>{{ $salaryStructure->level_jabatans->nama_level }}</td>
+                                            <td>{{ $salaryStructure->status_karyawan }}</td>
+                                            @if (Auth::user()->role == 5)
+                                                <td>{{ $salaryStructure->partner }}</td>
+                                            @endif
+                                             <td class="text-center">
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <button class="btn btn-info btn-sm" title="Detail Struktur Gaji" data-toggle="modal" data-target="#showModal{{ $salaryStructure->id }}"><i class="fa fa-eye"></i></button>
+
+                                                    @if ($salaryStructure->partner !== 0)
+                                                        <a class="btn btn-success btn-sm" title="Edit Struktur Gaji" data-toggle="modal" data-target="#edit{{ $salaryStructure->id }}"><i class="fa fa-edit"></i></a>
                                                     @endif
 
+                                                    <form action="/informasigaji/{{$salaryStructure->id}}" method="POST">
+                                                        @csrf
+                                                        <button title="Generate Informasi Gaji" type="submit" class="btn btn-dark btn-sm"><i class="fa fa-refresh"></i></button>
+                                                    </form>
+
                                                     @if ($role == 5)
-                                                        <button class="btn btn-danger btn-sm"
-                                                            onclick="hapus({{ $data->id }})"><i
-                                                                class="fa fa-trash"></i></button>
+                                                        <button class="btn btn-danger btn-sm" title="Hapus Struktur Gaji" onclick="hapus({{ $salaryStructure->id }})"><i class="fa fa-trash"></i></button>
                                                     @endif
                                                 </div>
-                                            </td> --}}
+                                            </td>
+                                            
                                         </tr>
-                                        {{-- @include('admin.datamaster.salary.data.edit') --}}
+                                        @include('admin.datamaster.salary.data.view')
+                                        @include('admin.datamaster.salary.data.edit')
                                     @endforeach
                                 </tbody>
                             </table>
@@ -94,6 +104,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
 
     @if (Session::has('pesan'))
         <script>
@@ -132,7 +150,7 @@
                         icon: "info",
                         confirmButtonColor: '#3085d6',
                     })
-                    location.href = '<?= '/salary/delete' ?>' + id;
+                    location.href = '{{ route('salary.delete', '') }}' + '/' + id;
                 }
             })
         }

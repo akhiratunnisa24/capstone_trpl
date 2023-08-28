@@ -15,8 +15,8 @@ class SalaryStructure extends Model
         'id',
         'nama',
         'partner',
-        'parent',
-        'reference',
+        'id_level_jabatan',
+        'status_karyawan',
     ];
     protected $guarded = [];
 
@@ -29,4 +29,20 @@ class SalaryStructure extends Model
     {
         return $this->hasMany(DetailSalaryStructure::class, 'id_salary_structure');
     }
+
+    public function level_jabatans()
+    {
+        return $this->belongsTo(LevelJabatan::class,'id_level_jabatan');
+    }
+
+    public function benefits()
+    {
+        return $this->belongsToMany(Benefit::class, 'detail_salary_structure', 'id_salary_structure', 'id_benefit');
+    }
+
+    public function informasigajis()
+    {
+        return $this->hasMany(Informasigaji::class, 'id_strukturgaji', 'id');
+    }
+
 }
