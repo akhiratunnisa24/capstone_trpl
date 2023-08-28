@@ -49,10 +49,21 @@ class UserMesinController extends Controller
         ]);
     
         // Cek apakah data dengan noid2 sudah ada dengan karyawan lain
-        $existingUserMesin = UserMesin::where('noid', $request->noid)
-            ->orWhere('noid2', $request->noid2)
-            ->where('partner',$row->partner)
-            ->first();
+        // $existingUserMesin = UserMesin::where('noid', $request->noid)
+        //     ->orWhere('noid2', $request->noid2)
+        //     ->where('partner',$row->partner)
+        //     ->first();
+
+        $existingUserMesin = UserMesin::where(function ($query) use ($request, $row) {
+            $query->where('noid', $request->noid)
+                  ->where('partner', $row->partner);
+        })->orWhere(function ($query) use ($request, $row) {
+            $query->where('noid2', $request->noid2)
+                  ->where('partner', $row->partner);
+        })->first();
+        
+
+        // return $existingUserMesin;
     
         // Proses penyimpanan data jika tidak ada data yang sama dengan noid2 pada karyawan lain
         $karyawan = Karyawan::find($request->id_pegawai);
