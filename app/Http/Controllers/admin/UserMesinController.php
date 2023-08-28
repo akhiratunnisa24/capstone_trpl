@@ -49,8 +49,7 @@ class UserMesinController extends Controller
         ]);
     
         // Cek apakah data dengan noid2 sudah ada dengan karyawan lain
-        $existingUserMesin = UserMesin::where('id_pegawai', '!=', $request->id_pegawai)
-            ->where('noid', $request->noid)
+        $existingUserMesin = UserMesin::where('noid', $request->noid)
             ->orWhere('noid2', $request->noid2)
             ->where('partner',$row->partner)
             ->first();
@@ -60,7 +59,7 @@ class UserMesinController extends Controller
         if (!$karyawan) {
             return back()->withErrors(['id_pegawai' => 'Karyawan tidak ditemukan.'])->withInput();
         }
-        
+
         if(!$existingUserMesin)
         {
             $userMesin = new UserMesin([
