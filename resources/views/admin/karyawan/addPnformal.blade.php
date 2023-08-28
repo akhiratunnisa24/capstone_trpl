@@ -36,16 +36,25 @@
                                 <div class="mb-3">
                                     <label class="form-label">Lama Pendidikan</label>
                                     <div>
-                                        <div class="input-daterange input-group" id="date-range2">
+                                        <div class="input-group">
+                                            <input id="datepicker-autoclose-format-e" type="text" class="form-control" placeholder="yyyy" 
+                                                name="tahun_masukNonFormal" autocomplete="off"  rows="10">
+                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                            <input id="datepicker-autoclose-format-f" type="text" class="form-control" placeholder="yyyy" 
+                                                name="tahun_lulusNonFormal" autocomplete="off"  rows="10">
+                        
+                                        </div>
+                                        {{-- <div class="input-daterange input-group" id="date-range2">
                                             <input type="text" class="form-control" name="tahun_masukNonFormal"
                                                 placeholder="dd/mm/yyyy" autocomplete="off" />
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                             <input type="text" class="form-control" name="tahun_lulusNonFormal"
                                                 placeholder="dd/mm/yyyy" autocomplete="off" />
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
+                            
                             {{-- <div class="form-group">
                                 <div class="mb-3">
                                     <label>Tahun Lulus</label>
@@ -75,3 +84,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/pages/form-advanced.js"></script>

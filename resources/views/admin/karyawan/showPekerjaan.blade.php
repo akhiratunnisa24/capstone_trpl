@@ -82,9 +82,9 @@
                                                                     <td>{{ $rpekerjaan->alamat }}</td>
                                                                     {{-- <td>{{ $rpekerjaan->tgl_mulai }}</td>
                                                                     <td>{{ $rpekerjaan->tgl_selesai }}</td> --}}
-                                                                    <td>{{ $rpekerjaan->tgl_mulai ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpekerjaan->tgl_mulai)->format('d/m/Y') : '' }}
+                                                                    <td>{{ $rpekerjaan->tgl_mulai }}
                                                                     </td>
-                                                                    <td>{{ $rpekerjaan->tgl_selesai ? \Carbon\Carbon::createFromFormat('Y-m-d', $rpekerjaan->tgl_selesai)->format('d/m/Y') : '' }}
+                                                                    <td>{{ $rpekerjaan->tgl_selesai }}
                                                                     </td>
                                                                     <td>{{ $rpekerjaan->jabatan }}</td>
                                                                     <td>{{ $rpekerjaan->level }}</td>

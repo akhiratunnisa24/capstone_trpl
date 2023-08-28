@@ -73,7 +73,7 @@ class karyawanController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2) {
+        if ($role == 1 || $role == 2 || $role == 5) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan = karyawan::all()->sortByDesc('created_at');
@@ -81,11 +81,30 @@ class karyawanController extends Controller
             $posisi = Lowongan::where('partner',Auth::user()->partner)->where('status', '=', 'Aktif')->where('tgl_selesai', '<', Carbon::now())->get();
 
             $query = $request->input('query');
-            $results = Karyawan::where('nama', 'LIKE', '%' . $query . '%')->where('partner',Auth::user()->partner)->get();
+            $role = Auth::user()->role;
+            if ($role == 5) {
+                $results = Karyawan::where('nama', 'LIKE', '%' . $query . '%')->get();
+            } else {
+                $results = Karyawan::where('nama', 'LIKE', '%' . $query . '%')
+                    ->where('partner', Auth::user()->partner)
+                    ->get();
+            }
+
 
             //ambil id_karyawan yang belum punya akun
             $user = DB::table('users')->pluck('id_pegawai');
-            $akun = DB::table('karyawan')->where('partner',Auth::user()->partner)->whereNotIn("id", $user)->get();
+            // $akun = DB::table('karyawan')->where('partner',Auth::user()->partner)->whereNotIn("id", $user)->get();
+            if ($role == 5) {
+                // Jika role user adalah 5, maka tidak perlu filter partner
+                $akun = DB::table('karyawan')->whereNotIn("id", $user)->get();
+            } else {
+                // Jika role user bukan 5, maka filter menggunakan partner
+                $akun = DB::table('karyawan')
+                    ->where('partner', Auth::user()->partner)
+                    ->whereNotIn("id", $user)
+                    ->get();
+            }
+
 
             $role = Role::where('status','1')->get();
 
@@ -130,6 +149,23 @@ class karyawanController extends Controller
                 throw new \Exception('Data not found');
             }
             return response()->json($getEmail, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getPartner(Request $request)
+    {
+        try {
+            $getPartner = Karyawan::select('partner')
+                ->where('id', '=', $request->id_pegawai)->first();
+
+            if (!$getPartner) {
+                throw new \Exception('Data not found');
+            }
+            return response()->json($getPartner, 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
@@ -1981,14 +2017,28 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1 || $role == 2) {
+        if ($role == 1 || $role == 2 || $role == 5) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
-            $karyawan = karyawan::findOrFail($id);
-            $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager','Direksi'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])->get();
+            $karyawan = Karyawan::findOrFail($id); // Perhatikan bahwa huruf 'k' pada 'Karyawan' harus besar
+
+            $partner_user_login = auth()->user()->partner;
+
+            if (auth()->user()->role == 5) {
+                $departemen = Departemen::all();
+                $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
+                $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])->get();
+            } else {
+                $departemen = Departemen::where('partner', $partner_user_login)->get();
+                $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager', 'Direksi'])
+                                ->where('partner', $partner_user_login)
+                                ->get();
+                $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])
+                                ->where('partner', $partner_user_login)
+                                ->get();
+            }
+
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::all();
 
@@ -2007,6 +2057,7 @@ class karyawanController extends Controller
 
             return redirect()->back();
         }
+
     }
 
     // Edit identitas terbaru
@@ -2015,14 +2066,26 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1 || $role == 2) {
+        if ($role == 1 || $role == 2 || $role == 5) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $karyawan       = Karyawan::findOrFail($id);
-            $departemen     = Departemen::all();
-            $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager','Direksi'])->get();
-            $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])->get();
+            $partner_user_login = auth()->user()->partner;
+
+            if (auth()->user()->role == 5) {
+                $departemen = Departemen::all();
+                $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager', 'Direksi'])->get();
+                $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])->get();
+            } else {
+                $departemen = Departemen::where('partner', $partner_user_login)->get();
+                $atasan_pertama = Karyawan::whereIn('jabatan', ['Asistant Manager', 'Manager', 'Direksi'])
+                                ->where('partner', $partner_user_login)
+                                ->get();
+                $atasan_kedua   = Karyawan::whereIn('jabatan', ['Manager','Direksi'])
+                                ->where('partner', $partner_user_login)
+                                ->get();
+            }
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::all();
 
@@ -2230,10 +2293,10 @@ class karyawanController extends Controller
                 'nama_sekolah' => $request->post('nama_sekolah'),
                 'kota_pformal' => $request->post('kotaPendidikanFormal'),
                 'jurusan' => $request->post('jurusan'),
-                // 'tahun_masuk_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d'),
-                // 'tahun_lulus_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusFormal'))->format('Y-m-d'),
-                'tahun_masuk_formal' => $request->tahun_masukFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : $nilaiNull,
-                'tahun_lulus_formal' => $request->tahun_lulusFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : $nilaiNull,
+                'tahun_masuk_formal' =>  $request->post('tahun_masukFormal'),
+                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
+                // 'tahun_masuk_formal' => $request->tahun_masukFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : $nilaiNull,
+                // 'tahun_lulus_formal' => $request->tahun_lulusFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : $nilaiNull,
 
 
                 'ijazah_formal' => $request->post('noijazahPformal'),
@@ -2259,9 +2322,11 @@ class karyawanController extends Controller
                 'nama_lembaga' => $request->post('namaLembaga'),
                 'jenis_pendidikan' => $request->post('jenis_pendidikan'),
                 'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
+                'tahun_masuk_nonformal' => $request->post('tahun_masukNonFormal'),
+                'tahun_lulus_nonformal' => $request->post('tahun_lulusNonFormal'),
 
-                'tahun_masuk_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d'),
-                'tahun_lulus_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusNonFormal'))->format('Y-m-d'),
+                // 'tahun_masuk_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d'),
+                // 'tahun_lulus_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusNonFormal'))->format('Y-m-d'),
 
                 // 'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
                 'ijazah_nonformal' => $request->post('noijazahPnonformal'),
@@ -3221,7 +3286,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1 || $role == 2) 
+        if ($role == 1 || $role == 2)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -3231,15 +3296,15 @@ class karyawanController extends Controller
             $leveljabatan = Leveljabatan::all();
             //  return $karyawan;
             $informasigaji = Informasigaji::where('id_karyawan',$id)->first();
-            if ($informasigaji === null) 
+            if ($informasigaji === null)
             {
                 $informasigaji = null;
                 $alertMessage = 'Karyawan memiliki sejumlah data yang belum lengkap. Silakan lengkapi data karyawan, struktur gaji dan informasi gaji untuk karyawan ini.';
                 $idStrukturgaji = null; // Atau berikan nilai default yang sesua
                 $struktur = null;
                 $detailstruktur = null;
-            } 
-            else 
+            }
+            else
             {
                 $informasigaji = $informasigaji;
                 $alertMessage ='';
@@ -3252,10 +3317,10 @@ class karyawanController extends Controller
                 })
                 ->get();
             }
-            
-            
+
+
             $file = File::where('id_pegawai', $id)->first();
-        
+
             $output = [
                 'row' => $row,
                 'karyawan' => $karyawan,

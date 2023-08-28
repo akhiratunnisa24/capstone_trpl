@@ -81,9 +81,9 @@
                                                                     {{-- <td>{{ $org->tgl_mulai }}</td> --}}
                                                                     {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_mulai)->format('d/m/Y') }}</td>
                                                                     <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_selesai)->format('d/m/Y') }}</td> --}}
-                                                                    <td>{{ $org->tgl_mulai ? \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_mulai)->format('d/m/Y') : '' }}
+                                                                    <td>{{ $org->tgl_mulai ? $org->tgl_mulai: '' }}
                                                                     </td>
-                                                                    <td>{{ $org->tgl_selesai ? \Carbon\Carbon::createFromFormat('Y-m-d', $org->tgl_selesai)->format('d/m/Y') : '' }}
+                                                                    <td>{{ $org->tgl_selesai ? $org->tgl_selesai : '' }}
                                                                     </td>
 
                                                                     {{-- <td>{{ $org->tgl_selesai }}</td> --}}

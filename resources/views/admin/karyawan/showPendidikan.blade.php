@@ -91,14 +91,14 @@
                                                                     <td>{{ $rpendidikan->nama_sekolah }}</td>
                                                                     <td>{{ $rpendidikan->jurusan }}</td>
                                                                     @if ($rpendidikan->tahun_masuk_formal !== null)
-                                                                        <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_masuk_formal)->format('d/m/Y') }}
-                                                                        </td>
+                                                                        <td>{{ $rpendidikan->tahun_masuk_formal }}</td>
+                                                                        {{-- <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_masuk_formal)->format('d/m/Y') }}</td> --}}
                                                                     @else
                                                                         <td></td>
                                                                     @endif
                                                                     @if ($rpendidikan->tahun_lulus_formal !== null)
-                                                                        <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y') }}
-                                                                        </td>
+                                                                        <td>{{ $rpendidikan->tahun_lulus_formal }}</td>
+                                                                        {{-- <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y') }}</td> --}}
                                                                     @else
                                                                         <td></td>
                                                                     @endif
@@ -156,15 +156,15 @@
                                                                 <td>{{ $rpendidikan->jenis_pendidikan }}</td>
                                                                 <td>{{ $rpendidikan->nama_lembaga }}</td>
                                                                 @if ($rpendidikan->tahun_masuk_nonformal !== null)
-                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_masuk_nonformal)->format('d/m/Y') }}
+                                                                    <td>{{ $rpendidikan->tahun_masuk_nonformal }}
                                                                     </td>
                                                                 @else
                                                                     <td></td>
                                                                 @endif
 
                                                                 @if ($rpendidikan->tahun_lulus_nonformal !== null)
-                                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_nonformal)->format('d/m/Y') }}
-                                                                    </td>
+                                                                {{-- <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $rpendidikan->tahun_lulus_nonformal)->format('d/m/Y') }}</td> --}}
+                                                                   <td>{{$rpendidikan->tahun_lulus_nonformal }}</td>
                                                                 @else
                                                                     <td></td>
                                                                 @endif
@@ -248,8 +248,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
-
-
+        
         @if (Session::has('pesan'))
             <script>
                 swal("Selamat", "{{ Session::get('pesan') }}", 'success', {

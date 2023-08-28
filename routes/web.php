@@ -230,6 +230,7 @@ Route::get('showkaryawan{id}', [karyawanController::class, 'showkaryawan'])->nam
 Route::post('/import_excel', [karyawanController::class, 'importexcel'])->name('importexcelKaryawan');
 Route::get('/exportexcelkaryawan', [karyawanController::class, 'exportExcel'])->name('exportexcelkaryawan');
 Route::post('/getemail', [karyawanController::class, 'getEmail'])->name('getEmail');
+Route::post('/getpartner', [karyawanController::class, 'getPartner'])->name('getPartner');
 Route::post('/getemail2', [karyawanController::class, 'getEmail2'])->name('getEmail2');
 Route::post('/tidakmasuk', [AbsensiController::class, 'storeTidakmasuk'])->name('tidakmasuk');
 Route::put('/update-pendidikan/{id}', [karyawanController::class, 'updatePendidikan'])->name('update.Pendidikan');
