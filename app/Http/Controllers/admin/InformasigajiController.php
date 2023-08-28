@@ -43,7 +43,7 @@ class InformasigajiController extends Controller
                 $informasigaji->id_karyawan     = $data->id;
                 $informasigaji->id_strukturgaji = $strukturgaji->id;
                 $informasigaji->status_karyawan = $strukturgaji->status_karyawan;
-                $informasigaji->level_jabatan= $strukturgaji->id_level_jabatan;
+                $informasigaji->level_jabatan   = $strukturgaji->id_level_jabatan;
                 $informasigaji->gaji_pokok      = $data->gaji;
                 $informasigaji->partner         = $strukturgaji->partner;
 

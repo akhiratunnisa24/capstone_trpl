@@ -89,6 +89,40 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        <table class="table dt-responsive nowrap table-striped" cellpadding="0" style="margin: auto; width:500px; margin-bottom:15px;">
+                                                            <thead style="background-color: #a1cee6;">
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Benefit</th>
+                                                                    <th>Nominal</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if($detailstruktur !== NULL)
+                                                                @foreach ($detailstruktur as $data)
+                                                                    <tr>
+                                                                        <td>{{ $loop->iteration }}</td>
+                                                                        <td>{{ $data->benefit->nama_benefit}}</td>
+                                                                        @if($data->benefit->siklus_pembayaran === "Bulan")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran_bulanan, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
+                                                                        @elseif($data->benefit->siklus_pembayaran === "Minggu")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran_mingguan, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
+                                                                        @elseif($data->benefit->siklus_pembayaran === "Hari")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran_harian, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
+                                                                        @elseif($data->benefit->siklus_pembayaran === "Jam")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran_jam, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
+                                                                        @elseif($data->benefit->siklus_pembayaran === "THR")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td> 
+                                                                        @elseif($data->benefit->siklus_pembayaran === "Bonus")
+                                                                            <td>Rp. {{ number_format($data->benefit->besaran, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td> 
+                                                                        @endif      
+                                                                    </tr>
+                                                                @endforeach
+                                                                @endif
+                                                            </tbody>
+                        
+                                                        </table>
                                                     </div>
 
                                                     <div class="col-md-6 m-t-10">
@@ -123,47 +157,15 @@
                                                         <div class="form-group col-md">
                                                             <div class="row">
                                                                 <label class="form-label col-sm-3 text-end">Struktur Gaji</label>
-                                                                <div class="col-sm-9">
+                                                                <div class="col-sm-7">
                                                                     <input type="text" class="form-control" name="id_strukturgaji" id="id_strukturgaji" autocomplete="off"
                                                                         placeholder="Masukkan Struktur Gaji" value="{{ $struktur ? $struktur->nama : '' }}"                                                                        readonly>
-                                            
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <a class="btn btn-info" style="height:37px; width:65px;" title="Edit Struktur Gaji" data-toggle="modal" data-target="#editD{{ $karyawan->id }}">Edit <i class="fa fa-edit"></i></a>
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <table id="datatable-responsive48" class="table dt-responsive nowrap table-striped" cellpadding="0" style="margin: auto; width:500px; margin-bottom:15px;">
-                                                            <thead style="background-color: #a1cee6;">
-                                                                <tr>
-                                                                    <th>No</th>
-                                                                    <th>Benefit</th>
-                                                                    <th>Nominal</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @if($detailstruktur !== NULL)
-                                                                @foreach ($detailstruktur as $data)
-                                                                    <tr>
-                                                                        <td>{{ $loop->iteration }}</td>
-                                                                        <td>{{ $data->benefit->nama_benefit}}</td>
-                                                                        @if($data->benefit->siklus_pembayaran === "Bulan")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran_bulanan, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
-                                                                        @elseif($data->benefit->siklus_pembayaran === "Minggu")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran_mingguan, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
-                                                                        @elseif($data->benefit->siklus_pembayaran === "Hari")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran_harian, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
-                                                                        @elseif($data->benefit->siklus_pembayaran === "Jam")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran_jam, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
-                                                                        @elseif($data->benefit->siklus_pembayaran === "THR")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td> 
-                                                                        @elseif($data->benefit->siklus_pembayaran === "Bonus")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td> 
-                                                                        @endif      
-                                                                    </tr>
-                                                                @endforeach
-                                                                @endif
-                                                            </tbody>
-                        
-                                                        </table>
                                                     </div>
                                                 </div>
                                         </div>
@@ -172,10 +174,10 @@
                                 
                                     <div class="modal-footer">
                                         @if($informasigaji !== NULL)
-                                        <a href="" class="btn btn-sm btn-success" type="button">Edit Informasi Gaji <i class="fa fa-money"></i></a>
+                                        <a href="" class="btn btn-success" type="button">Edit Informasi Gaji <i class="fa fa-money"></i></a>
                                         @endif
-                                        <a class="btn btn-sm btn-info"  title="Edit Data Karyawan" data-toggle="modal" data-target="#editDatakaryawan{{ $karyawan->id }}">Edit Data Karyawan <i class="fa fa-user"></i></a>
-                                        <a href="karyawan" class="btn btn-sm btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
+                                        <a class="btn btn-info"  title="Edit Data Karyawan" data-toggle="modal" data-target="#editDatakaryawan{{ $karyawan->id }}">Edit Data Karyawan <i class="fa fa-user"></i></a>
+                                        <a href="karyawan" class="btn btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
                                     </div>
                                 </form>
                                 @include('admin.karyawan.editdatashowinformasi')

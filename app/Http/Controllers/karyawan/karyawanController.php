@@ -3279,13 +3279,14 @@ class karyawanController extends Controller
     public function updateidentita(Request $request, $id)
     {
         $karyawan = Karyawan::find($id);
-        return $request->all();
+        $gaji = preg_replace('/[^0-9]/', '', $request->gajiKaryawan);
+        $gajiKaryawan = (float) $gaji;
         $data = array(
             'nama' => $request->post('namaKaryawan'),
             'divisi' => $request->post('divisi'),
             'nama_jabatan' => $request->post('namaJabatan'),
             'jabatan' => $request->post('leveljabatanKaryawan'),
-            'gaji' => $request->post('gajiKaryawan'),
+            'gaji' => $gaji,
             'status_karyawan' => $request->post('statusKaryawan'),
             'tglmasuk' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmasukKaryawan)->format('Y-m-d'),
         );
