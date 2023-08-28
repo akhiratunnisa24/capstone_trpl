@@ -326,6 +326,9 @@
                 <ul>
                     <li>
                         <a href="#" class="waves-effect"><i class="ti-home"></i><span>Dashboard</span></a>
+                        <a href="{{ route('karyawan.index') }}" class="waves-effect"><i
+                            class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title">Data
+                            Karyawan</span></a>
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i
                                 class="mdi mdi-account-circle"></i><span class="text-info panel-title">Master
