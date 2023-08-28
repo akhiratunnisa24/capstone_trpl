@@ -49,13 +49,14 @@ class UserMesinController extends Controller
     
         // Cek apakah data dengan noid2 sudah ada dengan karyawan lain
         $existingUserMesin = UserMesin::where('noid2', $request->noid2)
+            ->orWhere('noid', $request->noid)
             ->where('id_pegawai', '!=', $request->id_pegawai)
             ->first();
     
             if ($existingUserMesin) {
-                $errorMessage = 'Data dengan Nomor ID 2 tersebut sudah ada dengan karyawan lain.';
+                $errorMessage = 'Data dengan Nomor ID tersebut sudah ada.';
                 Session::flash('errorMessage', $errorMessage);
-                return redirect()->route('user_mesin.index')->withInput();
+                return redirect()->route('user_mesin.index');
             }
     
         // Proses penyimpanan data jika tidak ada data yang sama dengan noid2 pada karyawan lain
