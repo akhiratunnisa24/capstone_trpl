@@ -40,6 +40,7 @@ class UserMesinController extends Controller
     
     public function store(Request $request)
     {
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $request->validate([
             'id_pegawai' => 'required',
             'noid' => 'required',
@@ -48,14 +49,15 @@ class UserMesinController extends Controller
         ]);
     
         // Cek apakah data dengan noid2 sudah ada dengan karyawan lain
-        $existingUserMesin = UserMesin::where('noid2', $request->noid2)
-            ->orWhere('noid', $request->noid)
-            ->where('id_pegawai', '!=', $request->id_pegawai)
+        $existingUserMesin = UserMesin::where('id_pegawai', '!=', $request->id_pegawai)
+            ->where('noid', $request->noid)
+            ->orWhere('noid2', $request->noid2)
+            ->where('partner',$row->partner)
             ->first();
     
             if ($existingUserMesin) {
-                $errorMessage = 'Data dengan Nomor ID tersebut sudah ada.';
-                Session::flash('errorMessage', $errorMessage);
+                $pesan = 'Data dengan Nomor ID tersebut sudah ada.';
+                Session::flash('pesa', $pesan);
                 return redirect()->route('user_mesin.index');
             }
     
@@ -75,7 +77,7 @@ class UserMesinController extends Controller
         ]);
         $userMesin->save();
     
-        return redirect()->route('user_mesin.index')->with('success', 'Data user mesin berhasil ditambahkan.');
+        return redirect()->route('user_mesin.index')->with('pesan', 'Data user mesin berhasil ditambahkan.');
     }
     // =====================================Dropdown addModal=============================
     public function getKaryawanInfo($id)
