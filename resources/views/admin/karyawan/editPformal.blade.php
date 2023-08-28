@@ -75,12 +75,12 @@
                                 <div class="mb-3">
                                     <label class="form-label">Lama Pendidikan</label>
                                     <div>
-                                        <div class="input-daterange input-group">
-                                                <input type="date" class="form-control" name="tahun_masukFormal"
-                                                    placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_masuk_formal }}" />
+                                        <div class="input-group">
+                                            <input id="datepicker-autoclose-format-c" type="text" class="form-control" placeholder="yyyy" 
+                                                name="tahun_masukFormal" autocomplete="off"  rows="10"  value="{{ $rpendidikan->tahun_masuk_formal }}">
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input type="date" class="form-control" name="tahun_lulusFormal"
-                                                placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_lulus_formal }}" />
+                                            <input id="datepicker-autoclose-format-d" type="text" class="form-control" placeholder="yyyy" 
+                                                name="tahun_lulusFormal" autocomplete="off"  rows="10" value="{{ $rpendidikan->tahun_lulus_formal }}">
                                         </div>
                                     </div>
                                 </div>
@@ -104,3 +104,6 @@
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/pages/form-advanced.js"></script>

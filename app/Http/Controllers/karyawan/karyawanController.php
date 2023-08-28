@@ -2230,10 +2230,10 @@ class karyawanController extends Controller
                 'nama_sekolah' => $request->post('nama_sekolah'),
                 'kota_pformal' => $request->post('kotaPendidikanFormal'),
                 'jurusan' => $request->post('jurusan'),
-                // 'tahun_masuk_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d'),
-                // 'tahun_lulus_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusFormal'))->format('Y-m-d'),
-                'tahun_masuk_formal' => $request->tahun_masukFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : $nilaiNull,
-                'tahun_lulus_formal' => $request->tahun_lulusFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : $nilaiNull,
+                'tahun_masuk_formal' =>  $request->post('tahun_masukFormal'),
+                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
+                // 'tahun_masuk_formal' => $request->tahun_masukFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : $nilaiNull,
+                // 'tahun_lulus_formal' => $request->tahun_lulusFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : $nilaiNull,
 
 
                 'ijazah_formal' => $request->post('noijazahPformal'),
@@ -2259,9 +2259,11 @@ class karyawanController extends Controller
                 'nama_lembaga' => $request->post('namaLembaga'),
                 'jenis_pendidikan' => $request->post('jenis_pendidikan'),
                 'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
+                'tahun_masuk_nonformal' => $request->post('tahun_masukNonFormal'),
+                'tahun_lulus_nonformal' => $request->post('tahun_lulusNonFormal'),
 
-                'tahun_masuk_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d'),
-                'tahun_lulus_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusNonFormal'))->format('Y-m-d'),
+                // 'tahun_masuk_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d'),
+                // 'tahun_lulus_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusNonFormal'))->format('Y-m-d'),
 
                 // 'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
                 'ijazah_nonformal' => $request->post('noijazahPnonformal'),
