@@ -25,9 +25,11 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading clearfix">
+                            @if (auth()->user()->role != 7)
                             <strong>List Resign Staff</strong>
                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
                                 data-target="#Modal"> Form Ajukan Resign</a>
+                                @endif
                         </div>
                         <!-- modals tambah data cuti -->
                         @include('admin.resign.addresign')
