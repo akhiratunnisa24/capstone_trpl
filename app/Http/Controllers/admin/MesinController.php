@@ -33,8 +33,11 @@ class MesinController extends Controller
                     // $filtered_attendance = $attendance->filter_by_date(
                     //     ['start' => $today]
                     // );
-                    // $j = $filtered_attendance->get_response(['format' => 'json']);
-                    $j = $attendance->get_response(['format' => 'json']);
+                    $filtered_attendance = $attendance->filter_by_date(
+                        ['start' => '2023-03-01','end' => '2014-03-31']
+                    );
+                    $j = $filtered_attendance->get_response(['format' => 'json']);
+                    // $j = $attendance->get_response(['format' => 'json']);
                     $jArray = json_decode($j, true);
                     // dd($jArray);
 
