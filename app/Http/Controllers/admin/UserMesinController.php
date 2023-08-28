@@ -55,29 +55,33 @@ class UserMesinController extends Controller
             ->where('partner',$row->partner)
             ->first();
     
-            if ($existingUserMesin) {
-                $pesan = 'Data dengan Nomor ID tersebut sudah ada.';
-                Session::flash('pesa', $pesan);
-                return redirect()->route('user_mesin.index');
-            }
-    
         // Proses penyimpanan data jika tidak ada data yang sama dengan noid2 pada karyawan lain
         $karyawan = Karyawan::find($request->id_pegawai);
         if (!$karyawan) {
             return back()->withErrors(['id_pegawai' => 'Karyawan tidak ditemukan.'])->withInput();
         }
+        
+        if(!$existingUserMesin)
+        {
+            $userMesin = new UserMesin([
+                'id_pegawai' => $request->id_pegawai,
+                'nik' => $karyawan->nip,
+                'noid' => $request->noid,
+                'noid2' => $request->noid2,
+                'departemen' => $karyawan->departemen->id,
+                'partner' => $karyawan->partner,
+            ]);
+            $userMesin->save();
+
+            return redirect()->route('user_mesin.index')->with('pesan', 'Data user mesin berhasil ditambahkan.');
+        }else
+        {
+            $pesan = 'Data dengan Nomor ID tersebut sudah ada.';
+            Session::flash('pesa', $pesan);
+            return redirect()->back()->with('pesa',$pesan);
+        }
     
-        $userMesin = new UserMesin([
-            'id_pegawai' => $request->id_pegawai,
-            'nik' => $karyawan->nip,
-            'noid' => $request->noid,
-            'noid2' => $request->noid2,
-            'departemen' => $karyawan->departemen->id,
-            'partner' => $karyawan->partner,
-        ]);
-        $userMesin->save();
-    
-        return redirect()->route('user_mesin.index')->with('pesan', 'Data user mesin berhasil ditambahkan.');
+       
     }
     // =====================================Dropdown addModal=============================
     public function getKaryawanInfo($id)
