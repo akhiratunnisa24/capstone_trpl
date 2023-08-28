@@ -14,7 +14,7 @@
                 <form method="POST" action="{{ url('/registrasi') }}">
                     @csrf
                     @method('POST')
-                    
+
                     {{-- <div class="form-group col-xs-12">
                         <label class="form-label">Role</label>
                             <select type="text" class="form-control selecpicker @error('role') is-invalid @enderror"
@@ -58,7 +58,7 @@
                         <input id="emailKaryawan" type="text" class="form-control" name="emailKaryawan"
                             autocomplete="off" placeholder="Email Address" readonly>
                     </div>
-                    
+
 
                     <div class="form-group col-xs-12">
                         {{-- <div class=""> --}}
@@ -89,14 +89,19 @@
                             </div>
                         </div>
                     </div>
-                    <input id="partner" type="hidden" class="form-control" name="partner" value="{{Auth::user()->partner}}" autocomplete="off" >
+                    {{-- <div class="form-group col-xs-12">
+                        <label class="form-label">Partner</label>
+                        <input id="partner" type="text" class="form-control" name="partner"
+                            autocomplete="off" placeholder="Email Address" readonly>
+                    </div> --}}
+                    <input id="partner" type="hidden" class="form-control" name="partner" autocomplete="off" >
 
                     {{-- {{-- <div class="form-group"> --}}
                         <div class="col-xs-12">
                             <div class="checkbox checkbox-primary">
 
                         </div>
-                    </div> 
+                    </div>
 
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
@@ -145,6 +150,30 @@
                 // console.log(data);
                 $('#emailKaryawan').val(data.email);
                 console.log(data?.email)
+            }
+        });
+    });
+</script>
+
+<script>
+    $('#id_pegawai').on('change', function(e) {
+        var id_pegawai = e.target.value;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                    .attr('content')
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: '{{ route('getPartner') }}',
+            data: {
+                'id_pegawai': id_pegawai
+            },
+            success: function(data) {
+                // console.log(data);
+                $('#partner').val(data.partner);
+                console.log(data?.partner)
             }
         });
     });
