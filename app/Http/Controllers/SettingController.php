@@ -154,4 +154,17 @@ class SettingController extends Controller
         return redirect()->back();
         // return redirect('karyawan');
     }
+
+    public function setPartner($id)
+    {
+        if (Auth::user()->role == 7) {
+            $user = User::findOrFail(Auth::user()->id);
+            $user->partner = $id;
+            $user->save();
+
+            return redirect()->back()->with('success', 'Partner berhasil diupdate.');
+        } else {
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk melakukan aksi ini.');
+        }
+    }
 }

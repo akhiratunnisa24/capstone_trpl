@@ -33,6 +33,51 @@
 
                             <ul class="nav navbar-nav navbar-right pull-right">
                                 <li class="dropdown hidden-xs">
+                                    @php
+                                        use App\Models\Partner;
+                                        $partners = Partner::all();
+                                    @endphp
+
+                                    <!-- Dropdown Partner -->
+                                    @if (Auth::check() && Auth::user()->role == 7)
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="partnerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Pilih Perusahaan
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="partnerDropdown">
+                                            @foreach ($partners as $partner)
+                                                <form method="POST" action="{{ route('set.partner', $partner->id) }}">
+                                                    @csrf
+                                                    <button type="submit" class="dropdown-item">{{ $partner->nama_partner }}</button>
+                                                </form>
+                                            @endforeach
+                                        </div>
+                                    </li>
+                                    @endif
+
+                                    <style>
+                                        .dropdown-menu {
+                                            width: auto !important; /* Memastikan lebar dropdown mengikuti tombol */
+                                        }
+
+                                        .dropdown-menu .dropdown-item {
+                                            text-align: center;
+                                            display: block;
+                                            width: 100%;
+                                            padding: 0.5rem 0;
+                                            background-color: transparent;
+                                            border: none;
+                                            color: #333;
+                                            transition: background-color 0.2s ease-in-out;
+                                        }
+
+                                        .dropdown-menu .dropdown-item:hover {
+                                            background-color: #f8f9fa; /* Warna latar saat hover */
+                                        }
+                                    </style>
+
+
+
                                     {{-- <a href="#" data-target="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
                                         <i class="fa fa-bell"></i> <span class="badge badge-xs badge-danger">3</span>
                                     </a> --}}
@@ -78,7 +123,7 @@
                                     </ul>
                                 </li>
                                 <?php
-            
+
                                 use Illuminate\Support\Facades\Auth;
                                 $id = Auth::user()->id_pegawai;
                                 { ?>
@@ -90,11 +135,11 @@
                                         <li><a href="editPassword{{$id}}"><i class="fa fa-cog pull-right"></i> Ganti Password </a></li>
                                         {{-- <li><a href="javascript:void(0)"> Lock screen</a></li> --}}
                                         <li class="divider"></li>
-                                    
+
                                         <li><a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Keluar </a></li>
-                                        
+
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" >
                                             @csrf
                                         </form>
@@ -109,4 +154,3 @@
             </div>
         {{-- </div> --}}
     <!-- Top Bar End -->
-            

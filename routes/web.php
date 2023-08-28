@@ -762,6 +762,13 @@ Route::get('/settingorganisasi', [SettingorganisasiSAController::class, 'index']
 Route::post('/settingorganisasi', [SettingorganisasiSAController::class, 'store'])->name('organisasistore');
 Route::put('/settingorganisasi/update/{id}', [SettingorganisasiSAController::class, 'update'])->name('organisasiupdate');
 
+//role 7 partner
+Route::post('set/partner/{id}', [SettingController::class, 'setPartner'])->name('set.partner');
+
+
+
+
+
 
 
 

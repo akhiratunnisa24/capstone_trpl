@@ -300,7 +300,7 @@
                             <li><a href="settingrole" class="waves-effect"><i
                                         class="mdi mdi-account-settings-variant"></i><span>Setting Role
                                         Login</span></a></li>
-                            <li><a href="/setting-organisasi"><i
+                            <li><a href="/settingorganisasi"><i
                                         class="fa fa-institution (alias)"></i><span></span>Setting Organisasi</a></li>
                             <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Manajemen
                                         Libur</span></a></li>
