@@ -33,12 +33,12 @@
                                 <div class="mb-3">
                                     <label class="form-label">Lama Bertugas</label>
                                     <div>
-                                        <div class="input-daterange input-group">
-                                            <input type="date" class="form-control" name="tglmulai" id="tglmulai"
-                                                value="{{ $org->tgl_mulai }}" />
+                                        <div class="input-group">
+                                            <input id="datepicker-autoclose-format-o" type="text" class="form-control" placeholder="yyyy" 
+                                                name="tglmulai" autocomplete="off"  rows="10"  id="tglmulai" value="{{ $org->tgl_mulai }}">
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input type="date" class="form-control" name="tglselesai" id="tglselesai"
-                                                value="{{ $org->tgl_selesai }}" />
+                                            <input id="datepicker-autoclose-format-p" type="text" class="form-control" placeholder="yyyy" 
+                                                name="tglselesai" autocomplete="off" id="tglselesai"  rows="10" value="{{ $org->tgl_selesai }}">
                                         </div>
                                     </div>
                                 </div>
@@ -75,3 +75,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/pages/form-advanced.js"></script>

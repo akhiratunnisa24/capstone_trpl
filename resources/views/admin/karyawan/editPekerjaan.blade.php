@@ -31,13 +31,15 @@
                                 <div class="mb-3">
                                     <label class="form-label">Lama Kerja</label>
                                     <div>
-                                        <div class="input-daterange input-group">
-                                            <input type="date" class="form-control" name="tglmulai" id="tglmulai" value="{{$rpekerjaan->tgl_mulai}}" />
+                                        <div class="input-group">
+                                            <input id="datepicker-autoclose-format-i" type="text" class="form-control" placeholder="yyyy" 
+                                                name="tglmulai" autocomplete="off"  rows="10"  value="{{$rpekerjaan->tgl_mulai}}">
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input type="date" class="form-control" name="tglselesai"
-                                                id="tglselesai" value="{{$rpekerjaan->tgl_selesai}}"/>
+                                            <input id="datepicker-autoclose-format-j" type="text" class="form-control" placeholder="yyyy" 
+                                                name="tglselesai" autocomplete="off"  rows="10" value="{{$rpekerjaan->tgl_selesai}}">
                                         </div>
                                     </div>
+                                    
                                 </div>
                                 <div class="form-group">
                                 <div class="mb-3">
@@ -87,6 +89,9 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/pages/form-advanced.js"></script>
 
     <script>
         var rupiah = document.getElementById('gaji');

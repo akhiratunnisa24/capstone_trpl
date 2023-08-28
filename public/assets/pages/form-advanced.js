@@ -406,6 +406,55 @@
             viewMode: "years",
             minViewMode: "years",
         });
+        jQuery("#datepicker-autoclose-format-m").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-n").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-o").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-p").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-q").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-r").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-s").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
         // jQuery("#datepicker-autoclosec").datepicker({
         //     format: "dd/mm/yyyy",
         //     autoclose: true,

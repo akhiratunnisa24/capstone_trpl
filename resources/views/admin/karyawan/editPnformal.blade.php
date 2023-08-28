@@ -38,7 +38,7 @@
                                             <input id="datepicker-autoclose-format-g" type="text" class="form-control" placeholder="yyyy" 
                                                 name="tahun_masukNonFormal" autocomplete="off"  rows="10"  value="{{ $rpendidikan->tahun_masuk_nonformal }}">
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input id="datepicker-autoclose-format-h" type="text" class="form-control" placeholder="yyyy" 
+                                            <input id="datepicker-autoclose-format-l" type="text" class="form-control" placeholder="yyyy" 
                                                 name="tahun_lulusNonFormal" autocomplete="off"  rows="10" value="{{ $rpendidikan->tahun_lulus_nonformal }}">
                                         </div>
                                     </div>

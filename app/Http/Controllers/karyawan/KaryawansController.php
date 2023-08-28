@@ -1018,8 +1018,8 @@ class KaryawansController extends Controller
             'nama_direktur' => $request->post('namaDirektur'),
             // 'tgl_mulai' => Carbon::parse($request->post('tglmulai'))->format('Y/m/d'),
             // 'tgl_selesai' => Carbon::parse($request->post('tglselesai'))->format('Y/m/d'),
-            'tgl_mulai' => $request->tglmulai ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d') : $nilaiNull,
-            'tgl_selesai' => $request->tglselesai ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d') : $nilaiNull,
+            'tgl_mulai' => $request->tglmulai ? $request->tglmulai : $nilaiNull,
+            'tgl_selesai' => $request->tglselesai ?  $request->tglselesai : $nilaiNull,
 
             'alasan_berhenti' => $request->post('alasanBerhenti'),
             'gaji' => $request->post('gajiRpekerjaan'),
@@ -1040,10 +1040,10 @@ class KaryawansController extends Controller
             'id_pegawai' => $idk->id,
             'nama_organisasi' => $request->post('namaOrganisasi'),
             'alamat' => $request->post('alamatOrganisasi'),
-            // 'tgl_mulai' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d'),
-            // 'tgl_selesai' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d'),
-            'tgl_mulai' => $request->tglmulai ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d') : $nilaiNull,
-            'tgl_selesai' => $request->tglselesai ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d') : $nilaiNull,
+            'tgl_mulai' => $request->tglmulai,
+            'tgl_selesai' => $request->tglselesai,
+            // 'tgl_mulai' => $request->tglmulai ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d') : $nilaiNull,
+            // 'tgl_selesai' => $request->tglselesai ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d') : $nilaiNull,
 
             'jabatan' => $request->post('jabatanRorganisasi'),
             'no_sk' => $request->post('noSKorganisasi'),
@@ -1241,8 +1241,8 @@ class KaryawansController extends Controller
         $r_pekerjaan = array(
             'nama_perusahaan' => $request->post('namaPerusahaan'),
             'alamat' => $request->post('alamatPerusahaan'),
-            'tgl_mulai' => $request->tglmulai ? \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d') : $nilaiNull,
-            'tgl_selesai' => $request->tglselesai ? \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d') : $nilaiNull,
+            'tgl_mulai' => $request->tglmulai ? $request->tglmulai  : $nilaiNull,
+            'tgl_selesai' => $request->tglselesai ? $request->tglselesai : $nilaiNull,
 
             // 'jenis_usaha' => $request->post('jenisUsaha'),
             'jabatan' => $request->post('jabatan'),
@@ -1273,8 +1273,8 @@ class KaryawansController extends Controller
         $r_organisasi = array(
             'nama_organisasi' => $request->post('namaOrganisasi'),
             'alamat' => $request->post('alamatOrganisasi'),
-            'tgl_mulai' => $request->tglmulai ? \Carbon\Carbon::parse($request->tglmulai)->format('Y-m-d') : $nilaiNull,
-            'tgl_selesai' => $request->tglselesai ? \Carbon\Carbon::parse($request->tglselesai)->format('Y-m-d') : $nilaiNull,
+            'tgl_mulai' => $request->tglmulai ? $request->tglmulai : $nilaiNull,
+            'tgl_selesai' => $request->tglselesai ? $request->tglselesai : $nilaiNull,
 
             'jabatan' => $request->post('jabatanRorganisasi'),
             'no_sk' => $request->post('noSKorganisasi'),
