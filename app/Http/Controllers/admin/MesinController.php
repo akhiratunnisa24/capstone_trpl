@@ -128,7 +128,8 @@ class MesinController extends Controller
                                             }
                                             elseif($jam_masuk < $jadwal_masuk && $jam_keluar < $jadwal_pulang)
                                             {//pulangcepat
-                                                $jml_jamkerja = $jam_keluar->diff($jam_masuk);
+                                                //$jml_jamkerja = $jam_keluar->diff($jam_masuk);
+                                                $jml_jamkerja = $jam_keluar->diff($jadwal_masuk);
                                                 $total_minutes = ($jml_jamkerja->h * 60) + $jml_jamkerja->i;
 
                                                 if ($total_minutes < 540 || $total_jmlhadir < $total_minutes) { // 9 jam = 540 menit
@@ -142,7 +143,8 @@ class MesinController extends Controller
                                             }
                                             elseif($jam_masuk > $jadwal_masuk && $jam_keluar < $jadwal_pulang)
                                             {
-                                                $jml_jamkerja = $jadwal_pulang->diff($jam_masuk);
+                                                // $jml_jamkerja = $jadwal_pulang->diff($jam_masuk);
+                                                $jml_jamkerja = $jam_keluar->diff($jam_masuk);
                                                 $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
 
                                                 $absensi->lembur = null;
@@ -152,8 +154,8 @@ class MesinController extends Controller
                                             {
                                                 $lembur = $jam_keluar->diff($jadwal_pulang);
                                                 $absensi->lembur = $lembur->format('%H:%I:%S');
-
-                                                $jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
+                                                //$jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
+                                                $jml_jamkerja = $jadwal_pulang->diff($jam_masuk);
                                                 $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
                                             
                                             }
@@ -179,9 +181,11 @@ class MesinController extends Controller
 
                                             $telatMinutes = ($telat->h * 60) + $telat->i; // Konversi jam ke menit
 
-                                            if ($telatMinutes > 0) {
+                                            if ($telatMinutes > 0) 
+                                            {
                                                 $terlambat  = $telat->format('%H:%I:%S');
-                                            } else {
+                                            } 
+                                            else {
                                                 $terlambat = null;
                                             }
                                         }
@@ -237,7 +241,7 @@ class MesinController extends Controller
                                                         ->first();
                                         if($existingAbsensi)
                                         {
-                                            return $existingAbsensi;
+                                            // return $existingAbsensi;
                                             if ($existingAbsensi->jam_keluar != $jam) 
                                             {
                                                 $jadwal_masuk  = $jadwal->jadwal_masuk;
@@ -285,17 +289,17 @@ class MesinController extends Controller
                                                 {
         
                                                     $jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
+                                                    // $jml_jamkerja = $jam_keluar->diff($jadwal_masuk);
                                                     $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
                                                     
                                                     //lembur 
                                                     $lembur = $jam_keluar->diff($jadwal_pulang);
                                                     $absensi->lembur = $lembur->format('%H:%I:%S');
 
-
                                                 }
                                                 elseif($jam_masuk < $jadwal_masuk && $jam_keluar < $jadwal_pulang)
                                                 {//pulangcepat
-                                                    $jml_jamkerja = $jam_keluar->diff($jam_masuk);
+                                                    $jml_jamkerja = $jam_keluar->diff($jadwal_masuk);
                                                     $total_minutes = ($jml_jamkerja->h * 60) + $jml_jamkerja->i;
 
                                                     if ($total_jmlhadir < $total_minutes) { // 9 jam = 540 menit
@@ -310,7 +314,8 @@ class MesinController extends Controller
                                                 }
                                                 elseif($jam_masuk > $jadwal_masuk && $jam_keluar < $jadwal_pulang)
                                                 {
-                                                    $jml_jamkerja = $jadwal_pulang->diff($jam_masuk);
+                                                    // $jml_jamkerja = $jadwal_pulang->diff($jam_masuk);
+                                                    $jml_jamkerja = $jam_keluar->diff($jam_masuk);
                                                     $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
 
                                                     $absensi->lembur = null;
@@ -321,7 +326,8 @@ class MesinController extends Controller
                                                     $lembur = $jam_keluar->diff($jadwal_pulang);
                                                     $absensi->lembur = $lembur->format('%H:%I:%S');
 
-                                                    $jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
+                                                    //$jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
+                                                    $jml_jamkerja = $jadwal_pulang->diff($jam_masuk);
                                                     $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
                                                 
                                                 }
