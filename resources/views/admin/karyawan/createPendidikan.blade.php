@@ -74,8 +74,8 @@
                                                     <td>{{$p['jurusan'] }}</td>
                                                     {{-- <td>{{$p['tahun_masuk_formal'] }}</td>
                                                     <td>{{$p['tahun_lulus_formal'] }}</td> --}}
-                                                    <td>{{ $p['tahun_masuk_formal'] ? \Carbon\Carbon::parse($p['tahun_masuk_formal'])->format('d/m/Y') : '' }}</td>
-                                                    <td>{{ $p['tahun_lulus_formal'] ? \Carbon\Carbon::parse($p['tahun_lulus_formal'])->format('d/m/Y') : '' }}</td>
+                                                    <td>{{ $p['tahun_masuk_formal'] ? $p['tahun_masuk_formal'] : '' }}</td>
+                                                    <td>{{ $p['tahun_lulus_formal'] ? $p['tahun_lulus_formal'] : '' }}</td>
 
 
                                                     {{-- <td></td> --}}
@@ -130,8 +130,8 @@
                                                     <td>{{ $nf['nama_lembaga'] }}</td>
                                                     {{-- <td>{{ $nf['tahun_masuk_nonformal'] }}</td>
                                                     <td>{{ $nf['tahun_lulus_nonformal'] }}</td> --}}
-                                                    <td>{{ $nf['tahun_masuk_nonformal'] ? \Carbon\Carbon::parse($nf['tahun_masuk_nonformal'])->format('d/m/Y') : '' }}</td>
-                                                    <td>{{ $nf['tahun_lulus_nonformal'] ? \Carbon\Carbon::parse($nf['tahun_lulus_nonformal'])->format('d/m/Y') : '' }}</td>
+                                                    <td>{{ $nf['tahun_masuk_nonformal'] ? $nf['tahun_masuk_nonformal'] : '' }}</td>
+                                                    <td>{{ $nf['tahun_lulus_nonformal'] ? $nf['tahun_lulus_nonformal'] : '' }}</td>
                                                     
                                                     <td>{{ $nf['kota_pnonformal'] }}</td>
                                                     <td>{{ $nf['ijazah_nonformal'] }}</td>
@@ -231,14 +231,12 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Pendidikan</label>
                                                                     <div>
-                                                                        <div class="input-daterange input-group"
-                                                                        id="date-range">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_masukFormal"  placeholder="dd/mm/yyyy" autocomplete="off"  />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_lulusFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
+                                                                        <div class="input-group">
+                                                                            <input id="datepicker-autoclose-format-q" type="text" class="form-control" placeholder="yyyy" 
+                                                                                name="tahun_masukFormal" autocomplete="off"  rows="10">
+                                                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input id="datepicker-autoclose-format-r" type="text" class="form-control" placeholder="yyyy" 
+                                                                                name="tahun_lulusFormal" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -295,14 +293,13 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Pendidikan</label>
                                                                     <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range2">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahunMasukNonFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahunLulusNonFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
+                                                                        
+                                                                        <div class="input-group">
+                                                                            <input id="datepicker-autoclose-format-s" type="text" class="form-control" placeholder="yyyy" 
+                                                                                name="tahunMasukNonFormal" autocomplete="off"  rows="10">
+                                                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input id="datepicker-autoclose-format-t" type="text" class="form-control" placeholder="yyyy" 
+                                                                                name="tahunLulusNonFormal" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -363,10 +360,10 @@
                                                                     <option value="SD">SD</option>
                                                                     <option value="SMP">SMP</option>
                                                                     <option value="SMA/Sederajat">SMA/Sederajat</option>
-                                                                <option value="Sarjana Muda D3">Sarjana Muda D3</option>
-                                                                <option value="Sarjana S1">Sarjana S1</option>
-                                                                <option value="Pasca Sarjana S2">Pasca Sarjana S2</option>
-                                                                <option value="Doktoral/Phd">Doktoral/Phd</option>
+                                                                    <option value="Sarjana Muda D3">Sarjana Muda D3</option>
+                                                                    <option value="Sarjana S1">Sarjana S1</option>
+                                                                    <option value="Pasca Sarjana S2">Pasca Sarjana S2</option>
+                                                                    <option value="Doktoral/Phd">Doktoral/Phd</option>
                                                                 </select>
                                                             </div>
 
@@ -406,14 +403,13 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Pendidikan</label>
                                                                     <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range6">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_masukFormal" id="tahun_masukFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_lulusFormal" id="tahun_lulusFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
+
+                                                                        <div class="input-group">
+                                                                            <input id="datepicker-autoclose-format-u" type="text" class="form-control" placeholder="yyyy" 
+                                                                                name="tahun_masukFormal" autocomplete="off"  rows="10">
+                                                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input id="datepicker-autoclose-format-v" type="text" class="form-control" placeholder="yyyy" 
+                                                                                name="tahun_lulusFormal" id="tahun_lulusFormal" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -469,14 +465,12 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Pendidikan</label>
                                                                     <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range7">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_masukNonFormal" id="tahun_masukNonFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_lulusNonFormal" id="tahun_lulusNonFormal" placeholder="dd/mm/yyyy" autocomplete="off" />
+                                                                        <div class="input-group">
+                                                                            <input id="datepicker-autoclose-format-w" type="text" class="form-control" placeholder="yyyy" 
+                                                                            name="tahun_masukNonFormal" id="tahun_masukNonFormal" autocomplete="off"  rows="10">
+                                                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input id="datepicker-autoclose-format-x" type="text" class="form-control" placeholder="yyyy" 
+                                                                            name="tahun_lulusNonFormal" id="tahun_lulusNonFormal" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -542,35 +536,36 @@
                 // Ambil data dari objek yang sesuai dengan nomor index
                 var data = {!! json_encode($pendidikan) !!}[nomorIndex];
                 // Isi data ke dalam form
+                    // console.log(data);
                     $('#tingkat_pendidikan').val(data.tingkat);
                     $('#nama_sekolah').val(data.nama_sekolah);
                     $('#namaLembaga').val(data.nama_lembaga);
                     $('#jurusan').val(data.jurusan);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
-                    // $('#tahun_masukFormal').val(data.tahun_masuk_formal);
-                    // $('#tahun_lulusFormal').val(data.tahun_lulus_formal);
+                    $('#datepicker-autoclose-format-u').val(data.tahun_masuk_formal);
+                    $('#datepicker-autoclose-format-v').val(data.tahun_lulus_formal);
 
-                    var tanggal = data.tahun_masuk_formal ? new Date(data.tahun_masuk_formal) : null;
-                    var tanggallFormatted = tanggal ? ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear() : '';
-                    $('#tahun_masukFormal').val(tanggallFormatted);
+                    // var tanggal = data.tahun_masuk_formal ? new Date(data.tahun_masuk_formal) : null;
+                    // var tanggallFormatted = tanggal ? ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear() : '';
+                    // $('#tahun_masukFormal').val(tanggal);
 
-                    var tanggalLulus = data.tahun_lulus_formal ? new Date(data.tahun_lulus_formal) : null;
-                    var tanggalLulusFormatted = tanggalLulus ? ("0" + tanggalLulus.getDate()).slice(-2) + '/' + ("0" + (tanggalLulus.getMonth() + 1)).slice(-2) + '/' + tanggalLulus.getFullYear() : '';
-                    $('#tahun_lulusFormal').val(tanggallulusFormatted);
+                    // var tanggalLulus = data.tahun_lulus_formal ? new Date(data.tahun_lulus_formal) : null;
+                    // var tanggalLulusFormatted = tanggalLulus ? ("0" + tanggalLulus.getDate()).slice(-2) + '/' + ("0" + (tanggalLulus.getMonth() + 1)).slice(-2) + '/' + tanggalLulus.getFullYear() : '';
+                    // $('#tahun_lulusFormal').val(tanggalLulus);
 
                     $('#ijazahFormal').val(data.ijazah_formal);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
-                    // $('#tahun_masukNonFormal').val(data.tahun_masuk_nonformal);
-                    // $('#tahun_lulusNonFormal').val(data.tahun_lulus_nonformal);
+                    $('#datepicker-autoclose-format-w').val(data.tahun_masuk_nonformal);
+                    $('#datepicker-autoclose-format-x').val(data.tahun_lulus_nonformal);
 
-                    var tanggalMasukNonFormal = data.tahun_masuk_nonformal ? new Date(data.tahun_masuk_nonformal) : null;
-                    var tanggalMasukNonFormalFormatted = tanggalMasukNonFormal ? ("0" + tanggalMasukNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalMasukNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalMasukNonFormal.getFullYear() : '';
-                    $('#tahun_masukNonFormal').val(tanggalMasukNonFormalFormatted);
+                    // var tanggalMasukNonFormal = data.tahun_masuk_nonformal ? new Date(data.tahun_masuk_nonformal) : null;
+                    // var tanggalMasukNonFormalFormatted = tanggalMasukNonFormal ? ("0" + tanggalMasukNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalMasukNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalMasukNonFormal.getFullYear() : '';
+                    // $('#tahun_masukNonFormal').val(tanggalMasukNonFormalFormatted);
 
-                    var tanggalLulusNonFormal = data.tahun_lulus_nonformal ? new Date(data.tahun_lulus_nonformal) : null;
-                    var tanggalLulusNonFormalFormatted = tanggalLulusNonFormal ? ("0" + tanggalLulusNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalLulusNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalLulusNonFormal.getFullYear() : '';
-                    $('#tahun_lulusNonFormal').val(tanggalLulusNonFormalFormatted);
+                    // var tanggalLulusNonFormal = data.tahun_lulus_nonformal ? new Date(data.tahun_lulus_nonformal) : null;
+                    // var tanggalLulusNonFormalFormatted = tanggalLulusNonFormal ? ("0" + tanggalLulusNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalLulusNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalLulusNonFormal.getFullYear() : '';
+                    // $('#tahun_lulusNonFormal').val(tanggalLulusNonFormalFormatted);
 
                     $('#noijazahPnonformal').val(data.ijazah_nonformal);
         
@@ -604,30 +599,30 @@
                     $('#namaLembaga').val(data.nama_lembaga);
                     $('#jurusan').val(data.jurusan);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
-                    // $('#tahun_masukFormal').val(data.tahun_masuk_formal);
-                    // $('#tahun_lulusFormal').val(data.tahun_lulus_formal);
-                    var tanggalMasukFormal = data.tahun_masuk_formal ? new Date(data.tahun_masuk_formal) : null;
-                    var tanggalMasukFormalFormatted = tanggalMasukFormal ? ("0" + tanggalMasukFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalMasukFormal.getMonth() + 1)).slice(-2) + '/' + tanggalMasukFormal.getFullYear() : '';
-                    $('#tahun_masukFormal').val(tanggalMasukFormalFormatted);
+                    $('#datepicker-autoclose-format-u').val(data.tahun_masuk_formal);
+                    $('#datepicker-autoclose-format-v').val(data.tahun_lulus_formal);
+                    // var tanggalMasukFormal = data.tahun_masuk_formal ? new Date(data.tahun_masuk_formal) : null;
+                    // var tanggalMasukFormalFormatted = tanggalMasukFormal ? ("0" + tanggalMasukFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalMasukFormal.getMonth() + 1)).slice(-2) + '/' + tanggalMasukFormal.getFullYear() : '';
+                    // $('#tahun_masukFormal').val(tanggalMasukFormalFormatted);
 
-                    var tanggalLulusFormal = data.tahun_lulus_formal ? new Date(data.tahun_lulus_formal) : null;
-                    var tanggalLulusFormalFormatted = tanggalLulusFormal ? ("0" + tanggalLulusFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalLulusFormal.getMonth() + 1)).slice(-2) + '/' + tanggalLulusFormal.getFullYear() : '';
-                    $('#tahun_lulusFormal').val(tanggalLulusFormalFormatted);
+                    // var tanggalLulusFormal = data.tahun_lulus_formal ? new Date(data.tahun_lulus_formal) : null;
+                    // var tanggalLulusFormalFormatted = tanggalLulusFormal ? ("0" + tanggalLulusFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalLulusFormal.getMonth() + 1)).slice(-2) + '/' + tanggalLulusFormal.getFullYear() : '';
+                    // $('#tahun_lulusFormal').val(tanggalLulusFormalFormatted);
 
 
                     $('#ijazahFormal').val(data.ijazah_formal);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
-                    // $('#tahun_masukNonFormal').val(data.tahun_masuk_nonformal);
-                    // $('#tahun_lulusNonFormal').val(data.tahun_lulus_nonformal);
+                    $('#datepicker-autoclose-format-w').val(data.tahun_masuk_nonformal);
+                    $('#datepicker-autoclose-format-x').val(data.tahun_lulus_nonformal);
               
-                    var tanggalMasukNonFormal = data.tahun_masuk_nonformal ? new Date(data.tahun_masuk_nonformal) : null;
-                    var tanggalMasukNonFormalFormatted = tanggalMasukNonFormal ? ("0" + tanggalMasukNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalMasukNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalMasukNonFormal.getFullYear() : '';
-                    $('#tahun_masukNonFormal').val(tanggalMasukNonFormalFormatted);
+                    // var tanggalMasukNonFormal = data.tahun_masuk_nonformal ? new Date(data.tahun_masuk_nonformal) : null;
+                    // var tanggalMasukNonFormalFormatted = tanggalMasukNonFormal ? ("0" + tanggalMasukNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalMasukNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalMasukNonFormal.getFullYear() : '';
+                    // $('#tahun_masukNonFormal').val(tanggalMasukNonFormalFormatted);
 
-                    var tanggalLulusNonFormal = data.tahun_lulus_nonformal ? new Date(data.tahun_lulus_nonformal) : null;
-                    var tanggalLulusNonFormalFormatted = tanggalLulusNonFormal ? ("0" + tanggalLulusNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalLulusNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalLulusNonFormal.getFullYear() : '';
-                    $('#tahun_lulusNonFormal').val(tanggalLulusNonFormalFormatted);
+                    // var tanggalLulusNonFormal = data.tahun_lulus_nonformal ? new Date(data.tahun_lulus_nonformal) : null;
+                    // var tanggalLulusNonFormalFormatted = tanggalLulusNonFormal ? ("0" + tanggalLulusNonFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalLulusNonFormal.getMonth() + 1)).slice(-2) + '/' + tanggalLulusNonFormal.getFullYear() : '';
+                    // $('#tahun_lulusNonFormal').val(tanggalLulusNonFormalFormatted);
 
                     $('#noijazahPnonformal').val(data.ijazah_nonformal);
             });

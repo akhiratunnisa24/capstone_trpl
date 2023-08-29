@@ -140,7 +140,7 @@
                                                             <th>Bidang/Jenis</th>
                                                             <th>Lembaga Pendidikan</th>
                                                             <th>Tahun Mulai</th>
-                                                            <th>Tahun Lulus</th>
+                                                            <th>Tahun Selesai</th>
                                                             <th>Alamat</th>
                                                             <th>Nomor Ijazah</th>
                                                             <th>Aksi</th>

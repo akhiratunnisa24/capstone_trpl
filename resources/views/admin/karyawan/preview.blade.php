@@ -463,8 +463,8 @@
                                         <td>{{ $p['tingkat'] }}</td>
                                         <td>{{ $p['nama_sekolah'] }}</td>
                                         <td>{{ $p['jurusan'] }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($p['tahun_masuk_formal'])->format('d/m/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($p['tahun_lulus_formal'])->format('d/m/Y') }}</td>
+                                        <td>{{ $p['tahun_masuk_formal'] ? $p['tahun_masuk_formal'] : '' }}</td>
+                                        <td>{{ $p['tahun_lulus_formal'] ? $p['tahun_lulus_formal'] : '' }}</td>
                                         <td>{{ $p['kota_pformal'] }}</td>
                                         <td>{{ $p['ijazah_formal'] }}</td>
                                         {{-- <td>{{ $p['tahun_lulus_formal'] }}</td> --}}
@@ -496,8 +496,8 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $nf['jenis_pendidikan'] }}</td>
                                         <td>{{ $nf['nama_lembaga'] }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($p['tahun_masuk_nonformal'])->format('d/m/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($p['tahun_lulus_nonformal'])->format('d/m/Y') }}</td>
+                                        <td>{{ $p['tahun_masuk_nonformal'] ? $p['tahun_masuk_nonformal'] : '' }}</td>
+                                        <td>{{ $p['tahun_lulus_nonformal'] ? $p['tahun_lulus_nonformal'] : '' }}</td>
                                         <td>{{ $nf['kota_pnonformal'] }}</td>
                                         <td>{{ $nf['ijazah_nonformal'] }}</td>
                                         {{-- <td>{{ $nf['tahun_lulus_nonformal'] }}</td> --}}
@@ -536,8 +536,8 @@
                                     <td>{{ $pek['alamat'] }}</td>
                                     {{-- <td>{{ $pek['tgl_mulai'] }}</td>
                                     <td>{{ $pek['tgl_selesai'] }}</td> --}}
-                                        <td>{{ \Carbon\Carbon::parse($pek['tgl_mulai'])->format('d/m/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($pek['tgl_selesai'])->format('d/m/Y') }}</td>
+                                    <td>{{ $pek['tgl_mulai']   ?  $pek['tgl_mulai'] : ''}}</td>
+                                    <td>{{ $pek['tgl_selesai'] ? $pek['tgl_selesai'] : '' }}</td>
                                     <td>{{ $pek['jabatan'] }}</td>
                                     <td>{{ $pek['level'] }}</td>
                                     <td>{{ $pek['gaji'] }}</td>
@@ -572,10 +572,10 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $org['nama_organisasi'] }}</td>
                                     <td>{{ $org['alamat'] }}</td>
-                                    {{-- <td>{{ $org['tgl_mulai'] }}</td>
-                                    <td>{{ $org['tgl_selesai'] }}</td> --}}
-                                    <td>{{ \Carbon\Carbon::parse($org['tgl_mulai'])->format('d/m/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($org['tgl_selesai'])->format('d/m/Y') }}</td>
+                                    <td>{{ $org['tgl_mulai'] }}</td>
+                                    <td>{{ $org['tgl_selesai'] }}</td>
+                                    {{-- <td>{{ \Carbon\Carbon::parse($org['tgl_mulai'])->format('d/m/Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($org['tgl_selesai'])->format('d/m/Y') }}</td> --}}
                                     <td>{{ $org['jabatan'] }}</td>
                                     <td>{{ $org['no_sk'] }}</td>
                                 </tr>
