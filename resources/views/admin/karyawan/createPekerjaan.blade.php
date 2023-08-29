@@ -65,8 +65,8 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $pek['nama_perusahaan'] }}</td>
                                                 <td>{{ $pek['alamat'] }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_mulai'])->format('d/m/Y') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_selesai'])->format('d/m/Y') }}</td>
+                                                <td>{{ $pek['tgl_mulai'] }}</td>
+                                                <td>{{ $pek['tgl_selesai'] }}</td>
                                                 {{-- <td>{{ $pek['tgl_mulai'] }}</td>
                                                 <td>{{ $pek['tgl_selesai'] }}</td> --}}
                                                 <td>{{ $pek['jabatan'] }}</td>
@@ -129,14 +129,12 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Kerja</label>
                                                                     <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tglmulai"  autocomplete="off" placeholder="dd/mm/yyyy" />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tglselesai"  autocomplete="off" placeholder="dd/mm/yyyy" />
+                                                                        <div class="input-group">
+                                                                            <input id="datepicker-autoclose-format-y" type="text" class="form-control" placeholder="yyyy" 
+                                                                                name="tglmulai" autocomplete="off"  rows="10">
+                                                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input id="datepicker-autoclose-format-z" type="text" class="form-control" placeholder="yyyy" 
+                                                                                name="tglselesai" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -252,14 +250,12 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Kerja</label>
                                                                     <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range2">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tglmulai" id="tgl_mulai" placeholder="dd/mm/yyyy" />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tglselesai" id="tgl_selesai" placeholder="dd/mm/yyyy" />
+                                                                        <div class="input-group">
+                                                                            <input id="datepicker-autoclose-format-aa" type="text" class="form-control" placeholder="yyyy" 
+                                                                            name="tglmulai"  autocomplete="off"  rows="10">
+                                                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input id="datepicker-autoclose-format-ab" type="text" class="form-control" placeholder="yyyy" 
+                                                                                name="tglselesai" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -346,7 +342,9 @@
     </div>
        
      {{-- <script src="assets/js/jquery.min.js"></script> --}}
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    
 
     <script>
         var rupiah = document.getElementById('gaji');
@@ -428,16 +426,16 @@
                     $('#gajih').val(data.gaji);
                     $('#levelpekerjaan').val(data.level);
 
-                    var tanggal = new Date(data.tgl_mulai);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tgl_mulai').val(tanggalFormatted);
+                    // var tanggal = new Date(data.tgl_mulai);
+                    // var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    // $('#tgl_mulai').val(tanggalFormatted);
 
-                    var tanggal = new Date(data.tgl_selesai);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tgl_selesai').val(tanggalFormatted);
+                    // var tanggal = new Date(data.tgl_selesai);
+                    // var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    // $('#tgl_selesai').val(tanggalFormatted);
 
-                    // $('#tgl_mulai').val(data.tgl_mulai); 
-                    // $('#tgl_selesai').val(data.tgl_selesai);
+                    $('#datepicker-autoclose-format-aa').val(data.tgl_mulai); 
+                    $('#datepicker-autoclose-format-ab').val(data.tgl_selesai);
                     
             });
         });

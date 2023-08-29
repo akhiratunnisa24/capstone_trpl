@@ -367,13 +367,12 @@
                                     <td>{{ $rpendidikan->nama_sekolah }}</td>
                                     <td>{{ $rpendidikan->jurusan }}</td>
                                     @if ($rpendidikan->tahun_masuk_formal !== null)
-                                        <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_masuk_formal)->format('d/m/Y') }}
-                                        </td>
+                                        <td>{{ $rpendidikan->tahun_masuk_formal }}</td>
                                     @else
                                         <td></td>
                                     @endif
                                     @if ($rpendidikan->tahun_lulus_formal !== null)
-                                        <td>{{ \Carbon\Carbon::parse($rpendidikan->tahun_lulus_formal)->format('d/m/Y') }}
+                                        <td>{{ $rpendidikan->tahun_lulus_formal }}
                                         </td>
                                     @else
                                         <td></td>
@@ -419,14 +418,14 @@
                                     <td>{{ $pendidikan->jenis_pendidikan }}</td>
                                     <td>{{ $pendidikan->nama_lembaga }}</td>
                                     @if ($pendidikan->tahun_masuk_nonformal !== null)
-                                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $pendidikan->tahun_masuk_nonformal)->format('d/m/Y') }}
+                                        <td>{{ $pendidikan->tahun_masuk_nonformal }}
                                         </td>
                                     @else
                                         <td></td>
                                     @endif
 
                                     @if ($pendidikan->tahun_lulus_nonformal !== null)
-                                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $pendidikan->tahun_lulus_nonformal)->format('d/m/Y') }}
+                                        <td>{{ $pendidikan->tahun_lulus_nonformal }}
                                         </td>
                                     @else
                                         <td></td>
