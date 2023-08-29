@@ -18,7 +18,7 @@ class InformasigajiController extends Controller
         $strukturgaji   = SalaryStructure::find($id);
         $leveljabatan   = LevelJabatan::where('id',$strukturgaji->id_level_jabatan)->first();
         $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $strukturgaji->id)->get();
-        
+
         foreach($detailstruktur as $detail)
         {
             $benefit  = Benefit::where('id',$detail->id_benefit)->get();
