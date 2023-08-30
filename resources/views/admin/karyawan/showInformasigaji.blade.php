@@ -159,10 +159,14 @@
                                                                 <label class="form-label col-sm-3 text-end">Struktur Gaji</label>
                                                                 <div class="col-sm-7">
                                                                     <input type="text" class="form-control" name="id_strukturgaji" id="id_strukturgaji" autocomplete="off"
-                                                                        placeholder="Masukkan Struktur Gaji" value="{{ $struktur ? $struktur->nama : '' }}"                                                                        readonly>
+                                                                        placeholder="Masukkan Struktur Gaji" value="{{ $struktur ? $struktur->nama : '' }}" readonly>
                                                                 </div>
                                                                 <div class="col-sm-1">
-                                                                    <a class="btn btn-info" style="height:37px; width:65px;" title="Edit Struktur Gaji" data-toggle="modal" data-target="#editD{{ $karyawan->id }}">Edit <i class="fa fa-edit"></i></a>
+                                                                    @if($informasigaji == null)
+                                                                        <a class="btn btn-success" style="height:37px; width:65px;" title="Tambah Struktur Gaji" data-toggle="modal" data-target="#add"> <i class="fa fa-plus"></i></a>
+                                                                    @else
+                                                                        <a class="btn btn-info" style="height:37px; width:65px;" title="Edit Struktur Gaji" data-toggle="modal" data-target="#editD{{ $informasigaji->id }}"><i class="fa fa-edit"></i></a>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -181,6 +185,8 @@
                                     </div>
                                 </form>
                                 @include('admin.karyawan.editdatashowinformasi')
+                                @include('admin.karyawan.tambahstruktur')
+                                @include('admin.karyawan.editstruktur')
                             </div>
                         </div>
                     </div>

@@ -120,6 +120,8 @@ Route::get('showkeluarga{id}', [karyawanController::class, 'showkeluarga'])->nam
 Route::get('showkontakdarurat{id}', [karyawanController::class, 'showkontakdarurat'])->name('showkontakdarurat');
 Route::get('showinformasigaji{id}', [karyawanController::class, 'showinformasigaji'])->name('showinformasigaji');
 Route::put('/update-identitas{id}', [karyawanController::class, 'updateidentita'])->name('updateidentita');
+Route::post('/tambah-struktur{id}', [karyawanController::class, 'addstruktur'])->name('addstruktur');
+Route::put('/update-struktur{id}', [karyawanController::class, 'updatestruktur'])->name('updatestruktur');
 
 // Edit Data Karyawan Vesi Baru
 
