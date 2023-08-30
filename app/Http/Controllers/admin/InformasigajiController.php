@@ -8,6 +8,7 @@ use App\Models\LevelJabatan;
 use Illuminate\Http\Request;
 use App\Models\Informasigaji;
 use App\Models\SalaryStructure;
+use App\Models\Detailinformasigaji;
 use App\Http\Controllers\Controller;
 use App\Models\DetailSalaryStructure;
 
@@ -17,12 +18,6 @@ class InformasigajiController extends Controller
     {
         $strukturgaji   = SalaryStructure::find($id);
         $leveljabatan   = LevelJabatan::where('id',$strukturgaji->id_level_jabatan)->first();
-        $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $strukturgaji->id)->get();
-
-        foreach($detailstruktur as $detail)
-        {
-            $benefit  = Benefit::where('id',$detail->id_benefit)->get();
-        }
 
         $karyawan = Karyawan::where('status_karyawan', $strukturgaji->status_karyawan)
             ->where('jabatan',$leveljabatan->nama_level)
@@ -48,7 +43,52 @@ class InformasigajiController extends Controller
                 $informasigaji->partner         = $strukturgaji->partner;
 
                 $informasigaji->save();
+
+                $informasigaji = Informasigaji::where('id_karyawan',$data->id)->first();
+                $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $strukturgaji->id)->get();
+
+                foreach($detailstruktur as $detail)
+                {
+                    $benefit  = Benefit::where('id',$detail->id_benefit)->get();
+
+    
+                    $check = Detailinformasigaji::where('id_karyawan', $data->id)
+                            ->where('id_informasigaji',$informasigaji->id)
+                            ->where('partner',$data->partner)
+                            ->first();
+                    dd($informasigaji,$strukturgaji,$detailstruktur,$check);
+                }
+            }else
+            {
+                $informasigaji = Informasigaji::where('id_karyawan',$data->id)->first();
+                $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $strukturgaji->id)->get();
+
+                foreach($detailstruktur as $detail)
+                {
+                    $benefit  = Benefit::where('id',$detail->id_benefit)->get();
+
+                    $cek = Detailinformasigaji::where('id_karyawan', $data->id)
+                            ->where('id_informasigaji',$informasigaji->id)
+                            ->where('partner',$data->partner)
+                            ->first();
+                    if(!$cek)
+                    {
+                        $detailinformasi = new Detailinformasigaji();
+                        $detailinformasi->id_karyawan     = $informasigaji->id_karyawan;
+                        $detailinformasi->id_informasigaji= $informasigaji->id;
+                        $detailinformasi->id_struktur     = $informasigaji->id;
+                        $detailinformasi->id_benefit      = $benefit->id;
+                        $detailinformasi->siklus_bayar    = $strukturgaji->id_level_jabatan;
+                        $detailinformasi->gaji_pokok      = $data->gaji;
+                        $detailinformasi->partner         = $strukturgaji->partner;
+                
+                        $informasigaji->save();
+                    }
+                   
+                }
             }
+
+            
         }
 
         return redirect()->back()->with('pesan','Data Informasi Gaji berhasil dibuat');

@@ -186,7 +186,9 @@
                                 </form>
                                 @include('admin.karyawan.editdatashowinformasi')
                                 @include('admin.karyawan.tambahstruktur')
-                                @include('admin.karyawan.editstruktur')
+                                @if($informasigaji != null)
+                                    @include('admin.karyawan.editstruktur')
+                                @endif
                             </div>
                         </div>
                     </div>
