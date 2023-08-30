@@ -16,12 +16,14 @@
                                 <div class="col-sm-9">
                                     <select class="form-control" name="strukturgaji">
                                         <option value="">Pilih Struktur</option>
-                                        @foreach ($strukturgaji as $d)
-                                            <option value="{{ $d->id }}"
-                                                {{ $informasigaji ? ($informasigaji->id_strukturgaji == $d->id ? 'selected' : '') : '' }}>
-                                                {{ $d->nama }}
-                                            </option>
-                                        @endforeach
+                                        {{-- @if($informasigaji !== null) --}}
+                                            @foreach ($strukturgaji as $d)
+                                                <option value="{{ $d->id }}"
+                                                    {{ $informasigaji ? ($informasigaji->id_strukturgaji == $d->id ? 'selected' : '') : '' }}>
+                                                    {{ $d->nama }}
+                                                </option>
+                                            @endforeach
+                                        {{-- @endif --}}
                                     </select>
                                 </div>
                             </div>

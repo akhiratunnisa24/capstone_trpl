@@ -27,7 +27,7 @@ class Detailinformasigaji extends Model
         return $this->belongsTo(SalaryStructure::class, 'id_struktur','id');
     }
 
-    public function benefits()
+    public function benefit()
     {
         return $this->belongsTo(Benefit::class, 'id_benefit','id');
     }

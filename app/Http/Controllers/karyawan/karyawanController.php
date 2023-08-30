@@ -44,6 +44,7 @@ use App\Models\SalaryStructure;
 use App\Models\SettingOrganisasi;
 use App\Events\AbsenKaryawanEvent;
 use Illuminate\Support\Facades\DB;
+use App\Models\Detailinformasigaji;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -3317,56 +3318,92 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $karyawan = karyawan::where('id',$id)->first();
-            $departemen = Departemen::where('partner',$row->partner)->get();
-            $namajabatan = Jabatan::where('partner',$row->partner)->get();
-            $leveljabatan = Leveljabatan::all();
-            //  return $karyawan;
-            $informasigaji = Informasigaji::where('id_karyawan',$id)->first();
-            if ($informasigaji === null)
+
+            if($karyawan->status_karyawan !== null && $karyawan->jabatan !== null && $karyawan->divisi !== null)
             {
-                $informasigaji = null;
-                $alertMessage = 'Karyawan memiliki sejumlah data yang belum lengkap. Silakan lengkapi data karyawan, struktur gaji dan informasi gaji untuk karyawan ini.';
-                $idStrukturgaji = null; // Atau berikan nilai default yang sesua
-                $struktur = null;
-                $detailstruktur = null;
+                $departemen = Departemen::where('partner',$row->partner)->get();
+                $namajabatan = Jabatan::where('partner',$row->partner)->get();
+                $leveljabatan = Leveljabatan::all();
+                //  return $karyawan;
+                $informasigaji = Informasigaji::where('id_karyawan',$id)->first();
+                if ($informasigaji === null)
+                {
+                    $informasigaji = null;
+                    $alertMessage = 'Karyawan memiliki sejumlah data yang belum lengkap. Silakan lengkapi data karyawan, struktur gaji dan informasi gaji untuk karyawan ini.';
+                    $idStrukturgaji = null; // Atau berikan nilai default yang sesua
+                    $struktur = null;
+                    $detailstruktur = null;
+                    // $level = null;
+                    // $strukturgaji = null;
+                }
+                else
+                {
+                    $informasigaji = $informasigaji;
+                    $alertMessage ='';
+                    $idStrukturgaji = $informasigaji->id_strukturgaji;
+                    $struktur = SalaryStructure::where('id',$idStrukturgaji)->first();
+                    $detailstruktur = DetailSalaryStructure::with('benefit')
+                    ->where('id_salary_structure', $struktur->id)
+                    ->whereHas('benefit', function ($query) use ($karyawan) {
+                        $query->where('partner', $karyawan->partner);
+                    })
+                    ->get();
+                    $detailstruktur = Detailinformasigaji::with('benefit')
+                    ->where('id_karyawan',$karyawan->id)
+                    ->where('id_struktur', $struktur->id)
+                    ->whereHas('benefit', function ($query) use ($karyawan) {
+                        $query->where('partner', $karyawan->partner);
+                    })
+                    ->get();
+
+                }
+                $file = File::where('id_pegawai', $id)->first();
+
+                $level = Leveljabatan::where('nama_level',$karyawan->jabatan)->first();
+                $strukturgaji = SalaryStructure::where('partner',$karyawan->partner)
+                    ->where('status_karyawan', $karyawan->status_karyawan)
+                    ->where('id_level_jabatan',$level->id)
+                    ->get();
+                $output = [
+                    'row' => $row,
+                    'karyawan' => $karyawan,
+                    'file' => $file,
+                    'struktur' => $struktur,
+                    'detailstruktur' => $detailstruktur,
+                    'informasigaji' => $informasigaji,
+                    'alertMessage' => $alertMessage,
+                    'departemen' => $departemen,
+                    'namajabatan' => $namajabatan,
+                    'leveljabatan' => $leveljabatan,
+                    'strukturgaji' => $strukturgaji,
+                ];
+
+                return view('admin.karyawan.showInformasigaji', $output);
             }
             else
             {
-                $informasigaji = $informasigaji;
-                $alertMessage ='';
-                $idStrukturgaji = $informasigaji->id_strukturgaji;
-                $struktur = SalaryStructure::where('id',$idStrukturgaji)->first();
-                $detailstruktur = DetailSalaryStructure::with('benefit')
-                ->where('id_salary_structure', $struktur->id)
-                ->whereHas('benefit', function ($query) use ($karyawan) {
-                    $query->where('partner', $karyawan->partner);
-                })
-                ->get();
+                if($karyawan->divisi == null && $karyawan->jabatan !== null && $karyawan->status_karyawan !== null){
+                    $pesan = "Data <strong><span style='color: red;'>Divisi</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";          
+                }elseif($karyawan->status_karyawan == null && $karyawan->jabatan !== null && $karyawan->divisi !== null){
+                    $pesan = "Data <strong><span style='color: red;'>Status Karyawan</span></strong> belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";          
+                }elseif($karyawan->jabatan == null && $karyawan->status_karyawan !== null && $karyawan->divisi !== null)
+                {
+                    $pesan = "Data <strong><span style='color: red;'>Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";          
+                }elseif($karyawan->jabatan == null && $karyawan->status_karyawan == null && $karyawan->divisi !== null )
+                {
+                    $pesan = "Data <strong><span style='color: red;'>Status dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";          
+                }elseif($karyawan->jabatan == null && $karyawan->status_karyawan == null && $karyawan->divisi == null )
+                {
+                    $pesan = "Data <strong><span style='color: red;'>Status,Divisi dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";          
+                }
+                else{
+                    //$pesan = "Data tidak lengkap, silahkan lengkapi <strong><a href='/editidentitas" . $karyawan->id . "'>Status/Level Jabatan Karyawan</a></strong> dan Coba kembali.";
+                    $pesan = "Data <strong><span style='color: red;'>Status,Divisi dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
+                }
+                $pesan = '<div class="text-center">' . $pesan . '</div>';
+                $pesan = nl2br(html_entity_decode($pesan));
+                return redirect()->back()->with('message',$pesan);            
             }
-            $file = File::where('id_pegawai', $id)->first();
-
-            $level = Leveljabatan::where('nama_level',$karyawan->jabatan)->first();
-
-            $strukturgaji = SalaryStructure::where('partner',$karyawan->partner)
-                ->where('status_karyawan', $karyawan->status_karyawan)
-                ->where('id_level_jabatan',$level->id)
-                ->get();
-
-            $output = [
-                'row' => $row,
-                'karyawan' => $karyawan,
-                'file' => $file,
-                'struktur' => $struktur,
-                'detailstruktur' => $detailstruktur,
-                'informasigaji' => $informasigaji,
-                'alertMessage' => $alertMessage,
-                'departemen' => $departemen,
-                'namajabatan' => $namajabatan,
-                'leveljabatan' => $leveljabatan,
-                'strukturgaji' => $strukturgaji,
-            ];
-
-            return view('admin.karyawan.showInformasigaji', $output);
         } else {
 
             return redirect()->back();
@@ -3389,7 +3426,13 @@ class karyawanController extends Controller
         );
         Karyawan::where('id', $id)->update($data);
 
+        $informasigaji = Informasigaji::where('id_karyawan', $karyawan->id)->update([
+            'gaji_pokok' => $gaji, 
+        ]);
 
+        $detailinformasigaji = Detailinformasigaji::where('id_karyawan', $karyawan->id)->where('id_benefit',1)->update([
+            'nominal' => $gaji, 
+        ]);        
 
         return redirect()->back();
     }
@@ -3399,18 +3442,12 @@ class karyawanController extends Controller
         $karyawan = Karyawan::find($id);
         $strukturgaji   = SalaryStructure::where('id',$request->strukturgaji)->first();
 
-        // foreach($detailstruktur as $detail)
-        // {
-        //     $benefit  = Benefit::where('id',$detail->id_benefit)->get();
-        // }
-
         $check = Informasigaji::where('id_karyawan', $karyawan->id)
             ->where('partner',$strukturgaji->partner)
             ->where('status_karyawan',$strukturgaji->status_karyawan)
             ->where('level_jabatan',$strukturgaji->id_level_jabatan)
             ->first();
 
-        // dd($karyawan,$strukturgaji,$detailstruktur,$check);
         if(!$check)
         {
             $informasigaji = new Informasigaji();
@@ -3422,6 +3459,63 @@ class karyawanController extends Controller
             $informasigaji->partner         = $strukturgaji->partner;
 
             $informasigaji->save();
+
+            $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->first();
+            $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $strukturgaji->id)->get();
+            $details = [];
+            foreach($detailstruktur as $detail)
+                {
+                    $benefit  = Benefit::where('id',$detail->id_benefit)->first();
+
+                    $check = Detailinformasigaji::where('id_karyawan', $karyawan->id)
+                            ->where('id_informasigaji',$informasigaji->id)
+                            ->where('id_struktur',$strukturgaji->id)
+                            ->where('id_benefit',$detail->id_benefit)
+                            ->where('partner',$karyawan->partner)
+                            ->exists();
+                   
+                    if(!$check)
+                    {
+                        $nominal = null;
+                        if($benefit->id == 1)
+                        {
+                            $nominal = $informasigaji->gaji_pokok;
+                        }else
+                        {
+                            if($benefit->siklus_pembayaran == "Bulan")
+                            {
+                                $nominal      = $benefit->besaran_bulanan;
+                            }else if($benefit->siklus_pembayaran == "Minggu")
+                            {
+                                $nominal      = $benefit->besaran_mingguan;
+                            }else if($benefit->siklus_pembayaran == "Hari")
+                            {
+                                $nominal      = $benefit->besaran_harian;
+                            }else if($benefit->siklus_pembayaran == "Jam")
+                            {
+                                $nominal      = $benefit->besaran_jam;
+                            }else if($benefit->siklus_pembayaran == "Bonus")
+                            {
+                                $nominal      = $benefit->besaran;
+                            }else
+                            {
+                                $nominal      = $benefit->besaran;
+                            }
+                        }
+                               
+                        $details[] = [
+                            'id_karyawan'      =>$informasigaji->id_karyawan,
+                            'id_informasigaji' =>$informasigaji->id,
+                            'id_struktur'      =>$informasigaji->id_strukturgaji,
+                            'id_benefit'       =>$benefit->id,
+                            'siklus_bayar'     =>$benefit->siklus_pembayaran,
+                            'partner'          =>Auth::user()->partner,
+                            'nominal'          =>$nominal,
+                        ];
+                    }
+                   
+                }
+                Detailinformasigaji::insert($details);
         }
 
         return redirect()->back()->with('pesan','Struktur Gaji berhasil dibuat');

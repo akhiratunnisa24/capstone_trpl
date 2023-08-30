@@ -64,24 +64,30 @@ class InformasigajiController extends Controller
                     if(!$check)
                     {
                         $nominal = null;
-                        if($benefit->siklus_pembayaran == "Bulan")
+                        if($benefit->id == 1)
                         {
-                            $nominal      = $benefit->besaran_bulanan;
-                        }else if($benefit->siklus_pembayaran == "Minggu")
-                        {
-                            $nominal      = $benefit->besaran_mingguan;
-                        }else if($benefit->siklus_pembayaran == "Hari")
-                        {
-                            $nominal      = $benefit->besaran_harian;
-                        }else if($benefit->siklus_pembayaran == "Jam")
-                        {
-                            $nominal      = $benefit->besaran_jam;
-                        }else if($benefit->siklus_pembayaran == "Bonus")
-                        {
-                            $nominal      = $benefit->besaran;
+                            $nominal = $informasigaji->gaji_pokok;
                         }else
                         {
-                            $nominal      = $benefit->besaran;
+                            if($benefit->siklus_pembayaran == "Bulan")
+                            {
+                                $nominal      = $benefit->besaran_bulanan;
+                            }else if($benefit->siklus_pembayaran == "Minggu")
+                            {
+                                $nominal      = $benefit->besaran_mingguan;
+                            }else if($benefit->siklus_pembayaran == "Hari")
+                            {
+                                $nominal      = $benefit->besaran_harian;
+                            }else if($benefit->siklus_pembayaran == "Jam")
+                            {
+                                $nominal      = $benefit->besaran_jam;
+                            }else if($benefit->siklus_pembayaran == "Bonus")
+                            {
+                                $nominal      = $benefit->besaran;
+                            }else
+                            {
+                                $nominal      = $benefit->besaran;
+                            }
                         }
                                
                         $details[] = [
@@ -119,24 +125,30 @@ class InformasigajiController extends Controller
                     if(!$check)
                     {
                         $nominal = null;
-                        if($benefit->siklus_pembayaran == "Bulan")
+                        if($benefit->id == 1)
                         {
-                            $nominal      = $benefit->besaran_bulanan;
-                        }else if($benefit->siklus_pembayaran == "Minggu")
-                        {
-                            $nominal      = $benefit->besaran_mingguan;
-                        }else if($benefit->siklus_pembayaran == "Hari")
-                        {
-                            $nominal      = $benefit->besaran_harian;
-                        }else if($benefit->siklus_pembayaran == "Jam")
-                        {
-                            $nominal      = $benefit->besaran_jam;
-                        }else if($benefit->siklus_pembayaran == "Bonus")
-                        {
-                            $nominal      = $benefit->besaran;
+                            $nominal = $informasigaji->gaji_pokok;
                         }else
                         {
-                            $nominal      = $benefit->besaran;
+                            if($benefit->siklus_pembayaran == "Bulan")
+                            {
+                                $nominal      = $benefit->besaran_bulanan;
+                            }else if($benefit->siklus_pembayaran == "Minggu")
+                            {
+                                $nominal      = $benefit->besaran_mingguan;
+                            }else if($benefit->siklus_pembayaran == "Hari")
+                            {
+                                $nominal      = $benefit->besaran_harian;
+                            }else if($benefit->siklus_pembayaran == "Jam")
+                            {
+                                $nominal      = $benefit->besaran_jam;
+                            }else if($benefit->siklus_pembayaran == "Bonus")
+                            {
+                                $nominal      = $benefit->besaran;
+                            }else
+                            {
+                                $nominal      = $benefit->besaran;
+                            }
                         }
                                
                         $details[] = [

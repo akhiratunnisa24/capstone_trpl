@@ -104,19 +104,20 @@
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
                                                                         <td>{{ $data->benefit->nama_benefit}}</td>
-                                                                        @if($data->benefit->siklus_pembayaran === "Bulan")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran_bulanan, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
-                                                                        @elseif($data->benefit->siklus_pembayaran === "Minggu")
+                                                                        <td>Rp. {{ number_format($data->nominal, 0, ',', '.') }}/{{$data->siklus_bayar}}</td>
+                                                                        {{-- @if($data->siklus_bayar === "Bulan")
+                                                                            
+                                                                        @elseif($data->siklus_bayar === "Minggu")
                                                                             <td>Rp. {{ number_format($data->benefit->besaran_mingguan, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
-                                                                        @elseif($data->benefit->siklus_pembayaran === "Hari")
+                                                                        @elseif($data->siklus_bayar === "Hari")
                                                                             <td>Rp. {{ number_format($data->benefit->besaran_harian, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
-                                                                        @elseif($data->benefit->siklus_pembayaran === "Jam")
+                                                                        @elseif($data->siklus_bayar === "Jam")
                                                                             <td>Rp. {{ number_format($data->benefit->besaran_jam, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
-                                                                        @elseif($data->benefit->siklus_pembayaran === "THR")
+                                                                        @elseif($data->siklus_bayar === "THR")
                                                                             <td>Rp. {{ number_format($data->benefit->besaran, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td> 
-                                                                        @elseif($data->benefit->siklus_pembayaran === "Bonus")
+                                                                        @elseif($data->siklus_bayar === "Bonus")
                                                                             <td>Rp. {{ number_format($data->benefit->besaran, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td> 
-                                                                        @endif      
+                                                                        @endif       --}}
                                                                     </tr>
                                                                 @endforeach
                                                                 @endif
@@ -140,7 +141,7 @@
                                                             <div class="row">
                                                                 <label class="form-label col-sm-3 text-end">Jabatan</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" class="form-control" autocomplete="off" value="{{$karyawan->nama_jabatan ? $karyawan->nama_jabatan : 'Masukkan Level Jabatan'}}" readonly>
+                                                                    <input type="text" class="form-control" autocomplete="off" value="{{$karyawan->nama_jabatan ? $karyawan->nama_jabatan : 'Masukkan Jabatan'}}" readonly>
                                                                 </div>
                                                             </div>
                                                         </div>
