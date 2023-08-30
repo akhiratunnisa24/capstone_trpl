@@ -78,7 +78,7 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                            
+
                                         </tr>
                                         @include('admin.datamaster.salary.data.view')
                                         @include('admin.datamaster.salary.data.edit')
@@ -153,6 +153,22 @@
                     location.href = '{{ route('salary.delete', '') }}' + '/' + id;
                 }
             })
+        }
+    </script>
+    <script>
+        // Fungsi validasi (seperti yang Anda implementasikan sebelumnya)
+        function validateForm() {
+            var checkboxes = document.getElementsByName('benefits[]');
+            var checkboxChecked = false;
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    checkboxChecked = true;
+                    break;
+                }
+            }
+
+            return checkboxChecked;
         }
     </script>
 @endsection

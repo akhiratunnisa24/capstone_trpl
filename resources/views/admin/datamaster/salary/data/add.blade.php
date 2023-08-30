@@ -64,22 +64,4 @@
         </div>
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
-
-<script>
-    // Fungsi validasi (seperti yang Anda implementasikan sebelumnya)
-    function validateForm() {
-        var checkboxes = document.getElementsByName('benefits[]');
-        var checkboxChecked = false;
-
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-                checkboxChecked = true;
-                break;
-            }
-        }
-
-        return checkboxChecked;
-    }
-</script>
-
 <!-- END MODAL -->
