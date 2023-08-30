@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SalaryStructure;
 use App\Models\DetailSalaryStructure;
 use App\Models\Benefit;
+use App\Models\Informasigaji;
 use App\Models\Karyawan;
 use App\Models\LevelJabatan;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,7 @@ class SalaryController extends Controller
 
         $salaryStructures = SalaryStructure::with('level_jabatans')
                                         ->where('partner', $userPartner)
+                                        ->orderBy('created_at', 'desc') 
                                         ->get();
 
         $levelJabatanOptions = LevelJabatan::all()->pluck('nama_level', 'id');
@@ -54,7 +56,6 @@ class SalaryController extends Controller
 
     public function store(Request $request)
     {
-
         $salaryStructure = new SalaryStructure();
         $salaryStructure->nama = $request->nama;
         $salaryStructure->partner = $request->partner;
@@ -71,7 +72,7 @@ class SalaryController extends Controller
         } else {
             $benefits = $selectedBenefits;
         }
-        // $benefits = $request->input('benefits');
+
         $detailData = [];
         foreach ($benefits as $benefitId) {
             $detailData[] = [
@@ -82,8 +83,42 @@ class SalaryController extends Controller
 
         DB::table('detail_salary_structure')->insert($detailData);
 
+        // Generate informasi gaji langsung di dalam metode store
+        $leveljabatan = LevelJabatan::where('id', $salaryStructure->id_level_jabatan)->first();
+        $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $salaryStructure->id)->get();
+
+        foreach ($detailstruktur as $detail) {
+            $benefit = Benefit::where('id', $detail->id_benefit)->get();
+        }
+
+        $karyawan = Karyawan::where('status_karyawan', $salaryStructure->status_karyawan)
+            ->where('jabatan', $leveljabatan->nama_level)
+            ->where('partner', $salaryStructure->partner)
+            ->get();
+
+        foreach ($karyawan as $data) {
+            $check = Informasigaji::where('id_karyawan', $data->id)
+                ->where('partner', $salaryStructure->partner)
+                ->where('status_karyawan', $salaryStructure->status_karyawan)
+                ->where('level_jabatan', $salaryStructure->id_level_jabatan)
+                ->first();
+
+            if (!$check) {
+                $informasigaji = new Informasigaji();
+                $informasigaji->id_karyawan = $data->id;
+                $informasigaji->id_strukturgaji = $salaryStructure->id;
+                $informasigaji->status_karyawan = $salaryStructure->status_karyawan;
+                $informasigaji->level_jabatan = $salaryStructure->id_level_jabatan;
+                $informasigaji->gaji_pokok = $data->gaji;
+                $informasigaji->partner = $salaryStructure->partner;
+
+                $informasigaji->save();
+            }
+        }
+
         return redirect()->back()->with('pesan', 'Data berhasil disimpan.');
     }
+
 
     public function update(Request $request, $id)
     {
