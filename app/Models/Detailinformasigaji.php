@@ -18,6 +18,7 @@ class Detailinformasigaji extends Model
                     'id_benefit',
                     'siklus_bayar',
                     'nominal',
+                    'partner'
                 ];
     protected $guarded = [];
 

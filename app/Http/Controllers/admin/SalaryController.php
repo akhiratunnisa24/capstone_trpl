@@ -35,7 +35,7 @@ class SalaryController extends Controller
 
         $salaryStructures = SalaryStructure::with('level_jabatans')
                                         ->where('partner', $userPartner)
-                                        ->orderBy('created_at', 'desc')
+                                        ->orderBy('created_at', 'asc') 
                                         ->get();
 
         $levelJabatanOptions = LevelJabatan::all()->pluck('nama_level', 'id');
