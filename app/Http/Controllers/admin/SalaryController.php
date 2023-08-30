@@ -35,7 +35,7 @@ class SalaryController extends Controller
 
         $salaryStructures = SalaryStructure::with('level_jabatans')
                                         ->where('partner', $userPartner)
-                                        ->orderBy('created_at', 'desc') 
+                                        ->orderBy('created_at', 'desc')
                                         ->get();
 
         $levelJabatanOptions = LevelJabatan::all()->pluck('nama_level', 'id');
@@ -64,7 +64,7 @@ class SalaryController extends Controller
 
         $salaryStructure->save();
 
-        $selectedBenefits = [1, 2, 3]; // Tambahkan ID benefit yang ingin di-set otomatis tercentang
+        $selectedBenefits = [1, 2, 3];
         $benefits = $request->input('benefits');
 
         if ($benefits) {
@@ -123,20 +123,25 @@ class SalaryController extends Controller
     public function update(Request $request, $id)
     {
         $salaryStructure = SalaryStructure::findOrFail($id);
-        $salaryStructures = SalaryStructure::with('benefits')->get();
-        $salaryStructure = SalaryStructure::with('benefits')->find($id);
-        $salaryStructures = SalaryStructure::with('level_jabatans')->get();
-        $selectedBenefits = $salaryStructure->benefits->pluck('id')->toArray();
+        $selectedBenefits = [1, 2, 3]; 
+        $benefits = $request->input('benefits', []);
+
+        $salaryStructure->update([
+            'nama' => $request->input('nama'),
+            'level_jabatan_id' => $request->input('level_jabatan'),
+            'status_karyawan' => $request->input('status_karyawan'),
+        ]);
+
+        $selectedBenefits = array_merge($selectedBenefits, $benefits);
+        $benefits = Benefit::whereIn('id', $selectedBenefits)->get();
+        $salaryStructure->benefits()->sync($benefits);
+
         $role = Auth::user()->role;
         $userPartner = Auth::user()->partner;
-        $benefits = Benefit::where(function ($query) use ($userPartner) {
-            $query->where('partner', 0)
-                  ->orWhere('partner', $userPartner);
-        })->get();
 
-        $salaryStructures = SalaryStructure::with('level_jabatans')
-                                           ->where('partner', $userPartner)
-                                           ->get();
+        $benefits = Benefit::where('partner', 0)
+                           ->orWhere('partner', $userPartner)
+                           ->get();
 
         $levelJabatanOptions = LevelJabatan::all()->pluck('nama_level', 'id')->prepend('Pilih Level Jabatan', '');
         $statusKaryawanOptions = [
@@ -146,27 +151,12 @@ class SalaryController extends Controller
             'Tetap' => 'Tetap',
             'Probation' => 'Probation'
         ];
-        $salaryStructures = SalaryStructure::with('level_jabatans')->get();
 
-        $salaryStructure->update([
-            'nama' => $request->input('nama'),
-            'level_jabatan_id' => $request->input('level_jabatan'),
-            'status_karyawan' => $request->input('status_karyawan'),
-        ]);
+        $salaryStructures = SalaryStructure::with('level_jabatans')->where('partner', $userPartner)->get();
 
-        // Simpan data benefit yang dipilih
-        $selectedBenefits = [1, 2, 3]; // Tambahkan ID benefit yang ingin di-set otomatis tercentang
-        $benefits = $request->input('benefits');
-
-        if ($benefits) {
-            $benefits = array_merge($selectedBenefits, $benefits);
-        } else {
-            $benefits = $selectedBenefits;
-        }
-        $benefits = Benefit::whereIn('id', $benefits)->get();
-        $salaryStructure->benefits()->sync($benefits);
-
-        return redirect()->back()->with('pesan', 'Data berhasil disimpan.',compact('benefits','selectedBenefits','salaryStructures','salaryStructure','levelJabatanOptions','statusKaryawanOptions'));
+        return redirect()->back()
+                         ->with('pesan', 'Data berhasil disimpan.')
+                         ->with(compact('benefits', 'selectedBenefits', 'salaryStructures', 'salaryStructure', 'levelJabatanOptions', 'statusKaryawanOptions'));
     }
 
     public function destroy($id)
