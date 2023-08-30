@@ -138,7 +138,7 @@ class SalaryController extends Controller
                         }
 
                         $details[] = [
-                            'id_karyawan' => $informasigaji->id_karyawan,
+                            'id_karyawan' => $karyawan->id,
                             'id_informasigaji' => $informasigaji->id,
                             'id_struktur' => $informasigaji->id_strukturgaji,
                             'id_benefit' => $benefit->id,
