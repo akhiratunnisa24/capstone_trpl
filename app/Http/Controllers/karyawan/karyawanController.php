@@ -298,18 +298,21 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereDay('created_at', '=', Carbon::now())
+                ->where('partner',$row->partner)
                 ->count('jam_masuk');
 
             // Absen Terlambat untuk hari ini
             $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->where('partner',$row->partner)
                 ->count('terlambat');
 
             //absen masuk bulan ini
             $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->where('partner',$row->partner)
                 ->count('jam_masuk');
 
             //absen masuk bulan lalu
@@ -327,11 +330,14 @@ class karyawanController extends Controller
                 ->count();
 
             $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-                ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
+                ->whereDay('created_at', '=', Carbon::now())
+                ->where('partner',$row->partner)
+                ->count('jam_masuk');
 
             $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('aktif_dari', '=', Carbon::now()->year)
                 ->whereYear('sampai', '=', Carbon::now()->year)
+                ->where('partner',$row->partner)
                 ->where('status', '=', 1)
                 ->get();
 
@@ -362,7 +368,11 @@ class karyawanController extends Controller
                 ->where('sisa_cuti','>',0)
                 ->whereDate('dari', '<=', Carbon::now())
                 ->whereDate('sampai', '>=', Carbon::now())
-                ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
+                ->whereHas('karyawans', function ($query) use ($row) {
+                    $query->where('partner', $row->partner);
+                })
+                ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)
+                ->get();
 
             $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Makan')
                 ->where('partner',Auth::user()->partner)
@@ -478,7 +488,7 @@ class karyawanController extends Controller
                 $datatelat = collect();
                 $jumdat = 0;
             }
-            $posisi = Lowongan::all()->sortByDesc('created_at');
+            $posisi = Lowongan::all()->where('partner',$row->partner)->sortByDesc('created_at');
 
             if($role == 3 && $row->jabatan == "Manager")
             {
@@ -1223,17 +1233,19 @@ class karyawanController extends Controller
             $resign = Resign::where(function ($query) {
                 $query->where('status', '=', '1')
                 ->whereHas('karyawan', function ($query) {
-                    $query->where('atasan_pertama', Auth::user()->id_pegawai);
+                    $query->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->where('partner', Auth::user()->partner);
                 });
             })->orWhere(function ($query) {
                 $query->where('status', '=', '6')
                 ->whereHas('karyawan', function ($query) {
-                    $query->where('atasan_kedua', Auth::user()->id_pegawai);
+                    $query->where('atasan_kedua', Auth::user()->id_pegawai)
+                        ->where('partner', Auth::user()->partner);
                 });
             })->get();
 
             $resignjumlah = $resign->count();
-            $rekruitmen = Rekruitmen::orderBy('created_at', 'desc')->get();
+            $rekruitmen = Rekruitmen::where('partner',$row->partner)->orderBy('created_at', 'desc')->get();
             $rekruitmenjumlah = $rekruitmen->count();
 
             $alokasi = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
@@ -1241,10 +1253,12 @@ class karyawanController extends Controller
                 ->whereYear('sampai', '=', Carbon::now()->year)
                 ->where('status', '=', 1)
                 ->where('id_jeniscuti','=',1)
+                ->where('partner', Auth::user()->partner)
                 ->first();
 
             $currentDate = Carbon::now()->toDateString();
-            $informasi = Informasi::whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
+            $informasi = Informasi::where('partner', Auth::user()->partner)
+            ->whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
                 // return $informasi;
             $jmlinfo = $informasi->count();
 
@@ -1285,12 +1299,14 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+                ->where('partner', Auth::user()->partner)
                 ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
             // Absen Terlambat untuk hari ini
             $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->where('partner', Auth::user()->partner)
                 ->whereTime('jam_masuk', '>', '08:00:00')
                 ->count();
 
@@ -1298,26 +1314,32 @@ class karyawanController extends Controller
             $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->where('partner', Auth::user()->partner)
                 ->count('jam_masuk');
 
             //absen masuk bulan lalu
             $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->where('partner', Auth::user()->partner)
                 ->count('jam_masuk');
 
             //absen terlambat bulan lalu
             $absenTerlambatbulanlalu = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->where('partner', Auth::user()->partner)
                 ->count('terlambat');
 
             $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-                ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
+                ->whereDay('created_at', '=', Carbon::now())
+                ->where('partner', Auth::user()->partner)
+                ->count('jam_masuk');
 
             $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('aktif_dari', '=', Carbon::now()->year)
                 ->whereYear('sampai', '=', Carbon::now()->year)
+                ->where('partner', Auth::user()->partner)
                 ->where('status', '=', 1)
                 ->get();
                 // return $alokasicuti;
@@ -1332,17 +1354,20 @@ class karyawanController extends Controller
                 ->where('sisa_cuti','>',0)
                 ->whereDate('dari', '<=', Carbon::now())
                 ->whereDate('sampai', '>=', Carbon::now())
+                ->whereHas('karyawans', function ($query) use ($row) {
+                    $query->where('partner', $row->partner);
+                })
                 ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
 
 
             $posisi = Lowongan::where('partner',Auth::user()->partner)->sortByDesc('created_at')->get();
-            $resign = Resign::orderBy('created_at', 'desc')->get();
+            $resign = Resign::where('partner',Auth::user()->partner)->orderBy('created_at', 'desc')->get();
             $resignjumlah = $resign->count();
             $rekruitmen = Rekruitmen::where('partner',Auth::user()->partner)->orderBy('created_at', 'desc')->get();
             $rekruitmenjumlah = $rekruitmen->count();
 
             $currentDate = Carbon::now()->toDateString();
-            $informasi = Informasi::whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
+            $informasi = Informasi::where('partner',Auth::user()->partner)->whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
                 // return $informasi;
             $jmlinfo = $informasi->count();
 

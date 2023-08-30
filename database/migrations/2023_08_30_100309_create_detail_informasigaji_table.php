@@ -15,6 +15,13 @@ return new class extends Migration
     {
         Schema::create('detail_informasigaji', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_karyawan');
+            $table->integer('id_informasigaji');
+            $table->integer('id_struktur');
+            $table->integer('id_benefit');
+            $table->integer('siklus_bayar');
+            $table->decimal('nominal',10,2);
+            $table->integer('partner');
             $table->timestamps();
         });
     }
