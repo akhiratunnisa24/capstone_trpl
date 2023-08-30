@@ -16,6 +16,7 @@ use App\Models\Jadwal;
 use App\Models\Resign;
 use App\Models\Status;
 use App\Models\Absensi;
+use App\Models\Benefit;
 use App\Models\Jabatan;
 use App\Models\Karyawan;
 use App\Models\Kdarurat;
@@ -36,8 +37,8 @@ use App\Models\Informasigaji;
 use App\Models\LevelJabatan ;
 use App\Mail\CutiNotification;
 use App\Models\Settingabsensi;
-use App\Exports\KaryawanExport;
 // use Illuminate\Support\Facades\File;
+use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
 use App\Models\SalaryStructure;
 use App\Models\SettingOrganisasi;
@@ -3317,9 +3318,14 @@ class karyawanController extends Controller
                 })
                 ->get();
             }
-
-
             $file = File::where('id_pegawai', $id)->first();
+
+            $level = Leveljabatan::where('nama_level',$karyawan->jabatan)->first();
+
+            $strukturgaji = SalaryStructure::where('partner',$karyawan->partner)
+                ->where('status_karyawan', $karyawan->status_karyawan)
+                ->where('id_level_jabatan',$level->id)
+                ->get();
 
             $output = [
                 'row' => $row,
@@ -3331,7 +3337,8 @@ class karyawanController extends Controller
                 'alertMessage' => $alertMessage,
                 'departemen' => $departemen,
                 'namajabatan' => $namajabatan,
-                'leveljabatan' => $leveljabatan
+                'leveljabatan' => $leveljabatan,
+                'strukturgaji' => $strukturgaji,
             ];
 
             return view('admin.karyawan.showInformasigaji', $output);
@@ -3357,6 +3364,53 @@ class karyawanController extends Controller
         );
         Karyawan::where('id', $id)->update($data);
 
+
+
         return redirect()->back();
+    }
+
+    public function addstruktur(Request $request,$id)
+    {
+        $karyawan = Karyawan::find($id);
+        $strukturgaji   = SalaryStructure::where('id',$request->strukturgaji)->first();
+
+        foreach($detailstruktur as $detail)
+        {
+            $benefit  = Benefit::where('id',$detail->id_benefit)->get();
+        }
+
+        $check = Informasigaji::where('id_karyawan', $karyawan->id)
+            ->where('partner',$strukturgaji->partner)
+            ->where('status_karyawan',$strukturgaji->status_karyawan)
+            ->where('level_jabatan',$strukturgaji->id_level_jabatan)
+            ->first();
+
+        // dd($karyawan,$strukturgaji,$detailstruktur,$check);
+        if(!$check)
+        {
+            $informasigaji = new Informasigaji();
+            $informasigaji->id_karyawan     = $karyawan->id;
+            $informasigaji->id_strukturgaji = $strukturgaji->id;
+            $informasigaji->status_karyawan = $strukturgaji->status_karyawan;
+            $informasigaji->level_jabatan   = $strukturgaji->id_level_jabatan;
+            $informasigaji->gaji_pokok      = $karyawan->gaji;
+            $informasigaji->partner         = $strukturgaji->partner;
+
+            $informasigaji->save();
+        }
+
+        return redirect()->back()->with('pesan','Struktur Gaji berhasil dibuat');
+    }
+
+    public function updatestruktur(Request $request,$id)
+    {
+        $informasigaji  = Informasigaji::find($id);
+        $karyawan       = Karyawan::where('id',$informasigaji->id_karyawan)->first();
+        $strukturgaji   = SalaryStructure::where('id',$request->strukturgaji)->first();
+
+        $informasigaji->id_sturkturgaji = $strukturgaji->id;
+        $informasigaji->update();
+
+        return redirect()->back()->with('pesan','Informasi Gaji berhasil diupdate');
     }
 }
