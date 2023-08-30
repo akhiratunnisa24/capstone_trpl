@@ -3399,10 +3399,10 @@ class karyawanController extends Controller
         $karyawan = Karyawan::find($id);
         $strukturgaji   = SalaryStructure::where('id',$request->strukturgaji)->first();
 
-        foreach($detailstruktur as $detail)
-        {
-            $benefit  = Benefit::where('id',$detail->id_benefit)->get();
-        }
+        // foreach($detailstruktur as $detail)
+        // {
+        //     $benefit  = Benefit::where('id',$detail->id_benefit)->get();
+        // }
 
         $check = Informasigaji::where('id_karyawan', $karyawan->id)
             ->where('partner',$strukturgaji->partner)
