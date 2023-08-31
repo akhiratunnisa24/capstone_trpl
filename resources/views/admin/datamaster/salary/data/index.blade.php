@@ -73,9 +73,9 @@
                                                         <button title="Generate Informasi Gaji" type="submit" class="btn btn-dark btn-sm"><i class="fa fa-refresh"></i></button>
                                                     </form>
 
-                                                    @if ($role == 5)
+                                                    {{-- @if ($role == 5) --}}
                                                         <button class="btn btn-danger btn-sm" title="Hapus Struktur Gaji" onclick="hapus({{ $salaryStructure->id }})"><i class="fa fa-trash"></i></button>
-                                                    @endif
+                                                    {{-- @endif --}}
                                                 </div>
                                             </td>
 
