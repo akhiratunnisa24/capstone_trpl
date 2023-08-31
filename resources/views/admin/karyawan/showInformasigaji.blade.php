@@ -96,6 +96,7 @@
                                                                     <th>No</th>
                                                                     <th>Benefit</th>
                                                                     <th>Nominal</th>
+                                                                    <th></th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -105,6 +106,9 @@
                                                                         <td>{{ $loop->iteration }}</td>
                                                                         <td>{{ $data->benefit->nama_benefit}}</td>
                                                                         <td>Rp. {{ number_format($data->nominal, 0, ',', '.') }}/{{$data->siklus_bayar}}</td>
+                                                                        <td>
+                                                                            <a class="btn btn-info btn-sm" title="Edit Benefit" data-toggle="modal" data-target="#editD{{ $data->id }}"><i class="fa fa-edit"></i></a>
+                                                                        </td>
                                                                         {{-- @if($data->siklus_bayar === "Bulan")
                                                                             
                                                                         @elseif($data->siklus_bayar === "Minggu")
@@ -157,18 +161,23 @@
 
                                                         <div class="form-group col-md">
                                                             <div class="row">
-                                                                <label class="form-label col-sm-3 text-end">Struktur Gaji</label>
-                                                                <div class="col-sm-7">
-                                                                    <input type="text" class="form-control" name="id_strukturgaji" id="id_strukturgaji" autocomplete="off"
-                                                                        placeholder="Masukkan Struktur Gaji" value="{{ $struktur ? $struktur->nama : '' }}" readonly>
-                                                                </div>
-                                                                <div class="col-sm-1">
-                                                                    @if($informasigaji == null)
-                                                                        <a class="btn btn-success" style="height:37px; width:65px;" title="Tambah Struktur Gaji" data-toggle="modal" data-target="#add"> <i class="fa fa-plus"></i></a>
-                                                                    @else
-                                                                        <a class="btn btn-info" style="height:37px; width:65px;" title="Edit Struktur Gaji" data-toggle="modal" data-target="#editD{{ $informasigaji->id }}"><i class="fa fa-edit"></i></a>
-                                                                    @endif
-                                                                </div>
+                                                               
+                                                                @if($informasigaji == null)
+                                                                    <label class="form-label col-sm-3 text-end">Struktur Gaji</label>
+                                                                    <div class="col-sm-7">
+                                                                        <input type="text" class="form-control" name="id_strukturgaji" id="id_strukturgaji" autocomplete="off"
+                                                                            placeholder="Masukkan Struktur Gaji" value="{{ $struktur ? $struktur->nama : '' }}" readonly>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                            <a class="btn btn-success" style="height:37px; width:65px;" title="Tambah Struktur Gaji" data-toggle="modal" data-target="#add"> <i class="fa fa-plus"></i></a>
+                                                                    </div>
+                                                                @else
+                                                                    <label class="form-label col-sm-3 text-end">Struktur Gaji</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" name="id_strukturgaji" id="id_strukturgaji" autocomplete="off"
+                                                                            placeholder="Masukkan Struktur Gaji" value="{{ $struktur ? $struktur->nama : '' }}" readonly>
+                                                                    </div>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -176,10 +185,9 @@
                                         </div>
                                     </div>
 
-                                
                                     <div class="modal-footer">
                                         @if($informasigaji !== NULL)
-                                        <a href="" class="btn btn-success" type="button">Edit Informasi Gaji <i class="fa fa-money"></i></a>
+                                        <a href="" class="btn btn-success" title="Edit Informasi Gaji" data-toggle="modal" data-target="#editInfor{{ $informasigaji->id }}">Edit Informasi Gaji <i class="fa fa-money"></i></a>
                                         @endif
                                         <a class="btn btn-info"  title="Edit Data Karyawan" data-toggle="modal" data-target="#editDatakaryawan{{ $karyawan->id }}">Edit Data Karyawan <i class="fa fa-user"></i></a>
                                         <a href="karyawan" class="btn btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
@@ -189,6 +197,7 @@
                                 @include('admin.karyawan.tambahstruktur')
                                 @if($informasigaji != null)
                                     @include('admin.karyawan.editstruktur')
+                                    @include('admin.karyawan.editInformasigaji')
                                 @endif
                             </div>
                         </div>

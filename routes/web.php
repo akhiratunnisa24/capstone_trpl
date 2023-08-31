@@ -122,6 +122,7 @@ Route::get('showinformasigaji{id}', [karyawanController::class, 'showinformasiga
 Route::put('/update-identitas{id}', [karyawanController::class, 'updateidentita'])->name('updateidentita');
 Route::post('/tambah-struktur{id}', [karyawanController::class, 'addstruktur'])->name('addstruktur');
 Route::put('/update-struktur{id}', [karyawanController::class, 'updatestruktur'])->name('updatestruktur');
+Route::put('/update-informasigaji{id}', [karyawanController::class, 'updateinformasigaji'])->name('updateinformasigaji');
 
 // Edit Data Karyawan Vesi Baru
 

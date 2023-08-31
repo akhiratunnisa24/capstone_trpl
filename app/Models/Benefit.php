@@ -58,6 +58,6 @@ class Benefit extends Model
 
     public function manfaat()
     {
-        return $this->belongsToMany(Benefit::class, 'detail_informasigaji', 'id_benefit', 'id_informasigaji');
+        return $this->belongsToMany(Benefit::class, 'detail_informasigaji', 'id_informasigaji', 'id_benefit');
     }
 }

@@ -1,11 +1,11 @@
 
-<div class="modal fade" id="editD{{ $informasigaji->id }}" tabindex="-1" role="dialog" aria-labelledby="AddModal" aria-hidden="true">
+<div class="modal fade" id="editD{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="AddModal" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title text-center" id="myModalLabel">Edit Struktur Gaji</h4>
             <div class="modal-body">
-                <form action="/update-struktur{{$informasigaji->id}}" method="POST">
+                <form action="/update-struktur{{$data->id}}" method="POST">
                     @csrf
                     @method('PUT')
                   
@@ -16,12 +16,12 @@
                                 <div class="col-sm-9">
                                     <select class="form-control" name="strukturgaji">
                                         <option value="">Pilih Struktur</option>
-                                        @foreach ($strukturgaji as $d)
+                                        {{-- @foreach ($strukturgaji as $d)
                                             <option value="{{ $d->id }}"
                                                 {{ $informasigaji ? ($informasigaji->id_strukturgaji == $d->id ? 'selected' : '') : '' }}>
                                                 {{ $d->nama }}
                                             </option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
                                 </div>
                             </div>

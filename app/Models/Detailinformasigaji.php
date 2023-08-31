@@ -32,5 +32,10 @@ class Detailinformasigaji extends Model
         return $this->belongsTo(Benefit::class, 'id_benefit','id');
     }
 
+    public function informasigajis()
+    {
+        return $this->belongsTo(Informasigaji::class, 'id_infrmasigaji','id');
+    }
+
     
 }
