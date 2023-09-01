@@ -1,14 +1,14 @@
-
-<div class="modal fade" id="editD{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="AddModal" aria-hidden="true">
+<div class="modal fade" id="editD{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="AddModal"
+    aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-center" id="myModalLabel">Edit Struktur Gaji</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title text-center" id="myModalLabel">Edit Struktur Gaji</h4>
             <div class="modal-body">
-                <form action="/update-struktur{{$data->id}}" method="POST">
+                <form action="/update-struktur{{ $data->id }}" method="POST">
                     @csrf
                     @method('PUT')
-                  
+
                     <div class="col-md-12" style="margin-bottom:30px">
                         <div class="form-group col-sm">
                             <div class="row">
@@ -28,7 +28,8 @@
                         </div>
                     </div>
                     <div class="modal-footer" style="margin-top:30px">
-                        <button type="button" class="btn btn-danger btn-sm waves-effect" data-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-danger btn-sm waves-effect"
+                            data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-success btn-sm waves-effect waves-light" name="submit"
                             value="save">Simpan</button>
                     </div>
