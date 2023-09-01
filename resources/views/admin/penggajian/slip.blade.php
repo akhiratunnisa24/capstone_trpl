@@ -11,11 +11,11 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
-                <h4 class="pull-left page-title ">Informasi Gaji</h4>
+                <h4 class="pull-left page-title ">Slip Gaji Karyawan</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Rynest Employee Management System</li>
-                    <li class="active">Informasi Gaji</li>
+                    <li class="active">Slip Gaji</li>
                 </ol>
 
                 <div class="clearfix">
@@ -215,13 +215,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
-
-
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
 
 
     @if (Session::has('pesan'))

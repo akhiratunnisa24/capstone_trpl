@@ -68,6 +68,11 @@ class Kernel extends ConsoleKernel
                 ->whereDay('tanggal', '=', Carbon::now())
                 ->get();
 
+                // $jadwal = Jadwal::join('partner', 'jadwal.partner', '=', 'partner.id')
+                //     ->whereBetween('tanggal', [$awal, $akhir])
+                //     ->get();
+
+
                 foreach($jadwal as $jadwal)
                 {
                     $karyawanSudahAbsen = DB::table('absensi')
@@ -199,7 +204,7 @@ class Kernel extends ConsoleKernel
                 }
 
         })
-        ->dailyAt('23:59');
+        ->dailyAt('17:11');
 
         //schedule untuk mengubah status alokasi cuti tahun selain cuti tsahunan lalu menjadi tidak aktif
         $schedule->call(function () 

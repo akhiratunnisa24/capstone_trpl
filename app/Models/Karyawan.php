@@ -166,4 +166,9 @@ class Karyawan extends Model
         return $this->hasMany(Informasigaji::class,'id_karyawan','id');
     }
 
+    public function detailkehadiran()
+    {
+        return $this->hasMany(Detailkehadiran::class,'id_karyawan','id');
+    }
+
 }

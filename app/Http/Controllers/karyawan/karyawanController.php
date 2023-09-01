@@ -3631,4 +3631,18 @@ class karyawanController extends Controller
 
         return redirect()->back()->with('pesan','Informasi Gaji berhasil diupdate');
     }
+
+    public function updatedetailinformasi(Request $request,$id)
+    {
+        $nominals = preg_replace('/[^0-9]/', '', $request->nominal);
+        $nominal = (float) $nominals;
+
+        $detailinformasigaji = Detailinformasigaji::where('id', $id)
+            ->where('partner',$request->partner)
+            ->update([
+                'nominal' => $nominal, 
+            ]); 
+        return redirect()->back()->with('pesan','Detail benefit berhasil di update');
+
+    }
 }
