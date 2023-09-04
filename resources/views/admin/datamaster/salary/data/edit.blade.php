@@ -64,7 +64,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group m-t-20">
+                    <div class="modal-footer m-t-30">
                         <div class="col-xs">
                             <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
                             <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Update</button>

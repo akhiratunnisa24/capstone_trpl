@@ -264,50 +264,46 @@ class SalaryController extends Controller
             'status_karyawan' => $request->input('status_karyawan'),
         ]);
 
+        //sebelum di update
+        // $detailstruktur = DetailSalaryStructure::where('id_salary_structure',$id)->get();
+
         $selectedBenefits = array_merge($selectedBenefits, $benefits);
         $benefits = Benefit::whereIn('id', $selectedBenefits)->get();
         $salaryStructure->benefits()->sync($benefits);
 
-        $role = Auth::user()->role;
         $userPartner = Auth::user()->partner;
 
         $benefits = Benefit::where('partner', 0)
                         ->orWhere('partner', $userPartner)
                         ->get();
 
-        // Update detail informasigaji berdasarkan perubahan benefit
-        $karyawan = Karyawan::where('status_karyawan', $salaryStructure->status_karyawan)
-            ->where('jabatan', $salaryStructure->level_jabatans->nama_level)
-            ->where('partner', $salaryStructure->partner)
-            ->get();
+        $informasigaji = Informasigaji::where('id_strukturgaji',$salaryStructure->id)->get();
+        foreach($informasigaji as $informasi)
+        {
+            $selectedBenefits = [1, 2, 3];
+            $benefit          = $request->input('benefits', []);
+            $benefitId        = array_merge($selectedBenefits, $benefit);
+            $benefits         = Benefit::whereIn('id', $benefitId)->get();
+            $detail           = Detailinformasigaji::where('id_informasigaji',$informasi->id)->get();
+            // dd($informasi,$detail);
+            $idbenefit = $benefits->pluck('id')->toArray();
+            $iddetail  = $detail->pluck('id_benefit')->toArray();
 
-        foreach ($karyawan as $data) {
-            $informasigaji = Informasigaji::updateOrCreate(
-                [
-                    'id_karyawan' => $data->id,
-                    'partner' => $data->partner,
-                    'status_karyawan' => $salaryStructure->status_karyawan,
-                    'level_jabatan' => $salaryStructure->id_level_jabatan,
-                ],
-                []
-            );
+            //untuk tambah data benefit ke detail informasi gaji
+            $idtambah = array_diff($idbenefit, $iddetail);
+            $dataBenefit = $benefits->whereIn('id', $idtambah)->all();
 
-            $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $salaryStructure->id)->get();
-            $details = [];
+            //untuk menghapus data detailinformasi gaji yang tidak diperlukan
+            $idhapus = array_diff($iddetail , $idbenefit);
+            $details = $detail->whereIn('id_benefit', $idhapus)->all();
 
-            foreach ($detailstruktur as $detail) {
-                $benefit = Benefit::where('id', $detail->id_benefit)->first();
-
-                $check = Detailinformasigaji::where('id_karyawan', $data->id)
-                    ->where('id_informasigaji', $informasigaji->id)
-                    ->where('id_struktur', $salaryStructure->id)
-                    ->where('id_benefit', $detail->id_benefit)
-                    ->where('partner', $data->partner)
-                    ->exists();
-
-                if (!$check) {
-                    // Hitung nominal sesuai dengan logika bisnis
-                    $nominal = null;
+            //tambah data
+            if(isset($idtambah) && !empty($idtambah))
+            {
+                $details = [];
+                foreach ($dataBenefit as $benefit)
+                {
+                    $nominal = 0;
                     if($benefit->id == 1)
                     {
                         $nominal = $informasigaji->gaji_pokok;
@@ -335,19 +331,32 @@ class SalaryController extends Controller
                     }
 
                     $details[] = [
-                        'id_karyawan' => $data->id,
-                        'id_informasigaji' => $informasigaji->id,
-                        'id_struktur' => $salaryStructure->id,
-                        'id_benefit' => $detail->id_benefit,
-                        'siklus_bayar' => $benefit->siklus_pembayaran,
-                        'partner' => $data->partner,
-                        'nominal' => $nominal,
+                        'id_karyawan'      =>$informasi->id_karyawan,
+                        'id_informasigaji' =>$informasi->id,
+                        'id_struktur'      =>$informasi->id_strukturgaji,
+                        'id_benefit'       =>$benefit->id,
+                        'siklus_bayar'     =>$benefit->siklus_pembayaran,
+                        'partner'          =>Auth::user()->partner,
+                        'nominal'          =>$nominal,
                     ];
+
+                }
+                Detailinformasigaji::insert($details);
+            }
+
+            //hapus data dari detailinformasigaji
+            if (!empty($idhapus)) {
+                foreach ($details as $detail) {
+                    $detailToDelete = Detailinformasigaji::where('id_benefit', $detail->id_benefit)
+                        ->where('id_informasigaji', $informasi->id)
+                        ->first();
+
+                    if ($detailToDelete) {
+                        $detailToDelete->delete();
+                    }
                 }
             }
-            Detailinformasigaji::insert($details);
         }
-
         return redirect()->back()
                         ->with('pesan', 'Data berhasil disimpan.')
                         ->with(compact('benefits', 'selectedBenefits', 'salaryStructure', 'levelJabatanOptions', 'statusKaryawanOptions'));

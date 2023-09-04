@@ -1,5 +1,5 @@
-
-<div class="modal fade" id="editD{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="AddModal" aria-hidden="true">
+<div class="modal fade" id="editD{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="AddModal"
+    aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -45,7 +45,8 @@
                       <input type="hidden" class="form-control" name="partner" autocomplete="off" value="{{$data->partner}}">
                     
                     <div class="modal-footer" style="margin-top:30px">
-                        <button type="button" class="btn btn-danger btn-sm waves-effect" data-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-danger btn-sm waves-effect"
+                            data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-success btn-sm waves-effect waves-light" name="submit"
                             value="save">Simpan</button>
                     </div>
