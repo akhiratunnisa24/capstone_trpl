@@ -13,6 +13,7 @@ class Detailkehadiran extends Model
         'id_karyawan',
         'tgl_awal',
         'tgl_akhir',
+        'jumlah_hadir',
         'jumlah_lembur',
         'jumlah_cuti',
         'jumlah_izin',

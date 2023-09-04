@@ -748,6 +748,10 @@ Route::post('/informasigaji/{id}', [InformasigajiController::class, 'store'])->n
 
 //Penggajian
 Route::get('/slipgaji-karyawan', [PenggajianController::class, 'index'])->name('slipgaji');
+Route::post('/getrekening', [PenggajianController::class, 'getKaryawan'])->name('get.Karyawan');
+Route::post('/slipgaji-karyawan', [PenggajianController::class, 'storegaji'])->name('storegaji');
+Route::post('/slipgaji', [PenggajianController::class, 'showslipgaji'])->name('slipgajikaryawan');
+
 Route::get('/rekap-kehadiran', [PenggajianController::class, 'indexs'])->name('kehadirans');
 Route::post('/rekap-kehadiran', [PenggajianController::class, 'storehadir'])->name('storehadir');
 // Route::post('/struktur-penggajian', [SalaryController::class, 'store'])->name('salary.store');

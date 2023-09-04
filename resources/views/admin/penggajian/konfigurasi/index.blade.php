@@ -34,21 +34,30 @@
 
     th:nth-child(4),
     td:nth-child(4) {
-        width: 20%;
+        width: 8%;
     }
 
     th:nth-child(5),
     td:nth-child(5) {
-        width: 10%;
+        width: 8%;
     }
 
     th:nth-child(6),
     td:nth-child(6) {
-        width: 10%;
+        width: 8%;
     }
 
     th:nth-child(7),
     td:nth-child(7) {
+        width: 8%;
+    }
+
+    th:nth-child(8),
+    td:nth-child(8) {
+        width: 8%;
+    }
+    th:nth-child(9),
+    td:nth-child(9) {
         width: 15%;
     }
 </style>
@@ -85,6 +94,7 @@
                                                 <th>No</th>
                                                 <th>Periode</th>
                                                 <th>Karyawan</th>
+                                                <th>Hadir</th>
                                                 <th>Lembur</th>
                                                 <th>Cuti</th>
                                                 <th>Sakit</th>
@@ -98,6 +108,7 @@
                                                     <td>{{$loop->iteration}}</td>
                                                     <td>{{ \Carbon\Carbon::parse($data->tgl_awal)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($data->tgl_akhir)->format('d/m/Y')}}</td>
                                                     <td>{{$data->karyawans->nama}}</td>
+                                                    <td>{{$data->jumlah_hadir}}</td>
                                                     <td>{{$data->jumlah_lembur}}</td>
                                                     <td>{{$data->jumlah_cuti}}</td>
                                                     <td>{{$data->jumlah_sakit}}</td>

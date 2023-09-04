@@ -24,7 +24,7 @@
 
     th:nth-child(2),
     td:nth-child(2) {
-        width: 20%;
+        width: 10%;
     }
 
     th:nth-child(3),
@@ -50,6 +50,10 @@
     th:nth-child(7),
     td:nth-child(7) {
         width: 15%;
+    }
+    th:nth-child(7),
+    td:nth-child(7) {
+        width: 10%;
     }
 </style>
 
@@ -83,6 +87,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>Tgl.Gajian</th>
                                                 <th>Periode</th>
                                                 <th>Karyawan</th>
                                                 <th>Jabatan</th>
@@ -92,28 +97,29 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @foreach($slipkaryawan as $data)
+                                            @foreach($slipgaji as $data)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
-                                                    <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
+                                                    <td>{{\Carbon\Carbon::parse($data->tgl_gajian)->format('d/m/Y')}}</td>
+                                                    <td>{{\Carbon\Carbon::parse($data->tglawal)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($data->tglakhir)->format('d/m/Y')}}</td>
                                                     <td>{{$data->karyawans->nama}}</td>
-                                                    <td>{{$data->jam_masuk}}</td>
-                                                    <td>{{$data->jam_keluar}}</td>
-                                                    <td>{{$data->jam_kerja}}</td>
-                                                    <td>{{$data->terlambat}}</td>
-                                                    <td>{{$data->plg_cepat}}</td>
+                                                    <td>{{$data->karyawans->nama_jabatan}}</td>
+                                                    <td>{{ number_format($data->gaji_pokok, 0, ',', '.') }}</td>
+                                                    <td>{{\Carbon\Carbon::parse($data->karyawans->tglmasuk)->format('d/m/Y')}}</td>
                                                     <td> 
                                                         <div class="d-grid gap-2 " role="group" aria-label="Basic example"> 
-                                                            <a href=""class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i>
-                                                            </a>
+                                                            <form method="POST" action="{{ route('slipgajikaryawan') }}">
+                                                                @csrf
+                                                                <input type="hidden" name="nip" value="{{ $data->karyawans->nip }}">
+                                                                <input type="hidden" name="id" value="{{ $data->id }}">
+                                                                <button type="submit" class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i></button>
+                                                            </form>
+                                                            {{-- <a href="/slipgaji{{$data->id}}" class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i></a> --}}
                                                             <a href=""class="btn btn-success btn-sm" title="Cetak Slip Gaji"><i class="fa fa-file-pdf-o"></i>
                                                             </a>
-                                                            {{-- <a href=""class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye" style="font-size: 15px;"></i>
-                                                            </a> --}}
-                                                        {{-- </div>
                                                     </td>
                                                 </tr>
-                                            @endforeach --}} 
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -127,6 +133,7 @@
     @include('admin.penggajian.add')
     
     <script src="assets/pages/form-advanced.js"></script>
+    <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
@@ -135,7 +142,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
-
     @if(Session::has('pesan'))
         <script>
             swal("Selamat","{{ Session::get('pesan')}}", 'success', {

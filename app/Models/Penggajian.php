@@ -8,4 +8,30 @@ use Illuminate\Database\Eloquent\Model;
 class Penggajian extends Model
 {
     use HasFactory;
+
+    protected $table = "penggajian";
+    protected $fillable = [
+        'id_karyawan',
+        'tglawal',
+        'tglakhir',
+        'tglgajian',
+        'gaji_pokok',
+        'lembur',
+        'tunjangan',
+        'gaji_kotor',
+        'asuransi',
+        'potongan',
+        'pajak',
+        'gaji_bersih',
+        'nama_bank',
+        'no_rek',
+        'partner'
+    ];
+
+    public function karyawans()
+    {
+        return $this->belongsTo(Karyawan::class, 'id_karyawan','id');
+    }
+
+
 }
