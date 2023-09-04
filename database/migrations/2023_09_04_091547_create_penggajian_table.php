@@ -19,20 +19,21 @@ return new class extends Migration
             $table->date('tglawal');
             $table->date('tglakhir');
             $table->date('tglgajian');
-            $table->decimal('gaji_pokok',2);
-            $table->decimal('lembur',2)->nullable->default(null);
-            $table->decimal('tunjangan',2)->nullable->default(null);
-            $table->decimal('gaji_kotor',2);
-            $table->decimal('asuransi',2)->nullable->default(null);
-            $table->decimal('potongan',2)->nullable->default(null);
-            $table->decimal('pajak',2)->nullable->default(null);
-            $table->decimal('gaji_bersih',2);
-            $table->varchar('nama_bank',50);
-            $table->varchar('no_rekening',50);
+            $table->decimal('gaji_pokok', 2);
+            $table->decimal('lembur', 2)->nullable()->default(null);
+            $table->decimal('tunjangan', 2)->nullable()->default(null);
+            $table->decimal('gaji_kotor', 2);
+            $table->decimal('asuransi', 2)->nullable()->default(null);
+            $table->decimal('potongan', 2)->nullable()->default(null);
+            $table->decimal('pajak', 2)->nullable()->default(null);
+            $table->decimal('gaji_bersih', 2);
+            $table->string('nama_bank', 50);
+            $table->string('no_rekening', 50);
             $table->integer('partner');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

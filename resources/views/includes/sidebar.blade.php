@@ -140,8 +140,8 @@
                                         class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="/slipgaji-karyawan"><i class="mdi mdi-account-settings"></i><span>Karyawan</span></a></li>
-                                    <li><a href=""><i class="mdi mdi-account-multiple"></i><span></span>Grup</a></li>
-                                   
+                                    <li><a href="/slipgaji-karyawan-grup"><i class="mdi mdi-account-multiple"></i><span></span>Grup</a></li>
+
                                 </ul>
                             </li>
                             <li class="has_sub">
