@@ -264,6 +264,8 @@ class SalaryController extends Controller
             'status_karyawan' => $request->input('status_karyawan'),
         ]);
 
+        $detailsebelumupdate = DetailSalaryStructure::where('id_salary_structure',$id)->pluck('id');
+
         //sebelum di update
         // $detailstruktur = DetailSalaryStructure::where('id_salary_structure',$id)->get();
 
@@ -285,6 +287,7 @@ class SalaryController extends Controller
             $benefitId        = array_merge($selectedBenefits, $benefit);
             $benefits         = Benefit::whereIn('id', $benefitId)->get();
             $detail           = Detailinformasigaji::where('id_informasigaji',$informasi->id)->get();
+           
             // dd($informasi,$detail);
             $idbenefit = $benefits->pluck('id')->toArray();
             $iddetail  = $detail->pluck('id_benefit')->toArray();
@@ -342,10 +345,7 @@ class SalaryController extends Controller
 
                 }
                 Detailinformasigaji::insert($details);
-            }
-
-            //hapus data dari detailinformasigaji
-            if (!empty($idhapus)) {
+            }else if (!empty($idhapus)) {
                 foreach ($details as $detail) {
                     $detailToDelete = Detailinformasigaji::where('id_benefit', $detail->id_benefit)
                         ->where('id_informasigaji', $informasi->id)

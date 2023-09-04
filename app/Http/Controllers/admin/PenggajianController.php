@@ -23,7 +23,9 @@ class PenggajianController extends Controller
         if ($role == 1 ||$role == 6) 
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            return view('admin.penggajian.index',compact('row','role'));
+            $karyawan = Karyawan::where('partner',$row->partner)->get();
+            
+            return view('admin.penggajian.index',compact('row','role','karyawan'));
         }else {
 
             return redirect()->back();

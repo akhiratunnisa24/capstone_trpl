@@ -73,9 +73,8 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 clearfix" >
                             <div class="pull-right">
-                                <a href="" id="exportToExcel" class="btn btn-dark btn-sm fa fa-user" data-toggle="modal" data-target="#modal"> Data Kehadiran</a>
-                                <a href="" id="exportToExcel" class="btn btn-dark btn-sm fa fa-plus"  data-toggle="modal" data-target="#Modals"> Tambah Slip Baru</a>
-                            </div>
+                                <a href="" class="btn btn-dark btn-sm fa fa-plus" data-toggle="modal" data-target="#addslip"> Tambah Slip Baru</a>
+                            </div>                            
                         </div>
                         <div class="panel-body m-b-5">
                             <div class="row">
@@ -93,53 +92,28 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                {{-- <td>{{$loop->iteration}}</td> --}}
-                                                <td>1</td>
-                                                <td>28/07/2023 - 28/08/2023</td>
-                                                <td>Akhiratunnisa Hasanah</td>
-                                                <td>Software Engineer</td>
-                                                <td>5.000.000</td>
-                                                <td>11/10/2022</td>
-                                                <td> 
-                                                    <div class="d-grid gap-2 " role="group" aria-label="Basic example"> 
-                                                        <a href=""class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i>
-                                                        </a>
-                                                        <a href=""class="btn btn-success btn-sm" title="Cetak Slip Gaji"><i class="fa fa-file-pdf-o"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>28/07/2023 - 28/08/2023</td>
-                                                <td>Andika</td>
-                                                <td>Human resource staff merangkap staff keuangan</td>
-                                                <td>5.000.000</td>
-                                                <td>11/10/2022</td>
-                                                <td> 
-                                                    <div class="d-grid gap-2 " role="group" aria-label="Basic example"> 
-                                                        <a href=""class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i>
-                                                        </a>
-                                                        <a href=""class="btn btn-success btn-sm" title="Cetak Slip Gaji"><i class="fa fa-file-pdf-o"></i>
-                                                        </a>
-                                                        {{-- <a href=""class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye" style="font-size: 15px;"></i>
-                                                        </a> --}}
-                                                    </div>
-                                                </td>
-                                            </tr>
                                             {{-- @foreach($slipkaryawan as $data)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
-                                                    <td>{{$data->karyawans->nama}}</td>
                                                     <td>{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}</td>
+                                                    <td>{{$data->karyawans->nama}}</td>
                                                     <td>{{$data->jam_masuk}}</td>
                                                     <td>{{$data->jam_keluar}}</td>
                                                     <td>{{$data->jam_kerja}}</td>
                                                     <td>{{$data->terlambat}}</td>
                                                     <td>{{$data->plg_cepat}}</td>
+                                                    <td> 
+                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example"> 
+                                                            <a href=""class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a href=""class="btn btn-success btn-sm" title="Cetak Slip Gaji"><i class="fa fa-file-pdf-o"></i>
+                                                            </a>
+                                                            {{-- <a href=""class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye" style="font-size: 15px;"></i>
+                                                            </a> --}}
+                                                        {{-- </div>
+                                                    </td>
                                                 </tr>
-                                            @endforeach --}}
+                                            @endforeach --}} 
                                         </tbody>
                                     </table>
                                 </div>

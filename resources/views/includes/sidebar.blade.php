@@ -121,9 +121,9 @@
                                                 Benefit</span></a></li>
                                     <li><a href="/benefit"><i class="mdi mdi-clipboard-text"></i><span></span>Data
                                             Benefit</a></li>
-                                    <li><a href="/benefit-karyawan"><i
+                                    {{-- <li><a href="/benefit-karyawan"><i
                                                 class="mdi mdi-account-star-variant"></i><span></span>Benefit
-                                            Karyawan</a></li>
+                                            Karyawan</a></li> --}}
                                 </ul>
                             </li>
                             <li><a href="/"><i class="mdi mdi-cash-usd"></i><span></span>Kompensasi</a></li>
