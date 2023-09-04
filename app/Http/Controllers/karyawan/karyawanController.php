@@ -16,6 +16,7 @@ use App\Models\Jadwal;
 use App\Models\Resign;
 use App\Models\Status;
 use App\Models\Absensi;
+use App\Models\Benefit;
 use App\Models\Jabatan;
 use App\Models\Karyawan;
 use App\Models\Kdarurat;
@@ -36,13 +37,14 @@ use App\Models\Informasigaji;
 use App\Models\LevelJabatan ;
 use App\Mail\CutiNotification;
 use App\Models\Settingabsensi;
-use App\Exports\KaryawanExport;
 // use Illuminate\Support\Facades\File;
+use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
 use App\Models\SalaryStructure;
 use App\Models\SettingOrganisasi;
 use App\Events\AbsenKaryawanEvent;
 use Illuminate\Support\Facades\DB;
+use App\Models\Detailinformasigaji;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -297,18 +299,21 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereDay('created_at', '=', Carbon::now())
+                ->where('partner',$row->partner)
                 ->count('jam_masuk');
 
             // Absen Terlambat untuk hari ini
             $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->where('partner',$row->partner)
                 ->count('terlambat');
 
             //absen masuk bulan ini
             $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->where('partner',$row->partner)
                 ->count('jam_masuk');
 
             //absen masuk bulan lalu
@@ -326,11 +331,14 @@ class karyawanController extends Controller
                 ->count();
 
             $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-                ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
+                ->whereDay('created_at', '=', Carbon::now())
+                ->where('partner',$row->partner)
+                ->count('jam_masuk');
 
             $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('aktif_dari', '=', Carbon::now()->year)
                 ->whereYear('sampai', '=', Carbon::now()->year)
+                ->where('partner',$row->partner)
                 ->where('status', '=', 1)
                 ->get();
 
@@ -361,7 +369,11 @@ class karyawanController extends Controller
                 ->where('sisa_cuti','>',0)
                 ->whereDate('dari', '<=', Carbon::now())
                 ->whereDate('sampai', '>=', Carbon::now())
-                ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
+                ->whereHas('karyawans', function ($query) use ($row) {
+                    $query->where('partner', $row->partner);
+                })
+                ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)
+                ->get();
 
             $pct = Settingabsensi::where('sanksi_tidak_masuk', '=', 'Potong Uang Makan')
                 ->where('partner',Auth::user()->partner)
@@ -477,7 +489,7 @@ class karyawanController extends Controller
                 $datatelat = collect();
                 $jumdat = 0;
             }
-            $posisi = Lowongan::all()->sortByDesc('created_at');
+            $posisi = Lowongan::all()->where('partner',$row->partner)->sortByDesc('created_at');
 
             if($role == 3 && $row->jabatan == "Manager")
             {
@@ -1222,17 +1234,19 @@ class karyawanController extends Controller
             $resign = Resign::where(function ($query) {
                 $query->where('status', '=', '1')
                 ->whereHas('karyawan', function ($query) {
-                    $query->where('atasan_pertama', Auth::user()->id_pegawai);
+                    $query->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->where('partner', Auth::user()->partner);
                 });
             })->orWhere(function ($query) {
                 $query->where('status', '=', '6')
                 ->whereHas('karyawan', function ($query) {
-                    $query->where('atasan_kedua', Auth::user()->id_pegawai);
+                    $query->where('atasan_kedua', Auth::user()->id_pegawai)
+                        ->where('partner', Auth::user()->partner);
                 });
             })->get();
 
             $resignjumlah = $resign->count();
-            $rekruitmen = Rekruitmen::orderBy('created_at', 'desc')->get();
+            $rekruitmen = Rekruitmen::where('partner',$row->partner)->orderBy('created_at', 'desc')->get();
             $rekruitmenjumlah = $rekruitmen->count();
 
             $alokasi = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
@@ -1240,10 +1254,12 @@ class karyawanController extends Controller
                 ->whereYear('sampai', '=', Carbon::now()->year)
                 ->where('status', '=', 1)
                 ->where('id_jeniscuti','=',1)
+                ->where('partner', Auth::user()->partner)
                 ->first();
 
             $currentDate = Carbon::now()->toDateString();
-            $informasi = Informasi::whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
+            $informasi = Informasi::where('partner', Auth::user()->partner)
+            ->whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
                 // return $informasi;
             $jmlinfo = $informasi->count();
 
@@ -1284,12 +1300,14 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $absenKaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+                ->where('partner', Auth::user()->partner)
                 ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
 
             // Absen Terlambat untuk hari ini
             $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->where('partner', Auth::user()->partner)
                 ->whereTime('jam_masuk', '>', '08:00:00')
                 ->count();
 
@@ -1297,26 +1315,32 @@ class karyawanController extends Controller
             $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->where('partner', Auth::user()->partner)
                 ->count('jam_masuk');
 
             //absen masuk bulan lalu
             $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->where('partner', Auth::user()->partner)
                 ->count('jam_masuk');
 
             //absen terlambat bulan lalu
             $absenTerlambatbulanlalu = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->where('partner', Auth::user()->partner)
                 ->count('terlambat');
 
             $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-                ->whereDay('created_at', '=', Carbon::now(),)->count('jam_masuk');
+                ->whereDay('created_at', '=', Carbon::now())
+                ->where('partner', Auth::user()->partner)
+                ->count('jam_masuk');
 
             $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('aktif_dari', '=', Carbon::now()->year)
                 ->whereYear('sampai', '=', Carbon::now()->year)
+                ->where('partner', Auth::user()->partner)
                 ->where('status', '=', 1)
                 ->get();
                 // return $alokasicuti;
@@ -1331,17 +1355,20 @@ class karyawanController extends Controller
                 ->where('sisa_cuti','>',0)
                 ->whereDate('dari', '<=', Carbon::now())
                 ->whereDate('sampai', '>=', Carbon::now())
+                ->whereHas('karyawans', function ($query) use ($row) {
+                    $query->where('partner', $row->partner);
+                })
                 ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
 
 
             $posisi = Lowongan::where('partner',Auth::user()->partner)->sortByDesc('created_at')->get();
-            $resign = Resign::orderBy('created_at', 'desc')->get();
+            $resign = Resign::where('partner',Auth::user()->partner)->orderBy('created_at', 'desc')->get();
             $resignjumlah = $resign->count();
             $rekruitmen = Rekruitmen::where('partner',Auth::user()->partner)->orderBy('created_at', 'desc')->get();
             $rekruitmenjumlah = $rekruitmen->count();
 
             $currentDate = Carbon::now()->toDateString();
-            $informasi = Informasi::whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
+            $informasi = Informasi::where('partner',Auth::user()->partner)->whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
                 // return $informasi;
             $jmlinfo = $informasi->count();
 
@@ -3291,50 +3318,105 @@ class karyawanController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
             $karyawan = karyawan::where('id',$id)->first();
-            $departemen = Departemen::where('partner',$row->partner)->get();
-            $namajabatan = Jabatan::where('partner',$row->partner)->get();
-            $leveljabatan = Leveljabatan::all();
-            //  return $karyawan;
-            $informasigaji = Informasigaji::where('id_karyawan',$id)->first();
-            if ($informasigaji === null)
+            $id = $karyawan->id;
+
+            if($karyawan->status_karyawan !== null && $karyawan->jabatan !== null && $karyawan->divisi !== null)
             {
-                $informasigaji = null;
-                $alertMessage = 'Karyawan memiliki sejumlah data yang belum lengkap. Silakan lengkapi data karyawan, struktur gaji dan informasi gaji untuk karyawan ini.';
-                $idStrukturgaji = null; // Atau berikan nilai default yang sesua
-                $struktur = null;
-                $detailstruktur = null;
+                $departemen = Departemen::where('partner',$row->partner)->get();
+                $namajabatan = Jabatan::where('partner',$row->partner)->get();
+                $leveljabatan = Leveljabatan::all();
+
+                //  return $karyawan;
+                $informasigaji = Informasigaji::where('id_karyawan',$id)->first();
+                if ($informasigaji === null)
+                {
+                    $informasigaji = null;
+                    $alertMessage = 'Karyawan memiliki sejumlah data yang belum lengkap. Silakan lengkapi data karyawan, struktur gaji dan informasi gaji untuk karyawan ini.';
+                    $idStrukturgaji = null; // Atau berikan nilai default yang sesua
+                    $struktur = null;
+                    $detailstruktur = null;
+                    // $level = null;
+                    // $strukturgaji = null;
+                }
+                else
+                {
+                    //data perorangan
+                    $informasigaji = $informasigaji;
+                    $alertMessage ='';
+                    $idStrukturgaji = $informasigaji->id_strukturgaji;
+                    $struktur = SalaryStructure::where('id',$idStrukturgaji)->first();
+
+                    $detailstruktur = Detailinformasigaji::with('benefit')
+                        ->where('id_karyawan',$karyawan->id)
+                        ->where('id_struktur', $struktur->id)
+                        ->whereHas('benefit', function ($query) use ($karyawan) {
+                            $query->where('partner', $karyawan->partner);
+                        })
+                    ->get();
+                    // return $detailstruktur;
+
+                }
+                $file = File::where('id_pegawai', $id)->first();
+
+                //untuk form tambah atau edit
+                $level = Leveljabatan::where('nama_level',$karyawan->jabatan)->first();
+                $strukturgaji = SalaryStructure::where('partner',$karyawan->partner)
+                    ->where('status_karyawan', $karyawan->status_karyawan)
+                    ->where('id_level_jabatan',$level->id)
+                    ->get();
+
+                $benefits = Benefit::where(function ($query) use ($karyawan) {
+                        $query->where('partner', 0)
+                            ->orWhere('partner', $karyawan->partner);
+
+                    })->get();
+                $selectedBenefits = [1,2,3];
+
+                $detailinformasigaji = Detailinformasigaji::where('id_karyawan',$karyawan->id)->get();
+                // return $detailinformasigaji;
+                $output = [
+                    'row' => $row,
+                    'karyawan' => $karyawan,
+                    'file' => $file,
+                    'struktur' => $struktur,
+                    'detailstruktur' => $detailstruktur,
+                    'informasigaji' => $informasigaji,
+                    'alertMessage' => $alertMessage,
+                    'departemen' => $departemen,
+                    'namajabatan' => $namajabatan,
+                    'leveljabatan' => $leveljabatan,
+                    'strukturgaji' => $strukturgaji,
+                    'benefits' => $benefits,
+                    'selectedBenefits' => $selectedBenefits,
+                    'detailinformasigaji' => $detailinformasigaji,
+                ];
+
+                return view('admin.karyawan.showInformasigaji', $output);
             }
             else
             {
-                $informasigaji = $informasigaji;
-                $alertMessage ='';
-                $idStrukturgaji = $informasigaji->id_strukturgaji;
-                $struktur = SalaryStructure::where('id',$idStrukturgaji)->first();
-                $detailstruktur = DetailSalaryStructure::with('benefit')
-                ->where('id_salary_structure', $struktur->id)
-                ->whereHas('benefit', function ($query) use ($karyawan) {
-                    $query->where('partner', $karyawan->partner);
-                })
-                ->get();
+                if($karyawan->divisi == null && $karyawan->jabatan !== null && $karyawan->status_karyawan !== null){
+                    $pesan = "Data <strong><span style='color: red;'>Divisi</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
+                }elseif($karyawan->status_karyawan == null && $karyawan->jabatan !== null && $karyawan->divisi !== null){
+                    $pesan = "Data <strong><span style='color: red;'>Status Karyawan</span></strong> belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
+                }elseif($karyawan->jabatan == null && $karyawan->status_karyawan !== null && $karyawan->divisi !== null)
+                {
+                    $pesan = "Data <strong><span style='color: red;'>Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
+                }elseif($karyawan->jabatan == null && $karyawan->status_karyawan == null && $karyawan->divisi !== null )
+                {
+                    $pesan = "Data <strong><span style='color: red;'>Status dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
+                }elseif($karyawan->jabatan == null && $karyawan->status_karyawan == null && $karyawan->divisi == null )
+                {
+                    $pesan = "Data <strong><span style='color: red;'>Status,Divisi dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
+                }
+                else{
+                    //$pesan = "Data tidak lengkap, silahkan lengkapi <strong><a href='/editidentitas" . $karyawan->id . "'>Status/Level Jabatan Karyawan</a></strong> dan Coba kembali.";
+                    $pesan = "Data <strong><span style='color: red;'>Status,Divisi dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
+                }
+                $pesan = '<div class="text-center">' . $pesan . '</div>';
+                $pesan = nl2br(html_entity_decode($pesan));
+                return redirect()->back()->with('message',$pesan);
             }
-
-
-            $file = File::where('id_pegawai', $id)->first();
-
-            $output = [
-                'row' => $row,
-                'karyawan' => $karyawan,
-                'file' => $file,
-                'struktur' => $struktur,
-                'detailstruktur' => $detailstruktur,
-                'informasigaji' => $informasigaji,
-                'alertMessage' => $alertMessage,
-                'departemen' => $departemen,
-                'namajabatan' => $namajabatan,
-                'leveljabatan' => $leveljabatan
-            ];
-
-            return view('admin.karyawan.showInformasigaji', $output);
         } else {
 
             return redirect()->back();
@@ -3346,6 +3428,7 @@ class karyawanController extends Controller
         $karyawan = Karyawan::find($id);
         $gaji = preg_replace('/[^0-9]/', '', $request->gajiKaryawan);
         $gajiKaryawan = (float) $gaji;
+
         $data = array(
             'nama' => $request->post('namaKaryawan'),
             'divisi' => $request->post('divisi'),
@@ -3355,8 +3438,211 @@ class karyawanController extends Controller
             'status_karyawan' => $request->post('statusKaryawan'),
             'tglmasuk' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmasukKaryawan)->format('Y-m-d'),
         );
+
         Karyawan::where('id', $id)->update($data);
 
-        return redirect()->back();
+        $level = Leveljabatan::where('nama_level',$data['jabatan'])->first();
+        if($karyawan->status_karyawan !== $data['status_karyawan'] || $karyawan->jabatan !== $level->nama_level)
+        {
+            $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->first();
+            if (isset($informasigaji))
+            {
+
+                $detailinformasi = Detailinformasigaji::where('id_karyawan',$informasigaji->id_karyawan)
+                    ->where('id_informasigaji',$informasigaji->id)
+                    ->delete();
+
+                $informasigaji->delete();
+            }
+        }else if((float)$karyawan->gaji !== (float)$gajiKaryawan)
+        {
+            $informasigaji = Informasigaji::where('id_karyawan', $karyawan->id)->update([
+                'gaji_pokok' => $gaji,
+            ]);
+
+            $detailinformasigaji = Detailinformasigaji::where('id_karyawan', $karyawan->id)->where('id_benefit',1)->update([
+                'nominal' => $gaji,
+            ]);
+        }
+        // dd($karyawan->status_karyawan,$data['status_karyawan'], $data['jabatan'],$level);
+
+        return redirect()->back()->with('pesan','Data Karyawan berhasil di update.');
+    }
+
+    public function addstruktur(Request $request,$id)
+    {
+        $karyawan = Karyawan::find($id);
+        $strukturgaji   = SalaryStructure::where('id',$request->strukturgaji)->first();
+
+        $check = Informasigaji::where('id_karyawan', $karyawan->id)
+            ->where('partner',$strukturgaji->partner)
+            ->where('status_karyawan',$strukturgaji->status_karyawan)
+            ->where('level_jabatan',$strukturgaji->id_level_jabatan)
+            ->first();
+
+        if(!$check)
+        {
+            $informasigaji = new Informasigaji();
+            $informasigaji->id_karyawan     = $karyawan->id;
+            $informasigaji->id_strukturgaji = $strukturgaji->id;
+            $informasigaji->status_karyawan = $strukturgaji->status_karyawan;
+            $informasigaji->level_jabatan   = $strukturgaji->id_level_jabatan;
+            $informasigaji->gaji_pokok      = $karyawan->gaji;
+            $informasigaji->partner         = $strukturgaji->partner;
+
+            $informasigaji->save();
+
+            $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->first();
+            $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $strukturgaji->id)->get();
+            $details = [];
+            foreach($detailstruktur as $detail)
+                {
+                    $benefit  = Benefit::where('id',$detail->id_benefit)->first();
+
+                    $check = Detailinformasigaji::where('id_karyawan', $karyawan->id)
+                            ->where('id_informasigaji',$informasigaji->id)
+                            ->where('id_struktur',$strukturgaji->id)
+                            ->where('id_benefit',$detail->id_benefit)
+                            ->where('partner',$karyawan->partner)
+                            ->exists();
+
+                    if(!$check)
+                    {
+                        $nominal = null;
+                        if($benefit->id == 1)
+                        {
+                            $nominal = $informasigaji->gaji_pokok;
+                        }else
+                        {
+                            if($benefit->siklus_pembayaran == "Bulan")
+                            {
+                                $nominal      = $benefit->besaran_bulanan;
+                            }else if($benefit->siklus_pembayaran == "Minggu")
+                            {
+                                $nominal      = $benefit->besaran_mingguan;
+                            }else if($benefit->siklus_pembayaran == "Hari")
+                            {
+                                $nominal      = $benefit->besaran_harian;
+                            }else if($benefit->siklus_pembayaran == "Jam")
+                            {
+                                $nominal      = $benefit->besaran_jam;
+                            }else if($benefit->siklus_pembayaran == "Bonus")
+                            {
+                                $nominal      = $benefit->besaran;
+                            }else
+                            {
+                                $nominal      = $benefit->besaran;
+                            }
+                        }
+
+                        $details[] = [
+                            'id_karyawan'      =>$informasigaji->id_karyawan,
+                            'id_informasigaji' =>$informasigaji->id,
+                            'id_struktur'      =>$informasigaji->id_strukturgaji,
+                            'id_benefit'       =>$benefit->id,
+                            'siklus_bayar'     =>$benefit->siklus_pembayaran,
+                            'partner'          =>Auth::user()->partner,
+                            'nominal'          =>$nominal,
+                        ];
+                    }
+
+                }
+                Detailinformasigaji::insert($details);
+        }
+
+        return redirect()->back()->with('pesan','Struktur Gaji berhasil dibuat');
+    }
+
+    public function updateinformasigaji(Request $request,$id)
+    {
+        $informasigaji    = Informasigaji::find($id);
+        $selectedBenefits = [1, 2, 3];
+        $benefit          = $request->input('benefits', []);
+        $benefitId        = array_merge($selectedBenefits, $benefit);
+        $benefits         = Benefit::whereIn('id', $benefitId)->get();
+        $detail           = Detailinformasigaji::where('id_informasigaji',$informasigaji->id)->get();
+
+        $idbenefit = $benefits->pluck('id')->toArray();
+        $iddetail  = $detail->pluck('id_benefit')->toArray();
+
+        $idtambah = array_diff($idbenefit, $iddetail);
+        $idhapus = array_diff($iddetail , $idbenefit);
+
+        $dataBenefit = $benefits->whereIn('id', $idtambah)->all();
+        $details = $detail->whereIn('id_benefit', $idhapus)->all();
+
+        if(isset($idtambah) && !empty($idtambah))
+        {
+            $details = [];
+            foreach ($dataBenefit as $benefit)
+            {
+                $nominal = 0;
+                if($benefit->id == 1)
+                {
+                    $nominal = $informasigaji->gaji_pokok;
+                }else
+                {
+                    if($benefit->siklus_pembayaran == "Bulan")
+                    {
+                        $nominal      = $benefit->besaran_bulanan;
+                    }else if($benefit->siklus_pembayaran == "Minggu")
+                    {
+                        $nominal      = $benefit->besaran_mingguan;
+                    }else if($benefit->siklus_pembayaran == "Hari")
+                    {
+                        $nominal      = $benefit->besaran_harian;
+                    }else if($benefit->siklus_pembayaran == "Jam")
+                    {
+                        $nominal      = $benefit->besaran_jam;
+                    }else if($benefit->siklus_pembayaran == "Bonus")
+                    {
+                        $nominal      = $benefit->besaran;
+                    }else
+                    {
+                        $nominal      = $benefit->besaran;
+                    }
+                }
+
+                $details[] = [
+                    'id_karyawan'      =>$informasigaji->id_karyawan,
+                    'id_informasigaji' =>$informasigaji->id,
+                    'id_struktur'      =>$informasigaji->id_strukturgaji,
+                    'id_benefit'       =>$benefit->id,
+                    'siklus_bayar'     =>$benefit->siklus_pembayaran,
+                    'partner'          =>Auth::user()->partner,
+                    'nominal'          =>$nominal,
+                ];
+
+            }
+            Detailinformasigaji::insert($details);
+        }
+
+        if (!empty($idhapus)) {
+            foreach ($details as $detail) {
+                $detailToDelete = Detailinformasigaji::where('id_benefit', $detail->id_benefit)
+                    ->where('id_informasigaji', $informasigaji->id)
+                    ->first();
+
+                if ($detailToDelete) {
+                    $detailToDelete->delete();
+                }
+            }
+        }
+
+        return redirect()->back()->with('pesan','Informasi Gaji berhasil diupdate');
+    }
+
+    public function updatedetailinformasi(Request $request,$id)
+    {
+        $nominals = preg_replace('/[^0-9]/', '', $request->nominal);
+        $nominal = (float) $nominals;
+
+        $detailinformasigaji = Detailinformasigaji::where('id', $id)
+            ->where('partner',$request->partner)
+            ->update([
+                'nominal' => $nominal, 
+            ]); 
+        return redirect()->back()->with('pesan','Detail benefit berhasil di update');
+
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\SetcutiController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\admin\XmlController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\admin\PenggajianController;
 use App\Http\Controllers\admin\MesinController;
 use App\Http\Controllers\admin\ShiftController;
 use App\Http\Controllers\admin\AtasanController;
@@ -18,11 +19,11 @@ use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\BenefitController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
+
 use App\Http\Controllers\admin\AbsensisController;
 
+
 use App\Http\Controllers\admin\KalenderController;
-
-
 use App\Http\Controllers\admin\SisacutiController;
 use App\Http\Controllers\RequestAbsensiController;
 use App\Http\Controllers\admin\CutiadminController;
@@ -112,7 +113,6 @@ Route::get('editfile{id}', [karyawanController::class, 'editfile'])->name('editf
 Route::put('updatefile{id}', [karyawanController::class, 'updatefile'])->name('updatefile');
 
 
-
 // Show baru
 Route::get('showorganisasi{id}', [karyawanController::class, 'showorganisasi'])->name('showorganisasi');
 Route::get('showprestasi{id}', [karyawanController::class, 'showprestasi'])->name('showprestasi');
@@ -120,6 +120,9 @@ Route::get('showkeluarga{id}', [karyawanController::class, 'showkeluarga'])->nam
 Route::get('showkontakdarurat{id}', [karyawanController::class, 'showkontakdarurat'])->name('showkontakdarurat');
 Route::get('showinformasigaji{id}', [karyawanController::class, 'showinformasigaji'])->name('showinformasigaji');
 Route::put('/update-identitas{id}', [karyawanController::class, 'updateidentita'])->name('updateidentita');
+Route::post('/tambah-struktur{id}', [karyawanController::class, 'addstruktur'])->name('addstruktur');
+Route::put('/update-detail-informasi{id}', [karyawanController::class, 'updatedetailinformasi'])->name('updatedetailinformasi');
+Route::put('/update-informasigaji{id}', [karyawanController::class, 'updateinformasigaji'])->name('updateinformasigaji');
 
 // Edit Data Karyawan Vesi Baru
 
@@ -736,13 +739,20 @@ Route::post('/kategori-salary', [KategoriSalaryController::class, 'store'])->nam
 Route::put('/kategori-update/{id}', [KategoriSalaryController::class, 'update'])->name('kategorisalary.update');
 Route::get('/kategori-delete/{id}', [KategoriSalaryController::class, 'destroy'])->name('kategorisalary.delete');
 
-//Salary
+//Struktur Penggajian
 Route::get('/struktur-penggajian', [SalaryController::class, 'index'])->name('salary');
 Route::post('/struktur-penggajian', [SalaryController::class, 'store'])->name('salary.store');
 Route::put('/struktur-penggajian/update/{id}', [SalaryController::class, 'update'])->name('salary.update');
 Route::get('/struktur-penggajian/delete/{id}', [SalaryController::class, 'destroy'])->name('salary.delete');
 Route::post('/informasigaji/{id}', [InformasigajiController::class, 'store'])->name('informasigaji');
 
+//Penggajian
+Route::get('/slipgaji-karyawan', [PenggajianController::class, 'index'])->name('slipgaji');
+Route::get('/rekap-kehadiran', [PenggajianController::class, 'indexs'])->name('kehadirans');
+Route::post('/rekap-kehadiran', [PenggajianController::class, 'storehadir'])->name('storehadir');
+// Route::post('/struktur-penggajian', [SalaryController::class, 'store'])->name('salary.store');
+// Route::put('/struktur-penggajian/update/{id}', [SalaryController::class, 'update'])->name('salary.update');
+// Route::get('/struktur-penggajian/delete/{id}', [SalaryController::class, 'destroy'])->name('salary.delete');
 //===============================================================================
 //ROLE SUPER ADMIN
 //master partnert

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
 use App\Models\User;
+use App\Models\Jadwal;
 use App\Models\Resign;
 use App\Models\Absensi;
 use App\Models\Karyawan;
@@ -64,7 +65,7 @@ class HomeController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
         // Absen Terlambat Karyawan
-        $absenTerlambatkaryawan = Absensi::where('partner',Auth::user()->partner)
+        $absenTerlambatkaryawan = Absensi::where('partner',$row->partner)
             ->where('partner',Auth::user()->partner)
             ->where('id_karyawan', Auth::user()->id_pegawai)
             ->count('terlambat');
@@ -116,24 +117,41 @@ class HomeController extends Controller
                     ->where('tgl_selesai', '>=', $today);
             })
             ->where('status', '=', 7)
+            ->whereHas('karyawans', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
             ->count('jml_cuti');
              // Total
         $cutidanizin     = $dataIzinHariini + $cutiHariini;
         // Data Cuti dan Izin Bulan ini
         $dataIzinPerbulan   = Izin::whereYear('created_at', '=', Carbon::now()->year)
             ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+            ->whereHas('karyawans', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
             ->count('jml_hari');
+
         $cutiPerbulan       = Cuti::whereYear('created_at', '=', Carbon::now()->year)
             ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+            ->whereHas('karyawans', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
             ->count('jml_cuti');
              // Total
         $cutidanizinPerbulan    = $dataIzinPerbulan + $cutiPerbulan;
         // Data Cuti dan Izin Bulan Lalu
         $dataIzinbulanlalu   = Izin::whereYear('tgl_mulai', '=', Carbon::now()->year)
             ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
+            ->whereHas('karyawans', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
             ->count('jml_hari');
+
         $cutibulanlalu       = Cuti::whereYear('tgl_mulai', '=', Carbon::now()->year)
             ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
+            ->whereHas('karyawans', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
             ->count('jml_cuti');
             // Total
         $cutidanizibulanlalu    = $dataIzinbulanlalu + $cutibulanlalu;
@@ -159,21 +177,26 @@ class HomeController extends Controller
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->count('jam_masuk');
         // Absen Bulan Lalu
-        $absenBulanlalu  = Absensi::where('partner',Auth::user()->partner)
+        $absenBulanlalu  = Absensi::where('partner',$row->partner)
             ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
             ->count('jam_masuk');
 
+        $jadwal = Jadwal::where('tanggal', today())
+            ->where('partner', Auth::user()->partner)
+            ->first();
         // Absen Terlambat Hari Ini
         $absenTerlambatHariIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereDay('tanggal', '=', Carbon::now())
-            ->whereTime('jam_masuk', '>', '08:00:00')
+            ->where('jam_masuk','>',$jadwal->jadwal_masuk)
+            ->where('partner', $row->partner)
             ->count();
             // Absen Terlambat Bulan Ini
         $absenTerlambat = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
-            ->whereTime('jam_masuk', '>', '08:00:00')
+            ->where('terlambat','!=', null)
+            ->where('partner',$row->partner)
             ->count();
             // Absen Terlambat Bulan Lalu
         $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
@@ -197,17 +220,23 @@ class HomeController extends Controller
                     ->count('id_karyawan');
 
         $totalTidakAbsenHariIni = $totalKaryawan - $totalabsen;
-        $tidakMasukHariIni = Tidakmasuk::whereYear('tanggal', '=', Carbon::now()->year)
+        $tidakMasukHariIni = Tidakmasuk::with('karyawans')
+            ->whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereDay('tanggal', '=', Carbon::now())
+            ->whereHas('karyawan', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
             ->count('nama');
+    
         // dd($totalKaryawan);
-        $tidakMasukBulanIni = Tidakmasuk::whereYear('tanggal', '=',Carbon::now()->year)
+        $tidakMasukBulanIni = Tidakmasuk::with('karyawans')
+            ->whereYear('tanggal', '=',Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->whereHas('karyawan', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
             ->count('nama');
-
-
-
 
         $today =Carbon::now(); //Current Date and Time
         $firstDayofMonth = Carbon::parse($today)->firstOfMonth();
@@ -219,6 +248,9 @@ class HomeController extends Controller
         $getLabel = cuti::select(DB::raw("SUM(jml_cuti) as jumlah"), DB::raw("MONTHNAME(tgl_mulai) as month_name"), DB::raw("MONTH(tgl_mulai) as month_number"))
             ->whereYear('tgl_mulai', '=', Carbon::now()->year)
             ->where('status','=',7)
+            ->whereHas('karyawan', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
             ->groupBy(DB::raw('MONTHNAME(tgl_mulai)'),DB::raw("MONTH(tgl_mulai)"))
             ->orderBy(DB::raw("MONTH(tgl_mulai)"))
             ->pluck('jumlah', 'month_name');
@@ -230,6 +262,7 @@ class HomeController extends Controller
         $absenBulanLalu = Absensi::where('partner',Auth::user()->partner)
         ->whereYear('tanggal', '=', Carbon::now()->year)
         ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+        ->where('partner',$row->partner)
         ->count('jam_masuk');
 
         //absen masuk bulan ini
@@ -258,12 +291,12 @@ class HomeController extends Controller
 
         $currentDate = Carbon::now()->toDateString();
 
-        $informasi = Informasi::whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
+        $informasi = Informasi::where('partner', $row->partner)->whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
         // return $informasi;
         $jmlinfo = $informasi->count();
 
         //Data alokasi cuti seljuruh karyawan
-        $alokasicuti2 = Alokasicuti::all();
+        $alokasicuti2 = Alokasicuti::all()->where('partner',$row->partner);
 
 
         // keterangan absen terhadap login
@@ -284,11 +317,12 @@ class HomeController extends Controller
         $absenTerlambatkaryawan = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereYear('tanggal', '=', Carbon::now()->year)
+            ->where('partner',$row->partner)
             ->count('terlambat');
         //  dd($absenTerlambatkaryawan);
         // Absen Karyawan Hari Ini
         $absenKaryawan = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
-            ->whereDay('created_at', '=', Carbon::now(), )
+            ->whereDay('created_at', '=', Carbon::now())
             ->count('jam_masuk');
 
         // Absen Tidak Masuk
@@ -420,11 +454,13 @@ class HomeController extends Controller
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->where('cuti.status', 1)
-                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                            ->where('karyawan.partner', Auth::user()->partner);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('cuti.status', [1, 6])
-                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                            ->where('karyawan.partner', Auth::user()->partner);
                     });
                 })
                 ->where('cuti.catatan', '=', NULL)
@@ -444,11 +480,13 @@ class HomeController extends Controller
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
-                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                             ->where('karyawan.partner', Auth::user()->partner);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
-                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                            ->where('karyawan.partner', Auth::user()->partner);
                     });
                 })
                 ->whereIn('cuti.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
@@ -467,11 +505,13 @@ class HomeController extends Controller
                     $query->where(function ($q) {
                         $q->where('izin.status', 1)
                             ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                            ->where('karyawan.partner', Auth::user()->partner)
                             ->where('izin.catatan', '=', NULL);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('izin.status', [1, 6])
                             ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                            ->where('karyawan.partner', Auth::user()->partner)
                             ->where('izin.catatan', '=', NULL);
                     });
                 })
@@ -489,11 +529,13 @@ class HomeController extends Controller
                 ->where(function ($query) {
                     $query->where(function ($q) {
                         $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan'])
-                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai);
+                            ->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                             ->where('karyawan.partner', Auth::user()->partner);
                     })
                     ->orWhere(function ($q) {
                         $q->whereIn('izin.catatan', ['Mengajukan Pembatalan', 'Mengajukan Perubahan', 'Pembatalan Disetujui Atasan', 'Perubahan Disetujui Atasan'])
-                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                            ->where('karyawan.atasan_kedua', Auth::user()->id_pegawai)
+                            ->where('karyawan.partner', Auth::user()->partner);
                     });
                 })
                 ->get();
@@ -1032,6 +1074,9 @@ class HomeController extends Controller
             ->where('sisa_cuti','>',0)
             ->whereDate('dari', '<=', Carbon::now())
             ->whereDate('sampai', '>=', Carbon::now())
+            ->whereHas('karyawans', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
             ->where('sisacuti.id_pegawai','=',Auth::user()->id_pegawai)->get();
 
 
@@ -1166,12 +1211,14 @@ class HomeController extends Controller
 
         $jabatan = ['Komisaris', 'Direksi', 'Manager'];
         $jumlahKaryawanPerJabatan = Karyawan::groupBy('nama_jabatan')
-        ->whereIn('jabatan', $jabatan)
-        ->select('nama_jabatan', DB::raw('count(*) as total'))
-        ->get();
+            ->whereIn('jabatan', $jabatan)
+            ->where('partner',Auth::user()->partner)
+            ->select('nama_jabatan', DB::raw('count(*) as total'))
+            ->get();
 
         $jumlahKaryawanPerJabatan2 = Karyawan::whereIn('jabatan', $jabatan)
-        ->count();
+            ->where('partner',Auth::user()->partner)
+            ->count();
 
 
 

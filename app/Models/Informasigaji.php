@@ -38,4 +38,9 @@ class Informasigaji extends Model
     {
         return $this->belongsTo(LevelJabatan::class,'level_jabatan','id');
     }
+
+    public function detailinformasigajis()
+    {
+        return $this->hasMany(Detailinformasigaji::class, 'id_informasigaji','id');
+    }
 }
