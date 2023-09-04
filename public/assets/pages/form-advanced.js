@@ -547,32 +547,64 @@
             minViewMode: "years",
         });
         jQuery("#datepicker-autoclose-format-ag").datepicker({
-            format: "yyyy",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
-            viewMode: "years",
-            minViewMode: "years",
         });
         jQuery("#datepicker-autoclose-format-ah").datepicker({
-            format: "yyyy",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
-            viewMode: "years",
-            minViewMode: "years",
         });
         jQuery("#datepicker-autoclose-format-ai").datepicker({
-            format: "yyyy",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
-            viewMode: "years",
-            minViewMode: "years",
         });
         jQuery("#datepicker-autoclose-format-aj").datepicker({
-            format: "yyyy",
+            format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
-            viewMode: "years",
-            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-ak").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format-al").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format-am").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format-an").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format-ao").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format-ap").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format-aq").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format-ar").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
         });
         // jQuery("#datepicker-autoclosec").datepicker({
         //     format: "dd/mm/yyyy",
