@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
 use App\Models\User;
+use App\Models\Jadwal;
 use App\Models\Resign;
 use App\Models\Absensi;
 use App\Models\Karyawan;
@@ -181,12 +182,14 @@ class HomeController extends Controller
             ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
             ->count('jam_masuk');
 
-        
+        $jadwal = Jadwal::where('tanggal', today())
+            ->where('partner', Auth::user()->partner)
+            ->first();
         // Absen Terlambat Hari Ini
         $absenTerlambatHariIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereDay('tanggal', '=', Carbon::now())
-            ->where('terlambat','!=', null)
+            ->where('jam_masuk','>',$jadwal->jadwal_masuk)
             ->where('partner', $row->partner)
             ->count();
             // Absen Terlambat Bulan Ini
