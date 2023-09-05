@@ -728,7 +728,7 @@
         //       var liburDates = data.map(function(libur) {
         //         return new Date(libur.tanggal).getTime();
         //       });
-              
+
         //       // Tambahkan logika untuk menonaktifkan tanggal pada datepicker
         //       jQuery("#datepicker-autoclosef").datepicker({
         //         format: "yyyy-mm-dd",
@@ -739,7 +739,7 @@
         //         beforeShowDay: function(date) {
         //           var dateMillis = date.getTime();
         //         //   console.log(dateMillis);
-                
+
         //           if (dateMillis < minDate.getTime() || dateMillis > maxDate.getTime()) {
         //             return { enabled: false };
         //           }
@@ -751,7 +751,7 @@
         //           }
         //         },
         //       });
-          
+
         //       jQuery("#datepicker-autocloseg").datepicker({
         //         format: "yyyy-mm-dd",
         //         autoclose: true,
@@ -760,7 +760,7 @@
         //         todayHighlight: true,
         //         beforeShowDay: function(date) {
         //           var dateMillis = date.getTime();
-                 
+
         //           if (dateMillis < minDate.getTime() || dateMillis > maxDate.getTime()) {
         //             return { enabled: false };
         //           }
@@ -799,7 +799,17 @@
                 return;
             },
         });
-       
+        jQuery("#datepicker-autoclose76").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
         jQuery("#datepicker-autocloseg").datepicker({
             format: "dd/mm/yyyy",
             autoclose: true,

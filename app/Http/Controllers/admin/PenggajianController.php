@@ -13,7 +13,14 @@ use App\Models\Detailkehadiran;
 use Illuminate\Support\Facades\DB;
 use App\Models\Detailinformasigaji;
 use App\Http\Controllers\Controller;
+use App\Models\PenggajianGrup;
+use App\Models\SalaryStructure;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+
+
+
+
 
 class PenggajianController extends Controller
 {
@@ -23,9 +30,9 @@ class PenggajianController extends Controller
     }
 
     public function index(Request $request)
-    { 
+    {
         $role = Auth::user()->role;
-        if ($role == 1 ||$role == 6) 
+        if ($role == 1 ||$role == 6)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan = Karyawan::where('partner',$row->partner)->get();
@@ -45,7 +52,7 @@ class PenggajianController extends Controller
                 ->select('karyawan.nama_jabatan','karyawan.id' ,'karyawan.divisi', 'karyawan.nip', 'departemen.nama_departemen','karyawan.nama_bank','karyawan.no_rek','karyawan.tglmasuk')
                 ->where('karyawan.id','=', $request->id_karyawan)
                 ->first();
-            
+
             if (!$getKaryawan) {
                  throw new \Exception('Data not found');
             }
@@ -71,8 +78,8 @@ class PenggajianController extends Controller
         ]);
 
         $tgl_awal = date_format(date_create_from_format('d/m/Y', $request->tgl_awal), 'Y-m-d');
-        $tgl_akhir= date_format(date_create_from_format('d/m/Y', $request->tgl_akhir), 'Y-m-d');   
-        $tglgajian= date_format(date_create_from_format('d/m/Y', $request->tglgajian), 'Y-m-d');        
+        $tgl_akhir= date_format(date_create_from_format('d/m/Y', $request->tgl_akhir), 'Y-m-d');
+        $tglgajian= date_format(date_create_from_format('d/m/Y', $request->tglgajian), 'Y-m-d');
 
         $getKaryawan = Karyawan::leftjoin('departemen', 'karyawan.divisi', '=', 'departemen.id')
         ->select('karyawan.nama_jabatan','karyawan.id' ,'karyawan.divisi', 'karyawan.nip', 'departemen.nama_departemen','karyawan.nama_bank','karyawan.no_rek')
@@ -93,7 +100,7 @@ class PenggajianController extends Controller
             ->where('tgl_awal',$tgl_awal)
             ->where('tgl_akhir',$tgl_akhir)
             ->first();
-        
+
         $informasigaji = Informasigaji::where('id_karyawan',$request->id_karyawan)->first();
         $detail = Detailinformasigaji::where('id_informasigaji',$informasigaji->id)->get();
 
@@ -115,7 +122,7 @@ class PenggajianController extends Controller
         $penggajian->nama_bank = $request->nama_bank;
         $penggajian->no_rekening = $request->nomor_rekening;
         $penggajian->partner = $request->partner;
-                
+
         $penggajian->save();
 
         $pesan = "Slip Gaji untuk ". $getKaryawan->nama . "Periode ". $request->tgl_awal . " s/d " .  $request->tgl_akhir . "Berhasil dibuat";
@@ -123,22 +130,22 @@ class PenggajianController extends Controller
     }
 
     public function showslipgaji(Request $request)
-    { 
+    {
         $nip = $request->input('nip');
         $id = $request->id;
         $role = Auth::user()->role;
-        if ($role == 1 ||$role == 6) 
+        if ($role == 1 ||$role == 6)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan = Karyawan::where('partner',$row->partner)->first();
             $informasigaji = Informasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)->first();
             $detailinformasi= Detailinformasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)->get();
-        
+
             $kehadiran = Detailkehadiran::where('id_karyawan',$karyawan->id)->first();
             $slipgaji = Penggajian::with('karyawans')->where('id',$id)->first();
             $jadwal = Jadwal::whereBetween('tanggal', [$slipgaji->tglawal, $slipgaji->tglakhir])
             ->where('partner', $row->partner)
-            ->count();        
+            ->count();
 
             return view('admin.penggajian.slip',compact('row','role','karyawan','slipgaji','kehadiran','informasigaji','detailinformasi'));
         }else {
@@ -150,9 +157,9 @@ class PenggajianController extends Controller
 
     //konfigurasi kehadiran
     public function indexs(Request $request)
-    { 
+    {
         $role = Auth::user()->role;
-        if ($role == 1 ||$role == 6) 
+        if ($role == 1 ||$role == 6)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $kehadiran = Detailkehadiran::where('partner',$row->partner)->get();
@@ -190,7 +197,7 @@ class PenggajianController extends Controller
             $hadir = Absensi::where('id_karyawan', $data->id)
                 ->whereBetween('tanggal', [$awal, $akhir])
                 ->count();
-            
+
             $data = [
                 'id_karyawan' => $data->id,
                 'tgl_awal'    => $awal,
@@ -206,6 +213,51 @@ class PenggajianController extends Controller
         }
 
         return redirect()->back()->with('pesan','Data berhasil disimpan');
-       
+
     }
+
+
+    public function indexgrup(Request $request)
+    {
+        $role = Auth::user()->role;
+        if ($role == 1 ||$role == 6)
+        {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $karyawan = Karyawan::where('partner',$row->partner)->get();
+            $slipgrupindex = PenggajianGrup::where('partner',$row->partner)->get();
+            $slipgrup = SalaryStructure::where('partner',$row->partner)->get();
+
+            return view('admin.penggajian.indexgrup',compact('row','role','karyawan','slipgrup','slipgrupindex'));
+        }else {
+
+            return redirect()->back();
+        }
+    }
+
+    public function storepenggajian_grup(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'nama' => 'required',
+            'id_struktur' => 'required',
+            'tgl_penggajian' => 'required',
+            'tgl_mulai' => 'required',
+            'tgl_selesai' => 'required',
+        ]);
+        $tgl_penggajian = Carbon::createFromFormat('d/m/Y', $request->tgl_penggajian)->format('Y-m-d');
+        $tgl_mulai = Carbon::createFromFormat('d/m/Y', $request->tgl_mulai)->format('Y-m-d');
+        $tgl_selesai = Carbon::createFromFormat('d/m/Y', $request->tgl_selesai)->format('Y-m-d');
+
+        PenggajianGrup::create([
+            'nama_grup' => $request->nama,
+            'id_struktur' => $request->id_struktur,
+            'tglawal' => $tgl_mulai,
+            'tglakhir' => $tgl_selesai,
+            'tglgajian' => $tgl_penggajian,
+            'partner' => $request->partner,
+        ]);
+
+        return redirect()->back()->with('pesan','Data berhasil disimpan');
+    }
+
 }

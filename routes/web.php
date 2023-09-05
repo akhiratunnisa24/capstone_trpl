@@ -752,9 +752,10 @@ Route::post('/getrekening', [PenggajianController::class, 'getKaryawan'])->name(
 Route::post('/slipgaji-karyawan', [PenggajianController::class, 'storegaji'])->name('storegaji');
 Route::post('/slipgaji', [PenggajianController::class, 'showslipgaji'])->name('slipgajikaryawan');
 
+Route::get('/slipgaji-karyawan-grup', [PenggajianController::class, 'indexgrup'])->name('slipgaji_grup');
 Route::get('/rekap-kehadiran', [PenggajianController::class, 'indexs'])->name('kehadirans');
 Route::post('/rekap-kehadiran', [PenggajianController::class, 'storehadir'])->name('storehadir');
-// Route::post('/struktur-penggajian', [SalaryController::class, 'store'])->name('salary.store');
+Route::post('/slipgaji-karyawan-grup', [PenggajianController::class, 'storepenggajian_grup'])->name('storegrup');
 // Route::put('/struktur-penggajian/update/{id}', [SalaryController::class, 'update'])->name('salary.update');
 // Route::get('/struktur-penggajian/delete/{id}', [SalaryController::class, 'destroy'])->name('salary.delete');
 //===============================================================================
