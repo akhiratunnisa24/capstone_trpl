@@ -18,9 +18,16 @@ return new class extends Migration
             $table->integer('id_karyawan');
             $table->date('tgl_awal');
             $table->date('tgl_akhir');
+            $table->integer('jumlah_hadir')->nullable()->default(null);
+            $table->integer('jam_hadir')->nullable()->default(null);
             $table->integer('jumlah_lembur')->nullable()->default(null);
+            $table->integer('jam_lembur')->nullable()->default(null);
             $table->integer('jumlah_cuti')->nullable()->default(null);
+            $table->integer('jam_cuti')->nullable()->default(null);
             $table->integer('jumlah_izin')->nullable()->default(null);
+            $table->integer('jam_izin')->nullable()->default(null);
+            $table->integer('jumlah_sakit')->nullable()->default(null);
+            $table->integer('jam_sakit')->nullable()->default(null);
             $table->integer('partner');
             $table->timestamps();
         });

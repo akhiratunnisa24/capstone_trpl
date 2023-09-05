@@ -43,4 +43,9 @@ class Informasigaji extends Model
     {
         return $this->hasMany(Detailinformasigaji::class, 'id_informasigaji','id');
     }
+
+    public function penggajians()
+    {
+        return $this->hasMany(Penggajian::class, 'id_informasigaji','id');
+    }
 }

@@ -12,6 +12,7 @@ class Penggajian extends Model
     protected $table = "penggajian";
     protected $fillable = [
         'id_karyawan',
+        'id_informasigaji',
         'tglawal',
         'tglakhir',
         'tglgajian',
@@ -33,5 +34,8 @@ class Penggajian extends Model
         return $this->belongsTo(Karyawan::class, 'id_karyawan','id');
     }
 
-
+    public function informasigajis()
+    {
+        return $this->belongsTo(Informasigaji::class, 'id_informasigaji','id');
+    }
 }

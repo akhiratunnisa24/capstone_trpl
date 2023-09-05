@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('penggajian', function (Blueprint $table) {
             $table->id();
             $table->integer('id_karyawan');
+            $table->integer('id_informasigaji');
             $table->date('tglawal');
             $table->date('tglakhir');
             $table->date('tglgajian');
