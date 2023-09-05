@@ -154,69 +154,6 @@ class PenggajianController extends Controller
         }
     }
 
-
-    //konfigurasi kehadiran
-    public function indexs(Request $request)
-    {
-        $role = Auth::user()->role;
-        if ($role == 1 ||$role == 6)
-        {
-            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $kehadiran = Detailkehadiran::where('partner',$row->partner)->get();
-            return view('admin.penggajian.konfigurasi.index',compact('row','role','kehadiran'));
-        }else {
-
-            return redirect()->back();
-        }
-    }
-
-    public function storehadir(Request $request)
-    {
-        $karyawan = Karyawan::where('partner',$request->partner)->select('id','nama','partner')->get();
-        $awal = date_format(date_create_from_format('d/m/Y', $request->tgl_awal), 'Y-m-d');
-        $akhir = date_format(date_create_from_format('d/m/Y', $request->tgl_akhir), 'Y-m-d');
-        foreach($karyawan as $data)
-        {
-            $lembur = Absensi::where('id_karyawan', $data->id)
-                ->where('lembur', '!=', null)
-                ->whereBetween('tanggal', [$awal, $akhir])
-                ->where('lembur','>','01:00:00')
-                ->count();
-            $sakit = Tidakmasuk::where('id_pegawai',$data->id)
-                ->whereBetween('tanggal', [$awal, $akhir])
-                ->where('status','Sakit')
-                ->count();
-            $cuti = Tidakmasuk::where('id_pegawai', $data->id)
-                ->whereBetween('tanggal', [$awal, $akhir])
-                ->where('status', 'LIKE', '%Cuti%')
-                ->count();
-            $izin = Tidakmasuk::where('id_pegawai', $data->id)
-                ->whereBetween('tanggal', [$awal, $akhir])
-                ->where('status', 'LIKE', '%Izin%')
-                ->count();
-            $hadir = Absensi::where('id_karyawan', $data->id)
-                ->whereBetween('tanggal', [$awal, $akhir])
-                ->count();
-
-            $data = [
-                'id_karyawan' => $data->id,
-                'tgl_awal'    => $awal,
-                'tgl_akhir'   => $akhir,
-                'jumlah_hadir'=> $hadir,
-                'jumlah_lembur'=>$lembur,
-                'jumlah_cuti' => $cuti,
-                'jumlah_izin' => $izin,
-                'jumlah_sakit'=> $sakit,
-                'partner'     => $request->partner,
-            ];
-            Detailkehadiran::insert($data);
-        }
-
-        return redirect()->back()->with('pesan','Data berhasil disimpan');
-
-    }
-
-
     public function indexgrup(Request $request)
     {
         $role = Auth::user()->role;
@@ -236,14 +173,6 @@ class PenggajianController extends Controller
 
     public function storepenggajian_grup(Request $request)
     {
-        // Validasi input
-        $request->validate([
-            'nama' => 'required',
-            'id_struktur' => 'required',
-            'tgl_penggajian' => 'required',
-            'tgl_mulai' => 'required',
-            'tgl_selesai' => 'required',
-        ]);
         $tgl_penggajian = Carbon::createFromFormat('d/m/Y', $request->tgl_penggajian)->format('Y-m-d');
         $tgl_mulai = Carbon::createFromFormat('d/m/Y', $request->tgl_mulai)->format('Y-m-d');
         $tgl_selesai = Carbon::createFromFormat('d/m/Y', $request->tgl_selesai)->format('Y-m-d');
@@ -259,5 +188,26 @@ class PenggajianController extends Controller
 
         return redirect()->back()->with('pesan','Data berhasil disimpan');
     }
+
+    public function update(Request $request, $id)
+    {
+
+        $tgl_penggajian = Carbon::createFromFormat('d/m/Y', $request->tgl_penggajian)->format('Y-m-d');
+        $tgl_mulai = Carbon::createFromFormat('d/m/Y', $request->tgl_mulai)->format('Y-m-d');
+        $tgl_selesai = Carbon::createFromFormat('d/m/Y', $request->tgl_selesai)->format('Y-m-d');
+
+        $slipgrupindex = PenggajianGrup::find($id);
+
+        $slipgrupindex->nama_grup = $request->nama;
+        // $slipgrupindex->id_struktur = $request->id_struktur;
+        $slipgrupindex->tglawal = $tgl_mulai;
+        $slipgrupindex->tglakhir = $tgl_selesai;
+        $slipgrupindex->tglgajian = $tgl_penggajian;
+        $slipgrupindex->partner = $request->partner;
+        $slipgrupindex->save();
+
+        return redirect()->back()->with('pesan', 'Data berhasil diupdate');
+    }
+
 
 }

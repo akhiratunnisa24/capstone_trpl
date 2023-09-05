@@ -97,16 +97,14 @@
                                                     <td>{{\Carbon\Carbon::parse($data->tglawal)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($data->tglakhir)->format('d/m/Y')}}</td>
                                                     <td>{{$data->slipgrup->nama}}</td>
                                                     <td>
-                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                                            <a href=""class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i>
+                                                        <div class="d-grid gap-2 text-center" role="group" aria-label="Basic example">
+                                                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#editgrup{{ $data->id }}" title="Edit Slip Grup">
+                                                                <i class="fa fa-edit"></i>
                                                             </a>
-                                                            <a href=""class="btn btn-success btn-sm" title="Cetak Slip Gaji"><i class="fa fa-file-pdf-o"></i>
-                                                            </a>
-                                                            {{-- <a href=""class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye" style="font-size: 15px;"></i>
-                                                            </a> --}}
                                                         </div>
                                                     </td>
                                                 </tr>
+                                                @include('admin.penggajian.editgrup')
                                             @endforeach
                                         </tbody>
                                     </table>
