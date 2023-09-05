@@ -35,24 +35,125 @@ class PenggajianController extends Controller
         }
     }
 
-    public function indexgrup(Request $request)
-    {
-        $role = Auth::user()->role;
-        if ($role == 1 ||$role == 6)
-        {
-            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $karyawan = Karyawan::where('partner',$row->partner)->get();
-            $slipgrupindex = PenggajianGrup::where('partner',$row->partner)->get();
-            $slipgrup = SalaryStructure::where('partner',$row->partner)->get();
 
-            return view('admin.penggajian.indexgrup',compact('row','role','karyawan','slipgrup','slipgrupindex'));
-        }else {
 
-            return redirect()->back();
-        }
-    }
 
-    //konfigurasi kehadiran
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     public function indexs(Request $request)
     {
         $role = Auth::user()->role;
@@ -107,6 +208,24 @@ class PenggajianController extends Controller
 
         return redirect()->back()->with('pesan','Data berhasil disimpan');
 
+    }
+
+
+    public function indexgrup(Request $request)
+    {
+        $role = Auth::user()->role;
+        if ($role == 1 ||$role == 6)
+        {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $karyawan = Karyawan::where('partner',$row->partner)->get();
+            $slipgrupindex = PenggajianGrup::where('partner',$row->partner)->get();
+            $slipgrup = SalaryStructure::where('partner',$row->partner)->get();
+
+            return view('admin.penggajian.indexgrup',compact('row','role','karyawan','slipgrup','slipgrupindex'));
+        }else {
+
+            return redirect()->back();
+        }
     }
 
     public function storepenggajian_grup(Request $request)
