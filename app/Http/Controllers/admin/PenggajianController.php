@@ -13,6 +13,10 @@ use App\Models\SalaryStructure;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
+
+
+
+
 class PenggajianController extends Controller
 {
     public function __construct()
@@ -153,7 +157,7 @@ class PenggajianController extends Controller
 
 
 
-    
+
     public function indexs(Request $request)
     {
         $role = Auth::user()->role;
