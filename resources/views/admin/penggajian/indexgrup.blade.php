@@ -94,7 +94,11 @@
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
                                                     <td>{{$data->nama_grup}}</td>
-                                                    <td>{{\Carbon\Carbon::parse($data->tglawal)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($data->tglakhir)->format('d/m/Y')}}</td>
+                                                    <td>
+                                                        {{ \Carbon\Carbon::parse($data->tglawal)->locale('id')->isoFormat('D MMMM Y') }}
+                                                        -
+                                                        {{ \Carbon\Carbon::parse($data->tglakhir)->locale('id')->isoFormat('D MMMM Y') }}
+                                                    </td>
                                                     <td>{{$data->slipgrup->nama}}</td>
                                                     <td>
                                                         <div class="d-grid gap-2 text-center" role="group" aria-label="Basic example">

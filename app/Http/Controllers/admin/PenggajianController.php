@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use PDF;
 use Carbon\Carbon;
 use App\Models\Jadwal;
 use App\Models\Absensi;
@@ -9,6 +10,7 @@ use App\Models\Benefit;
 use App\Models\Karyawan;
 use App\Models\Penggajian;
 use App\Models\Tidakmasuk;
+use App\Models\SettingOrganisasi;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Informasigaji;
@@ -209,6 +211,13 @@ class PenggajianController extends Controller
         return redirect()->back()->with('pesan', 'Data berhasil diupdate');
     }
 
+    public function slipgajipdf (Request $request)
+    {
+        $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
+        $pdf = PDF::loadview('admin.penggajian.slipgajipdf')
+            ->setPaper('a4','potrait');
+        return $pdf->stream();
+    }
 
 
 
@@ -229,7 +238,7 @@ class PenggajianController extends Controller
 
 
 
-    
+
 
     public function hitunggaji(Request $request)
     {
