@@ -38,4 +38,9 @@ class Penggajian extends Model
     {
         return $this->belongsTo(Informasigaji::class, 'id_informasigaji','id');
     }
+
+    public function detailpenggajians()
+    {
+        return $this->hasMany(DetailPenggajian::class,'id_penggajian','id');
+    }
 }

@@ -751,8 +751,9 @@ Route::post('/informasigaji/{id}', [InformasigajiController::class, 'store'])->n
 Route::get('/slipgaji-karyawan', [PenggajianController::class, 'index'])->name('slipgaji');
 Route::post('/getrekening', [PenggajianController::class, 'getKaryawan'])->name('get.Karyawan');
 Route::post('/slipgaji-karyawan', [PenggajianController::class, 'storegaji'])->name('storegaji');
-Route::post('/slipgaji', [PenggajianController::class, 'showslipgaji'])->name('slipgajikaryawan');
+Route::put('/slipgaji', [PenggajianController::class, 'showslipgaji'])->name('slipgajikaryawan');
 Route::put('/hitung-gaji', [PenggajianController::class, 'hitunggaji'])->name('hitunggaji');
+Route::post('/slipgaji/{id}', [PenggajianController::class, 'showslipgajifix'])->name('showslipgaji');
 
 Route::get('/slipgaji-karyawan-grup', [PenggajianController::class, 'indexgrup'])->name('slipgaji_grup');
 Route::get('/rekap-kehadiran', [DetailhadirController::class, 'indexs'])->name('kehadirans');

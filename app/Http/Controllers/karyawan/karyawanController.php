@@ -3454,16 +3454,20 @@ class karyawanController extends Controller
 
                 $informasigaji->delete();
             }
-        }else if((float)$karyawan->gaji !== (float)$gajiKaryawan)
-        {
+        }
+        // }else if((float)$karyawan->gaji !== (float)$gajiKaryawan)
+        // {
             $informasigaji = Informasigaji::where('id_karyawan', $karyawan->id)->update([
                 'gaji_pokok' => $gaji,
             ]);
 
+            $d = Informasigaji::where('id_karyawan', $karyawan->id)->first();
+            // dd($d);
             $detailinformasigaji = Detailinformasigaji::where('id_karyawan', $karyawan->id)->where('id_benefit',1)->update([
                 'nominal' => $gaji,
             ]);
-        }
+        // }
+        // dd($informasigaji);
         // dd($karyawan->status_karyawan,$data['status_karyawan'], $data['jabatan'],$level);
 
         return redirect()->back()->with('pesan','Data Karyawan berhasil di update.');
