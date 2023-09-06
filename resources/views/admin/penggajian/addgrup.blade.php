@@ -25,29 +25,17 @@
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6 col-xs-12">
+                                <div class="form-group">
+                                    <div class="mb-3">
+                                        <label class="form-label">Periode Gajian</label>
                                         <div>
-                                            {{-- <form class="" action="#"> --}}
-                                                <div class="form-group">
-                                                    <label class="form-label">Periode Penggajian</label>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autocloseh" name="tgl_mulai"  autocomplete="off" rows="10" required>
-                                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                                    </div>
-                                                </div>
-                                            {{-- </form> --}}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-xs-12">
-                                        <div>
-                                                <div class="form-group">
-                                                    <label class="form-label">Sampai</label>
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosei" name="tgl_selesai"  autocomplete="off" rows="10" required>
-                                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
-                                                    </div>
-                                                </div>
+                                            <div class="input-group">
+                                                <input id="datepicker-autoclose-format-as" type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                                name="tgl_mulai"  autocomplete="off"  rows="10" required>
+                                                <span class="input-group-addon bg-info text-white b-0">-</span>
+                                                <input id="datepicker-autoclose-format-at" type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                                    name="tgl_selesai" autocomplete="off"  rows="10" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
