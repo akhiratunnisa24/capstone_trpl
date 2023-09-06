@@ -42,6 +42,10 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- <div class="form-group col-sm">
+                                <label class="col-form-label">Struktur Gaji</label>
+                                <input type="text" class="form-control" name="id_strukturgaji" id="id_strukturgaji" required>
+                            </div>  --}}
                             <div class="form-group col-sm">
                                 <label class="col-form-label">Tanggal Masuk</label>
                                 <input id="datepicker-autoclose-format-al" type="text" class="form-control" placeholder="dd/mm/yyyy" 

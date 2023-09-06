@@ -45,4 +45,9 @@ class SalaryStructure extends Model
         return $this->hasMany(Informasigaji::class, 'id_strukturgaji', 'id');
     }
 
+    public function penggajians()
+    {
+        return $this->hasMany(Penggajian::class, 'id_strukturgaji', 'id');
+    }
+
 }
