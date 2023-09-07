@@ -78,7 +78,7 @@
                         <div class="panel-heading  col-sm-15 clearfix" >
                             <div class="pull-right">
                                 <a href="" class="btn btn-dark btn-sm fa fa-plus" data-toggle="modal" data-target="#addslip"> Tambah Slip Baru</a>
-                            </div>                            
+                            </div>
                         </div>
                         <div class="panel-body m-b-5">
                             <div class="row">
@@ -106,8 +106,8 @@
                                                     <td>{{$data->karyawans->nama_jabatan}}</td>
                                                     <td>{{ number_format($data->gaji_pokok, 0, ',', '.') }}</td>
                                                     <td>{{\Carbon\Carbon::parse($data->karyawans->tglmasuk)->format('d/m/Y')}}</td>
-                                                    <td> 
-                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example"> 
+                                                    <td>
+                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                             <form method="POST" action="{{ route('slipgajikaryawan') }}">
                                                                 @csrf
                                                                 @method('PUT')
@@ -132,7 +132,8 @@
         </div> <!-- container -->
     </div> <!-- content -->
     @include('admin.penggajian.add')
-    
+    {{-- @include('admin.penggajian.slipgajipdf') --}}
+
     <script src="assets/pages/form-advanced.js"></script>
     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -162,5 +163,5 @@
     @endif
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   
+
 @endsection
