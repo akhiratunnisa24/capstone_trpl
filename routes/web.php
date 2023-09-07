@@ -753,6 +753,7 @@ Route::post('/getrekening', [PenggajianController::class, 'getKaryawan'])->name(
 Route::post('/slipgaji-karyawan', [PenggajianController::class, 'storegaji'])->name('storegaji');
 Route::put('/slipgaji', [PenggajianController::class, 'showslipgaji'])->name('slipgajikaryawan');
 Route::put('/hitung-gaji', [PenggajianController::class, 'hitunggaji'])->name('hitunggaji');
+Route::get('/slipgaji-pdf', [PenggajianController::class, 'slipgajipdf'])->name('slipgajipdf');
 Route::post('/slipgaji/{id}', [PenggajianController::class, 'showslipgajifix'])->name('showslipgaji');
 
 Route::get('/slipgaji-karyawan-grup', [PenggajianController::class, 'indexgrup'])->name('slipgaji_grup');
