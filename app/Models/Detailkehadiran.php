@@ -23,7 +23,8 @@ class Detailkehadiran extends Model
         'jam_lembur',
         'jam_cuti',
         'jam_izin',
-        'jam_sakit'    
+        'jam_sakit',
+        'total_jadwal'  
     ];
 
     public function karyawans()

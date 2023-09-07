@@ -244,8 +244,6 @@ Route::post('/tambah-pendidikan/{id}', [karyawanController::class, 'tambahPendid
 Route::post('/import-absensi', [AbsensiController::class, 'mesinabsen'])->name('download.mesin');
 
 
-
-
 //HALAMAN KARYAWAN
 //cuti
 Route::get('/absensi-karyawan', [AbsensiController::class, 'create'])->name('absensi_karyawan');
@@ -751,7 +749,7 @@ Route::post('/informasigaji/{id}', [InformasigajiController::class, 'store'])->n
 Route::get('/slipgaji-karyawan', [PenggajianController::class, 'index'])->name('slipgaji');
 Route::post('/getrekening', [PenggajianController::class, 'getKaryawan'])->name('get.Karyawan');
 Route::post('/slipgaji-karyawan', [PenggajianController::class, 'storegaji'])->name('storegaji');
-Route::put('/slipgaji', [PenggajianController::class, 'showslipgaji'])->name('slipgajikaryawan');
+Route::put('/slipgaji{id}', [PenggajianController::class, 'showslipgaji'])->name('slipgajikaryawan');
 Route::put('/hitung-gaji', [PenggajianController::class, 'hitunggaji'])->name('hitunggaji');
 Route::get('/slipgaji-pdf', [PenggajianController::class, 'slipgajipdf'])->name('slipgajipdf');
 Route::post('/slipgaji/{id}', [PenggajianController::class, 'showslipgajifix'])->name('showslipgaji');

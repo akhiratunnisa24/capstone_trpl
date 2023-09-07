@@ -70,11 +70,12 @@ class MesinController extends Controller
                                                     ->where('partner', $matchedUser->partner)
                                                     ->where('jam_masuk','!=',$jam)
                                                     ->first();
-                                    // return $existingAbsensi;
                                     if($existingAbsensi)
                                     {
-                                        if ($existingAbsensi->jam_keluar != $jam) 
+
+                                        if ($existingAbsensi->jam_keluar !== $jam ||$existingAbsensi->jam_keluar === null) 
                                         {
+                                            // dd($existingAbsensi,$jam);
                                             $jadwal_masuk  = $jadwal->jadwal_masuk;
                                             $jadwal_pulang = $jadwal->jadwal_pulang;
                                             $jam_keluar    = Carbon::createFromFormat('H:i:s', $jam);
@@ -162,7 +163,7 @@ class MesinController extends Controller
 
                                             $absensi->update();
                                         }
-                                        else if($existingAbsensi->jam_keluar == $jam)
+                                        else if($existingAbsensi->jam_keluar === $jam)
                                         {
                                             $absensi = $existingAbsensi;
                                         }

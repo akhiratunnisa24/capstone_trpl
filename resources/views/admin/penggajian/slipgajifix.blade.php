@@ -151,7 +151,7 @@
                                                             <tbody>
                                                                 @if ($detailgaji !== null)
                                                                     @foreach($detailgaji as $detail)
-                                                                        @if($detail->id_benefit == 1)
+                                                                        @if($detail->id_benefit === 1 )
                                                                             <tr>
                                                                                 <td>1</td>
                                                                                 <td>{{ $detail->benefit->nama_benefit}}</td>
@@ -160,6 +160,8 @@
                                                                                 <td>{{ number_format($detail->total, 0, ',', '.') }}</td>
                                                                             </tr>
                                                                         @endif
+                                                                    @endforeach
+                                                                    @foreach($detailgaji as $detail)
                                                                         @if($detail->benefit->partner !== 0)
                                                                             <tr>
                                                                                 <td>{{ $no++ }}</td>
@@ -167,6 +169,17 @@
                                                                                 <td>{{ number_format($detail->nominal, 0, ',', '.') }}/{{$detail->detailinformasigajis->siklus_bayar}}</td>
                                                                                 <td>{{ number_format($detail->jumlah,0) }}</td>
                                                                                 <td>{{ number_format($detail->total, 0, ',', '.')}}</td>
+                                                                            </tr>
+                                                                        @endif
+                                                                    @endforeach
+                                                                    @foreach($detailgaji as $detail)
+                                                                        @if($detail->id_benefit === 2)
+                                                                            <tr>
+                                                                                <td></td>
+                                                                                <td><strong>{{ $detail->benefit->nama_benefit}}</strong></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td>{{ number_format($detail->total, 0, ',', '.') }}</td>
                                                                             </tr>
                                                                         @endif
                                                                     @endforeach
