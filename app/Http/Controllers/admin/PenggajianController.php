@@ -17,6 +17,7 @@ use App\Models\Informasigaji;
 use App\Models\PenggajianGrup;
 use App\Models\Detailkehadiran;
 use App\Models\SalaryStructure;
+use App\Models\DetailPenggajian;
 use Illuminate\Support\Facades\DB;
 use App\Models\Detailinformasigaji;
 use App\Http\Controllers\Controller;
@@ -103,6 +104,7 @@ class PenggajianController extends Controller
             ->first();
 
         $informasigaji = Informasigaji::where('id_karyawan',$request->id_karyawan)->first();
+        // dd($informasigaji);
         $detail = Detailinformasigaji::where('id_informasigaji',$informasigaji->id)->get();
 
         $penggajian = Penggajian::firstOrNew([
@@ -135,20 +137,23 @@ class PenggajianController extends Controller
     {
         $nip = $request->input('nip');
         $id = $request->id;
+        // dd($nip,$id);
         $role = Auth::user()->role;
         if ($role == 1 ||$role == 6)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $karyawan = Karyawan::where('partner',$row->partner)->first();
+            $slipgaji = Penggajian::with('karyawans')->where('id',$id)->first();
+            $karyawan = Karyawan::where('id',$slipgaji->id)->first();
             $informasigaji = Informasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)->first();
             $detailinformasi= Detailinformasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)->get();
 
             $kehadiran = Detailkehadiran::where('id_karyawan',$karyawan->id)->first();
-            $slipgaji = Penggajian::with('karyawans')->where('id',$id)->first();
+           
             $jadwal = Jadwal::whereBetween('tanggal', [$slipgaji->tglawal, $slipgaji->tglakhir])
                 ->where('partner', $row->partner)
                 ->count();
 
+            // dd($slipgaji,$kehadiran,$id,$detailinformasi);
             return view('admin.penggajian.slip',compact('row','role','karyawan','slipgaji','kehadiran','informasigaji','detailinformasi'));
         }else {
 
@@ -245,13 +250,14 @@ class PenggajianController extends Controller
         $role = Auth::user()->role;
         if ($role == 1 ||$role == 6)
         {
+            $slipgaji = Penggajian::where('id',$request->id_slip)->first();
             $karyawan = Karyawan::where('id',$request->id_karyawan)->first();
             $informasigaji = Informasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)->first();
             $kehadiran = Detailkehadiran::where('id_karyawan',$karyawan->id)->first();
             $strukturgaji = SalaryStructure::where('id',$informasigaji->id_strukturgaji)->first();
             $detailstruktur = DetailSalaryStructure::where('id_salary_structure',$strukturgaji->id)->get();
 
-            $detailinformasi = Detailinformasigaji::with('karyawans')
+            $detailinformasis = Detailinformasigaji::with('karyawans')
                 ->join('benefit', 'detail_informasigaji.id_benefit', '=', 'benefit.id')
                 ->join('kategoribenefit', 'benefit.id_kategori', '=', 'kategoribenefit.id')
                 ->where('detail_informasigaji.id_informasigaji', $informasigaji->id)
@@ -264,9 +270,11 @@ class PenggajianController extends Controller
             $potongan = 0;
             $totalpotongan = 0;
             $gajibersih = 0;
+            $lembur = 0;
 
-            foreach ($detailinformasi as $detail)
+            foreach ($detailinformasis as $detail)
             {
+                // dd($detail);
                 switch ($detail->id_kategori) {
                     case 1:
                         $gajipokok = $detail->nominal;
@@ -285,6 +293,7 @@ class PenggajianController extends Controller
                             {
                                 $jam = $kehadiran->jam_lembur;
                                 $tunjangan += $detail->nominal * $jam;
+                                $lembur = $detail->nominal * $jam;
                             }else{
                                 $tunjangan += $detail->nominal * $detail->jumlah;
                             }
@@ -303,12 +312,147 @@ class PenggajianController extends Controller
             $totalpotongan = $asuransi + $potongan;
             $gajibersih = $gajikotor - $totalpotongan;
 
-            dd($gajipokok,$tunjangan, $gajikotor,$asuransi,$potongan, $totalpotongan,$gajibersih);
-             Penggajian::where('id', $$request->id_slip)->update($dataToUpdate);
+            $dataupdate = [
+                'lembur'     => $lembur ? $lembur : 0,
+                'tunjangan'  => $tunjangan ? $tunjangan : 0,
+                'gaji_kotor' => $gajikotor ? $gajikotor : 0,
+                'asuransi'   => $asuransi ? $asuransi : 0,
+                'potongan'   => $totalpotongan ? $totalpotongan : 0,
+                'pajak'      => 0,
+                'gaji_bersih'=> $gajibersih ? $gajibersih : 0,
+            ];
+            // dd($dataupdate);
 
+            $slipgaji->update($dataupdate);
 
+            $kehadiran = Detailkehadiran::where('id_karyawan',$karyawan->id)
+                ->where('tgl_awal',$slipgaji->tglawal)
+                ->where('tgl_akhir',$slipgaji->tglakhir)
+                ->first();
+            foreach($detailinformasis as $detail)
+            {
+                if($detail->id_kategori == 1)
+                {
+                    $nominal = $gajipokok;
+                    $jumlah  = $detail->jumlah;
+                    $total   = $gajipokok;
+                }
+                else if($detail->id_kategori == 2)
+                {
+                    $nominal = $gajikotor;
+                    $jumlah  = $detail->jumlah;
+                    $total   = $gajikotor;
+                }else if($detail->id_kategori == 3)
+                {
+                    $nominal = $gajibersih;
+                    $jumlah  = $detail->jumlah;
+                    $total   = $gajibersih;
+                }
+                else if($detail->id_kategori == 4)
+                {
+                    $nominal = $detail->nominal;
+                    // dd($detail);
+                    if($detail->siklus_pembayaran == "Bulan")
+                    {
+                        $hadir       = $kehadiran->jumlah_hadir;
+                        $totaljadwal = $kehadiran->total_jadwal;
+                        $jumlah      = $detail->jumlah;
+                        if($hadir == $totaljadwal)
+                        {
+                            $total       = $detail->nominal * $jumlah;
+                        }else if($hadir < $totaljadwal)
+                        {
+                            $totala = $nominal / $totaljadwal;
+                            $total = $totala * $hadir;
+                        }
+                       
+                        // dd($detail,$jumlah,$total);
+                    }else if($detail->siklus_pembayaran == "Hari")
+                    {
+                        $jumlah  = $kehadiran->jumlah_hadir;
+                        $total   = $detail->nominal * $kehadiran->jumlah_hadir;
+                        // dd($detail,$jumlah,$total);
+                    }else if($detail->siklus_pembayaran == "Jam")
+                    {
+                        if(Str::contains($detail->nama_benefit, 'Lembur'))
+                            {
+                                $jumlah  = $kehadiran->jam_lembur;
+                                $jam = $kehadiran->jam_lembur;
+                                $total = $lembur;
+                            }else{
+                                $jumlah = $kehadiran->jumlah_hadir;
+                                $total  = $detail->nominal * $jumlah;
+                            }
+                    }
+                    else if($detail->siklus_pembayaran == "Bonus")
+                    {
+                        $jumlah  = $detail->jumlah;
+                        $total   = $detail->nominal;
+                    }
+                }
 
-                return redirect()->back()->with('pesan','Penghitungan Gaji telah selesai');
+                $detailgaji = DetailPenggajian::firstOrNew([
+                    'id_karyawan' => $slipgaji->id_karyawan,
+                    'id_penggajian'=> $slipgaji->id,
+                    'id_benefit'  => $detail->id_benefit,
+                    'id_detailinformasigaji' =>$detail->id_informasigaji,
+                ]);
+              
+                $detailgaji->nominal = $nominal;
+                $detailgaji->jumlah  = $jumlah;
+                $detailgaji->total   = $total;
+
+                $detailgaji->save();
+            }
+          
+            $pesan = "Penghitungan Gaji karyawan sudah selesai";
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $detailinformasi= Detailinformasigaji::with('karyawans','benefit')
+                ->where('id_karyawan',$karyawan->id)
+                ->where('partner','!=',0)
+                ->get();
+
+            $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
+
+            // dd($detailgaji);
+            return view('admin.penggajian.slipgajifix', compact('slipgaji', 'detailinformasi','role', 'pesan','kehadiran','row','detailgaji'));
+        }
+        else {
+
+            return redirect()->back();
+        }
+    }
+
+    public function showslipgajifix(Request $request)
+    {
+        $nip = $request->input('nip');
+        $id = $request->id;
+        $role = Auth::user()->role;
+        if ($role == 1 ||$role == 6)
+        {
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $karyawan = Karyawan::where('partner',$row->partner)->first();
+            $informasigaji = Informasigaji::with('karyawans')
+                    ->where('id_karyawan',$karyawan->id)
+                    ->first();
+
+            $detailinformasi= Detailinformasigaji::with('karyawans','benefit')
+                ->where('id_karyawan',$karyawan->id)
+                ->where('benefit.partner','!=',0)
+                ->get();
+            foreach($detailinformasi as $d){
+                dd($d);
+            }
+
+            $kehadiran = Detailkehadiran::where('id_karyawan',$karyawan->id)->first();
+            $slipgaji = Penggajian::with('karyawans')->where('id',$id)->first();
+            $jadwal = Jadwal::whereBetween('tanggal', [$slipgaji->tglawal, $slipgaji->tglakhir])
+                ->where('partner', $row->partner)
+                ->count();
+
+            $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
+
+            return view('admin.penggajian.slip',compact('row','role','karyawan','slipgaji','kehadiran','informasigaji','detailinformasi','detailgaji'));
         }else {
 
             return redirect()->back();

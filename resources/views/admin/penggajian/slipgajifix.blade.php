@@ -30,7 +30,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-20 col-sm-20 col-xs-20">
-                                <form action="/hitung-gaji" method="POST" enctype="multipart/form-data">
+                                <form action="" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="control-group after-add-more">
@@ -132,61 +132,57 @@
                                                     </div>
                                                    
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <table class="table dt-responsive nowrap table-striped" cellpadding="0" style="margin: auto; width:500px; margin-bottom:15px;">
-                                                        <thead style="background-color: #b8e2f8;">
-                                                            <tr>
-                                                                <th>No</th>
-                                                                <th>Komponen</th>
-                                                                <th>Jumlah Hari</th>
-                                                                <th>Jumlah Jam</th>
-                                                               
-                                                            </tr>
-                                                        </thead>
-                                                    
-                                                        <tbody>
-                                                            @if($kehadiran!== NULL)
+                                                <div class="col-md-12">
+                                                    {{-- <div class="col-md-1"></div> --}}
+                                                    <div class="col-md-12">
+                                                        @php
+                                                            $no = 2;
+                                                        @endphp
+                                                        <table class="table dt-responsive nowrap table-striped" cellpadding="0" style="margin: auto; margin-bottom:15px;">
+                                                            <thead style="background-color: #b8e2f8;">
                                                                 <tr>
-                                                                    <td>1</td>
-                                                                    <td>Kehadiran</td>
-                                                                    <td>{{ $kehadiran->jumlah_hadir }}</td>
-                                                                    <td>{{ $kehadiran->jam_hadir }}</td>
+                                                                    <th style="width: 10%;">No</th>
+                                                                    <th style="width: 40%;">Komponen Gaji</th>
+                                                                    <th style="width: 20%;">Nominal</th>
+                                                                    <th style="width: 10%;">Jumlah</th>
+                                                                    <th style="width: 20%;">Total</th>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td>2</td>
-                                                                    <td>Lembur</td>
-                                                                    <td>{{ $kehadiran->jumlah_lembur }}</td>
-                                                                    <td>{{ $kehadiran->jam_lembur }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>3</td>
-                                                                    <td>Cuti</td>
-                                                                    <td>{{ $kehadiran->jumlah_cuti }}</td>
-                                                                    <td>{{ $kehadiran->jam_cuti }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>4</td>
-                                                                    <td>Sakit</td>
-                                                                    <td>{{ $kehadiran->jumlah_sakit }}</td>
-                                                                    <td>{{ $kehadiran->jam_sakit }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>5</td>
-                                                                    <td>Izin</td>
-                                                                    <td>{{ $kehadiran->jumlah_izin }}</td>
-                                                                    <td>{{ $kehadiran->jam_izin }}</td>
-                                                                </tr>
-                                                            @endif
-                                                        </tbody>
-                    
-                                                    </table>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if ($detailgaji !== null)
+                                                                    @foreach($detailgaji as $detail)
+                                                                        @if($detail->id_benefit == 1)
+                                                                            <tr>
+                                                                                <td>1</td>
+                                                                                <td>{{ $detail->benefit->nama_benefit}}</td>
+                                                                                <td>{{ number_format($detail->nominal, 0, ',', '.') }}/{{$detail->detailinformasigajis->siklus_bayar}}</td>
+                                                                                <td>{{ number_format($detail->jumlah,0) }}</td>
+                                                                                <td>{{ number_format($detail->total, 0, ',', '.') }}</td>
+                                                                            </tr>
+                                                                        @endif
+                                                                        @if($detail->benefit->partner !== 0)
+                                                                            <tr>
+                                                                                <td>{{ $no++ }}</td>
+                                                                                <td>{{ $detail->benefit->nama_benefit}}</td>
+                                                                                <td>{{ number_format($detail->nominal, 0, ',', '.') }}/{{$detail->detailinformasigajis->siklus_bayar}}</td>
+                                                                                <td>{{ number_format($detail->jumlah,0) }}</td>
+                                                                                <td>{{ number_format($detail->total, 0, ',', '.')}}</td>
+                                                                            </tr>
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endif
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    {{-- <div class="col-md-1"></div> --}}
                                                 </div>
                                         </div>
                                     </div>
                                     <input type="hidden" class="form-control" name="id_slip" value ="{{$slipgaji->id}}">
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-success" title="Hitung Gaji Karyawan" >Hitung Gaji <i class="mdi mdi-calculator"></i></button>
-                                        <a href="slipgaji-karyawan" class="btn btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
+                                        {{-- <button type="submit" class="btn btn-success" title="Hitung Gaji Karyawan" >Hitung Gaji <i class="mdi mdi-calculator"></i></button> --}}
+                                        <button type="submit" class="btn btn-sm btn-success" title="Print Slip Gaji" >Print <i class="fa fa-file"></i></button>
+                                        <a href="/slipgaji-karyawan" class="btn btn-sm btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
                                     </div>
                                 </form>
                               

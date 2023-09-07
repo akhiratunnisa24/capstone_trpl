@@ -110,6 +110,7 @@
                                                         <div class="d-grid gap-2 " role="group" aria-label="Basic example"> 
                                                             <form method="POST" action="{{ route('slipgajikaryawan') }}">
                                                                 @csrf
+                                                                @method('PUT')
                                                                 <input type="hidden" name="nip" value="{{ $data->karyawans->nip }}">
                                                                 <input type="hidden" name="id" value="{{ $data->id }}">
                                                                 <button type="submit" class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i></button>
