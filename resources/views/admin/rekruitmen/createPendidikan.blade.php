@@ -226,15 +226,15 @@
                                                                 </div>
                                                             </div> --}}
 
-                                                            <div class="form-group">
+                                                            {{-- <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Pendidikan</label>
                                                                     <div>
                                                                         <div class="input-daterange input-group"
-                                                                            id="date-range">
+                                                                            id="date-range8">
                                                                             <input type="text" class="form-control"
                                                                                 name="tahun_masukFormal"
-                                                                                placeholder="dd/mm/yyyy"
+                                                                                placeholder="yyyy"
                                                                                 autocomplete="off" />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
@@ -242,6 +242,20 @@
                                                                                 name="tahun_lulusFormal"
                                                                                 placeholder="dd/mm/yyyy"
                                                                                 autocomplete="off" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div> --}}
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Lama Pendidikan</label>
+                                                                    <div>
+                                                                        <div class="input-group">
+                                                                            <input id="datepicker-autoclose500" type="text" class="form-control" placeholder="yyyy"
+                                                                            name="tahun_masukFormal" style="text-align: center" autocomplete="off"  rows="10">
+                                                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input id="datepicker-autoclose501" type="text" class="form-control" placeholder="yyyy"
+                                                                            style="text-align: center" name="tahun_lulusFormal" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -316,18 +330,12 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Pendidikan</label>
                                                                     <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range2">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_masukNonFormal"
-                                                                                placeholder="dd/mm/yyyy"
-                                                                                autocomplete="off" />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_lulusNonFormal"
-                                                                                placeholder="dd/mm/yyyy"
-                                                                                autocomplete="off" />
+                                                                        <div class="input-group">
+                                                                            <input id="datepicker-autoclose502" type="text" class="form-control" placeholder="yyyy"
+                                                                            name="tahun_masukFormal" style="text-align: center" autocomplete="off"  rows="10">
+                                                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input id="datepicker-autoclose503" type="text" style="text-align: center" class="form-control" placeholder="yyyy"
+                                                                                name="tahun_lulusFormal" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
                                                                 </div>

@@ -131,16 +131,17 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Bertugas</label>
                                                                     <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tglmulai" autocomplete="off"
-                                                                                placeholder="dd/mm/yyyy" />
+                                                                        <div class="input-group">
+                                                                            <input id="datepicker-autoclose506" type="text"
+                                                                                class="form-control" placeholder="yyyy"
+                                                                                name="tglmulai" style="text-align: center"
+                                                                                autocomplete="off" rows="10">
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tglselesai" autocomplete="off"
-                                                                                placeholder="dd/mm/yyyy" />
+                                                                            <input id="datepicker-autoclose507" type="text"
+                                                                                class="form-control" placeholder="yyyy"
+                                                                                style="text-align: center" name="tglselesai"
+                                                                                autocomplete="off" rows="10">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -236,7 +237,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group">
+                                                    {{-- <div class="form-group">
                                                         <div class="mb-3">
                                                             <label class="form-label">Lama Bertugas</label>
                                                             <div>
@@ -250,6 +251,25 @@
                                                                     <input type="text" class="form-control"
                                                                         name="tglselesai" id="tglselesai"
                                                                         autocomplete="off" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> --}}
+                                                    <div class="form-group">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Lama Bertugas</label>
+                                                            <div>
+                                                                <div class="input-group">
+                                                                    <input id="datepicker-autoclose508" type="text"
+                                                                        class="form-control" placeholder="yyyy"
+                                                                        name="tglmulai" style="text-align: center"
+                                                                        autocomplete="off" rows="10">
+                                                                    <span
+                                                                        class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                    <input id="datepicker-autoclose509" type="text"
+                                                                        class="form-control" placeholder="yyyy"
+                                                                        style="text-align: center" name="tglselesai"
+                                                                        autocomplete="off" rows="10">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -341,12 +361,12 @@
                 // $('#datepicker-autoclose34').val(data.tgl_selesai);
                 var tanggal = new Date(data.tgl_mulai);
                 var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
                 $('#tglmulai').val(tanggalFormatted);
 
                 var tanggal = new Date(data.tgl_selesai);
                 var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
                 $('#tglselesai').val(tanggalFormatted);
 
                 $('#jabatanRorganisasi').val(data.jabatan);
