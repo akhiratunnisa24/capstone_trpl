@@ -82,8 +82,8 @@ return [
     |
     */
 
-    // 'locale' => 'en',
-    'locale' => 'id',
+    'locale' => 'en',
+    // 'locale' => 'id',
 
     /*
     |--------------------------------------------------------------------------
@@ -184,7 +184,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        Riskihajar\Terbilang\TerbilangServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -216,7 +215,6 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'SettingOrganisasi' => App\Helpers\SettingHelper::class . '::logo',
-        'Terbilang' => Riskihajar\Terbilang\Facades\Terbilang::class,
     ])->toArray(),
 
 ];

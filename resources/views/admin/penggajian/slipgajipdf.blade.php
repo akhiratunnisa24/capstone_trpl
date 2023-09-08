@@ -198,12 +198,6 @@
         @endforeach
     </table>
     <hr>
-    @foreach($detailgaji as $detail)
-        @if($detail->id_benefit === 3)
-            <div class="text-center" style="font-weight: bold;"><em style="font-style: italic;">Terbilang: {{ ucwords(strtolower(Riskihajar\Terbilang\Facades\Terbilang::make($detail->nominal))) }} Rupiah</em></div>
-        @endif
-    @endforeach
-    <hr>
     
     @php
         use Carbon\Carbon;

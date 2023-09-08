@@ -274,9 +274,6 @@
                                                                         <tr>
                                                                             <td>Rp. {{ number_format($detail->total, 0, ',', '.') }}</td>
                                                                         </tr>
-                                                                        <tr>
-                                                                            <td><em style="font-style: italic;">Terbilang: {{ ucwords(strtolower(Riskihajar\Terbilang\Facades\Terbilang::make($detail->nominal))) }} Rupiah</em></td>
-                                                                        </tr>
                                                                     </tbody>
                                                                 @endif
                                                             @endforeach
