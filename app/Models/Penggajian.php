@@ -26,7 +26,8 @@ class Penggajian extends Model
         'gaji_bersih',
         'nama_bank',
         'no_rek',
-        'partner'
+        'partner',
+        'statusmail',
     ];
 
     public function karyawans()

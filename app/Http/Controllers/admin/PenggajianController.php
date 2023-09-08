@@ -20,10 +20,12 @@ use App\Models\Detailkehadiran;
 use App\Models\SalaryStructure;
 use App\Models\DetailPenggajian;
 use App\Models\SettingOrganisasi;
+use App\Mail\SlipgajiNotification;
 use Illuminate\Support\Facades\DB;
 use App\Models\Detailinformasigaji;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Models\DetailSalaryStructure;
 
 class PenggajianController extends Controller
@@ -135,6 +137,7 @@ class PenggajianController extends Controller
             $penggajian->nama_bank = $request->nama_bank;
             $penggajian->no_rekening = $request->nomor_rekening;
             $penggajian->partner = $request->partner;
+            $penggajian->statusmail = 0;
 
             $penggajian->save();
 
@@ -522,7 +525,7 @@ class PenggajianController extends Controller
             $detailinformasis = Detailinformasigaji::with('karyawans')
                 ->join('benefit', 'detail_informasigaji.id_benefit', '=', 'benefit.id')
                 ->join('kategoribenefit', 'benefit.id_kategori', '=', 'kategoribenefit.id')
-                ->select('detail_informasigaji.*','benefit.nama_benefit','benefit.id_kategori','benefit.kode','benefit.aktif','benefit.dikenakan_pajak','benefit.kelas_pajak','benefit.muncul_dipenggajian','benefit.siklus_pembayaran','benefit.urutan','benefit.tipe','benefit.gaji_minimum','benefit.gaji_maksimum','benefit.besaran_bulanan','benefit.besaran_mingguan' ,'benefit.besaran_harian' ,'benefit.besaran_jam' ,'benefit.besaran' ,'benefit.dibayarkan_oleh','kategoribenefit.nama_kategori','kategoribenefit.kode as kode_kategori')
+                ->select('detail_informasigaji.*','benefit.nama_benefit','benefit.id_kategori','benefit.jumlah','benefit.kode','benefit.aktif','benefit.dikenakan_pajak','benefit.kelas_pajak','benefit.muncul_dipenggajian','benefit.siklus_pembayaran','benefit.urutan','benefit.tipe','benefit.gaji_minimum','benefit.gaji_maksimum','benefit.besaran_bulanan','benefit.besaran_mingguan' ,'benefit.besaran_harian' ,'benefit.besaran_jam' ,'benefit.besaran' ,'benefit.dibayarkan_oleh','kategoribenefit.nama_kategori','kategoribenefit.kode as kode_kategori')
                 ->where('detail_informasigaji.id_informasigaji', $informasigaji->id)
                 ->where('detail_informasigaji.id_karyawan',$informasigaji->id_karyawan)
                 ->get();
@@ -670,21 +673,53 @@ class PenggajianController extends Controller
                     }
                 }
 
-                $detailgaji = DetailPenggajian::firstOrCreate([
-                    'id_karyawan' => $slipgaji->id_karyawan,
-                    'id_penggajian'=> $slipgaji->id,
-                    'id_benefit'  => $detail->id_benefit,
-                    'id_detailinformasigaji' =>$detail->id,
-                ]);
-              
-                $detailgaji->nominal = isset($nominal) ? $nominal : 0;
-                $detailgaji->jumlah  = isset($jumlah) ?  $jumlah : 0;
-                $detailgaji->total   = isset($total) ? $total : 0;
-
-                $detailgaji->save();
+                //    dd($detail);
+                $cek = DetailPenggajian::where('id_karyawan',$slipgaji->id_karyawan)
+                    ->where('id_penggajian',$slipgaji->id)
+                    ->where('id_benefit',$detail->id_benefit)
+                    ->where('id_detailinformasigaji',$detail->id)
+                    ->first();
+                if($cek === null)
+                {
+                    $detailgaji = new DetailPenggajian();
+                    $detailgaji->id_karyawan            = $slipgaji->id_karyawan;
+                    $detailgaji->id_penggajian          = $slipgaji->id;
+                    $detailgaji->id_benefit             = $detail->id_benefit;
+                    $detailgaji->id_detailinformasigaji = $detail->id;
+                    $detailgaji->nominal = isset($nominal) ? $nominal : 0;
+                    $detailgaji->jumlah  = isset($jumlah) ?  $jumlah : 0;
+                    $detailgaji->total   = isset($total) ? $total : 0;
+    
+                    $detailgaji->save();
+                }
+                // dd($detail,$detail->id_benefit,$slipgaji->id,$slipgaji->id_karyawan,$detail->id_informasigaji);
+                
             }
-          
+            
             $pesan = "Penghitungan Gaji karyawan sudah selesai";
+
+            $a = \Carbon\Carbon::parse($slipgaji->tglawal)->format('d/m/Y');
+            $b = \Carbon\Carbon::parse($slipgaji->tglakhir)->format('d/m/Y');
+            $periode  = $a . ' s.d ' . $b;
+            $tglgajian = \Carbon\Carbon::parse($slipgaji->tglgajian)->format('d/m/Y');
+            $tujuan = $karyawan->email;
+            $nama = ucwords(strtolower($karyawan->nama));
+            
+
+            //mengirim email notifikasi slip gaji kepada karyawan
+            $data = [
+                'subject' => "Notifikasi Slip Gaji - " . $nama . " - [" . $periode . "]",
+                'periode' => $periode,
+                'tglgajian' => $tglgajian,
+                'nama' => $nama,
+            ];
+            Mail::to($tujuan)->send(new SlipgajiNotification($data));
+            $dataupdate = [
+                'statusmail'=> 1,
+            ];
+            $slipgaji->update($dataupdate);
+
+            // data yang ditampilkan pada form slip gaji
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $detailinformasi= Detailinformasigaji::with('karyawans','benefit')
                 ->where('id_karyawan',$karyawan->id)
@@ -692,6 +727,7 @@ class PenggajianController extends Controller
                 ->get();
 
             $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
+
 
             return view('admin.penggajian.slipgajifix', compact('slipgaji', 'detailinformasi','role', 'pesan','kehadiran','row','detailgaji'));
         }
