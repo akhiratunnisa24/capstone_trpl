@@ -1,11 +1,18 @@
 @extends('layouts.default')
 @section('content')
-    <!-- Header -->
     <style>
         .alert-info1
         {
             color: #000;
             background-color: rgba(24, 186, 226, 0.2); 
+        }
+
+        .garis {
+            margin-top: 10px;
+            height: 3px;
+            border-top: 3px solid black;
+            border-bottom: 1px solid black;
+            margin-bottom: 5px;
         }
     </style>
     <div class="row">
@@ -133,11 +140,11 @@
                                                    
                                                 </div>
                                                 <div class="col-md-12">
-                                                    {{-- <div class="col-md-1"></div> --}}
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         @php
                                                             $no = 2;
                                                         @endphp
+                                                        <label><strong>PENGHASILAN :</strong></label>
                                                         <table class="table dt-responsive nowrap table-striped" cellpadding="0" style="margin: auto; margin-bottom:15px;">
                                                             <thead style="background-color: #b8e2f8;">
                                                                 <tr>
@@ -176,8 +183,9 @@
                                                                         @if($detail->id_benefit === 2)
                                                                             <tr>
                                                                                 <td></td>
-                                                                                <td><strong>{{ $detail->benefit->nama_benefit}}</strong></td>
                                                                                 <td></td>
+                                                                                {{-- <td><strong>{{ $detail->benefit->nama_benefit}}</strong></td> --}}
+                                                                                <td><strong>Total</strong></td>
                                                                                 <td></td>
                                                                                 <td>{{ number_format($detail->total, 0, ',', '.') }}</td>
                                                                             </tr>
@@ -187,15 +195,101 @@
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    {{-- <div class="col-md-1"></div> --}}
+                                                    <div class="col-md-6">
+                                                        @php
+                                                            $nomor = 1;
+                                                        @endphp
+                                                        <label><strong>POTONGAN :</strong></label>
+                                                        <table class="table dt-responsive nowrap table-striped" cellpadding="0" style="margin: auto; margin-bottom:15px;">
+                                                            <thead style="background-color: #b8e2f8;">
+                                                                <tr>
+                                                                    <th style="width: 10%;">No</th>
+                                                                    <th style="width: 40%;">Komponen Gaji</th>
+                                                                    <th style="width: 20%;">Nominal</th>
+                                                                    <th style="width: 10%;">Jumlah</th>
+                                                                    <th style="width: 20%;">Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if($detailgaji !== null && $detail->id_kategori === 5 || $detail->id_kategori === 6)
+                                                                    @foreach($detailgaji as $detail)
+                                                                        {{-- @if($detail->id_kategori === 5 || ) --}}
+                                                                            <tr>
+                                                                                <td>{{ $nomor++ }}</td>
+                                                                                <td>{{ $detail->benefit->nama_benefit}}</td>
+                                                                                <td>{{ number_format($detail->nominal, 0, ',', '.') }}/{{$detail->detailinformasigajis->siklus_bayar}}</td>
+                                                                                <td>{{ number_format($detail->jumlah,0) }}</td>
+                                                                                <td>{{ number_format($detail->total, 0, ',', '.')}}</td>
+                                                                            </tr>
+                                                                        {{-- @endif --}}
+                                                                    @endforeach
+                                                                    @if($slipgaji !== null)
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td><strong>Total</strong></td>
+                                                                            <td></td>
+                                                                            <td>{{ number_format($slipgaji->potongan, 0, ',', '.') }}</td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @else
+                                                                    {{-- @if($slipgaji !== null) --}}
+                                                                        <tr>
+                                                                            <td>1</td>
+                                                                            <td>Asuransi</td>
+                                                                            <td>-</td>
+                                                                            <td>-</td>
+                                                                            <td>{{ number_format($slipgaji->asuransi, 0, ',', '.') }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>2</td>
+                                                                            <td>Pph21</td>
+                                                                            <td>-</td>
+                                                                            <td>-</td>
+                                                                            <td>{{ number_format($slipgaji->pajak, 0, ',', '.') }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td><strong>Total</strong></td>
+                                                                            <td></td>
+                                                                            <td>{{ number_format($slipgaji->potongan, 0, ',', '.') }}</td>
+                                                                        </tr>
+                                                                    {{-- @endif --}}
+                                                                @endif
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
+                                                <div class="col-md-12 text-center" style="margin-top: 20px;">
+                                                    <div class="col-md-12">
+                                                        <table class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" style="margin: auto; margin-bottom:15px;">
+                                                            @foreach($detailgaji as $detail)
+                                                                @if($detail->id_benefit === 3)
+                                                                    <thead style="background-color: #fcfcfc;">
+                                                                        <th style="text-transform: uppercase; text-align: center;">{{ strtoupper($detail->benefit->nama_benefit) }}</th>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>Rp. {{ number_format($detail->total, 0, ',', '.') }}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><em style="font-style: italic;">Terbilang: {{ ucwords(strtolower(Riskihajar\Terbilang\Facades\Terbilang::make($detail->nominal))) }} Rupiah</em></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                @endif
+                                                            @endforeach
+                                                        </table>
+                                                    </div>
+                                                </div>                                                
                                         </div>
                                     </div>
                                     <input type="hidden" class="form-control" name="id_slip" value ="{{$slipgaji->id}}">
                                     <div class="modal-footer">
-                                        {{-- <button type="submit" class="btn btn-success" title="Hitung Gaji Karyawan" >Hitung Gaji <i class="mdi mdi-calculator"></i></button> --}}
-                                        <button type="submit" class="btn btn-sm btn-success" title="Print Slip Gaji" >Print <i class="fa fa-file"></i></button>
-                                        <a href="/slipgaji-karyawan" class="btn btn-sm btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
+                                        <button type="submit" class="btn btn-sm btn-success" title="Kirim Slip Gaji" >Kirim Slip Gaji  <i class="fa fa-paper-plane-o"></i></button>
+                                        <a href="/slipgaji-pdf/{{ $slipgaji->id }}" class="btn btn-info btn-sm btn-info"  title="Print Slip Gaji" target="_blank">Print <i class="fa fa-file-pdf-o"></i></a>
+                                        <a href="/slipgaji-karyawan" class="btn btn-sm btn-danger" type="button">Kembali  <i class="fa fa-home"></i></a>
                                     </div>
                                 </form>
                               

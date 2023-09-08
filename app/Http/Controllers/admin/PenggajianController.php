@@ -396,8 +396,10 @@ class PenggajianController extends Controller
                 ->where('partner', $row->partner)
                 ->count();
 
+            $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
+            
             // dd($slipgaji,$kehadiran,$id,$detailinformasi);
-            return view('admin.penggajian.slip',compact('row','role','karyawan','slipgaji','kehadiran','informasigaji','detailinformasi'));
+            return view('admin.penggajian.slip',compact('row','detailgaji','role','karyawan','slipgaji','kehadiran','informasigaji','detailinformasi'));
         }else {
 
             return redirect()->back();
@@ -459,12 +461,29 @@ class PenggajianController extends Controller
         return redirect()->back()->with('pesan', 'Data berhasil diupdate');
     }
 
-    public function slipgajipdf (Request $request)
+    public function slipgajipdf (Request $request,$id)
     {
         $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
-        $pdf = PDF::loadview('admin.penggajian.slipgajipdf')
-            ->setPaper('a4','potrait');
-        return $pdf->stream();
+        $slipgaji = Penggajian::with('karyawans')->where('id',$id)->first();
+        $karyawan = Karyawan::where('id',$slipgaji->id_karyawan)->first();
+        $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
+        $detailinformasi= Detailinformasigaji::with('karyawans','benefit')
+                ->where('id_karyawan',$karyawan->id)
+                ->whereHas('benefit', function ($query) {
+                    $query->where('partner', '!=', 0);
+                })
+                ->get();
+
+        
+        $pdf = PDF::loadview('admin.penggajian.slipgajipdf',[
+            'setorganisasi' => $setorganisasi,
+            'slipgaji' => $slipgaji,
+            'karyawan' => $karyawan,
+            'detailgaji' => $detailgaji,
+            'detailinformasi' => $detailinformasi,
+        ])
+        ->setPaper('a4','potrait');
+        return $pdf->stream("Slip Gaji " . \Carbon\Carbon::parse($slipgaji->tglgajian)->format('d/m/Y') ." ". $karyawan->nama . ".pdf");
     }
 
 
@@ -651,7 +670,7 @@ class PenggajianController extends Controller
                     }
                 }
 
-                $detailgaji = DetailPenggajian::firstOrNew([
+                $detailgaji = DetailPenggajian::firstOrCreate([
                     'id_karyawan' => $slipgaji->id_karyawan,
                     'id_penggajian'=> $slipgaji->id,
                     'id_benefit'  => $detail->id_benefit,
@@ -682,7 +701,7 @@ class PenggajianController extends Controller
         }
     }
 
-    public function showslipgajifix(Request $request)
+    public function showslipgajifix(Request $request,$id)
     {
         $nip = $request->input('nip');
         $id = $request->id;
@@ -690,29 +709,27 @@ class PenggajianController extends Controller
         if ($role == 1 ||$role == 6)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $karyawan = Karyawan::where('partner',$row->partner)->first();
+            $slipgaji = Penggajian::with('karyawans')->where('id',$id)->first();
+            $karyawan = Karyawan::where('id',$slipgaji->id_karyawan)->first();
             $informasigaji = Informasigaji::with('karyawans')
                     ->where('id_karyawan',$karyawan->id)
                     ->first();
 
             $detailinformasi= Detailinformasigaji::with('karyawans','benefit')
                 ->where('id_karyawan',$karyawan->id)
-                ->where('benefit.partner','!=',0)
+                ->whereHas('benefit', function ($query) {
+                    $query->where('partner', '!=', 0);
+                })
                 ->get();
-            foreach($detailinformasi as $d){
-                dd($d);
-            }
 
             $kehadiran = Detailkehadiran::where('id_karyawan',$karyawan->id)->first();
-            $slipgaji = Penggajian::with('karyawans')->where('id',$id)->first();
+         
             $jadwal = Jadwal::whereBetween('tanggal', [$slipgaji->tglawal, $slipgaji->tglakhir])
                 ->where('partner', $row->partner)
                 ->count();
 
             $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
-            dd($detailgaji);
-
-            return view('admin.penggajian.slip',compact('row','role','karyawan','slipgaji','kehadiran','informasigaji','detailinformasi','detailgaji'));
+            return view('admin.penggajian.slipgajifix',compact('row','role','karyawan','slipgaji','kehadiran','informasigaji','detailinformasi','detailgaji'));
         }else {
 
             return redirect()->back();

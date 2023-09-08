@@ -185,8 +185,12 @@
                                     </div>
                                     <input type="hidden" class="form-control" name="id_slip" value ="{{$slipgaji->id}}">
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-success" title="Hitung Gaji Karyawan" >Hitung Gaji <i class="mdi mdi-calculator"></i></button>
-                                        <a href="slipgaji-karyawan" class="btn btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
+                                        @if($detailgaji === null)
+                                            <button type="submit" class="btn btn-success" title="Hitung Gaji Karyawan" >Hitung Gaji <i class="mdi mdi-calculator"></i></button>
+                                        @else
+                                            <button type="submit" class="btn btn-info" title="Lihat Slip Gaji" >Slip Gaji <i class="fa fa-wpforms"></i></button> 
+                                        @endif
+                                            <a href="slipgaji-karyawan" class="btn btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
                                     </div>
                                 </form>
                               

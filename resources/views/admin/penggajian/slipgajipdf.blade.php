@@ -90,80 +90,121 @@
         .n {
             text-align: left;
         }
+
+        /* Style untuk mengatur tampilan teks */
+        .text-center {
+            text-align: center;
+        } 
     </style>
 </head>
 
 <body>
-    <h1 align="center">Nama Perusahaan</h1>
-    <p id="address">Alamat dan kode pos</p>
+    <h1 align="center">{{$setorganisasi->nama_perusahaan}}</h1>
+    <p id="address">{{$setorganisasi->alamat}}, {{$setorganisasi->kode_pos}}</p>
     <div class="garis"></div>
     <h3 align="center">Slip Gaji Karyawan</h3>
     <table id="slipdetail">
         <tr>
             <td>Nama</td>
-            <td>: Jullyandre Fazri</td>
+            <td>: {{$slipgaji->karyawans->nama}}</td>
         </tr>
         <tr>
             <td>NIK</td>
-            <td>: RTI002</td>
+            <td>: {{$slipgaji->karyawans->nip}}</td>
         </tr>
         <tr>
             <td>Jabatan</td>
-            <td>: Staff</td>
+            <td>: {{$slipgaji->karyawans->nama_jabatan}}</td>
         </tr>
         <tr>
             <td>Status</td>
-            <td>: Karyawan Tetap</td>
+            <td>: {{$slipgaji->karyawans->jabatan}}</td>
         </tr>
     </table>
-
-    <table id="absensi">
-
-        <h3>PENGHASILAN:</h3>
-        <tr>
-            <td>Gaji Pokok</td>
-            <td class="text-right"> 1,000,000</td>
-        </tr>
-        <tr>
-            <td>Tunjangan Makan</td>
-            <td class="text-right"> 400,000</td>
-        </tr>
-        <tr>
-            <td>Tunjangan Transport</td>
-            <td class="text-right"> 300,000</td>
-        </tr>
-        <tr>
-            <td>Bonus</td>
-            <td class="text-right"> 1,000,000</td>
-        </tr>
-        <tr class="total-row">
-            <td class="text-right" style="font-weight: bold;">Total</td>
-            <td class="text-right" style="font-weight: bold;">Rp. -</td>
-        </tr>
-    </table>
-    <table id="absensi">
-    <h3>POTONGAN:</h3>
-
-        <tr>
-            <td>Pajak</td>
-            <td class="text-right"> 120,000</td>
-        </tr>
-        <tr>
-            <td>Asuransi</td>
-            <td class="text-right"> 300,000</td>
-        </tr>
-        <tr class="total-row">
-            <td class="text-right" style="font-weight: bold;">Total</td>
-            <td class="text-right" style="font-weight: bold;">Rp. -</td>
-        </tr>
-    </table>
+    <div class="row row-table">
+        <div class="col-md-6 row-table">
+            <table id="absensi">
+                <h3>PENGHASILAN:</h3>
+                @if ($detailgaji !== null)
+                    @foreach($detailgaji as $detail)
+                        @if($detail->id_benefit === 1 )
+                            <tr>
+                                <td>{{ $detail->benefit->nama_benefit}}</td>
+                                <td class="text-right">{{ number_format($detail->total, 0, ',', '.') }}</td>
+                            </tr>
+                        @endif
+                    @endforeach
+                    @foreach($detailgaji as $detail)
+                        @if($detail->benefit->partner !== 0)
+                            <tr>
+                                <td>{{ $detail->benefit->nama_benefit}}</td>
+                                <td class="text-right">{{ number_format($detail->total, 0, ',', '.')}}</td>
+                            </tr>
+                        @endif
+                    @endforeach
+                    @foreach($detailgaji as $detail)
+                        @if($detail->id_benefit === 2)
+                            <tr>
+                                <td class="text-right" style="font-weight: bold;">Total</td>
+                                <td class="text-right" style="font-weight: bold;">{{ number_format($detail->total, 0, ',', '.') }}</td>
+                            </tr>
+                        @endif
+                    @endforeach
+                @endif
+            </table>
+        </div> 
+        <div class="col-md-6 row-table">
+            <table id="absensi">
+               <h3>POTONGAN:</h3>
+                @if($detailgaji !== null && $detail->id_kategori === 5 || $detail->id_kategori === 6)
+                    @foreach($detailgaji as $detail)
+                        <tr>
+                            <td>{{ $detail->benefit->nama_benefit}}</td>
+                            <td class="text-right">{{ number_format($detail->total, 0, ',', '.')}}</td>
+                        </tr>
+                    @endforeach
+                    @if($slipgaji !== null)
+                        <tr class="total-row">
+                            <td class="text-right" style="font-weight: bold;">Total</td>
+                            <td class="text-right" style="font-weight: bold;">{{ number_format($slipgaji->potongan, 0, ',', '.') }}</td>
+                        </tr>
+                    @endif
+                @else
+                    <tr>
+                        <td>Asuransi</td>
+                        <td class="text-right">{{ number_format($slipgaji->asuransi, 0, ',', '.') }}</td>
+                    </tr>
+                    <tr>
+                        <td>Pph21</td>
+                        <td class="text-right">{{ number_format($slipgaji->pajak, 0, ',', '.') }}</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td class="text-right" style="font-weight: bold;">Total</td>
+                        <td class="text-right" style="font-weight: bold;">{{ number_format($slipgaji->potongan, 0, ',', '.') }}</td>
+                    </tr>
+                @endif
+            </table>
+        </div>
+    </div>
     <hr>
     <table id="absensi">
-        <tr class="total-row">
-            <td class="text-right" style="font-weight: bold;">Total Penerimaan Bersih</td>
-            <td class="text-right" style="font-weight: bold;">Rp. -</td>
-        </tr>
+        @foreach($detailgaji as $detail)
+            @if($detail->id_benefit === 3)
+                <tr class="total-row">
+                    <td class="text-right" style="font-weight: bold;">Total Penerimaan Bersih</td>
+                    <td class="text-right" style="font-weight: bold;">Rp. {{ number_format($detail->total, 0, ',', '.') }}</td>
+                </tr> 
+               @endif
+        @endforeach
     </table>
+    <hr>
+    @foreach($detailgaji as $detail)
+        @if($detail->id_benefit === 3)
+            <div class="text-center" style="font-weight: bold;"><em style="font-style: italic;">Terbilang: {{ ucwords(strtolower(Riskihajar\Terbilang\Facades\Terbilang::make($detail->nominal))) }} Rupiah</em></div>
+        @endif
+    @endforeach
+    <hr>
+    
     @php
         use Carbon\Carbon;
         $now = Carbon::now();
