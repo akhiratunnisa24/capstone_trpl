@@ -41,8 +41,8 @@
         }
 
         #absensi th {
-            padding-top: 12px;
-            padding-bottom: 12px;
+            padding-top: 8px;
+            padding-bottom: 8px;
             text-align: center;
             background-color: #3eb1d4;
             color: white;
@@ -85,6 +85,13 @@
             border: 2px solid #ddd;
         }
 
+        #photo {
+            width: 100%;
+            margin: 2rem auto;
+            border-collapse: collapse;
+            border: 2px solid #fffefe;
+        }
+
         td {
             padding: 0.5rem;
             border-bottom: 1px solid #ddd;
@@ -100,24 +107,42 @@
             padding: 0.5rem;
             text-align: left;
         }
+        #foto {
+            background-color: #fdfdfd;
+            color: white;
+            padding: 0.5rem;
+            text-align: left;
+        }
     </style>
 </head>
 
 <body>
     <h1 align="center">{{$setorganisasi->nama_perusahaan}}</h1>
-    <p id="address">{{$setorganisasi->alamat}}, {{$setorganisasi->kode_pos}}</p>
+    @if($setorganisasi->partner == 2)
+        <p id="address">{{$setorganisasi->alamat}},{{$setorganisasi->daerah}},{{$setorganisasi->kode_pos}}</p>
+    @else
+        <p id="address">{{$setorganisasi->alamat}}</p>
+        <p id="address">{{$setorganisasi->daerah}},{{$setorganisasi->kode_pos}}</p>
+    @endif
     <div class="garis"></div>
     <h3 align="center">Data Karyawan</h3>
 
     <h4>A. Identitas Diri</h4>
+    <table id="photo">
+        <tr>
+            <th id="foto" colspan="2" style="text-align: center;">
+                <img src="{{ public_path('Foto_Profile/') . $data->foto }}" alt="" style="width: 30%; display: block; margin: 0 auto;">
+            </th>
+        </tr>
+    </table>
     <table>
         <tbody>
-            <tr>
+            {{-- <tr>
                 <th>Foto Profile</th>
                 <td>
                     <img src="{{ public_path('Foto_Profile/') . $data->foto }}" alt="" style="width:30%; ">
                 </td>
-            </tr>
+            </tr> --}}
             <tr>
                 <th>NIP Karyawan</th>
                 <td>{{ $data->nip ?? '-' }}</td>
@@ -146,10 +171,10 @@
                 <th>Tanggal Masuk</th>
                 <td>{{ \Carbon\Carbon::parse($data->tglmasuk)->format('d/m/Y') ?? '-' }}</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th></th>
                 <th></th>
-            </tr>
+            </tr> --}}
             <tr>
                 <th>Status Pernikahan</th>
                 <td>{{ $data->status_pernikahan ?? '-' }}</td>
@@ -174,10 +199,10 @@
                 <th>Tempat Lahir</th>
                 <td>{{ $data->tempatlahir ?? '-' }}</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th></th>
                 <th></th>
-            </tr>
+            </tr> --}}
             <tr>
                 <th>Alamat</th>
                 <td>{{ $data->alamat ?? '-' }}</td>
@@ -202,10 +227,10 @@
                 <th>No. Kontak Telp/HP</th>
                 <td>{{ $data->kdarurat->no_hp ?? '-' }}</td>
             </tr> --}}
-            <tr>
+            {{-- <tr>
                 <th></th>
                 <th></th>
-            </tr>
+            </tr> --}}
             <tr>
                 <th>No. KTP</th>
                 <td>{{ $data->nik ?? '-' }}</td>
@@ -226,14 +251,14 @@
                 <th>No. BPJS Kesehatan</th>
                 <td>{{ $data->no_bpjs_kes ?? '-' }}</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th>No. Asuransi AKDHK</th>
                 <td>{{ $data->no_akdhk ?? '-' }}</td>
-            </tr>
-            <tr>
+            </tr> --}}
+            {{-- <tr>
                 <th>No. Program Pensiun</th>
                 <td>{{ $data->no_program_pensiun ?? '-' }}</td>
-            </tr>
+            </tr> --}}
             <tr>
                 <th>No. Program ASKES</th>
                 <td>{{ $data->no_program_askes ?? '-' }}</td>

@@ -10,7 +10,7 @@ class SettingOrganisasi extends Model
     use HasFactory;
     protected $table= 'setting_organisasi';
     protected $fillable = [
-        'nama_perusahaan','email','alamat','no_telp','kode_pos','logo','partner'
+        'nama_perusahaan','email','alamat', 'daerah' ,'no_telp','kode_pos','logo','partner'
     ];
 
     public function partners()

@@ -75,6 +75,12 @@
                                                                 <input type="text" name="alamat" value="{{ $settingorganisasi->alamat ?? '' }}" class="form-control" aria-describedby="emailHelp" placeholder="Masukkan Alamat Perusahaan" autocomplete="off" required>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Darah/Kota Administrasi</label>
+                                                                <input type="text" name="daerah" value="{{ $settingorganisasi->daerah ?? '' }}" class="form-control" aria-describedby="emailHelp" placeholder="Masukkan Kecamatan/Kota/Kabupaten" autocomplete="off" required>
+                                                            </div>
+                                                        </div>
 
                                                         <div class="form-group">
                                                             <div class="mb-3">
