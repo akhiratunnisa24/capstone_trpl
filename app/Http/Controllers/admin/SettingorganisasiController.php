@@ -38,7 +38,8 @@ class SettingorganisasiController extends Controller
             'email' => 'nullable|string',
             'no_telp' => 'nullable|string',
             'kode_pos' =>'nullable',
-            'alamat' =>'nullable|string'
+            'alamat' =>'nullable|string',
+            'daerah' =>'nullable|string',
         ]);
 
         $settingorganisasi = SettingOrganisasi::find($id);
@@ -64,6 +65,7 @@ class SettingorganisasiController extends Controller
         $settingorganisasi->nama_perusahaan = $request->nama_perusahaan;
         $settingorganisasi->email = $request->email;
         $settingorganisasi->alamat = $request->alamat;
+        $settingorganisasi->daerah = $request->daerah;
         $settingorganisasi->no_telp = $request->no_telp;
         $settingorganisasi->kode_pos = $request->kode_pos;
         $settingorganisasi->partner = Auth::user()->partner;

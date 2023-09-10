@@ -35,11 +35,11 @@
         #absensi tr:hover {background-color: #ddd;}
     
         #absensi th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: center;
-        background-color: #3eb1d4;
-        color: white;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            text-align: center;
+            background-color: #3eb1d4;
+            color: white;
         }
 
         #ttd {
@@ -64,7 +64,12 @@
 </head>
 <body>
     <h1 align="center">{{$setorganisasi->nama_perusahaan}}</h1>
-    <p id="address">{{$setorganisasi->alamat}}, {{$setorganisasi->kode_pos}}</p>
+    @if($setorganisasi->partner == 2)
+        <p id="address">{{$setorganisasi->alamat}},{{$setorganisasi->daerah}},{{$setorganisasi->kode_pos}}</p>
+    @else
+        <p id="address">{{$setorganisasi->alamat}}</p>
+        <p id="address">{{$setorganisasi->daerah}},{{$setorganisasi->kode_pos}}</p>
+    @endif
     <div class="garis"></div>
     <h3 align="center">Report Absensi Tidak Masuk Pegawai</h3>
     <table id="absensi">
