@@ -24,12 +24,14 @@
             text-align: center;
             margin-left: 30px;
             margin-right: 30px;
+            font-size: 12px;
         }
 
         #absensi td,
         #absensi th {
             border: 1px solid #ddd;
             padding: 8px;
+            border-bottom: 1px solid #ddd;
         }
 
         #absensi tr:nth-child(even) {
@@ -38,6 +40,7 @@
 
         #absensi tr:hover {
             background-color: #ddd;
+            border-bottom: 1px solid #ddd;
         }
 
         #absensi th {
@@ -46,6 +49,7 @@
             text-align: center;
             background-color: #3eb1d4;
             color: white;
+            border-bottom: 1px solid #ddd;
         }
 
         #ttd {
@@ -73,9 +77,9 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.0rem;
             text-align: center;
-            margin-top: 2rem;
+            margin-top: 20px;
         }
 
         table {
@@ -95,6 +99,7 @@
         td {
             padding: 0.5rem;
             border-bottom: 1px solid #ddd;
+            font-size: 12px; 
         }
 
         tr:last-child td {
@@ -106,6 +111,8 @@
             color: white;
             padding: 0.5rem;
             text-align: left;
+            font-size: 12px; 
+            border-bottom: 1px solid #ddd;
         }
         #foto {
             background-color: #fdfdfd;
@@ -136,7 +143,7 @@
         </tr>
     </table>
     <table>
-        <tbody>
+        <tbody class="absensi">
             {{-- <tr>
                 <th>Foto Profile</th>
                 <td>
