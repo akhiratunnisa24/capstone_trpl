@@ -24,7 +24,7 @@
 
     th:nth-child(2),
     td:nth-child(2) {
-        width: 10%;
+        width: 20%;
     }
 
     th:nth-child(3),
@@ -51,17 +51,13 @@
     td:nth-child(7) {
         width: 15%;
     }
-    th:nth-child(7),
-    td:nth-child(7) {
-        width: 10%;
-    }
 </style>
 
     <!-- Header -->
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Slip Gaji Karyawan</h4>
+                <h4 class="pull-left page-title">Slip Gaji Grup</h4>
                 <ol class="breadcrumb pull-right">
                     <li><a href="#">Rynest Employee Management System</a></li>
                     <li class="active">Slip Gaji</li>
@@ -77,7 +73,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 clearfix" >
                             <div class="pull-right">
-                                <a href="" class="btn btn-dark btn-sm fa fa-plus" data-toggle="modal" data-target="#addslip"> Tambah Slip Baru</a>
+                                <a href="" class="btn btn-dark btn-sm fa fa-plus" data-toggle="modal" data-target="#addslip-grup"> Tambah Slip Baru</a>
                             </div>
                         </div>
                         <div class="panel-body m-b-5">
@@ -87,39 +83,32 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Tgl.Gajian</th>
+                                                <th>Nama Grup</th>
                                                 <th>Periode</th>
-                                                <th>Karyawan</th>
-                                                <th>Jabatan</th>
-                                                <th>Gaji Pokok</th>
-                                                <th>Tgl Masuk</th>
+                                                <th>Struktur Penggajian</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($slipgaji as $data)
+                                            @foreach($slipgrupindex as $data)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
-                                                    <td>{{\Carbon\Carbon::parse($data->tgl_gajian)->format('d/m/Y')}}</td>
-                                                    <td>{{\Carbon\Carbon::parse($data->tglawal)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($data->tglakhir)->format('d/m/Y')}}</td>
-                                                    <td>{{$data->karyawans->nama}}</td>
-                                                    <td>{{$data->karyawans->nama_jabatan}}</td>
-                                                    <td>{{ number_format($data->gaji_pokok, 0, ',', '.') }}</td>
-                                                    <td>{{\Carbon\Carbon::parse($data->karyawans->tglmasuk)->format('d/m/Y')}}</td>
-                                                    <td> 
-                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example"> 
-                                                            <form method="POST" action="/slipgaji{{$data->id}}">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <input type="hidden" name="id_karyawan" value="{{ $data->karyawans->id }}">
-                                                                <input type="hidden" name="id" value="{{ $data->id }}">
-                                                                <button type="submit" class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i></button>
-                                                            </form>
-                                                            {{-- <a href="/slipgaji{{$data->id}}" class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i></a> --}}
-                                                            <a href=""class="btn btn-success btn-sm" title="Cetak Slip Gaji"><i class="fa fa-file-pdf-o"></i>
+                                                    <td>{{$data->nama_grup}}</td>
+                                                    <td>
+                                                        {{ \Carbon\Carbon::parse($data->tglawal)->locale('id')->isoFormat('D MMMM Y') }}
+                                                        -
+                                                        {{ \Carbon\Carbon::parse($data->tglakhir)->locale('id')->isoFormat('D MMMM Y') }}
+                                                    </td>
+                                                    <td>{{$data->slipgrup->nama}}</td>
+                                                    <td>
+                                                        <div class="d-grid gap-2 text-center" role="group" aria-label="Basic example">
+                                                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#editgrup{{ $data->id }}" title="Edit Slip Grup">
+                                                                <i class="fa fa-edit"></i>
                                                             </a>
+                                                        </div>
                                                     </td>
                                                 </tr>
+                                                @include('admin.penggajian.editgrup')
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -131,11 +120,9 @@
             </div> <!-- End Row -->
         </div> <!-- container -->
     </div> <!-- content -->
-    @include('admin.penggajian.add')
-    {{-- @include('admin.penggajian.slipgajipdf') --}}
+    @include('admin.penggajian.addgrup')
 
     <script src="assets/pages/form-advanced.js"></script>
-    <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
@@ -144,6 +131,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+
     @if(Session::has('pesan'))
         <script>
             swal("Selamat","{{ Session::get('pesan')}}", 'success', {

@@ -110,7 +110,7 @@
 
                                                     <table class="table dt-responsive nowrap table-striped" cellpadding="0"
                                                         style="margin: auto; width:500px; margin-bottom:15px;">
-                                                        <thead style="background-color: #a1cee6;">
+                                                        <thead style="background-color: #b8e2f8;">
                                                             <tr>
                                                                 <th>No</th>
                                                                 <th>Benefit</th>
@@ -229,63 +229,16 @@
                                                     </div>
                                                    
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <table class="table dt-responsive nowrap table-striped" cellpadding="0" style="margin: auto; width:500px; margin-bottom:15px;">
-                                                        <thead style="background-color: #a1cee6;">
-                                                            <tr>
-                                                                <th>No</th>
-                                                                <th>Benefit</th>
-                                                                <th>Nominal</th>
-                                                                <th>Aksi</th>
-                                                            </tr>
-                                                        </thead>
-                                                         {{-- id="datatable-responsive48" --}}
-                                                        <tbody>
-                                                            @if($detailstruktur !== NULL)
-                                                                @foreach ($detailstruktur as $data)
-                                                                    <tr>
-                                                                        <td>{{ $loop->iteration }}</td>
-                                                                        <td>{{ $data->benefit->nama_benefit}}</td>
-                                                                        <td>Rp. {{ number_format($data->nominal, 0, ',', '.') }}/{{$data->siklus_bayar}}</td>
-                                                                        <td>
-                                                                            <a class="btn btn-info btn-sm" title="Edit Benefit" data-toggle="modal" data-target="#editD{{ $data->id }}"><i class="fa fa-edit"></i></a>
-                                                                        </td>
-                                                                        {{-- @if($data->siklus_bayar === "Bulan")
-                                                                            
-                                                                        @elseif($data->siklus_bayar === "Minggu")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran_mingguan, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
-                                                                        @elseif($data->siklus_bayar === "Hari")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran_harian, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
-                                                                        @elseif($data->siklus_bayar === "Jam")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran_jam, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td>
-                                                                        @elseif($data->siklus_bayar === "THR")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td> 
-                                                                        @elseif($data->siklus_bayar === "Bonus")
-                                                                            <td>Rp. {{ number_format($data->benefit->besaran, 0, ',', '.') }}/{{$data->benefit->siklus_pembayaran}}</td> 
-                                                                        @endif       --}}
-                                                                    </tr>
-                                                                    @include('admin.karyawan.editstruktur')
-                                                                @endforeach
-                                                            @endif
-                                                        </tbody>
-                    
-                                                    </table>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="modal-footer">
                                         @if ($informasigaji !== null)
-                                            <a href="" class="btn btn-success" title="Edit Informasi Gaji"
-                                                data-toggle="modal" data-target="#editInfor{{ $informasigaji->id }}">Edit
-                                                Informasi Gaji <i class="fa fa-money"></i></a>
+                                            <a href="" class="btn btn-success" title="Edit Informasi Gaji" data-toggle="modal" data-target="#editInfor{{ $informasigaji->id }}">Edit Informasi Gaji <i class="fa fa-money"></i></a>
                                         @endif
-                                        <a class="btn btn-info" title="Edit Data Karyawan" data-toggle="modal"
-                                            data-target="#editDatakaryawan{{ $karyawan->id }}">Edit Data Karyawan <i
-                                                class="fa fa-user"></i></a>
-                                        <a href="karyawan" class="btn btn-danger" type="button">Kembali <i
-                                                class="fa fa-home"></i></a>
+                                        <a class="btn btn-info" title="Edit Data Karyawan" data-toggle="modal" data-target="#editDatakaryawan{{ $karyawan->id }}">Edit Data Karyawan <i class="fa fa-user"></i></a>
+                                        <a href="karyawan" class="btn btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
                                     </div>
                                 </form>
                                 @include('admin.karyawan.editdatashowinformasi')

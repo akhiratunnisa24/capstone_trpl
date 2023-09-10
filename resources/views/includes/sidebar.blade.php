@@ -120,11 +120,11 @@
                                     <li><a href="/kategori-benefit"><i class="fa fa-reorder (alias)"></i><span>Kategori
                                                 Benefit</span></a></li>
                                     <li><a href="/benefit"><i class="mdi mdi-clipboard-text"></i><span></span>Data
-                                            Benefit</a></li>
-                                    <li><a href="/benefit-karyawan"><i
+                                            Benefit</a></li> --}}
+                                    {{-- <li><a href="/benefit-karyawan"><i
                                                 class="mdi mdi-account-star-variant"></i><span></span>Benefit
-                                            Karyawan</a></li>
-                                </ul>
+                                            Karyawan</a></li> --}}
+                                {{-- </ul>
                             </li>
                             <li><a href="/"><i class="mdi mdi-cash-usd"></i><span></span>Kompensasi</a></li>
                         </ul>
@@ -140,8 +140,8 @@
                                         class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="/slipgaji-karyawan"><i class="mdi mdi-account-settings"></i><span>Karyawan</span></a></li>
-                                    <li><a href=""><i class="mdi mdi-account-multiple"></i><span></span>Grup</a></li>
-                                   
+                                    <li><a href="/slipgaji-karyawan-grup"><i class="mdi mdi-account-multiple"></i><span></span>Grup</a></li>
+
                                 </ul>
                             </li>
                             <li class="has_sub">

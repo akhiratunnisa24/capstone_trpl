@@ -9,7 +9,6 @@ use App\Http\Controllers\SetcutiController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\admin\XmlController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\admin\PenggajianController;
 use App\Http\Controllers\admin\MesinController;
 use App\Http\Controllers\admin\ShiftController;
 use App\Http\Controllers\admin\AtasanController;
@@ -19,11 +18,11 @@ use App\Http\Controllers\admin\AbsensiController;
 use App\Http\Controllers\admin\BenefitController;
 use App\Http\Controllers\admin\JabatanController;
 use App\Http\Controllers\Auth\RegisterController;
-
 use App\Http\Controllers\admin\AbsensisController;
 
-
 use App\Http\Controllers\admin\KalenderController;
+
+
 use App\Http\Controllers\admin\SisacutiController;
 use App\Http\Controllers\RequestAbsensiController;
 use App\Http\Controllers\admin\CutiadminController;
@@ -37,10 +36,12 @@ use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
 use App\Http\Controllers\admin\DepartemenController;
 use App\Http\Controllers\admin\OrganisasiController;
+use App\Http\Controllers\admin\PenggajianController;
 use App\Http\Controllers\admin\RekruitmenController;
 use App\Http\Controllers\admin\TidakMasukController;
 use App\Http\Controllers\manager\CutiizinController;
 use App\Http\Controllers\admin\AlokasicutiController;
+use App\Http\Controllers\admin\DetailhadirController;
 use App\Http\Controllers\admin\FormPelamarController;
 use App\Http\Controllers\admin\JadwalkerjaController;
 use App\Http\Controllers\admin\ResignAdminController;
@@ -241,8 +242,6 @@ Route::post('/tambah-pendidikan{id}', [karyawanController::class, 'addPendidikan
 Route::post('/tambah-pendidikan/{id}', [karyawanController::class, 'tambahPendidikan'])->name('tambahPendidikan');
 //download data absensi ke mesin absen
 Route::post('/import-absensi', [AbsensiController::class, 'mesinabsen'])->name('download.mesin');
-
-
 
 
 //HALAMAN KARYAWAN
@@ -748,11 +747,19 @@ Route::post('/informasigaji/{id}', [InformasigajiController::class, 'store'])->n
 
 //Penggajian
 Route::get('/slipgaji-karyawan', [PenggajianController::class, 'index'])->name('slipgaji');
-Route::get('/rekap-kehadiran', [PenggajianController::class, 'indexs'])->name('kehadirans');
-Route::post('/rekap-kehadiran', [PenggajianController::class, 'storehadir'])->name('storehadir');
-// Route::post('/struktur-penggajian', [SalaryController::class, 'store'])->name('salary.store');
-// Route::put('/struktur-penggajian/update/{id}', [SalaryController::class, 'update'])->name('salary.update');
-// Route::get('/struktur-penggajian/delete/{id}', [SalaryController::class, 'destroy'])->name('salary.delete');
+Route::post('/getrekening', [PenggajianController::class, 'getKaryawan'])->name('get.Karyawan');
+Route::post('/slipgaji-karyawan', [PenggajianController::class, 'storegaji'])->name('storegaji');
+Route::put('/slipgaji{id}', [PenggajianController::class, 'showslipgaji'])->name('slipgajikaryawan');
+Route::put('/hitung-gaji', [PenggajianController::class, 'hitunggaji'])->name('hitunggaji');
+Route::get('/slipgaji-pdf/{id}', [PenggajianController::class, 'slipgajipdf'])->name('slipgajipdf');
+Route::get('/slip-gaji/{id}', [PenggajianController::class, 'showslipgajifix'])->name('showslipgaji');
+
+Route::get('/slipgaji-karyawan-grup', [PenggajianController::class, 'indexgrup'])->name('slipgaji_grup');
+Route::get('/rekap-kehadiran', [DetailhadirController::class, 'indexs'])->name('kehadirans');
+Route::post('/rekap-kehadiran', [DetailhadirController::class, 'storehadir'])->name('storehadir');
+Route::post('/slipgaji-karyawan-grup', [PenggajianController::class, 'storepenggajian_grup'])->name('storegrup');
+Route::put('/slipgaji-karyawan-grup/update/{id}', [PenggajianController::class, 'update'])->name('slipgaji_update');
+Route::get('/slipgaji-karyawan-grup/delete/{id}', [PenggajianController::class, 'destroy'])->name('slipgaji_delete');
 //===============================================================================
 //ROLE SUPER ADMIN
 //master partnert

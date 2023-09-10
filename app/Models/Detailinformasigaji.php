@@ -42,5 +42,10 @@ class Detailinformasigaji extends Model
         return $this->belongsTo(Informasigaji::class, 'id_infrmasigaji','id');
     }
 
+    public function detailpenggajians()
+    {
+        return $this->hasMany(DetailPenggajian::class,'id_detailinformasigaji','id');
+    }
+
     
 }

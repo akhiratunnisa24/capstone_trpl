@@ -606,6 +606,26 @@
             autoclose: true,
             todayHighlight: true,
         });
+        jQuery("#datepicker-autoclose-format-as").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format-at").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format-au").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format-av").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            todayHighlight: true,
+        });
         // jQuery("#datepicker-autoclosec").datepicker({
         //     format: "dd/mm/yyyy",
         //     autoclose: true,
@@ -728,7 +748,7 @@
         //       var liburDates = data.map(function(libur) {
         //         return new Date(libur.tanggal).getTime();
         //       });
-              
+
         //       // Tambahkan logika untuk menonaktifkan tanggal pada datepicker
         //       jQuery("#datepicker-autoclosef").datepicker({
         //         format: "yyyy-mm-dd",
@@ -739,7 +759,7 @@
         //         beforeShowDay: function(date) {
         //           var dateMillis = date.getTime();
         //         //   console.log(dateMillis);
-                
+
         //           if (dateMillis < minDate.getTime() || dateMillis > maxDate.getTime()) {
         //             return { enabled: false };
         //           }
@@ -751,7 +771,7 @@
         //           }
         //         },
         //       });
-          
+
         //       jQuery("#datepicker-autocloseg").datepicker({
         //         format: "yyyy-mm-dd",
         //         autoclose: true,
@@ -760,7 +780,7 @@
         //         todayHighlight: true,
         //         beforeShowDay: function(date) {
         //           var dateMillis = date.getTime();
-                 
+
         //           if (dateMillis < minDate.getTime() || dateMillis > maxDate.getTime()) {
         //             return { enabled: false };
         //           }
@@ -799,7 +819,28 @@
                 return;
             },
         });
-       
+        jQuery("#datepicker-autoclose76").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
+        jQuery("#datepicker-autoclose76a").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: maxDate,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > maxDate) return { enabled: false };
+                return;
+            },
+        });
         jQuery("#datepicker-autocloseg").datepicker({
             format: "dd/mm/yyyy",
             autoclose: true,
@@ -1016,6 +1057,78 @@
             format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
+        });
+
+        jQuery("#datepicker-autoclose500").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+
+        jQuery("#datepicker-autoclose501").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose502").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose503").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose504").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose505").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose506").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose507").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose508").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose509").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
         });
 
         jQuery("#datepicker-inline").datepicker();

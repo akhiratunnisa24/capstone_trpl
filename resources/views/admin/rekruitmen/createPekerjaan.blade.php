@@ -130,7 +130,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="form-group">
+                                                                {{-- <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">Lama Kerja</label>
                                                                         <div>
@@ -147,6 +147,20 @@
                                                                                     name="tglselesai"
                                                                                     autocomplete="off"
                                                                                     placeholder="dd/mm/yyyy" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> --}}
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Lama Kerja</label>
+                                                                        <div>
+                                                                            <div class="input-group">
+                                                                                <input id="datepicker-autoclose504" type="text" class="form-control" placeholder="yyyy"
+                                                                                name="tglmulai" style="text-align: center" autocomplete="off"  rows="10">
+                                                                                <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                                <input id="datepicker-autoclose505" type="text" class="form-control" placeholder="yyyy"
+                                                                                style="text-align: center" name="tglselesai" autocomplete="off"  rows="10">
                                                                             </div>
                                                                         </div>
                                                                     </div>

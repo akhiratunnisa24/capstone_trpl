@@ -185,13 +185,19 @@ class HomeController extends Controller
         $jadwal = Jadwal::where('tanggal', today())
             ->where('partner', Auth::user()->partner)
             ->first();
-        // Absen Terlambat Hari Ini
-        $absenTerlambatHariIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
-            ->whereMonth('tanggal', '=', Carbon::now()->month)
-            ->whereDay('tanggal', '=', Carbon::now())
-            ->where('jam_masuk','>',$jadwal->jadwal_masuk)
-            ->where('partner', $row->partner)
-            ->count();
+        if($jadwal !== null)
+        {
+            // Absen Terlambat Hari Ini
+            $absenTerlambatHariIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->whereDay('tanggal', '=', Carbon::now())
+                ->where('jam_masuk','>',$jadwal->jadwal_masuk)
+                ->where('partner', $row->partner)
+                ->count();
+        }else{
+          $absenTerlambatHariIni = 0;
+        }
+
             // Absen Terlambat Bulan Ini
         $absenTerlambat = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
