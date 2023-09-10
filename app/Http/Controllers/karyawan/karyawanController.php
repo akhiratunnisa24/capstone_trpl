@@ -2918,7 +2918,7 @@ class karyawanController extends Controller
                 'setorganisasi' => $setorganisasi,
 
                 ])
-            ->setPaper('a4', 'landscape');
+            ->setPaper('a4', 'portrait');
             return $pdf->stream("Data Karyawan "  . $data->nama . ".pdf");
     }
     public function showfile($id)

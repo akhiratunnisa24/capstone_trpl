@@ -190,7 +190,7 @@
                 <th>Email</th>
                 <td>{{ $data->email ?? '-' }}</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th>Nama Kontak Person</th>
                 <td>{{ $data->kdarurat->nama ?? '-' }}</td>
             </tr>
@@ -201,7 +201,7 @@
             <tr>
                 <th>No. Kontak Telp/HP</th>
                 <td>{{ $data->kdarurat->no_hp ?? '-' }}</td>
-            </tr>
+            </tr> --}}
             <tr>
                 <th></th>
                 <th></th>
@@ -252,9 +252,9 @@
 
     <h4>B. Riwayat Pendidikan</h4>
     <label class="text-white badge bg-info">Pendidikan Formal</label>
-    <table>
+    <table  class="table table-striped">
         <thead>
-            <tr>
+            <tr  class="table-bordered">
                 <th>No</th>
                 <th>Tingkat Pendidikan</th>
                 <th>Nama Sekolah</th>
@@ -290,10 +290,13 @@
             </tr>
         </thead>
         <tbody>
+            @php 
+                $no = 1;
+            @endphp
             @foreach ($pendidikan as $nf)
                 @if ($nf['jenis_pendidikan'] != null)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $no++ }}</td>
                         <td>{{ $nf->jenis_pendidikan }}</td>
                         <td>{{ $nf->kota_pnonformal }}</td>
                         <td>{{ $nf->tahun_lulus_nonformal }}</td>
