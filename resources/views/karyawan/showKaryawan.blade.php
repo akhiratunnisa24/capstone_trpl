@@ -139,11 +139,7 @@
                             <div class="row align-items-end">
                                 <div class="col-md mb-md-0 m-l-15">
                                     <label class="font-size-14 fw-bold">Jenis Kelamin *</label>
-                                    @if ($karyawan->jenis_kelamin == 'P')
-                                        <p>Perempuan</p>
-                                    @else
-                                        <p>Laki-Laki</p>
-                                    @endif
+                                        <p>{{$karyawan->jenis_kelamin}}</p>
                                 </div>
                             </div>
                         </div>

@@ -159,7 +159,7 @@
                                             <div class="form-group">
                                                 <div class="mb-3">
                                                     <label for="exampleInputEmail1" class="form-label">Status
-                                                        Pernikahan</label>
+                                                        Pernikahan<span style="color: red;">*</span></label>
                                                     <select class="form-control selectpicker" name="status_pernikahan"
                                                         required>
                                                         <option value="">Pilih Status Pernikahan</option>
@@ -423,7 +423,7 @@
                                             </div>
                                         </div>
 
-                                        
+
 
                                     </div>
                                 </div>
