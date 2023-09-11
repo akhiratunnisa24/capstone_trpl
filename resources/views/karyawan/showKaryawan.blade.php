@@ -264,7 +264,7 @@
         <div id="data-keluarga">
             <div class="modal-body" style="margin-left:15px;margin-right:15px;">
                 <label>
-                    <h4>B. DATA KELUARGA </h4>
+                    <h4>B. DATA KELUARGA & TANGGUNGAN</h4>
                 </label>
                 <table class="table table-striped">
                     <thead class="alert alert-info">
@@ -448,7 +448,7 @@
         <div id="riwayat-pekerjaan">
             <div class="modal-body" style="margin-left:15px;margin-right:15px;">
                 <label class="" width="100%">
-                    <h4>E. RIWAYAT PEKERJAAN</h4>
+                    <h4>E. RIWAYAT PENGALAMAN BEKERJA</h4>
                 </label>
                 <table class="table table-striped">
                     <thead class="alert alert-info">

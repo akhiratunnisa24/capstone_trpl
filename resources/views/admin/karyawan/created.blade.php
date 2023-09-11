@@ -62,7 +62,7 @@
                 <li class="">
                     <a id="tabs5" href="#riwayatpekerjaan" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-suitcase"></i></span>
-                        <span class="hidden-xs">E. RIWAYAT PEKERJAAN</span>
+                        <span class="hidden-xs">E. RIWAYAT PENGALAMAN BEKERJA</span>
                     </a>
                 </li>
             </ul>
@@ -333,7 +333,7 @@
                                                             <!-- SEBELAH KANAN -->
                                                             <div class="col-md-6">
                                                                 <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5 ">
-                                                                    <label class="text-white">Data Keluarga *) </label>
+                                                                    <label class="text-white">Data Keluarga & Tanggungan *) </label>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
@@ -744,7 +744,7 @@
                                                         <div class="row">
                                                             <div>
                                                                 <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                                    <label class="text-white m-b-10">E. Riwayat Pekerjaan</label>
+                                                                    <label class="text-white m-b-10">E. Riwayat Pengalaman Bekerja</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6 m-t-10">

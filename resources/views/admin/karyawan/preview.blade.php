@@ -372,7 +372,7 @@
                     </div>
                     <table class="table table-striped">
                         <label>
-                            <h4>B. DATA KELUARGA </h4>
+                            <h4>B. DATA KELUARGA & TANGGUNGAN</h4>
                         </label>
                         <thead class="alert alert-info">
                             <tr>
@@ -512,7 +512,7 @@
             <div id="riwayat-pekerjaan">
                 <div class="modal-body" style="margin-left:15px;margin-right:15px;">
                     <label class="" width="100%">
-                        <h4>E. RIWAYAT PEKERJAAN</h4>
+                        <h4>E. RIWAYAT PENGALAMAN BEKERJA</h4>
                     </label>
                     <table class="table table-striped">
                         <thead class="alert alert-info">
@@ -552,7 +552,7 @@
             <div id="riwayat-organisasi">
                 <div class="modal-body" style="margin-left:15px;margin-right:15px;">
                     <label class="" width="100%">
-                        <h4>F. RIWAYAT ORGANISASI</h4>
+                        <h4>F. RIWAYAT ORGANISASI & KOMUNITAS</h4>
                     </label>
                     <table class="table table-striped">
                         <thead class="alert alert-info">
@@ -588,7 +588,7 @@
             <div id="riwayat-organisasi">
                 <div class="modal-body" style="margin-left:15px;margin-right:15px;">
                     <label class="" width="100%">
-                        <h4>H. RIWAYAT PRESTASI </h4>
+                        <h4>H. RIWAYAT PENGHARGAAN/PRESTASI </h4>
                     </label>
                     <table class="table table-striped">
                         <thead class="alert alert-info">

@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title text-center" id="myLargeModalLabel">Edit Data Riwayat Organisasi</h4>
+                <h4 class="modal-title text-center" id="myLargeModalLabel">Edit Data Riwayat Organisasi & Komunitas</h4>
             </div>
             <div class="modal-body">
                 <form id="formModaleditcuti" action="/updateOrganisasi/{{ $org->id }}" method="POST"

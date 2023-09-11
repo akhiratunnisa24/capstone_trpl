@@ -141,7 +141,7 @@
 
                                                         <div
                                                             class="modal-header bg-info panel-heading  col-sm-15 m-b-10 m-t-10">
-                                                            <label class="text-white">B. DATA KELUARGA *) </label>
+                                                            <label class="text-white">B. DATA KELUARGA & TANGGUNGAN *) </label>
                                                         </div>
 
 
@@ -289,7 +289,7 @@
                                                     <div class="col-md-8 m-t-10">
                                                         <div
                                                             class="modal-header bg-info panel-heading  col-sm-15 m-b-10 m-t-10">
-                                                            <label class="text-white">B. DATA KELUARGA *) </label>
+                                                            <label class="text-white">B. DATA KELUARGA DAN TANGGUNGAN *) </label>
                                                         </div>
                                                         <div class="form-group"
                                                             style="margin-left:10px;margin-right:10px;">

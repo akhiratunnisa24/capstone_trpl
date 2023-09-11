@@ -631,7 +631,7 @@
                                                                         <div
                                                                             class="modal-header bg-info panel-heading  col-sm-15 m-b-2 ">
                                                                             <label class="  ">
-                                                                                <h4>D. Riwayat Pekerjaan </h4>
+                                                                                <h4>D. Riwayat Pengalaman Bekerja </h4>
                                                                             </label>
                                                                         </div>
 

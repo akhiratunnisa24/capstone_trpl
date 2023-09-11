@@ -55,7 +55,7 @@
                                                     <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
                                                         data-target="#addKeluarga"
                                                         style="margin-right:10px;margin-bottom:10px">
-                                                        <i class="fa fa-plus"> <strong> Tambah Data Keluarga</strong></i>
+                                                        <i class="fa fa-plus"> <strong> Tambah Data</strong></i>
                                                     </a>
                                                     @include('admin.karyawan.addKeluarga')
                                                     <table class="table table-bordered table-striped">

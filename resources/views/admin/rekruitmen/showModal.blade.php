@@ -358,7 +358,7 @@
 
                 <div class="col-md-12">
                     <label>
-                        <h4> F. DATA KELUARGA</h4>
+                        <h4> F. DATA KELUARGA & TANGGUNGAN</h4>
                     </label>
 
                     <table class="table table-striped">

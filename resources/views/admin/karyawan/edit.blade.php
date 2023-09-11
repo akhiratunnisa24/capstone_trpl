@@ -369,7 +369,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 modal-header bg-info panel-heading">
-                    <label><h4>D. RIWAYAT PEKERJAAN</h4></label><br> 
+                    <label><h4>D. RIWAYAT PENGALAMAN BEKERJA</h4></label><br> 
                 </div>
             </div><br>
             <div class="row">
