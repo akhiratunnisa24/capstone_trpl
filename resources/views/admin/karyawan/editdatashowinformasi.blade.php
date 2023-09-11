@@ -59,7 +59,7 @@
                                     <div class="row">
                                         <label class="form-label col-sm-3 text-end">Gaji Pokok</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-controlformats input-" placeholder="Masukkan Gaji Pokok" name="gajiKaryawan" autocomplete="off" value="{{ $karyawan->gaji ? number_format($karyawan->gaji, 0, ',', '.')  : ''}}" >
+                                            <input type="text" class="form-control input-formats" placeholder="Masukkan Gaji Pokok" name="gajiKaryawan" autocomplete="off" value="{{ $karyawan->gaji ? number_format($karyawan->gaji, 0, ',', '.')  : ''}}" >
                                         </div>
                                     </div>
                                 </div>
