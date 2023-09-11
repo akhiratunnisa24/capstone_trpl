@@ -51,6 +51,7 @@
                                     </select>
                                 </div>
                             </div>
+                            
                                 <input id="partner" type="hidden" class="form-control" name="partner" value="{{ Auth::user()->partner }}" autocomplete="off">
                             </div>
                         </div>
