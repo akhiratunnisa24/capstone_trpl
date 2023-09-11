@@ -91,7 +91,7 @@
 
         #photo {
             width: 100%;
-            margin: 2rem auto;
+            margin: 0.5rem auto;
             border-collapse: collapse;
             border: 2px solid #fffefe;
         }
@@ -100,6 +100,7 @@
             padding: 0.5rem;
             border-bottom: 1px solid #ddd;
             font-size: 12px; 
+            border-top: 1px solid #ddd;
         }
 
         tr:last-child td {
@@ -113,11 +114,12 @@
             text-align: left;
             font-size: 12px; 
             border-bottom: 1px solid #ddd;
+            border-top: 1px solid #ddd;
         }
         #foto {
             background-color: #fdfdfd;
             color: white;
-            padding: 0.5rem;
+            padding: 10px;
             text-align: left;
         }
     </style>
@@ -138,7 +140,7 @@
     <table id="photo">
         <tr>
             <th id="foto" colspan="2" style="text-align: center;">
-                <img src="{{ public_path('Foto_Profile/') . $data->foto }}" alt="" style="width: 30%; display: block; margin: 0 auto;">
+                <img src="{{ public_path('Foto_Profile/') . $data->foto }}" alt="" style="width: 180px; height: 220px; display: block; margin: 0 auto;">
             </th>
         </tr>
     </table>
@@ -282,6 +284,28 @@
         </tbody>
     </table>
 
+    <h4>B. Riwayat Jabatan</h4>
+    <table  class="table table-striped">
+        <thead>
+            <tr  class="table-bordered">
+                <th>No</th>
+                <th>Jabatan Terakhir</th>
+                <th>Level Jabatan</th>
+                <th>Gaji Terakhir</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($historyjabatan as $p)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $p->jabatans->nama_jabatan }}</td>
+                    <td>{{ $p->leveljabatans->nama_level }}</td>
+                    <td>{{ number_format(floatval($p->gaji_terakhir), 0, ',', '.')}}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
     <h4>B. Riwayat Pendidikan</h4>
     <label class="text-white badge bg-info">Pendidikan Formal</label>
     <table  class="table table-striped">
@@ -338,15 +362,15 @@
         </tbody>
     </table>
 
-    <h4>C. Riwayat Pekerjaan</h4>
+    <h4>C. Riwayat Pengalaman Bekerja</h4>
     <table class="table table-striped">
         <thead class="alert alert-info">
             <tr>
                 <th>No</th>
                 <th>Perusahaan</th>
                 <th>Alamat</th>
-                <th>Tanggal Masuk</th>
-                <th>Tanggal Keluar</th>
+                <th>Tahun Masuk</th>
+                <th>Tahun Selesai</th>
                 <th>Jabatan</th>
                 <th>Level</th>
                 <th>Gaji</th>
@@ -368,15 +392,15 @@
         </tbody>
     </table>
 
-    <h4>D. Riwayat Organisasi</h4>
+    <h4>D. Riwayat Organisasi & Komunitas</h4>
     <table class="table table-striped">
         <thead class="alert alert-info">
             <tr>
                 <th>No</th>
                 <th>Lembaga</th>
                 <th>Alamat</th>
-                <th>Tanggal Mulai</th>
-                <th>Tanggal Selesai</th>
+                <th>Tahun Mulai</th>
+                <th>Tahun Selesai</th>
                 <th>Jabatan</th>
                 <th>Nomor SK</th>
             </tr>
@@ -396,7 +420,7 @@
         </tbody>
     </table>
 
-    <h4>E. Riwayat Prestasi</h4>
+    <h4>E. Riwayat Penghargaan/Prestasi</h4>
     <table class="table table-striped">
         <thead class="alert alert-info">
             <tr>
@@ -422,7 +446,7 @@
         </tbody>
     </table>
 
-    <h4>F. Data Keluarga</h4>
+    <h4>F. Data Keluarga & Tanggungan</h4>
     <table class="table table-striped">
         <thead class="alert alert-info">
             <tr>

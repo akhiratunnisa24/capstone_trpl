@@ -502,10 +502,14 @@
                                                         <div class="form-group">
                                                             <div class="mb-3">
                                                                 <label class="form-label">No. Rekening</label>
-                                                                <input type="number" name="norekKaryawan"
-                                                                    class="form-control"
-                                                                    value="{{ $karyawan->no_rek ?? '' }}"
-                                                                    placeholder="Masukkan No. Rekening">
+                                                                <input type="number" name="norekKaryawan" class="form-control" value="{{ $karyawan->no_rek ?? '' }}" placeholder="Masukkan No. Rekening">
+                                                            </div>
+                                                        </div>
+
+                                                         <div class="form-group">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Gaji Pokok</label>
+                                                                <input type="text" name="gaji" class="form-control input-formats" value="{{ number_format($karyawan->gaji, 0, ',', '.') ?? '' }}" placeholder="Masukkan Gaji Pokok">
                                                             </div>
                                                         </div>
 
@@ -548,4 +552,20 @@
             }
         }
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputFormats = document.querySelectorAll('.input-formats');
+        
+            inputFormats.forEach(input => {
+                input.addEventListener('input', function() {
+                    const value = parseFloat(this.value.replace(/\./g, '').replace(/,/g, ''));
+                    if (!isNaN(value)) {
+                        const formattedValue = new Intl.NumberFormat('id-ID').format(value);
+                        this.value = formattedValue;
+                    }
+                });
+            });
+        });
+    </script> 
 @endsection

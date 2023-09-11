@@ -94,7 +94,7 @@
         /* Style untuk mengatur tampilan teks */
         .text-center {
             text-align: center;
-        } 
+        }
     </style>
 </head>
 
@@ -157,7 +157,7 @@
                     @endforeach
                 @endif
             </table>
-        </div> 
+        </div>
         <div class="col-md-6 row-table">
             <table id="absensi">
                <h3>POTONGAN:</h3>
@@ -191,19 +191,19 @@
             </table>
         </div>
     </div>
-    <hr>
+    <hr> 
     <table id="absensi">
         @foreach($detailgaji as $detail)
             @if($detail->id_benefit === 3)
                 <tr class="total-row">
                     <td class="text-right" style="font-weight: bold;">Total Penerimaan Bersih</td>
                     <td class="text-right" style="font-weight: bold;">Rp. {{ number_format($detail->total, 0, ',', '.') }}</td>
-                </tr> 
+                </tr>
                @endif
         @endforeach
     </table>
     <hr>
-    
+
     @php
         use Carbon\Carbon;
         $now = Carbon::now();
