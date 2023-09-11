@@ -3360,7 +3360,7 @@ class karyawanController extends Controller
                 $leveljabatan = Leveljabatan::all();
 
                 //  return $karyawan;
-                $informasigaji = Informasigaji::where('id_karyawan',$id)->first();
+                $informasigaji = Informasigaji::where('id_karyawan',$id)->where('status',1)->first();
                 if ($informasigaji === null)
                 {
                     $informasigaji = null;

@@ -343,6 +343,7 @@
             <tr>
                 <th>No</th>
                 <th>Jenis/Bidang Pendidikan</th>
+                <th>Nama Lembaga</th>
                 <th>Alamat</th>
                 <th>Tahun Mulai</th>
                 <th>Tahun Akhir</th>
@@ -357,6 +358,7 @@
                     <tr>
                         <td>{{ $no++ }}</td>
                         <td>{{ $nf->jenis_pendidikan }}</td>
+                        <td>{{ $nf->nama_lembaga }}</td>
                         <td>{{ $nf->kota_pnonformal }}</td>
                         <td>{{ $nf->tahun_masuk_nonformal }}</td>
                         <td>{{ $nf->tahun_lulus_nonformal }}</td>

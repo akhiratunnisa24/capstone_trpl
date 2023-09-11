@@ -16,7 +16,8 @@ class Informasigaji extends Model
                             'status_karyawan',
                             'level_jabatan',
                             'gaji_pokok',
-                            'partner'
+                            'partner',
+                            'status'
                         ];
 
     public function partners()
