@@ -284,7 +284,7 @@
         </tbody>
     </table>
 
-    <h4>B. Riwayat Jabatan</h4>
+    {{-- <h4>B. Riwayat Jabatan</h4>
     <table  class="table table-striped">
         <thead>
             <tr  class="table-bordered">
@@ -304,7 +304,7 @@
                 </tr>
             @endforeach
         </tbody>
-    </table>
+    </table> --}}
 
     <h4>B. Riwayat Pendidikan</h4>
     <label class="text-white badge bg-info">Pendidikan Formal</label>

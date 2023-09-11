@@ -3458,6 +3458,29 @@ class karyawanController extends Controller
         $gaji = preg_replace('/[^0-9]/', '', $request->gajiKaryawan);
         $gajiKaryawan = (float) $gaji;
 
+        //generate history jabatan;
+        $jabatanlama = $karyawan->nama_jabatan;
+        $jabatanbaru = $request->namaJabatan;
+
+        $levellama = $karyawan->jabatan;
+        $levelbaru = $request->leveljabatanKaryawan;
+
+        if($jabatanlama !== $jabatanbaru || $levellama !== $levelbaru)
+        {
+            $jabatan = Jabatan::where('nama_jabatan',$jabatanlama)->first();
+            $level   = LevelJabatan::where('nama_level',$karyawan->jabatan)->first();
+
+            $data = array(
+                'id_karyawan' => $karyawan->id,
+                'id_jabatan' => $jabatan->id,
+                'id_leveljabatan' => $level->id,
+                'tanggal' => \Carbon\Carbon::parse(Carbon::now())->format('Y-m-d'),
+                'gaji_terakhir' => $karyawan->gaji
+                
+            );
+            HistoryJabatan::insert($data);
+        }
+
         $data = array(
             'nama' => $request->post('namaKaryawan'),
             'divisi' => $request->post('divisi'),
