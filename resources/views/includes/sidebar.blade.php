@@ -123,12 +123,12 @@
                                             Benefit</a></li> --}}
                                     {{-- <li><a href="/benefit-karyawan"><i
                                                 class="mdi mdi-account-star-variant"></i><span></span>Benefit
-                                            {{-- Karyawan</a></li> --}}
+                                            Karyawan</a></li> --}}
                                 {{-- </ul>
                             </li>
                             <li><a href="/"><i class="mdi mdi-cash-usd"></i><span></span>Kompensasi</a></li>
                         </ul>
-                    </li>  --}}
+                    </li> --}}
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i
                                 class="fa fa-usd"></i><span
@@ -148,12 +148,11 @@
                                 <a href="#"><i class="fa fa-cogs"></i><span>Konfigurasi</span><span
                                         class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="/rekap-kehadiran"><i class="fa fa-user"></i><span>Kehadiran</span></a></li> 
-                                    {{-- <li><a href=""><i class="mdi mdi-account-multiple"></i><span></span>Grup</a></li> --}}
-                                {</ul>
+                                    <li><a href="/rekap-kehadiran"><i class="fa fa-user"></i><span>Kehadiran</span></a></li><li><a href=""><i class="mdi mdi-account-multiple"></i><span></span>Grup</a></li> --}}
+                                </ul>
                             </li>
                         </ul>
-                    </li> 
+                    </li>
 
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-off"></i><span
@@ -198,7 +197,7 @@
                                                 class="fa fa-reorder (alias)"></i><span></span>Kategori Salary</a></li>  --}}
                                     {{-- <li><a href="/struktur-penggajian"><i class="mdi mdi-clipboard-text"></i><span></span>Struktur Penggajian</a></li>
                                 </ul>
-                            </li>  --}}
+                            </li> --}}
                             <li><a href="/manajemen-harilibur"><i class="ti-calendar"></i><span>Manajemen
                                         Libur</span></a></li>
                             {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li> --}}
