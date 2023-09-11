@@ -2139,31 +2139,35 @@ class karyawanController extends Controller
         $karyawan = Karyawan::find($id);
         $request->validate(['foto' => 'image|mimes:jpeg,png,jpg|max:2048']);
         $fotoLama = $karyawan->foto;
-        $jabatanlama = $karyawan->nama_jabatan;
-        $jabatanbaru = $request->namaJabatan;
+        // $jabatanlama = $karyawan->nama_jabatan;
+        // $jabatanbaru = $request->namaJabatan;
 
-        $levellama = $karyawan->jabatan;
-        $levelbaru = $request->jabatanKaryawan;
-        if($jabatanlama !== $jabatanbaru || $levellama !== $levelbaru)
-        {
-            $jabatan = Jabatan::where('nama_jabatan',$jabatanlama)->first();
-            $level   = LevelJabatan::where('nama_level',$karyawan->jabatan)->first();
+        // $levellama = $karyawan->jabatan;
+        // $levelbaru = $request->jabatanKaryawan;
+        // if($jabatanlama !== $jabatanbaru|| $jabatanlama !== null || $levellama !== $levelbaru || $levellama !== null)
+        // {
+        //     $jabatan = Jabatan::where('nama_jabatan',$jabatanlama)->first();
+        //     $level   = LevelJabatan::where('nama_level',$karyawan->jabatan)->first();
 
-            $data = array(
-                'id_karyawan' => $karyawan->id,
-                'id_jabatan' => $jabatan->id,
-                'id_leveljabatan' => $level->id,
-                'tanggal' => \Carbon\Carbon::parse(Carbon::now())->format('Y-m-d'),
-                'gaji_terakhir' => $karyawan->gaji
-                
-            );
-            HistoryJabatan::insert($data);
-        }
-        else
-        {
-            $nama_jabatan = $jabatanlama;
+        //     // dd($jabatanlama,$jabatanbaru,$jabatan);
+        //     if($jabatanlama !== null || $levellama !== null || isset($jabatan->nama_jabatan) !== null || isset($level->jabatan) !== null)
+        //     {
+        //         $data = array(
+        //             'id_karyawan' => $karyawan->id,
+        //             'id_jabatan' => $jabatan->id,
+        //             'id_leveljabatan' => $level->id,
+        //             'tanggal' => \Carbon\Carbon::parse(Carbon::now())->format('Y-m-d'),
+        //             'gaji_terakhir' => $karyawan->gaji
+                    
+        //         );
+        //         HistoryJabatan::insert($data);
+        //     }
+        // }
+        // else
+        // {
+        //     $nama_jabatan = $jabatanlama;
     
-        }
+        // }
 
         if ($file = $request->file('foto')) {
             // hapus foto lama dari storage
@@ -3459,27 +3463,27 @@ class karyawanController extends Controller
         $gajiKaryawan = (float) $gaji;
 
         //generate history jabatan;
-        $jabatanlama = $karyawan->nama_jabatan;
-        $jabatanbaru = $request->namaJabatan;
+        // $jabatanlama = $karyawan->nama_jabatan;
+        // $jabatanbaru = $request->namaJabatan;
 
-        $levellama = $karyawan->jabatan;
-        $levelbaru = $request->leveljabatanKaryawan;
+        // $levellama = $karyawan->jabatan;
+        // $levelbaru = $request->leveljabatanKaryawan;
 
-        if($jabatanlama !== $jabatanbaru || $levellama !== $levelbaru)
-        {
-            $jabatan = Jabatan::where('nama_jabatan',$jabatanlama)->first();
-            $level   = LevelJabatan::where('nama_level',$karyawan->jabatan)->first();
+        // if($jabatanlama !== $jabatanbaru || $levellama !== $levelbaru)
+        // {
+        //     $jabatan = Jabatan::where('nama_jabatan',$jabatanlama)->first();
+        //     $level   = LevelJabatan::where('nama_level',$karyawan->jabatan)->first();
 
-            $data = array(
-                'id_karyawan' => $karyawan->id,
-                'id_jabatan' => $jabatan->id,
-                'id_leveljabatan' => $level->id,
-                'tanggal' => \Carbon\Carbon::parse(Carbon::now())->format('Y-m-d'),
-                'gaji_terakhir' => $karyawan->gaji
+        //     $data = array(
+        //         'id_karyawan' => $karyawan->id,
+        //         'id_jabatan' => $jabatan->id,
+        //         'id_leveljabatan' => $level->id,
+        //         'tanggal' => \Carbon\Carbon::parse(Carbon::now())->format('Y-m-d'),
+        //         'gaji_terakhir' => $karyawan->gaji
                 
-            );
-            HistoryJabatan::insert($data);
-        }
+        //     );
+        //     HistoryJabatan::insert($data);
+        // }
 
         $data = array(
             'nama' => $request->post('namaKaryawan'),

@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title text-center" id="myLargeModalLabel">Tambah Data Keluarga</h4>
+                <h4 class="modal-title text-center" id="myLargeModalLabel">Tambah Data</h4>
             </div>
             <div class="modal-body">
                 <form id="" action="/storesdatakeluarga/{{ $karyawan->id }}" method="POST"

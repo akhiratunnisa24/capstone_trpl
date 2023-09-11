@@ -202,7 +202,7 @@
                                             <div class="row">
                                                 <div>
                                                     <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                        <label class="text-white m-b-10">G. RIWAYAT PRESTASI</label>
+                                                        <label class="text-white m-b-10">G. RIWAYAT PENGHARGAAN/PRESTASI</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 m-t-10">

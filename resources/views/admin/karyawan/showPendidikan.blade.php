@@ -59,7 +59,7 @@
 
                                                 <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
                                                     data-target="#addPformal" style="margin-right:10px;margin-bottom:10px">
-                                                    <i class="fa fa-plus"> <strong> Tambah Pendidikan Formal</strong></i>
+                                                    <i class="fa fa-plus"> <strong> Tambah Data</strong></i>
                                                 </a>
                                                 @include('admin.karyawan.addPformal')
                                                 <table class="table table-bordered table-striped">
@@ -129,7 +129,7 @@
 
                                                 <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
                                                     data-target="#addPnformal" style="margin-right:10px;margin-bottom:10px">
-                                                    <i class="fa fa-plus"> <strong> Tambah Pend. Non Formal</strong></i>
+                                                    <i class="fa fa-plus"> <strong> Tambah Data</strong></i>
                                                 </a>
 
                                                 @include('admin.karyawan.addPnformal')

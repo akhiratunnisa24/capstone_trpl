@@ -29,7 +29,7 @@
 
         #absensi td,
         #absensi th {
-            border: 1px solid #ddd;
+            border: none;
             padding: 8px;
             border-bottom: 1px solid #ddd;
         }
@@ -86,7 +86,7 @@
             width: 100%;
             margin: 2rem auto;
             border-collapse: collapse;
-            border: 2px solid #ddd;
+            border : 1px solid #878686;
         }
 
         #photo {
@@ -98,9 +98,8 @@
 
         td {
             padding: 0.5rem;
-            border-bottom: 1px solid #ddd;
             font-size: 12px; 
-            border-top: 1px solid #ddd;
+            border : 1px solid #878686;
         }
 
         tr:last-child td {
@@ -113,8 +112,9 @@
             padding: 0.5rem;
             text-align: left;
             font-size: 12px; 
-            border-bottom: 1px solid #ddd;
-            border-top: 1px solid #ddd;
+            /* border-bottom: 1px solid #ddd;
+            border-top: 1px solid #ddd; */
+            border : 1px solid #878686;
         }
         #foto {
             background-color: #fdfdfd;
@@ -153,7 +153,7 @@
                 </td>
             </tr> --}}
             <tr>
-                <th>NIP Karyawan</th>
+                <th>NIK Karyawan</th>
                 <td>{{ $data->nip ?? '-' }}</td>
             </tr>
             <tr>
@@ -316,7 +316,8 @@
                 <th>Nama Sekolah</th>
                 <th>Alamat</th>
                 <th>Jurusan</th>
-                <th>Tahun Lulus</th>
+                <th>Tahun Mulai</th>
+                <th>Tahun Akhir</th>
             </tr>
         </thead>
         <tbody>
@@ -328,6 +329,7 @@
                         <td>{{ $p->nama_sekolah }}</td>
                         <td>{{ $p->kota_pformal }}</td>
                         <td>{{ $p->jurusan }}</td>
+                        <td>{{ $p->tahun_masuk_formal }}</td>
                         <td>{{ $p->tahun_lulus_formal }}</td>
                     </tr>
                 @endif
@@ -342,7 +344,8 @@
                 <th>No</th>
                 <th>Jenis/Bidang Pendidikan</th>
                 <th>Alamat</th>
-                <th>Tahun Lulus</th>
+                <th>Tahun Mulai</th>
+                <th>Tahun Akhir</th>
             </tr>
         </thead>
         <tbody>
@@ -355,6 +358,7 @@
                         <td>{{ $no++ }}</td>
                         <td>{{ $nf->jenis_pendidikan }}</td>
                         <td>{{ $nf->kota_pnonformal }}</td>
+                        <td>{{ $nf->tahun_masuk_nonformal }}</td>
                         <td>{{ $nf->tahun_lulus_nonformal }}</td>
                     </tr>
                 @endif
@@ -453,6 +457,8 @@
                 <th>No</th>
                 <th>Nama</th>
                 <th>Tanggal Lahir</th>
+                <th>Kota Kelahiran</th>
+                <th>Jenis Kelamin</th>
                 <th>Hubungan</th>
                 <th>Pendidikan Terakhir</th>
                 <th>Pekerjaan</th>
@@ -463,7 +469,9 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $keluarga->nama }}</td>
-                    <td>{{ $keluarga->tgllahir }}</td>
+                    <td>{{ Carbon\Carbon::parse($keluarga->tgllahir)->format('d/m/Y') }}</td>
+                    <td>{{ $keluarga->tempatlahir}}</td>
+                    <td>{{ $keluarga->jenis_kelamin}}</td>
                     <td>{{ $keluarga->hubungan }}</td>
                     <td>{{ $keluarga->pendidikan_terakhir }}</td>
                     <td>{{ $keluarga->pekerjaan }}</td>

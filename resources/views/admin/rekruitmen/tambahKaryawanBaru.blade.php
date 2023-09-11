@@ -62,7 +62,7 @@
                             <li class="">
                                 <a id="tabs2" href="#datakeluarga" data-toggle="tab" aria-expanded="true">
                                     <span class="visible-xs"><i class="mdi mdi-account-multiple"></i></span>
-                                    <span class="hidden-xs">B. DATA KELUARGA</span>
+                                    <span class="hidden-xs">B. DATA KELUARGA & TANGGUNGAN</span>
                                 </a>
                             </li>
                             <li class="">
@@ -80,7 +80,7 @@
                             <li class="">
                                 <a id="tabs5" href="#riwayatpekerjaan" data-toggle="tab" aria-expanded="true">
                                     <span class="visible-xs"><i class="fa fa-suitcase"></i></span>
-                                    <span class="hidden-xs">E. RIWAYAT PEKERJAAN</span>
+                                    <span class="hidden-xs">E. RIWAYAT PENGALAMAN BEKERJA</span>
                                 </a>
                             </li>
                         </ul>
@@ -490,7 +490,7 @@
                                                                         <div class="col-md-6">
                                                                             <div
                                                                                 class="modal-header bg-info panel-heading  col-sm-15 m-b-5 ">
-                                                                                <label class="text-white">Data Keluarga
+                                                                                <label class="text-white">Data Keluarga & Tanggungan
                                                                                     *)
                                                                                 </label>
                                                                             </div>
@@ -1033,7 +1033,7 @@
                                                             <th>Nama Perusahaan</th>
                                                             <th>Jabatan</th>
                                                             <th>Lama Kerja</th>
-                                                            <th>Gaji</th>
+                                                            <th>Gaji Terakhir</th>
                                                             <th>Atasan Langsung</th>
                                                             <th>Direktur</th>
 

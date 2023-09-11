@@ -107,7 +107,7 @@
                                                     <div class="row">
                                                         <div>
                                                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                                <label class="text-white m-b-10">E. RIWAYAT PEKERJAAN</label>
+                                                                <label class="text-white m-b-10">E. RIWAYAT PENGALAMAN BEKERJA</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 m-t-10">
@@ -228,7 +228,7 @@
                                                     <div class="row">
                                                         <div>
                                                             <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                                <label class="text-white m-b-10">E. RIWAYAT PEKERJAAN</label>
+                                                                <label class="text-white m-b-10">E. RIWAYAT PENGALAMAN BEKERJA</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 m-t-10">
