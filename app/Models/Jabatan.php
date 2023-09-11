@@ -16,4 +16,9 @@ class Jabatan extends Model
     {
         return $this->belongsTo(Partner::class, 'partner', 'id');
     }
+
+    public function historyjabatans()
+    {
+        return $this->hasMany(HistoryJabatan::class, 'id_jabatan','id');
+    }
 }

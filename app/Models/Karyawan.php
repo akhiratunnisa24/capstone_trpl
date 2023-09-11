@@ -181,4 +181,9 @@ class Karyawan extends Model
         return $this->hasMany(DetailPenggajian::class,'id_karyawan','id');
     }
 
+    public function historyjabatans()
+    {
+        return $this->hasMany(HistoryJabatan::class, 'id_karyawan','id');
+    }
+
 }
