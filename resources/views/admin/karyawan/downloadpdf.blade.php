@@ -371,9 +371,9 @@
                 <th>Alamat</th>
                 <th>Tahun Masuk</th>
                 <th>Tahun Selesai</th>
-                <th>Jabatan</th>
-                <th>Level</th>
-                <th>Gaji</th>
+                <th>Jabatan Terakhir</th>
+                <th>Level Jabatan</th>
+                <th>Gaji Terakhir</th>
             </tr>
         </thead>
         <tbody>
