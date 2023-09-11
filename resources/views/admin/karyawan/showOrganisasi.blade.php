@@ -48,7 +48,7 @@
                                                 <div class="row">
                                                     <div>
                                                         <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                            <label class="text-white m-b-10">D. RIWAYAT ORGANISASI</label>
+                                                            <label class="text-white m-b-10">D. RIWAYAT ORGANISASI & KOMUNITAS</label>
                                                         </div>
                                                     </div>
 
