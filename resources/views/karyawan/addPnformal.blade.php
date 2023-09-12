@@ -35,12 +35,12 @@
                                 <div class="mb-3">
                                     <label class="form-label">Lama Pendidikan</label>
                                     <div>
-                                        <div class="input-daterange input-group" id="date-range2">
-                                            <input type="text" class="form-control" name="tahun_masukNonFormal"
-                                                placeholder="dd/mm/yyyy" autocomplete="off" />
+                                        <div class="input-group">
+                                            <input  id="datepicker-autoclose-format-bc" type="text" class="form-control" name="tahun_masukNonFormal"
+                                                placeholder="yyyy" autocomplete="off" />
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input type="text" class="form-control" name="tahun_lulusNonFormal"
-                                                placeholder="dd/mm/yyyy" autocomplete="off" />
+                                            <input  id="datepicker-autoclose-format-bd" type="text" class="form-control" name="tahun_lulusNonFormal"
+                                                placeholder="yyyy" autocomplete="off" />
                                         </div>
                                     </div>
                                 </div>

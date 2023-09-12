@@ -56,7 +56,7 @@
                                             <th>Gaji</th>
                                             {{-- <th>Alasan Berhenti</th> --}}
                                             <th>Aksi</th>
-            
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -117,7 +117,7 @@
                                                                     <input type="text" name="namaPerusahaan" class="form-control"  placeholder="Masukkan Nama Perusahaan" autocomplete="off">
                                                                 </div>
                                                             </div>
-    
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Alamat </label>
@@ -130,53 +130,53 @@
                                                                     <label class="form-label">Lama Kerja</label>
                                                                     <div>
                                                                         <div class="input-group">
-                                                                            <input id="datepicker-autoclose-format-y" type="text" class="form-control" placeholder="yyyy" 
+                                                                            <input id="datepicker-autoclose-format-y" type="text" class="form-control" placeholder="mm/yyyy"
                                                                                 name="tglmulai" autocomplete="off"  rows="10">
                                                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input id="datepicker-autoclose-format-z" type="text" class="form-control" placeholder="yyyy" 
+                                                                            <input id="datepicker-autoclose-format-z" type="text" class="form-control" placeholder="mm/yyyy"
                                                                                 name="tglselesai" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-    
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Jabatan Terakhir</label>
                                                                     <input type="text" name="jabatanRpekerjaan" class="form-control" placeholder="Masukkan Jabatan" autocomplete="off">
                                                                 </div>
                                                             </div>
-    
+
                                                             {{-- <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Jenis Usaha</label>
                                                                     <input type="text" name="jenisUsaha" class="form-control" placeholder="Masukkan Jenis Usaha" autocomplete="off">
                                                                 </div>
                                                             </div> --}}
-    
+
                                                             {{-- <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label"> Nama Atasan Langsung</label>
                                                                     <input type="text" name="namaAtasan" class="form-control"  placeholder="Masukkan Nama Atasan" autocomplete="off">
-                                                                
+
                                                                 </div>
                                                             </div> --}}
 
                                                         </div>
-    
+
                                                         {{-- KANAN --}}
                                                         <div class="col-md-6 m-t-10">
 
                                                             {{-- <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">  Nama Direktur</label>
-                                                                    <input type="text" name="namaDirektur"  class="form-control" 
+                                                                    <input type="text" name="namaDirektur"  class="form-control"
                                                                        placeholder="Masukkan Nama Direktur" autocomplete="off">
                                                                 </div>
                                                             </div> --}}
 
                                                             <div class="form-group">
-                                                                <div class="mb-3">  
+                                                                <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Level / Pangkat / Golongan</label>
                                                                     <input type="text" name="levelRpekerjaan" class="form-control" placeholder="Masukkan Level" autocomplete="off">
                                                                 </div>
@@ -188,17 +188,17 @@
                                                                     <input type="text" name="gajiRpekerjaan" class="form-control" id="gaji" placeholder="Masukkan Gaji" autocomplete="off">
                                                                 </div>
                                                             </div>
-    
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Alasan Berhenti</label>
                                                                     <input type="text"  name="alasanBerhenti" class="form-control" placeholder="Masukkan Alasan Berhenti" autocomplete="off">
-                                                                    
+
                                                                 </div>
                                                             </div>
-    
-                                                            
-    
+
+
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -215,8 +215,8 @@
                                             </table>
                                         </div>
                                     </div>
-                                </form> 
-                                
+                                </form>
+
                                 <form action="/updatepekerjaan" id="formUpdatePekerjaan"  method="POST" enctype="multipart/form-data">
                                     {{-- <div class="control-group after-add-more"> --}}
                                         @csrf
@@ -238,7 +238,7 @@
                                                                     <input type="text" id="namaPerusahaan" name="namaPerusahaan" class="form-control"  placeholder="Masukkan Nama Perusahaan" autocomplete="off">
                                                                 </div>
                                                             </div>
-    
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Alamat </label>
@@ -251,10 +251,10 @@
                                                                     <label class="form-label">Lama Kerja</label>
                                                                     <div>
                                                                         <div class="input-group">
-                                                                            <input id="datepicker-autoclose-format-aa" type="text" class="form-control" placeholder="yyyy" 
+                                                                            <input id="datepicker-autoclose-format-aa" type="text" class="form-control" placeholder="mm/yyyy"
                                                                             name="tglmulai"  autocomplete="off"  rows="10">
                                                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input id="datepicker-autoclose-format-ab" type="text" class="form-control" placeholder="yyyy" 
+                                                                            <input id="datepicker-autoclose-format-ab" type="text" class="form-control" placeholder="mm/yyyy"
                                                                                 name="tglselesai" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
@@ -267,25 +267,25 @@
                                                                     <input type="text" id="jabatanRpekerjaan" name="jabatanRpekerjaan" class="form-control" placeholder="Masukkan Jabatan" autocomplete="off">
                                                                 </div>
                                                             </div>
-    
+
                                                             {{-- <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Jenis Usaha</label>
                                                                     <input type="text" id="JenissUsaha"  name="jenisUsaha" class="form-control" placeholder="Masukkan Jenis Usaha" autocomplete="off">
                                                                 </div>
                                                             </div> --}}
-    
-                                                           
-    
+
+
+
                                                             {{-- <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label"> Nama Atasan Langsung</label>
                                                                     <input type="text" id="namaAtasan" name="namaAtasan" class="form-control"  placeholder="Masukkan Nama Atasan" autocomplete="off">
-                                                                
+
                                                                 </div>
                                                             </div> --}}
                                                         </div>
-    
+
                                                         {{-- KANAN --}}
                                                         <div class="col-md-6 m-t-10">
                                                             {{-- <div class="form-group">
@@ -295,12 +295,12 @@
                                                                 </div>
                                                             </div> --}}
                                                             <div class="form-group">
-                                                                <div class="mb-3">  
+                                                                <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Level / Pangkat / Golongan</label>
                                                                     <input type="text" name="levelRpekerjaan" class="form-control" id="levelpekerjaan" placeholder="Masukkan Level" autocomplete="off">
                                                                 </div>
                                                             </div>
-    
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Gaji</label>
@@ -312,10 +312,10 @@
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1" class="form-label">Alasan Berhenti</label>
                                                                     <input type="text" id="alasanBerhenti"  name="alasanBerhenti" class="form-control" placeholder="Masukkan Alasan Berhenti" autocomplete="off">
-                                                                    
+
                                                                 </div>
                                                             </div>
-    
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -332,7 +332,7 @@
                                             {{-- </table> --}}
                                         </div>
                                     {{-- </div> --}}
-                                </form> 
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -340,11 +340,11 @@
             </div>
         </div>
     </div>
-       
+
      {{-- <script src="assets/js/jquery.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    
+
 
     <script>
         var rupiah = document.getElementById('gaji');
@@ -434,11 +434,14 @@
                     // var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal.getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
                     // $('#tgl_selesai').val(tanggalFormatted);
 
-                    $('#datepicker-autoclose-format-aa').val(data.tgl_mulai); 
+                    $('#datepicker-autoclose-format-aa').val(data.tgl_mulai);
                     $('#datepicker-autoclose-format-ab').val(data.tgl_selesai);
-                    
+
             });
         });
     </script>
-    
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/i18n/jquery-ui-i18n.min.js"></script>
+
+
 @endsection

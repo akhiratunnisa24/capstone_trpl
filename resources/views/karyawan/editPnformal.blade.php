@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title center" id="myLargeModalLabel">Edit Data Pendidikan Non Formal</h4>
+                <h4 class="modal-title text-center" id="myLargeModalLabel">Edit Data Pendidikan Non Formal</h4>
             </div>
             <div class="modal-body">
                 <form id="formModaleditcuti" action="/update-pendidikan/{{$pendidikan->id}}" method="POST" enctype="multipart/form-data">
@@ -34,11 +34,11 @@
                                 <div class="mb-3">
                                     <label class="form-label">Lama Pendidikan</label>
                                     <div>
-                                        <div class="input-daterange input-group">
-                                            <input type="date" class="form-control" name="tahun_masukNonFormal"
+                                        <div class="input-group">
+                                            <input id="datepicker-autoclose-format-bg" type="text" class="form-control" name="tahun_masukNonFormal"
                                                 placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $pendidikan->tahun_masuk_nonformal }}" />
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input type="date" class="form-control" name="tahun_lulusNonFormal"
+                                            <input id="datepicker-autoclose-format-bh" type="text" class="form-control" name="tahun_lulusNonFormal"
                                                 placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $pendidikan->tahun_lulus_nonformal }}" />
                                         </div>
                                     </div>

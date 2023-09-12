@@ -284,7 +284,9 @@
                                     </div>
                                     <input type="hidden" class="form-control" name="id_slip" value ="{{$slipgaji->id}}">
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-sm btn-success" title="Kirim Slip Gaji" >Kirim Slip Gaji  <i class="fa fa-paper-plane-o"></i></button>
+                                        @if($slipgaji->statusmail == 0)
+                                            <button type="submit" class="btn btn-sm btn-success" title="Kirim Slip Gaji" >Kirim Slip Gaji  <i class="fa fa-paper-plane-o"></i></button>
+                                        @endif
                                         <a href="/slipgaji-pdf/{{ $slipgaji->id }}" class="btn btn-info btn-sm btn-info"  title="Print Slip Gaji" target="_blank">Print <i class="fa fa-file-pdf-o"></i></a>
                                         <a href="/slipgaji-karyawan" class="btn btn-sm btn-danger" type="button">Kembali  <i class="fa fa-home"></i></a>
                                     </div>

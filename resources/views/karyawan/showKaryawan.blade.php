@@ -396,7 +396,7 @@
                 <table class="table table-striped">
                     <thead class="alert alert-info">
                         <tr>
-                            <th>No</th>
+                            {{-- <th>No</th> --}}
                             <th>Bidang/Jenis</th>
                             <th>Lembaga Pendidikan</th>
                             <th>Tahun Mulai</th>
@@ -410,7 +410,6 @@
                         @forelse($pendidikan as $pendidikan)
                             @if ($pendidikan->jenis_pendidikan != null)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $pendidikan->jenis_pendidikan }}</td>
                                     <td>{{ $pendidikan->nama_lembaga }}</td>
                                     @if ($pendidikan->tahun_masuk_nonformal !== null)
@@ -486,5 +485,8 @@
             <a href="karyawandashboard" class="btn btn-sm btn-danger">Kembali</a>
         </div>
     </div>
-
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/pages/form-advanced.js"></script>
+    
 @endsection
