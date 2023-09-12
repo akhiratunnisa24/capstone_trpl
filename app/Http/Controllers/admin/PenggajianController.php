@@ -715,16 +715,20 @@ class PenggajianController extends Controller
 
 
             //mengirim email notifikasi slip gaji kepada karyawan
-            $data = [
-                'subject' => "Notifikasi Slip Gaji - " . $nama . " - [" . $periode . "]",
-                'periode' => $periode,
-                'tglgajian' => $tglgajian,
-                'nama' => $nama,
-            ];
-            Mail::to($tujuan)->send(new SlipgajiNotification($data));
-            $dataupdate = [
-                'statusmail'=> 1,
-            ];
+            if($slipgaji->statusmail == 0)
+            {
+                $data = [
+                    'subject' => "Notifikasi Slip Gaji - " . $nama . " - [" . $periode . "]",
+                    'periode' => $periode,
+                    'tglgajian' => $tglgajian,
+                    'nama' => $nama,
+                ];
+                Mail::to($tujuan)->send(new SlipgajiNotification($data));
+                $dataupdate = [
+                    'statusmail'=> 1,
+                ];
+            }
+
             $slipgaji->update($dataupdate);
 
             // data yang ditampilkan pada form slip gaji

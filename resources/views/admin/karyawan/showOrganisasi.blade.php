@@ -48,7 +48,7 @@
                                                 <div class="row">
                                                     <div>
                                                         <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                            <label class="text-white m-b-10">D. RIWAYAT ORGANISASI</label>
+                                                            <label class="text-white m-b-10">D. RIWAYAT ORGANISASI & KOMUNITAS</label>
                                                         </div>
                                                     </div>
 
@@ -56,7 +56,7 @@
                                                     <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
                                                         data-target="#addPekerjaan"
                                                         style="margin-right:10px;margin-bottom:10px">
-                                                        <i class="fa fa-plus"> <strong> Tambah Data Organisasi</strong></i>
+                                                        <i class="fa fa-plus"> <strong> Tambah Data</strong></i>
                                                     </a>
                                                     @include('admin.karyawan.addOrganisasi')
                                                     <table class="table table-bordered table-striped">

@@ -48,7 +48,7 @@
                                                 <div class="row">
                                                     <div>
                                                         <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                            <label class="text-white m-b-10">E. RIWAYAT PRESTASI</label>
+                                                            <label class="text-white m-b-10">E. RIWAYAT PENGHARGAAN/PRESTASI</label>
                                                         </div>
                                                     </div>
 
@@ -56,7 +56,7 @@
                                                     <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
                                                         data-target="#addPrestasi"
                                                         style="margin-right:10px;margin-bottom:10px">
-                                                        <i class="fa fa-plus"> <strong> Tambah Data Prestasi</strong></i>
+                                                        <i class="fa fa-plus"> <strong> Tambah Data</strong></i>
                                                     </a>
                                                     @include('admin.karyawan.addPrestasi')
                                                     <table class="table table-bordered table-striped">

@@ -15,4 +15,8 @@ class LevelJabatan extends Model
     {
         return $this->hasMany(Informasigaji::class, 'level_jabatan','id');
     }
+    public function historyjabatans()
+    {
+        return $this->hasMany(HistoryJabatan::class, 'id_leveljabatan','id');
+    }
 }

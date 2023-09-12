@@ -29,7 +29,7 @@
 
         #absensi td,
         #absensi th {
-            border: 1px solid #ddd;
+            border: none;
             padding: 8px;
             border-bottom: 1px solid #ddd;
         }
@@ -86,20 +86,20 @@
             width: 100%;
             margin: 2rem auto;
             border-collapse: collapse;
-            border: 2px solid #ddd;
+            border : 1px solid #878686;
         }
 
         #photo {
             width: 100%;
-            margin: 2rem auto;
+            margin: 0.5rem auto;
             border-collapse: collapse;
             border: 2px solid #fffefe;
         }
 
         td {
             padding: 0.5rem;
-            border-bottom: 1px solid #ddd;
             font-size: 12px; 
+            border : 1px solid #878686;
         }
 
         tr:last-child td {
@@ -112,12 +112,14 @@
             padding: 0.5rem;
             text-align: left;
             font-size: 12px; 
-            border-bottom: 1px solid #ddd;
+            /* border-bottom: 1px solid #ddd;
+            border-top: 1px solid #ddd; */
+            border : 1px solid #878686;
         }
         #foto {
             background-color: #fdfdfd;
             color: white;
-            padding: 0.5rem;
+            padding: 10px;
             text-align: left;
         }
     </style>
@@ -138,7 +140,7 @@
     <table id="photo">
         <tr>
             <th id="foto" colspan="2" style="text-align: center;">
-                <img src="{{ public_path('Foto_Profile/') . $data->foto }}" alt="" style="width: 30%; display: block; margin: 0 auto;">
+                <img src="{{ public_path('Foto_Profile/') . $data->foto }}" alt="" style="width: 180px; height: 220px; display: block; margin: 0 auto;">
             </th>
         </tr>
     </table>
@@ -151,7 +153,7 @@
                 </td>
             </tr> --}}
             <tr>
-                <th>NIP Karyawan</th>
+                <th>NIK Karyawan</th>
                 <td>{{ $data->nip ?? '-' }}</td>
             </tr>
             <tr>
@@ -282,6 +284,28 @@
         </tbody>
     </table>
 
+    {{-- <h4>B. Riwayat Jabatan</h4>
+    <table  class="table table-striped">
+        <thead>
+            <tr  class="table-bordered">
+                <th>No</th>
+                <th>Jabatan Terakhir</th>
+                <th>Level Jabatan</th>
+                <th>Gaji Terakhir</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($historyjabatan as $p)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $p->jabatans->nama_jabatan }}</td>
+                    <td>{{ $p->leveljabatans->nama_level }}</td>
+                    <td>{{ number_format(floatval($p->gaji_terakhir), 0, ',', '.')}}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table> --}}
+
     <h4>B. Riwayat Pendidikan</h4>
     <label class="text-white badge bg-info">Pendidikan Formal</label>
     <table  class="table table-striped">
@@ -292,7 +316,8 @@
                 <th>Nama Sekolah</th>
                 <th>Alamat</th>
                 <th>Jurusan</th>
-                <th>Tahun Lulus</th>
+                <th>Tahun Mulai</th>
+                <th>Tahun Akhir</th>
             </tr>
         </thead>
         <tbody>
@@ -304,6 +329,7 @@
                         <td>{{ $p->nama_sekolah }}</td>
                         <td>{{ $p->kota_pformal }}</td>
                         <td>{{ $p->jurusan }}</td>
+                        <td>{{ $p->tahun_masuk_formal }}</td>
                         <td>{{ $p->tahun_lulus_formal }}</td>
                     </tr>
                 @endif
@@ -317,8 +343,10 @@
             <tr>
                 <th>No</th>
                 <th>Jenis/Bidang Pendidikan</th>
+                <th>Nama Lembaga</th>
                 <th>Alamat</th>
-                <th>Tahun Lulus</th>
+                <th>Tahun Mulai</th>
+                <th>Tahun Akhir</th>
             </tr>
         </thead>
         <tbody>
@@ -330,7 +358,9 @@
                     <tr>
                         <td>{{ $no++ }}</td>
                         <td>{{ $nf->jenis_pendidikan }}</td>
+                        <td>{{ $nf->nama_lembaga }}</td>
                         <td>{{ $nf->kota_pnonformal }}</td>
+                        <td>{{ $nf->tahun_masuk_nonformal }}</td>
                         <td>{{ $nf->tahun_lulus_nonformal }}</td>
                     </tr>
                 @endif
@@ -338,18 +368,18 @@
         </tbody>
     </table>
 
-    <h4>C. Riwayat Pekerjaan</h4>
+    <h4>C. Riwayat Pengalaman Bekerja</h4>
     <table class="table table-striped">
         <thead class="alert alert-info">
             <tr>
                 <th>No</th>
                 <th>Perusahaan</th>
                 <th>Alamat</th>
-                <th>Tanggal Masuk</th>
-                <th>Tanggal Keluar</th>
-                <th>Jabatan</th>
-                <th>Level</th>
-                <th>Gaji</th>
+                <th>Tahun Masuk</th>
+                <th>Tahun Selesai</th>
+                <th>Jabatan Terakhir</th>
+                <th>Level Jabatan</th>
+                <th>Gaji Terakhir</th>
             </tr>
         </thead>
         <tbody>
@@ -368,15 +398,15 @@
         </tbody>
     </table>
 
-    <h4>D. Riwayat Organisasi</h4>
+    <h4>D. Riwayat Organisasi & Komunitas</h4>
     <table class="table table-striped">
         <thead class="alert alert-info">
             <tr>
                 <th>No</th>
                 <th>Lembaga</th>
                 <th>Alamat</th>
-                <th>Tanggal Mulai</th>
-                <th>Tanggal Selesai</th>
+                <th>Tahun Mulai</th>
+                <th>Tahun Selesai</th>
                 <th>Jabatan</th>
                 <th>Nomor SK</th>
             </tr>
@@ -396,7 +426,7 @@
         </tbody>
     </table>
 
-    <h4>E. Riwayat Prestasi</h4>
+    <h4>E. Riwayat Penghargaan/Prestasi</h4>
     <table class="table table-striped">
         <thead class="alert alert-info">
             <tr>
@@ -422,13 +452,15 @@
         </tbody>
     </table>
 
-    <h4>F. Data Keluarga</h4>
+    <h4>F. Data Keluarga & Tanggungan</h4>
     <table class="table table-striped">
         <thead class="alert alert-info">
             <tr>
                 <th>No</th>
                 <th>Nama</th>
                 <th>Tanggal Lahir</th>
+                <th>Kota Kelahiran</th>
+                <th>Jenis Kelamin</th>
                 <th>Hubungan</th>
                 <th>Pendidikan Terakhir</th>
                 <th>Pekerjaan</th>
@@ -439,7 +471,9 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $keluarga->nama }}</td>
-                    <td>{{ $keluarga->tgllahir }}</td>
+                    <td>{{ Carbon\Carbon::parse($keluarga->tgllahir)->format('d/m/Y') }}</td>
+                    <td>{{ $keluarga->tempatlahir}}</td>
+                    <td>{{ $keluarga->jenis_kelamin}}</td>
                     <td>{{ $keluarga->hubungan }}</td>
                     <td>{{ $keluarga->pendidikan_terakhir }}</td>
                     <td>{{ $keluarga->pekerjaan }}</td>

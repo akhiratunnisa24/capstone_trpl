@@ -224,6 +224,13 @@
                                                                         value="{{ $struktur ? $struktur->nama : '' }}"
                                                                         readonly>
                                                                 </div>
+                                                                {{-- <div class="col-sm-1">
+                                                                    <a class="btn btn-info"
+                                                                        style="height:37px; width:65px;"
+                                                                        title="Edit Struktur Gaji" data-toggle="modal"
+                                                                        data-target="#editstruktur{{ $struktur->id }}"> <i class="fa fa-edit"></i></a>
+                                                                @include('admin.karyawan.editstruktursaja') --}}
+                                                                </div>
                                                             @endif
                                                         </div>
                                                     </div>

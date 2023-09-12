@@ -36,8 +36,9 @@ use Illuminate\Http\Request;
 use App\Models\Informasigaji;
 use App\Models\LevelJabatan ;
 use App\Mail\CutiNotification;
-use App\Models\Settingabsensi;
+use App\Models\HistoryJabatan;
 // use Illuminate\Support\Facades\File;
+use App\Models\Settingabsensi;
 use App\Exports\KaryawanExport;
 use App\Imports\karyawanImport;
 use App\Models\SalaryStructure;
@@ -2138,6 +2139,35 @@ class karyawanController extends Controller
         $karyawan = Karyawan::find($id);
         $request->validate(['foto' => 'image|mimes:jpeg,png,jpg|max:2048']);
         $fotoLama = $karyawan->foto;
+        // $jabatanlama = $karyawan->nama_jabatan;
+        // $jabatanbaru = $request->namaJabatan;
+
+        // $levellama = $karyawan->jabatan;
+        // $levelbaru = $request->jabatanKaryawan;
+        // if($jabatanlama !== $jabatanbaru|| $jabatanlama !== null || $levellama !== $levelbaru || $levellama !== null)
+        // {
+        //     $jabatan = Jabatan::where('nama_jabatan',$jabatanlama)->first();
+        //     $level   = LevelJabatan::where('nama_level',$karyawan->jabatan)->first();
+
+        //     // dd($jabatanlama,$jabatanbaru,$jabatan);
+        //     if($jabatanlama !== null || $levellama !== null || isset($jabatan->nama_jabatan) !== null || isset($level->jabatan) !== null)
+        //     {
+        //         $data = array(
+        //             'id_karyawan' => $karyawan->id,
+        //             'id_jabatan' => $jabatan->id,
+        //             'id_leveljabatan' => $level->id,
+        //             'tanggal' => \Carbon\Carbon::parse(Carbon::now())->format('Y-m-d'),
+        //             'gaji_terakhir' => $karyawan->gaji
+                    
+        //         );
+        //         HistoryJabatan::insert($data);
+        //     }
+        // }
+        // else
+        // {
+        //     $nama_jabatan = $jabatanlama;
+    
+        // }
 
         if ($file = $request->file('foto')) {
             // hapus foto lama dari storage
@@ -2189,6 +2219,7 @@ class karyawanController extends Controller
                 'no_program_askes' => $request->post('noprogramAskes'),
                 'nama_bank' => $request->post('nama_bank'),
                 'no_rek' => $request->post('norekKaryawan'),
+                'gaji' => intval(str_replace(".", "",$request->post('gaji'))),
                 'updated_at' => new \DateTime(),
             );
 
@@ -2250,6 +2281,7 @@ class karyawanController extends Controller
                 'no_program_askes' => $request->post('noprogramAskes'),
                 'nama_bank' => $request->post('nama_bank'),
                 'no_rek' => $request->post('norekKaryawan'),
+                'gaji' => intval(str_replace(".", "",$request->post('gaji'))),
                 'updated_at' => new \DateTime(),
             );
 
@@ -2906,6 +2938,7 @@ class karyawanController extends Controller
             $keluarga = Keluarga::where('id_pegawai', $id)->get();
             $kontakdarurat = Kdarurat::where('id_pegawai', $id)->get();
             $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
+            $historyjabatan = HistoryJabatan::where('id_karyawan',$data->id)->get();
 
             $pdf = PDF::loadview('admin.karyawan.downloadpdf', [
                 'data' => $data,
@@ -2916,7 +2949,7 @@ class karyawanController extends Controller
                 'keluarga' => $keluarga,
                 'kontakdarurat' => $kontakdarurat,
                 'setorganisasi' => $setorganisasi,
-
+                'historyjabatan' => $historyjabatan
                 ])
             ->setPaper('a4', 'portrait');
             return $pdf->stream("Data Karyawan "  . $data->nama . ".pdf");
@@ -3327,7 +3360,7 @@ class karyawanController extends Controller
                 $leveljabatan = Leveljabatan::all();
 
                 //  return $karyawan;
-                $informasigaji = Informasigaji::where('id_karyawan',$id)->first();
+                $informasigaji = Informasigaji::where('id_karyawan',$id)->where('status',1)->first();
                 if ($informasigaji === null)
                 {
                     $informasigaji = null;
@@ -3426,8 +3459,33 @@ class karyawanController extends Controller
     public function updateidentita(Request $request, $id)
     {
         $karyawan = Karyawan::find($id);
+        $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->where('status',1)->first();
+    
         $gaji = preg_replace('/[^0-9]/', '', $request->gajiKaryawan);
         $gajiKaryawan = (float) $gaji;
+
+        //generate history jabatan;
+        // $jabatanlama = $karyawan->nama_jabatan;
+        // $jabatanbaru = $request->namaJabatan;
+
+        // $levellama = $karyawan->jabatan;
+        // $levelbaru = $request->leveljabatanKaryawan;
+
+        // if($jabatanlama !== $jabatanbaru || $levellama !== $levelbaru)
+        // {
+        //     $jabatan = Jabatan::where('nama_jabatan',$jabatanlama)->first();
+        //     $level   = LevelJabatan::where('nama_level',$karyawan->jabatan)->first();
+
+        //     $data = array(
+        //         'id_karyawan' => $karyawan->id,
+        //         'id_jabatan' => $jabatan->id,
+        //         'id_leveljabatan' => $level->id,
+        //         'tanggal' => \Carbon\Carbon::parse(Carbon::now())->format('Y-m-d'),
+        //         'gaji_terakhir' => $karyawan->gaji
+                
+        //     );
+        //     HistoryJabatan::insert($data);
+        // }
 
         $data = array(
             'nama' => $request->post('namaKaryawan'),
@@ -3445,14 +3503,15 @@ class karyawanController extends Controller
         if($karyawan->status_karyawan !== $data['status_karyawan'] || $karyawan->jabatan !== $level->nama_level)
         {
             $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->first();
+
             if (isset($informasigaji))
             {
 
-                $detailinformasi = Detailinformasigaji::where('id_karyawan',$informasigaji->id_karyawan)
-                    ->where('id_informasigaji',$informasigaji->id)
-                    ->delete();
+                // $detailinformasi = Detailinformasigaji::where('id_karyawan',$informasigaji->id_karyawan)
+                //     ->where('id_informasigaji',$informasigaji->id)
+                //     ->delete();
 
-                $informasigaji->delete();
+                // $informasigaji->delete();
             }
         }
         // }else if((float)$karyawan->gaji !== (float)$gajiKaryawan)

@@ -101,11 +101,11 @@
             {{-- DATA KELUARGA --}}
             <div class="row">
                 <label class="m-l-10">
-                    <h4>B. KELUARGA </h4>
+                    <h4>B. KELUARGA & TANGGUNGAN</h4>
                 </label>
                 <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addKeluarga"
                     style="margin-right:10px;margin-top:10px">
-                    <i class="fa fa-plus"> <strong> Tambah Data Keluarga</strong></i>
+                    <i class="fa fa-plus"> <strong> Tambah Data</strong></i>
                 </a>
                 @include('admin.karyawan.addKeluarga')
             </div>
@@ -278,11 +278,11 @@
             {{-- RIWAYAT PEKERJAAN --}}
             <div class="row m-t-10">
                 <label class="" width="50%">
-                    <h4>E. RIWAYAT PEKERJAAN </h4>
+                    <h4>E. RIWAYAT PENGALAMAN BEKERJA </h4>
                 </label>
                 <a class="btn btn-sm btn-success pull-right" data-toggle="modal" data-target="#addPekerjaan"
                     style="margin-right:10px;margin-bottom:10px">
-                    <i class="fa fa-plus"> <strong> Tambah Data Pekerjaan</strong></i>
+                    <i class="fa fa-plus"> <strong> Tambah Data Pengalaman Kerja</strong></i>
                 </a>
                 @include('admin.karyawan.addPekerjaan')
             </div>
@@ -295,7 +295,7 @@
                         <th>Direktur</th>
                         <th>Jabatan</th>
                         <th>Lama Kerja</th>
-                        <th>Gaji</th>
+                        <th>Gaji Terakhir</th>
                         <th>Alasan Berhenti</th>
                         <th>Aksi</th>
                     </tr>

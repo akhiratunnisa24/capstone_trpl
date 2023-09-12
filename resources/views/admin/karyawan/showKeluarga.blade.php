@@ -48,14 +48,14 @@
                                                 <div class="row">
                                                     <div>
                                                         <div class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                            <label class="text-white m-b-10">F. DATA KELUARGA</label>
+                                                            <label class="text-white m-b-10">F. DATA KELUARGA & TANGGUNGAN</label>
                                                         </div>
                                                     </div>
 
                                                     <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
                                                         data-target="#addKeluarga"
                                                         style="margin-right:10px;margin-bottom:10px">
-                                                        <i class="fa fa-plus"> <strong> Tambah Data Keluarga</strong></i>
+                                                        <i class="fa fa-plus"> <strong> Tambah Data</strong></i>
                                                     </a>
                                                     @include('admin.karyawan.addKeluarga')
                                                     <table class="table table-bordered table-striped">
