@@ -1,4 +1,4 @@
-<!--  Modal content for the above example -->
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <div class="modal fade bs-example-modal-lg" id="addPekerjaan" tabindex="-1" role="dialog" aria-labelledby="addPekerjaan"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -110,6 +110,5 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script src="assets/js/jquery.min.js"></script>
-<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="assets/pages/form-advanced.js"></script>
 
