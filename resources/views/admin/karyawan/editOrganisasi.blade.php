@@ -1,4 +1,4 @@
-<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+{{-- <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script> --}}
 <div class="modal fade bs-example-modal-md" id="editPekerjaan{{ $org->id }}" tabindex="-1" role="dialog"
     aria-labelledby="editIdentitas" aria-hidden="true">
     <div class="modal-dialog modal-md">
