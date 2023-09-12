@@ -141,10 +141,10 @@
                                                                     <label class="form-label">Lama Bertugas</label>
                                                                     <div>
                                                                         <div class="input-group">
-                                                                            <input id="datepicker-autoclose-format-ae" type="text" class="form-control" placeholder="yyyy" 
+                                                                            <input id="datepicker-autoclose-format-ae" type="text" class="form-control" placeholder="mm/yyyy"
                                                                             name="tglmulai"  autocomplete="off"  rows="10">
                                                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input id="datepicker-autoclose-format-af" type="text" class="form-control" placeholder="yyyy" 
+                                                                            <input id="datepicker-autoclose-format-af" type="text" class="form-control" placeholder="mm/yyyy"
                                                                                 name="tglselesai" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
@@ -177,7 +177,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -240,10 +240,10 @@
                                                                     <label class="form-label">Lama Bertugas</label>
                                                                     <div>
                                                                         <div class="input-group">
-                                                                            <input id="datepicker-autoclose-format-ac" type="text" class="form-control" placeholder="yyyy" 
+                                                                            <input id="datepicker-autoclose-format-ac" type="text" class="form-control" placeholder="mm/yyyy"
                                                                             name="tglmulai"  autocomplete="off"  rows="10">
                                                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input id="datepicker-autoclose-format-ad" type="text" class="form-control" placeholder="yyyy" 
+                                                                            <input id="datepicker-autoclose-format-ad" type="text" class="form-control" placeholder="mm/yyyy"
                                                                                 name="tglselesai" autocomplete="off"  rows="10">
                                                                         </div>
                                                                     </div>
@@ -265,7 +265,7 @@
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
-                                                            
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label for="exampleInputEmail1"
@@ -276,7 +276,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            
+
                                                         </div>
                                                     </div>
                                         </div>

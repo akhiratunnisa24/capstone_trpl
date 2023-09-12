@@ -31,9 +31,10 @@
                                         <option value="Kakak" @if($kondar->hubungan == "Kakak") selected @endif>Kakak</option>
                                         <option value="Adik" @if($kondar->hubungan == "Adik") selected @endif>Adik</option>
                                         <option value="Anak" @if($kondar->hubungan == "Anak") selected @endif>Anak</option>
+                                        <option value="Famili/Suadara/Teman"@if($kondar->hubungan == "Famili/Suadara/Teman") selected @endif>Famili/Suadara/Teman</option>
                                     </select>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label>Alamat </label>
@@ -48,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-            
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-success">Update</button>

@@ -47,7 +47,7 @@
                                     @csrf
                                     @method('post')
                                     <div class="control-group after-add-more">
-                                    
+
                                         <div class="modal-body">
                                             <table class="table table-bordered table-striped">
                                                 <div class="col-md-12">
@@ -61,7 +61,7 @@
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label  class="form-label">NIP Karyawan</label>
+                                                                        <label  class="form-label">NIP Karyawan <span style="color: red;">*</span></label>
                                                                         <input type="text" name="nipKaryawan" value="{{ $karyawan->nip ?? '' }}" class="form-control"
                                                                             placeholder="Masukkan NIP Karyawan" required>
                                                                     </div>
@@ -69,14 +69,14 @@
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Nama Lengkap</label>
+                                                                    <label class="form-label">Nama Lengkap <span style="color: red;">*</span></label>
                                                                     <input type="text" name="namaKaryawan" class="form-control" value="{{ $karyawan->nama ?? '' }}" placeholder="Masukkan Nama Lengkap" autocomplete="off" required>
                                                                 </div>
                                                             </div>
-                        
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label  class="form-label">Tanggal Lahir</label>
+                                                                    <label  class="form-label">Tanggal Lahir <span style="color: red;">*</span></label>
                                                                     <div class="input-group">
                                                                         <input id="datepicker-autoclose-format" type="text" class="form-control" placeholder="dd/mm/yyyy" id="4"
                                                                             name="tgllahirKaryawan" value="{{ $karyawan->tgllahir ? \Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y') : '' }}" autocomplete="off" rows="10" required><br>
@@ -84,25 +84,25 @@
                                                                     </div><!-- input-group -->
                                                                 </div>
                                                             </div>
-                        
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Tempat Lahir</label>
+                                                                    <label class="form-label">Tempat Lahir <span style="color: red;">*</span></label>
                                                                     <input type="text" name="tempatlahirKaryawan" class="form-control" value="{{ $karyawan->tempatlahir ?? '' }}" placeholder="Masukkan Tempat Lahir" autocomplete="off" required>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                             <div class="form-group">
-                                                                <label class="form-label">Jenis Kelamin</label>
+                                                                <label class="form-label">Jenis Kelamin <span style="color: red;">*</span></label>
                                                                 <select class="form-control selectpicker" name="jenis_kelaminKaryawan" required>
                                                                     <option value="">Pilih Jenis Kelamin</option>
                                                                     <option value="Laki-Laki" {{ $karyawan->jenis_kelamin == 'Laki-Laki' ? 'selected' : '' }}>Laki-Laki</option>
                                                                     <option value="Perempuan" {{ $karyawan->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                                                                 </select>
-                                                            </div>  
-                        
+                                                            </div>
+
                                                             <div class="form-group">
-                                                                <label class="form-label">Divisi</label>
+                                                                <label class="form-label">Divisi <span style="color: red;">*</span></label>
                                                                 <select class="form-control selectpicker" name="divisi" data-live-search="true" required>
                                                                     <option value="">Pilih Departemen</option>
                                                                     @foreach ($departemen as $d)
@@ -111,13 +111,13 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                        
+
                                                             <div class="form-group">
                                                                 <label class="form-label">Atasan Langsung (Asistant Manager/Manager/Direksi)</label>
                                                                 <select class="form-control selectpicker" name="atasan_pertama" data-live-search="true">
                                                                     <option value="">Pilih Atasan Langsung</option>
                                                                     @foreach ($atasan_pertama as $atasan)
-                                                                        <option value="{{ $atasan->id }}" 
+                                                                        <option value="{{ $atasan->id }}"
                                                                             {{ $karyawan->atasan_pertama == $atasan->id ? 'selected' : '' }}>
                                                                             {{ $atasan->nama ?? '' }}
                                                                         </option>
@@ -125,13 +125,13 @@
 
                                                                 </select>
                                                             </div>
-                                                            
+
                                                             <div class="form-group">
                                                                 <label class="form-label">Atasan/Pimpinan (Manager/Direksi)</label>
                                                                 <select class="form-control selectpicker" name="atasan_kedua"  data-live-search="true">
                                                                     <option value="">Pilih Atasan</option>
                                                                     @foreach ($atasan_kedua as $atasan)
-                                                                        <option value="{{ $atasan->id }}" 
+                                                                        <option value="{{ $atasan->id }}"
                                                                             {{ $karyawan->atasan_kedua == $atasan->id ? 'selected' : '' }}>
                                                                             {{ $atasan->nama ?? '' }}
                                                                         </option>
@@ -140,7 +140,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="form-label">Nama Jabatan</label>
+                                                                <label class="form-label">Nama Jabatan <span style="color: red;">*</span></label>
                                                                 <select class="form-control selectpicker" name="namaJabatan" required>
                                                                     <option value="">Pilih Nama Jabatan</option>
                                                                     @foreach ($namajabatan as $nama)
@@ -150,7 +150,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="form-label">Level Jabatan</label>
+                                                                <label class="form-label">Level Jabatan <span style="color: red;">*</span></label>
                                                                 <select class="form-control selectpicker" name="jabatanKaryawan" required>
                                                                     <option value="">Pilih Level Jabatan</option>
                                                                     @foreach ($leveljabatan as $level)
@@ -161,7 +161,7 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label class="form-label">Status Karyawan</label>
+                                                                <label class="form-label">Status Karyawan <span style="color: red;">*</span></label>
                                                                 <select class="form-control selectpicker" name="statusKaryawan" required>
                                                                     <option value="">Pilih Status   </option>
                                                                     <option value="Pengurus"  {{ $karyawan->status_karyawan == 'Pengurus' ? 'selected' : '' }}>Pengurus</option>
@@ -172,7 +172,7 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                    <label class="form-label">Golongan Darah</label>
+                                                                    <label class="form-label">Golongan Darah <span style="color: red;">*</span></label>
                                                                     <select class="form-control selectpicker" name="gol_darahKaryawan" required>
                                                                         <option value="">Pilih Golongan Darah</option>
                                                                         <option value="A" {{ $karyawan->gol_darah == 'A' ? 'selected' : '' }}>A</option>
@@ -182,36 +182,36 @@
                                                                         <option value="Nihil" {{ $karyawan->gol_darah == 'Nihil' ? 'selected' : '' }}>Nihil</option>
                                                                     </select>
                                                                 </div>
-                        
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label col-sm-4">Pilih Foto Karyawan</label>
+                                                                    <label class="form-label col-sm-4">Pilih Foto Karyawan <span style="color: red;">*</span></label>
                                                                     @if($karyawan->foto != null)
                                                                         <img class="img-preview img-fluid mb-3 col-sm-4" src="{{ asset('Foto_Profile/'.$karyawan->foto) }}">
-                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()"> 
+                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()">
                                                                     @else
                                                                         <img class="img-preview img-fluid mb-3 col-sm-4">
-                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()" required> 
+                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()" required>
                                                                     @endif
-                                                                   
+
                                                                 </div>
-                                                            </div>                                                           
+                                                            </div>
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Alamat</label>
+                                                                    <label class="form-label">Alamat <span style="color: red;">*</span></label>
                                                                     <textarea class="form-control" autocomplete="off" name="alamatKaryawan" rows="5" required>{{ $karyawan->alamat ?? '' }}</textarea><br>
                                                                 </div>
                                                             </div>
 
                                                         </div>
-                        
+
                                                         <!-- baris sebelah kanan  -->
-                        
+
                                                         <div class="col-md-6 m-t-10">
-                                                            <div class="form-group">                                                    
+                                                            <div class="form-group">
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                    <label for="exampleInputEmail1" class="form-label">Status Pernikahan</label>
+                                                                    <label for="exampleInputEmail1" class="form-label">Status Pernikahan <span style="color: red;">*</span></label>
                                                                     <select class="form-control selectpicker" name="status_pernikahan" required>
                                                                         <option value="">Pilih Status Pernikahan</option>
                                                                         <option value="Sudah Menikah" {{ $karyawan->status_pernikahan == 'Sudah Menikah' ? 'selected' : '' }} >Sudah Menikah</option>
@@ -231,24 +231,24 @@
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">No. Handphone</label>
+                                                                        <label class="form-label">No. Handphone <span style="color: red;">*</span></label>
                                                                         <input type="number" name="no_hpKaryawan" value="{{ $karyawan->no_hp ?? '' }}" class="form-control"
                                                                             placeholder="Masukkan Nomor Handphone" required>
                                                                     </div>
                                                                 </div>
-                        
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">Alamat E-mail</label>
+                                                                        <label class="form-label">Alamat E-mail <span style="color: red;">*</span></label>
                                                                         <input type="email" name="emailKaryawan" value="{{ $karyawan->email ?? '' }}"
-                                                                            class="form-control" id="exampleInputEmail1" 
+                                                                            class="form-control" id="exampleInputEmail1"
                                                                             aria-describedby="emailHelp" placeholder="Masukkan Email" autocomplete="off" required>
                                                                     </div>
                                                                 </div>
-                        
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">Agama</label>
+                                                                        <label class="form-label">Agama <span style="color: red;">*</span></label>
                                                                         <select class="form-control selectpicker" name="agamaKaryawan" required>
                                                                             <option value="">Pilih Agama</option>
                                                                             <option value="Islam" {{ $karyawan->agama  == 'Islam' ? 'selected' : '' }}>Islam</option>
@@ -260,21 +260,21 @@
                                                                         </select>
                                                                     </div>
                                                                 </div>
-                        
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">Tanggal Masuk</label>
+                                                                        <label class="form-label">Tanggal Masuk <span style="color: red;">*</span></label>
                                                                         <div class="input-group">
-                                                                            <input id="datepicker-autoclose-format2" type="text" class="form-control" placeholder="dd/mm/yyyy" 
+                                                                            <input id="datepicker-autoclose-format2" type="text" class="form-control" placeholder="dd/mm/yyyy"
                                                                                 name="tglmasukKaryawan"  value="{{ $karyawan->tglmasuk ? \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') : '' }}" autocomplete="off"  rows="10"  required>
                                                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                        
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">No. KTP</label>
+                                                                        <label class="form-label">No. KTP <span style="color: red;">*</span></label>
                                                                         <input type="text" name="nikKaryawan" class="form-control" value="{{ $karyawan->nik ?? '' }}"
                                                                             placeholder="Masukkan No. KTP / NIK" required>
                                                                     </div>
@@ -338,7 +338,7 @@
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                    <label class="form-label">Nama Bank</label>
+                                                                    <label class="form-label">Nama Bank <span style="color: red;">*</span></label>
                                                                     <select class="form-control selectpicker" name="nama_bank" required>
                                                                         <option value="">Pilih Bank</option>
                                                                         <option value="Bank ANZ Indonesia" {{ $karyawan->nama_bank  == 'Bank ANZ Indonesia' ? 'selected' : '' }}>Bank ANZ Indonesia</option>
@@ -372,7 +372,7 @@
                                                                         <input type="number" name="norekKaryawan" class="form-control" value="{{ $karyawan->no_rek ?? '' }}"
                                                                             placeholder="Masukkan No. Rekening" >
                                                                     </div>
-                                                                </div>                                                           
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -381,25 +381,25 @@
                                                     {{-- <button type="submit" id="btnsimpan" name="submit" class="btn btn-sm btn-primary">Simpan</button> --}}
                                                     <button type="submit"  name="submit" id="btnselanjutnya" class="btn btn-sm btn-success">Simpan & Selanjutnya <i class="fa fa-forward"></i></button>
                                                 </div>
-                        
+
                                             </table>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                        </div> 
-                    </div> 
-                </div> 
-            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>  
+    </div>
      {{-- <script src="assets/js/jquery.min.js"></script> --}}
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
      <script src="assets/pages/form-advanced.js"></script>
 
      <script>
-        function previewImage() 
+        function previewImage()
         {
             const image = document.querySelector('#foto');
             const imgPreview = document.querySelector('.img-preview');
@@ -425,7 +425,7 @@
             $("#btnsimpan").click(function() {
                 $("#btnselanjutnya").attr('disabled', false);
             });
-            
+
             $("#btnselanjutnya").click(function() {
                 if ($("#btnsimpan").attr('disabled')) {
                     alert("Silakan klik tombol 'Simpan' terlebih dahulu!");
