@@ -148,7 +148,8 @@
                                 <a href="#"><i class="fa fa-cogs"></i><span>Konfigurasi</span><span
                                         class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="/rekap-kehadiran"><i class="fa fa-user"></i><span>Kehadiran</span></a></li><li><a href=""><i class="mdi mdi-account-multiple"></i><span></span>Grup</a></li> --}}
+                                    <li><a href="/rekap-kehadiran"><i class="fa fa-user"></i><span>Kehadiran</span></a></li> --}}
+                                    {{-- <li><a href=""><i class="mdi mdi-account-multiple"></i><span></span>Grup</a></li> --}}
                                 </ul>
                             </li>
                         </ul>
@@ -189,15 +190,15 @@
                                 </ul>
                             </li>
 
-                            {{-- <li class="has_sub">
+                            <li class="has_sub">
                                 <a href=""><i class="fa fa-money"></i><span></span>Master Penggajian<span
                                         class="pull-right"><i class="mdi mdi-plus"></i></span></a>
-                                <ul class="list-unstyled"> --}}
-                                    {{-- <li><a href="/kategori-salary"><i
-                                                class="fa fa-reorder (alias)"></i><span></span>Kategori Salary</a></li>  --}}
-                                    {{-- <li><a href="/struktur-penggajian"><i class="mdi mdi-clipboard-text"></i><span></span>Struktur Penggajian</a></li>
+                                <ul class="list-unstyled">
+                                    <li><a href="/kategori-salary"><i
+                                                class="fa fa-reorder (alias)"></i><span></span>Kategori Salary</a></li>
+                                    <li><a href="/struktur-penggajian"><i class="mdi mdi-clipboard-text"></i><span></span>Struktur Penggajian</a></li>
                                 </ul>
-                            </li> --}}
+                            </li>
                             <li><a href="/manajemen-harilibur"><i class="ti-calendar"></i><span>Manajemen
                                         Libur</span></a></li>
                             {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li> --}}
