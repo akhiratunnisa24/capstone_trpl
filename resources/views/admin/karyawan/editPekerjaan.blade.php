@@ -89,8 +89,9 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script src="assets/js/jquery.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="assets/pages/form-advanced.js"></script>
-{{-- <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script> --}}
+
 
     <script>
         var rupiah = document.getElementById('gaji');
