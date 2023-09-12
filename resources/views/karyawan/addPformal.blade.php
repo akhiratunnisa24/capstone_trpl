@@ -50,12 +50,12 @@
                                 <div class="mb-3">
                                     <label class="form-label">Lama Pendidikan</label>
                                     <div>
-                                        <div class="input-daterange input-group" id="date-range">
-                                            <input type="text" class="form-control" name="tahun_masukFormal"
-                                                placeholder="dd/mm/yyyy" autocomplete="off" />
+                                        <div class="input-group">
+                                            <input id="datepicker-autoclose-format-ba" type="text" class="form-control" name="tahun_masukFormal"
+                                                placeholder="yyyy" autocomplete="off"/>
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input type="text" class="form-control" name="tahun_lulusFormal"
-                                                placeholder="dd/mm/yyyy" autocomplete="off" />
+                                            <input id="datepicker-autoclose-format-bb" type="text" class="form-control" name="tahun_lulusFormal"
+                                                placeholder="yyyy" autocomplete="off"/>
                                         </div>
                                     </div>
                                 </div>
@@ -92,3 +92,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/pages/form-advanced.js"></script>

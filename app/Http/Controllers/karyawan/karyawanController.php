@@ -3300,8 +3300,8 @@ class karyawanController extends Controller
             'jurusan' => $request->post('jurusan'),
             // 'tahun_masuk_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d'),
             // 'tahun_lulus_formal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusFormal'))->format('Y-m-d'),
-            'tahun_masuk_formal' => $request->tahun_masukFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : $nilaiNull,
-            'tahun_lulus_formal' => $request->tahun_lulusFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : $nilaiNull,
+            'tahun_masuk_formal' => $request->tahun_masukFormal ? $request->tahun_masukFormal : $nilaiNull,
+            'tahun_lulus_formal' => $request->tahun_lulusFormal ? $request->tahun_lulusFormal : $nilaiNull,
 
 
             'ijazah_formal' => $request->post('noijazahPformal'),
@@ -3331,8 +3331,8 @@ class karyawanController extends Controller
             'nama_lembaga' => $request->post('namaLembaga'),
             'jenis_pendidikan' => $request->post('jenis_pendidikan'),
             'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-            'tahun_masuk_nonformal' => $request->tahun_masukNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d') : $nilaiNull,
-            'tahun_lulus_nonformal' => $request->tahun_lulusNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d') : $nilaiNull,
+            'tahun_masuk_nonformal' => $request->tahun_masukNonFormal ? $request->tahun_masukNonFormal : $nilaiNull,
+            'tahun_lulus_nonformal' => $request->tahun_lulusNonFormal ? $request->tahun_lulusNonFormal : $nilaiNull,
 
             'ijazah_nonformal' => $request->post('noijazahPnonformal'),
             'created_at' => new \DateTime(),
@@ -3464,7 +3464,7 @@ class karyawanController extends Controller
         $gaji = preg_replace('/[^0-9]/', '', $request->gajiKaryawan);
         $gajiKaryawan = (float) $gaji;
 
-        //generate history jabatan;
+        // generate history jabatan;
         // $jabatanlama = $karyawan->nama_jabatan;
         // $jabatanbaru = $request->namaJabatan;
 
@@ -3502,11 +3502,83 @@ class karyawanController extends Controller
         $level = Leveljabatan::where('nama_level',$data['jabatan'])->first();
         if($karyawan->status_karyawan !== $data['status_karyawan'] || $karyawan->jabatan !== $level->nama_level)
         {
-            $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->first();
-
             if (isset($informasigaji))
             {
+                $informasigaji = $informasigaji->update([
+                    'status' => 0,
+                ]);
+                $strukturgaji   = SalaryStructure::where('id_level_jabatan',$level->id)
+                    ->where('status_karyawan',$data['status_karyawan'])
+                    ->first();
 
+                $informasigaji = new Informasigaji();
+                $informasigaji->id_karyawan     = $karyawan->id;
+                $informasigaji->id_strukturgaji = $strukturgaji->id;
+                $informasigaji->status_karyawan = $strukturgaji->status_karyawan;
+                $informasigaji->level_jabatan   = $strukturgaji->id_level_jabatan;
+                $informasigaji->gaji_pokok      = $karyawan->gaji;
+                $informasigaji->partner         = $strukturgaji->partner;
+                $informasigaji->status          = 1;
+                    
+                $informasigaji->save();
+
+                $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->where('status',1)->first();
+                $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $strukturgaji->id)->get();
+                $details = [];
+                foreach($detailstruktur as $detail)
+                {
+                    $benefit  = Benefit::where('id',$detail->id_benefit)->first();
+
+                    $check = Detailinformasigaji::where('id_karyawan', $karyawan->id)
+                            ->where('id_informasigaji',$informasigaji->id)
+                            ->where('id_struktur',$strukturgaji->id)
+                            ->where('id_benefit',$detail->id_benefit)
+                            ->where('partner',$karyawan->partner)
+                            ->exists();
+                    // dd($check);
+                   
+                    if(!$check)
+                    {
+                        $nominal = null;
+                        if($benefit->id == 1)
+                        {
+                            $nominal = $informasigaji->gaji_pokok;
+                        }else
+                        {
+                            if($benefit->siklus_pembayaran == "Bulan")
+                            {
+                                $nominal      = $benefit->besaran_bulanan;
+                            }else if($benefit->siklus_pembayaran == "Minggu")
+                            {
+                                $nominal      = $benefit->besaran_mingguan;
+                            }else if($benefit->siklus_pembayaran == "Hari")
+                            {
+                                $nominal      = $benefit->besaran_harian;
+                            }else if($benefit->siklus_pembayaran == "Jam")
+                            {
+                                $nominal      = $benefit->besaran_jam;
+                            }else if($benefit->siklus_pembayaran == "Bonus")
+                            {
+                                $nominal      = $benefit->besaran;
+                            }else
+                            {
+                                $nominal      = $benefit->besaran;
+                            }
+                        }
+                               
+                        $details[] = [
+                            'id_karyawan'      =>$informasigaji->id_karyawan,
+                            'id_informasigaji' =>$informasigaji->id,
+                            'id_struktur'      =>$informasigaji->id_strukturgaji,
+                            'id_benefit'       =>$benefit->id,
+                            'siklus_bayar'     =>$benefit->siklus_pembayaran,
+                            'partner'          =>Auth::user()->partner,
+                            'nominal'          =>$nominal,
+                        ];
+                    }
+                   
+                }
+                Detailinformasigaji::insert($details);
                 // $detailinformasi = Detailinformasigaji::where('id_karyawan',$informasigaji->id_karyawan)
                 //     ->where('id_informasigaji',$informasigaji->id)
                 //     ->delete();
@@ -3516,21 +3588,22 @@ class karyawanController extends Controller
         }
         // }else if((float)$karyawan->gaji !== (float)$gajiKaryawan)
         // {
-            $informasigaji = Informasigaji::where('id_karyawan', $karyawan->id)->update([
-                'gaji_pokok' => $gaji,
-            ]);
+        $informasigaji = Informasigaji::where('id_karyawan', $karyawan->id)->update([
+            'gaji_pokok' => $gaji,
+        ]);
 
-            $d = Informasigaji::where('id_karyawan', $karyawan->id)->first();
+        $d = Informasigaji::where('id_karyawan', $karyawan->id)->first();
             // dd($d);
-            $detailinformasigaji = Detailinformasigaji::where('id_karyawan', $karyawan->id)->where('id_benefit',1)->update([
-                'nominal' => $gaji,
-            ]);
+        $detailinformasigaji = Detailinformasigaji::where('id_karyawan', $karyawan->id)->where('id_benefit',1)->update([
+            'nominal' => $gaji,
+        ]);
         // }
         // dd($informasigaji);
         // dd($karyawan->status_karyawan,$data['status_karyawan'], $data['jabatan'],$level);
 
         return redirect()->back()->with('pesan','Data Karyawan berhasil di update.');
     }
+
 
     public function addstruktur(Request $request,$id)
     {
@@ -3552,6 +3625,7 @@ class karyawanController extends Controller
             $informasigaji->level_jabatan   = $strukturgaji->id_level_jabatan;
             $informasigaji->gaji_pokok      = $karyawan->gaji;
             $informasigaji->partner         = $strukturgaji->partner;
+            $informasigaji->status          = 1;
 
             $informasigaji->save();
 

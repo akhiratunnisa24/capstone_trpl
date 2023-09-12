@@ -48,7 +48,7 @@
                                     <label>Tanggal Surat</label>
                                     <div class="input-group">
                                     <input type="date" class="form-control"
-                                        placeholder="dd/mm/yyyy" name="tgl_surat" rows="10" autocomplete="off"
+                                        placeholder="mm/yyyy" name="tgl_surat" rows="10" autocomplete="off"
                                         value="{{ $pres->tanggal_surat }}">
                                     <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>

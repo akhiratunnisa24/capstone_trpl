@@ -55,7 +55,7 @@
                                                     <a class="btn btn-sm btn-success pull-right" data-toggle="modal"
                                                         data-target="#addKontak"
                                                         style="margin-right:10px;margin-bottom:10px">
-                                                        <i class="fa fa-plus"> <strong> Tambah DataSW</strong></i>
+                                                        <i class="fa fa-plus"> <strong> Tambah Data</strong></i>
                                                     </a>
                                                     @include('admin.karyawan.addKontak')
                                                     <table class="table table-bordered table-striped">

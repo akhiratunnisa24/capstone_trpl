@@ -374,30 +374,30 @@
             minViewMode: "years",
         });
         jQuery("#datepicker-autoclose-format-h").datepicker({
-            format: "yyyy",
+            format: "mm/yyyy",
             autoclose: true,
             todayHighlight: true,
             viewMode: "years",
-            minViewMode: "years",
+            minViewMode: "months",
         });
         jQuery("#datepicker-autoclose-format-i").datepicker({
-            format: "yyyy",
+            format: "mm/yyyy",
             autoclose: true,
             viewMode: "years",
-            minViewMode: "years",
+            minViewMode: "months",
         });
         jQuery("#datepicker-autoclose-format-j").datepicker({
-            format: "yyyy",
+            format: "mm/yyyy",
             autoclose: true,
             todayHighlight: true,
             viewMode: "years",
-            minViewMode: "years",
+            minViewMode: "months",
         });
         jQuery("#datepicker-autoclose-format-k").datepicker({
-            format: "yyyy",
+            format: "mm/yyyy",
             autoclose: true,
             viewMode: "years",
-            minViewMode: "years",
+            minViewMode: "months",
         });
         jQuery("#datepicker-autoclose-format-l").datepicker({
             format: "yyyy",
@@ -407,32 +407,32 @@
             minViewMode: "years",
         });
         jQuery("#datepicker-autoclose-format-m").datepicker({
-            format: "yyyy",
+            format: "mm/yyyy",
             autoclose: true,
             todayHighlight: true,
             viewMode: "years",
-            minViewMode: "years",
+            minViewMode: "months",
         });
         jQuery("#datepicker-autoclose-format-n").datepicker({
-            format: "yyyy",
+            format: "mm/yyyy",
             autoclose: true,
             todayHighlight: true,
             viewMode: "years",
-            minViewMode: "years",
+            minViewMode: "months",
         });
         jQuery("#datepicker-autoclose-format-o").datepicker({
-            format: "yyyy",
+            format: "mm/yyyy",
             autoclose: true,
             todayHighlight: true,
             viewMode: "years",
-            minViewMode: "years",
+            minViewMode: "months",
         });
         jQuery("#datepicker-autoclose-format-p").datepicker({
-            format: "yyyy",
+            format: "mm/yyyy",
             autoclose: true,
             todayHighlight: true,
             viewMode: "years",
-            minViewMode: "years",
+            minViewMode: "months",
         });
         jQuery("#datepicker-autoclose-format-q").datepicker({
             format: "yyyy",
@@ -625,6 +625,62 @@
             format: "dd/mm/yyyy",
             autoclose: true,
             todayHighlight: true,
+        });
+        jQuery("#datepicker-autoclose-format-ba").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-bb").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-bc").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-bd").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-be").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-bf").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-bg").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose-format-bh").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
         });
         // jQuery("#datepicker-autoclosec").datepicker({
         //     format: "dd/mm/yyyy",

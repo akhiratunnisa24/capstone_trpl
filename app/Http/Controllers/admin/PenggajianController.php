@@ -88,7 +88,8 @@ class PenggajianController extends Controller
         $tglgajian= date_format(date_create_from_format('d/m/Y', $request->tglgajian), 'Y-m-d');
 
         $getKaryawan = Karyawan::leftjoin('departemen', 'karyawan.divisi', '=', 'departemen.id')
-            ->select('karyawan.nama_jabatan','karyawan.id' ,'karyawan.partner','karyawan.nama','karyawan.divisi', 'karyawan.nip', 'departemen.nama_departemen','karyawan.nama_bank','karyawan.no_rek')
+            ->select('karyawan.nama_jabatan','karyawan.id' ,'karyawan.partner','karyawan.nama','karyawan.divisi', 'karyawan.nip', 'departemen.nama_departemen','karyawan.nama_bank','karyawan.no_rek','karyawan.divisi',
+            'karyawan.jabatan','karyawan.status_karyawan')
             ->where('karyawan.id','=', $request->id_karyawan)
             ->first();
 
@@ -107,14 +108,35 @@ class PenggajianController extends Controller
             ->where('tgl_akhir',$tgl_akhir)
             ->first();
 
-        $informasigaji = Informasigaji::where('id_karyawan',$request->id_karyawan)->first();
-        // dd($informasigaji);
-        if($informasigaji == null)
+        $informasigaji = Informasigaji::where('id_karyawan',$request->id_karyawan)->where('status',1)->first();
+      
+        if($informasigaji === null)
         {
-            $pesan = "Data <strong><span style='color: red;'>Informasi Gaji</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
+            if($getKaryawan->divisi === null && $getKaryawan->jabatan !== null && $getKaryawan->status_karyawan !== null){
+                $pesan = "Data <strong><span style='color: red;'>Divisi</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $getKaryawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+            }elseif($getKaryawan->status_karyawan === null && $getKaryawan->jabatan !== null && $getKaryawan->divisi !== null){
+                $pesan = "Data <strong><span style='color: red;'>Status Karyawan</span></strong> belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $getKaryawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+            }elseif($getKaryawan->jabatan === null && $getKaryawan->status_karyawan !== null && $getKaryawan->divisi !== null)
+            {
+                $pesan = "Data <strong><span style='color: red;'>Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $getKaryawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+            }elseif($getKaryawan->jabatan === null && $getKaryawan->status_karyawan === null && $getKaryawan->divisi !== null)
+            {
+                $pesan = "Data <strong><span style='color: red;'>Status dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $getKaryawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+            }elseif($getKaryawan->jabatan === null && $getKaryawan->status_karyawan === null && $getKaryawan->divisi === null)
+            {
+                $pesan = "Data <strong><span style='color: red;'>Status,Divisi dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $getKaryawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+            }elseif($informasigaji === null)
+            {
+                $pesan = "Data <strong><span style='color: red;'>Informasi Gaji</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='". route('showinformasigaji',['id' => $getKaryawan->id])."' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
+            }
+            else{
+                //$pesan = "Data tidak lengkap, silahkan lengkapi <strong><a href='/editidentitas" . $karyawan->id . "'>Status/Level Jabatan Karyawan</a></strong> dan Coba kembali.";
+                $pesan = "Data <strong><span style='color: red;'>Status,Divisi dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $getKaryawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+            }
             $pesan = '<div class="text-center">' . $pesan . '</div>';
             $pesan = nl2br(html_entity_decode($pesan));
             return redirect()->back()->with('message',$pesan);
+            dd($informasigaji);
         }else{
             $detail = Detailinformasigaji::where('id_informasigaji',$informasigaji->id)->get();
 
@@ -354,16 +376,16 @@ class PenggajianController extends Controller
 
                 $detailkehadiran->total_jadwal = $jadwal ? $jadwal : 0;
                 $detailkehadiran->jumlah_hadir = $hadir ? $hadir : 0;
-                $detailkehadiran->jumlah_lembur = $lembur ? $lembur : 0;
-                $detailkehadiran->jumlah_cuti = $totalHariCuti ? $totalHariCuti : 0;
-                $detailkehadiran->jumlah_izin = $totalHariIzin ? $totalHariIzin : 0;
+                $detailkehadiran->jumlah_lembur= $lembur ? $lembur : 0;
+                $detailkehadiran->jumlah_cuti  = $totalHariCuti ? $totalHariCuti : 0;
+                $detailkehadiran->jumlah_izin  = $totalHariIzin ? $totalHariIzin : 0;
                 $detailkehadiran->jumlah_sakit = $totalHariIzinSakit ? $totalHariIzinSakit : 0;
-                $detailkehadiran->jam_hadir = $jamhadir ? $jamhadir : 0;
-                $detailkehadiran->jam_lembur = $jamlembur ? $jamlembur : 0;
-                $detailkehadiran->jam_cuti = $totalJamCuti ? $totalJamCuti : 0;
-                $detailkehadiran->jam_izin = $totalJamIzin ? $totalJamIzin : 0;
-                $detailkehadiran->jam_sakit = $totalJamSakit ? $totalJamSakit : 0;
-                $detailkehadiran->partner = $getKaryawan->partner;
+                $detailkehadiran->jam_hadir    = $jamhadir ? $jamhadir : 0;
+                $detailkehadiran->jam_lembur   = $jamlembur ? $jamlembur : 0;
+                $detailkehadiran->jam_cuti     = $totalJamCuti ? $totalJamCuti : 0;
+                $detailkehadiran->jam_izin     = $totalJamIzin ? $totalJamIzin : 0;
+                $detailkehadiran->jam_sakit    = $totalJamSakit ? $totalJamSakit : 0;
+                $detailkehadiran->partner      = $getKaryawan->partner;
 
                 $detailkehadiran->save();
 
@@ -654,6 +676,7 @@ class PenggajianController extends Controller
                         // dd($detail,$hadir,$totaljadwal,$jumlah,$total);
                     }else if($detail->siklus_pembayaran == "Hari")
                     {
+                        // dd($kehadiran);
                         $jumlah  = $kehadiran->jumlah_hadir;
                         $total   = $detail->nominal * $kehadiran->jumlah_hadir;
 
@@ -712,16 +735,18 @@ class PenggajianController extends Controller
             $tglgajian = \Carbon\Carbon::parse($slipgaji->tglgajian)->format('d/m/Y');
             $tujuan = $karyawan->email;
             $nama = ucwords(strtolower($karyawan->nama));
-
+            $setorganisasi = Settingorganisasi::where('partner',$karyawan->partner)->first();
 
             //mengirim email notifikasi slip gaji kepada karyawan
-            if($slipgaji->statusmail == 0)
+            if($slipgaji->statusmail === 0)
             {
                 $data = [
                     'subject' => "Notifikasi Slip Gaji - " . $nama . " - [" . $periode . "]",
                     'periode' => $periode,
                     'tglgajian' => $tglgajian,
                     'nama' => $nama,
+                    'emailperusahaan' => $setorganisasi->email,
+                    'notelpperusahaan' => $setorganisasi->no_telp,
                 ];
                 Mail::to($tujuan)->send(new SlipgajiNotification($data));
                 $dataupdate = [

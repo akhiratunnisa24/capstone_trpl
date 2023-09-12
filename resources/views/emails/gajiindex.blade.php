@@ -132,7 +132,7 @@
 			</div>
 		</div>
 		<div class="footer">
-			<p>Email ini dikirimkan secara otomatis. Jangan membalas email ini karena tidak akan terbaca. Hubungi kami di <b><a href="mailto:">info@grm-risk.com</a></b> atau anda bisa menghubungi <a href="#">(+62) 811-140-840-5</a> untuk informasi lebih lanjut.</p>
+			<p>Email ini dikirimkan secara otomatis. Jangan membalas email ini karena tidak akan terbaca. Hubungi kami di <b><a href="mailto:">{{$data['emailperusahaan']}}</a></b> atau anda bisa menghubungi <a href="#">{{$data['notelpperusahaan']}}</a> untuk informasi lebih lanjut.</p>
 		</div>
 	</div>
 </body>

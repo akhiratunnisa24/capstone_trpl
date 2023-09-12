@@ -106,18 +106,18 @@
                                                     <td>{{$data->karyawans->nama_jabatan}}</td>
                                                     <td>{{ number_format($data->gaji_pokok, 0, ',', '.') }}</td>
                                                     <td>{{\Carbon\Carbon::parse($data->karyawans->tglmasuk)->format('d/m/Y')}}</td>
-                                                    <td> 
-                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example"> 
-                                                            <form method="POST" action="/slipgaji{{$data->id}}">
-                                                                @csrf
-                                                                @method('PUT')
+                                                    <td>
+                                                        <div  class="d-grid gap-2" role="group" aria-label="Basic example">
+                                                            <a href="" class="col-md-6 btn btn-info btn-sm" data-toggle="modal" data-target="#editslip{{$data->id}}"><i class="fa fa-edit"></i></a>
+                                                            <form method="POST" action="/slipgaji{{$data->id}}" class="col-md-1">
+                                                              @csrf
+                                                              @method('PUT')
                                                                 <input type="hidden" name="id_karyawan" value="{{ $data->karyawans->id }}">
                                                                 <input type="hidden" name="id" value="{{ $data->id }}">
-                                                                <button type="submit" class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i></button>
+                                                                <button type="submit" class="btn btn-success btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i></button>
                                                             </form>
-                                                            {{-- <a href="/slipgaji{{$data->id}}" class="btn btn-info btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i></a> --}}
-                                                            <a href=""class="btn btn-success btn-sm" title="Cetak Slip Gaji"><i class="fa fa-file-pdf-o"></i>
-                                                            </a>
+                                                         
+                                                      </div>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -144,6 +144,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+   
     @if(Session::has('pesan'))
         <script>
             swal("Selamat","{{ Session::get('pesan')}}", 'success', {
@@ -158,6 +159,15 @@
             swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
                 button:true,
                 button:"OK",
+            });
+        </script>
+    @endif
+
+     @if (Session::has('message'))
+        <script>
+            swal("Mohon Maaf",<?php echo json_encode( Session::get('message') ) ?>, 'info', {
+                button: false,
+                button: "OK",
             });
         </script>
     @endif

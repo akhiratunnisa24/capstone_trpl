@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title center" id="myLargeModalLabel">Edit Data Pendidikan Formal</h4>
+                <h4 class="modal-title text-center" id="myLargeModalLabel">Edit Data Pendidikan Formal</h4>
             </div>
             <div class="modal-body">
                 <form id="formModaleditcuti" action="/updatePendidikan/{{ $rpendidikan->id }}" method="POST"
@@ -75,12 +75,12 @@
                                 <div class="mb-3">
                                     <label class="form-label">Lama Pendidikan</label>
                                     <div>
-                                        <div class="input-daterange input-group">
-                                                <input type="date" class="form-control" name="tahun_masukFormal"
-                                                    placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_masuk_formal }}" />
+                                        <div class="input-group">
+                                            <input id="datepicker-autoclose-format-be" type="text" class="form-control" name="tahun_masukFormal"
+                                                    placeholder="yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_masuk_formal }}" />
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input type="date" class="form-control" name="tahun_lulusFormal"
-                                                placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_lulus_formal }}" />
+                                            <input id="datepicker-autoclose-format-bf" type="text" class="form-control" name="tahun_lulusFormal"
+                                                placeholder="yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_lulus_formal }}" />
                                         </div>
                                     </div>
                                 </div>
