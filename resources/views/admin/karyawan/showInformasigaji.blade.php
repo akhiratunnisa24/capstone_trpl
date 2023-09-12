@@ -216,7 +216,7 @@
                                                             @else
                                                                 <label class="form-label col-sm-3 text-end">Struktur
                                                                     Gaji</label>
-                                                                <div class="col-sm-7">
+                                                                <div class="col-sm-9">
                                                                     <input type="text" class="form-control"
                                                                         name="id_strukturgaji" id="id_strukturgaji"
                                                                         autocomplete="off"
@@ -224,12 +224,12 @@
                                                                         value="{{ $struktur ? $struktur->nama : '' }}"
                                                                         readonly>
                                                                 </div>
-                                                                <div class="col-sm-1">
+                                                                {{-- <div class="col-sm-1">
                                                                     <a class="btn btn-info"
                                                                         style="height:37px; width:65px;"
                                                                         title="Edit Struktur Gaji" data-toggle="modal"
-                                                                        data-target="#editD{{ $struktur->id }}"> <i class="fa fa-edit"></i></a>
-                                                                @include('admin.karyawan.editstruktur')
+                                                                        data-target="#editstruktur{{ $struktur->id }}"> <i class="fa fa-edit"></i></a>
+                                                                @include('admin.karyawan.editstruktursaja') --}}
                                                                 </div>
                                                             @endif
                                                         </div>

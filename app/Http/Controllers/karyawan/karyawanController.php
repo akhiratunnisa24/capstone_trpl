@@ -3459,6 +3459,8 @@ class karyawanController extends Controller
     public function updateidentita(Request $request, $id)
     {
         $karyawan = Karyawan::find($id);
+        $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->where('status',1)->first();
+    
         $gaji = preg_replace('/[^0-9]/', '', $request->gajiKaryawan);
         $gajiKaryawan = (float) $gaji;
 
@@ -3501,14 +3503,15 @@ class karyawanController extends Controller
         if($karyawan->status_karyawan !== $data['status_karyawan'] || $karyawan->jabatan !== $level->nama_level)
         {
             $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->first();
+
             if (isset($informasigaji))
             {
 
-                $detailinformasi = Detailinformasigaji::where('id_karyawan',$informasigaji->id_karyawan)
-                    ->where('id_informasigaji',$informasigaji->id)
-                    ->delete();
+                // $detailinformasi = Detailinformasigaji::where('id_karyawan',$informasigaji->id_karyawan)
+                //     ->where('id_informasigaji',$informasigaji->id)
+                //     ->delete();
 
-                $informasigaji->delete();
+                // $informasigaji->delete();
             }
         }
         // }else if((float)$karyawan->gaji !== (float)$gajiKaryawan)
