@@ -485,8 +485,5 @@
             <a href="karyawandashboard" class="btn btn-sm btn-danger">Kembali</a>
         </div>
     </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script src="assets/pages/form-advanced.js"></script>
     
 @endsection

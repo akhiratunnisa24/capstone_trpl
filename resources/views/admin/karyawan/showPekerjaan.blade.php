@@ -2,7 +2,7 @@
 @section('content')
 
     <head>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
         <style>
             input::-webkit-outer-spin-button,
             input::-webkit-inner-spin-button {
@@ -164,7 +164,7 @@
         </div>
     </div>
     </div>
-
+    <script src="assets/js/jquery.min.js"></script>
     <script>
         function hapus_karyawan(id) {
             swal.fire({
@@ -189,4 +189,5 @@
             })
         }
     </script>
+ 
 @endsection
