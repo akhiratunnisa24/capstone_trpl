@@ -334,11 +334,11 @@
             @endforeach
         </tbody>
     </table>
-   @if($pendidikan->count() >= 7 && $pendidikan->count() <= 8 && $data->foto !== null)
+   @if($pendidikan->count() >= 5 && $pendidikan->count() <= 8 && $data->foto !== null)
         <div class="page-break"></div>
-    @elseif($pendidikan->count() < 7 && $pekerjaan !== null)
+    {{-- @elseif($pendidikan->count() < 7 && $pekerjaan !== null)
         <div class="page-break"></div>
-    @else
+    @else --}}
     @endif
 
     <h4 id="pekerjaan">C. Riwayat Pengalaman Bekerja</h4>
