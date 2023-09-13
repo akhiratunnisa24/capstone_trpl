@@ -52,26 +52,6 @@
             border-bottom: 1px solid #ddd;
         }
 
-        #ttd {
-            text-align: right;
-            padding-right: 10px;
-        }
-
-        #t {
-            text-align: right;
-            padding-right: 93px;
-        }
-
-        #tt {
-            text-align: right;
-            padding-right: 33px;
-            padding-top: 40px;
-        }
-
-        #n {
-            text-align: left;
-        }
-
         body {
             font-family: Arial, Helvetica, sans-serif;
         }
@@ -112,8 +92,6 @@
             padding: 0.5rem;
             text-align: left;
             font-size: 12px; 
-            /* border-bottom: 1px solid #ddd;
-            border-top: 1px solid #ddd; */
             border : 1px solid #878686;
         }
         #foto {
@@ -122,6 +100,11 @@
             padding: 10px;
             text-align: left;
         }
+
+        .page-break {
+            page-break-after: always;
+        } 
+        
     </style>
 </head>
 
@@ -140,7 +123,11 @@
     <table id="photo">
         <tr>
             <th id="foto" colspan="2" style="text-align: center;">
-                <img src="{{ public_path('Foto_Profile/') . $data->foto }}" alt="" style="width: 180px; height: 220px; display: block; margin: 0 auto;">
+                @if($data->foto !== null)
+                    <img src="{{ public_path('Foto_Profile/') . $data->foto }}" alt="" style="width: 180px; height: 220px; display: block; margin: 0 auto;">
+                @else
+                    <p style="color: red;">File foto tidak tersedia.</p>
+                @endif
             </th>
         </tr>
     </table>
@@ -283,32 +270,12 @@
 
         </tbody>
     </table>
-
-    {{-- <h4>B. Riwayat Jabatan</h4>
-    <table  class="table table-striped">
-        <thead>
-            <tr  class="table-bordered">
-                <th>No</th>
-                <th>Jabatan Terakhir</th>
-                <th>Level Jabatan</th>
-                <th>Gaji Terakhir</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($historyjabatan as $p)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $p->jabatans->nama_jabatan }}</td>
-                    <td>{{ $p->leveljabatans->nama_level }}</td>
-                    <td>{{ number_format(floatval($p->gaji_terakhir), 0, ',', '.')}}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table> --}}
-
-    <h4>B. Riwayat Pendidikan</h4>
-    <label class="text-white badge bg-info">Pendidikan Formal</label>
-    <table  class="table table-striped">
+    @php 
+        $n = 1;
+    @endphp
+    <h4 id="formal">B. Riwayat Pendidikan</h4>
+    <label  id="formal" class="text-white badge bg-info">Pendidikan Formal</label>
+    <table  id="formal"  class="table table-striped">
         <thead>
             <tr  class="table-bordered">
                 <th>No</th>
@@ -324,7 +291,7 @@
             @foreach ($pendidikan as $p)
                 @if ($p['tingkat'] != null)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $n++ }}</td>
                         <td>{{ $p->tingkat }}</td>
                         <td>{{ $p->nama_sekolah }}</td>
                         <td>{{ $p->kota_pformal }}</td>
@@ -337,8 +304,8 @@
         </tbody>
     </table>
 
-    <label class="text-white badge bg-info">Pendidikan Non Formal</label>
-    <table class="table table-striped">
+    <label id="noformal" class="text-white badge bg-info">Pendidikan Non Formal</label>
+    <table id="noformal" class="table table-striped">
         <thead class="alert alert-info">
             <tr>
                 <th>No</th>
@@ -367,9 +334,13 @@
             @endforeach
         </tbody>
     </table>
+   @if($pendidikan->count() >= 7 && $pendidikan->count() <= 10 && $data->foto !== null)
+        <div class="page-break"></div>
+    {{-- @elseif($pendidikan->count() >= 7 && $pendidikan->count() <= 10 && $data->foto !== null) --}}
+    @endif
 
-    <h4>C. Riwayat Pengalaman Bekerja</h4>
-    <table class="table table-striped">
+    <h4 id="pekerjaan">C. Riwayat Pengalaman Bekerja</h4>
+    <table id="pekerjaan" class="table table-striped">
         <thead class="alert alert-info">
             <tr>
                 <th>No</th>
@@ -398,8 +369,24 @@
         </tbody>
     </table>
 
-    <h4>D. Riwayat Organisasi & Komunitas</h4>
-    <table class="table table-striped">
+    @php
+        $a = $pendidikan->count();
+        $b = $pekerjaan->count();
+        $c = $a + $b;
+        $d = $organisasi->count();
+        $e = $c + $d;
+        $f = $prestasi->count();
+        $g = $e + $f;
+        $h = $keluarga->count();
+        $i = $g + $h;
+        $j = $b + $d + $f;
+    @endphp
+
+    @if($c >= 6 && $c <= 11 && $b !== 0)
+        <div class="page-break"></div>
+    @endif
+    <h4 id="organisasi">D. Riwayat Organisasi & Komunitas</h4>
+    <table id="organisasi" class="table table-striped">
         <thead class="alert alert-info">
             <tr>
                 <th>No</th>
@@ -426,8 +413,8 @@
         </tbody>
     </table>
 
-    <h4>E. Riwayat Penghargaan/Prestasi</h4>
-    <table class="table table-striped">
+    <h4 id="prestasi">E. Riwayat Penghargaan/Prestasi</h4>
+    <table  id="prestasi" class="table table-striped">
         <thead class="alert alert-info">
             <tr>
                 <th>No</th>
@@ -446,14 +433,18 @@
                     <td>{{ $pres->nama_instansi }}</td>
                     <td>{{ $pres->alamat }}</td>
                     <td>{{ $pres->no_surat }}</td>
-                    <td>{{ $pres->tanggal_surat }}</td>
+                    <td>{{ \Carbon\Carbon::parse($pres->tanggal_surat)->format('d/m/Y') }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    <h4>F. Data Keluarga & Tanggungan</h4>
-    <table class="table table-striped">
+    {{-- {{$j;}} --}}
+    @if($g >= 19 && $f == 0 && $d !== 0 || $j >= 7)
+        <div class="page-break"></div>
+    @endif
+    <h4 id="keluarga" >F. Data Keluarga & Tanggungan</h4>
+    <table id="keluarga" class="table table-striped">
         <thead class="alert alert-info">
             <tr>
                 <th>No</th>
@@ -482,8 +473,8 @@
         </tbody>
     </table>
 
-    <h4>G. Data Kontak Darurat</h4>
-    <table class="table table-striped">
+    <h4 id="kontakdarurat">G. Data Kontak Darurat</h4>
+    <table id="kontakdarurat" class="table table-striped" >
         <thead class="alert alert-info">
             <tr>
                 <th>No</th>
@@ -506,18 +497,28 @@
         </tbody>
     </table>
 
-
-    {{-- <br>
-         use Carbon\Carbon;
-        $now = Carbon::now();
-        $bulan = $now->locale('id')->monthName;
-        $formatted_date = $now->day . ' ' . $bulan . ' ' . $now->year;
-    <div class="row-sm-3">
-        <p id="ttd">Jakarta Selatan, {{  $formatted_date }}</p>
-        <br>
-        <br>
-        <p id="tt">(HR Development)</p>
-    </div> --}}
+    
+    {{-- <h4>B. Riwayat Jabatan</h4>
+    <table  class="table table-striped">
+        <thead>
+            <tr  class="table-bordered">
+                <th>No</th>
+                <th>Jabatan Terakhir</th>
+                <th>Level Jabatan</th>
+                <th>Gaji Terakhir</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($historyjabatan as $p)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $p->jabatans->nama_jabatan }}</td>
+                    <td>{{ $p->leveljabatans->nama_level }}</td>
+                    <td>{{ number_format(floatval($p->gaji_terakhir), 0, ',', '.')}}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table> --}}
 </body>
 
 </html>
