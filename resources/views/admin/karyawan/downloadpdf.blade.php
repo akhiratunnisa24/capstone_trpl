@@ -336,7 +336,9 @@
     </table>
    @if($pendidikan->count() >= 7 && $pendidikan->count() <= 8 && $data->foto !== null)
         <div class="page-break"></div>
-    @elseif($pendidikan->count() < 7)
+    @elseif($pendidikan->count() < 7 && $pekerjaan !== null)
+        <div class="page-break"></div>
+    @else
     @endif
 
     <h4 id="pekerjaan">C. Riwayat Pengalaman Bekerja</h4>
