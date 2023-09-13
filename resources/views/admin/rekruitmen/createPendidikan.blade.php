@@ -252,10 +252,10 @@
                                                                     <div>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose500" type="text" class="form-control" placeholder="yyyy"
-                                                                            name="tahun_masukFormal" style="text-align: center" autocomplete="off"  rows="10">
+                                                                            name="tahun_masukFormal" style="text-align: center" autocomplete="off"  rows="10" readonly>
                                                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input id="datepicker-autoclose501" type="text" class="form-control" placeholder="yyyy"
-                                                                            style="text-align: center" name="tahun_lulusFormal" autocomplete="off"  rows="10">
+                                                                            style="text-align: center" name="tahun_lulusFormal" autocomplete="off"  rows="10" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -332,10 +332,10 @@
                                                                     <div>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose502" type="text" class="form-control" placeholder="yyyy"
-                                                                            name="tahun_masukFormal" style="text-align: center" autocomplete="off"  rows="10">
+                                                                            name="tahun_masukFormal" style="text-align: center" autocomplete="off"  rows="10" readonly>
                                                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input id="datepicker-autoclose503" type="text" style="text-align: center" class="form-control" placeholder="yyyy"
-                                                                                name="tahun_lulusFormal" autocomplete="off"  rows="10">
+                                                                                name="tahun_lulusFormal" autocomplete="off"  rows="10" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -473,14 +473,14 @@
                                                                                 name="tahun_masukFormal"
                                                                                 id="tahun_masukFormal"
                                                                                 placeholder="dd/mm/yyyy"
-                                                                                autocomplete="off" />
+                                                                                autocomplete="off" readonly/>
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
                                                                                 name="tahun_lulusFormal"
                                                                                 id="tahun_lulusFormal"
                                                                                 placeholder="dd/mm/yyyy"
-                                                                                autocomplete="off" />
+                                                                                autocomplete="off" readonly/>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -560,14 +560,14 @@
                                                                                 name="tahun_masukNonFormal"
                                                                                 id="tahun_masukNonFormal"
                                                                                 placeholder="dd/mm/yyyy"
-                                                                                autocomplete="off" />
+                                                                                autocomplete="off" readonly/>
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
                                                                                 name="tahun_lulusNonFormal"
                                                                                 id="tahun_lulusNonFormal"
                                                                                 placeholder="dd/mm/yyyy"
-                                                                                autocomplete="off" />
+                                                                                autocomplete="off" readonly/>
                                                                         </div>
                                                                     </div>
                                                                 </div>

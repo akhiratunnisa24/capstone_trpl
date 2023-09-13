@@ -14,8 +14,8 @@
                         <div class="col-md-12">
                             <div class="form-group col-sm">
                                 <label class="form-label">Tanggal Penggajian</label>
-                                <input id="datepicker-autoclose-format-ak" type="text" class="form-control" placeholder="dd/mm/yyyy" 
-                                            name="tglgajian" autocomplete="off" value="{{\Carbon\Carbon::now()->format('d/m/Y')}}" rows="10" required>
+                                <input id="datepicker-autoclose-format-ak" type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                            name="tglgajian" autocomplete="off" value="{{\Carbon\Carbon::now()->format('d/m/Y')}}" rows="10" required readonly>
                             </div>
                             <div class="form-group col-sm">
                                 <label class="col-form-label">Nama Karyawan</label>
@@ -23,21 +23,21 @@
                                     <option>-- Pilih Karyawan --</option>
                                     @foreach ($karyawan as $data)
                                             <option value="{{ $data->id}}">
-                                                {{ $data->nama }} 
+                                                {{ $data->nama }}
                                             </option>
                                     @endforeach
-                                </select> 
+                                </select>
                             </div>
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label class="form-label">Periode Gajian</label>
                                     <div>
                                         <div class="input-group">
-                                            <input id="datepicker-autoclose-format-ai" type="text" class="form-control" placeholder="dd/mm/yyyy" 
-                                            name="tgl_awal"  autocomplete="off"  rows="10" required>
+                                            <input id="datepicker-autoclose-format-ai" type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                            name="tgl_awal"  autocomplete="off"  rows="10" required readonly>
                                             <span class="input-group-addon bg-info text-white b-0">-</span>
-                                            <input id="datepicker-autoclose-format-aj" type="text" class="form-control" placeholder="dd/mm/yyyy" 
-                                                name="tgl_akhir" autocomplete="off"  rows="10" required>
+                                            <input id="datepicker-autoclose-format-aj" type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                                name="tgl_akhir" autocomplete="off"  rows="10" required readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -48,8 +48,8 @@
                             </div>  --}}
                             <div class="form-group col-sm">
                                 <label class="col-form-label">Tanggal Masuk</label>
-                                <input id="datepicker-autoclose-format-al" type="text" class="form-control" placeholder="dd/mm/yyyy" 
-                                    name="tglmasuk" autocomplete="off" rows="10" required>
+                                <input id="datepicker-autoclose-format-al" type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                    name="tglmasuk" autocomplete="off" rows="10" required readonly>
                             </div>
                             <div class="form-group col-sm" id="nama_bank-group">
                                 <label class="col-form-label">Nama Bank</label>
@@ -58,9 +58,9 @@
                             <div class="form-group col-sm">
                                 <label class="col-form-label">No. rekening</label>
                                 <input type="text" class="form-control" name="nomor_rekening" id="nomor_rekening" required>
-                            </div> 
+                            </div>
                     </div>
-                            
+
                         <input type="hidden" class="form-control" name="partner" value="{{Auth::user()->partner}}">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
@@ -100,7 +100,7 @@
                         $('#nama_bank-group').html('<label class="col-form-label">Nama Bank</label><input type="text" class="form-control" name="nama_bank" id="nama_bank" required>');
                         $('#nama_bank').val(data.nama_bank);
                         $('#nomor_rekening').val(data.no_rek);
-                      
+
                         var tanggalMasuk = data.tglmasuk.split('-');
                         var tanggalFormatted = tanggalMasuk[2] + '/' + tanggalMasuk[1] + '/' + tanggalMasuk[0];
                         $('#datepicker-autoclose-format-al').val(tanggalFormatted);

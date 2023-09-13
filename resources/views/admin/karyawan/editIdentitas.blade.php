@@ -37,7 +37,7 @@
                                     <input name="tgllahirKaryawan" type="text" autocomplete="off"
                                         class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose17"
                                         autocomplete="off"
-                                        value="{{ \Carbon\Carbon::parse($karyawan->tgllahir)->format('Y/m/d') }}">
+                                        value="{{ \Carbon\Carbon::parse($karyawan->tgllahir)->format('Y/m/d') }}" readonly>
                                 </div>
                             </div>
 

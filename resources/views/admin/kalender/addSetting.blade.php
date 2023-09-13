@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title text-center" id="myModalLabel">Tambah Data Hari Libur</h4>
             </div>
-          
+
             <div class="modal-body">
                 <form action="/store-kalender" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label class="form-label">Tanggal</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose33" name="tanggal" autocomplete="off" required>
+                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose33" name="tanggal" autocomplete="off" required readonly>
                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                             </div>
                         </div>

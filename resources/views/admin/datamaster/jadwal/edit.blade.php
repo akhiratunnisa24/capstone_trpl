@@ -36,7 +36,7 @@
                     <div class="form-group col-sm" id="tanggal">
                         <label for="tanggal" class="form-label">Tanggal</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosey" name="tanggal"  value="{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}" autocomplete="off" rows="10">
+                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosey" name="tanggal"  value="{{\Carbon\Carbon::parse($data->tanggal)->format('d/m/Y')}}" autocomplete="off" rows="10" readonly>
                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                                 <input type="text" class="form-control" name="jadwal_masuk" id="jadwal_masuks" value="{{$data->jadwal_masuk}}" autocomplete="off" readonly>
                             </div>
                         </div>
-                       
+
                         <div class="col-sm-6">
                             <div class="form-group col-sm">
                                 <label for="jadwal_pulang">Jadwal Pulang</label>

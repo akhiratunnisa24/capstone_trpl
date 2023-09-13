@@ -101,7 +101,7 @@
                                                         <input id="datepicker-autoclose-format" type="text"
                                                             class="form-control" placeholder="dd/mm/yyyy"
                                                             name="tgllahirPelamar" autocomplete="off" rows="10"
-                                                            value="{{ $pelamar->tgllahir ?? '' }}" required><br>
+                                                            value="{{ $pelamar->tgllahir ?? '' }}" required readonly><br>
                                                         <span class="input-group-addon bg-custom b-0"><i
                                                                 class="mdi mdi-calendar text-white"></i></span>
                                                     </div>

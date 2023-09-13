@@ -191,7 +191,7 @@
             </table>
         </div>
     </div>
-    <hr> 
+    <hr>
     <table id="absensi">
         @foreach($detailgaji as $detail)
             @if($detail->id_benefit === 3)

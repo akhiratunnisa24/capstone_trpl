@@ -49,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 <div class="row">
                     <div class="col-lg-12">
                         <ul class="nav nav-tabs navtab-bg">
@@ -141,7 +141,7 @@
                                                                                             name="tgllahirKaryawan"
                                                                                             autocomplete="off"
                                                                                             rows="10"
-                                                                                            required></input><br>
+                                                                                            required readonly></input><br>
                                                                                         <span
                                                                                             class="input-group-addon bg-custom b-0"><i
                                                                                                 class="mdi mdi-calendar text-white"></i></span>
@@ -339,7 +339,7 @@
                                                                                                 name="tglmasukKaryawan"
                                                                                                 rows="10"
                                                                                                 autocomplete="off"
-                                                                                                required></input><br>
+                                                                                                required readonly></input><br>
                                                                                             <span
                                                                                                 class="input-group-addon bg-custom b-0"><i
                                                                                                     class="mdi mdi-calendar text-white"></i></span>
@@ -522,7 +522,7 @@
                                                                                             id="datepicker-autoclose8"
                                                                                             autocomplete="off"
                                                                                             name="tgllahirPasangan"
-                                                                                            rows="10"></input><br>
+                                                                                            rows="10" readonly></input><br>
                                                                                         <span
                                                                                             class="input-group-addon bg-custom b-0"><i
                                                                                                 class="mdi mdi-calendar text-white"></i></span>
@@ -920,7 +920,7 @@
                                                                                             id="4"
                                                                                             name="tahun_lulusFormal"
                                                                                             rows="10"
-                                                                                            autocomplete="off"></input><br>
+                                                                                            autocomplete="off" readonly></input><br>
                                                                                         <span
                                                                                             class="input-group-addon bg-custom b-0"><i
                                                                                                 class="mdi mdi-calendar text-white"></i></span>
@@ -989,7 +989,7 @@
                                                                                             id="4"
                                                                                             name="tahunLulusNonFormal"
                                                                                             autocomplete="off"
-                                                                                            rows="10"><br>
+                                                                                            rows="10" readonly><br>
                                                                                         <span
                                                                                             class="input-group-addon bg-custom b-0"><i
                                                                                                 class="mdi mdi-calendar text-white"></i></span>
@@ -1295,7 +1295,7 @@
             $(".after-add-more").after(html);
         });
 
-        // saat tombol remove dklik control group akan dihapus 
+        // saat tombol remove dklik control group akan dihapus
         $("body").on("click", ".remove", function() {
             $(this).parents(".control-group").remove();
         });

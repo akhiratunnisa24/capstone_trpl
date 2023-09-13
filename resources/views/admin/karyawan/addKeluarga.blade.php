@@ -60,7 +60,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="dd/mm/yyyy"
                                             id="datepicker-autoclose-format" autocomplete="off" name="tgllahirKeluarga"
-                                            rows="10"><br>
+                                            rows="10" readonly><br>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>
                                     </div>

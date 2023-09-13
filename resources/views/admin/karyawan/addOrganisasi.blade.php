@@ -45,12 +45,12 @@
                                                 id="tglselesai" placeholder="dd/mm/yyyy" autocomplete="off"/>
                                         </div> --}}
                                         <div class="input-group">
-                                            <input id="datepicker-autoclose-format-m" type="text" class="form-control" placeholder="mm/yyyy" 
-                                                name="tglmulai" autocomplete="off"  rows="10">
+                                            <input id="datepicker-autoclose-format-m" type="text" class="form-control" placeholder="mm/yyyy"
+                                                name="tglmulai" autocomplete="off"  rows="10" readonly>
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input id="datepicker-autoclose-format-n" type="text" class="form-control" placeholder="mm/yyyy" 
-                                                name="tglselesai" autocomplete="off"  rows="10">
-                        
+                                            <input id="datepicker-autoclose-format-n" type="text" class="form-control" placeholder="mm/yyyy"
+                                                name="tglselesai" autocomplete="off"  rows="10" readonly>
+
                                         </div>
                                     </div>
                                 </div>

@@ -57,7 +57,7 @@
                                     <div class="input-group">
                                         <input id="datepicker-autoclose-format" type="text" class="form-control"
                                             placeholder="dd/mm/yyyy" id="4" name="tgl_surat" rows="10"
-                                            autocomplete="off"><br>
+                                            autocomplete="off" readonly><br>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>
                                     </div>

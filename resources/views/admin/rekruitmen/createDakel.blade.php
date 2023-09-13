@@ -165,7 +165,7 @@
                                                                                 type="text" class="form-control"
                                                                                 placeholder="dd/mm/yyyy"
                                                                                 autocomplete="off"
-                                                                                name="tgllahirPasangan" required>
+                                                                                name="tgllahirPasangan" required readonly>
                                                                             <span
                                                                                 class="input-group-addon bg-custom b-0"><i
                                                                                     class="mdi mdi-calendar text-white"></i></span>
@@ -320,7 +320,7 @@
                                                                                 id="tgllahirPasangan"
                                                                                 autocomplete="off"
                                                                                 name="tgllahirPasangan" rows="10"
-                                                                                required><br>
+                                                                                required readonly><br>
                                                                             <span
                                                                                 class="input-group-addon bg-custom b-0"><i
                                                                                     class="mdi mdi-calendar text-white"></i></span>

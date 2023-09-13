@@ -28,7 +28,7 @@
                             <input type="text" class="form-control" id="id_karyawan" value="{{Auth::user()->name}}" readonly>
                             <input type="hidden" class="form-control" id="id_karyawan" value="{{Auth::user()->id_pegawai}}" hidden>
                         </div>
-                    
+
                         <div class="form-group col-sm">
                             <label for="id_jeniscuti" class="col-form-label">Kategori Cuti</label>
                             <select name="id_jeniscuti" id="id_jeniscuti" class="form-control selectpicker" data-live-search="true" required>
@@ -36,7 +36,7 @@
                                     <option value="{{$sisa->jenis_cuti}}">
                                         {{$sisa->jenis_cuti}}
                                     </option>
-                            </select> 
+                            </select>
                         </div>
                         <div class="form-group col-sm">
                             <input type="hidden" class="form-control" name="id_jeniscutis" id="id_jeniscutis">
@@ -54,21 +54,21 @@
                                         <div class="form-group">
                                             <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autocloseq" name="tgl_mulai"  autocomplete="off" rows="10" required>
+                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autocloseq" name="tgl_mulai"  autocomplete="off" rows="10" required readonly>
                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                             </div>
                                         </div>
                                     {{-- </form> --}}
                                 </div>
                             </div>
-                           
+
                             <div class="col-sm-6 col-xs-12">
                                 <div class="m-t-20">
                                     {{-- <form class="" action="#"> --}}
                                         <div class="form-group">
                                             <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autocloser" name="tgl_selesai"  autocomplete="off" rows="10" required>
+                                                <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="yyyy/mm/dd" id="datepicker-autocloser" name="tgl_selesai"  autocomplete="off" rows="10" required readonly>
                                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                             </div>
                                         </div>
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                         </div>
-                    
+
                         {{-- <div class="row">
                             <div class="col-sm-6 col-xs-12">
                                 <div class="form-group col-sm"> --}}
@@ -110,7 +110,7 @@
                         <div class="form-group col-sm">
                             <input type="hidden" class="form-control" name="status" id="status" value="Pending">
                         </div>
-                            
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                             <button type="submit" id="submit-button" class="btn btn-success" value="save">Kirim</button>
@@ -125,15 +125,15 @@
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      {{-- <script src="assets/js/bootstrap.min.js"></script> --}}
 
- 
+
      {{-- plugin js --}}
      <script src="assets/plugins/timepicker/bootstrap-timepicker.js"></script>
      <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-   
+
      <!-- Datatable init js -->
      <script src="assets/pages/datatables.init.js"></script>
      {{-- <script src="assets/js/app.js"></script> --}}
- 
+
      <!-- Plugins Init js -->
      <script src="assets/pages/form-advanced.js"></script>
 
@@ -178,7 +178,7 @@
             var daysOfYear = [];
 
             //untuk mendapatkan jumlah hari cuti
-            for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1)) 
+            for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1))
             {
                 //cek workdays
                 let tanggal = new Date(d);
@@ -202,19 +202,19 @@
             // console.info(daysOfYear);
             $('#jumlah').val(daysOfYear.length ?? 0);
 
-           
+
             //mengambil value jml_cuti
             var jml_cuti = $("#jumlah").val();
             var durasi   = $("#durasi").val(); ////ambil value dari input field durasi yang didapat dari ajax request
-            
-        
+
+
             if(jml_cuti > durasi){
                 $('#success-message').hide();
                 $('#error-message').html(' "WARNING !!"<br>Jumlah cuti yang diinput melebihi durasi cuti yang tersedia.<br>Silahkan pilih jumlah cuti yang lebih kecil atau sama dengan durasi');
                 $('#error-message').show();
                 $('#submit-button').attr('disabled', true); //nonaktifkan tombol submit
 
-                setTimeout(function() 
+                setTimeout(function()
                 {
                     $('#error-message').hide();
                 }, 3000);

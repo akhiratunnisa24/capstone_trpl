@@ -20,7 +20,7 @@
                     <div class="form-group col-sm">
                         <label class="form-label">Tanggal Penggajian</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose76a" name="tgl_penggajian" value="{{\Carbon\Carbon::parse($data->tglgajian)->format("d/m/Y")}}" autocomplete="off" required>
+                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose76a" name="tgl_penggajian" value="{{\Carbon\Carbon::parse($data->tglgajian)->format("d/m/Y")}}" autocomplete="off" required readonly>
                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                         </div>
                     </div>
@@ -30,10 +30,10 @@
                             <div>
                                 <div class="input-group">
                                     <input id="datepicker-autoclose-format-au" type="text" class="form-control" placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tglawal)->format("d/m/Y")}}"
-                                    name="tgl_mulai"  autocomplete="off"  rows="10" required>
+                                    name="tgl_mulai"  autocomplete="off"  rows="10" required readonly>
                                     <span class="input-group-addon bg-info text-white b-0">-</span>
                                     <input id="datepicker-autoclose-format-av" type="text" class="form-control" placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tglakhir)->format("d/m/Y")}}"
-                                        name="tgl_selesai" autocomplete="off"  rows="10" required>
+                                        name="tgl_selesai" autocomplete="off"  rows="10" required readonly>
                                 </div>
                             </div>
                         </div>

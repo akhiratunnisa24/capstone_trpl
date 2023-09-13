@@ -132,7 +132,7 @@
                                                                     <label class="form-label">Tanggal Surat </label>
                                                                     <input type="text" name="tglSurat"
                                                                         class="form-control" id="datepicker-autoclose35"
-                                                                        placeholder="yyyy/mm/dd">
+                                                                        placeholder="yyyy/mm/dd" readonly>
                                                                 </div>
                                                             </div>
 
@@ -149,11 +149,11 @@
                                                                         <div class="input-daterange input-group"
                                                                             id="date-range">
                                                                             <input type="text" class="form-control"
-                                                                                name="tglmulai" id="tglmulai"  />
+                                                                                name="tglmulai" id="tglmulai" readonly />
                                                                             <span
                                                                                 class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input type="text" class="form-control"
-                                                                                name="tglselesai" id="tglselesai"  />
+                                                                                name="tglselesai" id="tglselesai"  readonly/>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -168,7 +168,7 @@
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
-                                                            
+
                                                         </div>
 
                                                     </div>
@@ -231,7 +231,7 @@
                                                                     <label class="form-label">Tanggal Surat </label>
                                                                     <input type="text" name="tglSurat"
                                                                         class="form-control" id="datepicker-autoclose35"
-                                                                        placeholder="yyyy/mm/dd">
+                                                                        placeholder="yyyy/mm/dd" readonly>
                                                                 </div>
                                                             </div>
 
@@ -267,7 +267,7 @@
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
-                                                            
+
                                                         </div>
 
                                                     </div>
@@ -308,7 +308,7 @@
         });
         /* Fungsi formatRupiah */
         function formatRupiah(angka, prefix) {
-            
+
             var number_string = angka.replace(/[^,\d]/g, '').toString(),
                 split = number_string.split(','),
                 sisa = split[0].length % 3,
