@@ -336,7 +336,6 @@
     </table>
    @if($pendidikan->count() >= 7 && $pendidikan->count() <= 8 && $data->foto !== null)
         <div class="page-break"></div>
-    {{-- @elseif($pendidikan->count() >= 7 && $pendidikan->count() <= 10 && $data->foto !== null) --}}
     @endif
 
     <h4 id="pekerjaan">C. Riwayat Pengalaman Bekerja</h4>
@@ -441,8 +440,29 @@
     </table>
 
     {{-- {{$j;}} --}}
-    @if($g >= 19 && $f == 0 && $d !== 0 || $j >= 7 || $k > 0)
+    @if($f !== 0 && $d !== 0 && $k >= 0 && $j !== 0)
         <div class="page-break"></div>
+    @elseif($f !== 0 && $d !== 0 && $j !== 0)
+        <div class="page-break"></div>
+        {{$f}}{{$d}}{{$j}}{{$k}}
+    @elseif($k >= 1)
+        <div class="page-break"></div>
+        {{-- <p>Prestasi dan organisasi tidak null</p> --}}
+    @elseif($b <= 2 && $j >= 3)
+        <div class="page-break"></div>
+        {{-- <p>jumlah data pekerjaan kecil dari 2</p> --}}
+    @elseif($g >= 8)
+        <div class="page-break"></div>
+        {{-- <p>jumlah data pekerjaan kecil dari 2 {{$g}}</p> --}}
+    @elseif($g >= 6 && $k !== 0)
+        <div class="page-break"></div>
+        {{-- <p>jumlah data penghargaan dam organisasi {{$k}}</p> --}}
+    @elseif($b !== 0 && $d !== 0 && !$f == 0)
+        <div class="page-break"></div>
+        {{-- <p>Halo</p> --}}
+        {{-- {{$k}} --}}
+    @else
+         {{-- {{$k}} --}}
     @endif
     <h4 id="keluarga" >F. Data Keluarga & Tanggungan</h4>
     <table id="keluarga" class="table table-striped">
