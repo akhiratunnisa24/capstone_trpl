@@ -385,7 +385,7 @@
         $k = $d + $f;
     @endphp
 
-    @if($c >= 7 && $c <= 11 && $b !== 0)
+    @if($c >= 7 && $c <= 11 && $b >= 5 && $b <= 7)
         <div class="page-break"></div>
     @endif
     <h4 id="organisasi">D. Riwayat Organisasi & Komunitas</h4>
