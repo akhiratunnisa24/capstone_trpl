@@ -390,7 +390,7 @@
         <div class="page-break"></div>
     @elseif($c >= 6 && $c <= 7)
         <div class="page-break"></div>
-    @elseif($c <=4)
+    @elseif($c <= 4)
         <div class="page-break"></div>
     @endif
     <h4 id="organisasi">D. Riwayat Organisasi & Komunitas</h4>
