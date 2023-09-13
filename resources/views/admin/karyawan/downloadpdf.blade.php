@@ -334,7 +334,7 @@
             @endforeach
         </tbody>
     </table>
-   @if($pendidikan->count() >= 7 && $pendidikan->count() <= 10 && $data->foto !== null)
+   @if($pendidikan->count() >= 7 && $pendidikan->count() <= 8 && $data->foto !== null)
         <div class="page-break"></div>
     {{-- @elseif($pendidikan->count() >= 7 && $pendidikan->count() <= 10 && $data->foto !== null) --}}
     @endif
