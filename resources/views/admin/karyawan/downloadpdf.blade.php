@@ -334,9 +334,11 @@
             @endforeach
         </tbody>
     </table>
-   @if($pendidikan->count() >= 7 && $pendidikan->count() <= 10 && $data->foto !== null)
+   @if($pendidikan->count() >= 5 && $pendidikan->count() <= 7 && $data->foto !== null)
         <div class="page-break"></div>
-    {{-- @elseif($pendidikan->count() >= 7 && $pendidikan->count() <= 10 && $data->foto !== null) --}}
+    {{-- @elseif($pendidikan->count() < 7 && $pekerjaan !== null)
+        <div class="page-break"></div>
+    @else --}}
     @endif
 
     <h4 id="pekerjaan">C. Riwayat Pengalaman Bekerja</h4>
@@ -380,9 +382,17 @@
         $h = $keluarga->count();
         $i = $g + $h;
         $j = $b + $d + $f;
+        $k = $d + $f;
+        $l = $b + $d;
     @endphp
 
-    @if($c >= 6 && $c <= 11 && $b !== 0)
+    @if($c >= 7 && $c <= 11 && $b >= 5 && $b <= 7)
+        <div class="page-break"></div>
+    @elseif($c >= 6 && $c <= 7)
+        <div class="page-break"></div>
+    @elseif($c == 5)
+        <div class="page-break"></div>
+    @elseif($c <= 4)
         <div class="page-break"></div>
     @endif
     <h4 id="organisasi">D. Riwayat Organisasi & Komunitas</h4>
@@ -413,6 +423,14 @@
         </tbody>
     </table>
 
+    {{-- @if($l >= 13 ||$l == 0) 
+        <div class="page-break"></div>
+    @elseif($l == 0 && $c >= 20)
+        <div class="page-break">Halo</div>
+    @elseif($d > 5 )
+        <div class="page-break"></div>
+    @else
+    @endif --}}
     <h4 id="prestasi">E. Riwayat Penghargaan/Prestasi</h4>
     <table  id="prestasi" class="table table-striped">
         <thead class="alert alert-info">
@@ -440,9 +458,26 @@
     </table>
 
     {{-- {{$j;}} --}}
-    @if($g >= 19 && $f == 0 && $d !== 0 || $j >= 7)
+    {{-- @if($f !== 0 && $d !== 0 && $k >= 0 && $j !== 0)
         <div class="page-break"></div>
-    @endif
+    @elseif($f !== 0 && $d !== 0 && $j !== 0)
+        <div class="page-break"></div>
+        {{$f}}{{$d}}{{$j}}{{$k}}
+    @elseif($k >= 1)
+        <div class="page-break"></div>
+             
+    @elseif($b <= 2 && $j >= 3)
+        <div class="page-break"></div>
+    @elseif($g >= 8)
+        <div class="page-break"></div>
+    @elseif($g >= 6 && $k !== 0)
+        <div class="page-break"></div>
+    @elseif($b !== 0 && $d !== 0 && !$f == 0)
+        <div class="page-break"></div>
+    @else
+    
+    @endif --}}
+    <div class="page-break"></div>
     <h4 id="keluarga" >F. Data Keluarga & Tanggungan</h4>
     <table id="keluarga" class="table table-striped">
         <thead class="alert alert-info">

@@ -740,6 +740,27 @@ class PenggajianController extends Controller
             //mengirim email notifikasi slip gaji kepada karyawan
             if($slipgaji->statusmail === 0)
             {
+                $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
+                $slipgaji = Penggajian::with('karyawans')->where('id',$slipgaji->id)->first();
+                $karyawan = Karyawan::where('id',$slipgaji->id_karyawan)->first();
+                $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
+                $detailinformasi= Detailinformasigaji::with('karyawans','benefit')
+                        ->where('id_karyawan',$karyawan->id)
+                        ->whereHas('benefit', function ($query) {
+                            $query->where('partner', '!=', 0);
+                        })
+                        ->get();
+                $tgllahir = $karyawan->tgllahir;
+                $passpdf = date('dmY', strtotime($tgllahir));
+
+                $datapdf = [
+                    'setorganisasi' => $setorganisasi,
+                    'slipgaji' => $slipgaji,
+                    'karyawan' => $karyawan,
+                    'detailgaji' => $detailgaji,
+                    'detailinformasi' => $detailinformasi,
+                    'password' => $passpdf
+                ];
                 $data = [
                     'subject' => "Notifikasi Slip Gaji - " . $nama . " - [" . $periode . "]",
                     'periode' => $periode,
@@ -748,7 +769,7 @@ class PenggajianController extends Controller
                     'emailperusahaan' => $setorganisasi->email,
                     'notelpperusahaan' => $setorganisasi->no_telp,
                 ];
-                Mail::to($tujuan)->send(new SlipgajiNotification($data));
+                Mail::to($tujuan)->send(new SlipgajiNotification($data,$datapdf));
                 $dataupdate = [
                     'statusmail'=> 1,
                 ];
