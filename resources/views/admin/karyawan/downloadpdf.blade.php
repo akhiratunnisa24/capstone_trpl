@@ -388,6 +388,8 @@
 
     @if($c >= 7 && $c <= 11 && $b >= 5 && $b <= 7)
         <div class="page-break"></div>
+    @elseif($c >= 6 && $c <= 7)
+        <div class="page-break"></div>
     @endif
     <h4 id="organisasi">D. Riwayat Organisasi & Komunitas</h4>
     <table id="organisasi" class="table table-striped">
@@ -418,6 +420,8 @@
     </table>
 
     @if($l >= 13 ||$l == 0)
+        <div class="page-break"></div>
+    @elseif($d > 5)
         <div class="page-break"></div>
     @else
     @endif
