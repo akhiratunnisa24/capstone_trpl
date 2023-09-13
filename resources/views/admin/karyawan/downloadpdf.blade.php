@@ -334,7 +334,7 @@
             @endforeach
         </tbody>
     </table>
-   @if($pendidikan->count() >= 7 && $pendidikan->count() <= 10 && $data->foto !== null)
+   @if($pendidikan->count() >= 6 && $pendidikan->count() <= 10 && $data->foto !== null)
         <div class="page-break"></div>
     {{-- @elseif($pendidikan->count() >= 7 && $pendidikan->count() <= 10 && $data->foto !== null) --}}
     @endif
@@ -380,6 +380,7 @@
         $h = $keluarga->count();
         $i = $g + $h;
         $j = $b + $d + $f;
+        $k = $d + $f;
     @endphp
 
     @if($c >= 6 && $c <= 11 && $b !== 0)
@@ -440,7 +441,7 @@
     </table>
 
     {{-- {{$j;}} --}}
-    @if($g >= 19 && $f == 0 && $d !== 0 || $j >= 7)
+    @if($g >= 19 && $f == 0 && $d !== 0 || $j >= 7 || $k > 0)
         <div class="page-break"></div>
     @endif
     <h4 id="keluarga" >F. Data Keluarga & Tanggungan</h4>
