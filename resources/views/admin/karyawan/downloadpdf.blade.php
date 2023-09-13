@@ -421,9 +421,9 @@
         </tbody>
     </table>
 
-    @if($l >= 13 ||$l == 0)
-        <div class="page-break"></div>
-    @elseif($d > 5)
+    @if($l >= 13 ||$l == 0 || $l == 0 && $c >= 20)
+        <div class="page-break">Halo</div>
+    @elseif($d > 5 )
         <div class="page-break"></div>
     @else
     @endif
