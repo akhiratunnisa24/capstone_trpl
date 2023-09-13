@@ -52,10 +52,10 @@
                                     <div>
                                         <div class="input-group">
                                             <input id="datepicker-autoclose-format-ba" type="text" class="form-control" name="tahun_masukFormal"
-                                                placeholder="yyyy" autocomplete="off"/>
+                                                placeholder="yyyy" autocomplete="off" readonly/>
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                             <input id="datepicker-autoclose-format-bb" type="text" class="form-control" name="tahun_lulusFormal"
-                                                placeholder="yyyy" autocomplete="off"/>
+                                                placeholder="yyyy" autocomplete="off" readonly/>
                                         </div>
                                     </div>
                                 </div>

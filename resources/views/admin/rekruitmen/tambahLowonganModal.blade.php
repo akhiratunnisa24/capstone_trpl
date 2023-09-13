@@ -69,10 +69,10 @@
                         <div>
                             <div class="input-daterange input-group" id="date-range">
                                 <input type="text" class="form-control" name="tglmulai" autocomplete="off"
-                                    required />
+                                    required readonly/>
                                 <span class="input-group-addon bg-primary text-white b-0">To</span>
                                 <input type="text" class="form-control" name="tglselesai" autocomplete="off"
-                                    required />
+                                    required readonly/>
                             </div>
                         </div>
                     </div>

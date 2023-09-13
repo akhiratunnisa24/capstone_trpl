@@ -133,15 +133,15 @@
                                                                     <div>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose506" type="text"
-                                                                                class="form-control" placeholder="yyyy"
+                                                                                class="form-control" placeholder="mm/yyyy"
                                                                                 name="tglmulai" style="text-align: center"
-                                                                                autocomplete="off" rows="10">
+                                                                                autocomplete="off" rows="10" readonly>
                                                                             <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                                class="input-group-addon bg-primary text-white b-0">-</span>
                                                                             <input id="datepicker-autoclose507" type="text"
-                                                                                class="form-control" placeholder="yyyy"
+                                                                                class="form-control" placeholder="mm/yyyy"
                                                                                 style="text-align: center" name="tglselesai"
-                                                                                autocomplete="off" rows="10">
+                                                                                autocomplete="off" rows="10" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -261,15 +261,15 @@
                                                             <div>
                                                                 <div class="input-group">
                                                                     <input id="datepicker-autoclose508" type="text"
-                                                                        class="form-control" placeholder="yyyy"
+                                                                        class="form-control" placeholder="mm/yyyy"
                                                                         name="tglmulai" style="text-align: center"
-                                                                        autocomplete="off" rows="10">
+                                                                        autocomplete="off" rows="10" readonly>
                                                                     <span
-                                                                        class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                        class="input-group-addon bg-primary text-white b-0">-</span>
                                                                     <input id="datepicker-autoclose509" type="text"
-                                                                        class="form-control" placeholder="yyyy"
+                                                                        class="form-control" placeholder="mm/yyyy"
                                                                         style="text-align: center" name="tglselesai"
-                                                                        autocomplete="off" rows="10">
+                                                                        autocomplete="off" rows="10" readonly>
                                                                 </div>
                                                             </div>
                                                         </div>

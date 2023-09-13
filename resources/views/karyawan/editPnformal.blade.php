@@ -36,10 +36,10 @@
                                     <div>
                                         <div class="input-group">
                                             <input id="datepicker-autoclose-format-bg" type="text" class="form-control" name="tahun_masukNonFormal"
-                                                placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $pendidikan->tahun_masuk_nonformal }}" />
+                                                placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $pendidikan->tahun_masuk_nonformal }}" readonly />
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                             <input id="datepicker-autoclose-format-bh" type="text" class="form-control" name="tahun_lulusNonFormal"
-                                                placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $pendidikan->tahun_lulus_nonformal }}" />
+                                                placeholder="dd/mm/yyyy" autocomplete="off" value="{{ $pendidikan->tahun_lulus_nonformal }}" readonly/>
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-            
+
                     <div class="modal-footer">
                         <input type="hidden" name="id" id="id">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>

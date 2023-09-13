@@ -37,12 +37,12 @@
                                 <div class="mb-3">
                                     <label class="form-label">Lama Kerja</label>
                                     <div class="input-group">
-                                        <input id="datepicker-autoclose-format-k" type="text" class="form-control" placeholder="mm/yyyy" 
-                                            name="tglmulai" autocomplete="off"  rows="10">
+                                        <input id="datepicker-autoclose-format-k" type="text" class="form-control" placeholder="mm/yyyy"
+                                            name="tglmulai" autocomplete="off"  rows="10" readonly>
                                         <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                        <input id="datepicker-autoclose-format-h" type="text" class="form-control" placeholder="mm/yyyy" 
-                                            name="tglselesai" autocomplete="off"  rows="10">
-                    
+                                        <input id="datepicker-autoclose-format-h" type="text" class="form-control" placeholder="mm/yyyy"
+                                            name="tglselesai" autocomplete="off"  rows="10" readonly>
+
                                     </div>
                                     {{-- <div>
                                         <div class="input-daterange input-group" id="date-range">
@@ -69,7 +69,7 @@
 
                         {{-- KANAN --}}
                         <div class="col-md-6 m-t-10">
-                            
+
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label"> Level/Pangkat/Golongan</label>

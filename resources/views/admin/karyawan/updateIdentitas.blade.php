@@ -101,7 +101,7 @@
                                                                 <input id="datepicker-autoclose-format" type="text"
                                                                     class="form-control" name="tgllahirKaryawan"
                                                                     value="{{ \Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y') ?? '-' }}"
-                                                                    autocomplete="off">
+                                                                    autocomplete="off" readonly>
                                                                 <span class="input-group-addon bg-custom b-0"><i
                                                                         class="mdi mdi-calendar"></i></span>
                                                             </div>
@@ -340,7 +340,7 @@
                                                                         id="datepicker-autoclose-format2"
                                                                         name="tglmasukKaryawan" rows="10"
                                                                         autocomplete="off"
-                                                                        value="{{ \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') ?? '-' }}">
+                                                                        value="{{ \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') ?? '-' }}" readonly>
                                                                     <span class="input-group-addon bg-custom b-0"><i
                                                                             class="mdi mdi-calendar text-white"></i></span>
                                                                 </div>
@@ -556,7 +556,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const inputFormats = document.querySelectorAll('.input-formats');
-        
+
             inputFormats.forEach(input => {
                 input.addEventListener('input', function() {
                     const value = parseFloat(this.value.replace(/\./g, '').replace(/,/g, ''));
@@ -567,5 +567,5 @@
                 });
             });
         });
-    </script> 
+    </script>
 @endsection

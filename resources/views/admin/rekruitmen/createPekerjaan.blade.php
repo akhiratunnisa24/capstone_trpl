@@ -156,11 +156,11 @@
                                                                         <label class="form-label">Lama Kerja</label>
                                                                         <div>
                                                                             <div class="input-group">
-                                                                                <input id="datepicker-autoclose504" type="text" class="form-control" placeholder="yyyy"
-                                                                                name="tglmulai" style="text-align: center" autocomplete="off"  rows="10">
-                                                                                <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                                <input id="datepicker-autoclose505" type="text" class="form-control" placeholder="yyyy"
-                                                                                style="text-align: center" name="tglselesai" autocomplete="off"  rows="10">
+                                                                                <input id="datepicker-autoclose504" type="text" class="form-control" placeholder="mm/yyyy"
+                                                                                name="tglmulai" style="text-align: center" autocomplete="off"  rows="10" readonly>
+                                                                                <span class="input-group-addon bg-primary text-white b-0">-</span>
+                                                                                <input id="datepicker-autoclose505" type="text" class="form-control" placeholder="mm/yyyy"
+                                                                                style="text-align: center" name="tglselesai" autocomplete="off"  rows="10" readonly>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -309,16 +309,12 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label">Lama Kerja</label>
                                                                 <div>
-                                                                    <div class="input-daterange input-group"
-                                                                        id="date-range2">
-                                                                        <input id="tgl_mulai" type="text"
-                                                                            class="form-control" name="tglmulai"
-                                                                            placeholder="dd/mm/yyyy" />
-                                                                        <span
-                                                                            class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                        <input id="tgl_selesai" type="text"
-                                                                            class="form-control" name="tglselesai"
-                                                                            placeholder="dd/mm/yyyy" />
+                                                                    <div class="input-group">
+                                                                        <input id="datepicker-autoclose510" type="text" class="form-control" placeholder="mm/yyyy"
+                                                                        name="tglmulai" style="text-align: center" autocomplete="off"  rows="10" readonly>
+                                                                        <span class="input-group-addon bg-primary text-white b-0">-</span>
+                                                                        <input id="datepicker-autoclose511" type="text" class="form-control" placeholder="mm/yyyy"
+                                                                        style="text-align: center" name="tglselesai" autocomplete="off"  rows="10" readonly>
                                                                     </div>
                                                                 </div>
                                                             </div>

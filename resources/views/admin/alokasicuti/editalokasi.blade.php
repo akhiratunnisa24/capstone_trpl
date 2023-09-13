@@ -89,7 +89,7 @@
                                         <label for="tgl_mulai" class="form-label">Aktif Dari</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="yyyy/mm/dd"
-                                                id="datepicker-autoclosea3" name="aktif_dari" autocomplete="off">
+                                                id="datepicker-autoclosea3" name="aktif_dari" autocomplete="off" readonly>
                                             <span class="input-group-addon bg-custom b-0"><i
                                                     class="mdi mdi-calendar text-white"></i></span>
                                         </div>
@@ -100,7 +100,7 @@
                                         <label for="sampai" class="form-label">Sampai</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="yyyy/mm/dd"
-                                                id="datepicker-autoclosea4" name="sampai" autocomplete="off">
+                                                id="datepicker-autoclosea4" name="sampai" autocomplete="off" readonly>
                                             <span class="input-group-addon bg-custom b-0"><i
                                                     class="mdi mdi-calendar text-white"></i></span>
                                         </div>
@@ -129,7 +129,7 @@
 
 <!-- script untuk mengambil data alokasi cuti  -->
 <script type="text/javascript">
-    $('body').on('click','.btn-editalokasi',function() 
+    $('body').on('click','.btn-editalokasi',function()
     {
         var id_alokasi =$(this).data('alokasi');
 
@@ -158,7 +158,7 @@
 
             }
         });
-    
+
     });
 </script>
 
@@ -213,7 +213,7 @@
     {
         $('#tglmulai').prop("hidden", false);
         $('#tglnow').prop("hidden", false);
-       
+
         $('#idjeniscuti').on('change', function(a)
         {
             if(a.target.value == 1)
@@ -249,7 +249,7 @@
             url: "/updatealokasi/"+id_alokasi,
             type: "PUT",
             data: {
-                    "id":id_alokasi, 
+                    "id":id_alokasi,
                     "id_settingalokasi": id_settingalokasi,
                     "id_jeniscuti": id_jeniscuti,
                     "id_karyawan": id_karyawan,
@@ -268,13 +268,13 @@
                     $('#aid'+ response.id +' td:nth-child(4)').text(response.mode_alokasi);
                     $('#aid'+ response.id +' td:nth-child(5)').text(response.aktif_dari);
                     $('#aid'+ response.id +' td:nth-child(6)').text(response.sampai);
-                    
+
                     modal.hide();
                     // $('#editalokasi').modal('hide');
                     // $("#editalokasi").modal(toggle);
                     $("#input")[0].reset();
-                    
-                   
+
+
                     // $('#aid'+ response.id +' td:nth-child(1)').text(response.id_settingalokasi);
                     // $('#aid'+ response.id +' td:nth-child(6)').text(response.tgl_masuk);
                     // $('#aid'+ response.id +' td:nth-child(7)').text(response.tgl_sekarang);

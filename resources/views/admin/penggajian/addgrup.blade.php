@@ -21,7 +21,7 @@
                                 <div class="form-group col-sm">
                                     <label class="form-label">Tanggal Penggajian</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose76" name="tgl_penggajian"  autocomplete="off" required>
+                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose76" name="tgl_penggajian"  autocomplete="off" required readonly>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
@@ -31,10 +31,10 @@
                                         <div>
                                             <div class="input-group">
                                                 <input id="datepicker-autoclose-format-as" type="text" class="form-control" placeholder="dd/mm/yyyy"
-                                                name="tgl_mulai"  autocomplete="off"  rows="10" required>
+                                                name="tgl_mulai"  autocomplete="off"  rows="10" required readonly>
                                                 <span class="input-group-addon bg-info text-white b-0">-</span>
                                                 <input id="datepicker-autoclose-format-at" type="text" class="form-control" placeholder="dd/mm/yyyy"
-                                                    name="tgl_selesai" autocomplete="off"  rows="10" required>
+                                                    name="tgl_selesai" autocomplete="off"  rows="10" required readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -51,7 +51,7 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
                                 <input id="partner" type="hidden" class="form-control" name="partner" value="{{ Auth::user()->partner }}" autocomplete="off">
                             </div>
                         </div>

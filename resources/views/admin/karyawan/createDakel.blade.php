@@ -136,7 +136,7 @@
                                                                     <label for="exampleInputEmail1" class="form-label">Jumlah Anak</label>
                                                                     <input type="number" name="jumlahAnak" class="form-control" autocomplete="off" placeholder="Masukkan Jumlah Anak">
                                                                 </div>
-                                                          
+
                                                             @endif --}}
 
                                                         <div
@@ -198,7 +198,7 @@
                                                                         placeholder="dd/mm/yyyy"
                                                                         id="datepicker-autoclose-format" autocomplete="off"
                                                                         name="tgllahirPasangan" rows="10"
-                                                                        required></input><br>
+                                                                        required readonly></input><br>
                                                                     <span class="input-group-addon bg-custom b-0"><i
                                                                             class="mdi mdi-calendar text-white"></i></span>
                                                                 </div>
@@ -344,7 +344,7 @@
                                                                         placeholder="yyyy/mm/dd"
                                                                         id="datepicker-autoclose-format2"
                                                                         autocomplete="off" name="tgllahirPasangan"
-                                                                        rows="10" required></input><br>
+                                                                        rows="10" required readonly></input><br>
                                                                     <span class="input-group-addon bg-custom b-0"><i
                                                                             class="mdi mdi-calendar text-white"></i></span>
                                                                 </div>

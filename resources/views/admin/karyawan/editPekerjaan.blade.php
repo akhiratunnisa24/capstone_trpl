@@ -31,14 +31,14 @@
                                     <label class="form-label">Lama Kerja</label>
                                     <div>
                                         <div class="input-group">
-                                            <input id="datepicker-autoclose-format-i" type="text" class="form-control" placeholder="mm/yyyy" 
-                                                name="tglmulai" autocomplete="off"  rows="10"  value="{{$rpekerjaan->tgl_mulai}}">
+                                            <input id="datepicker-autoclose-format-i" type="text" class="form-control" placeholder="mm/yyyy"
+                                                name="tglmulai" autocomplete="off"  rows="10"  value="{{$rpekerjaan->tgl_mulai}}" readonly>
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input id="datepicker-autoclose-format-j" type="text" class="form-control" placeholder="mm/yyyy" 
-                                                name="tglselesai" autocomplete="off"  rows="10" value="{{$rpekerjaan->tgl_selesai}}">
+                                            <input id="datepicker-autoclose-format-j" type="text" class="form-control" placeholder="mm/yyyy"
+                                                name="tglselesai" autocomplete="off"  rows="10" value="{{$rpekerjaan->tgl_selesai}}" readonly>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="form-group">
                                 <div class="mb-3">
@@ -52,7 +52,7 @@
 
                         <!-- baris sebelah kanan  -->
                         <div class="col-md-6 m-t-10">
-                            
+
                             <div class="form-group">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label"> Level/Pangkat/Golongan</label>
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                     </div>
-            
+
                     <div class="modal-footer">
                         <input type="hidden" name="id" id="id">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>

@@ -77,10 +77,10 @@
                                     <div>
                                         <div class="input-group">
                                             <input id="datepicker-autoclose-format-be" type="text" class="form-control" name="tahun_masukFormal"
-                                                    placeholder="yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_masuk_formal }}" />
+                                                    placeholder="yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_masuk_formal }}" readonly/>
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                             <input id="datepicker-autoclose-format-bf" type="text" class="form-control" name="tahun_lulusFormal"
-                                                placeholder="yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_lulus_formal }}" />
+                                                placeholder="yyyy" autocomplete="off" value="{{ $rpendidikan->tahun_lulus_formal }}" readonly/>
                                         </div>
                                     </div>
                                 </div>

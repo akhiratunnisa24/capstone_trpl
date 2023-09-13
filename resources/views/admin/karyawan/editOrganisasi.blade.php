@@ -34,11 +34,11 @@
                                     <label class="form-label">Lama Bertugas</label>
                                     <div>
                                         <div class="input-group">
-                                            <input id="datepicker-autoclose-format-o" type="text" class="form-control" placeholder="mm/yyyy" 
-                                                name="tglmulai" autocomplete="off"  rows="10"  id="tglmulai" value="{{ $org->tgl_mulai }}">
+                                            <input id="datepicker-autoclose-format-o" type="text" class="form-control" placeholder="mm/yyyy"
+                                                name="tglmulai" autocomplete="off"  rows="10"  id="tglmulai" value="{{ $org->tgl_mulai }}" readonly>
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input id="datepicker-autoclose-format-p" type="text" class="form-control" placeholder="mm/yyyy" 
-                                                name="tglselesai" autocomplete="off" id="tglselesai"  rows="10" value="{{ $org->tgl_selesai }}">
+                                            <input id="datepicker-autoclose-format-p" type="text" class="form-control" placeholder="mm/yyyy"
+                                                name="tglselesai" autocomplete="off" id="tglselesai"  rows="10" value="{{ $org->tgl_selesai }}" readonly>
                                         </div>
                                     </div>
                                 </div>

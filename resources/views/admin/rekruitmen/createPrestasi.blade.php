@@ -161,7 +161,7 @@
                                                                               type="text" class="form-control"
                                                                               placeholder="dd/mm/yyyy" id="4"
                                                                               name="tgl_surat" autocomplete="off"
-                                                                              rows="10" required><br>
+                                                                              rows="10" required readonly><br>
                                                                           <span
                                                                               class="input-group-addon bg-custom b-0"><i
                                                                                   class="mdi mdi-calendar text-white"></i></span>
@@ -260,7 +260,7 @@
                                                               <input id="datepicker-autoclose-format2" type="text"
                                                                   class="form-control" placeholder="yyyy/mm/dd"
                                                                   id="4" name="tgl_surat" autocomplete="off"
-                                                                  rows="10" required><br>
+                                                                  rows="10" required readonly><br>
                                                               <span class="input-group-addon bg-custom b-0"><i
                                                                       class="mdi mdi-calendar text-white"></i></span>
                                                           </div><!-- input-group -->
