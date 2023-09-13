@@ -383,6 +383,7 @@
         $i = $g + $h;
         $j = $b + $d + $f;
         $k = $d + $f;
+        $l = $b + $d;
     @endphp
 
     @if($c >= 7 && $c <= 11 && $b >= 5 && $b <= 7)
@@ -416,6 +417,10 @@
         </tbody>
     </table>
 
+    @if($l >= 13 ||$l == 0)
+        <div class="page-break"></div>
+    @else
+    @endif
     <h4 id="prestasi">E. Riwayat Penghargaan/Prestasi</h4>
     <table  id="prestasi" class="table table-striped">
         <thead class="alert alert-info">
