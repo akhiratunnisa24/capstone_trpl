@@ -421,12 +421,14 @@
         </tbody>
     </table>
 
-    @if($l >= 13 ||$l == 0 || $l == 0 && $c >= 20)
+    {{-- @if($l >= 13 ||$l == 0) 
+        <div class="page-break"></div>
+    @elseif($l == 0 && $c >= 20)
         <div class="page-break">Halo</div>
     @elseif($d > 5 )
         <div class="page-break"></div>
     @else
-    @endif
+    @endif --}}
     <h4 id="prestasi">E. Riwayat Penghargaan/Prestasi</h4>
     <table  id="prestasi" class="table table-striped">
         <thead class="alert alert-info">
