@@ -41,7 +41,11 @@ class PenggajianController extends Controller
         if ($role == 1 ||$role == 6)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $karyawan = Karyawan::where('partner',$row->partner)->get();
+            $karyawan = Karyawan::where('partner', $row->partner)
+                ->where('status_kerja', 'Aktif')
+                ->whereNull('tglkeluar')
+                ->get();        
+
             $slipgaji = Penggajian::where('partner',$row->partner)->get();
 
             return view('admin.penggajian.index',compact('row','role','karyawan','slipgaji'));
@@ -437,7 +441,10 @@ class PenggajianController extends Controller
         if ($role == 1 ||$role == 6)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $karyawan = Karyawan::where('partner',$row->partner)->get();
+            $karyawan = Karyawan::where('partner', $row->partner)
+                ->where('status_kerja', 'Aktif')
+                ->whereNull('tglkeluar')
+                ->get();  
             $slipgrupindex = PenggajianGrup::where('partner',$row->partner)->get();
             $slipgrup = SalaryStructure::where('partner',$row->partner)->get();
 
@@ -465,9 +472,9 @@ class PenggajianController extends Controller
 
         $strukturgaji = SalaryStructure::where('id',$request->id_struktur)->first();
         $karyawan = Karyawan::join('informasi_gaji','karyawan.id','=','informasi_gaji.id_karyawan')
-        ->select('karyawan.*','informasi_gaji.id as id_informasigaji','informasi_gaji.id_strukturgaji','informasi_gaji.status_karyawan as status_karyawan','informasi_gaji.level_jabatan as level_jabatan')
-        ->where('informasi_gaji.id_strukturgaji',$strukturgaji->id)
-        ->get();
+            ->select('karyawan.*','informasi_gaji.id as id_informasigaji','informasi_gaji.id_strukturgaji','informasi_gaji.status_karyawan as status_karyawan','informasi_gaji.level_jabatan as level_jabatan')
+            ->where('informasi_gaji.id_strukturgaji',$strukturgaji->id)
+            ->get();
         dd($karyawan);
 
 
@@ -773,6 +780,7 @@ class PenggajianController extends Controller
                 $dataupdate = [
                     'statusmail'=> 1,
                 ];
+                $pesan = "Email Notifikasi E-slip gaji berhasil diterbitkan.";
             }
 
             $slipgaji->update($dataupdate);
@@ -786,9 +794,9 @@ class PenggajianController extends Controller
 
             $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
 
-
-            return view('admin.penggajian.slipgajifix', compact('slipgaji', 'detailinformasi','role', 'pesan','kehadiran','row','detailgaji'));
-        }
+            return view('admin.penggajian.slipgajifix', compact('slipgaji', 'detailinformasi', 'role', 'pesan', 'kehadiran', 'row', 'detailgaji'))
+            ->with('pesan', $pesan); 
+        }       
         else {
 
             return redirect()->back();
