@@ -123,6 +123,31 @@ class HomeController extends Controller
             ->count('jml_cuti');
              // Total
         $cutidanizin     = $dataIzinHariini + $cutiHariini;
+        // Data Cuti dan Izin Kemarin
+        $yesterday = Carbon::yesterday();
+
+        // Data Izin Kemarin
+        $dataIzinKemarin = Izin::whereHas('karyawan', function ($query) use ($yesterday) {
+                $query->where('partner', '=', Auth::user()->partner);
+            })
+            ->where(function ($query) use ($yesterday) {
+                $query->where('tgl_mulai', '<=', $yesterday)
+                    ->where('tgl_selesai', '>=', $yesterday);
+            })
+            ->where('status', '=', 7)
+            ->count('jml_hari');
+
+        // Data Cuti Kemarin
+        $cutiKemarin = Cuti::where(function ($query) use ($yesterday) {
+                $query->where('tgl_mulai', '<=', $yesterday)
+                    ->where('tgl_selesai', '>=', $yesterday);
+            })
+            ->where('status', '=', 7)
+            ->whereHas('karyawans', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
+            ->count('jml_cuti');
+
         // Data Cuti dan Izin Bulan ini
         $dataIzinPerbulan   = Izin::whereYear('created_at', '=', Carbon::now()->year)
             ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
@@ -170,7 +195,17 @@ class HomeController extends Controller
             ->get();
         $jumAbsen = $absenHarini->count();
 
-        // dd($absenHarini);
+        //Absen Kemarin
+        $absenKemarin = Absensi::with('karyawans')
+            ->where('partner', Auth::user()->partner)
+            ->whereYear('tanggal', '=', Carbon::yesterday()->year)
+            ->whereMonth('tanggal', '=', Carbon::yesterday()->month)
+            ->whereDay('tanggal', '=', Carbon::yesterday()->day)
+            ->get();
+
+        $jumAbsenKemarin = $absenKemarin->count();
+
+        // dd($absenKemarin);
         // Absen Bulan Ini
         $absenBulanini  = Absensi::where('partner',Auth::user()->partner)
             ->whereYear('tanggal', '=', Carbon::now()->year)
@@ -204,11 +239,29 @@ class HomeController extends Controller
             ->where('terlambat','!=', null)
             ->where('partner',$row->partner)
             ->count();
+
+            //Absen Terlambat Kemarin
+            $yesterday = Carbon::yesterday();
+
+            $absenTerlambatKemarin = Absensi::whereYear('tanggal', '=', $yesterday->year)
+                ->whereMonth('tanggal', '=', $yesterday->month)
+                ->whereDay('tanggal', '=', $yesterday->day)
+                ->where('terlambat', '!=', null)
+                ->where('partner', $row->partner)
+                ->count();
+
             // Absen Terlambat Bulan Lalu
         $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
             ->where('partner',$row->partner)
             ->count('terlambat');
+            // terlambat bulan ini
+        $absenTerlambatBulanIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->where('terlambat', '!=', null)
+            ->where('partner', $row->partner)
+            ->count();
+
 
         // DATA KARYAWAN TIDAK MASUK
 
@@ -234,7 +287,19 @@ class HomeController extends Controller
                 $query->where('partner', $row->partner);
             })
             ->count('nama');
-    
+            //Tidak Masuk Kemarin
+            $yesterday = Carbon::yesterday();
+
+            $tidakMasukKemarin = Tidakmasuk::with('karyawans')
+                ->whereYear('tanggal', '=', $yesterday->year)
+                ->whereMonth('tanggal', '=', $yesterday->month)
+                ->whereDay('tanggal', '=', $yesterday->day)
+                ->whereHas('karyawan', function ($query) use ($row) {
+                    $query->where('partner', $row->partner);
+                })
+                ->count('nama');
+
+
         // dd($totalKaryawan);
         $tidakMasukBulanIni = Tidakmasuk::with('karyawans')
             ->whereYear('tanggal', '=',Carbon::now()->year)
@@ -276,6 +341,13 @@ class HomeController extends Controller
             ->whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->count('jam_masuk');
+
+        $absenTerlambatBulanIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->where('terlambat', '!=', null)
+            ->where('partner', $row->partner)
+            ->count();
+
 
         $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
         ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
@@ -1302,6 +1374,13 @@ class HomeController extends Controller
                 'jumlahkaryawan' => $jumlahkaryawan,
                 'informasi' =>$informasi,
                 'jmlinfo' => $jmlinfo,
+                'jumAbsenKemarin' => $jumAbsenKemarin,
+                'absenTerlambatKemarin' => $absenTerlambatKemarin,
+                'tidakMasukKemarin' => $tidakMasukKemarin,
+                'cutiKemarin' => $cutiKemarin,
+                'dataIzinKemarin' => $dataIzinKemarin,
+                'absenTerlambatBulanini' => $absenTerlambatBulanIni,
+
             ];
             return view('admin.karyawan.dashboardhrd', $output);
 
@@ -1332,6 +1411,12 @@ class HomeController extends Controller
                 'posisi' => $posisi,
                 'informasi' =>$informasi,
                 'jmlinfo' => $jmlinfo,
+                // 'jumAbsenKemarin' => $jumAbsenKemarin,
+                // 'absenTerlambatKemarin' => $absenTerlambatKemarin,
+                // 'tidakMasukKemarin' => $tidakMasukKemarin,
+                // 'cutiKemarin' => $cutiKemarin,
+                // 'dataIzinKemarin' => $dataIzinKemarin,
+
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
@@ -1354,6 +1439,7 @@ class HomeController extends Controller
                 'absenHariini' =>  $absenHariini,
                 'absenHarini' => $absenHarini,
                 'jumAbsen' =>  $jumAbsen,
+                // 'jumAbsenKemarin' => $jumAbsenKemarin,
                 'sisacutis' => $sisacutis,
                 'role' => $role,
                 'informasi' =>$informasi,
@@ -1428,6 +1514,9 @@ class HomeController extends Controller
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
                 'sisacutis' => $sisacutis,
+                // 'jumAbsenKemarin' => $jumAbsenKemarin,
+                // 'cutiKemarin' => $cutiKemarin,
+                // 'dataIzinKemarin' => $dataIzinKemarin,
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
@@ -1477,6 +1566,9 @@ class HomeController extends Controller
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
                 'sisacutis' => $sisacutis,
+                // 'jumAbsenKemarin' => $jumAbsenKemarin,
+                // 'cutiKemarin' => $cutiKemarin,
+                // 'dataIzinKemarin' => $dataIzinKemarin,
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
@@ -1526,6 +1618,9 @@ class HomeController extends Controller
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
                 'sisacutis' => $sisacutis,
+                // 'jumAbsenKemarin' => $jumAbsenKemarin,
+                // 'cutiKemarin' => $cutiKemarin,
+                // 'dataIzinKemarin' => $dataIzinKemarin,
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
@@ -1567,6 +1662,9 @@ class HomeController extends Controller
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
                 'sisacutis' => $sisacutis,
+                // 'jumAbsenKemarin' => $jumAbsenKemarin,
+                // 'cutiKemarin' => $cutiKemarin,
+                // 'dataIzinKemarin' => $dataIzinKemarin,
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
