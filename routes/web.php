@@ -754,9 +754,11 @@ Route::put('/hitung-gaji', [PenggajianController::class, 'hitunggaji'])->name('h
 Route::get('/slipgaji-pdf/{id}', [PenggajianController::class, 'slipgajipdf'])->name('slipgajipdf');
 Route::get('/slip-gaji/{id}', [PenggajianController::class, 'showslipgajifix'])->name('showslipgaji');
 
-Route::get('/slipgaji-karyawan-grup', [PenggajianController::class, 'indexgrup'])->name('slipgaji_grup');
 Route::get('/rekap-kehadiran', [DetailhadirController::class, 'indexs'])->name('kehadirans');
 Route::post('/rekap-kehadiran', [DetailhadirController::class, 'storehadir'])->name('storehadir');
+Route::get('/slipgaji-karyawan-grup', [PenggajianController::class, 'indexgrup'])->name('slipgaji_grup');
+Route::get('/slipgaji-karyawan-grup/create', [PenggajianController::class, 'create'])->name('creategrup');
+Route::post('/getkaryawan', [PenggajianController::class, 'getkaryawangrup'])->name('getkaryawangrup');
 Route::post('/slipgaji-karyawan-grup', [PenggajianController::class, 'storepenggajian_grup'])->name('storegrup');
 Route::put('/slipgaji-karyawan-grup/update/{id}', [PenggajianController::class, 'update'])->name('slipgaji_update');
 Route::get('/slipgaji-karyawan-grup/delete/{id}', [PenggajianController::class, 'destroy'])->name('slipgaji_delete');

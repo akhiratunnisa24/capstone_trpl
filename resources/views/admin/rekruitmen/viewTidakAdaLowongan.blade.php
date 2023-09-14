@@ -45,7 +45,7 @@
           <div class="modal-body">
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Tutup</button>
           </div>
         </div>
         

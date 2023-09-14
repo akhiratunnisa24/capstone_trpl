@@ -96,8 +96,8 @@
                     </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-            <button type="submit" class="btn btn-success">Update</button>
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-sm btn-success">Update</button>
         </div>
         </form>
     </div>

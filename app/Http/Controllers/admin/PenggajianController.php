@@ -113,7 +113,6 @@ class PenggajianController extends Controller
             ->first();
 
         $informasigaji = Informasigaji::where('id_karyawan',$request->id_karyawan)->where('status',1)->first();
-      
         if($informasigaji === null)
         {
             if($getKaryawan->divisi === null && $getKaryawan->jabatan !== null && $getKaryawan->status_karyawan !== null){
@@ -140,7 +139,6 @@ class PenggajianController extends Controller
             $pesan = '<div class="text-center">' . $pesan . '</div>';
             $pesan = nl2br(html_entity_decode($pesan));
             return redirect()->back()->with('message',$pesan);
-            dd($informasigaji);
         }else{
             $detail = Detailinformasigaji::where('id_informasigaji',$informasigaji->id)->get();
 
@@ -152,17 +150,18 @@ class PenggajianController extends Controller
 
             $penggajian->tglgajian = $tglgajian;
             $penggajian->id_informasigaji = $informasigaji->id;
+            $penggajian->id_strukturgaji  = $informasigaji->id_strukturgaji;
             $penggajian->gaji_pokok = $informasigaji->gaji_pokok;
-            $penggajian->lembur = null;
-            $penggajian->tunjangan = null;
+            $penggajian->lembur     = null;
+            $penggajian->tunjangan  = null;
             $penggajian->gaji_kotor = null;
-            $penggajian->asuransi = null;
-            $penggajian->potongan = null;
-            $penggajian->pajak = null;
+            $penggajian->asuransi   = null;
+            $penggajian->potongan   = null;
+            $penggajian->pajak      = null;
             $penggajian->gaji_bersih = null;
-            $penggajian->nama_bank = $request->nama_bank;
+            $penggajian->nama_bank   = $request->nama_bank;
             $penggajian->no_rekening = $request->nomor_rekening;
-            $penggajian->partner = $request->partner;
+            $penggajian->partner    = $request->partner;
             $penggajian->statusmail = 0;
 
             $penggajian->save();
@@ -226,12 +225,26 @@ class PenggajianController extends Controller
                 {
                     $tglMulai = \Carbon\Carbon::parse($izinsakit->tgl_mulai);
                     $tglSelesai = \Carbon\Carbon::parse($izinsakit->tgl_selesai);
-                    $selisihHari = $tglMulai->diffInDays($tglSelesai) + 1;
 
-                    $totalHariIzinSakit += $selisihHari;
+                    if ($tglMulai->greaterThan($awal)) {
+                        $tglHitungAwal = $tglMulai;
+                    } else {
+                        $tglHitungAwal = $awal;
+                    }
 
+                    if ($tglSelesai->lessThan($akhir)) {
+                        $tglHitungAkhir = $tglSelesai;
+                    } else {
+                        $tglHitungAkhir = $akhir;
+                    }
+
+                    $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
+                    $tglHitungAkhir= \Carbon\Carbon::parse($tglHitungAkhir);
+
+                    $selisihHari = $tglHitungAwal->diffInDays($tglHitungAkhir) + 1;
+                    
                     $cocokkanTanggal = Jadwal::where('partner', $getKaryawan->partner)
-                        ->whereBetween('tanggal', [$tglMulai, $tglSelesai])
+                        ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
                         ->count();
 
                     if ($cocokkanTanggal > 0) {
@@ -239,7 +252,7 @@ class PenggajianController extends Controller
                     }
 
                     $jamTanggal = Jadwal::where('partner', $getKaryawan->partner)
-                        ->whereBetween('tanggal', [$tglMulai, $tglSelesai])
+                        ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
                         ->get();
 
                     foreach ($jamTanggal as $j) {
@@ -271,12 +284,26 @@ class PenggajianController extends Controller
                 {
                     $tglMulai = \Carbon\Carbon::parse($izin->tgl_mulai);
                     $tglSelesai = \Carbon\Carbon::parse($izin->tgl_selesai);
-                    $selisihHari = $tglMulai->diffInDays($tglSelesai) + 1;
 
-                    $totalHariIzin += $selisihHari;
+                    if ($tglMulai->greaterThan($awal)) {
+                        $tglHitungAwal = $tglMulai;
+                    } else {
+                        $tglHitungAwal = $awal;
+                    }
+
+                    if ($tglSelesai->lessThan($akhir)) {
+                        $tglHitungAkhir = $tglSelesai;
+                    } else {
+                        $tglHitungAkhir = $akhir;
+                    }
+
+                    $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
+                    $tglHitungAkhir= \Carbon\Carbon::parse($tglHitungAkhir);
+
+                    $selisihHari = $tglHitungAwal->diffInDays($tglHitungAkhir) + 1;
 
                     $cocokkanTanggal = Jadwal::where('partner', $getKaryawan->partner)
-                        ->whereBetween('tanggal', [$tglMulai, $tglSelesai])
+                        ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
                         ->count();
 
                     if ($cocokkanTanggal > 0) {
@@ -286,14 +313,13 @@ class PenggajianController extends Controller
                     if($izin->id_jenisizin == 2 && $izin->jam_mulai == NULL && $izin->jam_selesai == NULL)
                     {
                         $jamTanggal = Jadwal::where('partner', $getKaryawan->partner)
-                            ->whereBetween('tanggal', [$tglMulai, $tglSelesai])
+                            ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
                             ->get();
 
                         foreach ($jamTanggal as $j) {
                             $jamMasuk = \Carbon\Carbon::parse($j->jadwal_masuk);
                             $jamPulang = \Carbon\Carbon::parse($j->jadwal_pulang);
 
-                            // Hitung selisih jam (dalam jam)
                             $selisihJam = $jamMasuk->diffInHours($jamPulang);
 
                             $totalJamIzin += $selisihJam;
@@ -455,20 +481,66 @@ class PenggajianController extends Controller
         }
     }
 
+    public function create()
+    {
+        $role = Auth::user()->role; 
+        if ($role == 1) {
+
+            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $slipgrup = SalaryStructure::where('partner',$row->partner)->get();
+
+            $output = [
+                'row' => $row,
+                'slipgrup' => $slipgrup,
+                'role' => $role
+            ];
+            return view('admin.penggajian.creategrup', $output);
+        } else {
+
+            return redirect()->back();
+        }
+    }
+
+    public function getkaryawangrup(Request $request)
+    {
+        try {
+            $informasigaji = Informasigaji::select('id_karyawan', 'id_strukturgaji')
+                ->where('id_strukturgaji', $request->id_strukturgaji)
+                ->get();
+
+            $dataKaryawan = [];
+            foreach ($informasigaji as $informasi) {
+                $getKaryawan = Karyawan::leftjoin('departemen', 'karyawan.divisi', '=', 'departemen.id')
+                    ->select('karyawan.nama_jabatan','karyawan.nama' ,'karyawan.id', 'karyawan.divisi', 'karyawan.nip', 'departemen.nama_departemen', 'karyawan.nama_bank', 'karyawan.no_rek', 'karyawan.tglmasuk')
+                    ->where('karyawan.id', '=', $informasi->id_karyawan)
+                    ->first();
+                if ($getKaryawan) {
+                    $dataKaryawan[] = [
+                        'id' => $getKaryawan->id,
+                        'nama' => $getKaryawan->nama,
+                        'nama_bank' => $getKaryawan->nama_bank,
+                        'nomor_rekening' => $getKaryawan->no_rek,
+                        'jabatan' => $getKaryawan->nama_jabatan,
+                    ];
+                }
+            }
+
+            // dd($request->id_strukturgaji,$informasigaji,$dataKaryawan);
+            if (empty($dataKaryawan)) {
+                return response()->json(['message' => 'Data not found'], 404); // Ubah kode status ke 404 karena data tidak ditemukan
+            }
+
+            return response()->json($dataKaryawan, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
     public function storepenggajian_grup(Request $request)
     {
-        $tgl_penggajian = Carbon::createFromFormat('d/m/Y', $request->tgl_penggajian)->format('Y-m-d');
-        $tgl_mulai = Carbon::createFromFormat('d/m/Y', $request->tgl_mulai)->format('Y-m-d');
-        $tgl_selesai = Carbon::createFromFormat('d/m/Y', $request->tgl_selesai)->format('Y-m-d');
-
-        PenggajianGrup::create([
-            'nama_grup' => $request->nama,
-            'id_struktur' => $request->id_struktur,
-            'tglawal' => $tgl_mulai,
-            'tglakhir' => $tgl_selesai,
-            'tglgajian' => $tgl_penggajian,
-            'partner' => $request->partner,
-        ]);
+        $tgl_awal = date_format(date_create_from_format('d/m/Y', $request->tgl_awal), 'Y-m-d');
+        $tgl_akhir= date_format(date_create_from_format('d/m/Y', $request->tgl_akhir), 'Y-m-d');
+        $tglgajian= date_format(date_create_from_format('d/m/Y', $request->tglgajian), 'Y-m-d');
 
         $strukturgaji = SalaryStructure::where('id',$request->id_struktur)->first();
         $karyawan = Karyawan::join('informasi_gaji','karyawan.id','=','informasi_gaji.id_karyawan')

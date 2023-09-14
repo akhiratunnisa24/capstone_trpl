@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title center" id="myLargeModalLabel">Edit Data Pendidikan Formal</h4>
+                <h4 class="modal-title text-center" id="myLargeModalLabel">Edit Data Pendidikan Formal</h4>
             </div>
             <div class="modal-body">
                 <form id="formModaleditcuti" action="/updatePendidikan/{{ $rpendidikan->id }}" method="POST"
@@ -96,8 +96,8 @@
                     </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-            <button type="submit" class="btn btn-success">Update</button>
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-sm btn-success">Update</button>
         </div>
         </form>
     </div>

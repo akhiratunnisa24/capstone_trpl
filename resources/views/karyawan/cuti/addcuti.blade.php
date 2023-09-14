@@ -125,8 +125,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                            <button type="submit" id="submit-button" class="btn btn-success" value="save">Kirim</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                            <button type="submit" id="submit-button" class="btn btn-sm btn-success" value="save">Kirim</button>
                         </div>
                     </form>
                 </div>

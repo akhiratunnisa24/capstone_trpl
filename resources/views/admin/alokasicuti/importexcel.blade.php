@@ -16,8 +16,8 @@
                     </div> 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary">Import Data</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-sm btn-primary">Import Data</button>
                 </div>
             </form>
         </div>

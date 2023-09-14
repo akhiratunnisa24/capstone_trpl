@@ -85,8 +85,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
-                        <button type="submit" name="submit" value="save" class="btn btn-success waves-effect waves-light">Simpan</button>
+                        <button type="button" class="btn btn-sm btn-danger waves-effect" data-dismiss="modal">Tutup</button>
+                        <button type="submit" name="submit" value="save" class="btn btn-sm btn-success waves-effect waves-light">Simpan</button>
                     </div>
                 </form>
             </div>

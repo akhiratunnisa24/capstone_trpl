@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="edit-modal-label">Edit Kegiatan</h4>
+          <h4 class="modal-title text-center" id="edit-modal-label">Edit Kegiatan</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -31,8 +31,8 @@
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-            <button type="submit" class="btn btn-primary">Update Kegiatan</button>
+            <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-sm btn-primary">Update Kegiatan</button>
           </div>
         </form>
       </div>

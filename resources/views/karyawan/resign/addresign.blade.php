@@ -80,7 +80,7 @@
 
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
-                            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Ajukan</button>
+                            <button class="btn btn-sm btn-primary w-md waves-effect waves-light" type="submit">Ajukan</button>
                         </div>
                     </div>
 

@@ -73,9 +73,9 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 clearfix" >
                             <div class="pull-right">
-                                {{-- <a href="{{ route('creategrup') }}" class="btn btn-dark btn-sm fa fa-plus">Tambah Slip Baru</a> --}}
+                                <a href="{{ route('creategrup') }}" class="btn btn-dark btn-sm fa fa-plus" data-toggle="modal" data-target="#addslip-grup">Tambah Slip Baru</a>
 
-                                <a href="" class="btn btn-dark btn-sm fa fa-plus" data-toggle="modal" data-target="#addslip-grup"> Tambah Slip Baru</a>
+                                {{-- <a href="" class="btn btn-dark btn-sm fa fa-plus" data-toggle="modal" data-target="#addslip-grup"> Tambah Slip Baru</a> --}}
                             </div>
                         </div>
                         <div class="panel-body m-b-5">
@@ -92,7 +92,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($slipgrupindex as $data)
+                                            {{-- @foreach($slipgrupindex as $data)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
                                                     <td>{{$data->nama_grup}}</td>
@@ -111,7 +111,7 @@
                                                     </td>
                                                 </tr>
                                                 @include('admin.penggajian.editgrup')
-                                            @endforeach
+                                            @endforeach --}}
                                         </tbody>
                                     </table>
                                 </div>
