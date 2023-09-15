@@ -178,8 +178,24 @@ class HomeController extends Controller
                 $query->where('partner', $row->partner);
             })
             ->count('jml_cuti');
+
             // Total
         $cutidanizibulanlalu    = $dataIzinbulanlalu + $cutibulanlalu;
+
+        $dataIzinBulanIni = Izin::whereYear('tgl_mulai', '=', Carbon::now()->year)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+            ->whereHas('karyawans', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
+            ->count('jml_hari');
+
+        $cutiBulanIni = Cuti::whereYear('tgl_mulai', '=', Carbon::now()->year)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+            ->whereHas('karyawans', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
+            ->count('jml_cuti');
+            // dd($cutiBulanIni);
 
         // Absen Hari Ini
         $absenHariini = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
@@ -261,8 +277,6 @@ class HomeController extends Controller
             ->where('terlambat', '!=', null)
             ->where('partner', $row->partner)
             ->count();
-
-
         // DATA KARYAWAN TIDAK MASUK
 
 
@@ -308,6 +322,13 @@ class HomeController extends Controller
                 $query->where('partner', $row->partner);
             })
             ->count('nama');
+        $tidakMasukBulanLalu = Tidakmasuk::with('karyawans')
+            ->whereYear('tanggal', '=',Carbon::now()->subMonth()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+            ->whereHas('karyawan', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
+            ->count('nama');
 
         $today =Carbon::now(); //Current Date and Time
         $firstDayofMonth = Carbon::parse($today)->firstOfMonth();
@@ -335,6 +356,7 @@ class HomeController extends Controller
         ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
         ->where('partner',$row->partner)
         ->count('jam_masuk');
+        // dd($absenBulanLalu);
 
         //absen masuk bulan ini
         $absenBulanini  = Absensi::where('partner',Auth::user()->partner)
@@ -1379,7 +1401,11 @@ class HomeController extends Controller
                 'tidakMasukKemarin' => $tidakMasukKemarin,
                 'cutiKemarin' => $cutiKemarin,
                 'dataIzinKemarin' => $dataIzinKemarin,
-                'absenTerlambatBulanini' => $absenTerlambatBulanIni,
+                'absenTerlambatBulanIni' => $absenTerlambatBulanIni,
+                'cutiBulanIni' => $cutiBulanIni,
+                'dataIzinBulanIni' => $dataIzinBulanIni,
+                'tidakMasukBulanLalu' => $tidakMasukBulanLalu,
+                'absenBulanLalu' => $absenBulanLalu,
 
             ];
             return view('admin.karyawan.dashboardhrd', $output);
@@ -1454,6 +1480,7 @@ class HomeController extends Controller
                 'izinjumlah' => $izinjumlah,
                 'ijin' => $ijin,
                 'jumizin' => $jumizin,
+                'absenTerlambatBulanIni' => $absenTerlambatBulanIni,
                 // 'cutijumlah' => $cutijumlah,
                 // 'cuti' => $cuti,
                 // 'jumct' => $jumct,

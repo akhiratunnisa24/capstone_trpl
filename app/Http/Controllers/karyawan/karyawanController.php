@@ -331,6 +331,13 @@ class karyawanController extends Controller
                 ->where('terlambat', '!=',null)
                 ->count();
 
+                  // terlambat bulan ini
+            $absenTerlambatBulanIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->month)
+            ->where('terlambat', '!=', null)
+            ->where('partner', $row->partner)
+            ->count();
+
             $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereDay('created_at', '=', Carbon::now())
                 ->where('partner',$row->partner)
@@ -2158,7 +2165,7 @@ class karyawanController extends Controller
         //             'id_leveljabatan' => $level->id,
         //             'tanggal' => \Carbon\Carbon::parse(Carbon::now())->format('Y-m-d'),
         //             'gaji_terakhir' => $karyawan->gaji
-                    
+
         //         );
         //         HistoryJabatan::insert($data);
         //     }
@@ -2166,7 +2173,7 @@ class karyawanController extends Controller
         // else
         // {
         //     $nama_jabatan = $jabatanlama;
-    
+
         // }
 
         if ($file = $request->file('foto')) {
@@ -3460,7 +3467,7 @@ class karyawanController extends Controller
     {
         $karyawan = Karyawan::find($id);
         $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->where('status',1)->first();
-    
+
         $gaji = preg_replace('/[^0-9]/', '', $request->gajiKaryawan);
         $gajiKaryawan = (float) $gaji;
 
@@ -3482,7 +3489,7 @@ class karyawanController extends Controller
         //         'id_leveljabatan' => $level->id,
         //         'tanggal' => \Carbon\Carbon::parse(Carbon::now())->format('Y-m-d'),
         //         'gaji_terakhir' => $karyawan->gaji
-                
+
         //     );
         //     HistoryJabatan::insert($data);
         // }
@@ -3519,7 +3526,7 @@ class karyawanController extends Controller
                 $informasigaji->gaji_pokok      = $karyawan->gaji;
                 $informasigaji->partner         = $strukturgaji->partner;
                 $informasigaji->status          = 1;
-                    
+
                 $informasigaji->save();
 
                 $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->where('status',1)->first();
@@ -3536,7 +3543,7 @@ class karyawanController extends Controller
                             ->where('partner',$karyawan->partner)
                             ->exists();
                     // dd($check);
-                   
+
                     if(!$check)
                     {
                         $nominal = null;
@@ -3565,7 +3572,7 @@ class karyawanController extends Controller
                                 $nominal      = $benefit->besaran;
                             }
                         }
-                               
+
                         $details[] = [
                             'id_karyawan'      =>$informasigaji->id_karyawan,
                             'id_informasigaji' =>$informasigaji->id,
@@ -3576,7 +3583,7 @@ class karyawanController extends Controller
                             'nominal'          =>$nominal,
                         ];
                     }
-                   
+
                 }
                 Detailinformasigaji::insert($details);
                 // $detailinformasi = Detailinformasigaji::where('id_karyawan',$informasigaji->id_karyawan)
