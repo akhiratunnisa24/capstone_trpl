@@ -760,6 +760,7 @@ Route::get('/slipgaji-karyawan-grup', [PenggajianController::class, 'indexgrup']
 Route::get('/slipgaji-karyawan-grup/create', [PenggajianController::class, 'create'])->name('creategrup');
 Route::post('/getkaryawan', [PenggajianController::class, 'getkaryawangrup'])->name('getkaryawangrup');
 Route::post('/slipgaji-karyawan-grup', [PenggajianController::class, 'storepenggajian_grup'])->name('storegrup');
+Route::get('/slipgaji-karyawan-grup/{id}', [PenggajianController::class, 'showslipgrup'])->name('showslipgroup');
 Route::put('/slipgaji-karyawan-grup/update/{id}', [PenggajianController::class, 'update'])->name('slipgaji_update');
 Route::get('/slipgaji-karyawan-grup/delete/{id}', [PenggajianController::class, 'destroy'])->name('slipgaji_delete');
 //===============================================================================

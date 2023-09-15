@@ -91,7 +91,7 @@
                                                 <th>Periode</th>
                                                 <th>Karyawan</th>
                                                 <th>Jabatan</th>
-                                                <th>Gaji Pokok</th>
+                                                {{-- <th>Gaji Pokok</th> --}}
                                                 <th>Tgl Masuk</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -104,11 +104,11 @@
                                                     <td>{{\Carbon\Carbon::parse($data->tglawal)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($data->tglakhir)->format('d/m/Y')}}</td>
                                                     <td>{{$data->karyawans->nama}}</td>
                                                     <td>{{$data->karyawans->nama_jabatan}}</td>
-                                                    <td>{{ number_format($data->gaji_pokok, 0, ',', '.') }}</td>
+                                                    {{-- <td>{{ number_format($data->gaji_pokok, 0, ',', '.') }}</td> --}}
                                                     <td>{{\Carbon\Carbon::parse($data->karyawans->tglmasuk)->format('d/m/Y')}}</td>
                                                     <td>
                                                         <div  class="d-grid gap-2" role="group" aria-label="Basic example">
-                                                            <a href="" class="col-md-6 btn btn-info btn-sm" data-toggle="modal" data-target="#editslip{{$data->id}}"><i class="fa fa-edit"></i></a>
+                                                            <a href="" class="col-md-6 btn btn-info btn-sm" data-toggle="modal" data-target="#editslip{{$data->id}}" style="width:35px;"><i class="fa fa-edit"></i></a>
                                                             <form method="POST" action="/slipgaji{{$data->id}}" class="col-md-1">
                                                               @csrf
                                                               @method('PUT')

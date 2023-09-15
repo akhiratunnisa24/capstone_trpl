@@ -87,8 +87,7 @@
                 type:"POST",
                 url: '{{route('get.Karyawan')}}',
                 data: {'id_karyawan':id_karyawan},
-                success:function(data)
-                {
+                success:function(data){
                     if (data.nama_bank === null && data.no_rek === null) {
                         $('#nama_bank-group').html('<label class="col-form-label">Nama Bank</label><select class="form-control" name="nama_bank" id="nama_bank" required><option>-- Pilih Nama Bank --</option><option value="Bank ANZ Indonesia">Bank ANZ Indonesia</option><option value="Bank Bukopin">Bank Bukopin</option><option value="Bank Central Asia (BCA)">Bank Central Asia (BCA)</option><option value="Bank Danamon">Bank Danamon</option><option value="Bank DBS Indonesia">Bank DBS Indonesia</option><option value="Bank HSBC Indonesian">Bank HSBC Indonesia</option><option value="Bank Jabar Banten (BJB)">Bank Jabar Banten (BJB)</option><option value="Bank Mandiri">Bank Mandiri</option><option value="Bank Maybank">Bank Maybank</option><option value="Bank Mega">Bank Mega</option><option value="Bank Muamalat">Bank Muamalat</option><option value="Bank Negara Indonesia (BNI)">Bank Negara Indonesia (BNI)</option><option value="Bank OCBC NISP">Bank OCBC NISP</option><option value="Bank Panin">Bank Panin</option><option value="Bank Permata">Bank Permata</option><option value="Bank Rakyat Indonesia (BRI)">Bank Rakyat Indonesia (BRI)</option><option value="Bank Syariah Mandiri">Bank Syariah Mandiri</option><option value="Bank Tabungan Negara (BTN)">Bank Tabungan Negara (BTN)</option><option value="Bank UOB Indonesia">Bank UOB Indonesia</option><option value="Bank CIMB Niaga">Bank CIMB Niaga</option><option value="Bank Mandiri">Bank Mandiri</option></select>');
                         $('#nomor_rekening').val(data.no_rek);
