@@ -1505,6 +1505,127 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Absensi Hari Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="absensiChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Cuti Hari Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="cutiChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Ijin Hari Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="ijinChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Row -->
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Absensi Kemarin</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="absenKemarinChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Cuti Hari Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="cutiKemarinChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Ijin Hari Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="ijinKemarinChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Row -->
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Absensi Bulan Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="absenBulaniniChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Cuti Bulan Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="cutiKemarinChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Ijin Bulan Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="ijinKemarinChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Row -->
+
+    <div class="row">
     </div> <!-- End Row -->
     </div> <!-- container -->
     </div> <!-- content -->
@@ -1552,33 +1673,254 @@
 
 
     <script>
-        var users2 = {{ Js::from($data) }};
-        var labelBulan = {{ Js::from($labelBulan) }}
+        // Data absensi
+        var masuk = {{ $absenHariini }};
+        var terlambat = {{ $absenTerlambatHariIni }};
+        var tidakMasuk = {{ $totalTidakAbsenHariIni }};
+        var cuti = {{ $cutiHariini }};
+        var ijin = {{ $dataIzinHariini }};
+        var absenKemarin = {{ $jumAbsenKemarin }};
+        var terlambatKemarin = {{ $absenTerlambatKemarin }};
+        var tidakMasukKemarin = {{ $tidakMasukKemarin }}
+        var cutiKemarin = {{ $cutiKemarin }};
+        var ijinKemarin = {{ $dataIzinKemarin }};
+        var masukbulanini = {{ $absenBulanini }};
+        var terlambatBulanini = {{ $absenTerlambatBulanIni }};
+        var tidakMasukBulanIni = {{ $tidakMasukBulanIni }};
 
         const data = {
-            labels: labelBulan,
+            labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
             datasets: [{
-                label: 'Cuti',
-                backgroundColor: '#18bae2',
-                borderColor: '#18bae2',
-                data: users2,
+                label: '',
+                backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderWidth: 1,
+                data: [masuk, terlambat, tidakMasuk],
+            }]
+        };
+        const data1 = {
+            labels: ['Cuti'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [cuti],
+            }]
+        };
+        const data2 = {
+            labels: ['Ijin'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#FFFF00'],
+                borderColor: ['#FFFF00'],
+                borderWidth: 1,
+                data: [ijin],
+            }]
+        };
+        const data3 = {
+            labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderWidth: 1,
+                data: [absenKemarin, terlambatKemarin, tidakMasukKemarin],
+            }]
+        };
+        const data4 = {
+            labels: ['Cuti'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [cutiKemarin],
+            }]
+        };
+        const data5 = {
+            labels: ['Ijin'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [ijinKemarin],
+            }]
+        };
+        const data6 = {
+            labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderWidth: 1,
+                data: [masukbulanini, terlambatBulanIni, tidakMasukBulanIni],
+            }]
+        };
+        const data4 = {
+            labels: ['Cuti'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [cutiKemarin],
+            }]
+        };
+        const data5 = {
+            labels: ['Ijin'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [ijinKemarin],
             }]
         };
 
         const config = {
-            type: 'line',
+            type: 'bar',
             data: data,
             options: {
-                ticks: {
-                    precision: 0
+                plugins: {
+            legend: {
+                display: false,
+            },
+        },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
                 },
-
-            }
+            },
         };
 
-        const myChart = new Chart(
-            document.getElementById('myChart'),
+        const config1 = {
+            type: 'bar',
+            data: data1,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+
+        const config2 = {
+            type: 'bar',
+            data: data2,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config3 = {
+            type: 'bar',
+            data: data3,
+            options: {
+                plugins: {
+            legend: {
+                display: false,
+            },
+        },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config4 = {
+            type: 'bar',
+            data: data4,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config5 = {
+            type: 'bar',
+            data: data5,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config6 = {
+            type: 'bar',
+            data: data6,
+            options: {
+                plugins: {
+            legend: {
+                display: false,
+            },
+        },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+
+        const absensiChart = new Chart(
+            document.getElementById('absensiChart'),
             config
+        );
+        const cutiChart = new Chart(
+            document.getElementById('cutiChart'),
+            config1
+        );
+        const ijinChart = new Chart(
+            document.getElementById('ijinChart'),
+            config2
+        );
+        const absenKemarinChart = new Chart(
+            document.getElementById('absenKemarinChart'),
+            config3
+        );
+        const cutiKemarinChart = new Chart(
+            document.getElementById('cutiKemarinChart'),
+            config4
+        );
+        const ijinKemarinChart = new Chart(
+            document.getElementById('ijinKemarinChart'),
+            config5
+        );
+        const absenBulaniniChart = new Chart(
+            document.getElementById('absenBulaniniChart'),
+            config6
         );
     </script>
 
