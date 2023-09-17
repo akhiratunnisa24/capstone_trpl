@@ -14,7 +14,7 @@
                         <div class="form-group col-sm">
                             <label class="form-label">Tanggal Penggajian</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose76" name="tgl_penggajian"  autocomplete="off" required readonly>
+                                <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose76" name="tgl_penggajian"  autocomplete="off" required>
                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                             </div>
                         </div>

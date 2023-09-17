@@ -169,7 +169,7 @@
                                                                         @endif
                                                                     @endforeach
                                                                     @foreach($detailgaji as $detail)
-                                                                        @if($detail->benefit->partner !== 0)
+                                                                        @if($detail->benefit->partner !== 0 &&  $detail->benefit->id_kategori !== 5 &&  $detail->benefit->id_kategori !== 6)
                                                                             <tr>
                                                                                 <td>{{ $no++ }}</td>
                                                                                 <td>{{ $detail->benefit->nama_benefit}}</td>
@@ -177,6 +177,7 @@
                                                                                 <td>{{ number_format($detail->jumlah,0) }}</td>
                                                                                 <td>{{ number_format($detail->total, 0, ',', '.')}}</td>
                                                                             </tr>
+                                                                           
                                                                         @endif
                                                                     @endforeach
                                                                     @foreach($detailgaji as $detail)
@@ -211,9 +212,10 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @if($detailgaji !== null && $detail->id_kategori === 5 || $detail->id_kategori === 6)
+                                                                
+                                                                @if($detailgaji !== null && $detail->benefit->id_kategori === 5 || $detail->benefit->id_kategori === 6)
                                                                     @foreach($detailgaji as $detail)
-                                                                        {{-- @if($detail->id_kategori === 5 || ) --}}
+                                                                        @if($detail->benefit->id_kategori === 5 && $detail->benefit->id_kategori === 6)
                                                                             <tr>
                                                                                 <td>{{ $nomor++ }}</td>
                                                                                 <td>{{ $detail->benefit->nama_benefit}}</td>
@@ -221,7 +223,7 @@
                                                                                 <td>{{ number_format($detail->jumlah,0) }}</td>
                                                                                 <td>{{ number_format($detail->total, 0, ',', '.')}}</td>
                                                                             </tr>
-                                                                        {{-- @endif --}}
+                                                                        @endif
                                                                     @endforeach
                                                                     @if($slipgaji !== null)
                                                                         <tr>

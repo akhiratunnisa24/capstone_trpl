@@ -15,7 +15,7 @@
                             <div class="form-group col-sm">
                                 <label class="form-label">Tanggal Penggajian</label>
                                 <input id="datepicker-autoclose-format-ak" type="text" class="form-control" placeholder="dd/mm/yyyy"
-                                            name="tglgajian" autocomplete="off" value="{{\Carbon\Carbon::now()->format('d/m/Y')}}" rows="10" required readonly>
+                                            name="tglgajian" autocomplete="off" rows="10" required>
                             </div>
                             <div class="form-group col-sm">
                                 <label class="col-form-label">Nama Karyawan</label>

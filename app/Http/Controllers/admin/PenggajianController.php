@@ -609,8 +609,8 @@ class PenggajianController extends Controller
                 if($detailkehadiran == null)
                 {
                     //jumlah hadir dalam rentahg tanggal gajian
-                    $awal = date_format(date_create_from_format('d/m/Y', $request->tgl_awal), 'Y-m-d');
-                    $akhir = date_format(date_create_from_format('d/m/Y', $request->tgl_akhir), 'Y-m-d');
+                    $awal = date_format(date_create_from_format('d/m/Y', $request->tgl_mulai), 'Y-m-d');
+                    $akhir = date_format(date_create_from_format('d/m/Y', $request->tgl_selesai), 'Y-m-d');
                     $hadir = Absensi::where('id_karyawan', $karyawan->id)
                         ->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])
                         ->count();
@@ -953,7 +953,7 @@ class PenggajianController extends Controller
         {
             $slipgaji = Penggajian::where('id',$request->id_slip)->first();
             $karyawan = Karyawan::where('id',$request->id_karyawan)->first();
-            $informasigaji = Informasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)->first();
+            $informasigaji = Informasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)->where('status',1)->first();
             $kehadiran = Detailkehadiran::where('id_karyawan',$karyawan->id)->first();
             $strukturgaji = SalaryStructure::where('id',$informasigaji->id_strukturgaji)->first();
             $detailstruktur = DetailSalaryStructure::where('id_salary_structure',$strukturgaji->id)->get();
@@ -1003,7 +1003,9 @@ class PenggajianController extends Controller
                         }
                         break;
                     case 5:
+                        // dd($detail->nominal);
                         $asuransi += $detail->nominal;
+                        // dd($detail,$asuransi);
                         break;
                     case 6:
                         $potongan += $detail->nominal;
@@ -1108,6 +1110,11 @@ class PenggajianController extends Controller
                         $jumlah  = $detail->jumlah;
                         $total   = $detail->nominal;
                     }
+                }else if($detail->id_kategori == 5)
+                {
+                    $nominal = $detail->nominal;
+                    $jumlah = $detail->jumlah;
+                    $total = $nominal * $jumlah;
                 }
 
                 //    dd($detail);
@@ -1192,7 +1199,6 @@ class PenggajianController extends Controller
                 ->get();
 
             $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
-
             return view('admin.penggajian.slipgajifix', compact('slipgaji', 'detailinformasi', 'role', 'pesan', 'kehadiran', 'row', 'detailgaji'))
             ->with('pesan', $pesan); 
         }       
@@ -1229,7 +1235,8 @@ class PenggajianController extends Controller
                 ->where('partner', $row->partner)
                 ->count();
 
-            $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
+            $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->where('status',1)->get();
+            dd($detailgaji);
             return view('admin.penggajian.slipgajifix',compact('row','role','karyawan','slipgaji','kehadiran','informasigaji','detailinformasi','detailgaji'));
         }else {
 

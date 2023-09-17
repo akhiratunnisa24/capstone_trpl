@@ -94,6 +94,7 @@
                                                 <th>Jabatan</th>
                                                 {{-- <th>Gaji Pokok</th> --}}
                                                 <th>Tgl Masuk</th>
+                                                <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -107,20 +108,30 @@
                                                     <td>{{$data->karyawans->nama_jabatan}}</td>
                                                     {{-- <td>{{ number_format($data->gaji_pokok, 0, ',', '.') }}</td> --}}
                                                     <td>{{\Carbon\Carbon::parse($data->karyawans->tglmasuk)->format('d/m/Y')}}</td>
+                                                    
+                                                        @if($data->nama_bank !== null && $data->no_rekening !== null)
+                                                            <td>Data Lengkap</td>
+                                                        @elseif($data->nama_bank === null && $data->no_rekening !== null || $data->nama_bank !== null && $data->no_rekening === null ||$data->nama_bank === null && $data->no_rekening === null)  
+                                                            <td style="color: rgb(240, 20, 20)">Lengkapi Data</td>
+                                                        @endif
+                                                    
                                                     <td>
-                                                        {{-- <div  class="d-grid gap-2" role="group" aria-label="Basic example">
-                                                            <a href="" class="col-md-6 btn btn-info btn-sm" data-toggle="modal" data-target="#editslip{{$data->id}}" style="width:35px;"><i class="fa fa-edit"></i></a>
-                                                            <form method="POST" action="/slipgaji{{$data->id}}" class="col-md-1">
-                                                              @csrf
-                                                              @method('PUT')
-                                                                <input type="hidden" name="id_karyawan" value="{{ $data->karyawans->id }}">
-                                                                <input type="hidden" name="id" value="{{ $data->id }}">
-                                                                <button type="submit" class="btn btn-success btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i></button>
-                                                            </form>
+                                                        <div  class="d-grid gap-2" role="group" aria-label="Basic example">
+                                                            <a href="" class="col-md-6 btn btn-info btn-sm" data-toggle="modal" data-target="#editslip{{$data->id}}" style="width:35px;">Edit<i class="fa fa-edit"></i></a>
+                                                            @if($data->nama_bank !== null || $data->no_rekening !== null)
+                                                                <form method="POST" action="/slipgaji{{$data->id}}" class="col-md-1">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                    <input type="hidden" name="id_karyawan" value="{{ $data->karyawans->id }}">
+                                                                    <input type="hidden" name="id" value="{{ $data->id }}">
+                                                                    <button type="submit" class="btn btn-success btn-sm" title="Lihat Slip Gaji">Slip Gaji<i class="fa fa-eye"></i></button>
+                                                                </form>
+                                                            @endif
                                                          
-                                                      </div> --}}
+                                                      </div>
                                                     </td>
                                                 </tr>
+                                                @include('admin.penggajian.editrekening')
                                             @endforeach
                                         </tbody>
                                     </table>

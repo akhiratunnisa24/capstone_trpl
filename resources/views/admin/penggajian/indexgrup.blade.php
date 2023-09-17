@@ -109,7 +109,7 @@
                                                         <td>
                                                             <div  class="d-grid gap-2" role="group" aria-label="Basic example">
                                                                 <a href="/slipgaji-karyawan" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-eye"></i></a>
-                                                                {{-- <a href="/slipgaji-karyawan-grup/{{$data->id_strukturgaji}}" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-eye"></i></a> --}}
+                                                                <a href="/slipgaji-karyawan-grup/{{$data->id_strukturgaji}}" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-eye"></i></a>
                                                              
                                                           </div>
                                                         </td>

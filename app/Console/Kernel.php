@@ -518,14 +518,27 @@ class Kernel extends ConsoleKernel
                                                 {
                                                     $absensi = new Absensi();
 
+                                                    $batasmasuk =Carbon::createFromFormat('H:i:s','14:00:00');
+
+                                                    if($jam_masuk > $batasmasuk)
+                                                    {
+                                                        $absensi->jam_masuk     = null;
+                                                        $absensi->jam_keluar    = $jam;
+                                                    }
+                                                    elseif($jam_masuk < $batasmasuk)
+                                                    {
+                                                        $absensi->jam_masuk     = $jam;
+                                                        $absensi->jam_keluar    = null;
+                                                    }
+
                                                     $absensi->id_karyawan   = $matchedUser->id_pegawai;
                                                     $absensi->nik           = $matchedUser->nik;
                                                     $absensi->tanggal       = $tanggal;
                                                     $absensi->shift         = null;
                                                     $absensi->jadwal_masuk  = $jadwal_masuk;
                                                     $absensi->jadwal_pulang = $jadwal_pulang;
-                                                    $absensi->jam_masuk     = $jam;
-                                                    $absensi->jam_keluar    = null;
+                                                    // $absensi->jam_masuk     = $jam;
+                                                    // $absensi->jam_keluar    = null;
                                                     $absensi->terlambat     = $terlambat;
                                                     $absensi->plg_cepat     = null;
                                                     $absensi->absent        = null;

@@ -192,8 +192,6 @@ class BenefitController extends Controller
     {
         $benefit = Benefit::find($id);
 
-        return $request->all();
-
         $aktif              = $request->has('aktif') ? 'Aktif' : 'Tidak Aktif';
         $dikenakanPajak     = $request->has('dikenakan_pajak') ? 'Ya' : 'Tidak';
         $munculDiPenggajian = $request->has('muncul_dipenggajian') ? 'Ya' : 'Tidak';

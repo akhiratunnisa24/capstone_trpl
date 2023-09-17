@@ -3389,6 +3389,7 @@ class karyawanController extends Controller
                     $detailstruktur = Detailinformasigaji::with('benefit')
                         ->where('id_karyawan',$karyawan->id)
                         ->where('id_struktur', $struktur->id)
+                        ->where('id_informasigaji',$informasigaji->id)
                         ->whereHas('benefit', function ($query) use ($karyawan) {
                             $query->where('partner', $karyawan->partner);
                         })
@@ -3412,7 +3413,9 @@ class karyawanController extends Controller
                     })->get();
                 $selectedBenefits = [1,2,3];
 
-                $detailinformasigaji = Detailinformasigaji::where('id_karyawan',$karyawan->id)->get();
+                $detailinformasigaji = Detailinformasigaji::where('id_karyawan',$karyawan->id)
+                ->where('id_informasigaji',$informasigaji->id)
+                ->get();
                 // return $detailinformasigaji;
                 $output = [
                     'row' => $row,
