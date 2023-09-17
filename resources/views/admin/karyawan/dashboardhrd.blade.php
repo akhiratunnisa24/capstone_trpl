@@ -1506,7 +1506,7 @@
     </div>
     <div class="row">
         <div class="col-lg-4">
-            <div class="panel panel-border panel-primary">
+            <div class="panel panel-border panel-success">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white text-center">Absensi Hari Ini</h3>
                 </div>
@@ -1546,7 +1546,7 @@
     </div> <!-- End Row -->
     <div class="row">
         <div class="col-lg-4">
-            <div class="panel panel-border panel-primary">
+            <div class="panel panel-border panel-success">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white text-center">Absensi Kemarin</h3>
                 </div>
@@ -1586,13 +1586,13 @@
     </div> <!-- End Row -->
     <div class="row">
         <div class="col-lg-4">
-            <div class="panel panel-border panel-primary">
+            <div class="panel panel-border panel-success">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white text-center">Absensi Bulan Ini</h3>
                 </div>
                 <div class="panel-body">
                     <div>
-                        <canvas id="absenBulaniniChart" style="height: 300px"></canvas>
+                        <canvas id="absenBulanIniChart" style="height: 300px"></canvas>
                     </div>
                 </div>
             </div>
@@ -1605,7 +1605,7 @@
                 </div>
                 <div class="panel-body">
                     <div>
-                        <canvas id="cutiKemarinChart" style="height: 300px"></canvas>
+                        <canvas id="cutiBulanIniChart" style="height: 300px"></canvas>
                     </div>
                 </div>
             </div>
@@ -1618,7 +1618,47 @@
                 </div>
                 <div class="panel-body">
                     <div>
-                        <canvas id="ijinKemarinChart" style="height: 300px"></canvas>
+                        <canvas id="ijinBulanIniChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Row -->
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Absensi Bulan Lalu</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="absenBulanLaluChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Cuti Bulan Lalu</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="cutiBulanLaluChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Ijin Bulan Lalu</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="ijinBulanlaluChart" style="height: 300px"></canvas>
                     </div>
                 </div>
             </div>
@@ -1684,9 +1724,16 @@
         var tidakMasukKemarin = {{ $tidakMasukKemarin }}
         var cutiKemarin = {{ $cutiKemarin }};
         var ijinKemarin = {{ $dataIzinKemarin }};
-        var masukbulanini = {{ $absenBulanini }};
-        var terlambatBulanini = {{ $absenTerlambatBulanIni }};
+        var masukBulanini = {{ $absenBulanini }};
+        var terlambatBulanIni =  {{$absenTerlambatBulanIni }};
         var tidakMasukBulanIni = {{ $tidakMasukBulanIni }};
+        var cutiBulanIni = {{ $cutiBulanIni }};
+        var IjinBulanIni = {{ $dataIzinBulanIni }};
+        var masukBulanLalu = {{ $absenBulanLalu }};
+        var terlambatBulanLalu = {{ $absenTerlambatbulanlalu }};
+        var tidakMasukBulanLalu = {{ $tidakMasukBulanLalu }};
+        var cutiBulanLalu = {{ $cutibulanlalu }};
+        var ijinBulanlalu = {{$dataIzinbulanlalu }};
 
         const data = {
             labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
@@ -1755,27 +1802,57 @@
                 backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
                 borderColor: ['#18bae2', '#FF8C00', '#f44336'],
                 borderWidth: 1,
-                data: [masukbulanini, terlambatBulanIni, tidakMasukBulanIni],
+                data: [masukBulanini, terlambatBulanIni, tidakMasukBulanIni],
             }]
         };
-        const data4 = {
+        const data7 = {
             labels: ['Cuti'],
             datasets: [{
                 label: '',
                 backgroundColor: ['#18bae2'],
                 borderColor: ['#18bae2'],
                 borderWidth: 1,
-                data: [cutiKemarin],
+                data: [cutiBulanIni],
             }]
         };
-        const data5 = {
+        const data8 = {
             labels: ['Ijin'],
             datasets: [{
                 label: '',
                 backgroundColor: ['#18bae2'],
                 borderColor: ['#18bae2'],
                 borderWidth: 1,
-                data: [ijinKemarin],
+                data: [IjinBulanIni],
+            }]
+        };
+        const data9 = {
+            labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderWidth: 1,
+                data: [masukBulanLalu, terlambatBulanLalu, tidakMasukBulanLalu],
+            }]
+        };
+        const data10 = {
+            labels: ['Cuti'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [cutiBulanLalu],
+            }]
+        };
+        const data11 = {
+            labels: ['Ijin'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [ijinBulanlalu],
             }]
         };
 
@@ -1784,10 +1861,10 @@
             data: data,
             options: {
                 plugins: {
-            legend: {
-                display: false,
-            },
-        },
+                    legend: {
+                        display: false,
+                    },
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -1795,6 +1872,7 @@
                 },
             },
         };
+
 
         const config1 = {
             type: 'bar',
@@ -1834,10 +1912,10 @@
             data: data3,
             options: {
                 plugins: {
-            legend: {
-                display: false,
-            },
-        },
+                    legend: {
+                        display: false,
+                    },
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -1882,10 +1960,90 @@
             data: data6,
             options: {
                 plugins: {
-            legend: {
-                display: false,
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
             },
-        },
+        };
+        const config7 = {
+            type: 'bar',
+            data: data7,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config8 = {
+            type: 'bar',
+            data: data8,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config9 = {
+            type: 'bar',
+            data: data9,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config10 = {
+            type: 'bar',
+            data: data10,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config11 = {
+            type: 'bar',
+            data: data11,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -1919,8 +2077,28 @@
             config5
         );
         const absenBulaniniChart = new Chart(
-            document.getElementById('absenBulaniniChart'),
+            document.getElementById('absenBulanIniChart'),
             config6
+        );
+        const cutiBulanIniChart = new Chart(
+            document.getElementById('cutiBulanIniChart'),
+            config7
+        );
+        const ijinBulanIniChart = new Chart(
+            document.getElementById('ijinBulanIniChart'),
+            config8
+        );
+        const absenBulanLaluChart = new Chart(
+            document.getElementById('absenBulanLaluChart'),
+            config9
+        );
+        const cutiBulanLaluChart = new Chart(
+            document.getElementById('cutiBulanLaluChart'),
+            config10
+        );
+        const ijinBulanlaluChart = new Chart(
+            document.getElementById('ijinBulanlaluChart'),
+            config11
         );
     </script>
 
