@@ -330,6 +330,24 @@ class HomeController extends Controller
             })
             ->count('nama');
 
+
+            //Tidak Masuk Bulan baca absensi
+            $tidakMasukBulanini = Absensi::with('karyawans')
+                ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('created_at', '=', Carbon::now()->month)
+                ->whereHas('karyawan', function ($query) use ($row) {
+                            $query->where('partner', $row->partner);
+                        })
+                ->count('jam_masuk');
+
+            $tidakMasukBulanlalu = Absensi::with('karyawans')
+            ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
+            ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+            ->whereHas('karyawan', function ($query) use ($row) {
+                $query->where('partner', $row->partner);
+            })
+            ->count('jam_masuk');
+
         $today =Carbon::now(); //Current Date and Time
         $firstDayofMonth = Carbon::parse($today)->firstOfMonth();
         $lastDayofMonth = Carbon::parse($today)->endOfMonth();
@@ -1406,6 +1424,8 @@ class HomeController extends Controller
                 'dataIzinBulanIni' => $dataIzinBulanIni,
                 'tidakMasukBulanLalu' => $tidakMasukBulanLalu,
                 'absenBulanLalu' => $absenBulanLalu,
+                'tidakMasukBulanini' => $tidakMasukBulanini,
+                'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
 
             ];
             return view('admin.karyawan.dashboardhrd', $output);
@@ -1481,6 +1501,8 @@ class HomeController extends Controller
                 'ijin' => $ijin,
                 'jumizin' => $jumizin,
                 'absenTerlambatBulanIni' => $absenTerlambatBulanIni,
+                'tidakMasukBulanini' => $tidakMasukBulanini,
+                'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
                 // 'cutijumlah' => $cutijumlah,
                 // 'cuti' => $cuti,
                 // 'jumct' => $jumct,

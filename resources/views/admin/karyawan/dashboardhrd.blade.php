@@ -1726,12 +1726,12 @@
         var ijinKemarin = {{ $dataIzinKemarin }};
         var masukBulanini = {{ $absenBulanini }};
         var terlambatBulanIni =  {{$absenTerlambatBulanIni }};
-        var tidakMasukBulanIni = {{ $tidakMasukBulanIni }};
+        var tidakMasukBulanIni = {{ $tidakMasukBulanini }};
         var cutiBulanIni = {{ $cutiBulanIni }};
         var IjinBulanIni = {{ $dataIzinBulanIni }};
         var masukBulanLalu = {{ $absenBulanLalu }};
         var terlambatBulanLalu = {{ $absenTerlambatbulanlalu }};
-        var tidakMasukBulanLalu = {{ $tidakMasukBulanLalu }};
+        var tidakMasukBulanLalu = {{ $tidakMasukBulanlalu }};
         var cutiBulanLalu = {{ $cutibulanlalu }};
         var ijinBulanlalu = {{$dataIzinbulanlalu }};
 

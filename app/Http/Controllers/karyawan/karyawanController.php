@@ -316,6 +316,7 @@ class karyawanController extends Controller
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->where('partner',$row->partner)
                 ->count('jam_masuk');
+            // dd($absenBulanini);
 
             //absen masuk bulan lalu
             $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
@@ -342,6 +343,19 @@ class karyawanController extends Controller
                 ->whereDay('created_at', '=', Carbon::now())
                 ->where('partner',$row->partner)
                 ->count('jam_masuk');
+
+            // $absenTidakmasukbulanini = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
+            //     ->whereYear('tanggal', '=', Carbon::now()->year)
+            //     ->whereMonth('created_at', '=', Carbon::now()->month)
+            //     ->where('partner',$row->partner)
+            //     ->count('jam_masuk');
+            //     // dd($absenTidakmasukbulanini);
+
+            // $absenTidakmasukbulanlalu = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
+            //     ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
+            //     ->where('partner',$row->partner)
+            //     ->count('jam_masuk');
+            //     // dd($absenTidakmasukbulanlalu);
 
             $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('aktif_dari', '=', Carbon::now()->year)
@@ -1276,6 +1290,8 @@ class karyawanController extends Controller
                 'absenKaryawan' => $absenKaryawan,
                 'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
                 'absenTidakmasuk' => $absenTidakmasuk,
+                'absenTidakmasukbulanini' => $absenTidakmasukbulanini,
+                'absenTidakmasukbulanlalu' => $absenTidakmasukbulanlalu,
                 'alokasicuti' => $alokasicuti,
                 'absenBulanini' => $absenBulanini,
                 'absenBulanlalu' => $absenBulanlalu,

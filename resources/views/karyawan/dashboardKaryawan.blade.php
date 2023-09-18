@@ -3468,9 +3468,209 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="panel panel-border panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Absensi Bulan Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="absensiChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="panel panel-border panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Absen Bulan Lalu</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="absensiBulanLaluChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Terlambat Bulan Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="terlambatBulanIniChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-lg-3">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Terlambat Bulan Lalu</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="terlambatBulanLaluChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Row -->
+
     <style>
         #a {
             border-radius: 10px;
         }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+        var absenBulanini = {{ $absenBulanini }};
+        var absenTerlambatkaryawan =  {{ $absenTerlambatkaryawan }};
+        var absenTidakmasukbulanini = {{ $tidakMasukBulanIni }};
+        var absenBulanlalu = {{ $absenBulanlalu }};
+        var absenTerlambatbulanlalu =  {{ $absenTerlambatbulanlalu }};
+        var absenTidakmasukbulanlalu = {{ $tidakMasukBulanLalu }};
+
+        // '#FF8C00',
+
+        const data = {
+            labels: ['Masuk', 'Tidak Masuk'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2',  '#f44336'],
+                borderColor: ['#18bae2', '#f44336'],
+                borderWidth: 1,
+                data: [absenBulanini, absenTidakmasukbulanini],
+            }]
+        };
+
+        const data1 = {
+            labels: ['Terlambat'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#FF8C00'],
+                borderColor: ['#FF8C00'],
+                borderWidth: 1,
+                data: [absenTerlambatkaryawan],
+            }]
+        };
+        const data2 = {
+            labels: ['Masuk', 'Tidak Masuk'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2',  '#f44336'],
+                borderColor: ['#18bae2', '#f44336'],
+                borderWidth: 1,
+                data: [absenBulanlalu, absenTidakmasukbulanlalu],
+            }]
+        };
+
+        const data3 = {
+            labels: ['Terlambat'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#FF8C00'],
+                borderColor: ['#FF8C00'],
+                borderWidth: 1,
+                data: [absenTerlambatbulanlalu],
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+
+        const config1 = {
+            type: 'bar',
+            data: data1,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+
+        const config2 = {
+            type: 'bar',
+            data: data2,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+
+        const config3 = {
+            type: 'bar',
+            data: data3,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+
+        const absensiChart = new Chart(
+            document.getElementById('absensiChart'),
+            config
+        );
+        const terlambatBulanIniChart = new Chart(
+            document.getElementById('terlambatBulanIniChart'),
+            config1
+        );
+        const absensiBulanLaluChart = new Chart(
+            document.getElementById('absensiBulanLaluChart'),
+            config2
+        );
+        const terlambatBulanLaluChart = new Chart(
+            document.getElementById('terlambatBulanLaluChart'),
+            config3
+        );
+
+
+    </script>
+
 @endsection
