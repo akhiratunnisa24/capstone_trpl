@@ -311,51 +311,84 @@ class karyawanController extends Controller
                 ->count('terlambat');
 
             //absen masuk bulan ini
-            $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-                ->whereYear('tanggal', '=', Carbon::now()->year)
-                ->whereMonth('tanggal', '=', Carbon::now()->month)
-                ->where('partner',$row->partner)
-                ->count('jam_masuk');
+            $absenBulanini =Absensi::with('karyawans', 'departemens')
+            ->whereMonth('tanggal', Carbon::now()->month)
+            ->whereYear('tanggal', Carbon::now()->year)
+            ->where('partner',$row->partner)
+            ->where('id_departement',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->count('absensi.jam_masuk');
+
             // dd($absenBulanini);
 
             //absen masuk bulan lalu
-            $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
-                ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
-                ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-                ->where('partner',$row->partner)
-                ->count('jam_masuk');
-
+            $absenBulanlalu  =Absensi::with('karyawans', 'departemens')
+            ->whereMonth('tanggal', Carbon::now()->subMonth()->month)
+            ->whereYear('tanggal', Carbon::now()->subMonth()->year)
+            ->where('partner',$row->partner)
+            ->where('id_departement',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->count('absensi.jam_masuk');
             //absen terlambat bulan lalu
-            $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
-                ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-                ->where('partner',$row->partner)
+            $absenTerlambatbulanlalu =Absensi::with('karyawans', 'departemens')
+            ->whereMonth('tanggal', Carbon::now()->subMonth()->month)
+            ->whereYear('tanggal', Carbon::now()->subMonth()->year)
+            ->where('partner',$row->partner)
+            ->where('id_departement',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
                 ->where('terlambat', '!=',null)
                 ->count();
 
                   // terlambat bulan ini
-            $absenTerlambatBulanIni = Absensi::whereYear('tanggal', '=', Carbon::now()->year)
-            ->whereMonth('tanggal', '=', Carbon::now()->month)
-            ->where('terlambat', '!=', null)
-            ->where('partner', $row->partner)
-            ->count();
+            $absenTerlambatBulanIni =Absensi::with('karyawans', 'departemens')
+            ->whereMonth('tanggal', Carbon::now()->month)
+            ->whereYear('tanggal', Carbon::now()->year)
+            ->where('partner',$row->partner)
+            ->where('id_departement',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+                ->where('terlambat', '!=',null)
+                ->count();
 
             $absenTidakmasuk = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereDay('created_at', '=', Carbon::now())
                 ->where('partner',$row->partner)
                 ->count('jam_masuk');
 
-            // $absenTidakmasukbulanini = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
-            //     ->whereYear('tanggal', '=', Carbon::now()->year)
-            //     ->whereMonth('created_at', '=', Carbon::now()->month)
-            //     ->where('partner',$row->partner)
-            //     ->count('jam_masuk');
-            //     // dd($absenTidakmasukbulanini);
-
-            // $absenTidakmasukbulanlalu = Absensi::where('id_karyawan',Auth::user()->id_pegawai)
-            //     ->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)
-            //     ->where('partner',$row->partner)
-            //     ->count('jam_masuk');
-            //     // dd($absenTidakmasukbulanlalu);
+            $tidakMasukBulanini = Tidakmasuk::join('karyawan', 'tidakmasuk.id_pegawai', 'karyawan.id')
+                ->whereYear('tidakmasuk.tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tidakmasuk.tanggal', '=', Carbon::now()->month)
+                ->where('karyawan.partner', $row->partner)
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->count('tidakmasuk.nama');
+                // dd($tidakMasukBulanini);
+            $tidakMasukBulanlalu = Tidakmasuk::join('karyawan','tidakmasuk.id_pegawai','karyawan.id')
+                ->whereYear('tanggal', '=',Carbon::now()->subMonth()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->where('karyawan.partner',$row->partner)
+                ->where(function ($query) {
+                    $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->count('tidakmasuk.nama');
 
             $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
                 ->whereYear('aktif_dari', '=', Carbon::now()->year)
@@ -1290,8 +1323,8 @@ class karyawanController extends Controller
                 'absenKaryawan' => $absenKaryawan,
                 'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
                 'absenTidakmasuk' => $absenTidakmasuk,
-                'absenTidakmasukbulanini' => $absenTidakmasukbulanini,
-                'absenTidakmasukbulanlalu' => $absenTidakmasukbulanlalu,
+                // 'absenTidakmasukbulanini' => $absenTidakmasukbulanini,
+                // 'absenTidakmasukbulanlalu' => $absenTidakmasukbulanlalu,
                 'alokasicuti' => $alokasicuti,
                 'absenBulanini' => $absenBulanini,
                 'absenBulanlalu' => $absenBulanlalu,
@@ -1313,7 +1346,10 @@ class karyawanController extends Controller
                 'rekruitmenjumlah' => $rekruitmenjumlah,
                 'absenHariini' =>  $absenHariini,
                 'absenHarini' => $absenHarini,
-                'jumAbsen' =>  $jumAbsen
+                'jumAbsen' =>  $jumAbsen,
+                'tidakMasukBulanini' => $tidakMasukBulanini,
+                'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
+                'absenTerlambatBulanIni' => $absenTerlambatBulanIni,
 
             ];
             return view('karyawan.dashboardKaryawan', $output);

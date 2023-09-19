@@ -1721,17 +1721,17 @@
         var ijin = {{ $dataIzinHariini }};
         var absenKemarin = {{ $jumAbsenKemarin }};
         var terlambatKemarin = {{ $absenTerlambatKemarin }};
-        var tidakMasukKemarin = {{ $tidakMasukKemarin }}
+        var tidakMasukkemarin = {{ $tidakMasukKemarin }}
         var cutiKemarin = {{ $cutiKemarin }};
         var ijinKemarin = {{ $dataIzinKemarin }};
         var masukBulanini = {{ $absenBulanini }};
         var terlambatBulanIni =  {{$absenTerlambatBulanIni }};
-        var tidakMasukBulanIni = {{ $tidakMasukBulanini }};
+        var tidakMasukBulanIni = {{ $tidakMasukBulanIni }};
         var cutiBulanIni = {{ $cutiBulanIni }};
         var IjinBulanIni = {{ $dataIzinBulanIni }};
         var masukBulanLalu = {{ $absenBulanLalu }};
         var terlambatBulanLalu = {{ $absenTerlambatbulanlalu }};
-        var tidakMasukBulanLalu = {{ $tidakMasukBulanlalu }};
+        var tidakMasukBulanLalu = {{ $tidakMasukBulanLalu }};
         var cutiBulanLalu = {{ $cutibulanlalu }};
         var ijinBulanlalu = {{$dataIzinbulanlalu }};
 
@@ -1772,7 +1772,7 @@
                 backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
                 borderColor: ['#18bae2', '#FF8C00', '#f44336'],
                 borderWidth: 1,
-                data: [absenKemarin, terlambatKemarin, tidakMasukKemarin],
+                data: [absenKemarin, terlambatKemarin, tidakMasukkemarin],
             }]
         };
         const data4 = {

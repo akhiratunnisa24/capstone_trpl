@@ -293,60 +293,57 @@ class HomeController extends Controller
                     ->count('id_karyawan');
 
         $totalTidakAbsenHariIni = $totalKaryawan - $totalabsen;
-        $tidakMasukHariIni = Tidakmasuk::with('karyawans')
+        $tidakMasukHariIni = Tidakmasuk::join('karyawan','tidakmasuk.id_pegawai','karyawan.id')
             ->whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->whereDay('tanggal', '=', Carbon::now())
-            ->whereHas('karyawan', function ($query) use ($row) {
-                $query->where('partner', $row->partner);
-            })
-            ->count('nama');
+            ->where('karyawan.partner',$row->partner)
+            ->count('tidakmasuk.nama');
             //Tidak Masuk Kemarin
             $yesterday = Carbon::yesterday();
 
-            $tidakMasukKemarin = Tidakmasuk::with('karyawans')
+            $tidakMasukKemarin = Tidakmasuk::join('karyawan','tidakmasuk.id_pegawai','karyawan.id')
                 ->whereYear('tanggal', '=', $yesterday->year)
                 ->whereMonth('tanggal', '=', $yesterday->month)
                 ->whereDay('tanggal', '=', $yesterday->day)
-                ->whereHas('karyawan', function ($query) use ($row) {
-                    $query->where('partner', $row->partner);
-                })
-                ->count('nama');
+                ->where('karyawan.partner',$row->partner)
+                ->count('tidakmasuk.nama');
 
 
         // dd($totalKaryawan);
-        $tidakMasukBulanIni = Tidakmasuk::with('karyawans')
-            ->whereYear('tanggal', '=',Carbon::now()->year)
-            ->whereMonth('tanggal', '=', Carbon::now()->month)
-            ->whereHas('karyawan', function ($query) use ($row) {
-                $query->where('partner', $row->partner);
-            })
-            ->count('nama');
-        $tidakMasukBulanLalu = Tidakmasuk::with('karyawans')
+        $tidakMasukBulanIni = Tidakmasuk::join('karyawan','tidakmasuk.id_pegawai','karyawan.id')
+            ->whereYear('tidakmasuk.tanggal', '=',Carbon::now()->year)
+            ->whereMonth('tidakmasuk.tanggal', '=', Carbon::now()->month)
+            ->where('karyawan.partner',$row->partner)
+            ->count('tidakmasuk.nama');
+            // dd($tidakMasukBulanIni);
+
+        $tidakMasukBulanLalu = Tidakmasuk::join('karyawan','tidakmasuk.id_pegawai','karyawan.id')
             ->whereYear('tanggal', '=',Carbon::now()->subMonth()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-            ->whereHas('karyawan', function ($query) use ($row) {
-                $query->where('partner', $row->partner);
+            ->where('karyawan.partner',$row->partner)
+            ->count('tidakmasuk.nama');
+
+        $tidakMasukBulanini = Tidakmasuk::join('karyawan', 'tidakmasuk.id_pegawai', 'karyawan.id')
+            ->whereYear('tidakmasuk.tanggal', '=', Carbon::now()->year)
+            ->whereMonth('tidakmasuk.tanggal', '=', Carbon::now()->month)
+            ->where('karyawan.partner', $row->partner)
+            ->where(function ($query) {
+                $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
             })
-            ->count('nama');
-
-
-            //Tidak Masuk Bulan baca absensi
-            $tidakMasukBulanini = Absensi::with('karyawans')
-                ->whereYear('tanggal', '=', Carbon::now()->year)
-                ->whereMonth('created_at', '=', Carbon::now()->month)
-                ->whereHas('karyawan', function ($query) use ($row) {
-                            $query->where('partner', $row->partner);
-                        })
-                ->count('jam_masuk');
-
-            $tidakMasukBulanlalu = Absensi::with('karyawans')
-            ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
+            ->count('tidakmasuk.nama');
+            // dd($tidakMasukBulanini);
+        $tidakMasukBulanlalu = Tidakmasuk::join('karyawan','tidakmasuk.id_pegawai','karyawan.id')
+            ->whereYear('tanggal', '=',Carbon::now()->subMonth()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-            ->whereHas('karyawan', function ($query) use ($row) {
-                $query->where('partner', $row->partner);
+            ->where('karyawan.partner',$row->partner)
+            ->where(function ($query) {
+                $query->where('karyawan.atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('karyawan.atasan_kedua', Auth::user()->id_pegawai);
             })
-            ->count('jam_masuk');
+            ->count('tidakmasuk.nama');
+
 
         $today =Carbon::now(); //Current Date and Time
         $firstDayofMonth = Carbon::parse($today)->firstOfMonth();
@@ -1424,9 +1421,6 @@ class HomeController extends Controller
                 'dataIzinBulanIni' => $dataIzinBulanIni,
                 'tidakMasukBulanLalu' => $tidakMasukBulanLalu,
                 'absenBulanLalu' => $absenBulanLalu,
-                'tidakMasukBulanini' => $tidakMasukBulanini,
-                'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
-
             ];
             return view('admin.karyawan.dashboardhrd', $output);
 
@@ -1457,6 +1451,8 @@ class HomeController extends Controller
                 'posisi' => $posisi,
                 'informasi' =>$informasi,
                 'jmlinfo' => $jmlinfo,
+                // 'tidakMasukBulanini' => $tidakMasukBulanini,
+                // 'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
                 // 'jumAbsenKemarin' => $jumAbsenKemarin,
                 // 'absenTerlambatKemarin' => $absenTerlambatKemarin,
                 // 'tidakMasukKemarin' => $tidakMasukKemarin,
@@ -1563,6 +1559,8 @@ class HomeController extends Controller
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
                 'sisacutis' => $sisacutis,
+                'tidakMasukBulanini' => $tidakMasukBulanini,
+                'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
                 // 'jumAbsenKemarin' => $jumAbsenKemarin,
                 // 'cutiKemarin' => $cutiKemarin,
                 // 'dataIzinKemarin' => $dataIzinKemarin,
