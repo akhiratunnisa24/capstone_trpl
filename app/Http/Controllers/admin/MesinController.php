@@ -201,7 +201,7 @@ class MesinController extends Controller
                                         {
                                             $absensi = new Absensi();
 
-                                            $batasmasuk =Carbon::createFromFormat('H:i:s','14:00:00');
+                                            $batasmasuk = Carbon::createFromFormat('H:i:s','16:00:00');
 
                                             if($jam_masuk > $batasmasuk)
                                             {

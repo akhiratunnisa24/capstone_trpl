@@ -204,7 +204,7 @@ class Kernel extends ConsoleKernel
                 }
 
         })
-        ->dailyAt('23:59');
+        ->dailyAt('09:36');
 
         //schedule untuk mengubah status alokasi cuti tahun selain cuti tsahunan lalu menjadi tidak aktif
         $schedule->call(function ()
@@ -518,7 +518,7 @@ class Kernel extends ConsoleKernel
                                                 {
                                                     $absensi = new Absensi();
 
-                                                    $batasmasuk =Carbon::createFromFormat('H:i:s','14:00:00');
+                                                    $batasmasuk =Carbon::createFromFormat('H:i:s','16:00:00');
 
                                                     if($jam_masuk > $batasmasuk)
                                                     {

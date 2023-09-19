@@ -163,7 +163,7 @@
     @if (Session::has('message'))
         <script>
             swal("Mohon Maaf",<?php echo json_encode( Session::get('message') ) ?>, 'info', {
-                button: false,
+                button: true,
                 button: "OK",
             });
         </script>

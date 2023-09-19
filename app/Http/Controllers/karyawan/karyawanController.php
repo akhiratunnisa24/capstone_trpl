@@ -3383,7 +3383,12 @@ class karyawanController extends Controller
                 $leveljabatan = Leveljabatan::all();
 
                 //  return $karyawan;
-                $informasigaji = Informasigaji::where('id_karyawan',$id)->where('status',1)->first();
+                $level = Leveljabatan::where('nama_level',$karyawan->jabatan)->first();
+                $informasigaji = Informasigaji::where('id_karyawan',$id)
+                    ->where('status_karyawan',$karyawan->status_karyawan)
+                    ->where('level_jabatan',$level->id)
+                    ->where('status',1)->first();
+                // dd($informasigaji);
                 if ($informasigaji === null)
                 {
                     $informasigaji = null;
@@ -3391,6 +3396,7 @@ class karyawanController extends Controller
                     $idStrukturgaji = null; // Atau berikan nilai default yang sesua
                     $struktur = null;
                     $detailstruktur = null;
+                    $detailinformasigaji = null;
                     // $level = null;
                     // $strukturgaji = null;
                 }
@@ -3410,8 +3416,11 @@ class karyawanController extends Controller
                             $query->where('partner', $karyawan->partner);
                         })
                     ->get();
-                    // return $detailstruktur;
 
+                    $detailinformasigaji = Detailinformasigaji::where('id_karyawan',$karyawan->id)
+                    ->where('id_informasigaji',$informasigaji->id)
+                    ->get();
+                    // return $detailstruktur;
                 }
                 $file = File::where('id_pegawai', $id)->first();
 
@@ -3429,9 +3438,7 @@ class karyawanController extends Controller
                     })->get();
                 $selectedBenefits = [1,2,3];
 
-                $detailinformasigaji = Detailinformasigaji::where('id_karyawan',$karyawan->id)
-                ->where('id_informasigaji',$informasigaji->id)
-                ->get();
+             
                 // return $detailinformasigaji;
                 $output = [
                     'row' => $row,
@@ -3455,22 +3462,22 @@ class karyawanController extends Controller
             else
             {
                 if($karyawan->divisi == null && $karyawan->jabatan !== null && $karyawan->status_karyawan !== null){
-                    $pesan = "Data <strong><span style='color: red;'>Divisi</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+                    $pesan = "Data <strong><span style='color: red;'>Divisi</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
                 }elseif($karyawan->status_karyawan == null && $karyawan->jabatan !== null && $karyawan->divisi !== null){
-                    $pesan = "Data <strong><span style='color: red;'>Status Karyawan</span></strong> belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+                    $pesan = "Data <strong><span style='color: red;'>Status Karyawan</span></strong> belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
                 }elseif($karyawan->jabatan == null && $karyawan->status_karyawan !== null && $karyawan->divisi !== null)
                 {
-                    $pesan = "Data <strong><span style='color: red;'>Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+                    $pesan = "Data <strong><span style='color: red;'>Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
                 }elseif($karyawan->jabatan == null && $karyawan->status_karyawan == null && $karyawan->divisi !== null )
                 {
-                    $pesan = "Data <strong><span style='color: red;'>Status dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+                    $pesan = "Data <strong><span style='color: red;'>Status dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
                 }elseif($karyawan->jabatan == null && $karyawan->status_karyawan == null && $karyawan->divisi == null )
                 {
-                    $pesan = "Data <strong><span style='color: red;'>Status,Divisi dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+                    $pesan = "Data <strong><span style='color: red;'>Status,Divisi dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
                 }
                 else{
                     //$pesan = "Data tidak lengkap, silahkan lengkapi <strong><a href='/editidentitas" . $karyawan->id . "'>Status/Level Jabatan Karyawan</a></strong> dan Coba kembali.";
-                    $pesan = "Data <strong><span style='color: red;'>Status,Divisi dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info' target='_blank'>Lengkapi Data</a></strong> <br>";
+                    $pesan = "Data <strong><span style='color: red;'>Status,Divisi dan Level Jabatan</span></strong> karyawan belum lengkap,<br> silahkan lengkapi dan Coba lagi. <br><br><strong><a href='" . route('editidentitas', ['id' => $karyawan->id]) . "' class='btn btn-sm btn-info'>Lengkapi Data</a></strong> <br>";
                 }
                 $pesan = '<div class="text-center">' . $pesan . '</div>';
                 $pesan = nl2br(html_entity_decode($pesan));
@@ -3640,8 +3647,8 @@ class karyawanController extends Controller
             ->where('partner',$strukturgaji->partner)
             ->where('status_karyawan',$strukturgaji->status_karyawan)
             ->where('level_jabatan',$strukturgaji->id_level_jabatan)
+            ->where('status',1)
             ->first();
-
         if(!$check)
         {
             $informasigaji = new Informasigaji();
@@ -3655,7 +3662,8 @@ class karyawanController extends Controller
 
             $informasigaji->save();
 
-            $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->first();
+            $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->where('status',1)->first();
+            // dd($informasigaji);
             $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $strukturgaji->id)->get();
             $details = [];
             foreach($detailstruktur as $detail)

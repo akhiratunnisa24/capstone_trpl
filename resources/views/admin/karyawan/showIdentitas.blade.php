@@ -277,7 +277,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-
+                                                    <a href="/karyawan" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
                                                     <a href="editidentitas{{ $karyawan->id }}" class="btn btn-sm btn-primary" type="button">Edit Data <i class="fa fa-edit"></i></a>
                                                     
                                                     {{-- <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#updateIdentitas{{$karyawan->id}}" >
