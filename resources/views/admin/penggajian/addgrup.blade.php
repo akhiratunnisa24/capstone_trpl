@@ -10,7 +10,13 @@
                 <form id="formCreatePekerjaan" method="POST" action="{{ route('storegrup') }}" onsubmit="return validateForm()">
                     @csrf
                     @method('POST')
-                    <div class="col-md-12">
+                    <div class="col-md-12 m-b-50">
+                        <div class="form-group col-sm">
+                            <label class="form-label">Nama Grup</label>
+                            <div class="input-group col-md-12">
+                                <input id="nama_grup" type="text" placeholder="Masukkan Nama Slip Grup" class="form-control" name="nama_grup" autocomplete="off" required>
+                            </div>
+                        </div>
                         <div class="form-group col-sm">
                             <label class="form-label">Tanggal Penggajian</label>
                             <div class="input-group">
@@ -32,7 +38,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-sm">
+                        {{-- <div class="form-group col-sm">
                             <label  class="col-form-label">Struktur Penggajian</label>
                             <select name="id_strukturgaji" id="id_strukturgaji" class="form-control selectpicker" data-live-search="true" required>
                                 <option>-- Pilih Struktur Penggajian --</option>
@@ -40,10 +46,10 @@
                                     <option value="{{ $data->id }}">{{ $data->nama }}</option>
                                 @endforeach
                             </select>
-                        </div> 
+                        </div>  --}}
                         <input id="partner" type="hidden" class="form-control" name="partner" value="{{ Auth::user()->partner }}" autocomplete="off">
                     </div>
-                    <div class="modal-footer m-t-30">
+                    <div class="modal-footer m-t-50">
                         <button type="button" class="btn btn-sm btn-danger waves-effect" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-sm btn-success waves-effect waves-light" name="submit" value="save">Simpan</button>
                     </div>

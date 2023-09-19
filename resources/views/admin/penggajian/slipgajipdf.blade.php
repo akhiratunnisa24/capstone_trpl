@@ -151,7 +151,7 @@
                     @foreach($detailgaji as $detail)
                         @if($detail->id_benefit === 2)
                             <tr>
-                                <td class="text-right" style="font-weight: bold;">Total</td>
+                                <td class="text-right" style="font-weight: bold;">Total (+)</td>
                                 <td class="text-right" style="font-weight: bold;">{{ number_format($detail->total, 0, ',', '.') }}</td>
                             </tr>
                         @endif
@@ -173,7 +173,7 @@
                     @endforeach
                     @if($slipgaji !== null)
                         <tr class="total-row">
-                            <td class="text-right" style="font-weight: bold;">Total (+)</td>
+                            <td class="text-right" style="font-weight: bold;">Total (-)</td>
                             <td class="text-right" style="font-weight: bold;">{{ number_format($slipgaji->potongan, 0, ',', '.') }}</td>
                         </tr>
                     @endif

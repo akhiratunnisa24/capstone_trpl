@@ -73,8 +73,6 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading  col-sm-15 clearfix" >
                             <div class="pull-right">
-                                {{-- <a href="{{ route('creategrup') }}" class="btn btn-dark btn-sm fa fa-plus">Tambah Slip Baru</a> --}}
-
                                 <a href="" class="btn btn-dark btn-sm fa fa-plus" data-toggle="modal" data-target="#addslip-grup"> Tambah Slip Baru</a>
                             </div>
                         </div>
@@ -85,9 +83,9 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>Nama Grup</th>
                                                 <th>Tgl. Gajian</th>
                                                 <th>Periode</th>
-                                                <th>Struktur Gaji</th>
                                                 <th>Jumlah Slip</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -97,25 +95,30 @@
                                                
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
-                                                        <td>{{\Carbon\Carbon::parse($data->tgl_gajian)->format('d/m/Y')}}</td>
+                                                        <td>{{$data->nama_grup}}</td>
+                                                        <td>{{\Carbon\Carbon::parse($data->tglgajian)->format('d/m/Y')}}</td>
                                                         <td>{{\Carbon\Carbon::parse($data->tglawal)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($data->tglakhir)->format('d/m/Y')}}</td>
-                                                        <td>{{$data->strukturgajis->nama}}</td>
                                                         <td>
                                                             @php
-                                                                $jumlahData = $slip->where('id_strukturgaji', $data->id_strukturgaji)->count();
+                                                                $jumlahData = $slip->where('tglawal', $data->tglawal)
+                                                                    ->where('tglakhir', $data->tglakhir)
+                                                                    ->where('partner',$data->partner)
+                                                                    ->count();
                                                             @endphp
                                                             {{$jumlahData}} slip
                                                         </td>
                                                         <td>
                                                             <div  class="d-grid gap-2" role="group" aria-label="Basic example">
-                                                                <a href="/slipgaji-karyawan" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-eye"></i></a>
-                                                                <a href="/slipgaji-karyawan-grup/{{$data->id_strukturgaji}}" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-eye"></i></a>
-                                                             
+                                                                {{-- <a href="/slipgaji-karyawan-grup/{{$data->id}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a> 
+                                                                 --}}
+                                                                 <a href="/slipgaji-grup{{ $data->id }}" class="btn btn-info btn-sm" title="Lihat Identitas" target="_blank"><i class="fa fa-eye" style="font-size: 15px;"></i></a>
+                                                                 {{-- <a href="{{ route('showslipgroup', ['id' => $data->id]) }}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a> --}}
+
                                                           </div>
                                                         </td>
                                                     </tr>
                                                 
-                                                @include('admin.penggajian.editgrup')
+                                                {{-- @include('admin.penggajian.editgrup') --}}
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -153,6 +156,15 @@
             swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
                 button:true,
                 button:"OK",
+            });
+        </script>
+    @endif
+
+    @if (Session::has('message'))
+        <script>
+            swal("Mohon Maaf",<?php echo json_encode( Session::get('message') ) ?>, 'info', {
+                button: false,
+                button: "OK",
             });
         </script>
     @endif

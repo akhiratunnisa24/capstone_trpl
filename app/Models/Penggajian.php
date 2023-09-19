@@ -14,6 +14,7 @@ class Penggajian extends Model
         'id_karyawan',
         'id_strukturgaji',
         'id_informasigaji',
+        'id_grup',
         'tglawal',
         'tglakhir',
         'tglgajian',

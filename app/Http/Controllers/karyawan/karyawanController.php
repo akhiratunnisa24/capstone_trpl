@@ -2075,7 +2075,7 @@ class karyawanController extends Controller
             }
 
             $leveljabatan = LevelJabatan::all();
-            $namajabatan = Jabatan::all();
+            $namajabatan = Jabatan::where('partner',$row->partner)->get();
 
             $output = [
                 'row' => $row,
@@ -2122,7 +2122,7 @@ class karyawanController extends Controller
                                 ->get();
             }
             $leveljabatan = LevelJabatan::all();
-            $namajabatan = Jabatan::all();
+            $namajabatan = Jabatan::where('partner',$row->partner)->get();
 
             $output = [
                 'row' => $row,
@@ -3598,7 +3598,7 @@ class karyawanController extends Controller
         }
         // }else if((float)$karyawan->gaji !== (float)$gajiKaryawan)
         // {
-        $informasigaji = Informasigaji::where('id_karyawan', $karyawan->id)->update([
+        $informasigaji = Informasigaji::where('id_karyawan', $karyawan->id)->where('status',1)->update([
             'gaji_pokok' => $gaji,
         ]);
 

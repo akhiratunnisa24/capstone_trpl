@@ -9,10 +9,13 @@ use App\Models\Izin;
 use App\Models\Jadwal;
 use App\Models\Absensi;
 use App\Models\Benefit;
+use App\Models\Jabatan;
 use App\Models\Karyawan;
+use App\Models\Departemen;
 use App\Models\Penggajian;
 use App\Models\Tidakmasuk;
 use Illuminate\Support\Str;
+use App\Models\LevelJabatan;
 use Illuminate\Http\Request;
 use App\Models\Informasigaji;
 use App\Models\PenggajianGrup;
@@ -471,11 +474,13 @@ class PenggajianController extends Controller
                 ->where('status_kerja', 'Aktif')
                 ->whereNull('tglkeluar')
                 ->get();  
-            $slipgrupindex = Penggajian::select('id_strukturgaji', 'tglgajian', 'tglawal', 'tglakhir')
-                ->selectRaw('COUNT(*) as jumlah_penggajian')
-                ->where('partner', $row->partner)
-                ->groupBy('id_strukturgaji', 'tglgajian', 'tglawal', 'tglakhir')
-                ->orderBy('id_strukturgaji','asc')
+            // $slipgrupindex = Penggajian::select('id_strukturgaji', 'tglgajian', 'tglawal', 'tglakhir')
+            //     ->selectRaw('COUNT(*) as jumlah_penggajian')
+            //     ->where('partner', $row->partner)
+            //     ->groupBy('id_strukturgaji', 'tglgajian', 'tglawal', 'tglakhir')
+            //     ->orderBy('id_strukturgaji','asc')
+            //     ->get();
+            $slipgrupindex = PenggajianGrup::where('partner', $row->partner)
                 ->get();
             $slip = Penggajian::where('partner', $row->partner)->get();
             $slipgrup = SalaryStructure::where('partner',$row->partner)->get();
@@ -548,202 +553,166 @@ class PenggajianController extends Controller
         $tgl_akhir= date_format(date_create_from_format('d/m/Y', $request->tgl_selesai), 'Y-m-d');
         $tglgajian= date_format(date_create_from_format('d/m/Y', $request->tgl_penggajian), 'Y-m-d');
 
-        $strukturgaji = SalaryStructure::where('id',$request->id_strukturgaji)->first();
+        $penggajiangrup = PenggajianGrup::firstOrNew([
+            'nama_grup' => $request->nama_grup,
+            'tglawal' => $tgl_awal,
+            'tglakhir' => $tgl_akhir,
+            'tglgajian' => $tglgajian,
+            'partner' => $request->partner
+        ]);
+
         $listkaryawan = Karyawan::join('informasi_gaji','karyawan.id','=','informasi_gaji.id_karyawan')
             ->select('karyawan.*','informasi_gaji.id as id_informasigaji','informasi_gaji.id_strukturgaji','informasi_gaji.status_karyawan as status_karyawan','informasi_gaji.level_jabatan as level_jabatan')
-            ->where('informasi_gaji.id_strukturgaji',$strukturgaji->id)
+            ->where('karyawan.partner',$request->partner)
+            ->where('informasi_gaji.status',1)
             ->get();
-        foreach($listkaryawan as $karyawan)
-        {
-            $nama_bank = $karyawan->nama_bank;
-            $no_rekening = $karyawan->no_rek;
-            if($karyawan->nama_bank == null && $karyawan->no_rek !== null)
+        $informasigajibelumada = Karyawan::where('partner',$request->partner)->whereNotIn('id', $listkaryawan->pluck('id','nama'));
+     
+        if($informasigajibelumada !== null)
+        {   
+            $jumlah = $informasigajibelumada->count();
+            $namaKaryawan = $informasigajibelumada->pluck('nama')->implode(', ');
+             return redirect()->back()->with('pesa', 'Sebanyak ' . $jumlah . ' karyawan belum memiliki informasi gaji. Karyawan yang belum memiliki informasi gaji: ' . $namaKaryawan . '. Silahkan lengkapi data karyawan tersebut dan buat Informasi gajinya terlebih dahulu dan Coba Kembali');
+        }else{
+
+            //simpan data grup penggajian
+            $penggajiangrup->save();
+            $penggajiangrup_id = $penggajiangrup->id;
+
+            foreach($listkaryawan as $karyawan)
             {
-                $nama_bank = null;
-                $no_rekening = $no_rekening;
-            }elseif($karyawan->nama_bank !== null &&  $karyawan->no_rek == null)
-            {
-                $nama_bank = $nama_bank;
-                $no_rekening = null;
-            }
-
-            $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->where('status',1)->first();
-            $id_informasigaji = $informasigaji->id;
-            if($informasigaji === null){
-                $id_informasigaji = null;
-            }else{
-                $id_informasigaji =  $id_informasigaji;
-                $detail = Detailinformasigaji::where('id_informasigaji',$id_informasigaji)->get();
-                $penggajian = Penggajian::firstOrNew([
-                    'id_karyawan' => $request->id_karyawan,
-                    'tglawal' => $tgl_awal,
-                    'tglakhir' => $tgl_akhir,
-                ]);
-
-                $penggajian->tglgajian = $tglgajian;
-                $penggajian->id_karyawan = $karyawan->id;
-                $penggajian->id_informasigaji = $id_informasigaji;
-                $penggajian->id_strukturgaji  = $informasigaji->id_strukturgaji;
-                $penggajian->gaji_pokok = $karyawan->gaji_pokok ? $karyawan->gaji_pokok : 0;
-                $penggajian->lembur     = null;
-                $penggajian->tunjangan  = null;
-                $penggajian->gaji_kotor = null;
-                $penggajian->asuransi   = null;
-                $penggajian->potongan   = null;
-                $penggajian->pajak      = null;
-                $penggajian->gaji_bersih = null;
-                $penggajian->nama_bank   = $karyawan->nama_bank ? $karyawan->nama_bank : null;
-                $penggajian->no_rekening = $karyawan->no_rek ? $karyawan->no_rek : null;
-                $penggajian->partner    = $request->partner;
-                $penggajian->statusmail = 0;
-    
-                $penggajian->save();
-
-                $detailkehadiran = Detailkehadiran::where('id_karyawan',  $karyawan->id)
-                ->where(function ($query) use ($tgl_awal,$tgl_akhir) {
-                    $query->whereBetween('tgl_awal', [$tgl_awal, $tgl_akhir])
-                        ->orWhereBetween('tgl_akhir', [$tgl_awal, $tgl_akhir]);
-                })
-                ->first();
-
-                if($detailkehadiran == null)
+                $strukturgaji = SalaryStructure::where('id',$karyawan->id_strukturgaji)->first();
+            
+                $nama_bank = $karyawan->nama_bank;
+                $no_rekening = $karyawan->no_rek;
+                if($karyawan->nama_bank == null && $karyawan->no_rek !== null)
                 {
-                    //jumlah hadir dalam rentahg tanggal gajian
-                    $awal = date_format(date_create_from_format('d/m/Y', $request->tgl_mulai), 'Y-m-d');
-                    $akhir = date_format(date_create_from_format('d/m/Y', $request->tgl_selesai), 'Y-m-d');
-                    $hadir = Absensi::where('id_karyawan', $karyawan->id)
-                        ->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])
-                        ->count();
+                    $nama_bank = null;
+                    $no_rekening = $no_rekening;
+                }elseif($karyawan->nama_bank !== null &&  $karyawan->no_rek == null)
+                {
+                    $nama_bank = $nama_bank;
+                    $no_rekening = null;
+                }
 
-                    $jamhadir = Absensi::selectRaw('SUM(TIME_TO_SEC(TIME(jml_jamkerja))) / 3600 AS total_jam')
-                        ->where('id_karyawan', $karyawan->id)
-                        ->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])
-                        ->value('total_jam');
-                    // dd($jamhadir);
+                $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->where('status',1)->first();
+                $id_informasigaji = $informasigaji->id;
+                if($informasigaji === null){
+                    $id_informasigaji = null;
+                }else{
+                    $id_informasigaji =  $id_informasigaji;
+                    $detail = Detailinformasigaji::where('id_informasigaji',$id_informasigaji)->get();
+                    $penggajian = Penggajian::firstOrNew([
+                        'id_karyawan' => $request->id_karyawan,
+                        'tglawal' => $tgl_awal,
+                        'tglakhir' => $tgl_akhir,
+                    ]);
+                    
+                    $penggajian->tglgajian = $tglgajian;
+                    $penggajian->id_karyawan = $karyawan->id;
+                    $penggajian->id_informasigaji = $id_informasigaji;
+                    $penggajian->id_grup = $penggajiangrup_id;
+                    $penggajian->id_strukturgaji  = $informasigaji->id_strukturgaji;
+                    $penggajian->gaji_pokok = $karyawan->gaji_pokok ? $karyawan->gaji_pokok : $informasigaji->gaji_pokok;
+                    $penggajian->lembur     = null;
+                    $penggajian->tunjangan  = null;
+                    $penggajian->gaji_kotor = null;
+                    $penggajian->asuransi   = null;
+                    $penggajian->potongan   = null;
+                    $penggajian->pajak      = null;
+                    $penggajian->gaji_bersih = null;
+                    $penggajian->nama_bank   = $karyawan->nama_bank ? $karyawan->nama_bank : null;
+                    $penggajian->no_rekening = $karyawan->no_rek ? $karyawan->no_rek : null;
+                    $penggajian->partner    = $request->partner;
+                    $penggajian->statusmail = 0;
+        
+                    // dd($penggajian->id_karyawan,$penggajian->gaji_pokok);
+                    $penggajian->save();
 
-                    //menghitung jumlah dan jam lembur karyawan
-                    $lembur = Absensi::where('id_karyawan', $karyawan->id)
-                        ->where('lembur', '!=', null)
-                        ->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])
-                        ->where('lembur','>','01:00:00')
-                        ->count();
+                    $detailkehadiran = Detailkehadiran::where('id_karyawan',  $karyawan->id)
+                    ->where(function ($query) use ($tgl_awal,$tgl_akhir) {
+                        $query->whereBetween('tgl_awal', [$tgl_awal, $tgl_akhir])
+                            ->orWhereBetween('tgl_akhir', [$tgl_awal, $tgl_akhir]);
+                    })
+                    ->first();
 
-                    $jamlembur = Absensi::selectRaw('SUM(TIME_TO_SEC(TIME(lembur))) / 3600 AS total_jam')
-                        ->where('id_karyawan', $karyawan->id)
-                        ->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])
-                        ->where('lembur','>','01:00:00')
-                        ->value('total_jam');
-
-                    $jadwal = Jadwal::where('partner',$karyawan->partner)
-                        ->whereBetween('tanggal',[$tgl_awal, $tgl_akhir])
-                        ->count();
-
-                    //hitung jumlah sakit dalam 1 bulan
-                    $izinSakit = Izin::where('id_karyawan', $karyawan->id)->where('id_jenisizin', 1)
-                        ->where(function ($query) use ($tgl_awal, $tgl_akhir) {
-                            $query->where(function ($q) use ($tgl_awal, $tgl_akhir) {
-                                $q->where('tgl_mulai', '>=', $tgl_awal)->where('tgl_mulai', '<=', $tgl_akhir);
-                            })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
-                                $q->where('tgl_selesai', '>=', $tgl_awal)->where('tgl_selesai', '<=', $tgl_akhir);
-                            })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
-                                $q->where('tgl_mulai', '<', $tgl_awal)->where('tgl_selesai', '>', $tgl_akhir);
-                            });
-                        })
-                        ->get();
-
-                    $totalHariIzinSakit = 0;
-                    $totalJamSakit = 0;
-                    foreach ($izinSakit as $izinsakit)
+                    if($detailkehadiran == null)
                     {
-                        $tglMulai = \Carbon\Carbon::parse($izinsakit->tgl_mulai);
-                        $tglSelesai = \Carbon\Carbon::parse($izinsakit->tgl_selesai);
-
-                        if ($tglMulai->greaterThan($awal)) {
-                            $tglHitungAwal = $tglMulai;
-                        } else {
-                            $tglHitungAwal = $awal;
-                        }
-
-                        if ($tglSelesai->lessThan($akhir)) {
-                            $tglHitungAkhir = $tglSelesai;
-                        } else {
-                            $tglHitungAkhir = $akhir;
-                        }
-
-                        $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
-                        $tglHitungAkhir= \Carbon\Carbon::parse($tglHitungAkhir);
-
-                        $selisihHari = $tglHitungAwal->diffInDays($tglHitungAkhir) + 1;
-                        
-                        $cocokkanTanggal = Jadwal::where('partner', $karyawan->partner)
-                            ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                        //jumlah hadir dalam rentahg tanggal gajian
+                        $awal = date_format(date_create_from_format('d/m/Y', $request->tgl_mulai), 'Y-m-d');
+                        $akhir = date_format(date_create_from_format('d/m/Y', $request->tgl_selesai), 'Y-m-d');
+                        $hadir = Absensi::where('id_karyawan', $karyawan->id)
+                            ->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])
                             ->count();
 
-                        if ($cocokkanTanggal > 0) {
-                            $totalHariIzinSakit = $cocokkanTanggal;
-                        }
+                        $jamhadir = Absensi::selectRaw('SUM(TIME_TO_SEC(TIME(jml_jamkerja))) / 3600 AS total_jam')
+                            ->where('id_karyawan', $karyawan->id)
+                            ->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])
+                            ->value('total_jam');
+                        // dd($jamhadir);
 
-                        $jamTanggal = Jadwal::where('partner', $karyawan->partner)
-                            ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                        //menghitung jumlah dan jam lembur karyawan
+                        $lembur = Absensi::where('id_karyawan', $karyawan->id)
+                            ->where('lembur', '!=', null)
+                            ->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])
+                            ->where('lembur','>','01:00:00')
+                            ->count();
+
+                        $jamlembur = Absensi::selectRaw('SUM(TIME_TO_SEC(TIME(lembur))) / 3600 AS total_jam')
+                            ->where('id_karyawan', $karyawan->id)
+                            ->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])
+                            ->where('lembur','>','01:00:00')
+                            ->value('total_jam');
+
+                        $jadwal = Jadwal::where('partner',$karyawan->partner)
+                            ->whereBetween('tanggal',[$tgl_awal, $tgl_akhir])
+                            ->count();
+
+                        //hitung jumlah sakit dalam 1 bulan
+                        $izinSakit = Izin::where('id_karyawan', $karyawan->id)->where('id_jenisizin', 1)
+                            ->where(function ($query) use ($tgl_awal, $tgl_akhir) {
+                                $query->where(function ($q) use ($tgl_awal, $tgl_akhir) {
+                                    $q->where('tgl_mulai', '>=', $tgl_awal)->where('tgl_mulai', '<=', $tgl_akhir);
+                                })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
+                                    $q->where('tgl_selesai', '>=', $tgl_awal)->where('tgl_selesai', '<=', $tgl_akhir);
+                                })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
+                                    $q->where('tgl_mulai', '<', $tgl_awal)->where('tgl_selesai', '>', $tgl_akhir);
+                                });
+                            })
                             ->get();
 
-                        foreach ($jamTanggal as $j) {
-                            $jamMasuk = \Carbon\Carbon::parse($j->jadwal_masuk);
-                            $jamPulang = \Carbon\Carbon::parse($j->jadwal_pulang);
-
-                            $selisihJam = $jamMasuk->diffInHours($jamPulang);
-
-                        $totalJamSakit += $selisihJam;
-                        }
-                    }
-
-                    //menghitung jumlah dan jam izin biasa karyawan
-                    $izin = Izin::where('id_karyawan', $karyawan->id)->where('id_jenisizin', [2,5])
-                        ->where(function ($query) use ($tgl_awal, $tgl_akhir) {
-                            $query->where(function ($q) use ($tgl_awal, $tgl_akhir) {
-                                $q->where('tgl_mulai', '>=', $tgl_awal)->where('tgl_mulai', '<=', $tgl_akhir);
-                            })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
-                                $q->where('tgl_selesai', '>=', $tgl_awal)->where('tgl_selesai', '<=', $tgl_akhir);
-                            })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
-                                $q->where('tgl_mulai', '<', $tgl_awal)->where('tgl_selesai', '>', $tgl_akhir);
-                            });
-                        })
-                        ->get();
-
-                    $totalHariIzin = 0;
-                    $totalJamIzin = 0;
-                    foreach ($izin as $izin)
-                    {
-                        $tglMulai = \Carbon\Carbon::parse($izin->tgl_mulai);
-                        $tglSelesai = \Carbon\Carbon::parse($izin->tgl_selesai);
-
-                        if ($tglMulai->greaterThan($awal)) {
-                            $tglHitungAwal = $tglMulai;
-                        } else {
-                            $tglHitungAwal = $awal;
-                        }
-
-                        if ($tglSelesai->lessThan($akhir)) {
-                            $tglHitungAkhir = $tglSelesai;
-                        } else {
-                            $tglHitungAkhir = $akhir;
-                        }
-
-                        $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
-                        $tglHitungAkhir= \Carbon\Carbon::parse($tglHitungAkhir);
-
-                        $selisihHari = $tglHitungAwal->diffInDays($tglHitungAkhir) + 1;
-
-                        $cocokkanTanggal = Jadwal::where('partner', $karyawan->partner)
-                            ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
-                            ->count();
-
-                        if ($cocokkanTanggal > 0) {
-                            $totalHariIzin = $cocokkanTanggal;
-                        }
-
-                        if($izin->id_jenisizin == 2 && $izin->jam_mulai == NULL && $izin->jam_selesai == NULL)
+                        $totalHariIzinSakit = 0;
+                        $totalJamSakit = 0;
+                        foreach ($izinSakit as $izinsakit)
                         {
+                            $tglMulai = \Carbon\Carbon::parse($izinsakit->tgl_mulai);
+                            $tglSelesai = \Carbon\Carbon::parse($izinsakit->tgl_selesai);
+
+                            if ($tglMulai->greaterThan($awal)) {
+                                $tglHitungAwal = $tglMulai;
+                            } else {
+                                $tglHitungAwal = $awal;
+                            }
+
+                            if ($tglSelesai->lessThan($akhir)) {
+                                $tglHitungAkhir = $tglSelesai;
+                            } else {
+                                $tglHitungAkhir = $akhir;
+                            }
+
+                            $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
+                            $tglHitungAkhir= \Carbon\Carbon::parse($tglHitungAkhir);
+
+                            $selisihHari = $tglHitungAwal->diffInDays($tglHitungAkhir) + 1;
+                            
+                            $cocokkanTanggal = Jadwal::where('partner', $karyawan->partner)
+                                ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                                ->count();
+
+                            if ($cocokkanTanggal > 0) {
+                                $totalHariIzinSakit = $cocokkanTanggal;
+                            }
+
                             $jamTanggal = Jadwal::where('partner', $karyawan->partner)
                                 ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
                                 ->get();
@@ -754,130 +723,340 @@ class PenggajianController extends Controller
 
                                 $selisihJam = $jamMasuk->diffInHours($jamPulang);
 
-                                $totalJamIzin += $selisihJam;
+                            $totalJamSakit += $selisihJam;
                             }
-                        }else if($izin->id_jenisizin == 5)
-                        {
-                            $jamMulai   = \Carbon\Carbon::parse($izin->jam_mulai);
-                            $jamSelesai = \Carbon\Carbon::parse($izin->jam_selesai);
-
-                            $selisih = $jamMulai->diff($jamSelesai);
-
-                            $jam   = $selisih->format('%h');
-                            $menit = $selisih->format('%i');
-
-                            $totalJamIzin = $jam + ($menit / 60);
-
-                        }
-                    }
-
-                    //menghitung jumlah dan jam cuti  biasa karyawan
-                    $cuti = Cuti::where('id_karyawan',$karyawan->id)
-                        ->where(function ($query) use ($tgl_awal, $tgl_akhir) {
-                            $query->where(function ($q) use ($tgl_awal, $tgl_akhir) {
-                                $q->where('tgl_mulai', '>=', $tgl_awal)->where('tgl_mulai', '<=', $tgl_akhir);
-                            })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
-                                $q->where('tgl_selesai', '>=', $tgl_awal)->where('tgl_selesai', '<=', $tgl_akhir);
-                            })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
-                                $q->where('tgl_mulai', '<', $tgl_awal)->where('tgl_selesai', '>', $tgl_akhir);
-                            });
-                        })
-                        ->get();
-
-                    $totalHariCuti = 0;
-                    $totalJamCuti = 0;
-                    foreach ($cuti as $cuty)
-                    {
-                        $tglMulai = \Carbon\Carbon::parse($cuty->tgl_mulai);
-                        $tglSelesai = \Carbon\Carbon::parse($cuty->tgl_selesai);
-
-                        if ($tglMulai->greaterThan($awal)) {
-                            $tglHitungAwal = $tglMulai;
-                        } else {
-                            $tglHitungAwal = $awal;
                         }
 
-                        if ($tglSelesai->lessThan($akhir)) {
-                            $tglHitungAkhir = $tglSelesai;
-                        } else {
-                            $tglHitungAkhir = $akhir;
-                        }
-
-                        $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
-                        $tglHitungAkhir= \Carbon\Carbon::parse($tglHitungAkhir);
-
-                        $selisihHari = $tglHitungAwal->diffInDays($tglHitungAkhir) + 1;
-
-                        $cocokkanTanggal = Jadwal::where('partner', $karyawan->partner)
-                            ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
-                            ->count();
-
-                        if ($cocokkanTanggal > 0) {
-                            $totalHariCuti = $cocokkanTanggal;
-                        }
-                        $jamTanggal = Jadwal::where('partner', $karyawan->partner)
-                            ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                        //menghitung jumlah dan jam izin biasa karyawan
+                        $izin = Izin::where('id_karyawan', $karyawan->id)->where('id_jenisizin', [2,5])
+                            ->where(function ($query) use ($tgl_awal, $tgl_akhir) {
+                                $query->where(function ($q) use ($tgl_awal, $tgl_akhir) {
+                                    $q->where('tgl_mulai', '>=', $tgl_awal)->where('tgl_mulai', '<=', $tgl_akhir);
+                                })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
+                                    $q->where('tgl_selesai', '>=', $tgl_awal)->where('tgl_selesai', '<=', $tgl_akhir);
+                                })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
+                                    $q->where('tgl_mulai', '<', $tgl_awal)->where('tgl_selesai', '>', $tgl_akhir);
+                                });
+                            })
                             ->get();
 
-                        foreach ($jamTanggal as $j) {
-                            $jamMasuk = \Carbon\Carbon::parse($j->jadwal_masuk);
-                            $jamPulang = \Carbon\Carbon::parse($j->jadwal_pulang);
+                        $totalHariIzin = 0;
+                        $totalJamIzin = 0;
+                        foreach ($izin as $izin)
+                        {
+                            $tglMulai = \Carbon\Carbon::parse($izin->tgl_mulai);
+                            $tglSelesai = \Carbon\Carbon::parse($izin->tgl_selesai);
 
-                            $selisihJam = $jamMasuk->diffInHours($jamPulang);
+                            if ($tglMulai->greaterThan($awal)) {
+                                $tglHitungAwal = $tglMulai;
+                            } else {
+                                $tglHitungAwal = $awal;
+                            }
 
-                        $totalJamCuti += $selisihJam;
+                            if ($tglSelesai->lessThan($akhir)) {
+                                $tglHitungAkhir = $tglSelesai;
+                            } else {
+                                $tglHitungAkhir = $akhir;
+                            }
+
+                            $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
+                            $tglHitungAkhir= \Carbon\Carbon::parse($tglHitungAkhir);
+
+                            $selisihHari = $tglHitungAwal->diffInDays($tglHitungAkhir) + 1;
+
+                            $cocokkanTanggal = Jadwal::where('partner', $karyawan->partner)
+                                ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                                ->count();
+
+                            if ($cocokkanTanggal > 0) {
+                                $totalHariIzin = $cocokkanTanggal;
+                            }
+
+                            if($izin->id_jenisizin == 2 && $izin->jam_mulai == NULL && $izin->jam_selesai == NULL)
+                            {
+                                $jamTanggal = Jadwal::where('partner', $karyawan->partner)
+                                    ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                                    ->get();
+
+                                foreach ($jamTanggal as $j) {
+                                    $jamMasuk = \Carbon\Carbon::parse($j->jadwal_masuk);
+                                    $jamPulang = \Carbon\Carbon::parse($j->jadwal_pulang);
+
+                                    $selisihJam = $jamMasuk->diffInHours($jamPulang);
+
+                                    $totalJamIzin += $selisihJam;
+                                }
+                            }else if($izin->id_jenisizin == 5)
+                            {
+                                $jamMulai   = \Carbon\Carbon::parse($izin->jam_mulai);
+                                $jamSelesai = \Carbon\Carbon::parse($izin->jam_selesai);
+
+                                $selisih = $jamMulai->diff($jamSelesai);
+
+                                $jam   = $selisih->format('%h');
+                                $menit = $selisih->format('%i');
+
+                                $totalJamIzin = $jam + ($menit / 60);
+
+                            }
                         }
+
+                        //menghitung jumlah dan jam cuti  biasa karyawan
+                        $cuti = Cuti::where('id_karyawan',$karyawan->id)
+                            ->where(function ($query) use ($tgl_awal, $tgl_akhir) {
+                                $query->where(function ($q) use ($tgl_awal, $tgl_akhir) {
+                                    $q->where('tgl_mulai', '>=', $tgl_awal)->where('tgl_mulai', '<=', $tgl_akhir);
+                                })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
+                                    $q->where('tgl_selesai', '>=', $tgl_awal)->where('tgl_selesai', '<=', $tgl_akhir);
+                                })->orWhere(function ($q) use ($tgl_awal, $tgl_akhir) {
+                                    $q->where('tgl_mulai', '<', $tgl_awal)->where('tgl_selesai', '>', $tgl_akhir);
+                                });
+                            })
+                            ->get();
+
+                        $totalHariCuti = 0;
+                        $totalJamCuti = 0;
+                        foreach ($cuti as $cuty)
+                        {
+                            $tglMulai = \Carbon\Carbon::parse($cuty->tgl_mulai);
+                            $tglSelesai = \Carbon\Carbon::parse($cuty->tgl_selesai);
+
+                            if ($tglMulai->greaterThan($awal)) {
+                                $tglHitungAwal = $tglMulai;
+                            } else {
+                                $tglHitungAwal = $awal;
+                            }
+
+                            if ($tglSelesai->lessThan($akhir)) {
+                                $tglHitungAkhir = $tglSelesai;
+                            } else {
+                                $tglHitungAkhir = $akhir;
+                            }
+
+                            $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
+                            $tglHitungAkhir= \Carbon\Carbon::parse($tglHitungAkhir);
+
+                            $selisihHari = $tglHitungAwal->diffInDays($tglHitungAkhir) + 1;
+
+                            $cocokkanTanggal = Jadwal::where('partner', $karyawan->partner)
+                                ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                                ->count();
+
+                            if ($cocokkanTanggal > 0) {
+                                $totalHariCuti = $cocokkanTanggal;
+                            }
+                            $jamTanggal = Jadwal::where('partner', $karyawan->partner)
+                                ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                                ->get();
+
+                            foreach ($jamTanggal as $j) {
+                                $jamMasuk = \Carbon\Carbon::parse($j->jadwal_masuk);
+                                $jamPulang = \Carbon\Carbon::parse($j->jadwal_pulang);
+
+                                $selisihJam = $jamMasuk->diffInHours($jamPulang);
+
+                            $totalJamCuti += $selisihJam;
+                            }
+                        }
+
+                        $detailkehadiran = Detailkehadiran::firstOrNew(
+                            [
+                                'id_karyawan' => $karyawan->id,
+                                'tgl_awal' => $awal,
+                                'tgl_akhir' => $akhir,
+                            ]);
+
+                        $detailkehadiran->total_jadwal = $jadwal ? $jadwal : 0;
+                        $detailkehadiran->jumlah_hadir = $hadir ? $hadir : 0;
+                        $detailkehadiran->jumlah_lembur= $lembur ? $lembur : 0;
+                        $detailkehadiran->jumlah_cuti  = $totalHariCuti ? $totalHariCuti : 0;
+                        $detailkehadiran->jumlah_izin  = $totalHariIzin ? $totalHariIzin : 0;
+                        $detailkehadiran->jumlah_sakit = $totalHariIzinSakit ? $totalHariIzinSakit : 0;
+                        $detailkehadiran->jam_hadir    = $jamhadir ? $jamhadir : 0;
+                        $detailkehadiran->jam_lembur   = $jamlembur ? $jamlembur : 0;
+                        $detailkehadiran->jam_cuti     = $totalJamCuti ? $totalJamCuti : 0;
+                        $detailkehadiran->jam_izin     = $totalJamIzin ? $totalJamIzin : 0;
+                        $detailkehadiran->jam_sakit    = $totalJamSakit ? $totalJamSakit : 0;
+                        $detailkehadiran->partner      = $karyawan->partner;
+
+                        $detailkehadiran->save();
+
                     }
-
-                    $detailkehadiran = Detailkehadiran::firstOrNew(
-                        [
-                            'id_karyawan' => $karyawan->id,
-                            'tgl_awal' => $awal,
-                            'tgl_akhir' => $akhir,
-                        ]);
-
-                    $detailkehadiran->total_jadwal = $jadwal ? $jadwal : 0;
-                    $detailkehadiran->jumlah_hadir = $hadir ? $hadir : 0;
-                    $detailkehadiran->jumlah_lembur= $lembur ? $lembur : 0;
-                    $detailkehadiran->jumlah_cuti  = $totalHariCuti ? $totalHariCuti : 0;
-                    $detailkehadiran->jumlah_izin  = $totalHariIzin ? $totalHariIzin : 0;
-                    $detailkehadiran->jumlah_sakit = $totalHariIzinSakit ? $totalHariIzinSakit : 0;
-                    $detailkehadiran->jam_hadir    = $jamhadir ? $jamhadir : 0;
-                    $detailkehadiran->jam_lembur   = $jamlembur ? $jamlembur : 0;
-                    $detailkehadiran->jam_cuti     = $totalJamCuti ? $totalJamCuti : 0;
-                    $detailkehadiran->jam_izin     = $totalJamIzin ? $totalJamIzin : 0;
-                    $detailkehadiran->jam_sakit    = $totalJamSakit ? $totalJamSakit : 0;
-                    $detailkehadiran->partner      = $karyawan->partner;
-
-                    $detailkehadiran->save();
-
                 }
             }
+            return redirect()->back()->with('pesan','Data berhasil disimpan');
         }
-        return redirect()->back()->with('pesan','Data berhasil disimpan');
     }
 
-    public function showslipgrup($id)
+    public function showslipgrup(Request $request, $id)
     {
         $role = Auth::user()->role;
         if($role === 1 || $role === 6)
         {
             $row = Karyawan::where('id',Auth::user()->id_pegawai)->first();
-            $slipgaji = Penggajian::where('id_strukturgaji',$id)->get();
+            $penggajiangrup = PenggajianGrup::where('id',$id)->first();
+            $slipgaji = Penggajian::where(function($query) use ($penggajiangrup) {
+                $query->where('tglgajian', $penggajiangrup->tglgajian)
+                      ->where('tglawal', $penggajiangrup->tglawal)
+                      ->where('tglakhir', $penggajiangrup->tglakhir)
+                      ->orWhere(function($subquery) use ($penggajiangrup) {
+                          $subquery->where('id_grup', $penggajiangrup->id)
+                                   ->orWhereNull('id_grup');
+                      });
+            })->get();
+            
             $karyawan = Karyawan::where('partner', $row->partner)
                 ->where('status_kerja', 'Aktif')
                 ->whereNull('tglkeluar')
                 ->get();  
+
+            //notifikasi data karyawan yang elum punya slip gaji bulan ini
+            $slipgajiKaryawanIds = $slipgaji->pluck('id_karyawan')->toArray();
+            $karyawanBelumAdaSlip = Karyawan::where('partner', $row->partner)
+                ->where('status_kerja', 'Aktif')
+                ->whereNull('tglkeluar')
+                ->whereNotIn('id', $slipgajiKaryawanIds)
+                ->get();
+            $namajabatan = Jabatan::where('partner',$row->partner)->get();
+            $leveljabatan = LevelJabatan::all();
+            $departemen = Departemen::where('partner',$row->partner)->get();
             $output = [
                 'row' => $row,
                 'karyawan' => $karyawan,
                 'slipgaji' => $slipgaji,
-                'role' => $role
+                'role' => $role,
+                'namajabatan' => $namajabatan,
+                'leveljabatan' => $leveljabatan,
+                'departemen' => $departemen,
+                'karyawanBelumAdaSlip'=> $karyawanBelumAdaSlip,
             ];
             return view('admin.penggajian.slipgrup',$output);
         }else{
             return redirect()->back();
         }
+    }
+
+    public function updateRekening(Request $request,$id)
+    {
+        // dd($request->all(),$id);
+        $karyawan = Karyawan::find($id);
+        $gaji = preg_replace('/[^0-9]/', '', $request->gajiKaryawan);
+        $gajiKaryawan = (float) $gaji;
+
+        $data = array(
+            'nama' => $request->post('namaKaryawan'),
+            'divisi' => $request->post('divisi'),
+            'nama_jabatan' => $request->post('namaJabatan'),
+            'jabatan' => $request->post('leveljabatanKaryawan'),
+            'gaji' => $gaji,
+            'nama_bank' => $request->post('nama_bank'),
+            'no_rek' => $request->post('nomor_rekening'),
+            'status_karyawan' => $request->post('statusKaryawan'),
+            'tglmasuk' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmasukKaryawan)->format('Y-m-d'),
+        );
+
+        Karyawan::where('id', $id)->update($data);
+        $karyawan = $karyawan;
+     
+        $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)
+            ->where('status',1)
+            ->first();
+        $penggajian = Penggajian::where('id_karyawan',$karyawan->id)->first();
+        $level = Leveljabatan::where('nama_level',$data['jabatan'])->first();
+        
+        if($karyawan->status_karyawan !== $data['status_karyawan'] || $karyawan->jabatan !== $level->nama_level)
+        {
+            if (isset($informasigaji))
+            {
+                $informasigaji = $informasigaji->update([
+                    'status' => 0,
+                ]);
+                $strukturgaji   = SalaryStructure::where('id_level_jabatan',$level->id)
+                    ->where('status_karyawan',$data['status_karyawan'])
+                    ->first();
+
+                $informasigaji = new Informasigaji();
+                $informasigaji->id_karyawan     = $karyawan->id;
+                $informasigaji->id_strukturgaji = $strukturgaji->id;
+                $informasigaji->status_karyawan = $strukturgaji->status_karyawan;
+                $informasigaji->level_jabatan   = $strukturgaji->id_level_jabatan;
+                $informasigaji->gaji_pokok      = $karyawan->gaji;
+                $informasigaji->partner         = $strukturgaji->partner;
+                $informasigaji->status          = 1;
+
+                $informasigaji->save();
+
+                $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->where('status',1)->first();
+                $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $strukturgaji->id)->get();
+                $details = [];
+                foreach($detailstruktur as $detail)
+                {
+                    $benefit  = Benefit::where('id',$detail->id_benefit)->first();
+
+                    $check = Detailinformasigaji::where('id_karyawan', $karyawan->id)
+                            ->where('id_informasigaji',$informasigaji->id)
+                            ->where('id_struktur',$strukturgaji->id)
+                            ->where('id_benefit',$detail->id_benefit)
+                            ->where('partner',$karyawan->partner)
+                            ->exists();
+                    // dd($check);
+
+                    if(!$check)
+                    {
+                        $nominal = null;
+                        if($benefit->id == 1)
+                        {
+                            $nominal = $informasigaji->gaji_pokok;
+                        }else
+                        {
+                            if($benefit->siklus_pembayaran == "Bulan")
+                            {
+                                $nominal      = $benefit->besaran_bulanan;
+                            }else if($benefit->siklus_pembayaran == "Minggu")
+                            {
+                                $nominal      = $benefit->besaran_mingguan;
+                            }else if($benefit->siklus_pembayaran == "Hari")
+                            {
+                                $nominal      = $benefit->besaran_harian;
+                            }else if($benefit->siklus_pembayaran == "Jam")
+                            {
+                                $nominal      = $benefit->besaran_jam;
+                            }else if($benefit->siklus_pembayaran == "Bonus")
+                            {
+                                $nominal      = $benefit->besaran;
+                            }else
+                            {
+                                $nominal      = $benefit->besaran;
+                            }
+                        }
+
+                        $details[] = [
+                            'id_karyawan'      =>$informasigaji->id_karyawan,
+                            'id_informasigaji' =>$informasigaji->id,
+                            'id_struktur'      =>$informasigaji->id_strukturgaji,
+                            'id_benefit'       =>$benefit->id,
+                            'siklus_bayar'     =>$benefit->siklus_pembayaran,
+                            'partner'          =>Auth::user()->partner,
+                            'nominal'          =>$nominal,
+                        ];
+                    }
+
+                }
+                Detailinformasigaji::insert($details);
+            }
+        }
+        $informasigaji = Informasigaji::where('id_karyawan', $karyawan->id)->where('status',1)->update([
+            'gaji_pokok' => $gajiKaryawan,
+        ]);
+        $detailinformasigaji = Detailinformasigaji::where('id_karyawan', $karyawan->id)->where('id_benefit',1)->update([
+            'nominal' => $gajiKaryawan,
+        ]);
+        $penggajian = Penggajian::where('id',$request->id_slip)->update([
+            'gaji_pokok' => $gajiKaryawan,
+            'nama_bank' => $request->nama_bank,
+            'no_rekening' => $request->nomor_rekening,
+        ]);
+        return redirect()->back()->with('pesan','Data Karyawan berhasil di update.');
     }
 
     public function update(Request $request, $id)
