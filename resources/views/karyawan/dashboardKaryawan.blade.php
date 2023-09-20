@@ -3449,7 +3449,7 @@
                     <h4 class="panel-title">Terlambat Bulan Ini</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>{{ $absenTerlambatkaryawan }}</b></h3>
+                    <h3 class=""><b>{{ $absenTerlambatBulanIni }}</b></h3>
                     <p class="text-muted"><b>Kali absensi</b> </p>
                 </div>
             </div>
@@ -3534,11 +3534,11 @@
     <script>
 
         var absenBulanini = {{ $absenBulanini }};
-        var absenTerlambatkaryawan =  {{ $absenTerlambatkaryawan }};
-        var absenTidakmasukbulanini = {{ $tidakMasukBulanIni }};
+        var absenTerlambatBulanIni =  {{ $absenTerlambatBulanIni }};
+        var tidakMasukBulanini = {{ $tidakMasukBulanini }};
         var absenBulanlalu = {{ $absenBulanlalu }};
         var absenTerlambatbulanlalu =  {{ $absenTerlambatbulanlalu }};
-        var absenTidakmasukbulanlalu = {{ $tidakMasukBulanLalu }};
+        var tidakMasukBulanlalu = {{ $tidakMasukBulanlalu }};
 
         // '#FF8C00',
 
@@ -3549,7 +3549,7 @@
                 backgroundColor: ['#18bae2',  '#f44336'],
                 borderColor: ['#18bae2', '#f44336'],
                 borderWidth: 1,
-                data: [absenBulanini, absenTidakmasukbulanini],
+                data: [absenBulanini, tidakMasukBulanini],
             }]
         };
 
@@ -3560,7 +3560,7 @@
                 backgroundColor: ['#FF8C00'],
                 borderColor: ['#FF8C00'],
                 borderWidth: 1,
-                data: [absenTerlambatkaryawan],
+                data: [absenTerlambatBulanIni],
             }]
         };
         const data2 = {
@@ -3570,7 +3570,7 @@
                 backgroundColor: ['#18bae2',  '#f44336'],
                 borderColor: ['#18bae2', '#f44336'],
                 borderWidth: 1,
-                data: [absenBulanlalu, absenTidakmasukbulanlalu],
+                data: [absenBulanlalu, tidakMasukBulanlalu],
             }]
         };
 

@@ -103,7 +103,7 @@ class ManagerController extends Controller
         // return $role;
         if($role == 3 && $row->jabatan = "Manager")
         {
-            dd($row);
+            // dd($row);
             $karyawan = Karyawan::with('departemens')
             ->where(function ($query) use ($partner) {
                 $query->where('atasan_pertama', Auth::user()->id_pegawai)
