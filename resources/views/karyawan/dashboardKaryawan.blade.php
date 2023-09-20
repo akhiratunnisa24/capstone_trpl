@@ -3415,8 +3415,57 @@
 
     <!-- baris kedua -->
     <div class="row">
+        @if(Auth::user()->role == 4)
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-teal text-center">
+                <div class="panel-heading btn-success">
+                    <h4 class="panel-title">Data Absen Bulan Ini</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>{{ $absenBulanini }}</b></h3>
+                    <p class="text-muted"><b>Kali absensi</b></p>
+                </div>
+            </div>
+        </div>
 
 
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-teal text-center">
+                <div class="panel-heading btn-success">
+                    <h4 class="panel-title">Data Absen Bulan Lalu</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
+                    <p class="text-muted"><b>Kali absensi</b></p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-primary text-center">
+                <div class="panel-heading btn-warning">
+                    <h4 class="panel-title">Terlambat Bulan Ini</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>{{ $absenTerlambatkaryawan }}</b></h3>
+                    <p class="text-muted"><b>Kali absensi</b> </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+            <div id="a" class="panel panel-teal text-center">
+                <div class="panel-heading btn-warning">
+                    <h4 class="panel-title">Terlambat Bulan Lalu</h4>
+                </div>
+                <div class="panel-body">
+                    <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
+                    <p class="text-muted"><b>Kali absensi</b></p>
+                </div>
+            </div>
+        </div>
+        @elseif(Auth::user()->role == 3)
         <div class="col-sm-6 col-lg-3">
             <div id="a" class="panel panel-teal text-center">
                 <div class="panel-heading btn-success">
@@ -3498,7 +3547,7 @@
         <div class="col-lg-3">
             <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
-                    <h3 class="panel-title text-white text-center">Terlambat Bulan Ini</h3>
+                    <h3 class="panel-title text-white text-center">Cuti & Ijin Bulan Ini</h3>
                 </div>
                 <div class="panel-body">
                     <div>
@@ -3539,49 +3588,53 @@
         var absenBulanlalumanager = {{ $absenBulanlalumanager }};
         var absenTerlambatbulanlalu =  {{ $absenTerlambatbulanlalu }};
         var tidakMasukBulanlalu = {{ $tidakMasukBulanlalu }};
+        var cutiBulanInimanager = {{ $cutiBulanInimanager }};
+        var dataIzinBulanInimanager = {{ $dataIzinBulanInimanager }};
+        var cutiBulanLalumanager = {{ $cutiBulanLalumanager }};
+        var dataIzinBulanLalumanager = {{ $dataIzinBulanLalumanager }};
 
         // '#FF8C00',
 
         const data = {
-            labels: ['Masuk', 'Tidak Masuk'],
+            labels: ['Masuk', 'Terlambat', 'Tidak Masuk' ],
             datasets: [{
                 label: '',
-                backgroundColor: ['#18bae2',  '#f44336'],
-                borderColor: ['#18bae2', '#f44336'],
+                backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderColor: ['#18bae2', '#FF8C00', '#f44336'],
                 borderWidth: 1,
-                data: [absenBulaninimanager, tidakMasukBulanini],
+                data: [absenBulaninimanager, absenTerlambatBulanini, tidakMasukBulanini],
             }]
         };
 
         const data1 = {
-            labels: ['Terlambat'],
+            labels: ['Cuti' , 'Ijin'],
             datasets: [{
                 label: '',
-                backgroundColor: ['#FF8C00'],
-                borderColor: ['#FF8C00'],
+                backgroundColor: ['#18bae2','#FF8C00'],
+                borderColor: ['#18bae2' ,'#FF8C00'],
                 borderWidth: 1,
-                data: [absenTerlambatBulanini],
+                data: [cutiBulanInimanager, dataIzinBulanInimanager],
             }]
         };
         const data2 = {
-            labels: ['Masuk', 'Tidak Masuk'],
+            labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
             datasets: [{
                 label: '',
-                backgroundColor: ['#18bae2',  '#f44336'],
-                borderColor: ['#18bae2', '#f44336'],
+                backgroundColor: ['#18bae2','#FF8C00', '#f44336'],
+                borderColor: ['#18bae2', '#FF8C00','#f44336'],
                 borderWidth: 1,
-                data: [absenBulanlalumanager, tidakMasukBulanlalu],
+                data: [absenBulanlalumanager,absenTerlambatbulanlalu, tidakMasukBulanlalu],
             }]
         };
 
         const data3 = {
-            labels: ['Terlambat'],
+            labels: ['Cuti' , 'Ijin'],
             datasets: [{
                 label: '',
-                backgroundColor: ['#FF8C00'],
-                borderColor: ['#FF8C00'],
+                backgroundColor: ['#18bae2','#FF8C00'],
+                borderColor: ['#18bae2' ,'#FF8C00'],
                 borderWidth: 1,
-                data: [absenTerlambatbulanlalu],
+                data: [cutiBulanLalumanager, dataIzinBulanLalumanager],
             }]
         };
 
@@ -3672,5 +3725,6 @@
 
 
     </script>
+    @endif
 
 @endsection
