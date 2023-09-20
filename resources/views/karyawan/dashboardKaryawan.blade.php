@@ -3423,7 +3423,7 @@
                     <h4 class="panel-title">Data Absen Bulan Ini</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>{{ $absenBulanini }}</b></h3>
+                    <h3 class=""><b>{{ $absenBulaninimanager }}</b></h3>
                     <p class="text-muted"><b>Kali absensi</b></p>
                 </div>
             </div>
@@ -3436,7 +3436,7 @@
                     <h4 class="panel-title">Data Absen Bulan Lalu</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
+                    <h3 class=""><b>{{ $absenBulanlalumanager }}</b></h3>
                     <p class="text-muted"><b>Kali absensi</b></p>
                 </div>
             </div>
@@ -3449,7 +3449,7 @@
                     <h4 class="panel-title">Terlambat Bulan Ini</h4>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>{{ $absenTerlambatBulanIni }}</b></h3>
+                    <h3 class=""><b>{{ $absenTerlambatBulanini }}</b></h3>
                     <p class="text-muted"><b>Kali absensi</b> </p>
                 </div>
             </div>
@@ -3533,10 +3533,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
 
-        var absenBulanini = {{ $absenBulanini }};
-        var absenTerlambatBulanIni =  {{ $absenTerlambatBulanIni }};
+        var absenBulaninimanager = {{ $absenBulaninimanager }};
+        var absenTerlambatBulanini =  {{ $absenTerlambatBulanini }};
         var tidakMasukBulanini = {{ $tidakMasukBulanini }};
-        var absenBulanlalu = {{ $absenBulanlalu }};
+        var absenBulanlalumanager = {{ $absenBulanlalumanager }};
         var absenTerlambatbulanlalu =  {{ $absenTerlambatbulanlalu }};
         var tidakMasukBulanlalu = {{ $tidakMasukBulanlalu }};
 
@@ -3549,7 +3549,7 @@
                 backgroundColor: ['#18bae2',  '#f44336'],
                 borderColor: ['#18bae2', '#f44336'],
                 borderWidth: 1,
-                data: [absenBulanini, tidakMasukBulanini],
+                data: [absenBulaninimanager, tidakMasukBulanini],
             }]
         };
 
@@ -3560,7 +3560,7 @@
                 backgroundColor: ['#FF8C00'],
                 borderColor: ['#FF8C00'],
                 borderWidth: 1,
-                data: [absenTerlambatBulanIni],
+                data: [absenTerlambatBulanini],
             }]
         };
         const data2 = {
@@ -3570,7 +3570,7 @@
                 backgroundColor: ['#18bae2',  '#f44336'],
                 borderColor: ['#18bae2', '#f44336'],
                 borderWidth: 1,
-                data: [absenBulanlalu, tidakMasukBulanlalu],
+                data: [absenBulanlalumanager, tidakMasukBulanlalu],
             }]
         };
 
