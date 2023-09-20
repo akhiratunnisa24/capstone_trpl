@@ -311,7 +311,7 @@ class karyawanController extends Controller
                 ->count('terlambat');
 
             //absen masuk bulan ini
-            $absenBulanini =Absensi::with('karyawans', 'departemens')
+            $absenBulaninimanager =Absensi::with('karyawans', 'departemens')
             ->whereMonth('tanggal', Carbon::now()->month)
             ->whereYear('tanggal', Carbon::now()->year)
             ->where('partner',$row->partner)
@@ -326,7 +326,7 @@ class karyawanController extends Controller
             // dd($absenBulanini);
 
             //absen masuk bulan lalu
-            $absenBulanlalu  =Absensi::with('karyawans', 'departemens')
+            $absenBulanlalumanager  =Absensi::with('karyawans', 'departemens')
             ->whereMonth('tanggal', Carbon::now()->subMonth()->month)
             ->whereYear('tanggal', Carbon::now()->subMonth()->year)
             ->where('partner',$row->partner)
@@ -352,7 +352,7 @@ class karyawanController extends Controller
                 ->count();
 
                   // terlambat bulan ini
-            $absenTerlambatBulanIni =Absensi::with('karyawans', 'departemens')
+            $absenTerlambatBulanini =Absensi::with('karyawans', 'departemens')
             ->whereMonth('tanggal', Carbon::now()->month)
             ->whereYear('tanggal', Carbon::now()->year)
             ->where('partner',$row->partner)
@@ -1349,7 +1349,9 @@ class karyawanController extends Controller
                 'jumAbsen' =>  $jumAbsen,
                 'tidakMasukBulanini' => $tidakMasukBulanini,
                 'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
-                'absenTerlambatBulanIni' => $absenTerlambatBulanIni,
+                'absenTerlambatBulanini' => $absenTerlambatBulanini,
+                'absenBulaninimanager' => $absenBulaninimanager,
+                'absenBulanlalumanager' => $absenBulanlalumanager,
 
             ];
             return view('karyawan.dashboardKaryawan', $output);
@@ -3474,7 +3476,7 @@ class karyawanController extends Controller
                     })->get();
                 $selectedBenefits = [1,2,3];
 
-             
+
                 // return $detailinformasigaji;
                 $output = [
                     'row' => $row,

@@ -136,6 +136,7 @@
                     <li class="list"><strong>mm</strong> &nbsp;&nbsp;: Dua digit bulan lahir</li>
                     <li class="list"><strong>yyyy</strong> : Empat digit tahun lahir</li>
                 </ul>
+                <br>
                 <p>Contoh: Password untuk tanggal lahir 01 Januari 1990 adalah <strong>01011990</strong>.</p>
 				<p><strong style="color: #c42007">INFO PENTING !!</strong></p>
                 <p>Mohon diperhatikan bahwa E-SLIP GAJI ini bersifat rahasia dan hanya untuk konsumsi pribadi Anda. Jika Anda memiliki pertanyaan atau keberatan terkait dengan rincian gaji Anda, jangan ragu untuk menghubungi bagian HR.</p>

@@ -227,11 +227,35 @@ class HomeController extends Controller
             ->whereYear('tanggal', '=', Carbon::now()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->month)
             ->count('jam_masuk');
+
+        $absenBulaninimanager =Absensi::with('karyawans', 'departemens')
+            ->whereMonth('tanggal', Carbon::now()->month)
+            ->whereYear('tanggal', Carbon::now()->year)
+            ->where('partner',$row->partner)
+            ->where('id_departement',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->count('absensi.jam_masuk');
         // Absen Bulan Lalu
         $absenBulanlalu  = Absensi::where('partner',$row->partner)
             ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
             ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
             ->count('jam_masuk');
+
+        $absenBulanlalumanager  =Absensi::with('karyawans', 'departemens')
+            ->whereMonth('tanggal', Carbon::now()->subMonth()->month)
+            ->whereYear('tanggal', Carbon::now()->subMonth()->year)
+            ->where('partner',$row->partner)
+            ->where('id_departement',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->count('absensi.jam_masuk');
 
         $jadwal = Jadwal::where('tanggal', today())
             ->where('partner', Auth::user()->partner)
@@ -277,6 +301,19 @@ class HomeController extends Controller
             ->where('terlambat', '!=', null)
             ->where('partner', $row->partner)
             ->count();
+
+        $absenTerlambatBulanini =Absensi::with('karyawans', 'departemens')
+            ->whereMonth('tanggal', Carbon::now()->month)
+            ->whereYear('tanggal', Carbon::now()->year)
+            ->where('partner',$row->partner)
+            ->where('id_departement',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+                ->where('terlambat', '!=',null)
+                ->count();
         // DATA KARYAWAN TIDAK MASUK
 
 
@@ -1451,6 +1488,9 @@ class HomeController extends Controller
                 'posisi' => $posisi,
                 'informasi' =>$informasi,
                 'jmlinfo' => $jmlinfo,
+                'absenTerlambatBulanini' => $absenTerlambatBulanini,
+                'absenBulaninimanager' => $absenBulaninimanager,
+                'absenBulanlalumanager' => $absenBulanlalumanager,
                 // 'tidakMasukBulanini' => $tidakMasukBulanini,
                 // 'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
                 // 'jumAbsenKemarin' => $jumAbsenKemarin,
@@ -1561,7 +1601,9 @@ class HomeController extends Controller
                 'sisacutis' => $sisacutis,
                 'tidakMasukBulanini' => $tidakMasukBulanini,
                 'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
-                // 'jumAbsenKemarin' => $jumAbsenKemarin,
+                'absenTerlambatBulanini' => $absenTerlambatBulanini,
+                'absenBulaninimanager' => $absenBulaninimanager,
+                'absenBulanlalumanager' => $absenBulanlalumanager,
                 // 'cutiKemarin' => $cutiKemarin,
                 // 'dataIzinKemarin' => $dataIzinKemarin,
                 // 'cekSisacuti' => $cekSisacuti,
