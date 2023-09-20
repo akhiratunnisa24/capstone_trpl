@@ -113,6 +113,7 @@ class SalaryController extends Controller
                             ->where('partner', $data->partner)
                             ->where('status_karyawan', $strukturgaji->status_karyawan)
                             ->where('level_jabatan', $strukturgaji->id_level_jabatan)
+                            ->where('status',1)
                             ->first();
 
                 if (!$check)
@@ -127,7 +128,7 @@ class SalaryController extends Controller
 
                     $informasigaji->save();
 
-                    $informasigaji = Informasigaji::where('id_karyawan', $data->id)->first();
+                    $informasigaji = Informasigaji::where('id_karyawan', $data->id)->where('status',1)->first();
                     $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $strukturgaji->id)->get();
                     $details = [];
 
@@ -279,7 +280,7 @@ class SalaryController extends Controller
                         ->orWhere('partner', $userPartner)
                         ->get();
 
-        $informasigaji = Informasigaji::where('id_strukturgaji',$salaryStructure->id)->get();
+        $informasigaji = Informasigaji::where('id_strukturgaji',$salaryStructure->id)->where('status',1)->get();
         foreach($informasigaji as $informasi)
         {
             $selectedBenefits = [1, 2, 3];

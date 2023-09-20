@@ -194,8 +194,8 @@
                                 <a href=""><i class="fa fa-money"></i><span></span>Master Penggajian<span
                                         class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="/kategori-salary"><i
-                                                class="fa fa-reorder (alias)"></i><span></span>Kategori Salary</a></li>
+                                    {{-- <li><a href="/kategori-salary"><i
+                                                class="fa fa-reorder (alias)"></i><span></span>Kategori Salary</a></li> --}}
                                     <li><a href="/struktur-penggajian"><i class="mdi mdi-clipboard-text"></i><span></span>Struktur Penggajian</a></li>
                                 </ul>
                             </li>

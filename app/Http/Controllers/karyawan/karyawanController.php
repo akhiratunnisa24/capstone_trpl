@@ -3661,9 +3661,10 @@ class karyawanController extends Controller
             'gaji_pokok' => $gaji,
         ]);
 
-        $d = Informasigaji::where('id_karyawan', $karyawan->id)->first();
+        $d = Informasigaji::where('id_karyawan', $karyawan->id)->where('status',1)->first();
             // dd($d);
-        $detailinformasigaji = Detailinformasigaji::where('id_karyawan', $karyawan->id)->where('id_benefit',1)->update([
+        $detailinformasigaji = Detailinformasigaji::where('id_karyawan', $karyawan->id)
+        ->where('id_informasigaji',$d->id)->where('id_benefit',1)->update([
             'nominal' => $gaji,
         ]);
         // }

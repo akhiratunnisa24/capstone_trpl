@@ -3282,7 +3282,7 @@
             </div>
         </div> <!-- end row -->
     @endif
-
+        
 
 
     <!-- baris kedua -->
@@ -3531,146 +3531,150 @@
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
+    @if(Auth::user()->role !== 7)
+        <script>
 
-        var absenBulanini = {{ $absenBulanini }};
-        var absenTerlambatBulanIni =  {{ $absenTerlambatBulanIni }};
-        var tidakMasukBulanini = {{ $tidakMasukBulanini }};
-        var absenBulanlalu = {{ $absenBulanlalu }};
-        var absenTerlambatbulanlalu =  {{ $absenTerlambatbulanlalu }};
-        var tidakMasukBulanlalu = {{ $tidakMasukBulanlalu }};
+            var absenBulanini = {{ $absenBulanini }};
+            var absenTerlambatBulanIni =  {{ $absenTerlambatBulanIni }};
+            var tidakMasukBulanini = {{ $tidakMasukBulanini }};
+            var absenBulanlalu = {{ $absenBulanlalu }};
+            var absenTerlambatbulanlalu =  {{ $absenTerlambatbulanlalu }};
+            var tidakMasukBulanlalu = {{ $tidakMasukBulanlalu }};
 
-        // '#FF8C00',
+            // '#FF8C00',
 
-        const data = {
-            labels: ['Masuk', 'Tidak Masuk'],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#18bae2',  '#f44336'],
-                borderColor: ['#18bae2', '#f44336'],
-                borderWidth: 1,
-                data: [absenBulanini, tidakMasukBulanini],
-            }]
-        };
+            const data = {
+                labels: ['Masuk', 'Tidak Masuk'],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#18bae2',  '#f44336'],
+                    borderColor: ['#18bae2', '#f44336'],
+                    borderWidth: 1,
+                    data: [absenBulanini, tidakMasukBulanini],
+                }]
+            };
 
-        const data1 = {
-            labels: ['Terlambat'],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#FF8C00'],
-                borderColor: ['#FF8C00'],
-                borderWidth: 1,
-                data: [absenTerlambatBulanIni],
-            }]
-        };
-        const data2 = {
-            labels: ['Masuk', 'Tidak Masuk'],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#18bae2',  '#f44336'],
-                borderColor: ['#18bae2', '#f44336'],
-                borderWidth: 1,
-                data: [absenBulanlalu, tidakMasukBulanlalu],
-            }]
-        };
+            const data1 = {
+                labels: ['Terlambat'],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#FF8C00'],
+                    borderColor: ['#FF8C00'],
+                    borderWidth: 1,
+                    data: [absenTerlambatBulanIni],
+                }]
+            };
+            const data2 = {
+                labels: ['Masuk', 'Tidak Masuk'],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#18bae2',  '#f44336'],
+                    borderColor: ['#18bae2', '#f44336'],
+                    borderWidth: 1,
+                    data: [absenBulanlalu, tidakMasukBulanlalu],
+                }]
+            };
 
-        const data3 = {
-            labels: ['Terlambat'],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#FF8C00'],
-                borderColor: ['#FF8C00'],
-                borderWidth: 1,
-                data: [absenTerlambatbulanlalu],
-            }]
-        };
+            const data3 = {
+                labels: ['Terlambat'],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#FF8C00'],
+                    borderColor: ['#FF8C00'],
+                    borderWidth: 1,
+                    data: [absenTerlambatbulanlalu],
+                }]
+            };
 
-        const config = {
-            type: 'bar',
-            data: data,
-            options: {
-                plugins: {
-                    legend: {
-                        display: false,
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
                     },
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
-        };
+            };
 
-        const config1 = {
-            type: 'bar',
-            data: data1,
-            options: {
-                plugins: {
-                    legend: {
-                        display: false,
+            const config1 = {
+                type: 'bar',
+                data: data1,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
                     },
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
-        };
+            };
 
-        const config2 = {
-            type: 'bar',
-            data: data2,
-            options: {
-                plugins: {
-                    legend: {
-                        display: false,
+            const config2 = {
+                type: 'bar',
+                data: data2,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
                     },
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
-        };
+            };
 
-        const config3 = {
-            type: 'bar',
-            data: data3,
-            options: {
-                plugins: {
-                    legend: {
-                        display: false,
+            const config3 = {
+                type: 'bar',
+                data: data3,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
                     },
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
-        };
+            };
 
-        const absensiChart = new Chart(
-            document.getElementById('absensiChart'),
-            config
-        );
-        const terlambatBulanIniChart = new Chart(
-            document.getElementById('terlambatBulanIniChart'),
-            config1
-        );
-        const absensiBulanLaluChart = new Chart(
-            document.getElementById('absensiBulanLaluChart'),
-            config2
-        );
-        const terlambatBulanLaluChart = new Chart(
-            document.getElementById('terlambatBulanLaluChart'),
-            config3
-        );
+            const absensiChart = new Chart(
+                document.getElementById('absensiChart'),
+                config
+            );
+            const terlambatBulanIniChart = new Chart(
+                document.getElementById('terlambatBulanIniChart'),
+                config1
+            );
+            const absensiBulanLaluChart = new Chart(
+                document.getElementById('absensiBulanLaluChart'),
+                config2
+            );
+            const terlambatBulanLaluChart = new Chart(
+                document.getElementById('terlambatBulanLaluChart'),
+                config3
+            );
 
 
-    </script>
+        </script>
+    @else
+    
+    @endif
 
 @endsection

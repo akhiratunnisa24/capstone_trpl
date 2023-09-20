@@ -440,8 +440,9 @@ class PenggajianController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $slipgaji = Penggajian::with('karyawans')->where('id',$id)->first();
             $karyawan = Karyawan::where('id',$slipgaji->id_karyawan)->first();
-            $informasigaji = Informasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)->first();
-            $detailinformasi= Detailinformasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)->get();
+            $informasigaji = Informasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)->where('status',1)->first();
+            $detailinformasi= Detailinformasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)
+            ->where('id_informasigaji',$informasigaji->id)->get();
 
             $kehadiran = Detailkehadiran::where('id_karyawan', $karyawan->id)
             ->where(function ($query) use ($slipgaji) {
@@ -1098,7 +1099,9 @@ class PenggajianController extends Controller
         $informasigaji = Informasigaji::where('id_karyawan', $karyawan->id)->where('status',1)->update([
             'gaji_pokok' => $gajiKaryawan,
         ]);
-        $detailinformasigaji = Detailinformasigaji::where('id_karyawan', $karyawan->id)->where('id_benefit',1)->update([
+        $detailinformasigaji = Detailinformasigaji::where('id_karyawan', $karyawan->id)
+        ->where('id_informasigaji',$informasigaji->id)
+        ->where('id_benefit',1)->update([
             'nominal' => $gajiKaryawan,
         ]);
         $penggajian = Penggajian::where('id',$request->id_slip)->update([
@@ -1137,6 +1140,7 @@ class PenggajianController extends Controller
         $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
         $detailinformasi= Detailinformasigaji::with('karyawans','benefit')
                 ->where('id_karyawan',$karyawan->id)
+                ->where('id_informasigaji',$slipgaji->id_informasigaji)
                 ->whereHas('benefit', function ($query) {
                     $query->where('partner', '!=', 0);
                 })
@@ -1388,6 +1392,7 @@ class PenggajianController extends Controller
                 $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
                 $detailinformasi= Detailinformasigaji::with('karyawans','benefit')
                         ->where('id_karyawan',$karyawan->id)
+                        ->where('id_informasigaji',$slipgaji->id_informasigaji)
                         ->whereHas('benefit', function ($query) {
                             $query->where('partner', '!=', 0);
                         })
@@ -1424,6 +1429,7 @@ class PenggajianController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $detailinformasi= Detailinformasigaji::with('karyawans','benefit')
                 ->where('id_karyawan',$karyawan->id)
+                ->where('id_informasigaji',$slipgaji->id_informasigaji)
                 ->where('partner','!=',0)
                 ->get();
 
@@ -1449,10 +1455,12 @@ class PenggajianController extends Controller
             $karyawan = Karyawan::where('id',$slipgaji->id_karyawan)->first();
             $informasigaji = Informasigaji::with('karyawans')
                     ->where('id_karyawan',$karyawan->id)
+                    ->where('status',1)
                     ->first();
 
             $detailinformasi= Detailinformasigaji::with('karyawans','benefit')
                 ->where('id_karyawan',$karyawan->id)
+                ->where('id_informasigaji',$informasigaji->id_informasigaji)
                 ->whereHas('benefit', function ($query) {
                     $query->where('partner', '!=', 0);
                 })
