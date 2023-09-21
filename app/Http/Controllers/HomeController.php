@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Builder;
+use Carbon\CarbonInterface;
 
 class HomeController extends Controller
 {
@@ -324,10 +325,11 @@ class HomeController extends Controller
             ->where('partner',$row->partner)
             ->count();
 
-            //Absen Terlambat Kemarin
-            $yesterday = Carbon::yesterday();
+        //Absen Terlambat Kemarin
+        $yesterday = Carbon::yesterday();
 
-            $absenTerlambatKemarin = Absensi::whereYear('tanggal', '=', $yesterday->year)
+        //Chart HRD
+        $absenTerlambatKemarin = Absensi::whereYear('tanggal', '=', $yesterday->year)
                 ->whereMonth('tanggal', '=', $yesterday->month)
                 ->whereDay('tanggal', '=', $yesterday->day)
                 ->where('terlambat', '!=', null)
@@ -383,7 +385,7 @@ class HomeController extends Controller
             //Tidak Masuk Kemarin
             $yesterday = Carbon::yesterday();
 
-            $tidakMasukKemarin = Tidakmasuk::join('karyawan','tidakmasuk.id_pegawai','karyawan.id')
+        $tidakMasukKemarin = Tidakmasuk::join('karyawan','tidakmasuk.id_pegawai','karyawan.id')
                 ->whereYear('tanggal', '=', $yesterday->year)
                 ->whereMonth('tanggal', '=', $yesterday->month)
                 ->whereDay('tanggal', '=', $yesterday->day)
@@ -530,6 +532,44 @@ class HomeController extends Controller
 
         $posisi = Lowongan::where('partner',Auth::user()->partner)->where('status', '=', 'Aktif')->get();
 
+
+        //==================================  CHART OWNER =============================================================
+        Carbon::setLocale('id');
+        $namabulan = [];
+        $attendance = [];
+        $terlambats = [];
+        $tidakmasuk = [];
+
+        for($bulan = 1; $bulan <= 12; $bulan++) {
+            $tanggal = Carbon::createFromDate($tahun, $bulan, 1);
+            $namaBulan = $tanggal->locale('id')->isoFormat('MMM');
+            $namabulan[] = $namaBulan;
+
+            $attendance[] = Absensi::where('partner', $row->partner)
+                ->whereYear('tanggal', '=', $tahun)
+                ->whereMonth('tanggal', '=', $bulan)
+                ->count();
+
+            $terlambats[] = Absensi::where('partner', $row->partner)
+                ->whereYear('tanggal', '=', $tahun)
+                ->whereMonth('tanggal', '=', $bulan)
+                ->whereNotNull('terlambat')
+                ->count();
+            $karyawan = Karyawan::where('partner',$row->partner)->pluck('id');
+            $jum = $karyawan->count();
+
+            $jadwal = Jadwal::whereYear('tanggal', $tahun)
+                ->whereMonth('tanggal', $bulan)
+                ->where('partner',$row->partner)
+                ->count();
+            $totaldata = $jum * $jadwal;
+            $tidakmasuk[] = $totaldata - $attendance[$bulan - 1];
+        }
+        $namabulan = $namabulan;
+        $attendance = implode(', ', $attendance);
+        $terlambats = implode(', ', $terlambats);
+        $tidakmasuk = implode(', ', $tidakmasuk);
+        // dd($absenmasuk,$terlambat,$tidakmasuk);
         if($role->role == 3 && $row->jabatan == "Manager")
         {
             $cuti = DB::table('cuti')
@@ -1757,11 +1797,17 @@ class HomeController extends Controller
                 'resign' => $resign,
                 'resignjumlah' => $resignjumlah,
                 'sisacutis' => $sisacutis,
+                'namabulan' => $namabulan,
+                'attendance'=> $attendance,
+                'terlambats'=> $terlambats,
+                'tidakmasuk'=> $tidakmasuk, 
                 // 'jumAbsenKemarin' => $jumAbsenKemarin,
                 // 'cutiKemarin' => $cutiKemarin,
                 // 'dataIzinKemarin' => $dataIzinKemarin,
                 // 'cekSisacuti' => $cekSisacuti,
+            //   dd($attendance)
             ];
+            // dd($output);
             return view('karyawan.dashboardKaryawan', $output);
         }
         else

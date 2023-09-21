@@ -607,6 +607,52 @@ class karyawanController extends Controller
             }
             $posisi = Lowongan::all()->where('partner',$row->partner)->sortByDesc('created_at');
 
+            //==================================  CHART OWNER =============================================================
+            $tahun = Carbon::now()->year;
+            Carbon::setLocale('id');
+            $namabulan = [];
+            $attendance = [];
+            $terlambats = [];
+            $tidakmasuk = [];
+            // $jadwals = [];
+            // $total = [];
+            // $kry = [];
+
+            for($bulan = 1; $bulan <= 12; $bulan++) {
+                $tanggal = Carbon::createFromDate($tahun, $bulan, 1);
+                $namaBulan = $tanggal->locale('id')->isoFormat('MMM');
+                $namabulan[] = $namaBulan;
+
+                $attendance[] = Absensi::where('partner', $row->partner)
+                    ->whereYear('tanggal', '=', $tahun)
+                    ->whereMonth('tanggal', '=', $bulan)
+                    ->count();
+
+                $terlambats[] = Absensi::where('partner', $row->partner)
+                    ->whereYear('tanggal', '=', $tahun)
+                    ->whereMonth('tanggal', '=', $bulan)
+                    ->whereNotNull('terlambat')
+                    ->count();
+
+                $karyawan = Karyawan::where('partner',$row->partner)->pluck('id');
+                $jum = $karyawan->count();
+
+                $jadwal = Jadwal::whereYear('tanggal', $tahun)
+                    ->whereMonth('tanggal', $bulan)
+                    ->where('partner',$row->partner)
+                    ->count();
+                $totaldata = $jum * $jadwal;
+                // $total[] = $totaldata;
+                // $jadwals[] = $jadwal;
+                // $kry[] = $jum;
+                $tidakmasuk[] = $totaldata - $attendance[$bulan - 1];
+            }
+            $namabulan = $namabulan;
+            $attendance = implode(', ', $attendance);
+            $terlambats = implode(', ', $terlambats);
+            $tidakmasuk = implode(', ', $tidakmasuk);
+            // dd($Namabulan,$Absenmasuk,$Terlambat,$Tidakmasuk);
+
             if($role == 3 && $row->jabatan == "Manager")
             {
                 // $cuti = DB::table('cuti')
@@ -1378,48 +1424,92 @@ class karyawanController extends Controller
             ->whereRaw('? BETWEEN tanggal_aktif AND tanggal_berakhir', [$currentDate])->get();
                 // return $informasi;
             $jmlinfo = $informasi->count();
-
-            $output = [
-                'row' => $row,
-                'absenKaryawan' => $absenKaryawan,
-                'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
-                'absenTidakmasuk' => $absenTidakmasuk,
-                // 'absenTidakmasukbulanini' => $absenTidakmasukbulanini,
-                // 'absenTidakmasukbulanlalu' => $absenTidakmasukbulanlalu,
-                'alokasicuti' => $alokasicuti,
-                'absenBulanini' => $absenBulanini,
-                'absenBulanlalu' => $absenBulanlalu,
-                'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
-                'informasi' => $informasi,
-                'jmlinfo' => $jmlinfo,
-                'cuti' => $cuti,
-                'cutijumlah' => $cutijumlah,
-                'cutis' => $cutis,
-                'jumct' => $jumct,
-                'izin' => $izin,
-                'izinjumlah' => $izinjumlah,
-                'ijin' =>$ijin,
-                'jumizin' =>$jumizin,
-                'resign' => $resign,
-                'resignjumlah' => $resignjumlah,
-                'posisi' => $posisi,
-                'sisacutis' =>$sisacutis,
-                'rekruitmenjumlah' => $rekruitmenjumlah,
-                'absenHariini' =>  $absenHariini,
-                'absenHarini' => $absenHarini,
-                'jumAbsen' =>  $jumAbsen,
-                'tidakMasukBulanini' => $tidakMasukBulanini,
-                'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
-                'absenTerlambatBulanini' => $absenTerlambatBulanini,
-                'absenBulaninimanager' => $absenBulaninimanager,
-                'absenBulanlalumanager' => $absenBulanlalumanager,
+            if ($role == 2 || $role == 3)
+            {
+                $output = [
+                    'row' => $row,
+                    'absenKaryawan' => $absenKaryawan,
+                    'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
+                    'absenTidakmasuk' => $absenTidakmasuk,
+                    // 'absenTidakmasukbulanini' => $absenTidakmasukbulanini,
+                    // 'absenTidakmasukbulanlalu' => $absenTidakmasukbulanlalu,
+                    'alokasicuti' => $alokasicuti,
+                    'absenBulanini' => $absenBulanini,
+                    'absenBulanlalu' => $absenBulanlalu,
+                    'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
+                    'informasi' => $informasi,
+                    'jmlinfo' => $jmlinfo,
+                    'cuti' => $cuti,
+                    'cutijumlah' => $cutijumlah,
+                    'cutis' => $cutis,
+                    'jumct' => $jumct,
+                    'izin' => $izin,
+                    'izinjumlah' => $izinjumlah,
+                    'ijin' =>$ijin,
+                    'jumizin' =>$jumizin,
+                    'resign' => $resign,
+                    'resignjumlah' => $resignjumlah,
+                    'posisi' => $posisi,
+                    'sisacutis' =>$sisacutis,
+                    'rekruitmenjumlah' => $rekruitmenjumlah,
+                    'absenHariini' =>  $absenHariini,
+                    'absenHarini' => $absenHarini,
+                    'jumAbsen' =>  $jumAbsen,
+                    'tidakMasukBulanini' => $tidakMasukBulanini,
+                    'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
+                    'absenTerlambatBulanini' => $absenTerlambatBulanini,
+                    'absenBulaninimanager' => $absenBulaninimanager,
+                    'absenBulanlalumanager' => $absenBulanlalumanager,
                 'dataIzinBulanInimanager' => $dataIzinBulanInimanager,
                 'cutiBulanInimanager' => $cutiBulanInimanager,
                 'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
                 'cutiBulanLalumanager' => $cutiBulanLalumanager,
+                ];
+                return view('karyawan.dashboardKaryawan', $output);
+            }elseif($role == 7)
+            {
+                $output = [
+                    'row' => $row,
+                    'absenKaryawan' => $absenKaryawan,
+                    'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
+                    'absenTidakmasuk' => $absenTidakmasuk,
+                    // 'absenTidakmasukbulanini' => $absenTidakmasukbulanini,
+                    // 'absenTidakmasukbulanlalu' => $absenTidakmasukbulanlalu,
+                    'alokasicuti' => $alokasicuti,
+                    'absenBulanini' => $absenBulanini,
+                    'absenBulanlalu' => $absenBulanlalu,
+                    'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
+                    'informasi' => $informasi,
+                    'jmlinfo' => $jmlinfo,
+                    'cuti' => $cuti,
+                    'cutijumlah' => $cutijumlah,
+                    'cutis' => $cutis,
+                    'jumct' => $jumct,
+                    'izin' => $izin,
+                    'izinjumlah' => $izinjumlah,
+                    'ijin' =>$ijin,
+                    'jumizin' =>$jumizin,
+                    'resign' => $resign,
+                    'resignjumlah' => $resignjumlah,
+                    'posisi' => $posisi,
+                    'sisacutis' =>$sisacutis,
+                    'rekruitmenjumlah' => $rekruitmenjumlah,
+                    'absenHariini' =>  $absenHariini,
+                    'absenHarini' => $absenHarini,
+                    'jumAbsen' =>  $jumAbsen,
+                    'tidakMasukBulanini' => $tidakMasukBulanini,
+                    'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
+                    'absenTerlambatBulanini' => $absenTerlambatBulanini,
+                    'absenBulaninimanager' => $absenBulaninimanager,
+                    'absenBulanlalumanager' => $absenBulanlalumanager,
+                    'namabulan' => $namabulan,
+                    'attendance'=> $attendance,
+                    'terlambats'=> $terlambats,
+                    'tidakmasuk'=> $tidakmasuk,
+                ];
+                return view('karyawan.dashboardKaryawan', $output);
+            }
 
-            ];
-            return view('karyawan.dashboardKaryawan', $output);
 
         }elseif($role == 4)
         {

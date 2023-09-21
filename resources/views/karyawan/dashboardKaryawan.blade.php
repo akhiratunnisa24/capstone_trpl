@@ -3472,7 +3472,9 @@
                     <h4 class="panel-title">Data Absen Bulan Ini</h4>
                 </div>
                 <div class="panel-body">
+                    @if(Auth::user()->role !== 7)
                     <h3 class=""><b>{{ $absenBulaninimanager }}</b></h3>
+                    @endif
                     <p class="text-muted"><b>Kali absensi</b></p>
                 </div>
             </div>
@@ -3485,7 +3487,9 @@
                     <h4 class="panel-title">Data Absen Bulan Lalu</h4>
                 </div>
                 <div class="panel-body">
+                    @if(Auth::user()->role !== 7)
                     <h3 class=""><b>{{ $absenBulanlalumanager }}</b></h3>
+                    @endif
                     <p class="text-muted"><b>Kali absensi</b></p>
                 </div>
             </div>
@@ -3498,12 +3502,13 @@
                     <h4 class="panel-title">Terlambat Bulan Ini</h4>
                 </div>
                 <div class="panel-body">
+                    @if(Auth::user()->role !== 7)
                     <h3 class=""><b>{{ $absenTerlambatBulanini }}</b></h3>
+                     @endif
                     <p class="text-muted"><b>Kali absensi</b> </p>
                 </div>
             </div>
         </div>
-
         <div class="col-sm-6 col-lg-3">
             <div id="a" class="panel panel-teal text-center">
                 <div class="panel-heading btn-warning">
@@ -3517,32 +3522,33 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-3">
-            <div class="panel panel-border panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title text-white text-center">Absensi Bulan Ini</h3>
-                </div>
-                <div class="panel-body">
-                    <div>
-                        <canvas id="absensiChart" style="height: 300px"></canvas>
+    @if(Auth::user()->role !== 7)
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="panel panel-border panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-white text-center">Absensi Bulan Ini</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <canvas id="absensiChart" style="height: 300px"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-lg-3">
-            <div class="panel panel-border panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title text-white text-center">Absen Bulan Lalu</h3>
-                </div>
-                <div class="panel-body">
-                    <div>
-                        <canvas id="absensiBulanLaluChart" style="height: 300px"></canvas>
+            <div class="col-lg-3">
+                <div class="panel panel-border panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-white text-center">Absen Bulan Lalu</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <canvas id="absensiBulanLaluChart" style="height: 300px"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
         <div class="col-lg-3">
             <div class="panel panel-border panel-warning">
@@ -3559,20 +3565,41 @@
 
 
 
-        <div class="col-lg-3">
-            <div class="panel panel-border panel-warning">
-                <div class="panel-heading">
-                    <h3 class="panel-title text-white text-center">Terlambat Bulan Lalu</h3>
+            <div class="col-lg-3">
+                <div class="panel panel-border panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-white text-center">Terlambat Bulan Lalu</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <canvas id="terlambatBulanLaluChart" style="height: 300px"></canvas>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <div>
-                        <canvas id="terlambatBulanLaluChart" style="height: 300px"></canvas>
+            </div>
+        </div> <!-- End Row -->
+    @endif
+    @if(Auth::user()->role === 7)
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-border panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-white text-center">Absensi Tahun Ini</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <canvas id="absensiTahuniniChart" style="height: 300px"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div> <!-- End Row -->
 
+        {{-- {{$absenmasuk}} --}}
+        {{-- {{dd($terlambats)}} --}}
+        {{-- {{dd($attendance)}} --}}
+        {{-- {{$terlambats}}{{$tidakmasuk}} --}}
+    @endif
     <style>
         #a {
             border-radius: 10px;
@@ -3580,7 +3607,8 @@
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
+    @if(Auth::user()->role !== 7)
+        <script>
 
         var absenBulaninimanager = {{ $absenBulaninimanager }};
         var absenTerlambatBulanini =  {{ $absenTerlambatBulanini }};
@@ -3593,7 +3621,7 @@
         var cutiBulanLalumanager = {{ $cutiBulanLalumanager }};
         var dataIzinBulanLalumanager = {{ $dataIzinBulanLalumanager }};
 
-        // '#FF8C00',
+            // '#FF8C00',
 
         const data = {
             labels: ['Masuk', 'Terlambat', 'Tidak Masuk' ],
@@ -3638,93 +3666,153 @@
             }]
         };
 
-        const config = {
-            type: 'bar',
-            data: data,
-            options: {
-                plugins: {
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                },
+            };
+
+            const config1 = {
+                type: 'bar',
+                data: data1,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                },
+            };
+
+            const config2 = {
+                type: 'bar',
+                data: data2,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                },
+            };
+
+            const config3 = {
+                type: 'bar',
+                data: data3,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                },
+            };
+
+            const absensiChart = new Chart(
+                document.getElementById('absensiChart'),
+                config
+            );
+            const terlambatBulanIniChart = new Chart(
+                document.getElementById('terlambatBulanIniChart'),
+                config1
+            );
+            const absensiBulanLaluChart = new Chart(
+                document.getElementById('absensiBulanLaluChart'),
+                config2
+            );
+            const terlambatBulanLaluChart = new Chart(
+                document.getElementById('terlambatBulanLaluChart'),
+                config3
+            );
+
+
+        </script>
+    @elseif(Auth::user()->role === 7)
+        <script>
+            var namabulan  =  @json($namabulan);
+            var attendance  =  @json($attendance);
+            var terlambats  =  @json($terlambats);
+            var tidakmasuk =  @json($tidakmasuk);
+
+            console.log(attendance);
+            console.log(terlambats);
+            console.log(tidakmasuk);
+            const data = {
+                labels: namabulan,
+                datasets: [
+                    {
+                        label: 'Absen Masuk',
+                        backgroundColor: ['#1abc9c'],
+                        borderColor: ['#1abc9c'],
+                        borderWidth: 1,
+                        data: attendance,
+                    },
+                    {
+                        label: 'Terlambat',
+                        backgroundColor: ['#FF1493'],
+                        borderColor: ['#FF1493'],
+                        borderWidth: 1,
+                        data: terlambats,
+                    },
+                    {
+                        label: 'Tidak masuk',
+                        backgroundColor: ['#18bae2'],
+                        borderColor: ['#18bae2'],
+                        borderWidth: 1,
+                        data: tidakmasuk,
+                    },
+                ]
+            };
+
+            const configa = {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
                     legend: {
-                        display: false,
+                        position: 'top',
                     },
+                    title: {
+                        display: true,
+                        text: 'Chart.js Line Chart'
+                    }
+                    }
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
-        };
+            };
 
-        const config1 = {
-            type: 'bar',
-            data: data1,
-            options: {
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
-        };
+            const absensiTahuniniChart = new Chart(
+                document.getElementById('absensiTahuniniChart'),
+                configa
+            );
 
-        const config2 = {
-            type: 'bar',
-            data: data2,
-            options: {
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
-        };
-
-        const config3 = {
-            type: 'bar',
-            data: data3,
-            options: {
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
-        };
-
-        const absensiChart = new Chart(
-            document.getElementById('absensiChart'),
-            config
-        );
-        const terlambatBulanIniChart = new Chart(
-            document.getElementById('terlambatBulanIniChart'),
-            config1
-        );
-        const absensiBulanLaluChart = new Chart(
-            document.getElementById('absensiBulanLaluChart'),
-            config2
-        );
-        const terlambatBulanLaluChart = new Chart(
-            document.getElementById('terlambatBulanLaluChart'),
-            config3
-        );
-
-
-    </script>
+        </script>
     @endif
 
 @endsection
