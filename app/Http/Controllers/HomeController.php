@@ -469,10 +469,18 @@ class HomeController extends Controller
             ->count();
 
 
-        $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
-        ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-        ->where('partner',$row->partner)
-        ->count('terlambat');
+        $absenTerlambatbulanlalumanager =Absensi::with('karyawans', 'departemens')
+            ->whereMonth('tanggal', Carbon::now()->subMonth()->month)
+            ->whereYear('tanggal', Carbon::now()->subMonth()->year)
+            ->where('partner',$row->partner)
+            ->where('id_departement',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+                ->where('terlambat', '!=',null)
+                ->count();
 
         //Data alokasi cuti seljuruh karyawan
         $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
@@ -540,7 +548,7 @@ class HomeController extends Controller
         $terlambats = [];
         $tidakmasuk = [];
 
-        for($bulan = 1; $bulan <= 12; $bulan++) 
+        for($bulan = 1; $bulan <= 12; $bulan++)
         {
             //absensi
             $tanggal = Carbon::createFromDate($tahun, $bulan, 1);
@@ -575,7 +583,7 @@ class HomeController extends Controller
 
 
         //CHART CUTI DAN IZIN
-        $namemonth  = []; 
+        $namemonth  = [];
         $leave      = [];
         $permission = [];
 
@@ -583,7 +591,7 @@ class HomeController extends Controller
         $b = [];
         $m = null;
         $s = null;
-        for($month = 1; $month <= 12; $month++) 
+        for($month = 1; $month <= 12; $month++)
         {
             $date = Carbon::createFromDate($tahun, $month, 1);
             $nameMonth = $date->locale('id')->isoFormat('MMM');
@@ -621,7 +629,7 @@ class HomeController extends Controller
             $selesai = null;
             foreach($cutiBulanan as $cb)
             {
-                
+
                $mulai = \Carbon\Carbon::parse($cb->tgl_mulai);
                $selesai = \Carbon\Carbon::parse($cb->tgl_selesai);
 
@@ -630,7 +638,7 @@ class HomeController extends Controller
                 } else {
                     $tglHitungAwal = $awal;
                 }
-            
+
                 if ($selesai->lessThan($akhir)) {
                     $tglHitungAkhir = $selesai;
                 } else {
@@ -645,10 +653,10 @@ class HomeController extends Controller
                     ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
                     ->where('partner',$role->partner)
                     ->count();
-        
+
                 if ($cocokkanTanggal > 0) {
                     $jumCutiBulanan += $cocokkanTanggal;
-                }  
+                }
             }
             $leave[$month - 1] = $jumCutiBulanan;
 
@@ -682,7 +690,7 @@ class HomeController extends Controller
                 } else {
                     $HitungAwal = $awal;
                 }
-            
+
                 if ($s->lessThan($akhir)) {
                     $HitungAkhir = $s;
                 } else {
@@ -700,7 +708,7 @@ class HomeController extends Controller
 
                 if($cocok > 0) {
                     $jumIzinBulanan += $cocok;
-                }  
+                }
             }
             $permission[$month - 1] = $jumIzinBulanan;
         }
@@ -709,7 +717,7 @@ class HomeController extends Controller
         $permission = implode(', ', $permission);
 
         //============= END CHART OWNER ====================
-      
+
         if($role->role == 3 && $row->jabatan == "Manager")
         {
             $cuti = DB::table('cuti')
@@ -1597,7 +1605,7 @@ class HomeController extends Controller
             ->count();
 
 
-
+        // dd($absenTerlambatbulanlalu);
         // Role Admin
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1719,6 +1727,7 @@ class HomeController extends Controller
                 'cutiBulanInimanager' => $cutiBulanInimanager,
                 'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
                 'cutiBulanLalumanager' => $cutiBulanLalumanager,
+                'absenTerlambatbulanlalumanager' => $absenTerlambatbulanlalumanager,
                 // 'tidakMasukBulanini' => $tidakMasukBulanini,
                 // 'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
                 // 'jumAbsenKemarin' => $jumAbsenKemarin,
@@ -1836,6 +1845,7 @@ class HomeController extends Controller
                 'cutiBulanInimanager' => $cutiBulanInimanager,
                 'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
                 'cutiBulanLalumanager' => $cutiBulanLalumanager,
+                'absenTerlambatbulanlalumanager' => $absenTerlambatbulanlalumanager,
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
@@ -1940,9 +1950,7 @@ class HomeController extends Controller
                 'namabulan' => $namabulan,
                 'attendance'=> $attendance,
                 'terlambats'=> $terlambats,
-                'tidakmasuk'=> $tidakmasuk, 
-                'leave'     => $leave,
-                'permission'=> $permission,
+                'tidakmasuk'=> $tidakmasuk,
                 // 'jumAbsenKemarin' => $jumAbsenKemarin,
                 // 'cutiKemarin' => $cutiKemarin,
                 // 'dataIzinKemarin' => $dataIzinKemarin,
