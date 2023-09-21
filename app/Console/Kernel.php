@@ -350,6 +350,7 @@ class Kernel extends ConsoleKernel
                     $port = $listmesin->port;
                     $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key,'soap_port' => $port]))->get_instance();
                     $con = $tad->is_alive();
+
                     if ($con)
                     {
                         $attendance = $tad->get_att_log();
@@ -698,7 +699,19 @@ class Kernel extends ConsoleKernel
 
                                                     if(!Absensi::where('id_karyawan',$matchedUser->id_pegawai)->where('tanggal',$tanggal)->where('partner',$matchedUser->partner)->exists())
                                                     {
+                                                        $batasmasuk =Carbon::createFromFormat('H:i:s','16:00:00');
                                                         $absensi = new Absensi();
+
+                                                        if($jam_masuk > $batasmasuk)
+                                                        {
+                                                            $absensi->jam_masuk     = null;
+                                                            $absensi->jam_keluar    = $jam;
+                                                        }
+                                                        elseif($jam_masuk < $batasmasuk)
+                                                        {
+                                                            $absensi->jam_masuk     = $jam;
+                                                            $absensi->jam_keluar    = null;
+                                                        }
 
                                                         $absensi->id_karyawan   = $matchedUser->id_pegawai;
                                                         $absensi->nik           = $matchedUser->nik;
@@ -706,8 +719,6 @@ class Kernel extends ConsoleKernel
                                                         $absensi->shift         = null;
                                                         $absensi->jadwal_masuk  = $jadwal_masuk;
                                                         $absensi->jadwal_pulang = $jadwal_pulang;
-                                                        $absensi->jam_masuk     = $jam;
-                                                        $absensi->jam_keluar    = null;
                                                         $absensi->terlambat     = $terlambat;
                                                         $absensi->plg_cepat     = null;
                                                         $absensi->absent        = null;

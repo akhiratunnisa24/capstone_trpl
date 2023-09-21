@@ -3515,7 +3515,9 @@
                         <h4 class="panel-title">Terlambat Bulan Lalu</h4>
                     </div>
                     <div class="panel-body">
-                        <h3 class=""><b>{{ $absenTerlambatbulanlalumanager }}</b></h3>
+                        @if (Auth::user()->role !== 7)
+                            <h3 class=""><b>{{ $absenTerlambatbulanlalumanager }}</b></h3>
+                        @endif
                         <p class="text-muted"><b>Kali absensi</b></p>
                     </div>
                 </div>
@@ -3582,13 +3584,26 @@
     @if (Auth::user()->role === 7)
         <div class="row">
             <div class="col-lg-6">
-                <div class="panel panel-border panel-success">
+                <div class="panel panel-border panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title text-white text-center">Absensi Tahun Ini</h3>
                     </div>
                     <div class="panel-body">
                         <div>
                             <canvas id="absensiTahuniniChart" style="height: 300px"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-lg-6">
+                <div class="panel panel-border panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-white text-center">Absensi Tahun Ini</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <canvas id="cutiTahuniniChart" style="height: 300px"></canvas>
                         </div>
                     </div>
                 </div>

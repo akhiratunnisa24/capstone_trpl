@@ -48,6 +48,9 @@ class SettingController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $user = User::all();
             $partner = Partner::all();
+            if($role == 7){
+                $user = User::where('partner',Auth::user()->partner)->get();
+            }
 
             return view('admin.datamaster.user.settingUser', compact('user','row','partner','role'));
         }

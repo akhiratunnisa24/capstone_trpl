@@ -40,7 +40,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    @elseif($role == 5)
+                    @elseif($role == 5 || $role == 7)
                         <div class="form-group col-sm">
                             <label for="id_shift" class="col-form-label">Shift</label>
                             <select name="id_shift" id="id_shift" class="form-control" required>
@@ -88,8 +88,7 @@
                         </div>
 
                         <div class="col-sm-6 col-xs-12">
-                            <div class="m-t-20">
-
+                            <div class="m-t-10">
                                     <div class="form-group">
                                         <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                                         <div class="input-group">
@@ -117,7 +116,7 @@
                         </div>
                     </div>
 
-                    @if($role == 5)
+                    @if($role == 5 || $role == 7)
                         <div class="form-group col-xs-12">
                             <label class="form-label">Partner</label>
                             <select class="form-control" name="partner">

@@ -1617,7 +1617,6 @@ class karyawanController extends Controller
                     'alokasicuti' => $alokasicuti,
                     'absenBulanini' => $absenBulanini,
                     'absenBulanlalu' => $absenBulanlalu,
-                    'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
                     'informasi' => $informasi,
                     'jmlinfo' => $jmlinfo,
                     'cuti' => $cuti,

@@ -18,12 +18,16 @@
     </div>
 
     <div class="panel panel-primary">
-        <div class="panel-heading clearfix">
-            <a type="button" class="btn btn-sm btn-dark fa fa-sign-in" data-toggle="modal" data-target="#myModal"> Tambah
-                Role Login</a>
-        </div>
-        @include('admin.datamaster.role.addRoleModal')
-
+        @if(Auth::user()->role !== 7)
+            <div class="panel-heading clearfix">
+                <a type="button" class="btn btn-sm btn-dark fa fa-sign-in pull-right" data-toggle="modal" data-target="#myModal"> Tambah
+                    Role Login</a>
+            </div>
+            @include('admin.datamaster.role.addRoleModal')
+        @else
+            <div class="panel-heading clearfix" style="height:35px;">
+            </div>
+        @endif
         <div class="panel-body m-b-5">
             <div class="row">
                 <div class="col-md-20 col-sm-20 col-xs-20">
@@ -33,7 +37,9 @@
                             <tr>
                                 <th>No</th>
                                 <th>Role</th>
-                                <th>Action</th>
+                                @if(Auth::user()->role !== 7)
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -41,19 +47,22 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $data->role }}</td>
-                                    <td>
-                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example">
-                                            <a class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#myModal{{ $data->id }}"><i class="fa fa-pencil"></i></a>
+                                    @if(Auth::user()->role !== 7)
+                                        <td>
+                                            <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                <a class="btn btn-info btn-sm" data-toggle="modal"
+                                                    data-target="#myModal{{ $data->id }}"><i class="fa fa-pencil"></i></a>
 
-                                            {{-- <button onclick="hapus_karyawan({{ $data->id }})"
-                                                class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
-                                        </div>
-                                    </td>
-
+                                                {{-- <button onclick="hapus_karyawan({{ $data->id }})"
+                                                    class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr>
                                 {{-- modal show cuti --}}
-                                @include('admin.datamaster.role.editRoleModal')
+                                @if(Auth::user()->role !== 7)
+                                    @include('admin.datamaster.role.editRoleModal')
+                                @endif
                             @endforeach
                         </tbody>
                     </table>
