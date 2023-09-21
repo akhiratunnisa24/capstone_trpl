@@ -3465,354 +3465,409 @@
                 </div>
             </div>
         </div>
-        @elseif(Auth::user()->role == 3)
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-success">
-                    <h4 class="panel-title">Data Absen Bulan Ini</h4>
-                </div>
-                <div class="panel-body">
-                    @if(Auth::user()->role !== 7)
-                    <h3 class=""><b>{{ $absenBulaninimanager }}</b></h3>
-                    @endif
-                    <p class="text-muted"><b>Kali absensi</b></p>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-success">
-                    <h4 class="panel-title">Data Absen Bulan Lalu</h4>
-                </div>
-                <div class="panel-body">
-                    @if(Auth::user()->role !== 7)
-                    <h3 class=""><b>{{ $absenBulanlalumanager }}</b></h3>
-                    @endif
-                    <p class="text-muted"><b>Kali absensi</b></p>
+        @elseif(Auth::user()->role == 3 || Auth::user()->role !== 4)
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-teal text-center">
+                    <div class="panel-heading btn-success">
+                        <h4 class="panel-title">Data Absen Bulan Ini</h4>
+                    </div>
+                    <div class="panel-body">
+                        @if(Auth::user()->role !== 7)
+                        <h3 class=""><b>{{ $absenBulaninimanager }}</b></h3>
+                        @endif
+                        <p class="text-muted"><b>Kali absensi</b></p>
+                    </div>
                 </div>
             </div>
-        </div>
 
 
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-primary text-center">
-                <div class="panel-heading btn-warning">
-                    <h4 class="panel-title">Terlambat Bulan Ini</h4>
-                </div>
-                <div class="panel-body">
-                    @if(Auth::user()->role !== 7)
-                    <h3 class=""><b>{{ $absenTerlambatBulanini }}</b></h3>
-                     @endif
-                    <p class="text-muted"><b>Kali absensi</b> </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-warning">
-                    <h4 class="panel-title">Terlambat Bulan Lalu</h4>
-                </div>
-                <div class="panel-body">
-                    <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
-                    <p class="text-muted"><b>Kali absensi</b></p>
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-teal text-center">
+                    <div class="panel-heading btn-success">
+                        <h4 class="panel-title">Data Absen Bulan Lalu</h4>
+                    </div>
+                    <div class="panel-body">
+                        @if(Auth::user()->role !== 7)
+                        <h3 class=""><b>{{ $absenBulanlalumanager }}</b></h3>
+                        @endif
+                        <p class="text-muted"><b>Kali absensi</b></p>
+                    </div>
                 </div>
             </div>
-        </div>
+
+
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-primary text-center">
+                    <div class="panel-heading btn-warning">
+                        <h4 class="panel-title">Terlambat Bulan Ini</h4>
+                    </div>
+                    <div class="panel-body">
+                        @if(Auth::user()->role !== 7)
+                        <h3 class=""><b>{{ $absenTerlambatBulanini }}</b></h3>
+                        @endif
+                        <p class="text-muted"><b>Kali absensi</b> </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-teal text-center">
+                    <div class="panel-heading btn-warning">
+                        <h4 class="panel-title">Terlambat Bulan Lalu</h4>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
+                        <p class="text-muted"><b>Kali absensi</b></p>
+                    </div>
+                </div>
+            </div>
     </div>
-
-    @if(Auth::user()->role !== 7)
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="panel panel-border panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-white text-center">Absensi Bulan Ini</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div>
-                            <canvas id="absensiChart" style="height: 300px"></canvas>
+    
+        @if(Auth::user()->role !== 7)
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="panel panel-border panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-white text-center">Absensi Bulan Ini</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <canvas id="absensiChart" style="height: 300px"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-3">
-                <div class="panel panel-border panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-white text-center">Absen Bulan Lalu</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div>
-                            <canvas id="absensiBulanLaluChart" style="height: 300px"></canvas>
+                <div class="col-lg-3">
+                    <div class="panel panel-border panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-white text-center">Absen Bulan Lalu</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <canvas id="absensiBulanLaluChart" style="height: 300px"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-        <div class="col-lg-3">
-            <div class="panel panel-border panel-warning">
-                <div class="panel-heading">
-                    <h3 class="panel-title text-white text-center">Cuti & Ijin Bulan Ini</h3>
-                </div>
-                <div class="panel-body">
-                    <div>
-                        <canvas id="terlambatBulanIniChart" style="height: 300px"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
 
             <div class="col-lg-3">
                 <div class="panel panel-border panel-warning">
                     <div class="panel-heading">
-                        <h3 class="panel-title text-white text-center">Terlambat Bulan Lalu</h3>
+                        <h3 class="panel-title text-white text-center">Cuti & Ijin Bulan Ini</h3>
                     </div>
                     <div class="panel-body">
                         <div>
-                            <canvas id="terlambatBulanLaluChart" style="height: 300px"></canvas>
+                            <canvas id="terlambatBulanIniChart" style="height: 300px"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> <!-- End Row -->
-    @endif
-    @if(Auth::user()->role === 7)
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="panel panel-border panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-white text-center">Absensi Tahun Ini</h3>
+
+
+
+                <div class="col-lg-3">
+                    <div class="panel panel-border panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-white text-center">Terlambat Bulan Lalu</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <canvas id="terlambatBulanLaluChart" style="height: 300px"></canvas>
+                            </div>
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        <div>
-                            <canvas id="absensiTahuniniChart" style="height: 300px"></canvas>
+                </div>
+            </div> <!-- End Row -->
+        @endif
+        @if(Auth::user()->role === 7)
+            {{ Auth::user()->partner}}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-border panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-white text-center">Absensi Tahun Ini</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <canvas id="absensiTahuniniChart" style="height: 300px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="panel panel-border panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-white text-center">Cuti Tahun Ini</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                <canvas id="cutiTahuniniChart" style="height: 300px"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            {{-- {{$absenmasuk}} --}}
+            {{-- {{dd($terlambats)}} --}}
+            {{-- {{dd($attendance)}} --}}
+            {{-- {{$terlambats}}{{$tidakmasuk}} --}}
+        @endif
+        <style>
+            #a {
+                border-radius: 10px;
+            }
+        </style>
 
-        {{-- {{$absenmasuk}} --}}
-        {{-- {{dd($terlambats)}} --}}
-        {{-- {{dd($attendance)}} --}}
-        {{-- {{$terlambats}}{{$tidakmasuk}} --}}
-    @endif
-    <style>
-        #a {
-            border-radius: 10px;
-        }
-    </style>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        @if(Auth::user()->role !== 7)
+            <script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    @if(Auth::user()->role !== 7)
-        <script>
+            var absenBulaninimanager = {{ $absenBulaninimanager }};
+            var absenTerlambatBulanini =  {{ $absenTerlambatBulanini }};
+            var tidakMasukBulanini = {{ $tidakMasukBulanini }};
+            var absenBulanlalumanager = {{ $absenBulanlalumanager }};
+            var absenTerlambatbulanlalu =  {{ $absenTerlambatbulanlalu }};
+            var tidakMasukBulanlalu = {{ $tidakMasukBulanlalu }};
+            var cutiBulanInimanager = {{ $cutiBulanInimanager }};
+            var dataIzinBulanInimanager = {{ $dataIzinBulanInimanager }};
+            var cutiBulanLalumanager = {{ $cutiBulanLalumanager }};
+            var dataIzinBulanLalumanager = {{ $dataIzinBulanLalumanager }};
 
-        var absenBulaninimanager = {{ $absenBulaninimanager }};
-        var absenTerlambatBulanini =  {{ $absenTerlambatBulanini }};
-        var tidakMasukBulanini = {{ $tidakMasukBulanini }};
-        var absenBulanlalumanager = {{ $absenBulanlalumanager }};
-        var absenTerlambatbulanlalu =  {{ $absenTerlambatbulanlalu }};
-        var tidakMasukBulanlalu = {{ $tidakMasukBulanlalu }};
-        var cutiBulanInimanager = {{ $cutiBulanInimanager }};
-        var dataIzinBulanInimanager = {{ $dataIzinBulanInimanager }};
-        var cutiBulanLalumanager = {{ $cutiBulanLalumanager }};
-        var dataIzinBulanLalumanager = {{ $dataIzinBulanLalumanager }};
+                // '#FF8C00',
 
-            // '#FF8C00',
-
-        const data = {
-            labels: ['Masuk', 'Terlambat', 'Tidak Masuk' ],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
-                borderColor: ['#18bae2', '#FF8C00', '#f44336'],
-                borderWidth: 1,
-                data: [absenBulaninimanager, absenTerlambatBulanini, tidakMasukBulanini],
-            }]
-        };
-
-        const data1 = {
-            labels: ['Cuti' , 'Ijin'],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#18bae2','#FF8C00'],
-                borderColor: ['#18bae2' ,'#FF8C00'],
-                borderWidth: 1,
-                data: [cutiBulanInimanager, dataIzinBulanInimanager],
-            }]
-        };
-        const data2 = {
-            labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#18bae2','#FF8C00', '#f44336'],
-                borderColor: ['#18bae2', '#FF8C00','#f44336'],
-                borderWidth: 1,
-                data: [absenBulanlalumanager,absenTerlambatbulanlalu, tidakMasukBulanlalu],
-            }]
-        };
-
-        const data3 = {
-            labels: ['Cuti' , 'Ijin'],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#18bae2','#FF8C00'],
-                borderColor: ['#18bae2' ,'#FF8C00'],
-                borderWidth: 1,
-                data: [cutiBulanLalumanager, dataIzinBulanLalumanager],
-            }]
-        };
-
-            const config = {
-                type: 'bar',
-                data: data,
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                        },
-                    },
-                },
-            };
-
-            const config1 = {
-                type: 'bar',
-                data: data1,
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                        },
-                    },
-                },
-            };
-
-            const config2 = {
-                type: 'bar',
-                data: data2,
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                        },
-                    },
-                },
-            };
-
-            const config3 = {
-                type: 'bar',
-                data: data3,
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false,
-                        },
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                        },
-                    },
-                },
-            };
-
-            const absensiChart = new Chart(
-                document.getElementById('absensiChart'),
-                config
-            );
-            const terlambatBulanIniChart = new Chart(
-                document.getElementById('terlambatBulanIniChart'),
-                config1
-            );
-            const absensiBulanLaluChart = new Chart(
-                document.getElementById('absensiBulanLaluChart'),
-                config2
-            );
-            const terlambatBulanLaluChart = new Chart(
-                document.getElementById('terlambatBulanLaluChart'),
-                config3
-            );
-
-
-        </script>
-    @elseif(Auth::user()->role === 7)
-        <script>
-            var namabulan  =  @json($namabulan);
-            var attendance  =  @json($attendance);
-            var terlambats  =  @json($terlambats);
-            var tidakmasuk =  @json($tidakmasuk);
-
-            console.log(attendance);
-            console.log(terlambats);
-            console.log(tidakmasuk);
             const data = {
-                labels: namabulan,
-                datasets: [
-                    {
-                        label: 'Absen Masuk',
-                        backgroundColor: ['#1abc9c'],
-                        borderColor: ['#1abc9c'],
-                        borderWidth: 1,
-                        data: attendance,
-                    },
-                    {
-                        label: 'Terlambat',
-                        backgroundColor: ['#FF1493'],
-                        borderColor: ['#FF1493'],
-                        borderWidth: 1,
-                        data: terlambats,
-                    },
-                    {
-                        label: 'Tidak masuk',
-                        backgroundColor: ['#18bae2'],
-                        borderColor: ['#18bae2'],
-                        borderWidth: 1,
-                        data: tidakmasuk,
-                    },
-                ]
+                labels: ['Masuk', 'Terlambat', 'Tidak Masuk' ],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                    borderColor: ['#18bae2', '#FF8C00', '#f44336'],
+                    borderWidth: 1,
+                    data: [absenBulaninimanager, absenTerlambatBulanini, tidakMasukBulanini],
+                }]
             };
 
-            const configa = {
-                type: 'line',
-                data: data,
-                options: {
-                    responsive: true,
-                    plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Chart.js Line Chart'
-                    }
-                    }
-                },
+            const data1 = {
+                labels: ['Cuti' , 'Ijin'],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#18bae2','#FF8C00'],
+                    borderColor: ['#18bae2' ,'#FF8C00'],
+                    borderWidth: 1,
+                    data: [cutiBulanInimanager, dataIzinBulanInimanager],
+                }]
+            };
+            const data2 = {
+                labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#18bae2','#FF8C00', '#f44336'],
+                    borderColor: ['#18bae2', '#FF8C00','#f44336'],
+                    borderWidth: 1,
+                    data: [absenBulanlalumanager,absenTerlambatbulanlalu, tidakMasukBulanlalu],
+                }]
             };
 
-            const absensiTahuniniChart = new Chart(
-                document.getElementById('absensiTahuniniChart'),
-                configa
-            );
+            const data3 = {
+                labels: ['Cuti' , 'Ijin'],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#18bae2','#FF8C00'],
+                    borderColor: ['#18bae2' ,'#FF8C00'],
+                    borderWidth: 1,
+                    data: [cutiBulanLalumanager, dataIzinBulanLalumanager],
+                }]
+            };
 
-        </script>
+                const config = {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                            },
+                        },
+                    },
+                };
+
+                const config1 = {
+                    type: 'bar',
+                    data: data1,
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                            },
+                        },
+                    },
+                };
+
+                const config2 = {
+                    type: 'bar',
+                    data: data2,
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                            },
+                        },
+                    },
+                };
+
+                const config3 = {
+                    type: 'bar',
+                    data: data3,
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false,
+                            },
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                            },
+                        },
+                    },
+                };
+
+                const absensiChart = new Chart(
+                    document.getElementById('absensiChart'),
+                    config
+                );
+                const terlambatBulanIniChart = new Chart(
+                    document.getElementById('terlambatBulanIniChart'),
+                    config1
+                );
+                const absensiBulanLaluChart = new Chart(
+                    document.getElementById('absensiBulanLaluChart'),
+                    config2
+                );
+                const terlambatBulanLaluChart = new Chart(
+                    document.getElementById('terlambatBulanLaluChart'),
+                    config3
+                );
+
+
+            </script>
+        @elseif(Auth::user()->role == 7)
+            <script>
+
+                //absensi
+                var namabulan  =  @json($namabulan);
+                var attendance =  @json($attendance);
+                var terlambats =  @json($terlambats);
+                var tidakmasuk =  @json($tidakmasuk);
+
+                var attendanceArray = attendance.split(', ');
+                var terlambatsArray = terlambats.split(', ');
+                var tidakmasukArray = tidakmasuk.split(', ');
+
+                //cuti dan izin
+                var leave       =  @json($leave);
+                var permission  =  @json($permission);
+                var leaveArray  = leave.split(', ');
+                var permissionArray = permission.split(', ');
+
+                const data = {
+                    labels: namabulan,
+                    datasets: [
+                        {
+                            label: 'Absen Masuk',
+                            backgroundColor: ['#006400'],
+                            borderColor: ['#006400'],
+                            borderWidth: 1,
+                            data: attendanceArray,
+                        },
+                        {
+                            label: 'Terlambat',
+                            backgroundColor: ['#FF1493'],
+                            borderColor: ['#FF1493'],
+                            borderWidth: 1,
+                            data: terlambatsArray,
+                        },
+                        {
+                            label: 'Tidak masuk',
+                            backgroundColor: ['#18bae2'],
+                            borderColor: ['#18bae2'],
+                            borderWidth: 1,
+                            data: tidakmasukArray,
+                        },
+                    ]
+                };
+
+                const data2 = {
+                    labels: namabulan,
+                    datasets: [
+                        {
+                            label: 'Cuti',
+                            backgroundColor: ['#FF1493'],
+                            borderColor: ['#FF1493'],
+                            borderWidth: 1,
+                            data: leaveArray,
+                        },
+                        {
+                            label: 'Izin',
+                            backgroundColor: ['#18bae2'],
+                            borderColor: ['#18bae2'],
+                            borderWidth: 1,
+                            data: permissionArray,
+                        },
+                    ]
+                };
+
+                const config = {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                        }
+                    },
+                };
+
+                const config2 = {
+                    type: 'line',
+                    data: data2,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                        }
+                    },
+                };
+                const absensiTahuniniChart = new Chart(
+                    document.getElementById('absensiTahuniniChart'),
+                    config
+                );
+
+                const cutiTahuniniChart = new Chart(
+                    document.getElementById('cutiTahuniniChart'),
+                    config2
+                );
+
+            </script>
+        @endif
     @endif
-
 @endsection

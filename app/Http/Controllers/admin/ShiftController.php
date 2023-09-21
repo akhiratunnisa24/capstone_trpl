@@ -33,6 +33,10 @@ class ShiftController extends Controller
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $shift = DB::table('shift')->get();
+            if($role == 7)
+            {
+                $shift = Shift::where('partner',Auth::user()->partner)->get();
+            }
             $partner = Partner::all();
             // dd($shift);
             return view('admin.datamaster.shift.index', compact('shift', 'row','role','partner'));
