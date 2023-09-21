@@ -3415,114 +3415,114 @@
 
     <!-- baris kedua -->
     <div class="row">
-        @if(Auth::user()->role == 4)
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-success">
-                    <h4 class="panel-title">Data Absen Bulan Ini</h4>
-                </div>
-                <div class="panel-body">
-                    <h3 class=""><b>{{ $absenBulanini }}</b></h3>
-                    <p class="text-muted"><b>Kali absensi</b></p>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-success">
-                    <h4 class="panel-title">Data Absen Bulan Lalu</h4>
-                </div>
-                <div class="panel-body">
-                    <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
-                    <p class="text-muted"><b>Kali absensi</b></p>
+        @if (Auth::user()->role == 4)
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-teal text-center">
+                    <div class="panel-heading btn-success">
+                        <h4 class="panel-title">Data Absen Bulan Ini</h4>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class=""><b>{{ $absenBulanini }}</b></h3>
+                        <p class="text-muted"><b>Kali absensi</b></p>
+                    </div>
                 </div>
             </div>
-        </div>
 
 
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-primary text-center">
-                <div class="panel-heading btn-warning">
-                    <h4 class="panel-title">Terlambat Bulan Ini</h4>
-                </div>
-                <div class="panel-body">
-                    <h3 class=""><b>{{ $absenTerlambatkaryawan }}</b></h3>
-                    <p class="text-muted"><b>Kali absensi</b> </p>
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-teal text-center">
+                    <div class="panel-heading btn-success">
+                        <h4 class="panel-title">Data Absen Bulan Lalu</h4>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
+                        <p class="text-muted"><b>Kali absensi</b></p>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-warning">
-                    <h4 class="panel-title">Terlambat Bulan Lalu</h4>
-                </div>
-                <div class="panel-body">
-                    <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
-                    <p class="text-muted"><b>Kali absensi</b></p>
-                </div>
-            </div>
-        </div>
-        @elseif(Auth::user()->role == 3)
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-success">
-                    <h4 class="panel-title">Data Absen Bulan Ini</h4>
-                </div>
-                <div class="panel-body">
-                    @if(Auth::user()->role !== 7)
-                    <h3 class=""><b>{{ $absenBulaninimanager }}</b></h3>
-                    @endif
-                    <p class="text-muted"><b>Kali absensi</b></p>
-                </div>
-            </div>
-        </div>
 
 
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-success">
-                    <h4 class="panel-title">Data Absen Bulan Lalu</h4>
-                </div>
-                <div class="panel-body">
-                    @if(Auth::user()->role !== 7)
-                    <h3 class=""><b>{{ $absenBulanlalumanager }}</b></h3>
-                    @endif
-                    <p class="text-muted"><b>Kali absensi</b></p>
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-primary text-center">
+                    <div class="panel-heading btn-warning">
+                        <h4 class="panel-title">Terlambat Bulan Ini</h4>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class=""><b>{{ $absenTerlambatkaryawan }}</b></h3>
+                        <p class="text-muted"><b>Kali absensi</b> </p>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-teal text-center">
+                    <div class="panel-heading btn-warning">
+                        <h4 class="panel-title">Terlambat Bulan Lalu</h4>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
+                        <p class="text-muted"><b>Kali absensi</b></p>
+                    </div>
+                </div>
+            </div>
+        @elseif(Auth::user()->role == 3 || Auth::user()->role !== 4)
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-teal text-center">
+                    <div class="panel-heading btn-success">
+                        <h4 class="panel-title">Data Absen Bulan Ini</h4>
+                    </div>
+                    <div class="panel-body">
+                        @if (Auth::user()->role !== 7)
+                            <h3 class=""><b>{{ $absenBulaninimanager }}</b></h3>
+                        @endif
+                        <p class="text-muted"><b>Kali absensi</b></p>
+                    </div>
+                </div>
+            </div>
 
 
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-primary text-center">
-                <div class="panel-heading btn-warning">
-                    <h4 class="panel-title">Terlambat Bulan Ini</h4>
-                </div>
-                <div class="panel-body">
-                    @if(Auth::user()->role !== 7)
-                    <h3 class=""><b>{{ $absenTerlambatBulanini }}</b></h3>
-                     @endif
-                    <p class="text-muted"><b>Kali absensi</b> </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-teal text-center">
-                <div class="panel-heading btn-warning">
-                    <h4 class="panel-title">Terlambat Bulan Lalu</h4>
-                </div>
-                <div class="panel-body">
-                    <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
-                    <p class="text-muted"><b>Kali absensi</b></p>
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-teal text-center">
+                    <div class="panel-heading btn-success">
+                        <h4 class="panel-title">Data Absen Bulan Lalu</h4>
+                    </div>
+                    <div class="panel-body">
+                        @if (Auth::user()->role !== 7)
+                            <h3 class=""><b>{{ $absenBulanlalumanager }}</b></h3>
+                        @endif
+                        <p class="text-muted"><b>Kali absensi</b></p>
+                    </div>
                 </div>
             </div>
-        </div>
+
+
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-primary text-center">
+                    <div class="panel-heading btn-warning">
+                        <h4 class="panel-title">Terlambat Bulan Ini</h4>
+                    </div>
+                    <div class="panel-body">
+                        @if (Auth::user()->role !== 7)
+                            <h3 class=""><b>{{ $absenTerlambatBulanini }}</b></h3>
+                        @endif
+                        <p class="text-muted"><b>Kali absensi</b> </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div id="a" class="panel panel-teal text-center">
+                    <div class="panel-heading btn-warning">
+                        <h4 class="panel-title">Terlambat Bulan Lalu</h4>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class=""><b>{{ $absenTerlambatbulanlalumanager }}</b></h3>
+                        <p class="text-muted"><b>Kali absensi</b></p>
+                    </div>
+                </div>
+            </div>
     </div>
 
-    @if(Auth::user()->role !== 7)
+    @if (Auth::user()->role !== 7)
         <div class="row">
             <div class="col-lg-3">
                 <div class="panel panel-border panel-success">
@@ -3550,25 +3550,25 @@
                 </div>
             </div>
 
-        <div class="col-lg-3">
-            <div class="panel panel-border panel-warning">
-                <div class="panel-heading">
-                    <h3 class="panel-title text-white text-center">Cuti & Ijin Bulan Ini</h3>
-                </div>
-                <div class="panel-body">
-                    <div>
-                        <canvas id="terlambatBulanIniChart" style="height: 300px"></canvas>
+            <div class="col-lg-3">
+                <div class="panel panel-border panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-white text-center">Cuti & Ijin Bulan Ini</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <canvas id="terlambatBulanIniChart" style="height: 300px"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
 
             <div class="col-lg-3">
                 <div class="panel panel-border panel-warning">
                     <div class="panel-heading">
-                        <h3 class="panel-title text-white text-center">Terlambat Bulan Lalu</h3>
+                        <h3 class="panel-title text-white text-center">Cuti & Ijin Bulan Lalu</h3>
                     </div>
                     <div class="panel-body">
                         <div>
@@ -3579,7 +3579,7 @@
             </div>
         </div> <!-- End Row -->
     @endif
-    @if(Auth::user()->role === 7)
+    @if (Auth::user()->role === 7)
         <div class="row">
             <div class="col-lg-6">
                 <div class="panel panel-border panel-success">
@@ -3607,64 +3607,63 @@
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    @if(Auth::user()->role !== 7)
+    @if (Auth::user()->role !== 7)
         <script>
-
-        var absenBulaninimanager = {{ $absenBulaninimanager }};
-        var absenTerlambatBulanini =  {{ $absenTerlambatBulanini }};
-        var tidakMasukBulanini = {{ $tidakMasukBulanini }};
-        var absenBulanlalumanager = {{ $absenBulanlalumanager }};
-        var absenTerlambatbulanlalu =  {{ $absenTerlambatbulanlalu }};
-        var tidakMasukBulanlalu = {{ $tidakMasukBulanlalu }};
-        var cutiBulanInimanager = {{ $cutiBulanInimanager }};
-        var dataIzinBulanInimanager = {{ $dataIzinBulanInimanager }};
-        var cutiBulanLalumanager = {{ $cutiBulanLalumanager }};
-        var dataIzinBulanLalumanager = {{ $dataIzinBulanLalumanager }};
+            var absenBulaninimanager = {{ $absenBulaninimanager }};
+            var absenTerlambatBulanini = {{ $absenTerlambatBulanini }};
+            var tidakMasukBulanini = {{ $tidakMasukBulanini }};
+            var absenBulanlalumanager = {{ $absenBulanlalumanager }};
+            var absenTerlambatbulanlalumanager = {{ $absenTerlambatbulanlalumanager }};
+            var tidakMasukBulanlalu = {{ $tidakMasukBulanlalu }};
+            var cutiBulanInimanager = {{ $cutiBulanInimanager }};
+            var dataIzinBulanInimanager = {{ $dataIzinBulanInimanager }};
+            var cutiBulanLalumanager = {{ $cutiBulanLalumanager }};
+            var dataIzinBulanLalumanager = {{ $dataIzinBulanLalumanager }};
 
             // '#FF8C00',
 
-        const data = {
-            labels: ['Masuk', 'Terlambat', 'Tidak Masuk' ],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
-                borderColor: ['#18bae2', '#FF8C00', '#f44336'],
-                borderWidth: 1,
-                data: [absenBulaninimanager, absenTerlambatBulanini, tidakMasukBulanini],
-            }]
-        };
+            const data = {
+                labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                    borderColor: ['#18bae2', '#FF8C00', '#f44336'],
+                    borderWidth: 1,
+                    data: [absenBulaninimanager, absenTerlambatBulanini, tidakMasukBulanini],
+                }]
+            };
 
-        const data1 = {
-            labels: ['Cuti' , 'Ijin'],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#18bae2','#FF8C00'],
-                borderColor: ['#18bae2' ,'#FF8C00'],
-                borderWidth: 1,
-                data: [cutiBulanInimanager, dataIzinBulanInimanager],
-            }]
-        };
-        const data2 = {
-            labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#18bae2','#FF8C00', '#f44336'],
-                borderColor: ['#18bae2', '#FF8C00','#f44336'],
-                borderWidth: 1,
-                data: [absenBulanlalumanager,absenTerlambatbulanlalu, tidakMasukBulanlalu],
-            }]
-        };
+            const data1 = {
+                labels: ['Cuti', 'Ijin'],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#18bae2', '#FF8C00'],
+                    borderColor: ['#18bae2', '#FF8C00'],
+                    borderWidth: 1,
+                    data: [cutiBulanInimanager, dataIzinBulanInimanager],
+                }]
+            };
+            const data2 = {
+                labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                    borderColor: ['#18bae2', '#FF8C00', '#f44336'],
+                    borderWidth: 1,
+                    data: [absenBulanlalumanager, absenTerlambatbulanlalumanager, tidakMasukBulanlalu],
+                }]
+            };
 
-        const data3 = {
-            labels: ['Cuti' , 'Ijin'],
-            datasets: [{
-                label: '',
-                backgroundColor: ['#18bae2','#FF8C00'],
-                borderColor: ['#18bae2' ,'#FF8C00'],
-                borderWidth: 1,
-                data: [cutiBulanLalumanager, dataIzinBulanLalumanager],
-            }]
-        };
+            const data3 = {
+                labels: ['Cuti', 'Ijin'],
+                datasets: [{
+                    label: '',
+                    backgroundColor: ['#18bae2', '#FF8C00'],
+                    borderColor: ['#18bae2', '#FF8C00'],
+                    borderWidth: 1,
+                    data: [cutiBulanLalumanager, dataIzinBulanLalumanager],
+                }]
+            };
 
             const config = {
                 type: 'bar',
@@ -3750,23 +3749,20 @@
                 document.getElementById('terlambatBulanLaluChart'),
                 config3
             );
-
-
         </script>
     @elseif(Auth::user()->role === 7)
         <script>
-            var namabulan  =  @json($namabulan);
-            var attendance  =  @json($attendance);
-            var terlambats  =  @json($terlambats);
-            var tidakmasuk =  @json($tidakmasuk);
+            var namabulan = @json($namabulan);
+            var attendance = @json($attendance);
+            var terlambats = @json($terlambats);
+            var tidakmasuk = @json($tidakmasuk);
 
             console.log(attendance);
             console.log(terlambats);
             console.log(tidakmasuk);
             const data = {
                 labels: namabulan,
-                datasets: [
-                    {
+                datasets: [{
                         label: 'Absen Masuk',
                         backgroundColor: ['#1abc9c'],
                         borderColor: ['#1abc9c'],
@@ -3796,13 +3792,13 @@
                 options: {
                     responsive: true,
                     plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Chart.js Line Chart'
-                    }
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Chart.js Line Chart'
+                        }
                     }
                 },
             };
@@ -3811,8 +3807,7 @@
                 document.getElementById('absensiTahuniniChart'),
                 configa
             );
-
         </script>
     @endif
-
+    @endif
 @endsection

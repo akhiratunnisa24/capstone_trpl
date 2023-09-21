@@ -399,7 +399,7 @@ class karyawanController extends Controller
 
 
             //absen terlambat bulan lalu
-            $absenTerlambatbulanlalu =Absensi::with('karyawans', 'departemens')
+            $absenTerlambatbulanlalumanager =Absensi::with('karyawans', 'departemens')
             ->whereMonth('tanggal', Carbon::now()->subMonth()->month)
             ->whereYear('tanggal', Carbon::now()->subMonth()->year)
             ->where('partner',$row->partner)
@@ -1460,10 +1460,12 @@ class karyawanController extends Controller
                     'absenTerlambatBulanini' => $absenTerlambatBulanini,
                     'absenBulaninimanager' => $absenBulaninimanager,
                     'absenBulanlalumanager' => $absenBulanlalumanager,
-                'dataIzinBulanInimanager' => $dataIzinBulanInimanager,
-                'cutiBulanInimanager' => $cutiBulanInimanager,
-                'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
-                'cutiBulanLalumanager' => $cutiBulanLalumanager,
+                    'dataIzinBulanInimanager' => $dataIzinBulanInimanager,
+                    'cutiBulanInimanager' => $cutiBulanInimanager,
+                    'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
+                    'cutiBulanLalumanager' => $cutiBulanLalumanager,
+                    'absenTerlambatbulanlalumanager' => $absenTerlambatbulanlalumanager,
+
                 ];
                 return view('karyawan.dashboardKaryawan', $output);
             }elseif($role == 7)

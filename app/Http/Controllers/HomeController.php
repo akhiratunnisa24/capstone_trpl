@@ -469,10 +469,18 @@ class HomeController extends Controller
             ->count();
 
 
-        $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
-        ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-        ->where('partner',$row->partner)
-        ->count('terlambat');
+        $absenTerlambatbulanlalumanager =Absensi::with('karyawans', 'departemens')
+            ->whereMonth('tanggal', Carbon::now()->subMonth()->month)
+            ->whereYear('tanggal', Carbon::now()->subMonth()->year)
+            ->where('partner',$row->partner)
+            ->where('id_departement',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+                ->where('terlambat', '!=',null)
+                ->count();
 
         //Data alokasi cuti seljuruh karyawan
         $alokasicuti = Alokasicuti::where('id_karyawan', Auth::user()->id_pegawai)
@@ -1457,7 +1465,7 @@ class HomeController extends Controller
             ->count();
 
 
-
+        // dd($absenTerlambatbulanlalu);
         // Role Admin
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1579,6 +1587,7 @@ class HomeController extends Controller
                 'cutiBulanInimanager' => $cutiBulanInimanager,
                 'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
                 'cutiBulanLalumanager' => $cutiBulanLalumanager,
+                'absenTerlambatbulanlalumanager' => $absenTerlambatbulanlalumanager,
                 // 'tidakMasukBulanini' => $tidakMasukBulanini,
                 // 'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
                 // 'jumAbsenKemarin' => $jumAbsenKemarin,
@@ -1696,6 +1705,7 @@ class HomeController extends Controller
                 'cutiBulanInimanager' => $cutiBulanInimanager,
                 'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
                 'cutiBulanLalumanager' => $cutiBulanLalumanager,
+                'absenTerlambatbulanlalumanager' => $absenTerlambatbulanlalumanager,
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);
@@ -1800,7 +1810,7 @@ class HomeController extends Controller
                 'namabulan' => $namabulan,
                 'attendance'=> $attendance,
                 'terlambats'=> $terlambats,
-                'tidakmasuk'=> $tidakmasuk, 
+                'tidakmasuk'=> $tidakmasuk,
                 // 'jumAbsenKemarin' => $jumAbsenKemarin,
                 // 'cutiKemarin' => $cutiKemarin,
                 // 'dataIzinKemarin' => $dataIzinKemarin,
