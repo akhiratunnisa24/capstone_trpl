@@ -149,6 +149,50 @@ class HomeController extends Controller
             })
             ->count('jml_cuti');
 
+        $dataIzinBulanInimanager = Izin::with('karyawans', 'departemens')
+            ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+            ->where('departemen',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->count('jml_hari');
+
+        $cutiBulanInimanager = Cuti::with('karyawans', 'departemens')
+            ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+            ->where('departemen',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->count('jml_cuti');
+
+        $dataIzinBulanLalumanager = Izin::with('karyawans', 'departemens')
+            ->whereYear('tgl_mulai', '=', Carbon::now()->subMonth()->year)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
+            ->where('departemen',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->count('jml_hari');
+
+        $cutiBulanLalumanager = Cuti::with('karyawans', 'departemens')
+            ->whereYear('tgl_mulai', '=', Carbon::now()->subMonth()->year)
+            ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
+            ->where('departemen',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->count('jml_cuti');
+
         // Data Cuti dan Izin Bulan ini
         $dataIzinPerbulan   = Izin::whereYear('created_at', '=', Carbon::now()->year)
             ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
@@ -1531,6 +1575,10 @@ class HomeController extends Controller
                 'absenTerlambatBulanini' => $absenTerlambatBulanini,
                 'absenBulaninimanager' => $absenBulaninimanager,
                 'absenBulanlalumanager' => $absenBulanlalumanager,
+                'dataIzinBulanInimanager' => $dataIzinBulanInimanager,
+                'cutiBulanInimanager' => $cutiBulanInimanager,
+                'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
+                'cutiBulanLalumanager' => $cutiBulanLalumanager,
                 // 'tidakMasukBulanini' => $tidakMasukBulanini,
                 // 'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
                 // 'jumAbsenKemarin' => $jumAbsenKemarin,
@@ -1644,8 +1692,10 @@ class HomeController extends Controller
                 'absenTerlambatBulanini' => $absenTerlambatBulanini,
                 'absenBulaninimanager' => $absenBulaninimanager,
                 'absenBulanlalumanager' => $absenBulanlalumanager,
-                // 'cutiKemarin' => $cutiKemarin,
-                // 'dataIzinKemarin' => $dataIzinKemarin,
+                'dataIzinBulanInimanager' => $dataIzinBulanInimanager,
+                'cutiBulanInimanager' => $cutiBulanInimanager,
+                'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
+                'cutiBulanLalumanager' => $cutiBulanLalumanager,
                 // 'cekSisacuti' => $cekSisacuti,
             ];
             return view('karyawan.dashboardKaryawan', $output);

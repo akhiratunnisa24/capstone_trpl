@@ -337,6 +337,67 @@ class karyawanController extends Controller
                     ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
             })
             ->count('absensi.jam_masuk');
+
+            $absenBulanini  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+                ->whereYear('tanggal', '=', Carbon::now()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->month)
+                ->where('partner',$row->partner)
+                ->count('jam_masuk');
+
+            //absen masuk bulan lalu
+            $absenBulanlalu  = Absensi::where('id_karyawan', Auth::user()->id_pegawai)
+                ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
+                ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
+                ->where('partner',$row->partner)
+                ->count('jam_masuk');
+
+
+            //cuti dan izin bulanini
+            $dataIzinBulanInimanager = Izin::with('karyawans', 'departemens')
+                ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+                ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+                ->where('departemen',$row->divisi)
+                ->whereHas('karyawans', function ($query) use($row){
+                    $query->where('divisi',$row->divisi)
+                        ->where('atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->count('jml_hari');
+
+            $cutiBulanInimanager = Cuti::with('karyawans', 'departemens')
+                ->whereYear('tgl_mulai', '=', Carbon::now()->year)
+                ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
+                ->where('departemen',$row->divisi)
+                ->whereHas('karyawans', function ($query) use($row){
+                    $query->where('divisi',$row->divisi)
+                        ->where('atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->count('jml_cuti');
+                // dd($cutiBulanInimanager);
+            $dataIzinBulanLalumanager = Izin::with('karyawans', 'departemens')
+                ->whereYear('tgl_mulai', '=', Carbon::now()->subMonth()->year)
+                ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
+                ->where('departemen',$row->divisi)
+                ->whereHas('karyawans', function ($query) use($row){
+                    $query->where('divisi',$row->divisi)
+                        ->where('atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->count('jml_hari');
+
+            $cutiBulanLalumanager = Cuti::with('karyawans', 'departemens')
+                ->whereYear('tgl_mulai', '=', Carbon::now()->subMonth()->year)
+                ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
+                ->where('departemen',$row->divisi)
+                ->whereHas('karyawans', function ($query) use($row){
+                    $query->where('divisi',$row->divisi)
+                        ->where('atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->count('jml_cuti');
+
+
             //absen terlambat bulan lalu
             $absenTerlambatbulanlalu =Absensi::with('karyawans', 'departemens')
             ->whereMonth('tanggal', Carbon::now()->subMonth()->month)
@@ -545,7 +606,7 @@ class karyawanController extends Controller
                 $jumdat = 0;
             }
             $posisi = Lowongan::all()->where('partner',$row->partner)->sortByDesc('created_at');
-           
+
             //==================================  CHART OWNER =============================================================
             $tahun = Carbon::now()->year;
             Carbon::setLocale('id');
@@ -1399,6 +1460,10 @@ class karyawanController extends Controller
                     'absenTerlambatBulanini' => $absenTerlambatBulanini,
                     'absenBulaninimanager' => $absenBulaninimanager,
                     'absenBulanlalumanager' => $absenBulanlalumanager,
+                'dataIzinBulanInimanager' => $dataIzinBulanInimanager,
+                'cutiBulanInimanager' => $cutiBulanInimanager,
+                'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
+                'cutiBulanLalumanager' => $cutiBulanLalumanager,
                 ];
                 return view('karyawan.dashboardKaryawan', $output);
             }elseif($role == 7)
@@ -1440,11 +1505,11 @@ class karyawanController extends Controller
                     'namabulan' => $namabulan,
                     'attendance'=> $attendance,
                     'terlambats'=> $terlambats,
-                    'tidakmasuk'=> $tidakmasuk, 
+                    'tidakmasuk'=> $tidakmasuk,
                 ];
                 return view('karyawan.dashboardKaryawan', $output);
             }
-           
+
 
         }elseif($role == 4)
         {
