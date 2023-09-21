@@ -543,41 +543,181 @@ class HomeController extends Controller
 
         //==================================  CHART OWNER =============================================================
         Carbon::setLocale('id');
-        $namabulan = [];
+        $namabulan  = [];
         $attendance = [];
         $terlambats = [];
         $tidakmasuk = [];
 
-        for($bulan = 1; $bulan <= 12; $bulan++) {
+        for($bulan = 1; $bulan <= 12; $bulan++)
+        {
+            //absensi
             $tanggal = Carbon::createFromDate($tahun, $bulan, 1);
             $namaBulan = $tanggal->locale('id')->isoFormat('MMM');
             $namabulan[] = $namaBulan;
 
-            $attendance[] = Absensi::where('partner', $row->partner)
+            $attendance[] = Absensi::where('partner', $role->partner)
                 ->whereYear('tanggal', '=', $tahun)
                 ->whereMonth('tanggal', '=', $bulan)
                 ->count();
 
-            $terlambats[] = Absensi::where('partner', $row->partner)
+            $terlambats[] = Absensi::where('partner', $role->partner)
                 ->whereYear('tanggal', '=', $tahun)
                 ->whereMonth('tanggal', '=', $bulan)
                 ->whereNotNull('terlambat')
                 ->count();
-            $karyawan = Karyawan::where('partner',$row->partner)->pluck('id');
+            $karyawan = Karyawan::where('partner',$role->partner)->pluck('id');
             $jum = $karyawan->count();
 
             $jadwal = Jadwal::whereYear('tanggal', $tahun)
                 ->whereMonth('tanggal', $bulan)
-                ->where('partner',$row->partner)
+                ->where('partner',$role->partner)
                 ->count();
-            $totaldata = $jum * $jadwal;
+            $jumjadwal = $jadwal;
+            $totaldata = $jum * $jumjadwal;
             $tidakmasuk[] = $totaldata - $attendance[$bulan - 1];
         }
         $namabulan = $namabulan;
         $attendance = implode(', ', $attendance);
         $terlambats = implode(', ', $terlambats);
         $tidakmasuk = implode(', ', $tidakmasuk);
-        // dd($absenmasuk,$terlambat,$tidakmasuk);
+
+
+        //CHART CUTI DAN IZIN
+        $namemonth  = [];
+        $leave      = [];
+        $permission = [];
+
+        $a = [];
+        $b = [];
+        $m = null;
+        $s = null;
+        for($month = 1; $month <= 12; $month++)
+        {
+            $date = Carbon::createFromDate($tahun, $month, 1);
+            $nameMonth = $date->locale('id')->isoFormat('MMM');
+            $namemonth[] = $nameMonth;
+
+            $karyawan = Karyawan::where('partner',$role->partner)->pluck('id');
+            $jum = $karyawan->count();
+
+            $awal = Carbon::create($tahun, $month, 1)->startOfMonth();
+            $akhir = Carbon::create($tahun, $month, 1)->endOfMonth();
+
+            //============= CUTI ================
+            $cutiBulanan = Cuti::with('karyawans')
+                ->where('status', 7)
+                ->whereHas('karyawans', function ($query) use ($role) {
+                    $query->where('partner', $role->partner);
+                })
+                ->where(function ($query) use ($awal, $akhir) {
+                    $query->where(function ($q) use ($awal, $akhir) {
+                            $q->where('tgl_mulai', '>=', $awal)->where('tgl_mulai', '<=', $akhir);
+                        })
+                        ->orWhere(function ($q) use ($awal, $akhir) {
+                            $q->where('tgl_selesai', '>=', $awal)->where('tgl_selesai', '<=', $akhir);
+                        })
+                        ->orWhere(function ($q) use ($awal, $akhir) {
+                            $q->where('tgl_mulai', '<', $awal)->where('tgl_selesai', '>', $akhir);
+                        });
+                })
+                ->get();
+
+            $jumCutiBulanan = 0;
+            $tglHitungAwal = null;
+            $tglHitungAkhir = null;
+            $mulai = null;
+            $selesai = null;
+            foreach($cutiBulanan as $cb)
+            {
+
+               $mulai = \Carbon\Carbon::parse($cb->tgl_mulai);
+               $selesai = \Carbon\Carbon::parse($cb->tgl_selesai);
+
+                if ($mulai->greaterThan($awal)) {
+                    $tglHitungAwal = $mulai;
+                } else {
+                    $tglHitungAwal = $awal;
+                }
+
+                if ($selesai->lessThan($akhir)) {
+                    $tglHitungAkhir = $selesai;
+                } else {
+                    $tglHitungAkhir = $akhir;
+                }
+
+                $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
+                $tglHitungAkhir= \Carbon\Carbon::parse($tglHitungAkhir);
+
+                $cocokkanTanggal = Jadwal::whereYear('tanggal', $tahun)
+                    ->whereMonth('tanggal', $month)
+                    ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                    ->where('partner',$role->partner)
+                    ->count();
+
+                if ($cocokkanTanggal > 0) {
+                    $jumCutiBulanan += $cocokkanTanggal;
+                }
+            }
+            $leave[$month - 1] = $jumCutiBulanan;
+
+            //============ IZIN ===============
+            $izinBulanan = Izin::with('karyawans')
+                ->where('status', 7)
+                ->whereHas('karyawans', function ($query) use ($role) {
+                    $query->where('partner', $role->partner);
+                })
+                ->where(function ($query) use ($awal, $akhir) {
+                    $query->where(function ($q) use ($awal, $akhir) {
+                            $q->where('tgl_mulai', '>=', $awal)->where('tgl_mulai', '<=', $akhir);
+                        })
+                        ->orWhere(function ($q) use ($awal, $akhir) {
+                            $q->where('tgl_selesai', '>=', $awal)->where('tgl_selesai', '<=', $akhir);
+                        })
+                        ->orWhere(function ($q) use ($awal, $akhir) {
+                            $q->where('tgl_mulai', '<', $awal)->where('tgl_selesai', '>', $akhir);
+                        });
+                })
+                ->get();
+
+            $jumIzinBulanan = 0;
+            foreach($izinBulanan as $ib)
+            {
+                $m = \Carbon\Carbon::parse($ib->tgl_mulai);
+                $s = \Carbon\Carbon::parse($ib->tgl_selesai);
+
+                if ($m->greaterThan($awal)) {
+                    $HitungAwal = $m;
+                } else {
+                    $HitungAwal = $awal;
+                }
+
+                if ($s->lessThan($akhir)) {
+                    $HitungAkhir = $s;
+                } else {
+                    $HitungAkhir = $akhir;
+                }
+
+                $HitungAwal = \Carbon\Carbon::parse($HitungAwal);
+                $HitungAkhir= \Carbon\Carbon::parse($HitungAkhir);
+
+                $cocok = Jadwal::whereYear('tanggal', $tahun)
+                    ->whereMonth('tanggal', $month)
+                    ->whereBetween('tanggal', [$HitungAwal, $HitungAkhir])
+                    ->where('partner',$role->partner)
+                    ->count();
+
+                if($cocok > 0) {
+                    $jumIzinBulanan += $cocok;
+                }
+            }
+            $permission[$month - 1] = $jumIzinBulanan;
+        }
+        $namemonth  = $namemonth;
+        $leave      = implode(', ', $leave);
+        $permission = implode(', ', $permission);
+
+        //============= END CHART OWNER ====================
+
         if($role->role == 3 && $row->jabatan == "Manager")
         {
             $cuti = DB::table('cuti')
