@@ -1449,8 +1449,8 @@
 
     <div class="row">
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
-                <div class="panel-heading btn-info">
+            <div class="panel panel-warning text-center">
+                <div class="panel-heading btn-warning">
                     <a href="{{ url('showkaryawancuti') }}" class="panel-title ">
                         <h4 class="panel-title ">Cuti dan Ijin Hari Ini</h4>
                     </a>
@@ -1463,8 +1463,8 @@
         </div>
 
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
-                <div class="panel-heading btn-success">
+            <div class="panel panel-warning text-center">
+                <div class="panel-heading btn-warning">
                     <a href="{{ url('showkaryawanabsen') }}" class="panel-title ">
                         <h4 class="panel-title">Absen Masuk Hari Ini</h4>
                     </a>
@@ -1477,7 +1477,7 @@
         </div>
 
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
+            <div class="panel panel-warning text-center">
                 <div class="panel-heading btn-warning">
                     <a href="{{ url('showkaryawanterlambat') }}" class="panel-title ">
                         <h4 class="panel-title">Terlambat Hari Ini</h4>
@@ -1491,8 +1491,8 @@
         </div>
 
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
-                <div class="panel-heading btn-danger">
+            <div class="panel panel-warning text-center">
+                <div class="panel-heading btn-warning">
                     <a href="{{ url('showkaryawantidakmasuk') }}" class="panel-title ">
                         <h4 class="panel-title"> Belum / Tidak Masuk Hari Ini</h4>
                     </a>
@@ -1506,7 +1506,7 @@
     </div>
     <div class="row">
         <div class="col-lg-4">
-            <div class="panel panel-border panel-success">
+            <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white text-center">Absensi Hari Ini</h3>
                 </div>
@@ -1532,7 +1532,7 @@
         </div>
 
         <div class="col-lg-4">
-            <div class="panel panel-border panel-info">
+            <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white text-center">Ijin Hari Ini</h3>
                 </div>
@@ -1546,7 +1546,7 @@
     </div> <!-- End Row -->
     <div class="row">
         <div class="col-lg-4">
-            <div class="panel panel-border panel-success">
+            <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white text-center">Absensi Kemarin</h3>
                 </div>
@@ -1572,7 +1572,7 @@
         </div>
 
         <div class="col-lg-4">
-            <div class="panel panel-border panel-info">
+            <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white text-center">Ijin Hari Ini</h3>
                 </div>
@@ -1586,7 +1586,7 @@
     </div> <!-- End Row -->
     <div class="row">
         <div class="col-lg-4">
-            <div class="panel panel-border panel-success">
+            <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white text-center">Absensi Bulan Ini</h3>
                 </div>
@@ -1612,7 +1612,7 @@
         </div>
 
         <div class="col-lg-4">
-            <div class="panel panel-border panel-info">
+            <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white text-center">Ijin Bulan Ini</h3>
                 </div>
@@ -1626,7 +1626,7 @@
     </div> <!-- End Row -->
     <div class="row">
         <div class="col-lg-4">
-            <div class="panel panel-border panel-success">
+            <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white text-center">Absensi Bulan Lalu</h3>
                 </div>
@@ -1652,7 +1652,7 @@
         </div>
 
         <div class="col-lg-4">
-            <div class="panel panel-border panel-info">
+            <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
                     <h3 class="panel-title text-white text-center">Ijin Bulan Lalu</h3>
                 </div>
