@@ -243,7 +243,7 @@
         @if (Auth::check() && Auth::user()->role == 4)
             <div id="sidebar-menu">
                 <ul>
-                    <li><a href="/karyawandashboard" class="waves-effect"><i class="ti-home"></i><span
+                    <li><a href="/" class="waves-effect"><i class="ti-home"></i><span
                                 class="text-info panel-title">Dashboard</span></a></li>
                     <li><a href="kalender"><i class="fa fa-calendar"></i><span>Kalender</span></a></li>
                     {{-- <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li> --}}

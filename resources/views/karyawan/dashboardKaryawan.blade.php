@@ -21,7 +21,7 @@
 
     ?> --}}
 
-    @if (Auth::check() && (Auth::user()->role == 1 || Auth::user()->role == 3 || Auth::user()->role == 7))
+    @if (Auth::check() && (Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 3 || Auth::check() && Auth::user()->role == 7))
         {{-- @php dd($row->jabatan, Auth::user()->role) @endphp --}}
         <div class="row">
             <div class="col-lg-6">
@@ -836,7 +836,7 @@
                                                 <tr class="info">
                                                     <th>No</th>
                                                     <th>Karyawan</th>
-                                                    <th>Izin</th>
+                                                    <th>Ijin</th>
                                                     <th>Tanggal</th>
                                                     {{-- <th>Hari</th> --}}
                                                     {{-- <th>Jam</th> --}}
@@ -1125,7 +1125,7 @@
                                                 <tr class="info">
                                                     <th>No</th>
                                                     <th>Karyawan</th>
-                                                    <th>Izin</th>
+                                                    <th>Ijin</th>
                                                     <th>Tanggal</th>
                                                     <th>Catatan</th>
                                                     <th>Action</th>
@@ -2318,7 +2318,7 @@
                                                 <tr class="info">
                                                     <th>No</th>
                                                     <th>Karyawan</th>
-                                                    <th>Izin</th>
+                                                    <th>Ijin</th>
                                                     <th>Tanggal</th>
                                                     {{-- <th>Hari</th> --}}
                                                     {{-- <th>Jam</th> --}}
@@ -2607,7 +2607,7 @@
                                                 <tr class="info">
                                                     <th>No</th>
                                                     <th>Karyawan</th>
-                                                    <th>Izin</th>
+                                                    <th>Ijin</th>
                                                     <th>Tanggal</th>
                                                     <th>Catatan</th>
                                                     <th>Action</th>
@@ -3386,8 +3386,8 @@
         </div>
 
         <div class="col-sm-6 col-lg-3">
-            <div id="a" class="panel panel-primary text-center">
-                <div class="panel-heading btn-success">
+            <div id="a" class="panel panel-warning text-center">
+                <div class="panel-heading btn-warning">
                     <h4 class="panel-title">Absen Hari Ini</h4>
                 </div>
                 <?php
@@ -3415,10 +3415,10 @@
 
     <!-- baris kedua -->
     <div class="row">
-        @if (Auth::user()->role == 4)
+        @if (Auth::check() &&  Auth::user()->role == 4)
             <div class="col-sm-6 col-lg-3">
-                <div id="a" class="panel panel-teal text-center">
-                    <div class="panel-heading btn-success">
+                <div id="a" class="panel panel-warning text-center">
+                    <div class="panel-heading btn-warning">
                         <h4 class="panel-title">Data Absen Bulan Ini</h4>
                     </div>
                     <div class="panel-body">
@@ -3430,8 +3430,8 @@
 
 
             <div class="col-sm-6 col-lg-3">
-                <div id="a" class="panel panel-teal text-center">
-                    <div class="panel-heading btn-success">
+                <div id="a" class="panel panel-warning text-center">
+                    <div class="panel-heading btn-warning">
                         <h4 class="panel-title">Data Absen Bulan Lalu</h4>
                     </div>
                     <div class="panel-body">
@@ -3443,7 +3443,7 @@
 
 
             <div class="col-sm-6 col-lg-3">
-                <div id="a" class="panel panel-primary text-center">
+                <div id="a" class="panel panel-warning text-center">
                     <div class="panel-heading btn-warning">
                         <h4 class="panel-title">Terlambat Bulan Ini</h4>
                     </div>
@@ -3455,7 +3455,7 @@
             </div>
 
             <div class="col-sm-6 col-lg-3">
-                <div id="a" class="panel panel-teal text-center">
+                <div id="a" class="panel panel-warning text-center">
                     <div class="panel-heading btn-warning">
                         <h4 class="panel-title">Terlambat Bulan Lalu</h4>
                     </div>
@@ -3465,15 +3465,19 @@
                     </div>
                 </div>
             </div>
-        @elseif(Auth::user()->role == 3 || Auth::user()->role !== 4 || Auth::user()->role !== 4)
+        @elseif(Auth::check() &&  Auth::user()->role == 3 || Auth::check() && Auth::user()->role !== 4)
                 <div class="col-sm-6 col-lg-3">
-                    <div id="a" class="panel panel-teal text-center">
-                        <div class="panel-heading btn-success">
+                    <div id="a" class="panel panel-warning text-center">
+                        <div class="panel-heading btn-warning">
                             <h4 class="panel-title">Data Absen Bulan Ini</h4>
                         </div>
                         <div class="panel-body">
-                            @if (Auth::user()->role !== 7)
+                            @if (Auth::user()->role == 3 && $row->jabatan !== "Direksi" || Auth::user()->role == 3 && $row->jabatan == "Manager" || Auth::user()->role == 3 && $row->jabatan == "Asistant Manager")
                                 <h3 class=""><b>{{ $absenBulaninimanager }}</b></h3>
+                            @endif
+                            @if(Auth::user()->role == 7 || Auth::user()->role == 3 && $row->jabatan == "Direksi")
+                                <h3 class=""><b>{{ $absenBulanini }}</b></h3>
+                            @else
                             @endif
                             <p class="text-muted"><b>Kali absensi</b></p>
                         </div>
@@ -3482,13 +3486,16 @@
 
 
             <div class="col-sm-6 col-lg-3">
-                <div id="a" class="panel panel-teal text-center">
-                    <div class="panel-heading btn-success">
+                <div id="a" class="panel panel-warning text-center">
+                    <div class="panel-heading btn-warning">
                         <h4 class="panel-title">Data Absen Bulan Lalu</h4>
                     </div>
                     <div class="panel-body">
-                        @if (Auth::user()->role !== 7)
+                        @if (Auth::user()->role == 3 && $row->jabatan !== "Direksi" || Auth::user()->role == 3 && $row->jabatan == "Manager" || Auth::user()->role == 3 && $row->jabatan == "Asistant Manager")
                             <h3 class=""><b>{{ $absenBulanlalumanager }}</b></h3>
+                        @endif
+                        @if(Auth::user()->role == 7 || $row->jabatan == "Direksi")
+                            <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
                         @endif
                         <p class="text-muted"><b>Kali absensi</b></p>
                     </div>
@@ -3497,26 +3504,32 @@
 
 
             <div class="col-sm-6 col-lg-3">
-                <div id="a" class="panel panel-primary text-center">
+                <div id="a" class="panel panel-warning text-center">
                     <div class="panel-heading btn-warning">
                         <h4 class="panel-title">Terlambat Bulan Ini</h4>
                     </div>
                     <div class="panel-body">
-                        @if (Auth::user()->role !== 7)
+                        @if (Auth::user()->role == 3 && $row->jabatan !== "Direksi" || Auth::user()->role == 3 && $row->jabatan == "Manager" || Auth::user()->role == 3 && $row->jabatan == "Asistant Manager")
                             <h3 class=""><b>{{ $absenTerlambatBulanini }}</b></h3>
+                        @endif
+                        @if(Auth::user()->role == 7 || Auth::user()->role == 3  && $row->jabatan == "Direksi")
+                            <h3 class=""><b>{{ $absenTerlambatBulanIni }}</b></h3>
                         @endif
                         <p class="text-muted"><b>Kali absensi</b> </p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-lg-3">
-                <div id="a" class="panel panel-teal text-center">
+                <div id="a" class="panel panel-warning text-center">
                     <div class="panel-heading btn-warning">
                         <h4 class="panel-title">Terlambat Bulan Lalu</h4>
                     </div>
                     <div class="panel-body">
-                        @if (Auth::user()->role !== 7)
+                        @if (Auth::user()->role == 3 && $row->jabatan !== "Direksi" || Auth::user()->role == 3 && $row->jabatan == "Manager" || Auth::user()->role == 3 && $row->jabatan == "Asistant Manager")
                             <h3 class=""><b>{{ $absenTerlambatbulanlalumanager }}</b></h3>
+                        @endif
+                        @if(Auth::user()->role == 7 || Auth::user()->role == 3  && $row->jabatan == "Direksi")
+                            <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
                         @endif
                         <p class="text-muted"><b>Kali absensi</b></p>
                     </div>
@@ -3524,10 +3537,10 @@
             </div>
     </div>
 
-    @if (Auth::user()->role !== 7)
+    @if (Auth::user()->role == 3 && $row->jabatan == "Manager" || Auth::user()->role == 3 && $row->jabatan == "Asistant Manager")
         <div class="row">
             <div class="col-lg-3">
-                <div class="panel panel-border panel-success">
+                <div class="panel panel-border panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title text-white text-center">Absensi Bulan Ini</h3>
                     </div>
@@ -3540,7 +3553,7 @@
             </div>
 
                 <div class="col-lg-3">
-                    <div class="panel panel-border panel-success">
+                    <div class="panel panel-border panel-warning">
                         <div class="panel-heading">
                             <h3 class="panel-title text-white text-center">Absen Bulan Lalu</h3>
                         </div>
@@ -3581,11 +3594,11 @@
             </div>
         </div> <!-- End Row -->
     @endif
-    @if (Auth::user()->role === 7)
+    @if (Auth::user()->role === 7 || Auth::user()->role == 3 && $row->jabatan == "Direksi")
         <div class="row">
             <div class="col-lg-6">
                 <div class="panel panel-border panel-warning">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="height:40px;">
                         <h3 class="panel-title text-white text-center">Absensi Tahun Ini</h3>
                     </div>
                     <div class="panel-body">
@@ -3598,8 +3611,8 @@
     
             <div class="col-lg-6">
                 <div class="panel panel-border panel-warning">
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-white text-center">Absensi Tahun Ini</h3>
+                    <div class="panel-heading" style="height:40px;">
+                        <h3 class="panel-title text-white text-center">Cuti & Ijin Tahun Ini</h3>
                     </div>
                     <div class="panel-body">
                         <div>
@@ -3622,7 +3635,7 @@
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    @if (Auth::user()->role !== 7)
+    @if (Auth::user()->role == 3 && $row->jabatan == "Manager" || Auth::user()->role == 3 && $row->jabatan == "Asistant Manager")
         <script>
             var absenBulaninimanager = {{ $absenBulaninimanager }};
             var absenTerlambatBulanini = {{ $absenTerlambatBulanini }};
@@ -3765,7 +3778,7 @@
                 config3
             );
         </script>
-    @elseif(Auth::user()->role === 7)
+    @elseif(Auth::user()->role === 7 || Auth::user()->role === 3 && $row->jabatan == "Direksi")
         <script>
             var namabulan = @json($namabulan);
             var attendance = @json($attendance);
@@ -3820,7 +3833,7 @@
                             data: leaveArray,
                         },
                         {
-                            label: 'Izin',
+                            label: 'Ijin',
                             backgroundColor: ['#18bae2'],
                             borderColor: ['#18bae2'],
                             borderWidth: 1,

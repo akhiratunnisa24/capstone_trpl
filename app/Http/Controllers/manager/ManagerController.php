@@ -63,7 +63,7 @@ class ManagerController extends Controller
 
             return view('manager.staff.dataStaff', compact('staff','row','partner'));
         }
-        elseif ($role == 7) // Role 7 condition
+        elseif ($role == 3 && $row->jabatan == "Direksi" || $role == 7) // Role 7 condition
         {
             $staff = Karyawan::where('partner', $partner)
                 // ->where('divisi', $row->divisi)
