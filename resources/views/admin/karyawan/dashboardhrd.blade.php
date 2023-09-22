@@ -1498,7 +1498,7 @@
                     </a>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>{{ $totalTidakAbsenHariIni }}</b></h3>
+                    <h3 class=""><b>{{ $totalTidakAbsenHariInihrd }}</b></h3>
                     <p class="text-muted"><b>Total Tidak Masuk</b></p>
                 </div>
             </div>
@@ -1716,24 +1716,24 @@
         // Data absensi
         var masuk = {{ $absenHariinihrd }};
         var terlambat = {{ $absenTerlambatHariInihrd }};
-        var tidakMasuk = {{ $totalTidakAbsenHariIni }};
-        var cuti = {{ $cutiHariini }};
-        var ijin = {{ $dataIzinHariini }};
+        var tidakMasuk = {{ $totalTidakAbsenHariInihrd }};
+        var cuti = {{ $cutiHariinihrd }};
+        var ijin = {{ $dataIzinHariinihrd }};
         var absenKemarin = {{ $jumAbsenKemarin }};
-        var terlambatKemarin = {{ $absenTerlambatKemarin }};
-        var tidakMasukkemarin = {{ $tidakMasukKemarin }}
-        var cutiKemarin = {{ $cutiKemarin }};
-        var ijinKemarin = {{ $dataIzinKemarin }};
+        var terlambatKemarin = {{ $absenTerlambatKemarinhrd }};
+        var tidakMasukkemarin = {{ $tidakMasukKemarinhrd }}
+        var cutiKemarin = {{ $cutiKemarinhrd }};
+        var ijinKemarin = {{ $dataIzinKemarinhrd }};
         var masukBulanini = {{ $absenBulaninihrd }};
-        var terlambatBulanIni =  {{$absenTerlambatBulanIni }};
-        var tidakMasukBulanIni = {{ $tidakMasukBulanIni }};
-        var cutiBulanIni = {{ $cutiBulanIni }};
-        var IjinBulanIni = {{ $dataIzinBulanIni }};
+        var terlambatBulanIni =  {{$absenTerlambatBulanInihrd }};
+        var tidakMasukBulanIni = {{ $tidakMasukBulanInihrd }};
+        var cutiBulanIni = {{ $cutiBulanInihrd }};
+        var IjinBulanIni = {{ $dataIzinBulanInihrd }};
         var masukBulanLalu = {{ $absenBulanLaluhrd }};
-        var terlambatBulanLalu = {{ $absenTerlambatbulanlalu }};
+        var terlambatBulanLalu = {{ $absenTerlambatbulanlaluhrd }};
         var tidakMasukBulanLalu = {{ $tidakMasukBulanLaluhrd }};
-        var cutiBulanLalu = {{ $cutibulanlalu }};
-        var ijinBulanlalu = {{$dataIzinbulanlalu }};
+        var cutiBulanLalu = {{ $cutibulanlaluhrd }};
+        var ijinBulanlalu = {{$dataIzinbulanlaluhrd }};
 
         const data = {
             labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
