@@ -1470,7 +1470,7 @@
                     </a>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>{{ $absenHariini }}</b></h3>
+                    <h3 class=""><b>{{ $absenHariinihrd }}</b></h3>
                     <p class="text-muted"><b>Total Absen Masuk </b> </p>
                 </div>
             </div>
@@ -1484,7 +1484,7 @@
                     </a>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>{{ $absenTerlambatHariIni }}</b></h3>
+                    <h3 class=""><b>{{ $absenTerlambatHariInihrd }}</b></h3>
                     <p class="text-muted"><b>Total Terlambat</b> </p>
                 </div>
             </div>
@@ -1714,8 +1714,8 @@
 
     <script>
         // Data absensi
-        var masuk = {{ $absenHariini }};
-        var terlambat = {{ $absenTerlambatHariIni }};
+        var masuk = {{ $absenHariinihrd }};
+        var terlambat = {{ $absenTerlambatHariInihrd }};
         var tidakMasuk = {{ $totalTidakAbsenHariIni }};
         var cuti = {{ $cutiHariini }};
         var ijin = {{ $dataIzinHariini }};
@@ -1724,14 +1724,14 @@
         var tidakMasukkemarin = {{ $tidakMasukKemarin }}
         var cutiKemarin = {{ $cutiKemarin }};
         var ijinKemarin = {{ $dataIzinKemarin }};
-        var masukBulanini = {{ $absenBulanini }};
+        var masukBulanini = {{ $absenBulaninihrd }};
         var terlambatBulanIni =  {{$absenTerlambatBulanIni }};
         var tidakMasukBulanIni = {{ $tidakMasukBulanIni }};
         var cutiBulanIni = {{ $cutiBulanIni }};
         var IjinBulanIni = {{ $dataIzinBulanIni }};
-        var masukBulanLalu = {{ $absenBulanLalu }};
+        var masukBulanLalu = {{ $absenBulanLaluhrd }};
         var terlambatBulanLalu = {{ $absenTerlambatbulanlalu }};
-        var tidakMasukBulanLalu = {{ $tidakMasukBulanLalu }};
+        var tidakMasukBulanLalu = {{ $tidakMasukBulanLaluhrd }};
         var cutiBulanLalu = {{ $cutibulanlalu }};
         var ijinBulanlalu = {{$dataIzinbulanlalu }};
 

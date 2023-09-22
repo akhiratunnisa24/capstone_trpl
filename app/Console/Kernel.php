@@ -204,7 +204,7 @@ class Kernel extends ConsoleKernel
                 }
 
         })
-        ->dailyAt('09:36');
+        ->dailyAt('23:59');
 
         //schedule untuk mengubah status alokasi cuti tahun selain cuti tsahunan lalu menjadi tidak aktif
         $schedule->call(function ()
