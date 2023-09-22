@@ -3477,7 +3477,9 @@
                             @endif
                             @if(Auth::user()->role == 7 || Auth::user()->role == 3 && $row->jabatan == "Direksi")
                                 <h3 class=""><b>{{ $absenBulanini }}</b></h3>
-                            @else
+                            @endif
+                            @if(Auth::user()->role == 2)
+                                <h3 class=""><b>{{ $absenBulanini }}</b></h3>
                             @endif
                             <p class="text-muted"><b>Kali absensi</b></p>
                         </div>
@@ -3494,7 +3496,10 @@
                         @if (Auth::user()->role == 3 && $row->jabatan !== "Direksi" || Auth::user()->role == 3 && $row->jabatan == "Manager" || Auth::user()->role == 3 && $row->jabatan == "Asistant Manager")
                             <h3 class=""><b>{{ $absenBulanlalumanager }}</b></h3>
                         @endif
-                        @if(Auth::user()->role == 7 || $row->jabatan == "Direksi")
+                        @if(Auth::user()->role == 7 || Auth::user()->role == 3 && $row->jabatan == "Direksi")
+                            <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
+                        @endif
+                        @if(Auth::user()->role == 2)
                             <h3 class=""><b>{{ $absenBulanlalu }}</b></h3>
                         @endif
                         <p class="text-muted"><b>Kali absensi</b></p>
@@ -3515,6 +3520,9 @@
                         @if(Auth::user()->role == 7 || Auth::user()->role == 3  && $row->jabatan == "Direksi")
                             <h3 class=""><b>{{ $absenTerlambatBulanIni }}</b></h3>
                         @endif
+                        @if(Auth::user()->role == 2)
+                            <h3 class=""><b>{{ $absenTerlambatBulanIni }}</b></h3>
+                        @endif
                         <p class="text-muted"><b>Kali absensi</b> </p>
                     </div>
                 </div>
@@ -3529,6 +3537,9 @@
                             <h3 class=""><b>{{ $absenTerlambatbulanlalumanager }}</b></h3>
                         @endif
                         @if(Auth::user()->role == 7 || Auth::user()->role == 3  && $row->jabatan == "Direksi")
+                            <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
+                        @endif
+                        @if(Auth::user()->role == 2)
                             <h3 class=""><b>{{ $absenTerlambatbulanlalu }}</b></h3>
                         @endif
                         <p class="text-muted"><b>Kali absensi</b></p>

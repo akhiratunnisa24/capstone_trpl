@@ -356,13 +356,12 @@ class karyawanController extends Controller
                     ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
                     ->where('partner',$partner)
                     ->count('jam_masuk');
-            }elseif(Auth::user()->role == 7 || Auth::user()->role == 3 && $row->jabatan == "Direksi")
+            }elseif(Auth::user()->role == 7 || Auth::user()->role == 3 && $row->jabatan == "Direksi" || Auth::user()->role == 2)
             {
                 $absenBulanini  = Absensi::where('partner',Auth::user()->partner)
                     ->whereYear('tanggal', '=', Carbon::now()->year)
                     ->whereMonth('tanggal', '=', Carbon::now()->month)
                     ->count();
-
                 $absenBulanlalu  = Absensi::where('partner',Auth::user()->partner)
                     ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                     ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
@@ -1641,7 +1640,53 @@ class karyawanController extends Controller
                         'permission'=> $permission,
                     ];
                     return view('karyawan.dashboardKaryawan', $output);
-                }else{
+                }elseif($role === 2)
+                {
+                    dd($absenBulanini);
+                    $output = [
+                        'row' => $row,
+                        'absenKaryawan' => $absenKaryawan,
+                        'absenTerlambatkaryawan' => $absenTerlambatkaryawan,
+                        'absenTidakmasuk' => $absenTidakmasuk,
+                        // 'absenTidakmasukbulanini' => $absenTidakmasukbulanini,
+                        // 'absenTidakmasukbulanlalu' => $absenTidakmasukbulanlalu,
+                        'alokasicuti' => $alokasicuti,
+                        'absenBulanini' => $absenBulanini,
+                        'absenBulanlalu' => $absenBulanlalu,
+                        // 'absenTerlambatbulanlalu' => $absenTerlambatbulanlalu,
+                        'informasi' => $informasi,
+                        'jmlinfo' => $jmlinfo,
+                        'cuti' => $cuti,
+                        'cutijumlah' => $cutijumlah,
+                        'cutis' => $cutis,
+                        'jumct' => $jumct,
+                        'izin' => $izin,
+                        'izinjumlah' => $izinjumlah,
+                        'ijin' =>$ijin,
+                        'jumizin' =>$jumizin,
+                        'resign' => $resign,
+                        'resignjumlah' => $resignjumlah,
+                        'posisi' => $posisi,
+                        'sisacutis' =>$sisacutis,
+                        'rekruitmenjumlah' => $rekruitmenjumlah,
+                        'absenHariini' =>  $absenHariini,
+                        'absenHarini' => $absenHarini,
+                        'jumAbsen' =>  $jumAbsen,
+                        'tidakMasukBulanini' => $tidakMasukBulanini,
+                        'tidakMasukBulanlalu' => $tidakMasukBulanlalu,
+                        'absenTerlambatBulanini' => $absenTerlambatBulanini,
+                        'absenBulaninimanager' => $absenBulaninimanager,
+                        'absenBulanlalumanager' => $absenBulanlalumanager,
+                        'dataIzinBulanInimanager' => $dataIzinBulanInimanager,
+                        'cutiBulanInimanager' => $cutiBulanInimanager,
+                        'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
+                        'cutiBulanLalumanager' => $cutiBulanLalumanager,
+                        'absenTerlambatbulanlalumanager' => $absenTerlambatbulanlalumanager,
+
+                    ];
+                    return view('karyawan.dashboardKaryawan', $output);
+                }
+                else{
                     $output = [
                         'row' => $row,
                         'absenKaryawan' => $absenKaryawan,
@@ -1752,7 +1797,7 @@ class karyawanController extends Controller
                 ->whereYear('tanggal', '=', Carbon::now()->year)
                 ->whereMonth('tanggal', '=', Carbon::now()->month)
                 ->where('partner', Auth::user()->partner)
-                ->whereTime('jam_masuk', '>', '08:00:00')
+                ->whereNotNull('terlambat')
                 ->count();
 
             //absen masuk bulan ini
