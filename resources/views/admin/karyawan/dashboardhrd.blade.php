@@ -1393,6 +1393,52 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    @if (count($sisacutis) > 0)
+                                        <table class="table table-striped">
+                                            <label><b>Sisa Cuti Tahun Lalu</b></label>
+                                            <thead>
+                                                <tr class="info">
+                                                    <th>No</th>
+                                                    <th>Kategori</th>
+                                                    <th>Sisa Cuti Tahun Lalu</th>
+                                                    <th>Periode</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse($sisacutis as $key => $sisa)
+                                                    @if ($sisa->id_pegawai == Auth::user()->id_pegawai)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $sisa->karyawans->nama }}</td>
+                                                            <td>{{ $sisa->jenis_cuti }}</td>
+                                                            <td>{{ $sisa->sisa_cuti }} hari</td>
+                                                            <td>{{ $sisa->periode }}</td>
+                                                            <td>
+                                                                <a href=""
+                                                                    class="btn btn-sm btn-danger fa fa-plus pull-right"
+                                                                    data-toggle="modal" data-target="#mModal"> Ambil Cuti</a>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                    @include('karyawan.addcuti')
+                                                @empty 
+                                                    @if ($sisa->id_pegawai != Auth::user()->id_pegawai)
+                                                        <tr>
+                                                            <td colspan="12" class="text-center">No data available in table.
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

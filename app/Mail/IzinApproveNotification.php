@@ -31,10 +31,14 @@ class IzinApproveNotification extends Mailable
      */
     public function build()
     {
+        $hrdmanager = $this->data['hrdmanager'] ?? null;
+        $hrdstaff = $this->data['hrdstaff'] ?? null;
+
         $email = $this->from('no-reply@rynest.com')
             ->subject($this->data['subject'])
             ->cc($this->data['atasan1'], 'Atasan Pertama')
-            ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
+            ->cc($hrdmanager,'HRD Manager')
+            ->cc($hrdstaff,'HRD Staff')
             ->view('emails.izinApprove')->with('data',$this->data);
        
         if (isset($this->data['atasan2']) && $this->data['atasan2'] !== null) {

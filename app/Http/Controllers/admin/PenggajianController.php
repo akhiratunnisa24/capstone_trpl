@@ -6,6 +6,7 @@ use PDF;
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
+use App\Models\User;
 use App\Models\Jadwal;
 use App\Models\Absensi;
 use App\Models\Benefit;
@@ -1416,7 +1417,9 @@ class PenggajianController extends Controller
                     'emailperusahaan' => $setorganisasi->email,
                     'notelpperusahaan' => $setorganisasi->no_telp,
                 ];
+
                 Mail::to($tujuan)->send(new SlipgajiNotification($data,$datapdf));
+                
                 $dataupdate = [
                     'statusmail'=> 1,
                 ];
@@ -1473,7 +1476,7 @@ class PenggajianController extends Controller
                 ->count();
 
             $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->where('status',1)->get();
-            dd($detailgaji);
+            // dd($detailgaji);
             return view('admin.penggajian.slipgajifix',compact('row','role','karyawan','slipgaji','kehadiran','informasigaji','detailinformasi','detailgaji'));
         }else {
 

@@ -48,7 +48,7 @@ class RekruitmenDiterimaNotification extends Mailable
 
         return $this
             ->from('no-reply@rynest.com')
-            ->subject('Pemberitahuan Penerimaan di Perusahaan Global Risk Management')
+            ->subject('Pemberitahuan Penerimaan di ' . $this->data->nama_perusahaan)
             ->view('emails.RekruitmenDiterimaNotif')
             ->with('data', $this->data)
             ->with('posisi', $this->lowongan);

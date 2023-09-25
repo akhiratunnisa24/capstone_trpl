@@ -4,6 +4,7 @@ namespace App\Http\Controllers\karyawan;
 
 use Carbon\Carbon;
 use App\Models\Izin;
+use App\Models\User;
 use App\Models\Status;
 use App\Models\Karyawan;
 use App\Models\Jenisizin;
@@ -96,7 +97,7 @@ class IzinkaryawanController extends Controller
                 $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                     ->join('departemen','izin.departemen','=','departemen.id')
                     ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                    ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','izin.*','karyawan.nama_jabatan','departemen.nama_departemen')
+                    ->select('karyawan.email','karyawan.partner','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','izin.*','karyawan.nama_jabatan','departemen.nama_departemen')
                     ->first();
                 $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
     
@@ -110,6 +111,20 @@ class IzinkaryawanController extends Controller
                     $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
                     ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                     ->first();
+                }
+
+                $partner = $emailkry->partner;
+            
+                $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+                if($hrdmanager !== null){
+                    $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+                    $hrdmng = $hrdmng->email;
+                }
+    
+                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                if($hrdstaff !== null){
+                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                    $hrdstf = $hrdstf->email;
                 }
                
                 $tujuan = $atasan->email;
@@ -139,6 +154,15 @@ class IzinkaryawanController extends Controller
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
+                }
+                if($hrdmng !== null)
+                {
+                    $data['hrdmanager'] = $hrdmng;
+                }
+
+                if($hrdstf !== null)
+                {
+                    $data['hrdstaff'] = $hrdstf;
                 }
                 Mail::to($tujuan)->send(new IzinNotification($data));
                 
@@ -190,7 +214,7 @@ class IzinkaryawanController extends Controller
                 $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                     ->join('departemen','izin.departemen','=','departemen.id')
                     ->where('izin.id_karyawan','=',$izin->id_karyawan)
-                    ->select('karyawan.email','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','izin.*','karyawan.nama_jabatan','departemen.nama_departemen')
+                    ->select('karyawan.email','karyawan.partner','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','izin.*','karyawan.nama_jabatan','departemen.nama_departemen')
                     ->first();
                 $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
 
@@ -203,6 +227,20 @@ class IzinkaryawanController extends Controller
                     $atasan2 = Karyawan::where('id',$emailkry->atasan_kedua)
                     ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                     ->first();
+                }
+
+                $partner = $emailkry->partner;
+            
+                $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+                if($hrdmanager !== null){
+                    $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+                    $hrdmng = $hrdmng->email;
+                }
+    
+                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                if($hrdstaff !== null){
+                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                    $hrdstf = $hrdstf->email;
                 }
 
                 $tujuan = $atasan->email;
@@ -232,10 +270,19 @@ class IzinkaryawanController extends Controller
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
                 }
+
+                if($hrdmng !== null)
+                {
+                    $data['hrdmanager'] = $hrdmng;
+                }
+
+                if($hrdstf !== null)
+                {
+                    $data['hrdstaff'] = $hrdstf;
+                }
                 Mail::to($tujuan)->send(new IzinNotification($data));
                 // dd($data);
                 return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
-
             }
             else
             {

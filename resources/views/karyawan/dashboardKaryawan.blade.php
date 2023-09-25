@@ -3290,6 +3290,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12">
+
                             @if (count($sisacutis) > 0)
                                 <table class="table table-striped">
                                     <label><b>Sisa Cuti Tahun Lalu</b></label>

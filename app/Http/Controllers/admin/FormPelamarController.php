@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Atasan;
 use App\Models\Karyawan;
 use App\Models\Kdarurat;
@@ -13,9 +14,10 @@ use App\Models\Departemen;
 use App\Models\Rekruitmen;
 use App\Models\Rpekerjaan;
 use App\Models\Rorganisasi;
-use App\Models\Rpendidikan;
 // use Illuminate\Support\Facades\Auth;
+use App\Models\Rpendidikan;
 use Illuminate\Http\Request;
+use App\Models\SettingOrganisasi;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RekruitmenApplyNotification;
@@ -620,6 +622,7 @@ class FormPelamarController extends Controller
         $pelamar = $request->session()->get('pelamar');
         $pelamar->save();
         $idKaryawan = $pelamar->id;
+        $partner = $pelamar->partner;
 
         // $datakeluarga = json_decode($request->session()->get('datakeluarga', []), true);
 
@@ -707,9 +710,31 @@ class FormPelamarController extends Controller
         $request->session()->forget('prestasi');
 
         $data = Rekruitmen::findOrFail($idKaryawan);
+        $settingorganisasi = SettingOrganisasi::where('partner',$partner)->first();
+        if ($settingorganisasi !== null) {
+            $data->email_perusahaan  = $settingorganisasi->email;
+            $data->nama_perusahaan   = $settingorganisasi->nama_perusahaan;
+            $data->notelp_perusahaan = $settingorganisasi->no_telp;
+        }
         // Email HRD
-        $tujuan = 'hrd@gmail.com';
-        $tujuan2 = 'hrd2@gmail.com';
+        $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+        if($hrdmanager !== null){
+            $hrdmng = $hrdmanager->karyawans->email;
+        }
+        
+        $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+        if($hrdstaff !== null){
+            $hrdstf = $hrdstaff->karyawans->email;
+        }
+
+        if ($hrdmng !== null) {
+            $tujuan = $hrdmng;
+        } 
+
+        if ($hrdstf !== null) {
+            $tujuan2 = $hrdstf;
+        }
+
         $email = new RekruitmenApplyNotification($data);
         Mail::to($tujuan)->send($email);
         Mail::to($tujuan2)->send($email);

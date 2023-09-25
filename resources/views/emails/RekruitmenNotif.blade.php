@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
             integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z">
-    <title>Pemberitahuan - Rekruitmen RTI Posisi {{ $data->posisi }}</title>
+    <title>Pemberitahuan - Rekruitmen {{ $data->nama_perusahaan }} Posisi {{ $data->posisi }}</title>
     <style>
         .badge {
             padding: 5px 10px;
@@ -123,6 +123,6 @@
 
 </body>
 <div class="footer">
-			<p>Email ini dikirimkan secara otomatis. Jangan membalas email ini karena tidak akan terbaca. Hubungi kami di <b><a href="mailto:">info@grm-risk.com</a></b> atau anda bisa menghubungi <a href="#">(+62) 811-140-840-5</a> untuk informasi lebih lanjut.</p>
+			<p>Email ini dikirimkan secara otomatis. Jangan membalas email ini karena tidak akan terbaca. Hubungi kami di <b><a href="mailto:">{{ $data->email_perusahaan }}</a></b> atau anda bisa menghubungi <a href="#">{{ $data->notelp_perusahaan }}</a> untuk informasi lebih lanjut.</p>
 		</div>
 </html>

@@ -270,6 +270,7 @@
                                                                         placeholder="Masukkan No. Ijazah"
                                                                         autocomplete="off">
                                                                 </div>
+                                                                <button type="submit" name="submit" class="btn btn-sm btn-dark" style="margin-left:170px;margin-top:30px;">Simpan Pendidikan Formal</button>
                                                             </div>
 
                                                         </div>
@@ -352,7 +353,9 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div></div><br><br><br><br><br><br><br><br>
+                                                            <div></div><br><br><br><br>
+                                                            <button type="submit" name="submit" class="btn btn-sm btn-dark" style="margin-left:150px;margin-top:10px;">Simpan Pendidikan Non Formal</button>
+                                                            <br>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -362,8 +365,8 @@
                                                                     class="fa fa-backward"></i> Sebelumnya</a>
                                                         </div>
                                                         <div class="pull-right">
-                                                            <button type="submit" name="submit"
-                                                                class="btn btn-sm btn-dark">Simpan</button>
+                                                            {{-- <button type="submit" name="submit"
+                                                                class="btn btn-sm btn-dark">Simpan</button> --}}
                                                             <a href="/create_data_pekerjaan"
                                                                 class="btn btn-sm btn-success">Selanjutnya <i
                                                                     class="fa fa-forward"></i></a>
@@ -496,7 +499,7 @@
                                                                         autocomplete="off">
                                                                 </div>
                                                             </div>
-
+                                                            
                                                         </div>
 
                                                         {{-- KANAN --}}

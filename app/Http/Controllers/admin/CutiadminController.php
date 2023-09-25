@@ -20,6 +20,7 @@ use App\Mail\CutiHRDNotification;
 use App\Models\SettingOrganisasi;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
@@ -440,7 +441,7 @@ class CutiadminController extends Controller
                 ->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
                 ->join('departemen', 'cuti.departemen', '=', 'departemen.id')
                 ->where('cuti.id_karyawan', '=', $cuti->id_karyawan)
-                ->select('karyawan.email', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
+                ->select('karyawan.email','karyawan.partner', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
                 ->first();
             // dd($emailkry);
             $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
@@ -455,6 +456,20 @@ class CutiadminController extends Controller
                     ->first();
             }
             $tujuan = $atasan->email;
+
+            $partner = $emailkry->partner;
+            
+            $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+            if($hrdmanager !== null){
+                $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+                $hrdmng = $hrdmng->email;
+            }
+
+            $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+            if($hrdstaff !== null){
+                $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                $hrdstf = $hrdstf->email;
+            }
             // dd($tujuan);
 
             $data = [
@@ -477,9 +492,21 @@ class CutiadminController extends Controller
                 'jabatan' => $atasan->jabatan,
                 'nama_atasan' => $atasan->nama,
             ];
+
             if($atasan2 !== NULL){
                 $data['atasan2'] = $atasan2->email;
             }
+
+            if($hrdmng !== null)
+            {
+                $data['hrdmanager'] = $hrdmng;
+            }
+
+            if($hrdstf !== null)
+            {
+                $data['hrdstaff'] = $hrdstf;
+            }
+
             Mail::to($tujuan)->send(new CutiNotification($data));
             // dd($data);
     
@@ -609,7 +636,7 @@ class CutiadminController extends Controller
                     $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
                             ->join('departemen','cuti.departemen','=','departemen.id')
                             ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
-                            ->select('karyawan.email','karyawan.nama as nama','karyawan.atasan_kedua','karyawan.atasan_kedua','departemen.nama_departemen')
+                            ->select('karyawan.email','karyawan.partner','karyawan.nama as nama','karyawan.atasan_kedua','karyawan.atasan_kedua','departemen.nama_departemen')
                             ->first();
 
                     $atasan1 = Karyawan::where('id',$emailkry->atasan_pertama)
@@ -622,6 +649,22 @@ class CutiadminController extends Controller
                             ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                             ->first();
                     }
+
+                    $partner = $emailkry->partner;
+            
+                    $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+
+                    if($hrdmanager !== null){
+                        $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+                        $hrdmng = $hrdmng->email;
+                    }
+
+                    $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                    if($hrdstaff !== null){
+                        $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                        $hrdstf = $hrdstf->email;
+                    }
+                    
                     $tujuan = $emailkry->email;
                     $alasan = '';
                     $data = [
@@ -650,6 +693,16 @@ class CutiadminController extends Controller
                     if($atasan2 !== NULL){
                         $data['atasan2'] = $atasan2->email;
                         $data['namaatasan2'] = $atasan2->nama;
+                    }
+
+                    if($hrdmng !== null)
+                    {
+                        $data['hrdmanager'] = $hrdmng;
+                    }
+        
+                    if($hrdstf !== null)
+                    {
+                        $data['hrdstaff'] = $hrdstf;
                     }
                     Mail::to($tujuan)->send(new CutiApproveNotification($data));
             
@@ -907,7 +960,7 @@ class CutiadminController extends Controller
                         $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
                             ->join('departemen','cuti.departemen','=','departemen.id')
                             ->where('cuti.id_karyawan','=',$datacuti->id_karyawan)
-                            ->select('karyawan.email','karyawan.nama as nama','karyawan.atasan_pertama','karyawan.atasan_kedua','departemen.nama_departemen')
+                            ->select('karyawan.email','karyawan.partner','karyawan.nama as nama','karyawan.atasan_pertama','karyawan.atasan_kedua','departemen.nama_departemen')
                             ->first();
                         //atasan pertama
                         $idatasan1 = DB::table('karyawan')
@@ -922,6 +975,21 @@ class CutiadminController extends Controller
                         
                         //atasan yang login
                         $atasan2 = Auth::user()->email;
+
+                        $partner = $emailkry->partner;
+            
+                        $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+
+                        if($hrdmanager !== null){
+                            $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+                            $hrdmng = $hrdmng->email;
+                        }
+
+                        $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                        if($hrdstaff !== null){
+                            $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                            $hrdstf = $hrdstf->email;
+        }
         
                         // $tujuan = 'akhiratunnisahasanah0917@gmail.com';
                         $tujuan = $emailkry->email;
@@ -951,6 +1019,16 @@ class CutiadminController extends Controller
                             'alasan'      =>$alasan,
                         ];
                         // return $data;
+                        if($hrdmng !== null)
+                        {
+                            $data['hrdmanager'] = $hrdmng;
+                        }
+            
+                        if($hrdstf !== null)
+                        {
+                            $data['hrdstaff'] = $hrdstf;
+                        }
+
                         Mail::to($tujuan)->send(new CutiApproveNotification($data));
                         return redirect()->back()->withInput();
         
@@ -1072,7 +1150,7 @@ class CutiadminController extends Controller
                     ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
-                    ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                    ->select('karyawan.email as email','karyawan.partner','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
                     ->first(); 
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
@@ -1083,6 +1161,20 @@ class CutiadminController extends Controller
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
                 }
+
+                $partner = $karyawan->partner;
+                $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+                if($hrdmanager !== null){
+                    $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+                    $hrdmng = $hrdmng->email;
+                }
+    
+                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                if($hrdstaff !== null){
+                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                    $hrdstf = $hrdstf->email;
+                }
+
                 $tujuan = $karyawan->email;
                 $data = [
                     'subject'     => 'Notifikasi Permohonan Cuti Ditolak, Cuti ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
@@ -1107,9 +1199,20 @@ class CutiadminController extends Controller
                     'tgldisetujuiatasan' => Carbon::parse($ct->tgldisetujui_a)->format("d/m/Y H:i"),
                     'tglditolak' => Carbon::now()->format('d/m/Y H:i'),
                 ];
+
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
                     $data['namaatasan2'] = $atasan2->nama;
+                }
+
+                if($hrdmng !== null)
+                {
+                    $data['hrdmanager'] = $hrdmng;
+                }
+
+                if($hrdstf !== null)
+                {
+                    $data['hrdstaff'] = $hrdstf;
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
@@ -1145,7 +1248,7 @@ class CutiadminController extends Controller
                     ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
-                    ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                    ->select('karyawan.email as email','karyawan.partner','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
                     ->first(); 
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
@@ -1156,6 +1259,20 @@ class CutiadminController extends Controller
                     $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
+                }
+
+                $partner = $karyawan->partner;
+            
+                $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+                if($hrdmanager !== null){
+                    $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+                    $hrdmng = $hrdmng->email;
+                }
+
+                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                if($hrdstaff !== null){
+                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                    $hrdstf = $hrdstf->email;
                 }
                 $tujuan = $karyawan->email;
                 $data = [
@@ -1184,6 +1301,15 @@ class CutiadminController extends Controller
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
                     $data['namaatasan2'] = $atasan2->nama;
+                }
+                if($hrdmng !== null)
+                {
+                    $data['hrdmanager'] = $hrdmng;
+                }
+
+                if($hrdstf !== null)
+                {
+                    $data['hrdstaff'] = $hrdstf;
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
@@ -1226,8 +1352,9 @@ class CutiadminController extends Controller
                     ->join('karyawan','cuti.id_karyawan','=','karyawan.id')
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
-                    ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
+                    ->select('karyawan.email as email','karyawan.partner','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
                     ->first(); 
+                    
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1238,7 +1365,23 @@ class CutiadminController extends Controller
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
                 }
+
+                $partner = $karyawan->partner;
+            
+                $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+                if($hrdmanager !== null){
+                    $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+                    $hrdmng = $hrdmng->email;
+                }
+
+                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                if($hrdstaff !== null){
+                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                    $hrdstf = $hrdstf->email;
+                }
+
                 $tujuan = $karyawan->email;
+
                 $data = [
                     'subject'     => 'Notifikasi Permohonan Cuti Ditolak, Cuti ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$cuti->id,
@@ -1266,6 +1409,16 @@ class CutiadminController extends Controller
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
                     $data['namaatasan2'] = $atasan2->nama;
+                }
+
+                if($hrdmng !== null)
+                {
+                    $data['hrdmanager'] = $hrdmng;
+                }
+    
+                if($hrdstf !== null)
+                {
+                    $data['hrdstaff'] = $hrdstf;
                 }
                 // dd($data);
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));

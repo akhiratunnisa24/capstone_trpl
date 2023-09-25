@@ -20,17 +20,18 @@ use App\Models\UserMesin;
 use App\Models\Departemen;
 use App\Models\Tidakmasuk;
 use App\Models\Alokasicuti;
+use App\Models\SettingOrganisasi;
 use App\Mail\SisacutiNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Mail\TidakmasukNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -248,6 +249,7 @@ class Kernel extends ConsoleKernel
                         $query->whereRaw('LOWER(jenis_cuti) LIKE ?', ['%cuti tahunan%']);
                     })
                     ->get();
+                $settingorganisasi = SettingOrganisasi::where('partner',$partner->id)->first();
                 foreach($jeniscutis as $jeniscuti)
                 {
 
@@ -266,10 +268,19 @@ class Kernel extends ConsoleKernel
                         if ($isEligible && $isInPeriod) {
                             $tujuan = $sisa->email;
 
-                            $atasan1 = Karyawan::where('id',$sisa->atasan_pertama)->select('nama','email')->first();
+                            $atasan1 = Karyawan::where('id',$sisa->atasan_pertama)->select('nama','email')->where('partner',$partner->id)->first();
                             $atasan2 = null;
                             if($sisa->atasan_kedua != NULL){
-                                $atasan2 = Karyawan::where('id',$sisa->atasan_kedua)->select('nama','email')->first();
+                                $atasan2 = Karyawan::where('id',$sisa->atasan_kedua)->select('nama','email')->where('partner',$partner->id)->first();
+                            }
+                            $hrdmanager = User::where('partner',$partner->id)->where('role',1)->first();
+                            if($hrdmanager !== null){
+                                $hrdmng = $hrdmanager->karyawans->email;
+                            }
+
+                            $hrdstaff   = User::where('partner',$partner->id)->where('role',2)->first();
+                            if($hrdstaff !== null){
+                                $hrdstf = $hrdstaff->karyawans->email;
                             }
 
                             $data = [
@@ -284,8 +295,24 @@ class Kernel extends ConsoleKernel
                                 'sampai' => Carbon::parse($sisa->sampai)->format('d F Y'),
                             ];
 
-                            if($atasan2 != NULL){
+                            if($atasan2 !== NULL){
                                 $data['emailatasan2'] = $atasan2->email;
+                            }
+
+                            if($settingorganisasi !== NULL)
+                            {
+                                $data['emailperusahaan'] = $settingorganisasi->email;
+                                $data['notelp_perusahaan'] = $settingorganisasi->no_telp;
+                            }
+
+                            if($hrdmng !== null)
+                            {
+                                $data['hrdmanager'] = $hrdmng;
+                            }
+
+                            if($hrdstf !== null)
+                            {
+                                $data['hrdstaff'] = $hrdstf;
                             }
 
                             Mail::to($tujuan)->send(new SisacutiNotification($data));

@@ -241,7 +241,7 @@ class karyawanController extends Controller
 
         $emailkry = DB::table('cuti')->join('karyawan','cuti.id_karyawan','=','karyawan.id')
             ->where('cuti.id_karyawan','=',$cuti->id_karyawan)
-            ->select('karyawan.email')
+            ->select('karyawan.email','karyawan.partner')
             ->first();
 
         //atasan pertama
@@ -263,6 +263,20 @@ class karyawanController extends Controller
         $atasan2 = Karyawan::where('id',$idatasan2->atasan_kedua)
             ->select('email as email','nama as nama','nama_jabatan as jabatan')
             ->first();
+        $partner = $emailkry->partner;
+            
+        $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+
+        if($hrdmanager !== null){
+            $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+            $hrdmng = $hrdmng->email;
+        }
+
+        $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+        if($hrdstaff !== null){
+            $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+            $hrdstf = $hrdstf->email;
+        }
 
         if ($atasan) {
             $tujuan = $atasan->email;
@@ -281,7 +295,17 @@ class karyawanController extends Controller
                 'atasan_depar' => $atasan->jabatan,
                 'nama_atasan' => $atasan->nama,
                 'role' => $role,
-                ];
+            ];
+            if($hrdmng !== null)
+            {
+                $data['hrdmanager'] = $hrdmng;
+            }
+
+            if($hrdstf !== null)
+            {
+                $data['hrdstaff'] = $hrdstf;
+            }
+
             Mail::to($tujuan)->send(new CutiNotification($data));
         } else {
             // proses jika data atasan tidak ada / email tidak ada
@@ -500,6 +524,7 @@ class karyawanController extends Controller
                 // return $alokasicuti;
 
 
+            //data sisa cuti karyawan
             $sisacutis = Sisacuti::with(['karyawans','jeniscutis'])
                 ->where('status',1)
                 ->where('sisa_cuti','>',0)

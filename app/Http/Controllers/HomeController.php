@@ -1726,6 +1726,7 @@ class HomeController extends Controller
 
             $output = [
                 'row' => $row,
+                'sisacutis' => $sisacutis,
                 'cutiPerbulan' => $cutiPerbulan,
                 'cutiHariinihrd' => $cutiHariinihrd,
                 'absenHariinihrd' => $absenHariinihrd,

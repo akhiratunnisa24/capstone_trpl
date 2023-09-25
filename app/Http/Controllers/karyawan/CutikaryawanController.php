@@ -5,6 +5,7 @@ namespace App\Http\Controllers\karyawan;
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Izin;
+use App\Models\User;
 use App\Models\Status;
 use App\Models\Karyawan;
 use App\Models\Jeniscuti;
@@ -192,7 +193,7 @@ class CutikaryawanController extends Controller
             $emailkry = DB::table('cuti')->join('karyawan', 'cuti.id_karyawan', '=', 'karyawan.id')
                 ->join('departemen', 'cuti.departemen', '=', 'departemen.id')
                 ->where('cuti.id_karyawan', '=', $cuti->id_karyawan)
-                ->select('karyawan.email', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
+                ->select('karyawan.email','karyawan.partner', 'karyawan.nama', 'cuti.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
                 ->first();
 
             $jeniscuti = Jeniscuti::where('id', $cuti->id_jeniscuti)->first();
@@ -210,7 +211,18 @@ class CutikaryawanController extends Controller
             }
             $tujuan = $atasan->email;
 
-     
+            $partner = $emailkry->partner;
+            $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+            if($hrdmanager !== null){
+                $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+                $hrdmng = $hrdmng->email;
+            }
+
+            $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+            if($hrdstaff !== null){
+                $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                $hrdstf = $hrdstf->email;
+            }
             $data = [
                 'subject' => 'Notifikasi Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#' . $cuti->id . ' ' . ucwords(strtolower($emailkry->nama)),
                 'noregistrasi' => $cuti->id,
@@ -235,6 +247,17 @@ class CutikaryawanController extends Controller
             if($atasan2 !== NULL){
                 $data['atasan2'] = $atasan2->email;
             }
+
+            if($hrdmng !== null)
+            {
+                $data['hrdmanager'] = $hrdmng;
+            }
+
+            if($hrdstf !== null)
+            {
+                $data['hrdstaff'] = $hrdstf;
+            }
+
             Mail::to($tujuan)->send(new CutiNotification($data));
     
             return redirect()->back()->with('pesan', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
