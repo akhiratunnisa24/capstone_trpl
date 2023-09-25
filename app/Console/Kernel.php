@@ -176,7 +176,7 @@ class Kernel extends ConsoleKernel
                             //     'nama'        => $epegawai->nama,
                             //     'jatahcuti'   => $durasi_baru,
                             // ];
-                            // Mail::to($tujuan)->send(new TidakmasukNotification($data));
+                            //Mail::to($tujuan)->send(new TidakmasukNotification($data));
 
                         }
 

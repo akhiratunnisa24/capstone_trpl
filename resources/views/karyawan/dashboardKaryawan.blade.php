@@ -799,9 +799,7 @@
                         </div>
                     </div>
 
-
                     <div class="panel panel-default">
-
                     </div>
 
                 </div>
