@@ -373,49 +373,212 @@ class karyawanController extends Controller
 
 
             //cuti dan izin bulanini
-            $dataIzinBulanInimanager = Izin::with('karyawans', 'departemens')
-                ->whereYear('tgl_mulai', '=', Carbon::now()->year)
-                ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
-                ->where('departemen',$row->divisi)
-                ->whereHas('karyawans', function ($query) use($row){
-                    $query->where('divisi',$row->divisi)
-                        ->where('atasan_pertama', Auth::user()->id_pegawai)
-                        ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
-                })
-                ->count('jml_hari');
+        $tahun = Carbon::now()->year;
+        $bulan = Carbon::now()->month;
+        Carbon::setLocale('id');
+        $awalBulanIni = Carbon::now()->startOfMonth();
+        $akhirBulanIni = Carbon::now()->endOfMonth();
+        $awalBulanLalu = Carbon::now()->subMonth()->startOfMonth();
+        $akhirBulanLalu = Carbon::now()->subMonth()->endOfMonth();
 
-            $cutiBulanInimanager = Cuti::with('karyawans', 'departemens')
-                ->whereYear('tgl_mulai', '=', Carbon::now()->year)
-                ->whereMonth('tgl_mulai', '=', Carbon::now()->month)
-                ->where('departemen',$row->divisi)
-                ->whereHas('karyawans', function ($query) use($row){
-                    $query->where('divisi',$row->divisi)
-                        ->where('atasan_pertama', Auth::user()->id_pegawai)
-                        ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
-                })
-                ->count('jml_cuti');
-                // dd($cutiBulanInimanager);
-            $dataIzinBulanLalumanager = Izin::with('karyawans', 'departemens')
-                ->whereYear('tgl_mulai', '=', Carbon::now()->subMonth()->year)
-                ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
-                ->where('departemen',$row->divisi)
-                ->whereHas('karyawans', function ($query) use($row){
-                    $query->where('divisi',$row->divisi)
-                        ->where('atasan_pertama', Auth::user()->id_pegawai)
-                        ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
-                })
-                ->count('jml_hari');
+        // dd($awalBulanLalu,$akhirBulanLalu);
 
-            $cutiBulanLalumanager = Cuti::with('karyawans', 'departemens')
-                ->whereYear('tgl_mulai', '=', Carbon::now()->subMonth()->year)
-                ->whereMonth('tgl_mulai', '=', Carbon::now()->subMonth()->month)
-                ->where('departemen',$row->divisi)
-                ->whereHas('karyawans', function ($query) use($row){
-                    $query->where('divisi',$row->divisi)
-                        ->where('atasan_pertama', Auth::user()->id_pegawai)
-                        ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+        $jumCutiBulanInimgr = 0;
+
+        // Hitung cuti bulan ini
+        $cutiBulananInimgr = Cuti::with('karyawans','departemens')
+            ->where('status', 7)
+            ->whereHas('karyawans', function ($query) use ($partner) {
+                $query->where('partner', $partner);
+            })
+            ->where('departemen',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->where(function ($query) use ($awalBulanIni, $akhirBulanIni) {
+                $query->where(function ($q) use ($awalBulanIni, $akhirBulanIni) {
+                    $q->where('tgl_mulai', '>=', $awalBulanIni)->where('tgl_mulai', '<=', $akhirBulanIni);
                 })
-                ->count('jml_cuti');
+                    ->orWhere(function ($q) use ($awalBulanIni, $akhirBulanIni) {
+                        $q->where('tgl_selesai', '>=', $awalBulanIni)->where('tgl_selesai', '<=', $akhirBulanIni);
+                    })
+                    ->orWhere(function ($q) use ($awalBulanIni, $akhirBulanIni) {
+                        $q->where('tgl_mulai', '<', $awalBulanIni)->where('tgl_selesai', '>', $akhirBulanIni);
+                    });
+            })
+            ->get();
+
+        foreach ($cutiBulananInimgr as $cb) {
+            $mulai = \Carbon\Carbon::parse($cb->tgl_mulai);
+            $selesai = \Carbon\Carbon::parse($cb->tgl_selesai);
+
+            $tglHitungAwal = $mulai->greaterThan($awalBulanIni) ? $mulai : $awalBulanIni;
+            $tglHitungAkhir = $selesai->lessThan($akhirBulanIni) ? $selesai : $akhirBulanIni;
+
+            $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
+            $tglHitungAkhir = \Carbon\Carbon::parse($tglHitungAkhir);
+
+            $cocokkanTanggal = Jadwal::whereYear('tanggal', $tahun)
+                ->whereMonth('tanggal', $tglHitungAwal->month)
+                ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                ->where('partner', $partner)
+                ->count();
+            if($cocokkanTanggal >0)
+            {
+                $jumCutiBulanInimgr += $cocokkanTanggal;
+            }
+
+        }
+
+        // Hitung cuti bulan lalu
+        $cutiBulananLalumgr = Cuti::with('karyawans','departemens')
+            ->where('status', 7)
+            ->whereHas('karyawans', function ($query) use ($partner) {
+                $query->where('partner', $partner);
+            })
+            ->where('departemen',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->where(function ($query) use ($awalBulanLalu, $akhirBulanLalu) {
+                $query->where(function ($q) use ($awalBulanLalu, $akhirBulanLalu) {
+                    $q->where('tgl_mulai', '>=', $awalBulanLalu)->where('tgl_mulai', '<=', $akhirBulanLalu);
+                })
+                    ->orWhere(function ($q) use ($awalBulanLalu, $akhirBulanLalu) {
+                        $q->where('tgl_selesai', '>=', $awalBulanLalu)->where('tgl_selesai', '<=', $akhirBulanLalu);
+                    })
+                    ->orWhere(function ($q) use ($awalBulanLalu, $akhirBulanLalu) {
+                        $q->where('tgl_mulai', '<', $awalBulanLalu)->where('tgl_selesai', '>', $akhirBulanLalu);
+                    });
+            })
+            ->get();
+
+        $jumCutiBulanLalumgr = 0;
+        foreach ($cutiBulananLalumgr as $cb) {
+            $mulai = \Carbon\Carbon::parse($cb->tgl_mulai);
+            $selesai = \Carbon\Carbon::parse($cb->tgl_selesai);
+
+            $tglHitungAwal = $mulai->greaterThan($awalBulanLalu) ? $mulai : $awalBulanLalu;
+            $tglHitungAkhir = $selesai->lessThan($akhirBulanLalu) ? $selesai : $akhirBulanLalu;
+
+            $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
+            $tglHitungAkhir = \Carbon\Carbon::parse($tglHitungAkhir);
+
+            $cocokkanTanggal = Jadwal::whereYear('tanggal', $tahun)
+                ->whereMonth('tanggal', $tglHitungAwal->month)
+                ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                ->where('partner', $partner)
+                ->get();
+            $cocok = $cocokkanTanggal->count();
+            if($cocokkanTanggal)
+            {
+                $jumCutiBulanLalumgr += $cocok;
+            }
+        }
+
+        // ========================IZIN============================
+
+        $izinBulananInimgr = Izin::with('karyawans','departemens')
+            ->where('status', 7)
+            ->whereHas('karyawans', function ($query) use ($partner) {
+                $query->where('partner', $partner);
+            })
+            ->where('departemen',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->where(function ($query) use ($awalBulanIni, $akhirBulanIni) {
+                $query->where(function ($q) use ($awalBulanIni, $akhirBulanIni) {
+                    $q->where('tgl_mulai', '>=', $awalBulanIni)->where('tgl_mulai', '<=', $akhirBulanIni);
+                })
+                    ->orWhere(function ($q) use ($awalBulanIni, $akhirBulanIni) {
+                        $q->where('tgl_selesai', '>=', $awalBulanIni)->where('tgl_selesai', '<=', $akhirBulanIni);
+                    })
+                    ->orWhere(function ($q) use ($awalBulanIni, $akhirBulanIni) {
+                        $q->where('tgl_mulai', '<', $awalBulanIni)->where('tgl_selesai', '>', $akhirBulanIni);
+                    });
+            })
+            ->get();
+        $jumIzinBulanInimgr = 0;
+        foreach ($izinBulananInimgr as $cb) {
+            $mulai = \Carbon\Carbon::parse($cb->tgl_mulai);
+            $selesai = \Carbon\Carbon::parse($cb->tgl_selesai);
+
+            $tglHitungAwal = $mulai->greaterThan($awalBulanIni) ? $mulai : $awalBulanIni;
+            $tglHitungAkhir = $selesai->lessThan($akhirBulanIni) ? $selesai : $akhirBulanIni;
+
+            $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
+            $tglHitungAkhir = \Carbon\Carbon::parse($tglHitungAkhir);
+
+            $cocokkanTanggal = Jadwal::whereYear('tanggal', $tahun)
+                ->whereMonth('tanggal', $tglHitungAwal->month)
+                ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                ->where('partner', $partner)
+                ->count();
+            if($cocokkanTanggal >0)
+            {
+                $jumIzinBulanInimgr += $cocokkanTanggal;
+            }
+
+        }
+
+        // Hitung izin bulan lalu
+        $izinBulananLalumgr = Izin::with('karyawans','departemens')
+            ->where('status', 7)
+            ->whereHas('karyawans', function ($query) use ($partner) {
+                $query->where('partner', $partner);
+            })
+            ->where('departemen',$row->divisi)
+            ->whereHas('karyawans', function ($query) use($row){
+                $query->where('divisi',$row->divisi)
+                    ->where('atasan_pertama', Auth::user()->id_pegawai)
+                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+            })
+            ->where(function ($query) use ($awalBulanLalu, $akhirBulanLalu) {
+                $query->where(function ($q) use ($awalBulanLalu, $akhirBulanLalu) {
+                    $q->where('tgl_mulai', '>=', $awalBulanLalu)->where('tgl_mulai', '<=', $akhirBulanLalu);
+                })
+                    ->orWhere(function ($q) use ($awalBulanLalu, $akhirBulanLalu) {
+                        $q->where('tgl_selesai', '>=', $awalBulanLalu)->where('tgl_selesai', '<=', $akhirBulanLalu);
+                    })
+                    ->orWhere(function ($q) use ($awalBulanLalu, $akhirBulanLalu) {
+                        $q->where('tgl_mulai', '<', $awalBulanLalu)->where('tgl_selesai', '>', $akhirBulanLalu);
+                    });
+            })
+            ->get();
+
+        $jumIzinBulanLalumgr = 0;
+        foreach ($izinBulananLalumgr as $cb) {
+            $mulai = \Carbon\Carbon::parse($cb->tgl_mulai);
+            $selesai = \Carbon\Carbon::parse($cb->tgl_selesai);
+
+            $tglHitungAwal = $mulai->greaterThan($awalBulanLalu) ? $mulai : $awalBulanLalu;
+            $tglHitungAkhir = $selesai->lessThan($akhirBulanLalu) ? $selesai : $akhirBulanLalu;
+
+            $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
+            $tglHitungAkhir = \Carbon\Carbon::parse($tglHitungAkhir);
+
+            $cocokkanTanggal = Jadwal::whereYear('tanggal', $tahun)
+                ->whereMonth('tanggal', $tglHitungAwal->month)
+                ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
+                ->where('partner', $partner)
+                ->get();
+            $cocok = $cocokkanTanggal->count();
+            if($cocokkanTanggal)
+            {
+                $jumIzinBulanLalumgr += $cocok;
+            }
+        }
+
+        // dd($jumIzinBulanLalu);
+
+            // ==================================================================
 
 
             //absen terlambat bulan lalu
@@ -1627,10 +1790,10 @@ class karyawanController extends Controller
                         'absenTerlambatBulanini' => $absenTerlambatBulanini,
                         'absenBulaninimanager' => $absenBulaninimanager,
                         'absenBulanlalumanager' => $absenBulanlalumanager,
-                        'dataIzinBulanInimanager' => $dataIzinBulanInimanager,
-                        'cutiBulanInimanager' => $cutiBulanInimanager,
-                        'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
-                        'cutiBulanLalumanager' => $cutiBulanLalumanager,
+                        'jumIzinBulanInimgr' => $jumIzinBulanInimgr,
+                        'jumCutiBulanInimgr' => $jumCutiBulanInimgr,
+                        'jumIzinBulanLalumgr' => $jumIzinBulanLalumgr,
+                        'jumCutiBulanLalumgr' => $jumCutiBulanLalumgr,
                         'absenTerlambatbulanlalumanager' => $absenTerlambatbulanlalumanager,
                         'namabulan' => $namabulan,
                         'attendance'=> $attendance,
@@ -1677,10 +1840,10 @@ class karyawanController extends Controller
                         'absenTerlambatBulanini' => $absenTerlambatBulanini,
                         'absenBulaninimanager' => $absenBulaninimanager,
                         'absenBulanlalumanager' => $absenBulanlalumanager,
-                        'dataIzinBulanInimanager' => $dataIzinBulanInimanager,
-                        'cutiBulanInimanager' => $cutiBulanInimanager,
-                        'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
-                        'cutiBulanLalumanager' => $cutiBulanLalumanager,
+                        'jumIzinBulanInimgr' => $jumIzinBulanInimgr,
+                        'jumCutiBulanInimgr' => $jumCutiBulanInimgr,
+                        'jumIzinBulanLalumgr' => $jumIzinBulanLalumgr,
+                        'jumCutiBulanLalumgr' => $jumCutiBulanLalumgr,
                         'absenTerlambatbulanlalumanager' => $absenTerlambatbulanlalumanager,
 
                     ];
@@ -1721,10 +1884,10 @@ class karyawanController extends Controller
                         'absenTerlambatBulanini' => $absenTerlambatBulanini,
                         'absenBulaninimanager' => $absenBulaninimanager,
                         'absenBulanlalumanager' => $absenBulanlalumanager,
-                        'dataIzinBulanInimanager' => $dataIzinBulanInimanager,
-                        'cutiBulanInimanager' => $cutiBulanInimanager,
-                        'dataIzinBulanLalumanager' => $dataIzinBulanLalumanager,
-                        'cutiBulanLalumanager' => $cutiBulanLalumanager,
+                        'jumIzinBulanInimgr' => $jumIzinBulanInimgr,
+                        'jumCutiBulanInimgr' => $jumCutiBulanInimgr,
+                        'jumIzinBulanLalumgr' => $jumIzinBulanLalumgr,
+                        'jumCutiBulanLalumgr' => $jumCutiBulanLalumgr,
                         'absenTerlambatbulanlalumanager' => $absenTerlambatbulanlalumanager,
 
                     ];
