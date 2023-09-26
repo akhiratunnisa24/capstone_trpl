@@ -119,7 +119,7 @@ class HomeController extends Controller
                     ->where('tgl_selesai', '>=', $today);
             })
             ->where('status', '=', 7)
-            ->count('jml_hari');
+            ->count();
 
         //cuti hari ini hrd
         $cutiHariinihrd = Cuti::where(function ($query) use ($today) {
