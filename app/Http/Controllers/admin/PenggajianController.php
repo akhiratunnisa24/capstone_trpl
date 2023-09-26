@@ -380,7 +380,7 @@ class PenggajianController extends Controller
 
                     $selisihHari = $tglHitungAwal->diffInDays($tglHitungAkhir) + 1;
 
-                    $cocokkanTanggal = Jadwal::where('partner', $data->partner)
+                    $cocokkanTanggal = Jadwal::where('partner', $getKaryawan->partner)
                         ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
                         ->count();
 
@@ -583,7 +583,7 @@ class PenggajianController extends Controller
                 ->whereNotIn('karyawan.id', $idsudahada)
                 ->groupBy('karyawan.id','informasi_gaji.id')
                 ->get();
-           
+            
             $informasigajibelumada = Karyawan::where('partner',$request->partner)
                 ->where('status_kerja', 'Aktif')
                 ->whereNull('tglkeluar')
@@ -951,11 +951,12 @@ class PenggajianController extends Controller
                 $query->where('tglgajian', $penggajiangrup->tglgajian)
                       ->where('tglawal', $penggajiangrup->tglawal)
                       ->where('tglakhir', $penggajiangrup->tglakhir)
+                      ->whereNull('id_grup')
                       ->orWhere(function($subquery) use ($penggajiangrup) {
-                          $subquery->where('id_grup', $penggajiangrup->id)
-                                   ->orWhereNull('id_grup');
+                          $subquery->where('id_grup', $penggajiangrup->id);
                       });
             })->get();
+            dd($penggajiangrup,$slipgaji);
             
             $karyawan = Karyawan::where('partner', $row->partner)
                 ->where('status_kerja', 'Aktif')
@@ -1195,7 +1196,7 @@ class PenggajianController extends Controller
             $detailinformasis = Detailinformasigaji::with('karyawans')
                 ->join('benefit', 'detail_informasigaji.id_benefit', '=', 'benefit.id')
                 ->join('kategoribenefit', 'benefit.id_kategori', '=', 'kategoribenefit.id')
-                ->select('detail_informasigaji.*','benefit.nama_benefit','benefit.id_kategori','benefit.jumlah','benefit.kode','benefit.aktif','benefit.dikenakan_pajak','benefit.kelas_pajak','benefit.muncul_dipenggajian','benefit.siklus_pembayaran','benefit.urutan','benefit.tipe','benefit.gaji_minimum','benefit.gaji_maksimum','benefit.besaran_bulanan','benefit.besaran_mingguan' ,'benefit.besaran_harian' ,'benefit.besaran_jam' ,'benefit.besaran' ,'benefit.dibayarkan_oleh','kategoribenefit.nama_kategori','kategoribenefit.kode as kode_kategori')
+                ->select('detail_informasigaji.*','benefit.nama_benefit','benefit.id_kategori','benefit.dibayarkan_oleh','benefit.jumlah','benefit.kode','benefit.aktif','benefit.dikenakan_pajak','benefit.kelas_pajak','benefit.muncul_dipenggajian','benefit.siklus_pembayaran','benefit.urutan','benefit.tipe','benefit.gaji_minimum','benefit.gaji_maksimum','benefit.besaran_bulanan','benefit.besaran_mingguan' ,'benefit.besaran_harian' ,'benefit.besaran_jam' ,'benefit.besaran' ,'benefit.dibayarkan_oleh','kategoribenefit.nama_kategori','kategoribenefit.kode as kode_kategori')
                 ->where('detail_informasigaji.id_informasigaji', $informasigaji->id)
                 ->where('detail_informasigaji.id_karyawan',$informasigaji->id_karyawan)
                 ->get();
@@ -1208,6 +1209,8 @@ class PenggajianController extends Controller
             $totalpotongan = 0;
             $gajibersih = 0;
             $lembur = 0;
+            $asuransipt = 0;
+            $asuransikry= 0;
 
             foreach ($detailinformasis as $detail)
             {
@@ -1237,9 +1240,12 @@ class PenggajianController extends Controller
                         }
                         break;
                     case 5:
-                        // dd($detail->nominal);
-                        $asuransi += $detail->nominal;
-                        // dd($detail,$asuransi);
+                        if ($detail->dibayarkan_oleh == 'Perusahaan') {
+                            $asuransipt += $detail->nominal;
+                        }elseif($detail->dibayarkan_oleh == 'Karyawan') {
+                            $asuransikry += $detail->nominal;
+                        }
+                        $asuransi = $asuransikry;
                         break;
                     case 6:
                         $potongan += $detail->nominal;
@@ -1248,9 +1254,8 @@ class PenggajianController extends Controller
             }
 
             $gajikotor = $gajipokok + $tunjangan;
-            $totalpotongan = $asuransi + $potongan;
+            $totalpotongan = $asuransikry + $potongan;
             $gajibersih = $gajikotor - $totalpotongan;
-            // dd($gajipokok,$gajikotor, $tunjangan,$totalpotongan,$gajibersih,$lembur);
 
             $dataupdate = [
                 'lembur'     => $lembur ? $lembur : 0,
