@@ -108,7 +108,7 @@
                                                     <td>{{\Carbon\Carbon::parse($data->karyawans->tglmasuk)->format('d/m/Y')}}</td>
                                                     <td>
                                                         <div  class="d-grid gap-2" role="group" aria-label="Basic example">
-                                                            <a href="" class="col-md-6 btn btn-info btn-sm" data-toggle="modal" data-target="#editslip{{$data->id}}" style="width:35px;"><i class="fa fa-edit"></i></a>
+                                                            {{-- <a href="" class="col-md-6 btn btn-info btn-sm" data-toggle="modal" data-target="#editslip{{$data->id}}" style="width:35px;"><i class="fa fa-edit"></i></a> --}}
                                                             <form method="POST" action="/slipgaji{{$data->id}}" class="col-md-1">
                                                               @csrf
                                                               @method('PUT')

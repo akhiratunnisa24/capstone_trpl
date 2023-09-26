@@ -275,12 +275,14 @@ class Kernel extends ConsoleKernel
                             }
                             $hrdmanager = User::where('partner',$partner->id)->where('role',1)->first();
                             if($hrdmanager !== null){
-                                $hrdmng = $hrdmanager->karyawans->email;
+                                $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+                                $hrdmng = $hrdmng->email;
                             }
 
                             $hrdstaff   = User::where('partner',$partner->id)->where('role',2)->first();
                             if($hrdstaff !== null){
-                                $hrdstf = $hrdstaff->karyawans->email;
+                                $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                                $hrdstf = $hrdstf->email;
                             }
 
                             $data = [

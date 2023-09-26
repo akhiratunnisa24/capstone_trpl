@@ -379,7 +379,7 @@ class karyawanController extends Controller
                     ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                     ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
                     ->where('partner',$partner)
-                    ->count('jam_masuk');
+                    ->count();
             }elseif(Auth::user()->role == 7 || Auth::user()->role == 3 && $row->jabatan == "Direksi" || Auth::user()->role == 2)
             {
                 $absenBulanini  = Absensi::where('partner',Auth::user()->partner)
@@ -389,7 +389,7 @@ class karyawanController extends Controller
                 $absenBulanlalu  = Absensi::where('partner',Auth::user()->partner)
                     ->whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                     ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
-                    ->count('jam_masuk');
+                    ->count();
             }
 
             //absen masuk bulan lalu
@@ -1776,6 +1776,10 @@ class karyawanController extends Controller
             {
                 if($role === 3 && $row->jabatan === "Direksi")
                 {
+                    $absenBulanini  = Absensi::where('partner',Auth::user()->partner)
+                        ->whereYear('tanggal', '=', Carbon::now()->year)
+                        ->whereMonth('tanggal', '=', Carbon::now()->month)
+                        ->count();
                     $absenTerlambatbulanlalu = Absensi::whereYear('tanggal', '=', Carbon::now()->subMonth()->year)
                         ->whereMonth('tanggal', '=', Carbon::now()->subMonth()->month)
                         ->where('partner',$partner)
