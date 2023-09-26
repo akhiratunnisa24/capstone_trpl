@@ -3618,7 +3618,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-lg-6">
                 <div class="panel panel-border panel-warning">
                     <div class="panel-heading" style="height:40px;">
@@ -3653,10 +3653,10 @@
             var absenBulanlalumanager = {{ $absenBulanlalumanager }};
             var absenTerlambatbulanlalumanager = {{ $absenTerlambatbulanlalumanager }};
             var tidakMasukBulanlalu = {{ $tidakMasukBulanlalu }};
-            var cutiBulanInimanager = {{ $cutiBulanInimanager }};
-            var dataIzinBulanInimanager = {{ $dataIzinBulanInimanager }};
-            var cutiBulanLalumanager = {{ $cutiBulanLalumanager }};
-            var dataIzinBulanLalumanager = {{ $dataIzinBulanLalumanager }};
+            var cutiBulanInimanager = {{ $jumCutiBulanInimgr }};
+            var dataIzinBulanInimanager = {{ $jumIzinBulanInimgr }};
+            var cutiBulanLalumanager = {{ $jumCutiBulanLalumgr }};
+            var dataIzinBulanLalumanager = {{ $jumIzinBulanLalumgr }};
 
                 // '#FF8C00',
 

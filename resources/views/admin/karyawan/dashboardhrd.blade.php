@@ -544,7 +544,7 @@
 
                     </div>
                 </div>
-                
+
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -1774,13 +1774,13 @@
         var masukBulanini = {{ $absenBulaninihrd }};
         var terlambatBulanIni =  {{$absenTerlambatBulanInihrd }};
         var tidakMasukBulanIni = {{ $tidakMasukBulanInihrd }};
-        var cutiBulanIni = {{ $cutiBulanInihrd }};
-        var IjinBulanIni = {{ $dataIzinBulanInihrd }};
+        var cutiBulanIni = {{ $jumCutiBulanIni }};
+        var IjinBulanIni = {{ $jumIzinBulanIni }};
         var masukBulanLalu = {{ $absenBulanLaluhrd }};
         var terlambatBulanLalu = {{ $absenTerlambatbulanlaluhrd }};
         var tidakMasukBulanLalu = {{ $tidakMasukBulanLaluhrd }};
-        var cutiBulanLalu = {{ $cutibulanlaluhrd }};
-        var ijinBulanlalu = {{$dataIzinbulanlaluhrd }};
+        var cutiBulanLalu = {{ $jumCutiBulanLalu }};
+        var ijinBulanlalu = {{$jumIzinBulanLalu }};
 
         const data = {
             labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
