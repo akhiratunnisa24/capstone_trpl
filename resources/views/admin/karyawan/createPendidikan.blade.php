@@ -539,8 +539,8 @@
                     // console.log(data);
                     $('#tingkat_pendidikan').val(data.tingkat);
                     $('#nama_sekolah').val(data.nama_sekolah);
-                    $('#namaLembaga').val(data.nama_lembaga);
                     $('#jurusan').val(data.jurusan);
+                    $('#ijazahFormal').val(data.ijazah_formal);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
                     $('#datepicker-autoclose-format-u').val(data.tahun_masuk_formal);
                     $('#datepicker-autoclose-format-v').val(data.tahun_lulus_formal);
@@ -553,8 +553,9 @@
                     // var tanggalLulusFormatted = tanggalLulus ? ("0" + tanggalLulus.getDate()).slice(-2) + '/' + ("0" + (tanggalLulus.getMonth() + 1)).slice(-2) + '/' + tanggalLulus.getFullYear() : '';
                     // $('#tahun_lulusFormal').val(tanggalLulus);
 
-                    $('#ijazahFormal').val(data.ijazah_formal);
+ 
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
+                    $('#namaLembaga').val(data.nama_lembaga);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
                     $('#datepicker-autoclose-format-w').val(data.tahun_masuk_nonformal);
                     $('#datepicker-autoclose-format-x').val(data.tahun_lulus_nonformal);
@@ -596,8 +597,8 @@
                 // Isi data ke dalam form
                     $('#tingkat_pendidikan').val(data.tingkat);
                     $('#nama_sekolah').val(data.nama_sekolah);
-                    $('#namaLembaga').val(data.nama_lembaga);
                     $('#jurusan').val(data.jurusan);
+                    $('#ijazahFormal').val(data.ijazah_formal);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
                     $('#datepicker-autoclose-format-u').val(data.tahun_masuk_formal);
                     $('#datepicker-autoclose-format-v').val(data.tahun_lulus_formal);
@@ -609,8 +610,7 @@
                     // var tanggalLulusFormalFormatted = tanggalLulusFormal ? ("0" + tanggalLulusFormal.getDate()).slice(-2) + '/' + ("0" + (tanggalLulusFormal.getMonth() + 1)).slice(-2) + '/' + tanggalLulusFormal.getFullYear() : '';
                     // $('#tahun_lulusFormal').val(tanggalLulusFormalFormatted);
 
-
-                    $('#ijazahFormal').val(data.ijazah_formal);
+                    $('#namaLembaga').val(data.nama_lembaga);
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#kotaPendidikanNonFormal').val(data.kota_pnonformal);
                     $('#datepicker-autoclose-format-w').val(data.tahun_masuk_nonformal);

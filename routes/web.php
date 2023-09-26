@@ -169,26 +169,37 @@ Route::get('showkanidat{id}', [RekruitmenController::class, 'showkanidat'])->nam
     Route::get('/create_data_keluarga_pelamar', [FormPelamarController::class, 'createKeluarga'])->name('createKeluarga');
     Route::post('/store_data_keluarga', [FormPelamarController::class, 'storedk'])->name('store_data_keluarga');
     Route::post('/update_data_keluarga', [FormPelamarController::class, 'updatedk'])->name('update_data_keluarga');
+    Route::delete('/delete_data_keluarga', [FormPelamarController::class, 'deletedk'])->name('delete_dk');
     //Data kontak darurat
     Route::get('/create_kontak_darurat', [FormPelamarController::class, 'createkonrat'])->name('create_kontak_darurat');
     Route::post('/store_kontak_darurat', [FormPelamarController::class, 'storekd'])->name('store_kontak_darurat');
     Route::post('/update_kontak_darurat', [FormPelamarController::class, 'updatekd'])->name('/update_kontak_darurat');
+    Route::delete('/delete_kontak_darurat', [FormPelamarController::class, 'deletekd'])->name('delete_kd');
     //form data pendidikan
     Route::get('/create_data_pendidikan', [FormPelamarController::class, 'creatependidikan'])->name('create_data_pendidikan');
     Route::post('/storep_formal', [FormPelamarController::class, 'storepformal'])->name('storep_formal');
     Route::post('/update_pendidikan', [FormPelamarController::class, 'updaterPendidikan'])->name('update_pendidikan');
+    Route::delete('/delete_pendidikan', [FormPelamarController::class, 'deletePendidikan'])->name('delete_pendidikan');
+
+
     //form data pekerjaan
     Route::get('/create_data_pekerjaan', [FormPelamarController::class, 'createpekerjaan'])->name('create_data_pekerjaan');
     Route::post('/store_pekerjaan', [FormPelamarController::class, 'storepekerjaan'])->name('store_pekerjaan');
     Route::post('/update_pekerjaan', [FormPelamarController::class, 'updaterPekerjaan'])->name('update_pekerjaan');
+    Route::delete('/delete_pekerjaan', [FormPelamarController::class, 'deletePekerjaan'])->name('destroy_Pekerjaan');
+
     //Form data organisasi
     Route::get('/create_data_organisasi', [FormPelamarController::class, 'createorganisasi'])->name('create_data_organisasi');
     Route::post('/store_organisasi', [FormPelamarController::class, 'storeorganisasi'])->name('store_organisasi');
     Route::post('/update_organisasi', [FormPelamarController::class, 'updaterOrganisasi'])->name('update_organisasi');
+    Route::delete('/delete_organisasi', [FormPelamarController::class, 'deleteOrganisasi'])->name('delete_organisasi');
+
     //form data prestasi
     Route::get('/create_data_prestasi', [FormPelamarController::class, 'createprestasi'])->name('create_data_prestasi');
     Route::post('/store_prestasi', [FormPelamarController::class, 'storeprestasi'])->name('store_prestasi');
     Route::post('/update_prestasi', [FormPelamarController::class, 'updaterPrestasi'])->name('update_prestasi');
+    Route::delete('/delete_prestasi', [FormPelamarController::class, 'deletePrestasi'])->name('delete_prestasi');
+
     //preview data dan save ke database
     Route::get('/preview_data_pelamar', [FormPelamarController::class, 'previewData'])->name('preview_data_pelamar');
     Route::post('/store_Data', [FormPelamarController::class, 'storetoDatabase'])->name('store_Data');
@@ -629,7 +640,7 @@ Route::get('showpekerjaan{id}', [karyawanController::class, 'showpekerjaan'])->n
 // Edit Data Pekerjaan saat data sudah di database / saat Show
 Route::put('/updatePekerjaan/{id}', [karyawansController::class, 'updatePekerjaan'])->name('updatePekerjaan');
 // Delete Pekerjaan
-Route::get('/destroyPekerjaan{id}', [karyawanController::class, 'destroyPekerjaan'])->name('destroyPekerjaan');
+Route::delete('/destroyPekerjaan{id}', [karyawanController::class, 'destroyPekerjaan'])->name('destroyPekerjaan');
 
 
 //Form data organisasi

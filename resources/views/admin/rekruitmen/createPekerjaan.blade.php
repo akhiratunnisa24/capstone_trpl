@@ -65,9 +65,9 @@
                                                     <td>{{ $pek['alamat'] }}</td>
                                                     {{-- <td>{{ $pek['tgl_mulai'] }}</td>
                                                 <td>{{ $pek['tgl_selesai'] }}</td> --}}
-                                                    <td>{{ \Carbon\Carbon::parse($pek['tgl_mulai'])->format('d/m/Y') }}
+                                                    <td>{{$pek['tgl_mulai']}}
                                                     </td>
-                                                    <td>{{ \Carbon\Carbon::parse($pek['tgl_selesai'])->format('d/m/Y') }}
+                                                    <td>{{ $pek['tgl_selesai']}}
                                                     </td>
                                                     <td>{{ $pek['jabatan'] }}</td>
                                                     <td>{{ $pek['level'] }}</td>
@@ -80,11 +80,14 @@
                                                                 id="editPekerjaan" data-key="{{ $key }}">
                                                                 <i class="fa fa-edit" title="Edit"></i>
                                                             </a>
-                                                            {{-- /delete-pekerjaan/{{$key}} --}}
-                                                            {{-- <form class="pull-right" action="" method="POST" style="margin-right:5px;">
-                                                            <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{ $key }}"><i class="fa fa-trash"></i></button>
-                                                        </form>  --}}
-                                                            {{-- <button type="button" id="hapus_dakel" data-key="{{ $key }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
+                                                            <form class="pull-right" action="{{ route('destroy_Pekerjaan') }}" method="POST" style="margin-right: 5px;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="key" value="{{$key}}">
+                                                                <button type="submit" class="btn btn-danger btn-sm delete_pekerjaan" data-key="{{$key}}">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </form>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -104,8 +107,7 @@
                                                             <div>
                                                                 <div
                                                                     class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                                    <label class="text-white m-b-10">E. RIWAYAT
-                                                                        PEKERJAAN</label>
+                                                                    <label class="text-white m-b-10">E. RIWAYAT PEKERJAAN</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6 m-t-10">
@@ -277,8 +279,7 @@
                                                     <div>
                                                         <div
                                                             class="modal-header bg-info panel-heading  col-sm-15 m-b-5">
-                                                            <label class="text-white m-b-10">E. RIWAYAT
-                                                                PEKERJAAN</label>
+                                                            <label class="text-white m-b-10">E. RIWAYAT PEKERJAAN</label>
                                                         </div>
                                                     </div>
 
@@ -466,26 +467,17 @@
 
                     // Ambil data dari objek yang sesuai dengan nomor index
                     var data = {!! json_encode($pekerjaan) !!}[nomorIndex];
-                    console.log(data.jenis_usaha, data.gaji);
+                
                     // Isi data ke dalam form
                     $('#namaPerusahaan').val(data.nama_perusahaan);
                     $('#alamatPerusahaan').val(data.alamat);
-                    $('#JenissUsaha').val(data.jenis_usaha);
+                    // $('#JenissUsaha').val(data.jenis_usaha);
                     $('#jabatanRpekerjaan').val(data.jabatan);
                     $('#levelRpekerjaan').val(data.level);
-                    $('#namaAtasan').val(data.nama_atasan);
-                    $('#namaDirektur').val(data.nama_direktur);
-                    // $('#datepicker-autoclose33').val(data.tgl_mulai);
-                    // $('#datepicker-autoclose34').val(data.tgl_selesai);
-                    var tanggal = new Date(data.tgl_mulai);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                    .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tgl_mulai').val(tanggalFormatted);
-
-                    var tanggal = new Date(data.tgl_selesai);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                    .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tgl_selesai').val(tanggalFormatted);
+                    // $('#namaAtasan').val(data.nama_atasan);
+                    // $('#namaDirektur').val(data.nama_direktur);
+                    $('#datepicker-autoclose510').val(data.tgl_mulai);
+                    $('#datepicker-autoclose511').val(data.tgl_selesai);
 
                     $('#alasanBerhenti').val(data.alasan_berhenti);
                     $('#gajih').val(data.gaji);

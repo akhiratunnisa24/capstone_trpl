@@ -1188,20 +1188,48 @@
             minViewMode: "months",
         });
         $("#datepicker-autoclose510").datepicker({
-            format: "mm-yyyy",
+            format: "mm/yyyy",
             autoclose: true,
             todayHighlight: true,
             startView: "year",
             minViewMode: "months",
         });
         $("#datepicker-autoclose511").datepicker({
-            format: "mm-yyyy",
+            format: "mm/yyyy",
             autoclose: true,
             todayHighlight: true,
             startView: "year",
             minViewMode: "months",
         });
+        jQuery("#datepicker-autoclose512").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
 
+        jQuery("#datepicker-autoclose513").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose514").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
+        jQuery("#datepicker-autoclose515").datepicker({
+            format: "yyyy",
+            autoclose: true,
+            todayHighlight: true,
+            viewMode: "years",
+            minViewMode: "years",
+        });
         jQuery("#datepicker-inline").datepicker();
         jQuery("#datepicker-multiple-date").datepicker({
             format: "yyyy/mm/dd",

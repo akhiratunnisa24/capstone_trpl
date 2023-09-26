@@ -413,7 +413,7 @@
 
                 // Ambil data dari objek yang sesuai dengan nomor index
                 var data = {!! json_encode($pekerjaan) !!}[nomorIndex];
-                console.log(data.gaji, data.tgl_mulai,data.tgl_selesai);
+                // console.log(data.gaji, data.tgl_mulai,data.tgl_selesai);
                 // Isi data ke dalam form
                     $('#namaPerusahaan').val(data.nama_perusahaan);
                     $('#alamatPerusahaan').val(data.alamat);
