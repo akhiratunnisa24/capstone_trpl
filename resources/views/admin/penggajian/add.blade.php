@@ -49,7 +49,7 @@
                             <div class="form-group col-sm">
                                 <label class="col-form-label">Tanggal Masuk</label>
                                 <input id="datepicker-autoclose-format-al" type="text" class="form-control" placeholder="dd/mm/yyyy"
-                                    name="tglmasuk" autocomplete="off" rows="10" required readonly>
+                                    name="tglmasuk" autocomplete="off" rows="10" required disabled>
                             </div>
                             <div class="form-group col-sm" id="nama_bank-group">
                                 <label class="col-form-label">Nama Bank</label>
