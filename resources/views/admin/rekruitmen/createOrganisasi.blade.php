@@ -2,8 +2,6 @@
 
     <!-- Datapicker -->
     <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
-
-
     <meta charset="utf-8" />
     <title>REMS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -64,9 +62,8 @@
                                                 <td>{{ $pek['alamat'] }}</td>
                                                 {{-- <td>{{ $pek['tgl_mulai'] }}</td>
                                                 <td>{{ $pek['tgl_selesai'] }}</td> --}}
-                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_mulai'])->format('d/m/Y') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($pek['tgl_selesai'])->format('d/m/Y') }}
-                                                </td>
+                                                <td>{{ $pek['tgl_mulai']}}</td>
+                                                <td>{{ $pek['tgl_selesai'] }}</td>
                                                 <td>{{ $pek['jabatan'] }}</td>
                                                 <td>{{ $pek['no_sk'] }}</td>
                                                 <td class="text-center">
@@ -76,15 +73,14 @@
                                                             id="editOrganisasi" data-key="{{ $key }}">
                                                             <i class="fa fa-edit" title="Edit"></i>
                                                         </a>
-                                                        {{-- /delete-pekerjaan/{{$key}} --}}
-                                                        {{-- <form class="pull-right" action="" method="POST"
-                                                            style="margin-right:5px;">
-                                                            <button type="submit"
-                                                                class="btn btn-danger btn-sm delete_dakel"
-                                                                data-key="{{ $key }}"><i
-                                                                    class="fa fa-trash"></i></button>
-                                                        </form> --}}
-                                                        {{-- <button type="button" id="hapus_dakel" data-key="{{ $key }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
+                                                        <form class="pull-right" action="{{ route('delete_organisasi') }}" method="POST" style="margin-right: 5px;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="hidden" name="key" value="{{$key}}">
+                                                            <button type="submit" class="btn btn-danger btn-sm delete_organisasi" data-key="{{$key}}">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -133,15 +129,15 @@
                                                                     <div>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose506" type="text"
-                                                                                class="form-control" placeholder="yyyy"
+                                                                                class="form-control" placeholder="mm/yyyy"
                                                                                 name="tglmulai" style="text-align: center"
-                                                                                autocomplete="off" rows="10">
+                                                                                autocomplete="off" rows="10" readonly>
                                                                             <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                                class="input-group-addon bg-primary text-white b-0">-</span>
                                                                             <input id="datepicker-autoclose507" type="text"
-                                                                                class="form-control" placeholder="yyyy"
+                                                                                class="form-control" placeholder="mm/yyyy"
                                                                                 style="text-align: center" name="tglselesai"
-                                                                                autocomplete="off" rows="10">
+                                                                                autocomplete="off" rows="10" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -261,15 +257,15 @@
                                                             <div>
                                                                 <div class="input-group">
                                                                     <input id="datepicker-autoclose508" type="text"
-                                                                        class="form-control" placeholder="yyyy"
+                                                                        class="form-control" placeholder="mm/yyyy"
                                                                         name="tglmulai" style="text-align: center"
-                                                                        autocomplete="off" rows="10">
+                                                                        autocomplete="off" rows="10" readonly>
                                                                     <span
-                                                                        class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                        class="input-group-addon bg-primary text-white b-0">-</span>
                                                                     <input id="datepicker-autoclose509" type="text"
-                                                                        class="form-control" placeholder="yyyy"
+                                                                        class="form-control" placeholder="mm/yyyy"
                                                                         style="text-align: center" name="tglselesai"
-                                                                        autocomplete="off" rows="10">
+                                                                        autocomplete="off" rows="10" readonly>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -357,17 +353,17 @@
                 // Isi data ke dalam form
                 $('#namaOrganisasi').val(data.nama_organisasi);
                 $('#alamatOrganisasi').val(data.alamat);
-                // $('#datepicker-autoclose33').val(data.tgl_mulai);
-                // $('#datepicker-autoclose34').val(data.tgl_selesai);
-                var tanggal = new Date(data.tgl_mulai);
-                var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                    .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                $('#tglmulai').val(tanggalFormatted);
+                $('#datepicker-autoclose508').val(data.tgl_mulai);
+                $('#datepicker-autoclose509').val(data.tgl_selesai);
+                // var tanggal = new Date(data.tgl_mulai);
+                // var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
+                //     .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                // $('#tglmulai').val(tanggalFormatted);
 
-                var tanggal = new Date(data.tgl_selesai);
-                var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                    .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                $('#tglselesai').val(tanggalFormatted);
+                // var tanggal = new Date(data.tgl_selesai);
+                // var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
+                //     .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                // $('#tglselesai').val(tanggalFormatted);
 
                 $('#jabatanRorganisasi').val(data.jabatan);
                 $('#noSKorganisasi').val(data.no_sk);

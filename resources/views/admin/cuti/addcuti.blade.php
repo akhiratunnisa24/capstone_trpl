@@ -19,20 +19,20 @@
                                     <div class="form-group col-sm">
                                         <label class="form-label">Tanggal Permohonan</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosew" name="tgl_permohonan"  autocomplete="off" rows="10" required>
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosew" name="tgl_permohonan"  autocomplete="off" rows="10" required readonly>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
-                                    </div>  
+                                    </div>
                                     <div class="form-group col-sm">
                                         <label class="col-form-label">Nama Karyawan</label>
                                         <select name="id_karyawans" id="id_karyawans" class="form-control selectpicker" data-live-search="true" required>
                                             <option>-- Pilih Karyawan --</option>
                                             @foreach ($karyawan as $data)
                                                     <option value="{{ $data->id}}">
-                                                        {{ $data->nama }} 
+                                                        {{ $data->nama }}
                                                     </option>
                                             @endforeach
-                                        </select> 
+                                        </select>
                                     </div>
                                     <div class="form-group col-sm">
                                         <label class="col-form-label">Nomor Induk Karyawan</label>
@@ -41,24 +41,24 @@
                                     <div class="form-group col-sm">
                                         <label class="col-form-label">Jabatan</label>
                                         <input type="text" class="form-control" name="jabatan" id="jabatan"  readonly>
-                                    </div> 
+                                    </div>
                                     <div class="form-group col-sm">
                                         <label class="col-form-label">Divisi</label>
                                         <input type="text" class="form-control" id="namadepartemen" readonly>
                                         <input type="hidden" class="form-control" name="departemen" id="departemen" hidden>
-                                    </div>    
+                                    </div>
 
-                                   
+
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group col-sm">
                                         <label  class="col-form-label">Status Ketidakhadiran</label>
                                         <select name="id_jeniscuti" id="id_jeniscuti" class="form-control selectpicker" data-live-search="true" required>
                                             <option>-- Pilih Status Ketidakhadiran --</option>
-                                           
-                                        </select> 
+
+                                        </select>
                                     </div>
-                            
+
                                     <div class="row">
                                         <div class="col-sm-6 col-xs-12">
                                             <div>
@@ -66,21 +66,21 @@
                                                     <div class="form-group">
                                                         <label class="form-label">Tanggal Pelaksanaan</label>
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" onchange=(jumlahcutis()) placeholder="dd/mm/yyyy" id="datepicker-autocloseh" name="tgl_mulai"  autocomplete="off" rows="10" required>
+                                                            <input type="text" class="form-control" onchange=(jumlahcutis()) placeholder="dd/mm/yyyy" id="datepicker-autocloseh" name="tgl_mulai"  autocomplete="off" rows="10" required readonly>
                                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                         </div>
                                                     </div>
                                                 {{-- </form> --}}
                                             </div>
                                         </div>
-                                    
+
                                         <div class="col-sm-6 col-xs-12">
                                             <div>
                                                 {{-- <form class="" action="#"> --}}
                                                     <div class="form-group">
                                                         <label class="form-label">Sampai</label>
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" onchange=(jumlahcutis()) placeholder="dd/mm/yyyy" id="datepicker-autoclosei" name="tgl_selesai"  autocomplete="off" rows="10" required>
+                                                            <input type="text" class="form-control" onchange=(jumlahcutis()) placeholder="dd/mm/yyyy" id="datepicker-autoclosei" name="tgl_selesai"  autocomplete="off" rows="10" required readonly>
                                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                         </div>
                                                     </div>
@@ -118,10 +118,10 @@
                                 </div>
                             </div>
                         </div>
-                            
+
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                            <button type="submit" id="submit-button" class="btn btn-success" value="save">Kirim</button>
+                            <button type="button" class="btn btn-sm  btn-danger" data-dismiss="modal">Tutup</button>
+                            <button type="submit" id="submit-button" class="btn btn-sm btn-success" value="save">Kirim</button>
                         </div>
                     </form>
                 </div>
@@ -219,7 +219,7 @@
 
             // var start_date = new Date(start);
             // var end_date   = new Date(end);
-           
+
 
             var endArray = end.split('/');
             var endFormatted = endArray[1] + '/' + endArray[0] + '/' + endArray[2];
@@ -240,7 +240,7 @@
                         return new Date(dateFormatted).getTime();
                     });
 
-                    for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1)) 
+                    for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1))
                     {
                         //cek workdays
                         let tanggal = new Date(d);
@@ -263,7 +263,7 @@
 
                     console.info(daysOfYear.length);
                     $('#jumlahct').val(daysOfYear.length ?? 0);
-                } 
+                }
             });
         };
     </script>

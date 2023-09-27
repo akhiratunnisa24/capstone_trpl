@@ -59,7 +59,7 @@
                             </div>
 
                             <input type="hidden" class="form-control" name="id_settingalokasi" placeholder="id_settingalokasi" id="id_settingalokasi" readonly>
-                            
+
                             {{-- <div class="form-group col-sm" id="id_karyawan">
                                 <label for="id_karyawan" class="col-form-label">Karyawan</label>
                                 <select name="id_karyawan" id="id_karyawan" class="form-control" required>
@@ -118,7 +118,7 @@
                                     <label for="aktif_dari" class="form-label">Aktif Dari</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="yyyy/mm/dd"
-                                            id="datepicker-autoclosea1" name="aktif_dari" autocomplete="off" required>
+                                            id="datepicker-autoclosea1" name="aktif_dari" autocomplete="off" required readonly>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>
                                     </div>
@@ -129,7 +129,7 @@
                                     <label for="sampai" class="form-label">Sampai</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="yyyy/mm/dd"
-                                            id="datepicker-autoclosea2" name="sampai" autocomplete="off" required>
+                                            id="datepicker-autoclosea2" name="sampai" autocomplete="off" required readonly>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>
                                     </div>
@@ -139,8 +139,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" onclick="checkData()" class="btn btn-success" name="submit" value="save" id="save-button">Simpan</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" onclick="checkData()" class="btn btn-sm btn-success" name="submit" value="save" id="save-button">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -178,7 +178,7 @@
                 }else{
                     $('#departemen').val(data.mode_karyawan);
                 }
-                
+
             }
         });
     });
@@ -219,7 +219,7 @@
 
         $('#jeniscuti').on('change', function(e)
         {
-          
+
             if(e.target.value== 1)
             {
                 $('#tanggalmulai').prop("hidden", false);
@@ -242,7 +242,7 @@
                     $('#success-messages').show();
                     $('#save-button').attr('disabled', false);
 
-                    setTimeout(function() 
+                    setTimeout(function()
                     {
                         $('#success-messages').hide();
                     }, 3000);
@@ -254,7 +254,7 @@
                     $('#error-messages').html(' "WARNING !!"<br>Karyawan ini tidak memiliki Jatah Cuti Tahunan<br>Karena masa kerjanya yang kurang dari 1 Tahun');
                     $('#error-messages').show();
 
-                    setTimeout(function() 
+                    setTimeout(function()
                     {
                         $('#error-messages').hide();
                     }, 3000);
@@ -301,7 +301,7 @@
                 console.log(error);
             }
         });
-    } 
+    }
 </script>--}}
 
 {{-- <script>
@@ -312,11 +312,11 @@
 
         let start_month = new Date(start);
         let end_month   = new Date(end);
-           
+
         //menghitung selisih tahun dan bulan
         let selisihTahun = end_month.getFullYear()-start_month.getFullYear();
         let selisihBulan = end_month.getMonth()-start_month.getMonth();
-            
+
         let durasi = selisihBulan+(selisihTahun*12);
 
         console.info(durasi);

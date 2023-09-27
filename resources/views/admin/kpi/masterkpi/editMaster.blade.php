@@ -42,20 +42,20 @@
                                     <div class="form-group">
                                         <label for="tgl_mulai" class="form-label">Tanggal Aktif</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tglaktif)->format('d/m/Y')}}" id="datepicker-autoclosel" name="tglaktif"  autocomplete="off" rows="10">
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tglaktif)->format('d/m/Y')}}" id="datepicker-autoclosel" name="tglaktif"  autocomplete="off" rows="10" readonly>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>
-                               
+
                             </div>
                         </div>
-                       
+
                         <div class="col-sm-6 col-xs-12">
                             <div class="m-t-10">
                                     <div class="form-group">
                                         <label for="tgl_selesai" class="form-label">Tanggal Berakhir</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tglberakhir)->format('d/m/Y')}}" id="datepicker-autoclosem" name="tglberakhir"  autocomplete="off" rows="10">
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tglberakhir)->format('d/m/Y')}}" id="datepicker-autoclosem" name="tglberakhir"  autocomplete="off" rows="10" readonly>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>
@@ -63,8 +63,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success waves-effect waves-light" name="submit"
+                        <button type="button" class="btn btn-sm btn-danger waves-effect" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light" name="submit"
                             value="save">Simpan</button>
                     </div>
 

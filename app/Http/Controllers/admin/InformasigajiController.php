@@ -43,6 +43,7 @@ class InformasigajiController extends Controller
                 $informasigaji->level_jabatan   = $strukturgaji->id_level_jabatan;
                 $informasigaji->gaji_pokok      = $data->gaji;
                 $informasigaji->partner         = $strukturgaji->partner;
+                $informasigaji->status          = 1;
                 
                 $informasigaji->save();
 
@@ -106,7 +107,7 @@ class InformasigajiController extends Controller
             }
             else
             {
-                $informasigaji = Informasigaji::where('id_karyawan',$data->id)->first();
+                $informasigaji = Informasigaji::where('id_karyawan',$data->id)->where('status',1)->first();
                 $detailstruktur = DetailSalaryStructure::where('id_salary_structure', $strukturgaji->id)->get();
 
                 $details = [];

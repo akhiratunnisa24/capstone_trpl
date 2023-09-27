@@ -23,17 +23,17 @@
                             <option>-- Pilih Tim --</option>
                             @foreach ($tim as $data)
                                     <option value="{{ $data->id }}">
-                                       {{ $data->namatim }} 
+                                       {{ $data->namatim }}
                                     </option>
                             @endforeach
-                        </select> 
+                        </select>
                     </div>
                     <div class="form-group col-sm">
                         <label for="id_karyawan" class="col-form-label">Karyawan</label>
                         <select name="id_karyawan" id="id_karyawan" class="form-control" required>
                             <option>-- Pilih Karyawan--</option>
-                           
-                        </select> 
+
+                        </select>
                     </div>
                     <div class="form-group col-sm">
                         <label for="nik" class="col-form-label">NIK Karyawan</label>
@@ -61,21 +61,21 @@
                                     <div class="form-group">
                                         <label class="form-label">Tanggal Mulai</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosez" name="tgl_mulai"  autocomplete="off" rows="10" required>
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosez" name="tgl_mulai"  autocomplete="off" rows="10" required readonly>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>
                                 {{-- </form> --}}
                             </div>
                         </div>
-                    
+
                         <div class="col-sm-6 col-xs-12">
                             <div>
                                 {{-- <form class="" action="#"> --}}
                                     <div class="form-group">
                                         <label class="form-label">Deadline</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosezz" name="tgl_selesai"  autocomplete="off" rows="10" required>
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosezz" name="tgl_selesai"  autocomplete="off" rows="10" required readonly>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>
@@ -83,10 +83,10 @@
                             </div>
                         </div>
                     </div>
-        
+
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
-                        <button type="submit" name="submit" value="save" class="btn btn-success waves-effect waves-light">Simpan</button>
+                        <button type="button" class="btn btn-sm btn-danger waves-effect" data-dismiss="modal">Tutup</button>
+                        <button type="submit" name="submit" value="save" class="btn btn-sm btn-success waves-effect waves-light">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -115,7 +115,7 @@
                 success: function(data) {
                     $('#id_karyawan').empty(); // Menghapus semua opsi sebelumnya
                     $('#id_karyawan').append('<option>-- Pilih Karyawan--</option>'); // Menambahkan opsi default
-    
+
                     // Menambahkan opsi karyawan berdasarkan data yang diterima
                     for (var i = 0; i < data.length; i++) {
                         $('#id_karyawan').append('<option value="' + data[i].karyawans.id + '">' + data[i].karyawans.nama + '</option>');
@@ -126,8 +126,8 @@
             });
         });
     </script>
-    
-    
+
+
     <script>
         $('#id_karyawan').on('change', function(e) {
             var id_karyawan = e.target.value;

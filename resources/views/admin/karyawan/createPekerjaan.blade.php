@@ -131,10 +131,10 @@
                                                                     <div>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose-format-y" type="text" class="form-control" placeholder="mm/yyyy"
-                                                                                name="tglmulai" autocomplete="off"  rows="10">
+                                                                                name="tglmulai" autocomplete="off"  rows="10" readonly>
                                                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input id="datepicker-autoclose-format-z" type="text" class="form-control" placeholder="mm/yyyy"
-                                                                                name="tglselesai" autocomplete="off"  rows="10">
+                                                                                name="tglselesai" autocomplete="off"  rows="10" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -252,10 +252,10 @@
                                                                     <div>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose-format-aa" type="text" class="form-control" placeholder="mm/yyyy"
-                                                                            name="tglmulai"  autocomplete="off"  rows="10">
+                                                                            name="tglmulai"  autocomplete="off"  rows="10" readonly>
                                                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input id="datepicker-autoclose-format-ab" type="text" class="form-control" placeholder="mm/yyyy"
-                                                                                name="tglselesai" autocomplete="off"  rows="10">
+                                                                                name="tglselesai" autocomplete="off"  rows="10" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -413,7 +413,7 @@
 
                 // Ambil data dari objek yang sesuai dengan nomor index
                 var data = {!! json_encode($pekerjaan) !!}[nomorIndex];
-                console.log(data.gaji, data.tgl_mulai,data.tgl_selesai);
+                // console.log(data.gaji, data.tgl_mulai,data.tgl_selesai);
                 // Isi data ke dalam form
                     $('#namaPerusahaan').val(data.nama_perusahaan);
                     $('#alamatPerusahaan').val(data.alamat);

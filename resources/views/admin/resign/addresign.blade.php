@@ -48,7 +48,7 @@
                           <div class="input-group">
                               <input type="text" class="form-control" placeholder="dd/mm/yyyy"
                                   id="datepicker-autoclose44" name="tgl_resign" onchange=(tgl_resign())
-                                  autocomplete="off">
+                                  autocomplete="off" readonly>
                               <span class="input-group-addon bg-custom b-0"><i
                                       class="mdi mdi-calendar text-white"></i></span>
                           </div>
@@ -88,7 +88,7 @@
 
                       <div class="form-group text-center m-t-20">
                           <div class="col-xs-15">
-                              <button class="btn btn-primary w-md waves-effect waves-light"
+                              <button class="btn btn-sm btn-primary w-md waves-effect waves-light"
                                   type="submit">Ajukan</button>
                           </div>
                       </div>

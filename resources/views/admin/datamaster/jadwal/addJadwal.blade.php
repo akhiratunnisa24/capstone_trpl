@@ -40,7 +40,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    @elseif($role == 5)
+                    @elseif($role == 5 || $role == 7)
                         <div class="form-group col-sm">
                             <label for="id_shift" class="col-form-label">Shift</label>
                             <select name="id_shift" id="id_shift" class="form-control" required>
@@ -56,7 +56,7 @@
                     <div class="form-group col-sm" id="tanggal">
                         <label for="tanggal" class="form-label">Tanggal</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosep" name="tanggal"  autocomplete="off" rows="10">
+                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosep" name="tanggal"  autocomplete="off" rows="10" readonly>
                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                         </div>
                     </div>
@@ -75,29 +75,28 @@
                     <div class="row" id="date_range">
                         <div class="col-sm-6 col-xs-12">
                             <div class="m-t-10">
-                               
+
                                     <div class="form-group">
                                         <label for="tgl_mulai" class="form-label">Tanggal Mulai</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose42" name="tgl_mulai"  autocomplete="off" rows="10">
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose42" name="tgl_mulai"  autocomplete="off" rows="10" readonly>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>
-                                
+
                             </div>
                         </div>
-                       
+
                         <div class="col-sm-6 col-xs-12">
-                            <div class="m-t-20">
-                               
+                            <div class="m-t-10">
                                     <div class="form-group">
                                         <label for="tgl_selesai" class="form-label">Tanggal Selesai</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose43" name="tgl_selesai"  autocomplete="off" rows="10">
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose43" name="tgl_selesai"  autocomplete="off" rows="10" readonly>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -108,7 +107,7 @@
                                 <input type="text" class="form-control" name="jadwal_masuk" id="jadwal_masuk" autocomplete="off" readonly>
                             </div>
                         </div>
-                       
+
                         <div class="col-sm-6">
                             <div class="form-group col-sm">
                                 <label for="jadwal_pulang">Jadwal Pulang</label>
@@ -116,8 +115,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    @if($role == 5)
+
+                    @if($role == 5 || $role == 7)
                         <div class="form-group col-xs-12">
                             <label class="form-label">Partner</label>
                             <select class="form-control" name="partner">
@@ -131,8 +130,8 @@
                         </div>
                     @endif
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success waves-effect waves-light" name="submit"
+                        <button type="button" class="btn btn-sm btn-danger waves-effect" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light" name="submit"
                             value="save">Simpan</button>
                     </div>
                 </form>
@@ -158,7 +157,7 @@
                 if(a.target.value== 'harian')
                 {
                     // $('#pegawai').prop("hidden", false);
-                    $('#tanggal').prop("hidden", false);  
+                    $('#tanggal').prop("hidden", false);
                     $('#date_range').prop("hidden", true);
                 }
                 if(a.target.value== 'bulanan')
@@ -169,7 +168,7 @@
                 }
             });
         }
-    );  
+    );
 </script>
 
 

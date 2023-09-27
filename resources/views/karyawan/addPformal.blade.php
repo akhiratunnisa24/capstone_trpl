@@ -52,10 +52,10 @@
                                     <div>
                                         <div class="input-group">
                                             <input id="datepicker-autoclose-format-ba" type="text" class="form-control" name="tahun_masukFormal"
-                                                placeholder="yyyy" autocomplete="off"/>
+                                                placeholder="yyyy" autocomplete="off" readonly/>
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                             <input id="datepicker-autoclose-format-bb" type="text" class="form-control" name="tahun_lulusFormal"
-                                                placeholder="yyyy" autocomplete="off"/>
+                                                placeholder="yyyy" autocomplete="off" readonly/>
                                         </div>
                                     </div>
                                 </div>
@@ -84,8 +84,8 @@
 
                     <div class="modal-footer">
                         <input type="hidden" name="id" id="id">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-success">Simpan</button>
                     </div>
                 </form>
             </div>

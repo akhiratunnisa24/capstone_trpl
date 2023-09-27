@@ -60,7 +60,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="dd/mm/yyyy"
                                             id="datepicker-autoclose-format" autocomplete="off" name="tgllahirKeluarga"
-                                            rows="10"><br>
+                                            rows="10" readonly><br>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>
                                     </div>
@@ -102,8 +102,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-success">Simpan</button>
                     </div>
                 </form>
             </div>

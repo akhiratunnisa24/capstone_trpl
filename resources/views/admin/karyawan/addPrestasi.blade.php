@@ -57,7 +57,7 @@
                                     <div class="input-group">
                                         <input id="datepicker-autoclose-format" type="text" class="form-control"
                                             placeholder="dd/mm/yyyy" id="4" name="tgl_surat" rows="10"
-                                            autocomplete="off"><br>
+                                            autocomplete="off" readonly><br>
                                         <span class="input-group-addon bg-custom b-0"><i
                                                 class="mdi mdi-calendar text-white"></i></span>
                                     </div>
@@ -69,8 +69,8 @@
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" name="id" id="id">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-success">Simpan</button>
                     </div>
                 </form>
             </div>

@@ -12,7 +12,9 @@ class Penggajian extends Model
     protected $table = "penggajian";
     protected $fillable = [
         'id_karyawan',
+        'id_strukturgaji',
         'id_informasigaji',
+        'id_grup',
         'tglawal',
         'tglakhir',
         'tglgajian',
@@ -43,5 +45,10 @@ class Penggajian extends Model
     public function detailpenggajians()
     {
         return $this->hasMany(DetailPenggajian::class,'id_penggajian','id');
+    }
+
+    public function strukturgajis()
+    {
+        return $this->belongsTo(SalaryStructure::class, 'id_strukturgaji','id');
     }
 }

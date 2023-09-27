@@ -41,19 +41,19 @@
                                 <div class="form-group">
                                     <label class="form-label">Tanggal Aktif</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose47" name="tanggal_aktif"  autocomplete="off" required>
+                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose47" name="tanggal_aktif"  autocomplete="off" required readonly>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
-                       
+
                         <div class="col-sm-6 col-xs-12">
                             <div class="m-t-10">
                                 <div class="form-group">
                                     <label class="form-label">Sampai</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose48" name="tanggal_berakhir"  autocomplete="off">
+                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose48" name="tanggal_berakhir"  autocomplete="off" readonly>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                 </div>
@@ -61,10 +61,10 @@
                         </div>
                         <input id="partner" type="text" class="form-control" name="partner" value="{{Auth::user()->partner}}" autocomplete="off" >
                     </div>
-                    
+
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success waves-effect waves-light" name="submit" value="save">Simpan</button>
+                        <button type="button" class="btn btn-sm btn-danger waves-effect" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light" name="submit" value="save">Simpan</button>
                     </div>
                 </form>
             </div>

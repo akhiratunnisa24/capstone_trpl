@@ -46,24 +46,24 @@
                             <input name="namaKaryawan" type="text" class="form-control" value="{{$karyawan->nama}}">
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="mb-3">
-                           <label>NIK</label> 
+                           <label>NIK</label>
                            <input name="nikKaryawan" type="text" class="form-control" autocomplete="off" value="{{$karyawan->nik}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="mb-3">
-                           <label>Tanggal Lahir</label> 
+                           <label>Tanggal Lahir</label>
                             <input name="tgllahirKaryawan" type="text" autocomplete="off"
                                 class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose17" autocomplete="off"
-                                value="{{\Carbon\Carbon::parse($karyawan->tgllahir)->format('Y/m/d')}}">
+                                value="{{\Carbon\Carbon::parse($karyawan->tgllahir)->format('Y/m/d')}}" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="mb-3">
-                           <label>Jenis Kelamin</label> 
+                           <label>Jenis Kelamin</label>
                            <select class="form-control selectpicker" name="jenis_kelaminKaryawan" required>
                             <option value="">Pilih Jenis Kelamin</option>
                             <option value="L" @if($karyawan->jenis_kelamin == "L") selected @endif >Laki-Laki</option>
@@ -73,13 +73,13 @@
                     </div>
                     <div class="form-group">
                         <div class="mb-3">
-                           <label>Email</label> 
+                           <label>Email</label>
                            <input type="text" name="emailKaryawan" class="form-control" autocomplete="off" value="{{$karyawan->email}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="mb-3">
-                           <label>Agama</label> 
+                           <label>Agama</label>
                            <select class="form-control selectpicker" name="agamaKaryawan">
                                 <option value="">Pilih Agama</option>
                                 <option value="Islam" @if($karyawan->agama == "Islam") selected @endif>Islam</option>
@@ -93,7 +93,7 @@
                     </div>
                     <div class="form-group">
                         <div class="mb-3">
-                           <label>Golongan Darah</label> 
+                           <label>Golongan Darah</label>
                            <select class="form-control selectpicker" name="gol_darahKaryawan" required>
                             <option value="">Pilih Golongan Darah</option>
                             <option value="A" @if($karyawan->gol_darah == "A") selected @endif >A</option>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="form-group">
                         <div class="mb-3">
-                           <label>Alamat</label> 
+                           <label>Alamat</label>
                            <input name="alamatKaryawan" type="text" class="form-control" autocomplete="off" value="{{$karyawan->alamat}}">
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                     </div>
                     <div class="form-group">
                         <div class="mb-3">
-                           <label>Nomor Handphone</label> 
+                           <label>Nomor Handphone</label>
                            <input name="no_hpKaryawan" type="text" autocomplete="off" class="form-control" value="{{$karyawan->no_hp}}">
                         </div>
                     </div>
@@ -150,7 +150,7 @@
                                         selected
                                     @endif>{{ $atasan->nama }}
                                 </option>
-                                   
+
                             @endforeach
                         </select>
                     </div>
@@ -171,7 +171,7 @@
 
                     <div class="form-group">
                         <div class="mb-3">
-                           <label>Jabatan</label> 
+                           <label>Jabatan</label>
                            <select type="text" class="form-control selectpicker" name="jabatanKaryawan" required>
                             <option value="">Pilih Jabatan</option>
                             <option value="Direksi" @if($karyawan->jabatan == "Direksi") selected @endif >Direksi</option>
@@ -205,7 +205,7 @@
                             </select>
                         </div>
                     </div>
-            
+
                     <div class="form-group">
                         <div class="mb-3">
                             <label>Nama Pasangan</label>
@@ -215,7 +215,7 @@
                     <div class="form-group">
                         <div class="mb-3">
                             <label>Tanggal Lahir </label>
-                            <input type="text" name="tgllahirPasangan" autocomplete="off" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose16" value="{{\Carbon\Carbon::parse($keluarga->tgllahir)->format('Y/m/d')}}">
+                            <input type="text" name="tgllahirPasangan" autocomplete="off" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose16" value="{{\Carbon\Carbon::parse($keluarga->tgllahir)->format('Y/m/d')}}" readonly>
                         </div>
                     </div>
                     <div class="form-group">
@@ -272,10 +272,10 @@
                                 <option value="Adik" @if($kdarurat->hubungan == "Adik") selected @endif>Adik</option>
                                 <option value="Anak" @if($kdarurat->hubungan == "Anak") selected @endif>Anak</option>
                             </select>
-                        
+
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="row">
@@ -322,7 +322,7 @@
                             <div class="input-group">
                                 <input id="datepicker-autoclose3" type="text"
                                         class="form-control" value="{{$rpendidikan->tahun_lulus_formal}}" placeholder="yyyy" id="4"
-                                        name="tahun_lulusFormal" rows="10" autocomplete="off"><br>
+                                        name="tahun_lulusFormal" rows="10" autocomplete="off" readonly><br>
                                 <span class="input-group-addon bg-custom b-0"><i
                                             class="mdi mdi-calendar text-white"></i></span>
                             </div>
@@ -356,7 +356,7 @@
                             <div class="input-group">
                                 <input id="datepicker-autoclose4" type="text"
                                         class="form-control" placeholder="yyyy" id="4"  value="{{$rpendidikan->tahun_lulus_nonformal}}"
-                                        name="tahunLulusNonFormal" autocomplete="off" rows="10"><br>
+                                        name="tahunLulusNonFormal" autocomplete="off" rows="10" readonly><br>
                                 <span class="input-group-addon bg-custom b-0"><i
                                             class="mdi mdi-calendar text-white"></i></span>
                             </div>
@@ -369,7 +369,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 modal-header bg-info panel-heading">
-                    <label><h4>D. RIWAYAT PENGALAMAN BEKERJA</h4></label><br> 
+                    <label><h4>D. RIWAYAT PENGALAMAN BEKERJA</h4></label><br>
                 </div>
             </div><br>
             <div class="row">
@@ -471,7 +471,7 @@
                             <td><label for="name" class="text-bold">Nama Lengkap</label>
                             <input type="text" class="form-control" name="nama" id="nama" value="{{$karyawan->nama}}"></td>
                         </tr>
-                       
+
                         <tr>
 
                             <td><label for="dob">Tanggal Lahir </label>
@@ -514,8 +514,8 @@
                                 <option value="P" @if($karyawan->jenis_kelamin == "P") selected @endif >Perempuan</option>
                             </select></td>
                             <td><span id="gender"></span></td>
-                            
-                            
+
+
                             <td><label for="email">Email</label>
                             <input type="email" class="form-control" name="email" id="email" value="{{$karyawan->email}}"></td>
                             <td><span id="email"></span></td>
@@ -530,7 +530,7 @@
                                 <option value="Probation" @if($karyawan->status_karyawan == "Probation") selected @endif>Probation</option>
                             </select></td>
                             <td><span id="employee_status"></span></td>
-                            
+
                             <td><label for="contract_duration">Durasi Kontrak </label>
                             <input type="text" class="form-control" name="kontrak" id="kontrak" value="{{$karyawan->kontrak}}"></td>
                             <td><span id="contract_duration"></span></td>
@@ -569,7 +569,7 @@
                             <td><label for="npwp_number">No. NPWP</label>
                             <input type="number" class="form-control" name="no_npwp" id="no_npwp" value="{{$karyawan->no_npwp}}"></td>
                             <td><span id="npwp_number"></span></td>
-                            
+
                             <td><label for="role_name">Alamat</label>
                             <input type="text" class="form-control" name="alamat" id="alamat" value="{{$karyawan->alamat}}"></td>
                             <td><span id="role_name"></span></td>
@@ -602,8 +602,8 @@
                             <input type="number" class="form-control" name="no_bpjs_ket" id="no_bpjs_ket" value="{{$karyawan->no_bpjs_ket}}"></td>
                             <td><span ></span></td>
                         </tr>
-                      
-                        
+
+
                     </tbody> -->
 
 

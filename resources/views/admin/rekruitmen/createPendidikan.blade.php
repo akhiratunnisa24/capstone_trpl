@@ -42,8 +42,8 @@
                                                 <th>Tingkat Pendidikan</th>
                                                 <th>Nama Sekolah</th>
                                                 <th>Jurusan</th>
-                                                <th>Tanggal Mulai</th>
-                                                <th>Tanggal Akhir</th>
+                                                <th>Tahun Mulai</th>
+                                                <th>Tahun Akhir</th>
                                                 {{-- <th>Lama Pendidikan</th> --}}
                                                 <th>Alamat</th>
                                                 <th>Nomor Ijazah</th>
@@ -51,31 +51,39 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php 
+                                            $no = 1; 
+                                            $nomor = 1;
+                                        @endphp
                                             @foreach ($pendidikan as $key => $p)
                                                 @if ($p['tingkat'] != null)
                                                     <tr>
-                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $nomor++ }}</td>
                                                         <td>{{ $p['tingkat'] }}</td>
                                                         <td>{{ $p['nama_sekolah'] }}</td>
                                                         <td>{{ $p['jurusan'] }}</td>
                                                         {{-- <td>{{$p['tahun_masuk_formal'] }}</td>
                                                     <td>{{$p['tahun_lulus_formal'] }}</td> --}}
-                                                        <td>{{ \Carbon\Carbon::parse($p['tahun_masuk_formal'])->format('d/m/Y') }}
+                                                        <td>{{$p['tahun_masuk_formal']}}
                                                         </td>
-                                                        <td>{{ \Carbon\Carbon::parse($p['tahun_lulus_formal'])->format('d/m/Y') }}
+                                                        <td>{{$p['tahun_lulus_formal']}}
                                                         </td>
 
                                                         {{-- <td></td> --}}
                                                         <td>{{ $p['kota_pformal'] }}</td>
                                                         <td>{{ $p['ijazah_formal'] }}</td>
                                                         <td class="text-center">
-                                                            <div class="row d-grid gap-2" role="group"
-                                                                aria-label="Basic example">
-                                                                <a href="#formUpdatePendidikan"
-                                                                    class="btn btn-sm btn-info" id="editPendidikan"
-                                                                    data-key="{{ $key }}">
-                                                                    <i class="fa fa-edit" title="Edit"></i>
+                                                            <div class="row d-grid gap-2" role="group" aria-label="Basic example">
+                                                                <a href="#formUpdatePendidikan" class="btn btn-sm btn-info" id="editPendidikan" data-key="{{ $key }}"><i class="fa fa-edit" title="Edit"></i>
                                                                 </a>
+                                                                <form class="pull-right" action="{{ route('delete_pendidikan') }}" method="POST" style="margin-right: 60px;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <input type="hidden" name="key" value="{{$key}}">
+                                                                    <button type="submit" class="btn btn-danger btn-sm delete_konrat" data-key="{{$key}}">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </form>
                                                                 {{-- /delete-pendidikan/{{$key}} --}}
                                                                 {{-- <form class="pull-right" action="" method="POST" style="margin-right:5px;">
                                                                 <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{ $key }}"><i class="fa fa-trash"></i></button>
@@ -96,29 +104,28 @@
                                                 <th>No</th>
                                                 <th>Bidang/Jenis</th>
                                                 <th>Lembaga Pendidikan</th>
-                                                <th>Tanggal Mulai</th>
-                                                <th>Tanggal Akhir</th>
+                                                <th>Tahun Mulai</th>
+                                                <th>Tahun Akhir</th>
                                                 <th>Alamat</th>
                                                 <th>Nomor Ijazah</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                           
                                             @foreach ($pendidikan as $key => $nf)
                                                 @if ($nf['jenis_pendidikan'] != null)
                                                     <tr>
                                                         {{-- <td id="key">{{ $key }}</td> --}}
-                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $no++ }}</td>
                                                         <td>{{ $nf['jenis_pendidikan'] }}</td>
                                                         <td>{{ $nf['nama_lembaga'] }}</td>
                                                         {{-- <td>{{ $nf['tahun_masuk_nonformal'] }}</td>
                                                     <td>{{ $nf['tahun_lulus_nonformal'] }}</td> --}}
-                                                        <td>{{ \Carbon\Carbon::parse($nf['tahun_masuk_nonformal'])->format('d/m/Y') }}
-                                                        </td>
-                                                        <td>{{ \Carbon\Carbon::parse($nf['tahun_lulus_nonformal'])->format('d/m/Y') }}
-                                                        </td>
-                                                        <td>{{ $nf['kota_pnonformal'] }}</td>
-                                                        <td>{{ $nf['ijazah_nonformal'] }}</td>
+                                                        <td>{{ $nf['tahun_masuk_nonformal']}}</td>
+                                                        <td>{{ $nf['tahun_lulus_nonformal']}}</td>
+                                                        <td>{{ $nf['kota_pnonformal']}}</td>
+                                                        <td>{{ $nf['ijazah_nonformal']}}</td>
                                                         <td class="text-center">
                                                             <div class="row d-grid gap-2" role="group"
                                                                 aria-label="Basic example">
@@ -127,6 +134,14 @@
                                                                     data-key="{{ $key }}">
                                                                     <i class="fa fa-edit" title="Edit"></i>
                                                                 </a>
+                                                                <form class="pull-right" action="{{ route('delete_pendidikan') }}" method="POST" style="margin-right: 60px;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <input type="hidden" name="key" value="{{$key}}">
+                                                                    <button type="submit" class="btn btn-danger btn-sm delete_konrat" data-key="{{$key}}">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </form>
                                                                 {{-- /delete-pendidikan/{{$key}} --}}
                                                                 {{-- <form class="pull-right" action="" method="POST" style="margin-right:5px;">
                                                                 <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{ $key }}"><i class="fa fa-trash"></i></button>
@@ -252,10 +267,10 @@
                                                                     <div>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose500" type="text" class="form-control" placeholder="yyyy"
-                                                                            name="tahun_masukFormal" style="text-align: center" autocomplete="off"  rows="10">
+                                                                            name="tahun_masukFormal" style="text-align: center" autocomplete="off"  rows="10" readonly>
                                                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input id="datepicker-autoclose501" type="text" class="form-control" placeholder="yyyy"
-                                                                            style="text-align: center" name="tahun_lulusFormal" autocomplete="off"  rows="10">
+                                                                            style="text-align: center" name="tahun_lulusFormal" autocomplete="off"  rows="10" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -270,6 +285,7 @@
                                                                         placeholder="Masukkan No. Ijazah"
                                                                         autocomplete="off">
                                                                 </div>
+                                                                <button type="submit" name="submit" class="btn btn-sm btn-dark" style="margin-left:220px;margin-top:30px;">Simpan Pendidikan Formal</button>
                                                             </div>
 
                                                         </div>
@@ -332,10 +348,10 @@
                                                                     <div>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose502" type="text" class="form-control" placeholder="yyyy"
-                                                                            name="tahun_masukFormal" style="text-align: center" autocomplete="off"  rows="10">
+                                                                            name="tahunMasukNonFormal" style="text-align: center" autocomplete="off"  rows="10" readonly>
                                                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
                                                                             <input id="datepicker-autoclose503" type="text" style="text-align: center" class="form-control" placeholder="yyyy"
-                                                                                name="tahun_lulusFormal" autocomplete="off"  rows="10">
+                                                                                name="tahunLulusNonFormal" autocomplete="off"  rows="10" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -352,7 +368,9 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div></div><br><br><br><br><br><br><br><br>
+                                                            <div></div><br><br><br><br>
+                                                            <button type="submit" name="submit" class="btn btn-sm btn-dark" style="margin-left:190px;margin-top:10px;">Simpan Pendidikan Non Formal</button>
+                                                            <br>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -362,8 +380,8 @@
                                                                     class="fa fa-backward"></i> Sebelumnya</a>
                                                         </div>
                                                         <div class="pull-right">
-                                                            <button type="submit" name="submit"
-                                                                class="btn btn-sm btn-dark">Simpan</button>
+                                                            {{-- <button type="submit" name="submit"
+                                                                class="btn btn-sm btn-dark">Simpan</button> --}}
                                                             <a href="/create_data_pekerjaan"
                                                                 class="btn btn-sm btn-success">Selanjutnya <i
                                                                     class="fa fa-forward"></i></a>
@@ -375,8 +393,7 @@
                                         {{-- </div> --}}
                                     </form>
 
-                                    <form action="/update_pendidikan" method="POST" id="formUpdatePendidikan"
-                                        enctype="multipart/form-data">
+                                    <form action="/update_pendidikan" method="POST" id="formUpdatePendidikan" enctype="multipart/form-data">
                                         {{-- <div class="control-group after-add-more"> --}}
                                         @csrf
                                         @method('post')
@@ -388,67 +405,46 @@
                                                         <div class="col-md-12">
                                                             <div
                                                                 class="modal-header bg-primary panel-heading  col-sm-15 m-b-5">
-                                                                <label class="text-white m-b-10">D. RIWAYAT
-                                                                    PENDIDIKAN</label>
+                                                                <label class="text-white m-b-10">D. RIWAYAT PENDIDIKAN</label>
                                                             </div>
                                                         </div>
-                                                        <input type="hidden" name="nomor_index"
-                                                            id="nomor_index_update" value="">
+                                                        <input type="hidden" name="nomor_index"id="nomor_index_update" value="">
                                                         <div class="col-md-6">
                                                             {{-- <div class="modal-header panel-heading  col-sm-15 m-b-5 m-t-10"> --}}
-                                                            <span
-                                                                class="form-group badge badge-secondary col-sm-15 m-b-5 m-t-10"><label
-                                                                    class=""> 1. Pendidikan Formal</label></span>
+                                                            <span class="form-group badge badge-secondary col-sm-15 m-b-5 m-t-10"><label> 1. Pendidikan Formal</label></span>
                                                             {{-- </div> --}}
                                                             <div class="form-group">
-                                                                <label for="exampleInputEmail1"
-                                                                    class="form-label">Tingkat</label>
-                                                                <select class="form-control selectpicker"
-                                                                    id="tingkat_pendidikan" name="tingkat_pendidikan">
-                                                                    <option value="">Pilih Tingkat Pendidikan
-                                                                    </option>
+                                                                <label for="exampleInputEmail1" class="form-label">Tingkat</label>
+                                                                <select class="form-control selectpicker"  id="tingkat_pendidikan" name="tingkat_pendidikan">
+                                                                    <option value="">Pilih Tingkat Pendidikan </option>
                                                                     <option value="SD">SD</option>
                                                                     <option value="SMP">SMP</option>
-                                                                    <option value="SMA/Sederajat">SMA/Sederajat
-                                                                    </option>
-                                                                    <option value="Sarjana Muda D3">Sarjana Muda D3
-                                                                    </option>
+                                                                    <option value="SMA/Sederajat">SMA/Sederajat</option>
+                                                                    <option value="Sarjana Muda D3">Sarjana Muda D3</option>
                                                                     <option value="Sarjana S1">Sarjana S1</option>
-                                                                    <option value="Pasca Sarjana S2">Pasca Sarjana S2
-                                                                    </option>
+                                                                    <option value="Pasca Sarjana S2">Pasca Sarjana S2</option>
                                                                     <option value="Doktoral/Phd">Doktoral/Phd</option>
-
                                                                 </select>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label"> Jurusan</label>
-                                                                    <input type="text" name="jurusan"
-                                                                        id="jurusan" class="form-control"
-                                                                        placeholder="Masukkan Jurusan"
-                                                                        autocomplete="off">
+                                                                    <input type="text" name="jurusan" id="jurusan" class="form-control" placeholder="Masukkan Jurusan" autocomplete="off">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
-                                                                    <label for="exampleInputEmail1"
-                                                                        class="form-label">Nama Sekolah</label>
-                                                                    <input type="text" name="nama_sekolah"
-                                                                        id="nama_sekolah" class="form-control"
-                                                                        placeholder="Masukkan Sekolah"
-                                                                        autocomplete="off">
+                                                                    <label for="exampleInputEmail1" class="form-label">Nama Sekolah</label>
+                                                                    <input type="text" name="nama_sekolah" id="nama_sekolah" class="form-control" placeholder="Masukkan Sekolah" autocomplete="off">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label"> Alamat</label>
-                                                                    <input type="text" name="kotaPendidikanFormal"
-                                                                        id="kotaPendidikanFormal" class="form-control"
-                                                                        id="exampleInputEmail1"
-                                                                        placeholder="Masukkan Alamat">
+                                                                    <input type="text" name="kotaPendidikanFormal" id="kotaPendidikanFormal" class="form-control" placeholder="Masukkan Alamat">
                                                                 </div>
                                                             </div>
 
@@ -467,20 +463,12 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Pendidikan</label>
                                                                     <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range6">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_masukFormal"
-                                                                                id="tahun_masukFormal"
-                                                                                placeholder="dd/mm/yyyy"
-                                                                                autocomplete="off" />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_lulusFormal"
-                                                                                id="tahun_lulusFormal"
-                                                                                placeholder="dd/mm/yyyy"
-                                                                                autocomplete="off" />
+                                                                        <div class="input-group">
+                                                                            <input id="datepicker-autoclose512" type="text" class="form-control" placeholder="yyyy"
+                                                                            name="tahun_masukFormal" style="text-align: center" autocomplete="off"  rows="10" readonly>
+                                                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input id="datepicker-autoclose513" type="text" class="form-control" placeholder="yyyy"
+                                                                            style="text-align: center" name="tahun_lulusFormal" autocomplete="off"  rows="10" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -495,8 +483,8 @@
                                                                         placeholder="Masukkan No. Ijazah"
                                                                         autocomplete="off">
                                                                 </div>
+                                                                <button type="submit" name="submit" class="btn btn-sm btn-dark" style="margin-left:220px;margin-top:40px;">Update Pendidikan Formal</button>
                                                             </div>
-
                                                         </div>
 
                                                         {{-- KANAN --}}
@@ -554,20 +542,12 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Lama Pendidikan</label>
                                                                     <div>
-                                                                        <div class="input-daterange input-group"
-                                                                            id="date-range7">
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_masukNonFormal"
-                                                                                id="tahun_masukNonFormal"
-                                                                                placeholder="dd/mm/yyyy"
-                                                                                autocomplete="off" />
-                                                                            <span
-                                                                                class="input-group-addon bg-primary text-white b-0">To</span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="tahun_lulusNonFormal"
-                                                                                id="tahun_lulusNonFormal"
-                                                                                placeholder="dd/mm/yyyy"
-                                                                                autocomplete="off" />
+                                                                        <div class="input-group">
+                                                                            <input id="datepicker-autoclose514" type="text" class="form-control" placeholder="yyyy"
+                                                                            name="tahun_masukNonFormal" style="text-align: center" autocomplete="off"  rows="10" readonly>
+                                                                            <span class="input-group-addon bg-primary text-white b-0">To</span>
+                                                                            <input id="datepicker-autoclose515" type="text" class="form-control" placeholder="yyyy"
+                                                                            style="text-align: center" name="tahun_lulusNonFormal" autocomplete="off"  rows="10" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -584,7 +564,8 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div></div><br><br><br><br><br><br><br><br>
+                                                            <div></div><br><br><br><br><br>
+                                                            <button type="submit" name="submit" class="btn btn-sm btn-dark" style="margin-left:190px;">Update Pendidikan Non Formal</button>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -594,8 +575,6 @@
                                                                     class="fa fa-backward"></i> Sebelumnya</a>
                                                         </div>
                                                         <div class="pull-right">
-                                                            <button type="submit" name="submit"
-                                                                class="btn btn-sm btn-dark">Update</button>
                                                             <a href="/create_data_pekerjaan"
                                                                 class="btn btn-sm btn-success">Selanjutnya <i
                                                                     class="fa fa-forward"></i></a>
@@ -639,33 +618,26 @@
                     $('#tingkat_pendidikan').val(data.tingkat);
                     $('#nama_sekolah').val(data.nama_sekolah);
                     $('#jurusan').val(data.jurusan);
+                    $('#noijazahPformal').val(data.ijazah_formal);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
+                    $('#datepicker-autoclose512').val(data.tahun_masuk_formal);
+                    $('#datepicker-autoclose513').val(data.tahun_lulus_formal);
                     // $('#tahun_lulusFormal').val(data.tahun_lulus_formal);
-                    var tanggal = new Date(data.tahun_masuk_formal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                        .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_masukFormal').val(tanggalFormatted);
-                    var tanggal = new Date(data.tahun_lulus_formal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                        .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_lulusFormal').val(tanggalFormatted);
+                    // var tanggal = new Date(data.tahun_masuk_formal);
+                    // var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
+                    //     .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    // $('#tahun_masukFormal').val(tanggalFormatted);
+                    // var tanggal = new Date(data.tahun_lulus_formal);
+                    // var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
+                    //     .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    // $('#tahun_lulusFormal').val(tanggalFormatted);
 
                     $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#namaLembaga').val(data.nama_lembaga);
                     $('#alamatNonformal').val(data.kota_pnonformal);
-                    // $('#datepicker-autoclose21').val(data.tahun_lulus_nonformal);
-                    var tanggal = new Date(data.tahun_masuk_nonformal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                        .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_masukNonFormal').val(tanggalFormatted);
-                    var tanggal = new Date(data.tahun_lulus_nonformal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                        .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_lulusNonFormal').val(tanggalFormatted);
-
-                    $('#noijazahPformal').val(data.ijazah_formal);
+                    $('#datepicker-autoclose514').val(data.tahun_masuk_nonformal);
+                    $('#datepicker-autoclose515').val(data.tahun_lulus_nonformal);
                     $('#noijazahPnonformal').val(data.ijazah_nonformal);
-
 
                     // Set opsi yang dipilih pada dropdown select option
                     var select = document.getElementById("tingkat_pendidikan");
@@ -694,29 +666,25 @@
                     $('#tingkat_pendidikan').val(data.tingkat);
                     $('#nama_sekolah').val(data.nama_sekolah);
                     $('#jurusan').val(data.jurusan);
+                    $('#noijazahPformal').val(data.ijazah_formal);
                     $('#kotaPendidikanFormal').val(data.kota_pformal);
-                    // $('#datepicker-autoclose20').val(data.tahun_lulus_formal);
-                    var tanggal = new Date(data.tahun_masuk_formal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                        .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_masukFormal').val(tanggalFormatted);
-                    var tanggal = new Date(data.tahun_lulus_formal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                        .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_lulusFormal').val(tanggalFormatted);
-
-                    $('#jenis_pendidikan').val(data.jenis_pendidikan);
+                    $('#datepicker-autoclose512').val(data.tahun_masuk_formal);
+                    $('#datepicker-autoclose513').val(data.tahun_lulus_formal);
+               
                     $('#namaLembaga').val(data.nama_lembaga);
+                    $('#jenis_pendidikan').val(data.jenis_pendidikan);
                     $('#alamatNonformal').val(data.kota_pnonformal);
+                    $('#datepicker-autoclose514').val(data.tahun_masuk_nonformal);
+                    $('#datepicker-autoclose515').val(data.tahun_lulus_nonformal);
                     // $('#datepicker-autoclose21').val(data.tahun_lulus_nonformal);
-                    var tanggal = new Date(data.tahun_masuk_nonformal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                        .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_masukNonFormal').val(tanggalFormatted);
-                    var tanggal = new Date(data.tahun_lulus_nonformal);
-                    var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                        .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                    $('#tahun_lulusNonFormal').val(tanggalFormatted);
+                    // var tanggal = new Date(data.tahun_masuk_nonformal);
+                    // var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
+                    //     .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    // $('#tahun_masukNonFormal').val(tanggalFormatted);
+                    // var tanggal = new Date(data.tahun_lulus_nonformal);
+                    // var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
+                    //     .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                    // $('#tahun_lulusNonFormal').val(tanggalFormatted);
 
                     $('#noijazahPnonformal').val(data.ijazah_nonformal);
 

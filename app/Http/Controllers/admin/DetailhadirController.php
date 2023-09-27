@@ -91,12 +91,26 @@ class DetailhadirController extends Controller
                 {
                     $tglMulai = \Carbon\Carbon::parse($izinsakit->tgl_mulai);
                     $tglSelesai = \Carbon\Carbon::parse($izinsakit->tgl_selesai);
-                    $selisihHari = $tglMulai->diffInDays($tglSelesai) + 1; 
 
-                    $totalHariIzinSakit += $selisihHari;
+                    if ($tglMulai->greaterThan($awal)) {
+                        $tglHitungAwal = $tglMulai;
+                    } else {
+                        $tglHitungAwal = $awal;
+                    }
+
+                    if ($tglSelesai->lessThan($akhir)) {
+                        $tglHitungAkhir = $tglSelesai;
+                    } else {
+                        $tglHitungAkhir = $akhir;
+                    }
+
+                    $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
+                    $tglHitungAkhir= \Carbon\Carbon::parse($tglHitungAkhir);
+
+                    $selisihHari = $tglHitungAwal->diffInDays($tglHitungAkhir) + 1;
 
                     $cocokkanTanggal = Jadwal::where('partner', $data->partner)
-                        ->whereBetween('tanggal', [$tglMulai, $tglSelesai])
+                        ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
                         ->count();
 
                     if ($cocokkanTanggal > 0) {
@@ -104,7 +118,7 @@ class DetailhadirController extends Controller
                     }
 
                     $jamTanggal = Jadwal::where('partner', $data->partner)
-                        ->whereBetween('tanggal', [$tglMulai, $tglSelesai])
+                        ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
                         ->get();
 
                     foreach ($jamTanggal as $j) {
@@ -154,7 +168,7 @@ class DetailhadirController extends Controller
                     if($izin->id_jenisizin == 2 && $izin->jam_mulai == NULL && $izin->jam_selesai == NULL)
                     {
                         $jamTanggal = Jadwal::where('partner', $data->partner)
-                            ->whereBetween('tanggal', [$tglMulai, $tglSelesai])
+                            ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
                             ->get();
 
                         foreach ($jamTanggal as $j) {

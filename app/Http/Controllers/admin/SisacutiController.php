@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Mail\SisacutiNotification;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -40,8 +41,23 @@ class SisacutiController extends Controller
             ->leftjoin('jeniscuti','jeniscuti.id','=','sisacuti.id_jeniscuti')
             ->where('sisacuti.id_jeniscuti',$jeniscuti->id)
             ->where('sisacuti.id_pegawai',$id)
-            ->select('sisacuti.id_pegawai as id','karyawan.email as email','karyawan.nama as nama','sisacuti.id_jeniscuti as jeniscuti','jeniscuti.jenis_cuti as kategori','sisacuti.sisa_cuti as sisa','sisacuti.periode as tahun')
+            ->select('sisacuti.id_pegawai as id','karyawan.id as id_karyawan','karyawan.partner','karyawan.email as email','karyawan.nama as nama','sisacuti.id_jeniscuti as jeniscuti','jeniscuti.jenis_cuti as kategori','sisacuti.sisa_cuti as sisa','sisacuti.periode as tahun')
             ->first();
+        
+        $partner = $sisacuti->partner;
+        
+        $settingorganisasi = SettingOrganisasi::where('partner',$partner)->first();
+
+        $hrdmanager = User::where('partner',$partner->id)->where('role',1)->first();
+        if($hrdmanager !== null){
+            $hrdmng = $hrdmanager->karyawans->email;
+        }
+
+        $hrdstaff   = User::where('partner',$partner->id)->where('role',2)->first();
+        if($hrdstaff !== null){
+            $hrdstf = $hrdstaff->karyawans->email;
+        }
+
         // dd($email);
         foreach($sisacuti as $sisa){
             $tujuan = $sisa->email;
@@ -54,6 +70,23 @@ class SisacutiController extends Controller
                 'tahun'       => $sisa->tahun,
                 'sisacuti'    => $sisa->sisa,
             ];
+
+            if($settingorganisasi !== NULL)
+            {
+                $data['emailperusahaan'] = $settingorganisasi->email;
+                $data['notelp_perusahaan'] = $settingorganisasi->no_telp;
+            }
+
+            if($hrdmng !== null)
+            {
+                $data['hrdmanager'] = $hrdmng;
+            }
+
+            if($hrdstf !== null)
+            {
+                $data['hrdstaff'] = $hrdstf;
+            }
+
             Mail::to($tujuan)->send(new SisacutiNotification($data));
             
         }

@@ -9,8 +9,8 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title text-center" id="myModalLabel">FORM KETERANGAN KETIDAKHADIRAN KERJA</h4>
-                </div> 
-        
+                </div>
+
                 <div class="modal-body">
                     <form class="input" action="{{ route('izinstore')}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -25,14 +25,14 @@
                                     <div class="form-group col-sm">
                                         <label for="tglpermohonan" class="form-label">Tanggal Permohonan</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosex" name="tglpermohonan"  autocomplete="off" rows="10" required>
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosex" name="tglpermohonan"  autocomplete="off" rows="10" required readonly>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
-                                    </div>  
+                                    </div>
                                     <div class="form-group col-sm">
                                         <label for="nik" class="col-form-label">Nomor Induk Karyawan</label>
                                         <input type="text" class="form-control" name="nik" id="nik" value="{{$datakry->nip}}" readonly>
-                                    </div>         
+                                    </div>
                                     <div class="form-group">
                                         <label for="id_karyawan" class="col-form-label">Nama Karyawan</label>
                                         <input type="text" class="form-control" id="id_karyawan" value="{{$datakry->nama}}" readonly>
@@ -41,12 +41,12 @@
                                     <div class="form-group col-sm">
                                         <label for="jabatan" class="col-form-label">Jabatan</label>
                                         <input type="text" class="form-control" name="jabatan" id="jabatan" value="{{$datakry->nama_jabatan}}" readonly>
-                                    </div> 
+                                    </div>
                                     <div class="form-group col-sm">
                                         <label for="departemen" class="col-form-label">Departemen/Divisi</label>
                                         <input type="text" class="form-control" id="departemen" value="{{$departemen->nama_departemen}}" readonly>
                                         <input type="hidden" class="form-control" name="departemen" id="departemen" value="{{$departemen->id}}" hidden>
-                                    </div> 
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6">
@@ -55,11 +55,11 @@
                                         <select name="id_jenisizin" id="id_jenisizin" class="form-control selectpicker" data-live-search="true" required>
                                             <option>-- Pilih Status --</option>
                                             @foreach ($jenisizin as $data)
-                                                <option value="{{ $data->id}}" 
+                                                <option value="{{ $data->id}}"
                                                     >{{ $data->jenis_izin }}
                                                 </option>
                                             @endforeach
-                                        </select> 
+                                        </select>
                                     </div>
 
                                     <div class="row">
@@ -68,23 +68,23 @@
                                                 <div class="form-group">
                                                     <label for="tgl_mulai" class="form-label">Tanggal Pelaksanaan</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosec" name="tgl_mulai" onchange=(jumlahhari()) autocomplete="off" required>
+                                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosec" name="tgl_mulai" onchange=(jumlahhari()) autocomplete="off" required readonly>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-sm-6 col-xs-12">
                                             <div id="tanggalselesai">
                                                 <div class="form-group">
                                                     <label for="tgl_selesai" class="form-label">Sampai</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosed" name="tgl_selesai"  onchange=(jumlahhari()) autocomplete="off">
+                                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosed" name="tgl_selesai"  onchange=(jumlahhari()) autocomplete="off" readonly>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
-                                            </div>                                           
+                                            </div>
                                         </div>
                                     </div>
 
@@ -94,7 +94,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-6" id="jmulai">  
+                                        <div class="col-lg-6" id="jmulai">
                                             <div class="">
                                                 <label for="jam_mulai">Dari Jam</label>
                                                 <div class="input-group clockpicker pull-center" data-placement="top" data-align="top" data-autoclose="true">
@@ -104,7 +104,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                        </div>  
+                                        </div>
                                         <div class="col-lg-6" id="jselesai">
                                             <div class="">
                                                 <label for="jam_selesai">Sampai Jam</label>
@@ -134,8 +134,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-success" name="submit" value="save">Kirim</button>
+                                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                                <button type="submit" class="btn btn-sm btn-success" name="submit" value="save">Kirim</button>
                             </div>
                         </div>
                     </form>
@@ -147,7 +147,7 @@
     <!-- jQuery  -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+
     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     {{-- clockpicker --}}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
@@ -158,7 +158,7 @@
     <script src="assets/pages/form-advanced.js"></script>
 
     <script>
-        //show clockpicker 
+        //show clockpicker
         jQuery(function($){
             $('.clockpicker').clockpicker()
                 .find('input').change(function()
@@ -171,10 +171,10 @@
                 autoclose: true,
                 'default': 'now'
             });
-            
+
         });
     </script>
-        
+
     <script type="text/javascript">
         //show/hide clockpicker when id_jenisizin selected
         $(function()
@@ -265,7 +265,7 @@
                 error: function(jqXHR, textStatus, errorThrown){
                     console.log(textStatus, errorThrown);
                 }
-            });    
+            });
         };
     </script>
 
@@ -304,7 +304,6 @@
 // }; --}}
 
 
-    
 
-    
-             
+
+

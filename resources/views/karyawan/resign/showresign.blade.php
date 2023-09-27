@@ -63,12 +63,12 @@
                <!-- Button "Buka File PDF" pada modal show -->
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">File PDF</label>
-                    <button type="button" class="btn btn-primary small" onclick="window.open('{{ asset('pdf/' . $r->filepdf) }}', '_blank')">Buka File PDF</button>
+                    <button type="button" class="btn btn-sm btn-primary small" onclick="window.open('{{ asset('pdf/' . $r->filepdf) }}', '_blank')">Buka File PDF</button>
                     </div>
               
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>

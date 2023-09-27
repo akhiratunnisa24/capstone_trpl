@@ -158,7 +158,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Impor Excel</h4>
+                    <h4 class="modal-title text-center" id="myModalLabel">Impor Excel</h4>
                 </div>
                 <form action="{{ route('importexcel') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -170,8 +170,8 @@
                         </div> 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary">Impor Data</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-primary">Impor Data</button>
                     </div>
                 </form>
             </div>
@@ -183,7 +183,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Impor Excel</h4>
+                    <h4 class="modal-title text-center" id="myModalLabel">Impor Excel</h4>
                 </div>
                 <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -195,8 +195,8 @@
                         </div> 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary">Impor Data</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-primary">Impor Data</button>
                     </div>
                 </form>
             </div>
@@ -209,7 +209,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Impor CSV</h4>
+                    <h4 class="modal-title text-center" id="myModalLabel">Impor CSV</h4>
                 </div>
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -228,8 +228,8 @@
                         </div> 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary">Impor Data</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-primary">Impor Data</button>
                     </div>
                 </form>
             </div>
@@ -242,7 +242,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Impor CSV</h4>
+                    <h4 class="modal-title text-center" id="myModalLabel">Impor CSV</h4>
                 </div>
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -261,8 +261,8 @@
                         </div> 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary">Impor Data</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-primary">Impor Data</button>
                     </div>
                 </form>
             </div>
@@ -275,7 +275,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Impor Data Excel</h4>
+                    <h4 class="modal-title text-center" id="myModalLabel">Impor Data Excel</h4>
                 </div>
                 <form action="importdata" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -289,8 +289,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary">Impor Data</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-primary">Impor Data</button>
                     </div>
                 </form>
             </div>

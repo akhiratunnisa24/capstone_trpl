@@ -108,6 +108,7 @@
     @endif
     <div class="garis"></div>
     <h3 align="center">Slip Gaji Karyawan</h3>
+    <p align="center">Periode : {{\Carbon\carbon::parse($slipgaji->tglawal)->format('d/m/Y')}} s.d {{\Carbon\carbon::parse($slipgaji->tglakhir)->format('d/m/Y')}}</p>
     <table id="slipdetail">
         <tr>
             <td>Nama</td>
@@ -119,7 +120,7 @@
         </tr>
         <tr>
             <td>Jabatan</td>
-            <td>: {{$slipgaji->karyawans->nama_jabatan}}</td>
+            <td>: {{ ucwords(strtolower($slipgaji->karyawans->nama_jabatan)) }}</td>
         </tr>
         <tr>
             <td>Status</td>
@@ -140,7 +141,7 @@
                         @endif
                     @endforeach
                     @foreach($detailgaji as $detail)
-                        @if($detail->benefit->partner !== 0)
+                        @if($detail->benefit->partner !== 0 &&  $detail->benefit->id_kategori !== 5 &&  $detail->benefit->id_kategori !== 6)
                             <tr>
                                 <td>{{ $detail->benefit->nama_benefit}}</td>
                                 <td class="text-right">{{ number_format($detail->total, 0, ',', '.')}}</td>
@@ -150,7 +151,7 @@
                     @foreach($detailgaji as $detail)
                         @if($detail->id_benefit === 2)
                             <tr>
-                                <td class="text-right" style="font-weight: bold;">Total</td>
+                                <td class="text-right" style="font-weight: bold;">Total (+)</td>
                                 <td class="text-right" style="font-weight: bold;">{{ number_format($detail->total, 0, ',', '.') }}</td>
                             </tr>
                         @endif
@@ -161,16 +162,18 @@
         <div class="col-md-6 row-table">
             <table id="absensi">
                <h3>POTONGAN:</h3>
-                @if($detailgaji !== null && $detail->id_kategori === 5 || $detail->id_kategori === 6)
+                @if($detailgaji !== null && $detail->benefit->id_kategori === 5 || $detail->benefit->id_kategori === 6)
                     @foreach($detailgaji as $detail)
-                        <tr>
-                            <td>{{ $detail->benefit->nama_benefit}}</td>
-                            <td class="text-right">{{ number_format($detail->total, 0, ',', '.')}}</td>
-                        </tr>
+                        @if($detail->benefit->id_kategori === 5 && $detail->benefit->dibayarkan_oleh === "Karyarwan" ||  $detail->benefit->id_kategori === 6)
+                            <tr>
+                                <td>{{ $detail->benefit->nama_benefit}}</td>
+                                <td class="text-right">{{ number_format($detail->total, 0, ',', '.')}}</td>
+                            </tr>
+                        @endif
                     @endforeach
                     @if($slipgaji !== null)
                         <tr class="total-row">
-                            <td class="text-right" style="font-weight: bold;">Total</td>
+                            <td class="text-right" style="font-weight: bold;">Total (-)</td>
                             <td class="text-right" style="font-weight: bold;">{{ number_format($slipgaji->potongan, 0, ',', '.') }}</td>
                         </tr>
                     @endif
@@ -184,14 +187,14 @@
                         <td class="text-right">{{ number_format($slipgaji->pajak, 0, ',', '.') }}</td>
                     </tr>
                     <tr class="total-row">
-                        <td class="text-right" style="font-weight: bold;">Total</td>
+                        <td class="text-right" style="font-weight: bold;">Total (-)</td>
                         <td class="text-right" style="font-weight: bold;">{{ number_format($slipgaji->potongan, 0, ',', '.') }}</td>
                     </tr>
                 @endif
             </table>
         </div>
     </div>
-    <hr> 
+    <hr>
     <table id="absensi">
         @foreach($detailgaji as $detail)
             @if($detail->id_benefit === 3)

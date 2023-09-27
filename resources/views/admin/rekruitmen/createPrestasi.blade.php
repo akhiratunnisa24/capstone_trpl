@@ -61,7 +61,7 @@
                                                   <td>{{ $pres['nama_instansi'] }}</td>
                                                   <td>{{ $pres['alamat'] }}</td>
                                                   <td>{{ $pres['no_surat'] }}</td>
-                                                  <td>{{ \Carbon\Carbon::parse($pres['tanggal_surat'])->format('d/m/Y') }}
+                                                  <td>{{$pres['tanggal_surat']}}
                                                   </td>
                                                   <td class="text-center">
                                                       <div class="row d-grid gap-2" role="group"
@@ -70,15 +70,14 @@
                                                               id="editPrestasi" data-key="{{ $key }}">
                                                               <i class="fa fa-edit" title="Edit"></i>
                                                           </a>
-                                                          {{-- /delete-pekerjaan/{{$key}} --}}
-                                                          {{-- <form class="pull-right" action="" method="POST"
-                                                            style="margin-right:5px;">
-                                                            <button type="submit"
-                                                                class="btn btn-danger btn-sm delete_dakel"
-                                                                data-key="{{ $key }}"><i
-                                                                    class="fa fa-trash"></i></button>
-                                                        </form> --}}
-                                                          {{-- <button type="button" id="hapus_dakel" data-key="{{ $key }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
+                                                          <form class="pull-right" action="{{ route('delete_prestasi') }}" method="POST" style="margin-right: 5px;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="hidden" name="key" value="{{$key}}">
+                                                            <button type="submit" class="btn btn-danger btn-sm delete_prestasi" data-key="{{$key}}">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </form>
                                                       </div>
                                                   </td>
                                               </tr>
@@ -161,7 +160,7 @@
                                                                               type="text" class="form-control"
                                                                               placeholder="dd/mm/yyyy" id="4"
                                                                               name="tgl_surat" autocomplete="off"
-                                                                              rows="10" required><br>
+                                                                              rows="10" required readonly><br>
                                                                           <span
                                                                               class="input-group-addon bg-custom b-0"><i
                                                                                   class="mdi mdi-calendar text-white"></i></span>
@@ -260,7 +259,7 @@
                                                               <input id="datepicker-autoclose-format2" type="text"
                                                                   class="form-control" placeholder="yyyy/mm/dd"
                                                                   id="4" name="tgl_surat" autocomplete="off"
-                                                                  rows="10" required><br>
+                                                                  rows="10" required readonly><br>
                                                               <span class="input-group-addon bg-custom b-0"><i
                                                                       class="mdi mdi-calendar text-white"></i></span>
                                                           </div><!-- input-group -->
@@ -323,10 +322,10 @@
                   $('#alamatInstansi').val(data.alamat);
                   $('#noSurat').val(data.no_surat);
 
-                  var tanggal = new Date(data.tanggal_surat);
-                  var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
-                  .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
-                  $('#datepicker-autoclose-format2').val(tanggalFormatted);
+                //   var tanggal = new Date(data.tanggal_surat);
+                //   var tanggalFormatted = ("0" + tanggal.getDate()).slice(-2) + '/' + ("0" + (tanggal
+                //   .getMonth() + 1)).slice(-2) + '/' + tanggal.getFullYear();
+                  $('#datepicker-autoclose-format2').val(data.tanggal_surat);
 
               });
           });

@@ -29,7 +29,8 @@ class MesinController extends Controller
             if ($con) 
             {
                 $attendance = $tad->get_att_log();
-                if ($attendance) {
+                if ($attendance) 
+                {
                     // $today = Carbon::now()->format('Y-m-d');
                     // $filtered_attendance = $attendance->filter_by_date(
                     //     ['start' => $today]
@@ -73,7 +74,7 @@ class MesinController extends Controller
                                     if($existingAbsensi)
                                     {
 
-                                        if ($existingAbsensi->jam_keluar !== $jam ||$existingAbsensi->jam_keluar === null) 
+                                        if ($existingAbsensi->jam_keluar !== $jam || $existingAbsensi->jam_keluar === null) 
                                         {
                                             // dd($existingAbsensi,$jam);
                                             $jadwal_masuk  = $jadwal->jadwal_masuk;
@@ -170,12 +171,13 @@ class MesinController extends Controller
                                     }
                                     else
                                     {
+                                        
                                         $jadwal_masuk  = $jadwal->jadwal_masuk;
                                         $jadwal_masuk     = Carbon::createFromFormat('H:i:s', $jadwal_masuk);
 
                                         $jadwal_pulang = $jadwal->jadwal_pulang;
                                         $jam_masuk     = Carbon::createFromFormat('H:i:s', $jam);
-                            
+                                       
                                         if($jam_masuk > $jadwal_masuk)
                                         {
                                             $telat = $jadwal_masuk->diff($jam_masuk);
@@ -193,20 +195,34 @@ class MesinController extends Controller
                                         elseif($jam_masuk < $jadwal_masuk)
                                         {
                                             $terlambat     = null;
+                                          
                                         }
                                         
                                         if(!Absensi::where('id_karyawan',$matchedUser->id_pegawai)->where('tanggal',$tanggal)->where('partner',$matchedUser->partner)->exists())
                                         {
                                             $absensi = new Absensi();
-                                                    
+
+                                            $batasmasuk = Carbon::createFromFormat('H:i:s','16:00:00');
+
+                                            if($jam_masuk > $batasmasuk)
+                                            {
+                                                $absensi->jam_masuk     = null;
+                                                $absensi->jam_keluar    = $jam;
+                                            }
+                                            elseif($jam_masuk < $batasmasuk)
+                                            {
+                                                $absensi->jam_masuk     = $jam;
+                                                $absensi->jam_keluar    = null;
+                                            }
+                                            
                                             $absensi->id_karyawan   = $matchedUser->id_pegawai;
                                             $absensi->nik           = $matchedUser->nik;
                                             $absensi->tanggal       = $tanggal;
                                             $absensi->shift         = null;
                                             $absensi->jadwal_masuk  = $jadwal_masuk;
                                             $absensi->jadwal_pulang = $jadwal_pulang;
-                                            $absensi->jam_masuk     = $jam;
-                                            $absensi->jam_keluar    = null;
+                                            // $absensi->jam_masuk     = $jam;
+                                            // $absensi->jam_keluar    = null;
                                             $absensi->terlambat     = $terlambat;
                                             $absensi->plg_cepat     = null;
                                             $absensi->absent        = null;
@@ -369,16 +385,26 @@ class MesinController extends Controller
                                             
                                             if(!Absensi::where('id_karyawan',$matchedUser->id_pegawai)->where('tanggal',$tanggal)->where('partner',$matchedUser->partner)->exists())
                                             {
+                                                $batasmasuk =Carbon::createFromFormat('H:i:s','16:00:00');
                                                 $absensi = new Absensi();
                                                             
+                                                if($jam_masuk > $batasmasuk)
+                                                {
+                                                    $absensi->jam_masuk     = null;
+                                                    $absensi->jam_keluar    = $jam;
+                                                }
+                                                elseif($jam_masuk < $batasmasuk)
+                                                {
+                                                    $absensi->jam_masuk     = $jam;
+                                                    $absensi->jam_keluar    = null;
+                                                }
+
                                                 $absensi->id_karyawan   = $matchedUser->id_pegawai;
                                                 $absensi->nik           = $matchedUser->nik;
                                                 $absensi->tanggal       = $tanggal;
                                                 $absensi->shift         = null;
                                                 $absensi->jadwal_masuk  = $jadwal_masuk;
                                                 $absensi->jadwal_pulang = $jadwal_pulang;
-                                                $absensi->jam_masuk     = $jam;
-                                                $absensi->jam_keluar    = null;
                                                 $absensi->terlambat     = $terlambat;
                                                 $absensi->plg_cepat     = null;
                                                 $absensi->absent        = null;

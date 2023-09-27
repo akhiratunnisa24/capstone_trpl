@@ -17,11 +17,11 @@
                                 <label class="form-label">Periode</label>
                                 <div>
                                     <div class="input-group">
-                                        <input id="datepicker-autoclose-format-ag" type="text" class="form-control" placeholder="dd/mm/yyyy" 
-                                        name="tgl_awal"  autocomplete="off"  rows="10">
+                                        <input id="datepicker-autoclose-format-ag" type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                        name="tgl_awal"  autocomplete="off"  rows="10" readonly>
                                         <span class="input-group-addon bg-info text-white b-0">-</span>
-                                        <input id="datepicker-autoclose-format-ah" type="text" class="form-control" placeholder="dd/mm/yyyy" 
-                                            name="tgl_akhir" autocomplete="off"  rows="10">
+                                        <input id="datepicker-autoclose-format-ah" type="text" class="form-control" placeholder="dd/mm/yyyy"
+                                            name="tgl_akhir" autocomplete="off"  rows="10" readonly>
                                     </div>
                                 </div>
                             </div>

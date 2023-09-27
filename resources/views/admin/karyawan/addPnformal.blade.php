@@ -37,12 +37,12 @@
                                     <label class="form-label">Lama Pendidikan</label>
                                     <div>
                                         <div class="input-group">
-                                            <input id="datepicker-autoclose-format-e" type="text" class="form-control" placeholder="yyyy" 
-                                                name="tahun_masukNonFormal" autocomplete="off"  rows="10">
+                                            <input id="datepicker-autoclose-format-e" type="text" class="form-control" placeholder="yyyy"
+                                                name="tahun_masukNonFormal" autocomplete="off"  rows="10" readonly>
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input id="datepicker-autoclose-format-f" type="text" class="form-control" placeholder="yyyy" 
-                                                name="tahun_lulusNonFormal" autocomplete="off"  rows="10">
-                        
+                                            <input id="datepicker-autoclose-format-f" type="text" class="form-control" placeholder="yyyy"
+                                                name="tahun_lulusNonFormal" autocomplete="off"  rows="10" readonly>
+
                                         </div>
                                         {{-- <div class="input-daterange input-group" id="date-range2">
                                             <input type="text" class="form-control" name="tahun_masukNonFormal"
@@ -54,7 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             {{-- <div class="form-group">
                                 <div class="mb-3">
                                     <label>Tahun Lulus</label>
@@ -73,11 +73,11 @@
                             </div>
                         </div>
                     </div>
-            
+
                     <div class="modal-footer">
                         <input type="hidden" name="id" id="id">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-success">Simpan</button>
                     </div>
                 </form>
             </div>

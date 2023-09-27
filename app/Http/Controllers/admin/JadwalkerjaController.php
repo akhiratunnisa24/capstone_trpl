@@ -43,6 +43,12 @@ class JadwalkerjaController extends Controller
             $karyawan= Karyawan::all();
             $shift= Shift::all();
             $partner = Partner::all();
+            if($role == 7)
+            {
+                $jadwal= Jadwal::where('partner',Auth::user()->partner)->get();
+                $shift = Shift::where('partner',Auth::user()->partner)->get();
+                $karyawan = Karyawan::where('partner',Auth::user()->partner)->get();
+            }
             return view('admin.datamaster.jadwal.index', compact('jadwal','karyawan','role','shift','row','partner'));
         }
         else {
@@ -146,7 +152,7 @@ class JadwalkerjaController extends Controller
                 }
 
             }
-        }elseif($role == 5)
+        }elseif($role == 5 || $role == 7)
         {
             if($request->tgl_mulai && $request->tgl_selesai)
             {

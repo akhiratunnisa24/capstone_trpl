@@ -78,7 +78,7 @@
                                         @csrf
                                         @method('post')
                                         <div class="control-group after-add-more">
-                                           
+
                                             <div class="modal-body">
                                                 <table class="table table-bordered table-striped">
                                                     <div class="col-md-12">
@@ -89,7 +89,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6 m-t-10">
-                            
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
@@ -97,18 +97,18 @@
                                                                         <div id="emailHelp" class="form-text"></div>
                                                                     </div>
                                                                 </div>
-                            
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose15" type="text" class="form-control" placeholder="yyyy/mm/dd" id="4"
-                                                                                name="tgllahirKaryawan" value="{{ old('tgllahirKaryawan') }}" autocomplete="off" rows="10" required></input><br>
+                                                                                name="tgllahirKaryawan" value="{{ old('tgllahirKaryawan') }}" autocomplete="off" rows="10" required readonly></input><br>
                                                                             <span class="input-group-addon bg-custom b-0"><i  class="mdi mdi-calendar text-white"></i></span>
                                                                         </div><!-- input-group -->
                                                                     </div>
                                                                 </div>
-                            
+
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1" class="form-label">Jenis Kelamin</label>
                                                                     <select class="form-control selectpicker"  value="{{ old('jenis_kelaminKaryawan') }}" name="jenis_kelaminKaryawan" required>
@@ -117,7 +117,7 @@
                                                                         <option value="P">Perempuan</option>
                                                                     </select>
                                                                 </div>
-                            
+
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1" class="form-label">Departemen</label>
                                                                     <select class="form-control selectpicker" value="{{ old('divisi') }}" name="divisi" data-live-search="true" required>
@@ -128,7 +128,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                            
+
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1" class="form-label">Atasan Langsung (Asistant Manager/Manager/Direksi)</label>
                                                                     <select class="form-control selectpicker" value="{{ old('atasan_pertama') }}" name="atasan_pertama" data-live-search="true">
@@ -139,7 +139,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                            
+
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1" class="form-label">Atasan/Pimpinan (Manager/Direksi)</label>
                                                                     <select class="form-control selectpicker" value="{{ old('atasan_kedua') }}" name="atasan_kedua"  data-live-search="true">
@@ -150,7 +150,7 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                            
+
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1" class="form-label">Jabatan</label>
                                                                     <select class="form-control selectpicker" value="{{ old('jabatanKaryawan') }}" name="jabatanKaryawan" required>
@@ -161,19 +161,19 @@
                                                                         <option value="Staff">Staff</option>
                                                                     </select>
                                                                 </div>
-                            
-                            
+
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Alamat</label>
                                                                         <textarea class="form-control" autocomplete="off" value="{{ old('alamatKaryawan') }}" name="alamatKaryawan" rows="3"></textarea><br>
                                                                     </div>
                                                                 </div>
-                            
+
                                                             </div>
-                            
+
                                                             <!-- baris sebelah kanan  -->
-                            
+
                                                             <div class="col-md-6 m-t-10">
                                                                 <div class="form-group">
                                                                     <div class="form-group">
@@ -184,7 +184,7 @@
                                                                                 placeholder="Masukkan Nomor Handphone" required>
                                                                         </div>
                                                                     </div>
-                            
+
                                                                     <div class="form-group">
                                                                         <div class="mb-3">
                                                                             <label for="exampleInputEmail1" class="form-label">Alamat
@@ -196,7 +196,7 @@
                                                                             <div id="emailHelp" class="form-text"></div>
                                                                         </div>
                                                                     </div>
-                            
+
                                                                     <div class="form-group">
                                                                         <div class="mb-3">
                                                                             <label for="exampleInputEmail1"
@@ -212,7 +212,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </div>
-                            
+
                                                                     <div class="form-group">
                                                                         <div class="mb-3">
                                                                             <label for="exampleInputEmail1" class="form-label">Tanggal
@@ -221,13 +221,13 @@
                                                                                 <input type="text" class="form-control"
                                                                                     placeholder="yyyy/mm/dd" id="datepicker-autoclose2"
                                                                                     name="tglmasukKaryawan" rows="10" autocomplete="off"value="{{ old('tglmasukKaryawan') }}"
-                                                                                    required></input><br>
+                                                                                    required readonly></input><br>
                                                                                 <span class="input-group-addon bg-custom b-0"><i
                                                                                         class="mdi mdi-calendar text-white"></i></span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                            
+
                                                                     <div class="form-group">
                                                                         <div class="mb-3">
                                                                             <label for="exampleInputEmail1" class="form-label">NIK</label>
@@ -235,7 +235,7 @@
                                                                                 placeholder="Masukkan NIK" required>
                                                                         </div>
                                                                     </div>
-                            
+
                                                                     <div class="form-group">
                                                                         <label for="exampleInputEmail1" class="form-label">Golongan Darah</label>
                                                                         <select class="form-control selectpicker" name="gol_darahKaryawan" value="{{ old('gol_darahKaryawan') }}" required>
@@ -246,13 +246,13 @@
                                                                             <option value="O">O</option>
                                                                         </select>
                                                                     </div>
-                            
+
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label col-sm-4">Pilih Foto Karyawan</label>
                                                                         <img class="img-preview img-fluid mb-3 col-sm-4">
-                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()" value="{{ old('foto') }}"> 
+                                                                        <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()" value="{{ old('foto') }}">
                                                                     </div>
-                            
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -262,15 +262,15 @@
                                                         <button type="submit" name="submit" class="btn btn-sm btn-primary">Simpan</button>
                                                         <a href="#datakeluarga" class="btn btn-sm btn-danger" data-toggle="tab">Selanjutnya</a>
                                                     </div>
-                            
+
                                                 </table>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                            </div> 
-                        </div> 
-                    </div> 
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- END IDENTITAS CUTI -->
 
@@ -344,7 +344,7 @@
                                                                         <div id="emailHelp" class="form-text"></div>
                                                                     </div>
                                                                 </div>
-        
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Tanggal
@@ -353,7 +353,7 @@
                                                                             <input type="text" class="form-control"
                                                                                 placeholder="yyyy/mm/dd"
                                                                                 id="datepicker-autoclose8" autocomplete="off" name="tgllahirPasangan"
-                                                                                rows="10"></input><br>
+                                                                                rows="10" readonly></input><br>
                                                                             <span class="input-group-addon bg-custom b-0"><i
                                                                                     class="mdi mdi-calendar text-white"></i></span>
                                                                         </div>
@@ -374,7 +374,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </div>
-        
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1"
@@ -383,7 +383,7 @@
                                                                             rows="9" placeholder="Masukkan Alamat"></input>
                                                                     </div>
                                                                 </div>
-        
+
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1" class="form-label">Pendidikan
                                                                         Terakhir</label>
@@ -397,7 +397,7 @@
                                                                         <option value="S-1">S-1</option>
                                                                     </select>
                                                                 </div>
-        
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1"
@@ -409,7 +409,7 @@
                                                                         <div id="emailHelp" class="form-text"></div>
                                                                     </div>
                                                                 </div>
-        
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -421,7 +421,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </form>                
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -479,14 +479,14 @@
                                                                         <div id="emailHelp" class="form-text"></div>
                                                                     </div>
                                                                 </div>
-    
+
                                                                 <div class="form-group ">
                                                                     <div class="mb-3 ">
                                                                         <label for="exampleInputEmail1" class="form-label">Alamat</label>
                                                                         <input class="form-control" name="alamatKdarurat" rows="9" placeholder="Masukkan Alamat"></input>
                                                                     </div>
                                                                 </div>
-    
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">No. Handphone</label>
@@ -519,7 +519,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </form>                
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -638,14 +638,14 @@
                                                                         <label for="exampleInputEmail1" class="form-label">Lulus Tahun</label>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose20" type="text"  class="form-control" placeholder="yyyy" id="4"
-                                                                                    name="tahun_lulusFormal" rows="10" autocomplete="off"></input><br>
+                                                                                    name="tahun_lulusFormal" rows="10" autocomplete="off" readonly></input><br>
                                                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 {{-- <div class="pull-right">
                                                                     <button type="submit" name="submit" class="btn btn-sm btn-primary">Simpan</button>
-                                                                   
+
                                                                 </div> --}}
                                                             </div>
 
@@ -657,7 +657,7 @@
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Bidang / Jenis</label>
-                                                                        <input type="text" name="jenis_pendidikan" class="form-control" placeholder="Masukkan Nama" autocomplete="off"> 
+                                                                        <input type="text" name="jenis_pendidikan" class="form-control" placeholder="Masukkan Nama" autocomplete="off">
                                                                         <div id="emailHelp" class="form-text">
                                                                         </div>
                                                                     </div>
@@ -677,7 +677,7 @@
                                                                         <label for="exampleInputEmail1" class="form-label">Lulus Tahun</label>
                                                                         <div class="input-group">
                                                                             <input id="datepicker-autoclose21" type="text" class="form-control" placeholder="yyyy" id="4"
-                                                                                    name="tahunLulusNonFormal" autocomplete="off" rows="10" ><br>
+                                                                                    name="tahunLulusNonFormal" autocomplete="off" rows="10" readonly><br>
                                                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                                         </div>
                                                                     </div>
@@ -693,7 +693,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </form>                
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -717,7 +717,7 @@
                                                 <th>Gaji</th>
                                                 <th>Atasan Langsung</th>
                                                 <th>Direktur</th>
-                
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -781,7 +781,7 @@
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label"> Nama Atasan Langsung</label>
                                                                         <input type="text" name="namaAtasan" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Nama Atasan" autocomplete="off">
-                                                                    
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -807,7 +807,7 @@
                                                                     <div class="mb-3">
                                                                         <label for="exampleInputEmail1" class="form-label">Alasan Berhenti</label>
                                                                         <input type="text"  name="alasanBerhenti" class="form-control" id="exampleInputEmail1"  aria-describedby="emailHelp" placeholder="Masukkan Alasan Berhenti" autocomplete="off">
-                                                                        
+
                                                                     </div>
                                                                 </div>
 
@@ -828,7 +828,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </form>                
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -838,8 +838,8 @@
 
             </div>
         </div>
-    </div> 
-    
+    </div>
+
         {{-- <script src="assets/js/jquery.min.js"></script> --}}
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -849,7 +849,7 @@
         <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
         <script src="assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" type="text/javascript"></script>
         <script src="assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js" type="text/javascript"></script>
-    
+
         <!-- Plugins Init js -->
         <script src="assets/pages/form-advanced.js"></script>
 
@@ -876,7 +876,7 @@
                     $(".after-add-more").after(html);
                 });
 
-                // saat tombol remove dklik control group akan dihapus 
+                // saat tombol remove dklik control group akan dihapus
                 $("body").on("click", ".remove", function() {
                     $(this).parents(".control-group").remove();
                 });
@@ -931,5 +931,5 @@
             });
             });
         </script>
-    
+
 @endsection

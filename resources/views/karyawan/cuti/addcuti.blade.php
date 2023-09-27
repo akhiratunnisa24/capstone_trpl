@@ -8,7 +8,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title text-center" id="Modal">FORM CUTI TAHUNAN KARYAWAN</h4>
                 </div>
-               
+
                 <div class="alert alert-danger" id="error-message" style="display: none;">
                     <button type="button" class="close" onclick="$('#error-message').hide()">&times;</button>
                 </div>
@@ -31,14 +31,14 @@
                                     <div class="form-group col-sm">
                                         <label class="form-label">Tanggal Permohonan</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosew" name="tgl_permohonan"  autocomplete="off" rows="10" required>
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosew" name="tgl_permohonan"  autocomplete="off" rows="10" required readonly>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
-                                    </div>              
+                                    </div>
                                     <div class="form-group col-sm">
                                         <label  class="col-form-label">Nomor Induk Karyawan</label>
                                         <input type="text" class="form-control" name="nik" id="nik" value="{{$datakry->nip}}" readonly>
-                                    </div>         
+                                    </div>
                                     <div class="form-group col-sm">
                                         <label class="col-form-label">Nama Karyawan</label>
                                         <input type="text" class="form-control" id="id_karyawan" value="{{$datakry->nama}}" readonly>
@@ -47,12 +47,12 @@
                                     <div class="form-group col-sm">
                                         <label class="col-form-label">Jabatan</label>
                                         <input type="text" class="form-control" name="jabatan" id="jabatan" value="{{$datakry->nama_jabatan}}" readonly>
-                                    </div> 
+                                    </div>
                                     <div class="form-group col-sm">
                                         <label class="col-form-label">Departemen/Divisi</label>
                                         <input type="text" class="form-control" id="departemen" value="{{$departemen->nama_departemen}}" readonly>
                                         <input type="hidden" class="form-control" name="departemen" id="departemen" value="{{$departemen->id}}" hidden>
-                                    </div> 
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6">
@@ -62,10 +62,10 @@
                                             <option>-- Pilih Status Ketidakhadiran --</option>
                                             @foreach ($jeniscuti as $data)
                                                     <option value="{{ $data->id_jeniscuti}}">
-                                                       {{ $data->jenis_cuti }} 
+                                                       {{ $data->jenis_cuti }}
                                                     </option>
                                             @endforeach
-                                        </select> 
+                                        </select>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 col-xs-12">
@@ -73,26 +73,26 @@
                                                 <div class="form-group">
                                                     <label  class="form-label">Tanggal Pelaksanaan</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="dd/mm/yyyy" id="datepicker-autoclosef" name="tgl_mulai"  autocomplete="off" rows="10" required>
+                                                        <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="dd/mm/yyyy" id="datepicker-autoclosef" name="tgl_mulai"  autocomplete="off" rows="10" required readonly>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-sm-6 col-xs-12">
                                             <div>
                                                 <div class="form-group">
                                                     <label  class="form-label">Sampai</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="dd/mm/yyyy" id="datepicker-autocloseg" name="tgl_selesai"  autocomplete="off" rows="10" required>
+                                                        <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="dd/mm/yyyy" id="datepicker-autocloseg" name="tgl_selesai"  autocomplete="off" rows="10" required readonly>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-            
+
                                     <div class="form-group col-sm">
                                         <label  class="col-form-label">Keterangan</label>
                                         <textarea class="form-control" name="keperluan" id="keperluan" rows="5" placeholder="Masukkan keterangan" autocomplete="off" required></textarea>
@@ -116,17 +116,17 @@
                                         <input type="hidden" class="form-control" name="id_alokasi" id="id_alokasi">
                                         <input type="hidden" class="form-control" name="id_settingalokasi" id="id_settingalokasi">
                                     </div>
-            
+
                                     <div class="form-group col-sm">
                                         <input type="hidden" class="form-control" name="status" id="status" value="Pending">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                            
+
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                            <button type="submit" id="submit-button" class="btn btn-success" value="save">Kirim</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                            <button type="submit" id="submit-button" class="btn btn-sm btn-success" value="save">Kirim</button>
                         </div>
                     </form>
                 </div>
@@ -138,20 +138,20 @@
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      {{-- <script src="assets/js/bootstrap.min.js"></script> --}}
 
- 
+
      {{-- plugin js --}}
      <script src="assets/plugins/timepicker/bootstrap-timepicker.js"></script>
      <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-   
+
      <!-- Datatable init js -->
      <script src="assets/pages/datatables.init.js"></script>
      {{-- <script src="assets/js/app.js"></script> --}}
- 
+
      <!-- Plugins Init js -->
      <script src="assets/pages/form-advanced.js"></script>
 
      <!-- script untuk mengambil data durasi dari tabel alokasi cuti  -->
-     
+
 
     <script  type="text/javascript">
         var durasi;
@@ -216,7 +216,7 @@
                     });
 
                      //untuk mendapatkan jumlah hari cuti
-                    for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1)) 
+                    for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1))
                     {
                         //cek workdays
                         let tanggal = new Date(d);
@@ -244,14 +244,14 @@
                     //mengambil value jml_cuti
                     // var jml_cuti = $("#jumlah").val();
                     // var durasi   = $("#durasi").val(); ////ambil value dari input field durasi yang didapat dari ajax request
-            
+
                     // if(jml_cuti > durasi){
                     //     $('#success-message').hide();
                     //     $('#error-message').html(' "WARNING !!"<br>Jumlah cuti yang diinput melebihi durasi cuti yang tersedia.<br>Silahkan pilih jumlah cuti yang lebih kecil atau sama dengan durasi');
                     //     $('#error-message').show();
                     //     $('#submit-button').attr('disabled', true); //nonaktifkan tombol submit
 
-                    //     setTimeout(function() 
+                    //     setTimeout(function()
                     //     {
                     //         $('#error-message').hide();
                     //     }, 3000);
@@ -267,7 +267,7 @@
                     //     $('#submit-button').attr('disabled', false); //aktifkan tombol submit
                     // }
 
-                } 
+                }
             });
         };
     </script>
@@ -307,7 +307,7 @@
                     });
 
                     //untuk mendapatkan jumlah hari cuti
-                    for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1)) 
+                    for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1))
                     {
                         //cek workdays
                         let tanggal = new Date(d);
@@ -348,14 +348,14 @@
                     //mengambil value jml_cuti
                     var jml_cuti = $("#jumlah").val();
                     var durasi   = $("#durasi").val(); ////ambil value dari input field durasi yang didapat dari ajax request
-            
+
                     if(jml_cuti > durasi){
                         $('#success-message').hide();
                         $('#error-message').html(' "WARNING !!"<br>Jumlah cuti yang diinput melebihi durasi cuti yang tersedia.<br>Silahkan pilih jumlah cuti yang lebih kecil atau sama dengan durasi');
                         $('#error-message').show();
                         $('#submit-button').attr('disabled', true); //nonaktifkan tombol submit
 
-                        setTimeout(function() 
+                        setTimeout(function()
                         {
                             $('#error-message').hide();
                         }, 3000);
@@ -371,7 +371,7 @@
                         $('#submit-button').attr('disabled', false); //aktifkan tombol submit
                     }
 
-                } 
+                }
             });
         };
     </script> --}}
@@ -388,7 +388,7 @@
             var daysOfYear = [];
 
             //untuk mendapatkan jumlah hari cuti
-            for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1)) 
+            for (var d = start_date; d <= end_date; d.setDate(d.getDate() + 1))
             {
                 //cek workdays
                 let tanggal = new Date(d);
@@ -412,19 +412,19 @@
             // console.info(daysOfYear);
             $('#jumlah').val(daysOfYear.length ?? 0);
 
-           
+
             //mengambil value jml_cuti
             var jml_cuti = $("#jumlah").val();
             var durasi   = $("#durasi").val(); ////ambil value dari input field durasi yang didapat dari ajax request
-            
-        
+
+
             if(jml_cuti > durasi){
                 $('#success-message').hide();
                 $('#error-message').html(' "WARNING !!"<br>Jumlah cuti yang diinput melebihi durasi cuti yang tersedia.<br>Silahkan pilih jumlah cuti yang lebih kecil atau sama dengan durasi');
                 $('#error-message').show();
                 $('#submit-button').attr('disabled', true); //nonaktifkan tombol submit
 
-                setTimeout(function() 
+                setTimeout(function()
                 {
                     $('#error-message').hide();
                 }, 3000);

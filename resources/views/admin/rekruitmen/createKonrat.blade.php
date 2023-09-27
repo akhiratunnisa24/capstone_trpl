@@ -64,10 +64,14 @@
                                                                 data-key="{{ $key }}">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
-                                                                <button type="submit"
-                                                                    class="btn btn-danger btn-sm delete_dakel"
-                                                                    data-key="{{ $key }}"><i
-                                                                        class="fa fa-trash"></i></button>
+                                                            <form class="pull-right" action="{{ route('delete_kd') }}" method="POST" style="margin-right: 60px;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="key" value="{{$key}}">
+                                                                <button type="submit" class="btn btn-danger btn-sm delete_konrat" data-key="{{$key}}">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </form>
                                                         </div>
                                                     </td>
                                                 </tr>

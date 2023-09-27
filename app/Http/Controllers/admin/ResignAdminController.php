@@ -137,11 +137,11 @@ class ResignAdminController extends Controller
         $resign->save();
 
         $emailkry = DB::table('resign')
-        ->join('karyawan', 'resign.id_karyawan', '=', 'karyawan.id')
-        ->join('departemen', 'resign.departemen', '=', 'departemen.id')
-        ->where('resign.id_karyawan', '=', $resign->id_karyawan)
-        ->select('karyawan.email','karyawan.nip', 'karyawan.nama', 'resign.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
-        ->first();
+            ->join('karyawan', 'resign.id_karyawan', '=', 'karyawan.id')
+            ->join('departemen', 'resign.departemen', '=', 'departemen.id')
+            ->where('resign.id_karyawan', '=', $resign->id_karyawan)
+            ->select('karyawan.email','karyawan.partner','karyawan.nip', 'karyawan.nama', 'resign.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
+            ->first();
         // dd($emailkry);
         $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
             ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
@@ -155,7 +155,18 @@ class ResignAdminController extends Controller
                 ->first();
         }
         $tujuan = $atasan->email;
-        // dd($tujuan);
+
+        $partner = $emailkry->partner;
+
+        $hrdmanager = User::where('partner',$partner->id)->where('role',1)->first();
+        if($hrdmanager !== null){
+            $hrdmng = $hrdmanager->karyawans->email;
+        }
+        
+        $hrdstaff   = User::where('partner',$partner->id)->where('role',2)->first();
+        if($hrdstaff !== null){
+            $hrdstf = $hrdstaff->karyawans->email;
+        }
 
         $data = [
             'subject' => 'Notifikasi Permohonan ' . ' ' . '#' . $resign->id . ' ' . ucwords(strtolower($emailkry->nama)),
@@ -179,6 +190,16 @@ class ResignAdminController extends Controller
         ];
         if($atasan2 !== NULL){
             $data['atasan2'] = $atasan2->email;
+        }
+
+        if($hrdmng !== null)
+        {
+            $data['hrdmanager'] = $hrdmng;
+        }
+
+        if($hrdstf !== null)
+        {
+            $data['hrdstaff'] = $hrdstf;
         }
         Mail::to($tujuan)->send(new ResignNotification($data));
         // dd($data);
@@ -210,11 +231,11 @@ class ResignAdminController extends Controller
         //     $sk->status_kerja = 'Non-Aktif';
         // }
         $emailkry = DB::table('resign')
-        ->join('karyawan', 'resign.id_karyawan', '=', 'karyawan.id')
-        ->join('departemen', 'resign.departemen', '=', 'departemen.id')
-        ->where('resign.id_karyawan', '=', $resign->id_karyawan)
-        ->select('karyawan.email', 'karyawan.nip', 'karyawan.nama', 'resign.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
-        ->first();
+            ->join('karyawan', 'resign.id_karyawan', '=', 'karyawan.id')
+            ->join('departemen', 'resign.departemen', '=', 'departemen.id')
+            ->where('resign.id_karyawan', '=', $resign->id_karyawan)
+            ->select('karyawan.email','karyawan.partner', 'karyawan.nip', 'karyawan.nama', 'resign.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
+            ->first();
         // dd($emailkry);
         $atasan1 = Karyawan::where('id',$emailkry->atasan_pertama)
                         ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
@@ -229,7 +250,18 @@ class ResignAdminController extends Controller
         }
         $tujuan = $emailkry->email;
         $alasan ='';
-        // dd($tujuan);
+        
+        $partner = $emailkry->partner;
+
+        $hrdmanager = User::where('partner',$partner->id)->where('role',1)->first();
+        if($hrdmanager !== null){
+            $hrdmng = $hrdmanager->karyawans->email;
+        }
+        
+        $hrdstaff   = User::where('partner',$partner->id)->where('role',2)->first();
+        if($hrdstaff !== null){
+            $hrdstf = $hrdstaff->karyawans->email;
+        }
 
         $data = [
             'subject' => 'Notifikasi Resign Disetujui ' . ' ' . '#' . $resign->id . ' ' . $emailkry->nama,
@@ -256,6 +288,16 @@ class ResignAdminController extends Controller
         if($atasan2 !== NULL){
             $data['atasan2'] = $atasan2->email;
             $data['namaatasan2'] = $atasan2->nama;
+        }
+
+        if($hrdmng !== null)
+        {
+            $data['hrdmanager'] = $hrdmng;
+        }
+
+        if($hrdstf !== null)
+        {
+            $data['hrdstaff'] = $hrdstf;
         }
         Mail::to($tujuan)->send(new ResignApproveNotification($data));
 
@@ -331,11 +373,11 @@ class ResignAdminController extends Controller
         ]);
 
         $emailkry = DB::table('resign')
-        ->join('karyawan', 'resign.id_karyawan', '=', 'karyawan.id')
-        ->join('departemen', 'resign.departemen', '=', 'departemen.id')
-        ->where('resign.id_karyawan', '=', $resign->id_karyawan)
-        ->select('karyawan.email', 'karyawan.nip', 'karyawan.nama', 'resign.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
-        ->first();
+            ->join('karyawan', 'resign.id_karyawan', '=', 'karyawan.id')
+            ->join('departemen', 'resign.departemen', '=', 'departemen.id')
+            ->where('resign.id_karyawan', '=', $resign->id_karyawan)
+            ->select('karyawan.email','karyawan.partner', 'karyawan.nip', 'karyawan.nama', 'resign.*', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua', 'karyawan.nama_jabatan', 'departemen.nama_departemen')
+            ->first();
         // dd($emailkry);
         $atasan1 = Karyawan::where('id',$emailkry->atasan_pertama)
                         ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
@@ -350,7 +392,18 @@ class ResignAdminController extends Controller
         }
         $tujuan = $emailkry->email;
         $alasan ='';
-        // dd($tujuan);
+
+        $partner = $emailkry->partner;
+
+        $hrdmanager = User::where('partner',$partner->id)->where('role',1)->first();
+        if($hrdmanager !== null){
+            $hrdmng = $hrdmanager->karyawans->email;
+        }
+        
+        $hrdstaff   = User::where('partner',$partner->id)->where('role',2)->first();
+        if($hrdstaff !== null){
+            $hrdstf = $hrdstaff->karyawans->email;
+        }
 
         $data = [
             'subject' => 'Notifikasi Resign Ditolak ' . ' ' . '#' . $resign->id . ' ' . $emailkry->nama,
@@ -377,6 +430,16 @@ class ResignAdminController extends Controller
         if($atasan2 !== NULL){
             $data['atasan2'] = $atasan2->email;
             $data['namaatasan2'] = $atasan2->nama;
+        }
+
+        if($hrdmng !== null)
+        {
+            $data['hrdmanager'] = $hrdmng;
+        }
+
+        if($hrdstf !== null)
+        {
+            $data['hrdstaff'] = $hrdstf;
         }
         Mail::to($tujuan)->send(new ResignTolakNotification($data));
 

@@ -9,7 +9,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title text-center" id="Modal">FORM EDIT DATA KETIDAKHADIRAN KARYAWAN</h4>
                 </div>
-               
+
                 <div class="alert alert-danger" id="error-message" style="display: none;">
                     <button type="button" class="close" onclick="$('#error-message').hide()">&times;</button>
                 </div>
@@ -28,12 +28,12 @@
                                     <div class="form-group col-sm">
                                         <label for="tgl_permohonan" class="col-form-label">Tanggal Permohonan</label>
                                         <input type="text" class="form-control" value="{{\Carbon\Carbon::parse($data->tgl_permohonan)->format("d/m/Y")}}" name="tgl_permohonan" id="tgl_permohonan" value="{{ date('d/m/Y') }}" readonly>
-                                    </div>               
+                                    </div>
                                     <div class="form-group col-sm">
                                         <label for="nik" class="col-form-label">Nomor Induk Karyawan</label>
                                         <input type="text" class="form-control"value="{{$data->nik}}"  name="nik" id="nik" readonly>
                                         <input type="hidden" class="form-control"value="{{$data->id}}"  name="id" id="id" readonly>
-                                    </div>         
+                                    </div>
                                     <div class="form-group col-sm">
                                         <label for="id_karyawan" class="col-form-label">Nama Karyawan</label>
                                         <input type="text" class="form-control" id="id_karyawan" value="{{Auth::user()->name}}" readonly>
@@ -42,12 +42,12 @@
                                     <div class="form-group col-sm">
                                         <label for="jabatan" class="col-form-label">Jabatan</label>
                                         <input type="text" class="form-control" name="jabatan" id="jabatan" value="{{$data->jabatan}}" readonly>
-                                    </div> 
+                                    </div>
                                     <div class="form-group col-sm">
                                         <label for="departemen" class="col-form-label">Departemen/Divisi</label>
                                         <input type="text" class="form-control" id="departemen" value="{{$departemen->nama_departemen}}" readonly>
                                         <input type="hidden" class="form-control" name="departemen" id="departemen" value="{{$data->departemen}}" hidden>
-                                    </div> 
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6">
@@ -58,14 +58,14 @@
                                         <input type="hidden" class="form-control" name="id_jenisizin" id="id_jenisizin" value="{{$data->id_jenisizin}}" hidden>
                                             {{-- <textarea class="form-control" style="height: 39px;" name="keperluan" value="{{$data->id_jeniscuti}}" @if($data->id == $data->id_jeniscuti) selected @endif autocomplete="off" rows="1" readonly>{{$data->jenis_cuti}}</textarea> --}}
                                     </div>
-                                    
+
                                     <div class="row">
                                         <div class="col-sm-6 col-xs-12">
                                             <div>
                                                 <div class="form-group">
                                                     <label for="tgl_mulai" class="form-label">Tanggal Pelaksanaan</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" onchange=(jumlahizins()) value="{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}" placeholder="dd/mm/yyyy" id="datepicker-autoclose44" name="tgl_mulai"  autocomplete="off" rows="10">
+                                                        <input type="text" class="form-control" onchange=(jumlahizins()) value="{{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}}" placeholder="dd/mm/yyyy" id="datepicker-autoclose44" name="tgl_mulai"  autocomplete="off" rows="10" readonly>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
@@ -77,7 +77,7 @@
                                                     <div class="form-group">
                                                         <label for="tgl_selesai" class="form-label">Sampai</label>
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" onchange=(jumlahizins()) placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}" id="datepicker-autoclose45" name="tgl_selesai"  autocomplete="off" rows="10">
+                                                            <input type="text" class="form-control" onchange=(jumlahizins()) placeholder="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}}" id="datepicker-autoclose45" name="tgl_selesai"  autocomplete="off" rows="10" readonly>
                                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                         </div>
                                                     </div>
@@ -85,15 +85,15 @@
                                             </div>
                                         @endif
                                     </div>
-            
+
                                     <div class="form-group col-sm">
                                         <label for="keperluan" class="col-form-label">Keterangan</label>
                                         <textarea class="form-control" name="keperluan" id="keperluan" rows="5" placeholder="Masukkan keterangan" autocomplete="off">{{$data->keperluan}}</textarea>
-                                       
+
                                     </div>
                                     @if($data->jam_mulai !== NULL || $data->jam_selesai !== NULL)
                                         <div class="row">
-                                                <div class="col-lg-6" id="jmulai">  
+                                                <div class="col-lg-6" id="jmulai">
                                                     <div class="">
                                                         <label for="jam_mulai">Dari Jam</label>
                                                         <div class="input-group clockpicker pull-center" data-placement="top" data-align="top" data-autoclose="true">
@@ -103,7 +103,7 @@
                                                             </span>
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                             {{-- @elseif($data->jam_selesai !== NULL) --}}
                                                 <div class="col-lg-6" id="jselesai">
                                                     <div class="">
@@ -136,17 +136,17 @@
                                             </div>
                                         @endif
                                     </div>
-                        
+
                                     <div class="form-group col-sm">
                                         <input type="hidden" class="form-control" name="status" id="status" value="Pending">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                            
+
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                            <button type="submit" id="submit-button" class="btn btn-success" value="save">Update dan  Kirim</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                            <button type="submit" id="submit-button" class="btn btn-sm btn-success" value="save">Update dan  Kirim</button>
                         </div>
                     </form>
                 </div>
@@ -158,21 +158,21 @@
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      {{-- <script src="assets/js/bootstrap.min.js"></script> --}}
 
- 
+
      {{-- plugin js --}}
      <script src="assets/plugins/timepicker/bootstrap-timepicker.js"></script>
      <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.js"></script>
-   
+
      <!-- Datatable init js -->
      <script src="assets/pages/datatables.init.js"></script>
      {{-- <script src="assets/js/app.js"></script> --}}
- 
+
      <!-- Plugins Init js -->
      <script src="assets/pages/form-advanced.js"></script>
 
      <!-- script untuk mengambil data durasi dari tabel alokasi cuti  -->
-     
+
 
     <script  type="text/javascript">
         var durasi;
@@ -235,7 +235,7 @@
                     });
 
                      //untuk mendapatkan jumlahh hari cuti
-                    for (var d = start_dates; d <= end_dates; d.setDate(d.getDate() + 1)) 
+                    for (var d = start_dates; d <= end_dates; d.setDate(d.getDate() + 1))
                     {
                         //cek workdays
                         let tanggal = new Date(d);
@@ -262,10 +262,9 @@
                     });
 
                     $('#jumlahhh').val(daysOfYear.length ?? 0);
-                } 
+                }
             });
         };
     </script>
 
 
-   

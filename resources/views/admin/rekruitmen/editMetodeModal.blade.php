@@ -21,8 +21,8 @@
                         <div class="modal-footer">
                             {{-- <button onclick="window.location.reload();" type="button" class="btn btn-success" name="submit"
                                 id="update_data" data-dismiss="modal">Simpan</button> --}}
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-success" name="submit">Simpan</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-sm btn-success" name="submit">Simpan</button>
                         </div>
                     </form>
             </div>

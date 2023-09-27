@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title text-center" id="myModalLabel">Edit Data Hari Libur</h4>
             </div>
-          
+
             <div class="modal-body">
                 <form action="/update-kalender/{{$data->id}}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label class="form-label">Tanggal</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" value="{{\Carbon\Carbon::parse($data->tanggal)->format("d/m/Y")}}" placeholder="dd/mm/yyyy" id="datepicker-autoclose34" name="tanggal" autocomplete="off" required>
+                                <input type="text" class="form-control" value="{{\Carbon\Carbon::parse($data->tanggal)->format("d/m/Y")}}" placeholder="dd/mm/yyyy" id="datepicker-autoclose34" name="tanggal" autocomplete="off" required readonly>
                                 <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                             </div>
                         </div>
@@ -36,8 +36,8 @@
                     </div>
                     <input type="hidden" name="_method" value="PUT">
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success waves-effect waves-light" name="submit"
+                        <button type="button" class="btn btn-sm btn-danger waves-effect" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light" name="submit"
                             value="submit">Simpan</button>
                     </div>
                 </form>

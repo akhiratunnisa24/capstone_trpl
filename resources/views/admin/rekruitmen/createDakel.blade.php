@@ -79,14 +79,14 @@
                                                                     data-key="{{ $key }}">
                                                                     <i class="fa fa-edit" title="Edit"></i>
                                                                 </a>
-                                                                {{-- <form class="pull-right"
-                                                                    action="/delete-keluarga/{{ $key }}"
-                                                                    method="POST" style="margin-right:5px;">
-                                                                    <button type="submit"
-                                                                        class="btn btn-danger btn-sm delete_dakel"
-                                                                        data-key="{{ $key }}"><i
-                                                                            class="fa fa-trash"></i></button>
-                                                                </form> --}}
+                                                                <form class="pull-right" action="{{ route('delete_dk') }}" method="POST" style="margin-right: 5px;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <input type="hidden" name="key" value="{{$key}}">
+                                                                    <button type="submit" class="btn btn-danger btn-sm delete_dakel" data-key="{{$key}}">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </form>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -165,7 +165,7 @@
                                                                                 type="text" class="form-control"
                                                                                 placeholder="dd/mm/yyyy"
                                                                                 autocomplete="off"
-                                                                                name="tgllahirPasangan" required>
+                                                                                name="tgllahirPasangan" required readonly>
                                                                             <span
                                                                                 class="input-group-addon bg-custom b-0"><i
                                                                                     class="mdi mdi-calendar text-white"></i></span>
@@ -320,7 +320,7 @@
                                                                                 id="tgllahirPasangan"
                                                                                 autocomplete="off"
                                                                                 name="tgllahirPasangan" rows="10"
-                                                                                required><br>
+                                                                                required readonly><br>
                                                                             <span
                                                                                 class="input-group-addon bg-custom b-0"><i
                                                                                     class="mdi mdi-calendar text-white"></i></span>

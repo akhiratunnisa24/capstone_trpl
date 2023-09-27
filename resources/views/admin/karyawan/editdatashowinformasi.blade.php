@@ -23,7 +23,7 @@
                                         <label class="form-label col-sm-3 text-end">Tanggal Masuk</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose51" name="tglmasukKaryawan"
-                                                autocomplete="off" value="{{ \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') ?? '-' }}">
+                                                autocomplete="off" value="{{ \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') ?? '-' }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -117,8 +117,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success waves-effect waves-light" name="submit"
+                        <button type="button" class="btn btn-sm btn-danger waves-effect" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light" name="submit"
                             value="save">Simpan</button>
                     </div>
                 </form>
@@ -130,7 +130,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const inputFormats = document.querySelectorAll('.input-formats');
-    
+
         inputFormats.forEach(input => {
             input.addEventListener('input', function() {
                 const value = parseFloat(this.value.replace(/\./g, '').replace(/,/g, ''));
@@ -141,4 +141,4 @@
             });
         });
     });
-</script> 
+</script>

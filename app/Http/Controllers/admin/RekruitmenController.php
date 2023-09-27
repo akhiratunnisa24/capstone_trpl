@@ -2,30 +2,32 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Mail\RekruitmenDiterimaNotification;
-use Illuminate\Http\Request;
+use PDF;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Karyawan;
-use App\Models\Lowongan;
-use App\Models\Rekruitmen;
-use App\Models\Departemen;
-use App\Models\Alokasicuti;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use App\Mail\RekruitmenNotification;
 use App\Models\Kdarurat;
 use App\Models\Keluarga;
-use App\Models\MetodeRekruitmen;
+use App\Models\Lowongan;
 use App\Models\NamaTahap;
-use App\Models\Rorganisasi;
-use App\Models\Rpekerjaan;
-use App\Models\Rpendidikan;
 use App\Models\Rprestasi;
+use App\Models\Departemen;
+use App\Models\Rekruitmen;
+use App\Models\Rpekerjaan;
+use App\Models\Alokasicuti;
+use App\Models\Rorganisasi;
+use App\Models\Rpendidikan;
+use Illuminate\Http\Request;
+use App\Models\MetodeRekruitmen;
 use App\Models\StatusRekruitmen;
+use App\Models\SettingOrganisasi;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Mail\RekruitmenNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Carbon\Carbon;
-use PDF;
+use Illuminate\Support\Facades\Storage;
+use App\Mail\RekruitmenDiterimaNotification;
 
 
 class RekruitmenController extends Controller
@@ -372,6 +374,14 @@ class RekruitmenController extends Controller
         // Kirim Notif Email
 
         $data = Rekruitmen::findOrFail($id);
+        $partner = $data->partner;
+        $settingorganisasi = SettingOrganisasi::where('partner',$partner)->first();
+        if ($settingorganisasi !== null) 
+        {
+            $data->email_perusahaan = $settingorganisasi->email;
+            $data->nama_perusahaan = $settingorganisasi->nama_perusahaan;
+            $data->notelp_perusahaan = $settingorganisasi->no_telp;
+        }
         // Email Pelamar
         $tujuan = $data->email;
         // return $tujuan;
@@ -380,10 +390,22 @@ class RekruitmenController extends Controller
         // Isian Email untuk pelamar yang Diterima
         $emaillolos = new RekruitmenDiterimaNotification($data);
         // Email HRD
-        $hrd1 = 'akhiratunnisahasanah0917@gmail.com';
-        $hrd2 = 'andiny700@gmail.com';
+        $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+        if($hrdmanager !== null){
+            $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+            $hrdmng = $hrdmng->email;
+        }
 
-        if ($data->status_lamaran != '18'){
+        $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+        if($hrdstaff !== null){
+            $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+            $hrdstf = $hrdstf->email;
+        }
+
+        $hrd1 = $hrdmng ? $hrdmng : '';
+        $hrd2 = $hrdstf ? $hrdstf : '';
+
+        if ($data->status_lamaran !== '18'){
             Mail::to($tujuan)->send($email);
             Mail::to($hrd1)->send($email);
             Mail::to($hrd2)->send($email);

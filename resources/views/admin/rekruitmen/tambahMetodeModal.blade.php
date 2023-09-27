@@ -43,7 +43,7 @@
                 <div class="modal-footer">
                     <button class="btn btn-primary waves-effect waves-light"
                                 type="submit">Simpan</button>
-                            <button type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-sm btn-danger waves-effect waves-light" data-dismiss="modal">Tutup</button>
                 </div>
                 </form>
 

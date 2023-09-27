@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title center" id="myLargeModalLabel">Edit Data Pendidikan Formal</h4>
+                <h4 class="modal-title text-center" id="myLargeModalLabel">Edit Data Pendidikan Formal</h4>
             </div>
             <div class="modal-body">
                 <form id="formModaleditcuti" action="/updatePendidikan/{{ $rpendidikan->id }}" method="POST"
@@ -76,11 +76,11 @@
                                     <label class="form-label">Lama Pendidikan</label>
                                     <div>
                                         <div class="input-group">
-                                            <input id="datepicker-autoclose-format-c" type="text" class="form-control" placeholder="yyyy" 
-                                                name="tahun_masukFormal" autocomplete="off"  rows="10"  value="{{ $rpendidikan->tahun_masuk_formal }}">
+                                            <input id="datepicker-autoclose-format-c" type="text" class="form-control" placeholder="yyyy"
+                                                name="tahun_masukFormal" autocomplete="off"  rows="10"  value="{{ $rpendidikan->tahun_masuk_formal }}" readonly>
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input id="datepicker-autoclose-format-d" type="text" class="form-control" placeholder="yyyy" 
-                                                name="tahun_lulusFormal" autocomplete="off"  rows="10" value="{{ $rpendidikan->tahun_lulus_formal }}">
+                                            <input id="datepicker-autoclose-format-d" type="text" class="form-control" placeholder="yyyy"
+                                                name="tahun_lulusFormal" autocomplete="off"  rows="10" value="{{ $rpendidikan->tahun_lulus_formal }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -96,8 +96,8 @@
                     </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-            <button type="submit" class="btn btn-success">Update</button>
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-sm btn-success">Update</button>
         </div>
         </form>
     </div>

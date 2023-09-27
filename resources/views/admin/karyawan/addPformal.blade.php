@@ -57,12 +57,12 @@
                                         {{-- <input type="text" class="form-control" name="tahun_lulusFormal"
                                                 placeholder="yyyy" autocomplete="off" /> --}}
                                         <div class="input-group">
-                                            <input id="datepicker-autoclose-format-a" type="text" class="form-control" placeholder="yyyy" 
-                                                name="tahun_masukFormal" autocomplete="off"  rows="10">
+                                            <input id="datepicker-autoclose-format-a" type="text" class="form-control" placeholder="yyyy"
+                                                name="tahun_masukFormal" autocomplete="off"  rows="10" readonly>
                                             <span class="input-group-addon bg-primary text-white b-0">To</span>
-                                            <input id="datepicker-autoclose-format-b" type="text" class="form-control" placeholder="yyyy" 
-                                                name="tahun_lulusFormal" autocomplete="off"  rows="10">
-                        
+                                            <input id="datepicker-autoclose-format-b" type="text" class="form-control" placeholder="yyyy"
+                                                name="tahun_lulusFormal" autocomplete="off"  rows="10" readonly>
+
                                         </div>
                                     </div>
                                 </div>
@@ -91,8 +91,8 @@
 
                     <div class="modal-footer">
                         <input type="hidden" name="id" id="id">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-success">Simpan</button>
                     </div>
                 </form>
             </div>

@@ -544,6 +544,7 @@
 
                     </div>
                 </div>
+
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -1392,6 +1393,52 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    @if (count($sisacutis) > 0)
+                                        <table class="table table-striped">
+                                            <label><b>Sisa Cuti Tahun Lalu</b></label>
+                                            <thead>
+                                                <tr class="info">
+                                                    <th>No</th>
+                                                    <th>Kategori</th>
+                                                    <th>Sisa Cuti Tahun Lalu</th>
+                                                    <th>Periode</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse($sisacutis as $key => $sisa)
+                                                    @if ($sisa->id_pegawai == Auth::user()->id_pegawai)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $sisa->karyawans->nama }}</td>
+                                                            <td>{{ $sisa->jenis_cuti }}</td>
+                                                            <td>{{ $sisa->sisa_cuti }} hari</td>
+                                                            <td>{{ $sisa->periode }}</td>
+                                                            <td>
+                                                                <a href=""
+                                                                    class="btn btn-sm btn-danger fa fa-plus pull-right"
+                                                                    data-toggle="modal" data-target="#mModal"> Ambil Cuti</a>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                    @include('karyawan.addcuti')
+                                                @empty 
+                                                    @if ($sisa->id_pegawai != Auth::user()->id_pegawai)
+                                                        <tr>
+                                                            <td colspan="12" class="text-center">No data available in table.
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1449,8 +1496,8 @@
 
     <div class="row">
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
-                <div class="panel-heading btn-info">
+            <div class="panel panel-warning text-center">
+                <div class="panel-heading btn-warning">
                     <a href="{{ url('showkaryawancuti') }}" class="panel-title ">
                         <h4 class="panel-title ">Cuti dan Ijin Hari Ini</h4>
                     </a>
@@ -1463,47 +1510,208 @@
         </div>
 
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
-                <div class="panel-heading btn-success">
+            <div class="panel panel-warning text-center">
+                <div class="panel-heading btn-warning">
                     <a href="{{ url('showkaryawanabsen') }}" class="panel-title ">
                         <h4 class="panel-title">Absen Masuk Hari Ini</h4>
                     </a>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>{{ $absenHariini }}</b></h3>
+                    <h3 class=""><b>{{ $absenHariinihrd }}</b></h3>
                     <p class="text-muted"><b>Total Absen Masuk </b> </p>
                 </div>
             </div>
         </div>
 
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
+            <div class="panel panel-warning text-center">
                 <div class="panel-heading btn-warning">
                     <a href="{{ url('showkaryawanterlambat') }}" class="panel-title ">
                         <h4 class="panel-title">Terlambat Hari Ini</h4>
                     </a>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>{{ $absenTerlambatHariIni }}</b></h3>
+                    <h3 class=""><b>{{ $absenTerlambatHariInihrd }}</b></h3>
                     <p class="text-muted"><b>Total Terlambat</b> </p>
                 </div>
             </div>
         </div>
 
         <div class="col-sm-6 col-lg-3">
-            <div class="panel panel-primary text-center">
-                <div class="panel-heading btn-danger">
+            <div class="panel panel-warning text-center">
+                <div class="panel-heading btn-warning">
                     <a href="{{ url('showkaryawantidakmasuk') }}" class="panel-title ">
                         <h4 class="panel-title"> Belum / Tidak Masuk Hari Ini</h4>
                     </a>
                 </div>
                 <div class="panel-body">
-                    <h3 class=""><b>{{ $totalTidakAbsenHariIni }}</b></h3>
+                    <h3 class=""><b>{{ $totalTidakAbsenHariInihrd }}</b></h3>
                     <p class="text-muted"><b>Total Tidak Masuk</b></p>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Absensi Hari Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="absensiChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Cuti Hari Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="cutiChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Ijin Hari Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="ijinChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Row -->
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Absensi Kemarin</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="absenKemarinChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Cuti Hari Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="cutiKemarinChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Ijin Hari Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="ijinKemarinChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Row -->
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Absensi Bulan Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="absenBulanIniChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Cuti Bulan Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="cutiBulanIniChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Ijin Bulan Ini</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="ijinBulanIniChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Row -->
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Absensi Bulan Lalu</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="absenBulanLaluChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Cuti Bulan Lalu</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="cutiBulanLaluChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-border panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-white text-center">Ijin Bulan Lalu</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <canvas id="ijinBulanlaluChart" style="height: 300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Row -->
+
     <div class="row">
     </div> <!-- End Row -->
     </div> <!-- container -->
@@ -1552,33 +1760,392 @@
 
 
     <script>
-        var users2 = {{ Js::from($data) }};
-        var labelBulan = {{ Js::from($labelBulan) }}
+        // Data absensi
+        var masuk = {{ $absenHariinihrd }};
+        var terlambat = {{ $absenTerlambatHariInihrd }};
+        var tidakMasuk = {{ $totalTidakAbsenHariInihrd }};
+        var cuti = {{ $cutiHariinihrd }};
+        var ijin = {{ $dataIzinHariinihrd }};
+        var absenKemarin = {{ $jumAbsenKemarin }};
+        var terlambatKemarin = {{ $absenTerlambatKemarinhrd }};
+        var tidakMasukkemarin = {{ $tidakMasukKemarinhrd }}
+        var cutiKemarin = {{ $cutiKemarinhrd }};
+        var ijinKemarin = {{ $dataIzinKemarinhrd }};
+        var masukBulanini = {{ $absenBulaninihrd }};
+        var terlambatBulanIni =  {{$absenTerlambatBulanInihrd }};
+        var tidakMasukBulanIni = {{ $tidakMasukBulanInihrd }};
+        var cutiBulanIni = {{ $jumCutiBulanIni }};
+        var IjinBulanIni = {{ $jumIzinBulanIni }};
+        var masukBulanLalu = {{ $absenBulanLaluhrd }};
+        var terlambatBulanLalu = {{ $absenTerlambatbulanlaluhrd }};
+        var tidakMasukBulanLalu = {{ $tidakMasukBulanLaluhrd }};
+        var cutiBulanLalu = {{ $jumCutiBulanLalu }};
+        var ijinBulanlalu = {{$jumIzinBulanLalu }};
 
         const data = {
-            labels: labelBulan,
+            labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
             datasets: [{
-                label: 'Cuti',
-                backgroundColor: '#18bae2',
-                borderColor: '#18bae2',
-                data: users2,
+                label: '',
+                backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderWidth: 1,
+                data: [masuk, terlambat, tidakMasuk],
+            }]
+        };
+        const data1 = {
+            labels: ['Cuti'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [cuti],
+            }]
+        };
+        const data2 = {
+            labels: ['Ijin'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#FFFF00'],
+                borderColor: ['#FFFF00'],
+                borderWidth: 1,
+                data: [ijin],
+            }]
+        };
+        const data3 = {
+            labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderWidth: 1,
+                data: [absenKemarin, terlambatKemarin, tidakMasukkemarin],
+            }]
+        };
+        const data4 = {
+            labels: ['Cuti'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [cutiKemarin],
+            }]
+        };
+        const data5 = {
+            labels: ['Ijin'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [ijinKemarin],
+            }]
+        };
+        const data6 = {
+            labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderWidth: 1,
+                data: [masukBulanini, terlambatBulanIni, tidakMasukBulanIni],
+            }]
+        };
+        const data7 = {
+            labels: ['Cuti'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [cutiBulanIni],
+            }]
+        };
+        const data8 = {
+            labels: ['Ijin'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [IjinBulanIni],
+            }]
+        };
+        const data9 = {
+            labels: ['Masuk', 'Terlambat', 'Tidak Masuk'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderColor: ['#18bae2', '#FF8C00', '#f44336'],
+                borderWidth: 1,
+                data: [masukBulanLalu, terlambatBulanLalu, tidakMasukBulanLalu],
+            }]
+        };
+        const data10 = {
+            labels: ['Cuti'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [cutiBulanLalu],
+            }]
+        };
+        const data11 = {
+            labels: ['Ijin'],
+            datasets: [{
+                label: '',
+                backgroundColor: ['#18bae2'],
+                borderColor: ['#18bae2'],
+                borderWidth: 1,
+                data: [ijinBulanlalu],
             }]
         };
 
         const config = {
-            type: 'line',
+            type: 'bar',
             data: data,
             options: {
-                ticks: {
-                    precision: 0
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
                 },
-
-            }
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
         };
 
-        const myChart = new Chart(
-            document.getElementById('myChart'),
+
+        const config1 = {
+            type: 'bar',
+            data: data1,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+
+        const config2 = {
+            type: 'bar',
+            data: data2,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config3 = {
+            type: 'bar',
+            data: data3,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config4 = {
+            type: 'bar',
+            data: data4,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config5 = {
+            type: 'bar',
+            data: data5,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config6 = {
+            type: 'bar',
+            data: data6,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config7 = {
+            type: 'bar',
+            data: data7,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config8 = {
+            type: 'bar',
+            data: data8,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config9 = {
+            type: 'bar',
+            data: data9,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config10 = {
+            type: 'bar',
+            data: data10,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+        const config11 = {
+            type: 'bar',
+            data: data11,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        };
+
+        const absensiChart = new Chart(
+            document.getElementById('absensiChart'),
             config
+        );
+        const cutiChart = new Chart(
+            document.getElementById('cutiChart'),
+            config1
+        );
+        const ijinChart = new Chart(
+            document.getElementById('ijinChart'),
+            config2
+        );
+        const absenKemarinChart = new Chart(
+            document.getElementById('absenKemarinChart'),
+            config3
+        );
+        const cutiKemarinChart = new Chart(
+            document.getElementById('cutiKemarinChart'),
+            config4
+        );
+        const ijinKemarinChart = new Chart(
+            document.getElementById('ijinKemarinChart'),
+            config5
+        );
+        const absenBulaniniChart = new Chart(
+            document.getElementById('absenBulanIniChart'),
+            config6
+        );
+        const cutiBulanIniChart = new Chart(
+            document.getElementById('cutiBulanIniChart'),
+            config7
+        );
+        const ijinBulanIniChart = new Chart(
+            document.getElementById('ijinBulanIniChart'),
+            config8
+        );
+        const absenBulanLaluChart = new Chart(
+            document.getElementById('absenBulanLaluChart'),
+            config9
+        );
+        const cutiBulanLaluChart = new Chart(
+            document.getElementById('cutiBulanLaluChart'),
+            config10
+        );
+        const ijinBulanlaluChart = new Chart(
+            document.getElementById('ijinBulanlaluChart'),
+            config11
         );
     </script>
 

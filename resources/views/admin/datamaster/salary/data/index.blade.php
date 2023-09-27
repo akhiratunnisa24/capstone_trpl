@@ -60,7 +60,7 @@
                                             @if (Auth::user()->role == 5)
                                                 <td>{{ $salaryStructure->partner }}</td>
                                             @endif
-                                             <td class="text-center">
+                                            <td class="text-center">
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <button class="btn btn-info btn-sm" title="Detail Struktur Gaji" data-toggle="modal" data-target="#showModal{{ $salaryStructure->id }}"><i class="fa fa-eye"></i></button>
 

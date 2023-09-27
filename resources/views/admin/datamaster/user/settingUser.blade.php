@@ -18,7 +18,7 @@
     </div>
 
     <div class="panel panel-primary">
-        <div class="panel-heading clearfix">
+        <div class="panel-heading clearfix" style="height:35px;">
             {{-- <a href="/rekapcutiExcel" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o"> Export Excel</a> --}}
         </div>
 

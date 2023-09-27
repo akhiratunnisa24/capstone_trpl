@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <title>Notifikasi - Slip Gaji Karyawan</title>
@@ -110,7 +110,7 @@
             background-color: #dffb07;
         }
         .badge-info {
-            background-color: #1acce8; 
+            background-color: #1acce8;
         }
         .badge-success {
             background-color: #11e041;
@@ -118,6 +118,9 @@
         .badge-danger {
             background-color: #f13012;
         }
+		.list {
+			margin-left: 2.0rem;
+		}
     </style>
 </head>
 <body>
@@ -126,7 +129,19 @@
             <div>
                 <p>Kepada <strong>{{$data['nama']}}</strong></p>
 
-                <p>Kami ingin memberitahu Anda bahwa slip gaji Anda untuk periode {{$data['periode']}} telah tersedia. Detailnya sebagai berikut:</p>
+                <p>Kami ingin memberitahu Anda bahwa E-SLIP GAJI Anda untuk Periode <strong>{{$data['periode']}}</strong> telah tersedia dan terlampir.</p>
+                <p>Silahkan gunakan password <strong>ddmmyyyy</strong> untuk membuka slip gaji Anda, yang terdiri dari:</p>
+                <ul>
+                    <li class="list"><strong>dd</strong> &nbsp;&nbsp;&nbsp;&nbsp;: Dua digit tanggal lahir Anda</li>
+                    <li class="list"><strong>mm</strong> &nbsp;&nbsp;: Dua digit bulan lahir</li>
+                    <li class="list"><strong>yyyy</strong> : Empat digit tahun lahir</li>
+                </ul>
+                <br>
+                <p>Contoh: Password untuk tanggal lahir 01 Januari 1990 adalah <strong>01011990</strong>.</p>
+				<p><strong style="color: #c42007">INFO PENTING !!</strong></p>
+                <p>Mohon diperhatikan bahwa E-SLIP GAJI ini bersifat rahasia dan hanya untuk konsumsi pribadi Anda. Jika Anda memiliki pertanyaan atau keberatan terkait dengan rincian gaji Anda, jangan ragu untuk menghubungi bagian HR.</p>
+				<p>Segala Kerugian akibat diberikannya / bocornya Data Pribadi Anda dan/ atau  E-SLIP GAJI ini kepada pihak lain <strong>MENJADI TANGGUNG JAWAB ANDA SEPENUHNYA.</strong></p>
+				<p>Terima kasih atas kerja keras Anda selama bulan ini.</p>
                 <p>Salam Hormat,<br><br></p>
                 <p>[Manager/HR]<br>
 			</div>

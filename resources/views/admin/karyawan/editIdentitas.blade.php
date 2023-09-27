@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myLargeModalLabel">Edit Identitas Diri</h4>
+                <h4 class="modal-title text-center" id="myLargeModalLabel">Edit Identitas Diri</h4>
             </div>
             <div class="modal-body">
                 <form action="{{ route('identitas.update', $karyawan->id) }}" method="POST"
@@ -37,7 +37,7 @@
                                     <input name="tgllahirKaryawan" type="text" autocomplete="off"
                                         class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclose17"
                                         autocomplete="off"
-                                        value="{{ \Carbon\Carbon::parse($karyawan->tgllahir)->format('Y/m/d') }}">
+                                        value="{{ \Carbon\Carbon::parse($karyawan->tgllahir)->format('Y/m/d') }}" readonly>
                                 </div>
                             </div>
 
@@ -219,8 +219,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                        <button type="submit" value="submit" class="btn btn-success">Update</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
+                        <button type="submit" value="submit" class="btn btn-sm btn-success">Update</button>
                     </div>
                 </form>
             </div>

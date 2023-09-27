@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Atasan;
 use App\Models\Karyawan;
 use App\Models\Kdarurat;
@@ -13,9 +14,10 @@ use App\Models\Departemen;
 use App\Models\Rekruitmen;
 use App\Models\Rpekerjaan;
 use App\Models\Rorganisasi;
-use App\Models\Rpendidikan;
 // use Illuminate\Support\Facades\Auth;
+use App\Models\Rpendidikan;
 use Illuminate\Http\Request;
+use App\Models\SettingOrganisasi;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RekruitmenApplyNotification;
@@ -298,6 +300,19 @@ class FormPelamarController extends Controller
         return redirect()->back();
     }
 
+    public function deletedk(Request $request)
+    {
+        $key = $request->input('key');
+        $datakeluarga = json_decode($request->session()->get('datakeluarga', '[]'), true);
+
+        if (array_key_exists($key, $datakeluarga)) {
+            unset($datakeluarga[$key]);
+            session()->put('datakeluarga', json_encode($datakeluarga));
+        }
+
+        return redirect()->back();
+    }
+
     //data kontak darurat
     public function createkonrat(Request $request)
     {
@@ -343,6 +358,20 @@ class FormPelamarController extends Controller
         return redirect()->back();
     }
 
+    //delete data pada form create
+    public function deletekd(Request $request)
+    {
+        $key = $request->input('key');
+        $kontakdarurat = json_decode($request->session()->get('kontakdarurat', '[]'), true);
+
+        if (array_key_exists($key, $kontakdarurat)) {
+            unset($kontakdarurat[$key]);
+            session()->put('kontakdarurat', json_encode($kontakdarurat));
+        }
+
+        return redirect()->back();
+    }
+
     //data untuk pendidikan
     public function creatependidikan(Request $request)
     {
@@ -350,6 +379,7 @@ class FormPelamarController extends Controller
             $datakeluarga = $request->session()->get('datakeluarga');
             $kontakdarurat = $request->session()->get('kontakdarurat');
             $pendidikan = json_decode(session('pendidikan', '[]'), true);
+            // dd($pendidikan);
             if (empty($pendidikan)) {
                 $pendidikan = [];
             }
@@ -367,19 +397,18 @@ class FormPelamarController extends Controller
             'kota_pformal'         => $request->kotaPendidikanFormal,
             'jurusan'              => $request->jurusan,
             // 'tahun_lulus_formal'   => $request->tahun_lulusFormal,
-            'tahun_masuk_formal' => ($request->tahun_masukFormal !== null) ? \Carbon\Carbon::createFromFormat('Y', $request->tahun_masukFormal)->format('Y') : null,
-            'tahun_lulus_formal' => ($request->tahun_lulusFormal !== null) ? \Carbon\Carbon::createFromFormat('Y', $request->tahun_lulusFormal)->format('Y') : null,
+            'tahun_masuk_formal'   => $request->tahun_masukFormal,
+            'tahun_lulus_formal'   => $request->tahun_lulusFormal,
             'jenis_pendidikan'     => $request->jenis_pendidikan,
             'kota_pnonformal'      => $request->kotaPendidikanNonFormal,
             // 'tahun_lulus_nonformal'=> $request->tahunLulusNonFormal,
-            'tahun_masuk_nonformal' => ($request->tahunMasukNonFormal !== null) ? \Carbon\Carbon::createFromFormat('Y', $request->tahunMasukNonFormal)->format('Y') : null,
-            'tahun_lulus_nonformal' => ($request->tahunLulusNonFormal !== null) ? \Carbon\Carbon::createFromFormat('Y', $request->tahunLulusNonFormal)->format('Y') : null,
-            'ijazah_formal' => $request->noijazahPformal,
-            'ijazah_nonformal' => $request->noijazahPnonformal,
+            'tahun_masuk_nonformal'=> $request->tahunMasukNonFormal,
+            'tahun_lulus_nonformal'=> $request->tahunLulusNonFormal,
+            'ijazah_formal'        => $request->noijazahPformal,
+            'ijazah_nonformal'     => $request->noijazahPnonformal,
         ];
 
         $pendidikan[] = $pendidikanBaru;
-
         session()->put('pendidikan', json_encode($pendidikan));
         return redirect()->back();
     }
@@ -396,8 +425,8 @@ class FormPelamarController extends Controller
         $pendidikan[$index]['jurusan']              = $request->jurusan;
         // $pendidikan[$index]['tahun_masuk_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d');
         // $pendidikan[$index]['tahun_lulus_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d');
-        if (!empty($request->tahun_masukFormal)) {$pendidikan[$index]['tahun_masuk_formal'] = \Carbon\Carbon::createFromFormat('Y', $request->tahun_masukFormal)->format('Y');}
-        if (!empty($request->tahun_lulusFormal)) {$pendidikan[$index]['tahun_lulus_formal'] = \Carbon\Carbon::createFromFormat('Y', $request->tahun_lulusFormal)->format('Y');}
+        $pendidikan[$index]['tahun_masuk_formal'] = $request->tahun_masukFormal ? $request->tahun_masukFormal : null;
+        $pendidikan[$index]['tahun_lulus_formal'] = $request->tahun_lulusFormal ? $request->tahun_lulusFormal : null;
 
         // $pendidikan[$index]['tahun_lulus_formal']   = $request->tahun_lulusFormal;
         $pendidikan[$index]['jenis_pendidikan']     = $request->jenis_pendidikan;
@@ -405,13 +434,27 @@ class FormPelamarController extends Controller
         // $pendidikan[$index]['tahun_lulus_nonformal'] = $request->tahunLulusNonFormal;
         // $pendidikan[$index]['tahun_masuk_nonformal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d');
         // $pendidikan[$index]['tahun_lulus_nonformal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d');
-        if (!empty($request->tahun_masukNonFormal)) {$pendidikan[$index]['tahun_masuk_nonformal'] = \Carbon\Carbon::createFromFormat('Y', $request->tahun_masukNonFormal)->format('Y');}
-        if (!empty($request->tahun_lulusNonFormal)) {$pendidikan[$index]['tahun_lulus_nonformal'] = \Carbon\Carbon::createFromFormat('Y', $request->tahun_lulusNonFormal)->format('Y');}
+        $pendidikan[$index]['tahun_masuk_nonformal'] = $request->tahun_masukNonFormal ? $request->tahun_masukNonFormal : null;
+        $pendidikan[$index]['tahun_lulus_nonformal'] = $request->tahun_lulusNonFormal ? $request->tahun_lulusNonFormal : null;
 
         $pendidikan[$index]['ijazah_formal'] = $request->noijazahPformal;
         $pendidikan[$index]['ijazah_nonformal'] = $request->noijazahPnonformal;
 
         session()->put('pendidikan', json_encode($pendidikan));
+        return redirect()->back();
+    }
+
+    //delete data pendidikan pada session 
+    public function deletePendidikan(Request $request)
+    {
+        $key = $request->input('key');
+        $pendidikan = json_decode($request->session()->get('pendidikan', '[]'), true);
+
+        if (array_key_exists($key, $pendidikan)) {
+            unset($pendidikan[$key]);
+            session()->put('pendidikan', json_encode($pendidikan));
+        }
+
         return redirect()->back();
     }
 
@@ -441,8 +484,8 @@ class FormPelamarController extends Controller
             // 'jenis_usaha'     => $request->jenisUsaha,
             // 'tgl_mulai'       => Carbon::parse($request->tglmulai)->format('Y-m-d'),
             // 'tgl_selesai'     => Carbon::parse($request->tglselesai)->format('Y-m-d'),
-            'tgl_mulai'       => \Carbon\Carbon::createFromFormat('Y', $request->tglmulai)->format('Y'),
-            'tgl_selesai'     => \Carbon\Carbon::createFromFormat('Y', $request->tglselesai)->format('Y'),
+            'tgl_mulai'       => $request->tglmulai,
+            'tgl_selesai'     => $request->tglselesai,
             'jabatan'         => $request->jabatanRpekerjaan,
             'level'           => $request->levelRpekerjaan,
             // 'nama_atasan'     => $request->namaAtasan,
@@ -462,6 +505,7 @@ class FormPelamarController extends Controller
         $pekerjaan = json_decode($request->session()->get('pekerjaan', '[]'), true);
         $index = $request->nomor_index;
 
+        // dd($request->all());
         $pekerjaan[$index]['nama_perusahaan'] = $request->namaPerusahaan;
         $pekerjaan[$index]['alamat']         = $request->alamatPerusahaan;
         $pekerjaan[$index]['jenis_usaha']    = $request->jenisUsaha;
@@ -471,12 +515,25 @@ class FormPelamarController extends Controller
         $pekerjaan[$index]['nama_direktur']  = $request->namaDirektur;
         // $pekerjaan[$index]['tgl_mulai'] = Carbon::parse($request->tglmulai)->format('Y-m-d');
         // $pekerjaan[$index]['tgl_selesai'] = Carbon::parse($request->tglselesai)->format('Y-m-d');
-        $datakeluarga[$index]['tgl_mulai'] = \Carbon\Carbon::createFromFormat('Y', $request->tglmulai)->format('Y-m-d');
-        $datakeluarga[$index]['tgl_selesai'] = \Carbon\Carbon::createFromFormat('Y', $request->tglselesai)->format('Y-m-d');
-        $pekerjaan[$index]['alasan_berhenti'] = $request->alasanBerhenti;
+        $pekerjaan[$index]['tgl_mulai']   =  $request->tglmulai ? $request->tglmulai : null;
+        $pekerjaan[$index]['tgl_selesai'] =  $request->tglselesai ?  $request->tglselesai : null;
+        $pekerjaan[$index]['alasan_berhenti']= $request->alasanBerhenti;
         $pekerjaan[$index]['gaji']           = $request->gajiRpekerjaan;
 
         session()->put('pekerjaan', json_encode($pekerjaan));
+        return redirect()->back();
+    }
+
+    public function deletePekerjaan(Request $request)
+    {
+        $key = $request->input('key');
+        $pekerjaan = json_decode($request->session()->get('pekerjaan', '[]'), true);
+
+        if (array_key_exists($key, $pekerjaan)) {
+            unset($pekerjaan[$key]);
+            session()->put('pekerjaan', json_encode($pekerjaan));
+        }
+
         return redirect()->back();
     }
 
@@ -509,8 +566,8 @@ class FormPelamarController extends Controller
             'alamat'          => $request->alamatOrganisasi,
             // 'tgl_mulai'     => Carbon::parse($request->tglmulai)->format('Y-m-d'),
             // 'tgl_selesai'   => Carbon::parse($request->tglselesai)->format('Y-m-d'),
-            'tgl_mulai'     => \Carbon\Carbon::createFromFormat('Y', $request->tglmulai)->format('Y'),
-            'tgl_selesai'   => \Carbon\Carbon::createFromFormat('Y', $request->tglselesai)->format('Y'),
+            'tgl_mulai'     => $request->tglmulai,
+            'tgl_selesai'   => $request->tglselesai,
             'jabatan'     => $request->jabatanRorganisasi,
             'no_sk'   => $request->noSKorganisasi,
         ];
@@ -528,13 +585,13 @@ class FormPelamarController extends Controller
 
         // dd($index);
         $organisasi[$index]['nama_organisasi'] = $request->namaOrganisasi;
-        $organisasi[$index]['alamat']         = $request->alamatOrganisasi;
+        $organisasi[$index]['alamat']          = $request->alamatOrganisasi;
         // $organisasi[$index]['tgl_mulai']    = Carbon::parse($request->tglmulai)->format('Y-m-d');
         // $organisasi[$index]['tgl_selesai']        = Carbon::parse($request->tglselesai)->format('Y-m-d');
-        $organisasi[$index]['tgl_mulai']    = \Carbon\Carbon::createFromFormat('Y', $request->tglmulai)->format('Y');
-        $organisasi[$index]['tgl_selesai']        = \Carbon\Carbon::createFromFormat('Y', $request->tglselesai)->format('Y');
-        $organisasi[$index]['jabatan']          = $request->jabatanRorganisasi;
-        $organisasi[$index]['no_sk']    = $request->noSKorganisasi;
+        $organisasi[$index]['tgl_mulai']       = $request->tglmulai;
+        $organisasi[$index]['tgl_selesai']     = $request->tglselesai;
+        $organisasi[$index]['jabatan']         = $request->jabatanRorganisasi;
+        $organisasi[$index]['no_sk']           = $request->noSKorganisasi;
 
         // dd($pekerjaan[$index]['gaji']);
         session()->put('organisasi', json_encode($organisasi));
@@ -544,6 +601,20 @@ class FormPelamarController extends Controller
 
         return redirect()->back();
     }
+
+    public function deleteOrganisasi(Request $request)
+    {
+        $key = $request->input('key');
+        $organisasi = json_decode($request->session()->get('organisasi', '[]'), true);
+
+        if (array_key_exists($key, $organisasi)) {
+            unset($organisasi[$key]);
+            session()->put('organisasi', json_encode($organisasi));
+        }
+
+        return redirect()->back();
+    }
+
 
     //data untuk prestasi
     public function createprestasi(Request $request)
@@ -574,7 +645,7 @@ class FormPelamarController extends Controller
             'nama_instansi' => $request->namaInstansi,
             'alamat'        => $request->alamatInstansi,
             'no_surat'      => $request->noSurat,
-            'tanggal_surat'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d'),
+            'tanggal_surat' => $request->tgl_surat,
         ];
 
         $prestasi[] = $prestasiBaru;
@@ -593,9 +664,22 @@ class FormPelamarController extends Controller
         $prestasi[$index]['nama_instansi']    = $request->namaInstansi;
         $prestasi[$index]['alamat']           = $request->alamatInstansi;
         $prestasi[$index]['no_surat']         = $request->noSurat;
-        $prestasi[$index]['tanggal_surat']    = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d');
+        $prestasi[$index]['tanggal_surat']    = $request->tgl_surat;
 
         session()->put('prestasi', json_encode($prestasi));
+        return redirect()->back();
+    }
+
+    public function deletePrestasi(Request $request)
+    {
+        $key = $request->input('key');
+        $prestasi = json_decode($request->session()->get('prestasi', '[]'), true);
+
+        if (array_key_exists($key, $prestasi)) {
+            unset($prestasi[$key]);
+            session()->put('prestasi', json_encode($prestasi));
+        }
+
         return redirect()->back();
     }
 
@@ -618,8 +702,10 @@ class FormPelamarController extends Controller
     {
         //meyimpan data ke database
         $pelamar = $request->session()->get('pelamar');
+    
         $pelamar->save();
         $idKaryawan = $pelamar->id;
+        $partner = $pelamar->partner;
 
         // $datakeluarga = json_decode($request->session()->get('datakeluarga', []), true);
 
@@ -707,9 +793,33 @@ class FormPelamarController extends Controller
         $request->session()->forget('prestasi');
 
         $data = Rekruitmen::findOrFail($idKaryawan);
+        $settingorganisasi = SettingOrganisasi::where('partner',$partner)->first();
+        if ($settingorganisasi !== null) {
+            $data->email_perusahaan  = $settingorganisasi->email;
+            $data->nama_perusahaan   = $settingorganisasi->nama_perusahaan;
+            $data->notelp_perusahaan = $settingorganisasi->no_telp;
+        }
         // Email HRD
-        $tujuan = 'hrd@gmail.com';
-        $tujuan2 = 'hrd2@gmail.com';
+        $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
+        if($hrdmanager !== null){
+            $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+            $hrdmng = $hrdmng->email;
+        }
+        
+        $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+        if($hrdstaff !== null){
+            $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+            $hrdstf = $hrdstf->email;
+        }
+
+        if ($hrdmng !== null) {
+            $tujuan = $hrdmng;
+        } 
+
+        if ($hrdstf !== null) {
+            $tujuan2 = $hrdstf;
+        }
+
         $email = new RekruitmenApplyNotification($data);
         Mail::to($tujuan)->send($email);
         Mail::to($tujuan2)->send($email);

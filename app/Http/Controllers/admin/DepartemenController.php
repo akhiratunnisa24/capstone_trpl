@@ -38,9 +38,12 @@ class DepartemenController extends Controller
             return view('admin.datamaster.departemen.index', compact('departemen', 'row','role'));
         } elseif (($role == 5)||$role == 7)
         {
-
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen = Departemen::orderBy('id', 'asc')->get();
+            if($role == 7)
+            {
+                $departemen = Departemen::where('partner', Auth::user()->partner)->get();
+            }
             return view('admin.datamaster.departemen.index', compact('departemen', 'row','role'));
         }
         else {

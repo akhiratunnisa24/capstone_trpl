@@ -22,7 +22,7 @@ class Tidakmasuk extends Model
 
     public function karyawan()
     {
-        return $this->hasMany(Karyawan::class, 'id');
+        return $this->hasMany(Karyawan::class, 'id_pegawai','id');
     }
     public function departemen()
     {
