@@ -114,12 +114,14 @@
                                                     <td>{{$data->jumlah_sakit}}</td>
                                                     <td>{{$data->jumlah_izin}}</td>
                                                     <td>
-                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example"> 
-                                                            <a href=""class="btn btn-info btn-sm" title="Edit Kehadiran"><i class="fa fa-eye"></i>
+                                                        <div class="d-grid gap-2 " role="group" aria-label="Basic example">
+                                                            <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#Showlembur{{$data->id}}" title="Lihat Kehadiran">
+                                                                <i class="fa fa-eye"></i>
                                                             </a>
                                                         </div>
                                                     </td>
                                                 </tr>
+                                                @include('admin.penggajian.konfigurasi.showlembur')
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -132,7 +134,7 @@
         </div> <!-- container -->
     </div> <!-- content -->
     @include('admin.penggajian.konfigurasi.addlembur')
-    
+
     <script src="assets/pages/form-advanced.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
@@ -162,5 +164,5 @@
     @endif
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   
+
 @endsection
