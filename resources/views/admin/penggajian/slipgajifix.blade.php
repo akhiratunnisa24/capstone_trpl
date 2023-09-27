@@ -215,7 +215,7 @@
                                                                 
                                                                 @if($detailgaji !== null)
                                                                     @foreach($detailgaji as $detail)
-                                                                        @if($detail->benefit->id_kategori === 5 || $detail->benefit->id_kategori === 6)
+                                                                        @if($detail->benefit->id_kategori === 5 && $detail->benefit->dibayarkan_oleh == "Karyawan" || $detail->benefit->id_kategori === 6)
                                                                             <tr>
                                                                                 <td>{{ $nomor++ }}</td>
                                                                                 <td>{{ $detail->benefit->nama_benefit}}</td>

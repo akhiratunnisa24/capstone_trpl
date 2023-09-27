@@ -164,7 +164,7 @@
                <h3>POTONGAN:</h3>
                 @if($detailgaji !== null && $detail->benefit->id_kategori === 5 || $detail->benefit->id_kategori === 6)
                     @foreach($detailgaji as $detail)
-                        @if($detail->benefit->id_kategori === 5 ||  $detail->benefit->id_kategori === 6)
+                        @if($detail->benefit->id_kategori === 5 && $detail->benefit->dibayarkan_oleh === "Karyarwan" ||  $detail->benefit->id_kategori === 6)
                             <tr>
                                 <td>{{ $detail->benefit->nama_benefit}}</td>
                                 <td class="text-right">{{ number_format($detail->total, 0, ',', '.')}}</td>
