@@ -764,6 +764,8 @@ Route::put('/slipgaji{id}', [PenggajianController::class, 'showslipgaji'])->name
 Route::put('/hitung-gaji', [PenggajianController::class, 'hitunggaji'])->name('hitunggaji');
 Route::get('/slipgaji-pdf/{id}', [PenggajianController::class, 'slipgajipdf'])->name('slipgajipdf');
 Route::get('/slip-gaji/{id}', [PenggajianController::class, 'showslipgajifix'])->name('showslipgaji');
+Route::get('/slip-gaji-delete/{id}', [PenggajianController::class, 'destroy'])->name('slipgaji.destroy');
+
 
 Route::get('/rekap-kehadiran', [DetailhadirController::class, 'indexs'])->name('kehadirans');
 Route::post('/rekap-kehadiran', [DetailhadirController::class, 'storehadir'])->name('storehadir');
