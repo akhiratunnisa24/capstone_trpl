@@ -8,39 +8,6 @@
                 <h4 class="modal-title text-center" id="Showlembur">JADWAL ABSENSI KARYAWAN</h4>
             </div>
             <div class="modal-body">
-                {{-- <table>
-                    <thead>
-                        <tr>
-                            @foreach ($jadwal as $j)
-                                <th>{{ \Carbon\Carbon::parse($j->tanggal)->locale('id_ID')->isoFormat('D/M') }}</th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            @foreach ($jadwal as $j)
-                                @php
-                                    $matched = false;
-                                @endphp
-
-                                @foreach ($absensi as $a)
-                                    @if ($a['tanggal'] === $j->tanggal)
-                                        @php
-                                            $matched = true;
-                                        @endphp
-                                        <td>
-                                            <div class="fa fa-check"></div>
-                                        </td>
-                                    @break;
-                                @endif
-                            @endforeach
-
-                            @if (!$matched)
-                                <td>absen</td>
-                            @endif
-                        @endforeach
-                    </tr>
-                </table> --}}
                 @foreach ($jadwal as $j)
                     <div>{{ \Carbon\Carbon::parse($j->tanggal)->locale('id_ID')->isoFormat('D/M') }}</div>
                 @endforeach

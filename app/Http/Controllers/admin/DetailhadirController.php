@@ -39,8 +39,14 @@ class DetailhadirController extends Controller
                             ->get()
                             ->toArray();
                     // dd($jadwal,$absensi);
-                    return view('admin.penggajian.konfigurasi.index',compact('row','role','kehadiran','jadwal','absensi'));
+
+                    $dataKehadiran[] = [
+                        'kehadiran' => $hadir,
+                        'jadwal' => $jadwal,
+                        'absensi' => $absensi,
+                    ];
                }
+               return view('admin.penggajian.konfigurasi.index',compact('row','role','kehadiran','jadwal','absensi','dataKehadiran'));
 
            }else {
 
