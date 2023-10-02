@@ -1098,7 +1098,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <ul class="">
-                                            <li class="text-center notifi-title">Notifikasi Tidak Masuk
+                                            <li class="text-center notifi-title" style="background-color: #d9edf7; color: #666666; font-weight:bold; list-style-type:none">Notifikasi Tidak Masuk
                                                 @if ($jumlah)
                                                     <span class="badge badge-xs badge-danger">@php  echo $jumlah; @endphp</span>
                                                 @else
@@ -1172,7 +1172,7 @@
                                     <div class="col-xs-12">
                                         <ul class="">
 
-                                            <li class="text-center notifi-title">Notifikasi Terlambat <span
+                                            <li class="text-center notifi-title" style="background-color: #d9edf7; color: #666666; font-weight:bold; list-style-type:none">Notifikasi Terlambat <span
                                                     class="badge badge-xs badge-danger">@php  echo $jum; @endphp</span></li>
                                             <li class="list-group">
                                                 @if ($terlambat && $jumter > 0)
@@ -1425,7 +1425,7 @@
                                                         </tr>
                                                     @endif
                                                     @include('karyawan.addcuti')
-                                                @empty 
+                                                @empty
                                                     @if ($sisa->id_pegawai != Auth::user()->id_pegawai)
                                                         <tr>
                                                             <td colspan="12" class="text-center">No data available in table.
