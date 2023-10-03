@@ -126,10 +126,10 @@
                                                 Karyawan</a></li> --}}
                                     </ul>
                                 </li>
-                                <li><a href="/"><i class="mdi mdi-cash-usd"></i><span></span>Kompensasi</a></li>
+                                <li><a href="#"><i class="mdi mdi-cash-usd"></i><span></span>Kompensasi</a></li>
                             </ul>
                         </li>
-                  
+
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i
                                     class="fa fa-usd"></i><span
@@ -182,7 +182,7 @@
                                         class="fa fa-exclamation-circle"></i><span></span>Informasi</a></li>
                             <li><a href="/user_mesin"><i class="fa fa-user"></i><span></span>User Mesin</a></li>
                             <li class="has_sub">
-                                <a href=""><i class="mdi mdi-calendar-clock"></i><span></span>Jadwal
+                                <a href="#"><i class="mdi mdi-calendar-clock"></i><span></span>Jadwal
                                     Karyawan<span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="/shift"><i class="mdi mdi-calendar"></i><span></span>Shift</a></li>
@@ -193,7 +193,7 @@
                             </li>
                             @if(Auth::check() && Auth::user()->role === 1 || Auth::check() && Auth::user()->role === 6)
                                 <li class="has_sub">
-                                    <a href=""><i class="fa fa-money"></i><span></span>Master Penggajian<span
+                                    <a href="#"><i class="fa fa-money"></i><span></span>Master Penggajian<span
                                             class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                                     <ul class="list-unstyled">
                                         {{-- <li><a href="/kategori-salary"><i

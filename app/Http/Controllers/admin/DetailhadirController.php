@@ -10,6 +10,7 @@ use App\Models\Karyawan;
 use App\Models\Tidakmasuk;
 use Illuminate\Http\Request;
 use App\Models\Detailkehadiran;
+use App\Models\Penggajian;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,13 +24,37 @@ class DetailhadirController extends Controller
            {
                $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
                $kehadiran = Detailkehadiran::where('partner',$row->partner)->get();
-               return view('admin.penggajian.konfigurasi.index',compact('row','role','kehadiran'));
+               //show data
+               foreach($kehadiran as $hadir)
+               {
+                    $partner  = $hadir->partner;
+                    $awal     = $hadir->tgl_awal;
+                    $akhir    = $hadir->tgl_akhir;
+
+                    $jadwal   = Jadwal::where('partner',$partner)
+                            ->whereBetween('tanggal',[$awal,$akhir])
+                            ->get();
+                    $absensi= Absensi::where('id_karyawan', $hadir->id_karyawan)
+                            ->whereBetween('tanggal',[$awal,$akhir])
+                            ->get()
+                            ->toArray();
+                    // dd($jadwal,$absensi);
+
+                    $dataKehadiran[] = [
+                        'kehadiran' => $hadir,
+                        'jadwal' => $jadwal,
+                        'absensi' => $absensi,
+                    ];
+               }
+               return view('admin.penggajian.konfigurasi.index',compact('row','role','kehadiran','jadwal','absensi','dataKehadiran'));
+
            }else {
-   
+
                return redirect()->back();
            }
+
        }
-   
+
        public function storehadir(Request $request)
        {
            $karyawan = Karyawan::where('partner',$request->partner)->select('id','nama','partner')->get();
@@ -46,7 +71,7 @@ class DetailhadirController extends Controller
                    ->where('id_karyawan', $data->id)
                    ->whereBetween('tanggal', [$awal, $akhir])
                    ->value('total_jam');
-   
+
                 //menghitung jumlah dan jam lembur karyawan
                 $lembur = Absensi::where('id_karyawan', $data->id)
                    ->where('lembur', '!=', null)
@@ -59,7 +84,7 @@ class DetailhadirController extends Controller
                    ->whereBetween('tanggal', [$awal, $akhir])
                    ->where('lembur','>','01:00:00')
                    ->value('total_jam');
-                
+
                 //menghitung jumlah hari kerja dalam 1 bulan
                 $jadwal = Jadwal::where('partner',$data->partner)
                     ->whereBetween('tanggal', [$awal, $akhir])
@@ -87,7 +112,7 @@ class DetailhadirController extends Controller
 
                 $totalHariIzinSakit = 0;
                 $totalJamSakit = 0;
-                foreach ($izinSakit as $izinsakit) 
+                foreach ($izinSakit as $izinsakit)
                 {
                     $tglMulai = \Carbon\Carbon::parse($izinsakit->tgl_mulai);
                     $tglSelesai = \Carbon\Carbon::parse($izinsakit->tgl_selesai);
@@ -124,10 +149,10 @@ class DetailhadirController extends Controller
                     foreach ($jamTanggal as $j) {
                         $jamMasuk = \Carbon\Carbon::parse($j->jadwal_masuk);
                         $jamPulang = \Carbon\Carbon::parse($j->jadwal_pulang);
-                
+
                         // Hitung selisih jam (dalam jam)
                         $selisihJam = $jamMasuk->diffInHours($jamPulang);
-                
+
                         // Tambahkan selisih jam ke total jam
                        $totalJamSakit += $selisihJam;
                     }
@@ -149,11 +174,11 @@ class DetailhadirController extends Controller
 
                 $totalHariIzin = 0;
                 $totalJamIzin = 0;
-                foreach ($izin as $izin) 
+                foreach ($izin as $izin)
                 {
                     $tglMulai = \Carbon\Carbon::parse($izin->tgl_mulai);
                     $tglSelesai = \Carbon\Carbon::parse($izin->tgl_selesai);
-                    $selisihHari = $tglMulai->diffInDays($tglSelesai) + 1; 
+                    $selisihHari = $tglMulai->diffInDays($tglSelesai) + 1;
 
                     $totalHariIzin += $selisihHari;
 
@@ -174,10 +199,10 @@ class DetailhadirController extends Controller
                         foreach ($jamTanggal as $j) {
                             $jamMasuk = \Carbon\Carbon::parse($j->jadwal_masuk);
                             $jamPulang = \Carbon\Carbon::parse($j->jadwal_pulang);
-                    
+
                             // Hitung selisih jam (dalam jam)
                             $selisihJam = $jamMasuk->diffInHours($jamPulang);
-                
+
                             $totalJamIzin += $selisihJam;
                         }
                     }else if($izin->id_jenisizin == 5)
@@ -207,10 +232,10 @@ class DetailhadirController extends Controller
                         });
                     })
                     ->get();
-                
+
                 $totalHariCuti = 0;
                 $totalJamCuti = 0;
-                foreach ($cuti as $cuty) 
+                foreach ($cuti as $cuty)
                 {
                     $tglMulai = \Carbon\Carbon::parse($cuty->tgl_mulai);
                     $tglSelesai = \Carbon\Carbon::parse($cuty->tgl_selesai);
@@ -220,25 +245,25 @@ class DetailhadirController extends Controller
                     } else {
                         $tglHitungAwal = $awal;
                     }
-                
+
                     if ($tglSelesai->lessThan($akhir)) {
                         $tglHitungAkhir = $tglSelesai;
                     } else {
                         $tglHitungAkhir = $akhir;
                     }
-                
+
                     $tglHitungAwal = \Carbon\Carbon::parse($tglHitungAwal);
                     $tglHitungAkhir= \Carbon\Carbon::parse($tglHitungAkhir);
 
                     $selisihHari = $tglHitungAwal->diffInDays($tglHitungAkhir) + 1;
-                
+
                     // $totalHariCuti += $selisihHari;
-                    
-                
+
+
                     $cocokkanTanggal = Jadwal::where('partner', $data->partner)
                         ->whereBetween('tanggal', [$tglHitungAwal, $tglHitungAkhir])
                         ->count();
-                  
+
 
                     if ($cocokkanTanggal > 0) {
                         $totalHariCuti = $cocokkanTanggal;
@@ -250,9 +275,9 @@ class DetailhadirController extends Controller
                     foreach ($jamTanggal as $j) {
                         $jamMasuk = \Carbon\Carbon::parse($j->jadwal_masuk);
                         $jamPulang = \Carbon\Carbon::parse($j->jadwal_pulang);
-                
+
                         $selisihJam = $jamMasuk->diffInHours($jamPulang);
-            
+
                        $totalJamCuti += $selisihJam;
                     }
                     // dd($tglHitungAwal,$tglHitungAkhir,$cocokkanTanggal,$totalJamCuti);
@@ -266,24 +291,34 @@ class DetailhadirController extends Controller
                         'tgl_akhir' => $akhir,
                     ]);
 
-                $detailkehadiran->total_jadwal = $jadwal ? $jadwal : 0;             
+                $detailkehadiran->total_jadwal = $jadwal ? $jadwal : 0;
                 $detailkehadiran->jumlah_hadir = $hadir ? $hadir : 0;
                 $detailkehadiran->jumlah_lembur = $lembur ? $lembur : 0;
                 $detailkehadiran->jumlah_cuti = $totalHariCuti ? $totalHariCuti : 0;
                 $detailkehadiran->jumlah_izin = $totalHariIzin ? $totalHariIzin : 0;
                 $detailkehadiran->jumlah_sakit = $totalHariIzinSakit ? $totalHariIzinSakit : 0;
-                $detailkehadiran->jam_hadir = $detailkehadiran->jam_hadir ? $detailkehadiran->jam_hadir : 0;                    
+                $detailkehadiran->jam_hadir = $detailkehadiran->jam_hadir ? $detailkehadiran->jam_hadir : 0;
                 $detailkehadiran->jam_lembur = $detailkehadiran->jam_lembur ? $detailkehadiran->jam_lembur : 0;
-                $detailkehadiran->jam_cuti = $totalJamCuti ? $totalJamCuti : 0;                    
+                $detailkehadiran->jam_cuti = $totalJamCuti ? $totalJamCuti : 0;
                 $detailkehadiran->jam_izin = $totalJamIzin ? $totalJamIzin : 0;
-                $detailkehadiran->jam_sakit = $totalJamSakit ? $totalJamSakit : 0;                    
+                $detailkehadiran->jam_sakit = $totalJamSakit ? $totalJamSakit : 0;
                 $detailkehadiran->partner = $data->partner;
-                    
-                $detailkehadiran->save();    
-            
+
+                $detailkehadiran->save();
+
            }
-   
+
            return redirect()->back()->with('pesan','Data berhasil disimpan');
-   
+
        }
+
+       public function getAbsensi(Request $request,$id)
+        {
+
+        // dd($absensi);
+
+        return view('admin.konfigurasi.index');
+
+        }
+
 }

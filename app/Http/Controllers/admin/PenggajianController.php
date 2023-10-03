@@ -583,7 +583,7 @@ class PenggajianController extends Controller
                 ->whereNotIn('karyawan.id', $idsudahada)
                 ->groupBy('karyawan.id','informasi_gaji.id','karyawan.nik', 'karyawan.nip','karyawan.nama','karyawan.status_kerja','karyawan.nama_bank','karyawan.no_rek','karyawan.jabatan','karyawan.nama_jabatan','karyawan.tglkeluar','karyawan.gaji','karyawan.partner','informasi_gaji.id_strukturgaji','informasi_gaji.status_karyawan','informasi_gaji.level_jabatan')
                 ->get();
-            
+
             $informasigajibelumada = Karyawan::where('partner',$request->partner)
                 ->where('status_kerja', 'Aktif')
                 ->whereNull('tglkeluar')
@@ -1491,11 +1491,7 @@ class PenggajianController extends Controller
     public function destroy(Request $request, $id)
     {
         $penggajian = Penggajian::findOrFail($id);
-
-        // Hapus detail penggajian terlebih dahulu
         $penggajian->detailpenggajians()->delete();
-
-        // Hapus data penggajian
         $penggajian->delete();
 
         return redirect()->back()->with('pesan', 'Data Slip Gaji berhasil dihapus');
