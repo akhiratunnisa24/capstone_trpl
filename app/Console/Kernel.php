@@ -405,7 +405,7 @@ class Kernel extends ConsoleKernel
 
                                 // Cari data di $usermesin berdasarkan PIN
                                 $matchedUser = $usermesin->where('noid', $pin)->where('partner', $partner)->first();
-                                if ($matchedUser)
+                                if (isset($matchedUser))
                                 {
                                     $jadwals = Jadwal::where('tanggal', $tanggal)
                                         ->where('partner',$matchedUser->partner)
@@ -423,7 +423,7 @@ class Kernel extends ConsoleKernel
 
                                             if($existingAbsensi)
                                             {
-                                                if ($existingAbsensi->jam_keluar != $jam)
+                                                if ($existingAbsensi->jam_keluar !== $jam || $existingAbsensi->jam_keluar === null) 
                                                 {
                                                     $jadwal_masuk  = $jadwal->jadwal_masuk;
                                                     $jadwal_pulang = $jadwal->jadwal_pulang;
@@ -514,7 +514,7 @@ class Kernel extends ConsoleKernel
 
                                                     $absensi->update();
                                                 }
-                                                else if($existingAbsensi->jam_keluar == $jam)
+                                                else if($existingAbsensi->jam_keluar === $jam)
                                                 {
                                                     $absensi = $existingAbsensi;
                                                 }
@@ -585,7 +585,7 @@ class Kernel extends ConsoleKernel
                                 }
                                 else
                                 {
-                                    $matchedUser = $usermesin->where('noid2', $pin)->where('partner', $partner)->first();
+                                    $matchedUser = $usermesin->where('noid2', $pin)->where('noid2','!=', null)->where('partner', $partner)->first();
                                     // dd($matchedUser);
                                     if (isset($matchedUser))
                                     {
@@ -600,11 +600,11 @@ class Kernel extends ConsoleKernel
                                                 $existingAbsensi = Absensi::where('id_karyawan', $matchedUser->id_pegawai)
                                                                 ->where('tanggal', $tanggal)
                                                                 ->where('partner', $matchedUser->partner)
-                                                                ->whereNotNull('jam_masuk')
+                                                                ->where('jam_masuk','!=',$jam)
                                                                 ->first();
                                                 if($existingAbsensi)
                                                 {
-                                                    if ($existingAbsensi->jam_keluar != $jam)
+                                                    if ($existingAbsensi->jam_keluar !== $jam)
                                                     {
                                                         $jadwal_masuk  = $jadwal->jadwal_masuk;
                                                         $jadwal_pulang = $jadwal->jadwal_pulang;
@@ -615,7 +615,7 @@ class Kernel extends ConsoleKernel
                                                         $absensi->jam_keluar   = $jam_keluar;
 
                                                         //menghitung jumlah jam kerja
-                                                        $jam_masuk    = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
+                                                        $jam_masuk     = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
                                                         $jadwal_pulang = Carbon::createFromFormat('H:i:s', $jadwal_pulang);
 
                                                         $jmlhadir           = $jam_keluar->diff($jam_masuk);
@@ -765,10 +765,10 @@ class Kernel extends ConsoleKernel
                                 }
                             }
                         } else {
-                            return "Tidak ada data kehadiran.\n";
+                            Log::info('Tidak ada data kehadiran.\n');
                         }
                     } else {
-                        return 'Koneksi ke ' . $ip . ' Gagal';
+                        Log::info('Koneksi ke ' . $ip . ' Gagal');
                     }
                 }
 
