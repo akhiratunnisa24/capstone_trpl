@@ -102,6 +102,15 @@
                                                             </div>
 
                                                             <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Alamat E-mail <span style="color: red;">*</span></label>
+                                                                    <input type="email" name="emailKaryawan" value="{{ $karyawan->email ?? '' }}"
+                                                                        class="form-control" id="exampleInputEmail1"
+                                                                        aria-describedby="emailHelp" placeholder="Masukkan Email" autocomplete="off" required>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
                                                                 <label class="form-label">Divisi <span style="color: red;">*</span></label>
                                                                 <select class="form-control selectpicker" name="divisi" data-live-search="true" required>
                                                                     <option value="">Pilih Departemen</option>
@@ -239,15 +248,6 @@
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">Alamat E-mail <span style="color: red;">*</span></label>
-                                                                        <input type="email" name="emailKaryawan" value="{{ $karyawan->email ?? '' }}"
-                                                                            class="form-control" id="exampleInputEmail1"
-                                                                            aria-describedby="emailHelp" placeholder="Masukkan Email" autocomplete="off" required>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <div class="mb-3">
                                                                         <label class="form-label">Agama <span style="color: red;">*</span></label>
                                                                         <select class="form-control selectpicker" name="agamaKaryawan" required>
                                                                             <option value="">Pilih Agama</option>
@@ -368,11 +368,19 @@
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">No. Rekening</label>
+                                                                        <label class="form-label">No. Rekening <span style="color: red;">*</span></label>
                                                                         <input type="number" name="norekKaryawan" class="form-control" value="{{ $karyawan->no_rek ?? '' }}"
-                                                                            placeholder="Masukkan No. Rekening" >
+                                                                            placeholder="Masukkan No. Rekening" required>
                                                                     </div>
                                                                 </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Gaji Pokok <span style="color: red;">*</span></label>
+                                                                        <input type="text" name="gaji" class="form-control input-formats" value="{{ number_format($karyawan->gaji, 0, ',', '.') ?? '' }}" placeholder="Masukkan Gaji Pokok" required>
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
