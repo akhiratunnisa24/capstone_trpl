@@ -499,7 +499,7 @@
                                                         <div class="form-group">
                                                             <div class="mb-3">
                                                                 <label class="form-label">No. Rekening</label>
-                                                                <input type="number" name="norekKaryawan" class="form-control" value="{{ $karyawan->no_rek ?? '' }}" placeholder="Masukkan No. Rekening">
+                                                                <input type="number" name="norekKaryawan" class="form-control" value="{{ $karyawan->no_rek ?? '' }}" placeholder="Masukkan No. Rekening" required>
                                                             </div>
                                                         </div>
 
