@@ -548,7 +548,7 @@ class Kernel extends ConsoleKernel
                                                 {
                                                     $absensi = new Absensi();
 
-                                                    $batasmasuk =Carbon::createFromFormat('H:i:s','16:00:00');
+                                                    $batasmasuk =Carbon::createFromFormat('H:i:s','13:00:00');
 
                                                     if($jam_masuk > $batasmasuk)
                                                     {
@@ -728,7 +728,7 @@ class Kernel extends ConsoleKernel
 
                                                     if(!Absensi::where('id_karyawan',$matchedUser->id_pegawai)->where('tanggal',$tanggal)->where('partner',$matchedUser->partner)->exists())
                                                     {
-                                                        $batasmasuk =Carbon::createFromFormat('H:i:s','16:00:00');
+                                                        $batasmasuk =Carbon::createFromFormat('H:i:s','13:00:00');
                                                         $absensi = new Absensi();
 
                                                         if($jam_masuk > $batasmasuk)
