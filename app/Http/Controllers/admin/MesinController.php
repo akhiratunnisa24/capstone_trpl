@@ -258,8 +258,7 @@ class MesinController extends Controller
                                                         ->first();
                                         if($existingAbsensi)
                                         {
-                                            // return $existingAbsensi;
-                                            if ($existingAbsensi->jam_keluar != $jam) 
+                                            if ($existingAbsensi->jam_keluar !== $jam) 
                                             {
                                                 $jadwal_masuk  = $jadwal->jadwal_masuk;
                                                 $jadwal_pulang = $jadwal->jadwal_pulang;
@@ -270,7 +269,7 @@ class MesinController extends Controller
                                                 $absensi->jam_keluar   = $jam_keluar;
             
                                                 //menghitung jumlah jam kerja
-                                                $jam_masuk    = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
+                                                $jam_masuk     = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
                                                 $jadwal_pulang = Carbon::createFromFormat('H:i:s', $jadwal_pulang);
 
                                                 $jmlhadir           = $jam_keluar->diff($jam_masuk);
