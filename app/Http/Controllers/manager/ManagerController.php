@@ -106,17 +106,17 @@ class ManagerController extends Controller
         {
             // dd($row);
             $karyawan = Karyawan::with('departemens')
-            ->where(function ($query) use ($partner) {
-                $query->where('atasan_pertama', Auth::user()->id_pegawai)
-                    ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
-            })
-            ->where('partner', $partner)
-            ->where('divisi', $row->divisi)
-            ->get();
-
+                ->where(function ($query) use ($partner) {
+                    $query->where('atasan_pertama', Auth::user()->id_pegawai)
+                        ->orWhere('atasan_kedua', Auth::user()->id_pegawai);
+                })
+                ->where('partner', $partner)
+                ->where('divisi', $row->divisi)
+                ->get();
+                // dd($karyawan);
             $manager_iddep = DB::table('karyawan')->where('id','=',Auth::user()->id_pegawai)
                 ->select('divisi')->first();
-            $karyawan= Karyawan::where('divisi',$manager_iddep->divisi)->get();
+            // $karyawan= Karyawan::where('divisi',$manager_iddep->divisi)->get();
              //untuk filter data
             $idkaryawan = $request->id_karyawan;
             $bulan = $request->query('bulan',Carbon::now()->format('m'));
@@ -153,6 +153,7 @@ class ManagerController extends Controller
                     ->where('absensi.partner', Auth::user()->partner)
                     ->get();
             }
+
             return view('manager.staff.absensiStaff', compact('absensi','karyawan','row','role'));
             //menghapus filter data
             $request->session()->forget('id_karyawan');

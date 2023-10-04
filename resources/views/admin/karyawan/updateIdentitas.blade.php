@@ -433,9 +433,6 @@
                                                                 <select class="form-control" name="nama_bank" required>
                                                                     <option value="">Pilih Bank</option>
                                                                     <option
-                                                                        value="Pengurus"@if ($karyawan->status_karyawan == 'Pengurus') selected @endif>
-                                                                        Pengurus</option>
-                                                                    <option
                                                                         value="Bank ANZ Indonesia"@if ($karyawan->nama_bank == 'Bank ANZ Indonesia') selected @endif>
                                                                         Bank ANZ Indonesia</option>
                                                                     <option
