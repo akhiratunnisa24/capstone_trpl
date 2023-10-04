@@ -775,7 +775,7 @@ class Kernel extends ConsoleKernel
             } catch (\Exception $e) {
                 return "Error: " . $e->getMessage() . "\n";
             }
-        })->dailyAt('11:36');
+        })->everyFiveMinutes();
 
     }
 
