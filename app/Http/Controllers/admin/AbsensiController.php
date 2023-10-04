@@ -35,16 +35,16 @@ class AbsensiController extends Controller
 
     public function index(Request $request)
     {
-        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+        $row  = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         
         if ($role == 1 || $role == 2 ) {
             //filter data
-            $karyawan = Karyawan::where('partner',Auth::user()->partner)->get();
+            $karyawan   = Karyawan::where('partner',Auth::user()->partner)->get();
 
             $idkaryawan = $request->id_karyawan;
-            $bulan = $request->query('bulan',Carbon::now()->format('m'));
-            $tahun = $request->query('tahun',Carbon::now()->format('Y'));
+            $bulan      = $request->query('bulan',Carbon::now()->format('m'));
+            $tahun      = $request->query('tahun',Carbon::now()->format('Y'));
 
             // simpan session
             $request->session()->put('idkaryawan',$idkaryawan);
@@ -54,10 +54,10 @@ class AbsensiController extends Controller
             if($idkaryawan !=="Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
             {
                 $absensi = Absensi::with('karyawans','departemens')
-                ->where('id_karyawan', $idkaryawan)
-                ->whereMonth('tanggal', $bulan)
-                ->whereYear('tanggal',$tahun)
-                ->get();
+                    ->where('id_karyawan', $idkaryawan)
+                    ->whereMonth('tanggal', $bulan)
+                    ->whereYear('tanggal',$tahun)
+                    ->get();
             }
             else if($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
             {
@@ -66,21 +66,18 @@ class AbsensiController extends Controller
                         ->whereHas('departemens', function ($subQuery) {
                             $subQuery->where('absensi.partner', Auth::user()->partner);
                         });
-                })
-                ->whereMonth('tanggal', $bulan)
-                ->whereYear('tanggal', $tahun)
-                ->get();
+                    })
+                    ->whereMonth('tanggal', $bulan)
+                    ->whereYear('tanggal', $tahun)
+                    ->get();
             }
             else
             {
                 $absensi = Absensi::with('karyawans','departemens')
-                ->where('absensi.partner',Auth::user()->partner)
-                ->orderBy('tanggal','desc')
-                ->get();
+                    ->where('absensi.partner',Auth::user()->partner)
+                    ->orderBy('tanggal','desc')
+                    ->get();
             }
-
-           
-
 
             return view('admin.absensi.index',compact('absensi','karyawan','row','role'));
         
@@ -542,43 +539,41 @@ class AbsensiController extends Controller
             } else {
                 return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan " . $nbulan .".xlsx");
             }  
-        }
-
-       
+        } 
     }
 
     public function storeTidakmasuk(Request $data)
     {
         $karyawan = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $status = Tidakmasuk::where('id', Auth::user()->id_pegawai)->first();
-        $depart = DB::table('karyawan')->join('departemen', 'karyawan.divisi','=','departemen.id')
+        $status   = Tidakmasuk::where('id', Auth::user()->id_pegawai)->first();
+        $depart   = DB::table('karyawan')->join('departemen', 'karyawan.divisi','=','departemen.id')
                   ->where('karyawan.id','=',Auth::user()->id_pegawai)->first();
  
         $tidakmasuk = array(
             'id_pegawai' => $karyawan->id,
-            'nama' => $karyawan->nama,
-            'divisi' => $karyawan->divisi,
-            'status' => $data->post('status'),
-            'tanggal' => Carbon::now()->format("Y-m-d"),
+            'nama'       => $karyawan->nama,
+            'divisi'     => $karyawan->divisi,
+            'status'     => $data->post('status'),
+            'tanggal'    => Carbon::now()->format("Y-m-d"),
         );
 
         $absensi = array(
-            'id_karyawan' => $karyawan->id,
-            'tanggal' => Carbon::now()->format("Y-m-d"),
-            'shift' => 'NORMAL' ,
-            'jadwal_masuk' => '08:00:00' ,
+            'id_karyawan'   => $karyawan->id,
+            'tanggal'       => Carbon::now()->format("Y-m-d"),
+            'shift'         => 'NORMAL' ,
+            'jadwal_masuk'  => '08:00:00' ,
             'jadwal_pulang' => '17:00:00' ,
-            'normal' => '1' ,
-            'riil' => '0' ,
-            'absent' => 'True' ,
-            'hci' => 'True' ,
-            'hco' => 'True' ,
-            'h_normal' => 0,
-            'ap' => 0,
-            'hl' => 0,
-            'lemhanor' => 0,
-            'lemakpek' => 0,
-            'lemhali' => 0,
+            'normal'        => '1' ,
+            'riil'          => '0' ,
+            'absent'        => 'True' ,
+            'hci'           => 'True' ,
+            'hco'           => 'True' ,
+            'h_normal'      => 0,
+            'ap'            => 0,
+            'hl'            => 0,
+            'lemhanor'      => 0,
+            'lemakpek'      => 0,
+            'lemhali'       => 0,
         );
         // dd($absensi); 
 
@@ -592,9 +587,9 @@ class AbsensiController extends Controller
 
     public function someControllerMethod()
     {
-        $ipAddress = '192.168.1.58';
+        $ipAddress     = '192.168.1.58';
         $networkHelper = new NetworkHelper();
-        $isConnected = $networkHelper->connectToIP($ipAddress);
+        $isConnected   = $networkHelper->connectToIP($ipAddress);
 
 
         if ($isConnected) {

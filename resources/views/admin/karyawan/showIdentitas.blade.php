@@ -266,11 +266,16 @@
 
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
-                                                                        <label  class="form-label">No. Rekening</label>
+                                                                        <label class="form-label">No. Rekening</label>
                                                                         <label class="form-control">{{ $karyawan->no_rek ?? '-' }}</label>
                                                                     </div>
                                                                 </div>
-                                                                
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Gaji Pokok</label>
+                                                                        <label  class="form-control">{{ number_format($karyawan->gaji, 0, ',', '.') ?? '-' }}</label>
+                                                                    </div>
+                                                                </div>
                         
                                                             </div>
                                                         </div>

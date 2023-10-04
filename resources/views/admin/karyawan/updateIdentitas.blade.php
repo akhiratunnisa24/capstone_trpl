@@ -433,9 +433,6 @@
                                                                 <select class="form-control" name="nama_bank" required>
                                                                     <option value="">Pilih Bank</option>
                                                                     <option
-                                                                        value="Pengurus"@if ($karyawan->status_karyawan == 'Pengurus') selected @endif>
-                                                                        Pengurus</option>
-                                                                    <option
                                                                         value="Bank ANZ Indonesia"@if ($karyawan->nama_bank == 'Bank ANZ Indonesia') selected @endif>
                                                                         Bank ANZ Indonesia</option>
                                                                     <option
@@ -502,7 +499,7 @@
                                                         <div class="form-group">
                                                             <div class="mb-3">
                                                                 <label class="form-label">No. Rekening</label>
-                                                                <input type="number" name="norekKaryawan" class="form-control" value="{{ $karyawan->no_rek ?? '' }}" placeholder="Masukkan No. Rekening">
+                                                                <input type="number" name="norekKaryawan" class="form-control" value="{{ $karyawan->no_rek ?? '' }}" placeholder="Masukkan No. Rekening" required>
                                                             </div>
                                                         </div>
 
