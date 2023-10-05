@@ -88,179 +88,71 @@
             </div>
         </div>
     </div>
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div>
+                <div class="card-header">
+                    <h4> A. DATA DIRI</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">                               
+                        <div class="form-group col-md-6 col-12">
+                            <label>Nama lengkap *</label>
+                            <input type="text" class="form-control" value="{{ $karyawan->nama ? $karyawan->nama : '-' }}">
+                        </div>
+                        <div class="form-group col-md-6 col-12">
+                            <label>Agama *</label>
+                            <input type="text" class="form-control" value="{{ $karyawan->agama ? $karyawan->agama : '-' }}">
+                        </div>
+                        <div class="form-group col-md-6 col-12">
+                            <label>NIK (No. KTP) *</label>
+                            <input type="text" class="form-control" value="{{ $karyawan->nik ? $karyawan->nik : '-' }}">
+                        </div>
+                        <div class="form-group col-md-6 col-12">
+                            <label>E-Mail *</label>
+                            <input type="text" class="form-control" value="{{ $karyawan->email ? $karyawan->email : '-' }}">
+                        </div>
+                        <div class="form-group col-md-6 col-12">
+                            <label>Tanggal Lahir *</label>
+                            <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y') ? Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y')  : '-'}}">
+                        </div>
+                        <div class="form-group col-md-6 col-12">
+                            <label>Jabatan *</label>
+                            <input type="text" class="form-control" value="{{ $karyawan->nama_jabatan ? $karyawan->nama_jabatan : '-' }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6 col-12">
+                            <label>Jenis Kelamin</label>
+                            <input type="email" class="form-control" value="{{$karyawan->jenis_kelamin ? $karyawan->jenis_kelamin : '-' }}">
+                        </div>
+                        <div class="form-group col-md-6 col-12">
+                            <label>Departemen *</label>
+                            <input type="tel" class="form-control" value="{{ $karyawan->departemens->nama_departemen ? $karyawan->departemens->nama_departemen : '-' }}">
+                        </div>
+                        <div class="form-group col-md-6 col-12">
+                            <label>Golongan Darah *</label>
+                            <input type="text" class="form-control" value="{{ $karyawan->gol_darah ? $karyawan->gol_darah : '-' }}">
+                        </div>
+                        <div class="form-group col-md-6 col-12">
+                            <label>Jabatan *</label>
+                            <input type="text" class="form-control" value="{{ $karyawan->nama_jabatan ? $karyawan->nama_jabatan : '-' }}">
+                        </div>
+                        <div class="form-group col-md-6 col-12">
+                            <label>Alamat *</label>
+                            <input type="text" class="form-control" value="{{ $karyawan->alamat ? $karyawan->alamat : '-' }}">
+                        </div>
+                        <div class="form-group col-md-6 col-12">
+                            <label>Atasan/Pimpinan (Manager/Direksi)</label>
+                            <input type="text" class="form-control" value="{{$atasan_kedua_nama ? $atasan_kedua_nama : '-' }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="panel panel-primary">
-        <div class=" col-sm-0 m-b-0"></div>
-        <div class="modal-body">
-            <div class="col-md-4">
-                <label class="">
-                    <h4> A. DATA DIRI</h4>
-                </label>
-                <div class="my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Nama lengkap *</label>
-                                    <p style="text-transform: uppercase;">{{ $karyawan->nama }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Tanggal Lahir *</label>
-                                    <p style="text-transform: uppercase;">
-                                        {{ \Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y') }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Nomor Induk Kependudukan (NIK) *</label>
-                                    <p style="text-transform: uppercase;">{{ $karyawan->nik }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Jenis Kelamin *</label>
-                                        <p>{{$karyawan->jenis_kelamin}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <label class="">
-                    <h4 class="text-white">#</h4>
-                </label>
-                <div class="my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">E-Mail *</label>
-                                    <p>{{ $karyawan->email }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Agama *</label>
-                                    <p>{{ $karyawan->agama }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Golongan Darah *</label>
-                                    <p>{{ $karyawan->gol_darah }} </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Alamat *</label>
-                                    <p>{{ $karyawan->alamat }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <label class="">
-                    <h4 class="text-white">#</h4>
-                </label>
-                <div class="row my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Departemen *</label>
-                                    <p>{{ $karyawan->departemens->nama_departemen }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Jabatan *</label>
-                                    <p>{{ $karyawan->nama_jabatan }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Atasan Langsung *</label>
-                                    <p>{{ $atasan_pertama_nama }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row my-5">
-                    <div class="col-12 pl-0">
-                        <div class="form-group mb-3">
-                            <div class="row align-items-end">
-                                <div class="col-md mb-md-0 m-l-15">
-                                    <label class="font-size-14 fw-bold">Atasan/Pimpinan (Manager/Direksi)</label>
-                                    @if (!empty($atasan_kedua_nama))
-                                        <p>{{ $atasan_kedua_nama }}</p>
-                                    @else
-                                        <p>-</p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
         <div id="data-keluarga">
             <div class="modal-body" style="margin-left:15px;margin-right:15px;">
                 <label>
