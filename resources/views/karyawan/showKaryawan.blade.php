@@ -89,13 +89,13 @@
         </div>
     </div>
     <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
+        <div class="card" style="margin: 20px">
             <div>
                 <div class="card-header">
                     <h4> A. DATA DIRI</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row">                               
+                    <div class="row">
                         <div class="form-group col-md-6 col-12">
                             <label>Nama lengkap *</label>
                             <input type="text" class="form-control" value="{{ $karyawan->nama ? $karyawan->nama : '-' }}">
@@ -377,5 +377,5 @@
             <a href="karyawandashboard" class="btn btn-sm btn-danger">Kembali</a>
         </div>
     </div>
-    
+
 @endsection
