@@ -3287,14 +3287,24 @@ class karyawanController extends Controller
     // show 1 page non aktif
     public function showkaryawan($id)
     {
-        $karyawan = karyawan::findOrFail($id);
-        $atasan_pertama_nama = $karyawan->atasan_pertamaa->nama;
-        $atasan_kedua_nama = $karyawan->atasan_kedua;
-        if(!$atasan_kedua_nama){
-            $atasan_kedua_nama = "-";
-        }else
+        $karyawan = Karyawan::findOrFail($id);
+        $atasan_pertama_nama = $karyawan->atasan_pertama;
+        $atasan_kedua_nama   = $karyawan->atasan_kedua;
+        if($atasan_pertama_nama == null || $atasan_kedua_nama == null){
+            $atasan_pertama_nama = "-";
+            $atasan_kedua_nama   = "-";
+        }elseif($atasan_pertama_nama !== null && $atasan_kedua_nama == null)
+        {
+            $atasan_pertama_nama = $karyawan->atasan_pertamaa->nama;
+        }
+        elseif($atasan_kedua_nama !== null && $atasan_pertama_nama == null)
         {
             $atasan_kedua_nama = $karyawan->atasan_keduab->nama;
+        }
+        else
+        {
+            $atasan_pertama_nama = $karyawan->atasan_pertamaa->nama;
+            $atasan_kedua_nama   = $karyawan->atasan_keduab->nama;
         }
 
         $keluarga = Keluarga::where('id_pegawai', $id)->get();
