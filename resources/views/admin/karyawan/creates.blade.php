@@ -373,14 +373,14 @@
                                                                             placeholder="Masukkan No. Rekening" required>
                                                                     </div>
                                                                 </div>
-
+                                                                @if(Auth::check() && Auth::user()->role === 6)
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">Gaji Pokok <span style="color: red;">*</span></label>
                                                                         <input type="text" name="gaji" class="form-control input-formats" value="{{ number_format($karyawan->gaji, 0, ',', '.') ?? '' }}" placeholder="Masukkan Gaji Pokok" required>
                                                                     </div>
                                                                 </div>
-
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
