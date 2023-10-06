@@ -435,14 +435,7 @@ class AbsensiController extends Controller
             $pdfName = "Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf";
 
         }
-        else{
-            $data = Absensi::with('departemens','karyawans')->where('absensi.partner',Auth::user()->partner)
-            ->orderBy('id_karyawan','asc')->get();
-            $nbulan    = "-";
-            $pdfName = "Rekap Absensi Semua Karyawan.pdf";
-        }
-
-        if($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
+        elseif($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
         {
             $data = Absensi::whereHas('karyawans', function ($query) {
                 $query->where('absensi.partner', Auth::user()->partner)

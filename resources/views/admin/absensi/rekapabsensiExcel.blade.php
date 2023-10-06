@@ -13,7 +13,7 @@
         </style>
         <tr>
             <th>Emp No.</th>
-            <th>No. ID</th>
+            {{-- <th>No. ID</th> --}}
             <th>NIK</th>
             <th>Nama</th>
             {{-- <th>Auto-Assign</th> --}}
@@ -47,7 +47,7 @@
         @foreach($absensi as $data)
         <tr>
             <td>{{ $data->id_karyawan}}</td>
-            <td>{{ $data->id}}</td>
+            {{-- <td>{{ $data->id}}</td> --}}
             <td>{{ $data->nik }}</td>
             <td>{{ $data->karyawans->nama}}</td>
             {{-- <td></td> --}}
