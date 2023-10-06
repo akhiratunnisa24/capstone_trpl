@@ -37,7 +37,8 @@ class AbsensiKaryawanController extends Controller
         $iduser = Auth::user()->id_pegawai;
 
         $absensi = Absensi::with('karyawans', 'departemens')
-            ->where('id_karyawan', $iduser);
+            ->where('id_karyawan', $iduser)
+            ->orderBy('id','desc');
 
 
         $bulan = $request->query('bulan');
