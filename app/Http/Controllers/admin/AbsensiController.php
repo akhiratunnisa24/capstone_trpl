@@ -457,6 +457,7 @@ class AbsensiController extends Controller
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal', $tahun)
             ->orderBy('id_karyawan','asc')
+            ->orderBy('id','asc')
             ->get();
 
             $nbulan    = $namaBulan . ' ' . $tahun;
