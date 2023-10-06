@@ -434,6 +434,17 @@ class AbsensiController extends Controller
             $nbulan    = $namaBulan . ' ' . $tahun;
             $pdfName = "Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf";
 
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Data Ada.');
+            } else {
+            
+                $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
+                ->setPaper('a4','landscape');
+                // return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
+                return $pdf->stream($pdfName);
+            } 
+
         }
         elseif($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
         {
@@ -451,17 +462,32 @@ class AbsensiController extends Controller
             $nbulan    = $namaBulan . ' ' . $tahun;
             $pdfName = "Rekap Absensi Bulan ". $nbulan .".pdf";
 
-        }
-
-        if ($data->isEmpty()) 
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Data Ada.');
+            } else {
+            
+                $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
+                ->setPaper('a4','landscape');
+                // return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
+                return $pdf->stream($pdfName);
+            } 
+        }else
         {
-            return redirect()->back()->with('pesa','Tidak Data Ada.');
-        } else {
-           
-            $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
-            ->setPaper('a4','landscape');
-            // return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
-            return $pdf->stream($pdfName);
+            $data = Absensi::with('karyawans','departemens')->where('absensi.partner',Auth::user()->partner)
+            ->orderBy('id_karyawan', 'asc')->get();
+            $nbulan = "-";
+            $pdfName = "Rekap Absensi Karyawan ". $nbulan .".pdf";
+
+            if ($data->isEmpty()) 
+            {
+                return redirect()->back()->with('pesa','Tidak Ada Data');
+            } else {
+                $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
+                ->setPaper('a4','landscape');
+                // return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
+                return $pdf->stream($pdfName);
+            }  
         } 
     }
 
@@ -507,6 +533,7 @@ class AbsensiController extends Controller
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal', $tahun)
             ->orderBy('id_karyawan','asc')
+            ->orderBy('id','asc')
             ->get();
 
             $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
