@@ -1205,6 +1205,7 @@ class PenggajianController extends Controller
                 ->get();
             // dd($detailinformasis);
 
+            $gajipokok = 0;
             $gajikotor = 0;
             $tunjangan = 0;
             $asuransi = 0;
