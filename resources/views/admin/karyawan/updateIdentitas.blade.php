@@ -42,7 +42,6 @@
                     <div class="row">
                         <div class="col-md-20 col-sm-20 col-xs-20">
                             <form action="updateidentitas{{ $karyawan->id }}" method="POST" enctype="multipart/form-data">
-
                                 @csrf
                                 @method('PUT')
 
@@ -432,66 +431,11 @@
                                                                 <label class="form-label">Nama Bank</label>
                                                                 <select class="form-control" name="nama_bank" required>
                                                                     <option value="">Pilih Bank</option>
-                                                                    <option
-                                                                        value="Bank ANZ Indonesia"@if ($karyawan->nama_bank == 'Bank ANZ Indonesia') selected @endif>
-                                                                        Bank ANZ Indonesia</option>
-                                                                    <option
-                                                                        value="Bank Bukopin"@if ($karyawan->nama_bank == 'Bank Bukopin') selected @endif>
-                                                                        Bank Bukopin</option>
-                                                                    <option
-                                                                        value="Bank Central Asia (BCA)"@if ($karyawan->nama_bank == 'Bank Central Asia (BCA)') selected @endif>
-                                                                        Bank Central Asia (BCA)</option>
-                                                                    <option
-                                                                        value="Bank Danamon"@if ($karyawan->nama_bank == 'Bank Danamon') selected @endif>
-                                                                        Bank Danamon</option>
-                                                                    <option
-                                                                        value="Bank DBS Indonesia"@if ($karyawan->nama_bank == 'Bank DBS Indonesia') selected @endif>
-                                                                        Bank DBS Indonesia</option>
-                                                                    <option
-                                                                        value="Bank HSBC Indonesia"@if ($karyawan->nama_bank == 'Bank HSBC Indonesia') selected @endif>
-                                                                        Bank HSBC Indonesia</option>
-                                                                    <option
-                                                                        value="Bank Jabar Banten (BJB)"@if ($karyawan->nama_bank == 'Bank Jabar Banten (BJB)') selected @endif>
-                                                                        Bank Jabar Banten (BJB)</option>
-                                                                    <option
-                                                                        value="Bank Mandiri"@if ($karyawan->nama_bank == 'Bank Mandiri') selected @endif>
-                                                                        Bank Mandiri</option>
-                                                                    <option
-                                                                        value="Bank Maybank"@if ($karyawan->nama_bank == 'Bank Maybank') selected @endif>
-                                                                        Bank Maybank</option>
-                                                                    <option
-                                                                        value="Bank Mega"@if ($karyawan->nama_bank == 'Bank Mega') selected @endif>
-                                                                        Bank Mega</option>
-                                                                    <option
-                                                                        value="Bank Muamalat"@if ($karyawan->nama_bank == 'Bank Muamalat') selected @endif>
-                                                                        Bank Muamalat</option>
-                                                                    <option
-                                                                        value="Bank Negara Indonesia (BNI)"@if ($karyawan->nama_bank == 'Bank Negara Indonesia (BNI)') selected @endif>
-                                                                        Bank Negara Indonesia (BNI)</option>
-                                                                    <option
-                                                                        value="Bank OCBC NISP"@if ($karyawan->nama_bank == 'Bank OCBC NISP') selected @endif>
-                                                                        Bank OCBC NISP</option>
-                                                                    <option
-                                                                        value="Bank Panin"@if ($karyawan->nama_bank == 'Bank Panin') selected @endif>
-                                                                        Bank Panin</option>
-                                                                    <option
-                                                                        value="Bank Permata"@if ($karyawan->nama_bank == 'Bank Permata') selected @endif>
-                                                                        Bank Permata</option>
-                                                                    <option
-                                                                        value="Bank Rakyat Indonesia (BRI)"@if ($karyawan->nama_bank == 'Bank Rakyat Indonesia (BRI)') selected @endif>
-                                                                        Bank Rakyat Indonesia (BRI)</option>
-                                                                    <option
-                                                                        value="Bank Syariah Mandiri"@if ($karyawan->nama_bank == 'Bank Syariah Mandiri') selected @endif>
-                                                                        Bank Syariah Mandiri</option>
-                                                                    <option
-                                                                        value="Bank Tabungan Negara (BTN)"@if ($karyawan->nama_bank == 'Bank Tabungan Negara (BTN)') selected @endif>
-                                                                        Bank Tabungan Negara (BTN)</option>
-                                                                    <option
-                                                                        value="Bank UOB Indonesia"@if ($karyawan->nama_bank == 'Bank UOB Indonesia') selected @endif>
-                                                                        Bank UOB Indonesia</option>
-                                                                    <option
-                                                                        value="Bank CIMB Niaga"@if ($karyawan->nama_bank == 'Bank CIMB Niaga') selected @endif>
-                                                                        Bank CIMB Niaga</option>
+                                                                    @foreach ($bank as $bankItem)
+                                                                        <option value="{{ $bankItem->nama_bank }}" {{ $karyawan->nama_bank == $bankItem->nama_bank ? 'selected' : '' }}>
+                                                                            {{ $bankItem->nama_bank }}
+                                                                        </option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>

@@ -106,7 +106,6 @@ class SalaryController extends Controller
                 ->where('partner', $strukturgaji->partner)
                 ->get();
 
-            // return $karyawan;
             foreach ($karyawan as $data)
             {
                 $check = Informasigaji::where('id_karyawan', $data->id)
@@ -115,7 +114,6 @@ class SalaryController extends Controller
                             ->where('level_jabatan', $strukturgaji->id_level_jabatan)
                             ->where('status',1)
                             ->first();
-
                 if (!$check)
                 {
                     $informasigaji = new Informasigaji();
@@ -125,6 +123,7 @@ class SalaryController extends Controller
                     $informasigaji->level_jabatan   = $strukturgaji->id_level_jabatan;
                     $informasigaji->gaji_pokok      = $data->gaji;
                     $informasigaji->partner         = $strukturgaji->partner;
+                    $informasigaji->status          = 1;
 
                     $informasigaji->save();
 

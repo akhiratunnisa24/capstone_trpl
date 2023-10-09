@@ -297,13 +297,13 @@ class DetailhadirController extends Controller
                 $detailkehadiran->jumlah_cuti = $totalHariCuti ? $totalHariCuti : 0;
                 $detailkehadiran->jumlah_izin = $totalHariIzin ? $totalHariIzin : 0;
                 $detailkehadiran->jumlah_sakit = $totalHariIzinSakit ? $totalHariIzinSakit : 0;
-                $detailkehadiran->jam_hadir = $detailkehadiran->jam_hadir ? $detailkehadiran->jam_hadir : 0;
-                $detailkehadiran->jam_lembur = $detailkehadiran->jam_lembur ? $detailkehadiran->jam_lembur : 0;
+                $detailkehadiran->jam_hadir = $jamhadir ? $jamhadir : 0;
+                $detailkehadiran->jam_lembur = $jamlembur ? $jamlembur : 0;
                 $detailkehadiran->jam_cuti = $totalJamCuti ? $totalJamCuti : 0;
                 $detailkehadiran->jam_izin = $totalJamIzin ? $totalJamIzin : 0;
                 $detailkehadiran->jam_sakit = $totalJamSakit ? $totalJamSakit : 0;
                 $detailkehadiran->partner = $data->partner;
-
+                
                 $detailkehadiran->save();
 
            }

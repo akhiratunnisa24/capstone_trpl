@@ -324,9 +324,14 @@
                                                     <div class="mb-3">
                                                         <label for="exampleInputEmail1" class="form-label">Nama Bank
                                                             </label>
-                                                        <select class="form-control selectpicker" name="nama_bank">
+                                                        <select class="form-control selectpicker" name="nama_bank" data-live-search="off">
                                                             <option value="">Pilih Bank</option>
-                                                            <option value="Bank ANZ Indonesia"
+                                                                @foreach ($bank as $bankItem)
+                                                                    <option value="{{ $bankItem->nama_bank }}" {{ $pelamar->nama_bank == $bankItem->nama_bank ? 'selected' : '' }}>
+                                                                        {{ $bankItem->nama_bank }}
+                                                                    </option>
+                                                                @endforeach
+                                                            {{-- <option value="Bank ANZ Indonesia"
                                                                 {{ $karyawan->nama_bank ?? '' == 'Bank ANZ Indonesia' ? 'selected' : '' }}>
                                                                 Bank ANZ Indonesia</option>
                                                             <option value="Bank Bukopin"
@@ -383,7 +388,7 @@
                                                             <option value="Bank UOB Indonesia"
                                                                 {{ $karyawan->nama_bank ?? '' == 'Bank UOB Indonesia' ? 'selected' : '' }}>
                                                                 Bank UOB Indonesia</option>
-                                                            <option value="Bank CIMB Niaga"
+                                                            <option value="Bank CIMB Niaga" --}}
                                                                 {{ $karyawan->nama_bank ?? '' == 'Bank CIMB Niaga' ? 'selected' : '' }}>
                                                                 Bank CIMB Niaga</option>
                                                         </select>

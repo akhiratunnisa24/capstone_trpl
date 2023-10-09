@@ -76,7 +76,7 @@ class karyawanController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2 || $role == 5) {
+        if ($role == 1 || $role == 2 || $role == 5 || $role == 6) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $karyawan = karyawan::all()->sortByDesc('created_at');
@@ -2725,7 +2725,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1 || $role == 2 || $role == 5) {
+        if ($role == 1 || $role == 2 || $role == 5 || $role == 6) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -2774,7 +2774,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1 || $role == 2 || $role == 5) {
+        if ($role == 1 || $role == 2 || $role == 5 || $role == 6) {
 
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -2796,6 +2796,7 @@ class karyawanController extends Controller
             }
             $leveljabatan = LevelJabatan::all();
             $namajabatan = Jabatan::where('partner',$row->partner)->get();
+            $bank           = DB::table('bank')->get();
 
             $output = [
                 'row' => $row,
@@ -2805,6 +2806,7 @@ class karyawanController extends Controller
                 'atasan_kedua'  => $atasan_kedua,
                 'leveljabatan' => $leveljabatan,
                 'namajabatan' => $namajabatan,
+                'bank' => $bank,
             ];
 
             return view('admin.karyawan.updateIdentitas', $output);
@@ -4036,7 +4038,7 @@ class karyawanController extends Controller
     {
         $role = Auth::user()->role;
 
-        if ($role == 1 || $role == 2)
+        if ($role == 1 || $role == 2 || $role == 6)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
 
@@ -4055,7 +4057,7 @@ class karyawanController extends Controller
                     ->where('status_karyawan',$karyawan->status_karyawan)
                     ->where('level_jabatan',$level->id)
                     ->where('status',1)->first();
-                // dd($informasigaji);
+                    
                 if ($informasigaji === null)
                 {
                     $informasigaji = null;
@@ -4159,8 +4161,6 @@ class karyawanController extends Controller
     public function updateidentita(Request $request, $id)
     {
         $karyawan = Karyawan::find($id);
-        $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->where('status',1)->first();
-
         $gaji = preg_replace('/[^0-9]/', '', $request->gajiKaryawan);
         $gajiKaryawan = (float) $gaji;
 
@@ -4200,6 +4200,10 @@ class karyawanController extends Controller
         Karyawan::where('id', $id)->update($data);
 
         $level = Leveljabatan::where('nama_level',$data['jabatan'])->first();
+        $informasigaji = Informasigaji::where('id_karyawan',$karyawan->id)->where('status',1)->first();
+        if($informasigaji !== null){
+
+        }
         if($karyawan->status_karyawan !== $data['status_karyawan'] || $karyawan->jabatan !== $level->nama_level)
         {
             if (isset($informasigaji))
@@ -4284,6 +4288,8 @@ class karyawanController extends Controller
                 //     ->delete();
 
                 // $informasigaji->delete();
+            }else{
+                return redirect()->back()->with('pesa','Silahkan pilih struktur gaji karyawan terlebih dahulu');
             }
         }
         // }else if((float)$karyawan->gaji !== (float)$gajiKaryawan)

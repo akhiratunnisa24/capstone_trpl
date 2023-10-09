@@ -65,16 +65,16 @@
                                                 {{-- <td>{{$data->karyawans->nama_jabatan}}</td> --}}
                                                 <td>{{\Carbon\Carbon::parse($data->karyawans->tglmasuk)->format('d/m/Y')}}</td>
                                                 
-                                                    @if($data->karyawans->divisi !== null && $data->karyawans->jabatan !== null && $data->karyawans->nama_jabatan !== null  && $data->nama_bank !== null && $data->no_rekening !== null && $data->gaji_pokok !== null)
+                                                    @if($data->karyawans->divisi !== null && $data->karyawans->jabatan !== null && $data->karyawans->nama_bank !== null && $data->karyawans->nama_jabatan !== null  && $data->nama_bank !== null && $data->no_rekening !== null && $data->gaji_pokok !== null)
                                                         <td>Data Lengkap</td>
-                                                    @elseif($data->karyawans->divisi === null  || $data->karyawans->jabatan === null || $data->karyawans->nama_jabatan === null || $data->nama_bank === null || $data->no_rekening === null || $data->nama_bank === null && $data->no_rekening === null || $data->gaji_pokok === null)  
+                                                    @elseif($data->karyawans->divisi === null  || $data->karyawans->jabatan === null || $data->karyawans->nama_bank === null || $data->karyawans->nama_jabatan === null || $data->nama_bank === null || $data->no_rekening === null || $data->nama_bank === null && $data->no_rekening === null || $data->gaji_pokok === null)  
                                                         <td style="color: rgb(240, 20, 20)">Lengkapi Data</td>
                                                     @endif
                                                 
                                                 <td>
                                                     <div  class="d-grid gap-2" role="group" aria-label="Basic example">
-                                                        {{-- <a href="" class="col-md-6 btn btn-info btn-sm" data-toggle="modal" data-target="#editslip{{$data->id_karyawan}}" style="width:35px;"><i class="fa fa-edit"></i></a> --}}
-                                                        @if($data->karyawans->divisi !== null  && $data->karyawans->jabatan !== null && $data->karyawans->nama_jabatan !== null && $data->nama_bank !== null && $data->no_rekening !== null && $data->nama_bank !== null && $data->no_rekening !== null && $data->gaji_pokok !== null)  
+                                                   
+                                                        @if($data->karyawans->divisi !== null  && $data->karyawans->jabatan !== null && $data->karyawans->nama_bank !== null && $data->karyawans->nama_jabatan !== null && $data->nama_bank !== null && $data->no_rekening !== null  && $data->gaji_pokok !== null)  
                                                             <form method="POST" action="/slipgaji{{$data->id}}" class="col-md-1">
                                                             @csrf
                                                             @method('PUT')
@@ -82,6 +82,8 @@
                                                                 <input type="hidden" name="id" value="{{ $data->id }}">
                                                                 <button type="submit" class="btn btn-success btn-sm" title="Lihat Slip Gaji"><i class="fa fa-eye"></i></button>
                                                             </form>
+                                                        @else
+                                                             <a href="" class="col-md-6 btn btn-info btn-sm" data-toggle="modal" data-target="#editslip{{$data->id_karyawan}}" style="width:35px;margin-left:10px"><i class="fa fa-edit"></i></a>
                                                         @endif
                                                      
                                                   </div>
