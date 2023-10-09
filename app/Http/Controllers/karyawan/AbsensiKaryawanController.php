@@ -36,37 +36,32 @@ class AbsensiKaryawanController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $iduser = Auth::user()->id_pegawai;
 
-        $absensi = Absensi::with('karyawans', 'departemens')
-            ->where('id_karyawan', $iduser)
-            ->orderBy('id','desc');
-
-
         $bulan = $request->query('bulan');
         $tahun = $request->query('tahun');
 
-        if($bulan && $tahun)
-        {
-            $absensi = $absensi->whereMonth('tanggal', $bulan)
-                ->whereYear('tanggal', $tahun);
+        // Jika bulan dan tahun tidak ada dalam permintaan, gunakan bulan dan tahun saat ini
+        if (!$bulan || !$tahun) {
+            $bulan = Carbon::now()->format('m');
+            $tahun = Carbon::now()->format('Y');
         }
 
-        $absensi = $absensi->get();
+        // Ambil data absensi hanya untuk bulan dan tahun yang sedang berjalan
+        $absensi = Absensi::with('karyawans', 'departemens')
+            ->where('id_karyawan', $iduser)
+            ->whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal', $tahun)
+            ->orderBy('id', 'desc')
+            ->get();
 
-        // dd($absensi);
+        // Simpan bulan dan tahun ke dalam session
+        $request->session()->put('bulan', $bulan);
+        $request->session()->put('tahun', $tahun);
 
-        // simpan session
-        $request->session()->put('bulan', $bulan ?? Carbon::now()->format('m'));
-        $request->session()->put('tahun', $tahun ?? Carbon::now()->format('Y'));
-        // dd($absensi);
-        return view('karyawan.absensi.history_absensi',compact('absensi','row'));
-       
-        $request->session()->forget('bulan');
-        $request->session()->forget('tahun');
-        //menghapus filter data
-       
+        return view('karyawan.absensi.history_absensi', compact('absensi', 'row'));
     }
 
-    
+
+
     // public function index(Request $request)
     // {
     //     $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
@@ -91,7 +86,7 @@ class AbsensiKaryawanController extends Controller
     //             ->get();
     //     }
     //     return view('karyawan.absensi.history_absensi',compact('absensi','row'));
-        
+
     //     //menghapus filter data
     //     $request->session()->forget('bulan');
     //     $request->session()->forget('tahun');
@@ -109,7 +104,7 @@ class AbsensiKaryawanController extends Controller
         $bulan      = $request->session()->get('bulan');
         $tahun      = $request->session()->get('tahun',);
 
-    
+
         if(isset($bulan) && isset($tahun))
         {
             $data = Absensi::with('karyawans','departemens')
@@ -129,12 +124,12 @@ class AbsensiKaryawanController extends Controller
             $nbulan = "-";
         }
 
-        if ($data->isEmpty()) 
+        if ($data->isEmpty())
         {
             return redirect()->back()->with('pesa','Tidak Ada Data');
         } else {
             return Excel::download(new AbsensiPeroranganExport($data, $iduser), "Rekap Absensi {$nama->nama} {$nbulan}.xlsx");
-        }  
+        }
     }
 
     public function absensiPeroranganPdf(Request $request)
@@ -144,7 +139,7 @@ class AbsensiKaryawanController extends Controller
         $iduser = Auth::user()->id_pegawai;
 
         $nama   = Karyawan::where('id','=', $iduser)->first();
-      
+
         $data = Absensi::with('karyawans', 'departemens')
             ->where('id_karyawan', $iduser);
 
@@ -168,19 +163,19 @@ class AbsensiKaryawanController extends Controller
         }
         $data = $data->get();
 
-        if ($data->isEmpty()) 
+        if ($data->isEmpty())
         {
             return redirect()->back()->with('pesa','Tidak Data Ada.');
         } else {
-           
+
             $nama = Karyawan::where('id',$iduser)->first();
             $departemen = Departemen::where('id',$nama->divisi)->first();
             $pdf  = PDF::loadview('karyawan.absensi.absensistaff_pdf',['data'=>$data,'departemen'=>$departemen,'iduser'=>$iduser, 'nama'=> $nama, 'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
             ->setPaper('A4','landscape');
 
         return $pdf->stream("Report Absensi {$nama->nama} Bulan {$nbulan}.pdf");
-        } 
+        }
 
-        
+
     }
 }
