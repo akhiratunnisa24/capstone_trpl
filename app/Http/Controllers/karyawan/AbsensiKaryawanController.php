@@ -41,15 +41,15 @@ class AbsensiKaryawanController extends Controller
 
         // Jika bulan dan tahun tidak ada dalam permintaan, gunakan bulan dan tahun saat ini
         if (!$bulan || !$tahun) {
-            $bulan = Carbon::now()->format('m');
-            $tahun = Carbon::now()->format('Y');
+            $bulanSekarang = Carbon::now()->format('m');
+            $tahunSekarang = Carbon::now()->format('Y');
         }
 
         // Ambil data absensi hanya untuk bulan dan tahun yang sedang berjalan
         $absensi = Absensi::with('karyawans', 'departemens')
             ->where('id_karyawan', $iduser)
-            ->whereMonth('tanggal', $bulan)
-            ->whereYear('tanggal', $tahun)
+            ->whereMonth('tanggal', $bulanSekarang)
+            ->whereYear('tanggal', $tahunSekarang)
             ->orderBy('id', 'desc')
             ->get();
 
@@ -95,42 +95,39 @@ class AbsensiKaryawanController extends Controller
     public function absensiPeroranganExcel(Request $request)
     {
         $iduser = Auth::user()->id_pegawai;
-        $nama   = Karyawan::where('id','=', $iduser)->first();
+        $nama   = Karyawan::where('id', '=', $iduser)->first();
 
-        $bulan  = $request->query('bulan',Carbon::now()->format('m'));
-        $tahun  = $request->query('tahun',Carbon::now()->format('Y'));
+        $bulan  = $request->query('bulan', Carbon::now()->format('m'));
+        $tahun  = $request->query('tahun', Carbon::now()->format('Y'));
 
-        // simpan session
-        $bulan      = $request->session()->get('bulan');
-        $tahun      = $request->session()->get('tahun',);
-
-
-        if(isset($bulan) && isset($tahun))
-        {
-            $data = Absensi::with('karyawans','departemens')
+        // Cek apakah bulan dan tahun diatur dalam permintaan
+        if (isset($bulan) && isset($tahun)) {
+            $data = Absensi::with('karyawans', 'departemens')
                 ->where('id_karyawan', $iduser)
                 ->whereMonth('tanggal', $bulan)
-                ->whereYear('tanggal',$tahun)
+                ->whereYear('tanggal', $tahun)
                 ->get();
 
             $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
             $nbulan    = $namaBulan . ' ' . $tahun;
-            // dd($data);
-        }
-        else{
+        } else {
+            // Jika tidak ada filter yang diatur, ambil data untuk bulan saat ini
             $data = Absensi::with('karyawans', 'departemens')
                 ->where('id_karyawan', $iduser)
+                ->whereMonth('tanggal', Carbon::now()->format('m'))
+                ->whereYear('tanggal', Carbon::now()->format('Y'))
                 ->get();
-            $nbulan = "-";
+
+            $nbulan = Carbon::now()->locale('id')->monthName . ' ' . Carbon::now()->year;
         }
 
-        if ($data->isEmpty())
-        {
-            return redirect()->back()->with('pesa','Tidak Ada Data');
+        if ($data->isEmpty()) {
+            return redirect()->back()->with('pesa', 'Tidak Ada Data');
         } else {
             return Excel::download(new AbsensiPeroranganExport($data, $iduser), "Rekap Absensi {$nama->nama} {$nbulan}.xlsx");
         }
     }
+
 
     public function absensiPeroranganPdf(Request $request)
     {
@@ -138,44 +135,40 @@ class AbsensiKaryawanController extends Controller
         $setorganisasi = SettingOrganisasi::where('partner', Auth::user()->partner)->first();
         $iduser = Auth::user()->id_pegawai;
 
-        $nama   = Karyawan::where('id','=', $iduser)->first();
+        $nama = Karyawan::where('id', '=', $iduser)->first();
 
-        $data = Absensi::with('karyawans', 'departemens')
-            ->where('id_karyawan', $iduser);
+        $bulan = $request->query('bulan', Carbon::now()->format('m'));
+        $tahun = $request->query('tahun', Carbon::now()->format('Y'));
 
-
-        $bulan  = $request->query('bulan',Carbon::now()->format('m'));
-        $tahun  = $request->query('tahun',Carbon::now()->format('Y'));
-
-        // simpan session
-        $bulan      = $request->session()->get('bulan');
-        $tahun      = $request->session()->get('tahun');
+        // Jika bulan dan tahun tidak disetel dalam permintaan, gunakan bulan dan tahun saat ini
+        if (!$request->has('bulan') || !$request->has('tahun')) {
+            $bulan = Carbon::now()->format('m');
+            $tahun = Carbon::now()->format('Y');
+        } else {
+            // Simpan session jika bulan dan tahun disetel dalam permintaan
+            $request->session()->put('bulan', $bulan);
+            $request->session()->put('tahun', $tahun);
+        }
 
         $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
-        $nbulan    = $namaBulan . ' ' . $tahun;
+        $nbulan = $namaBulan . ' ' . $tahun;
 
-        if(isset($bulan) && isset($tahun))
-        {
-           $data = Absensi::with('karyawans','departemens')
-                ->where('id_karyawan', $iduser)
-                ->whereMonth('tanggal', $bulan)
-                ->whereYear('tanggal',$tahun);
-        }
-        $data = $data->get();
+        $data = Absensi::with('karyawans', 'departemens')
+            ->where('id_karyawan', $iduser)
+            ->whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal', $tahun)
+            ->get();
 
-        if ($data->isEmpty())
-        {
-            return redirect()->back()->with('pesa','Tidak Data Ada.');
+        if ($data->isEmpty()) {
+            return redirect()->back()->with('pesa', 'Tidak Data Ada.');
         } else {
 
-            $nama = Karyawan::where('id',$iduser)->first();
-            $departemen = Departemen::where('id',$nama->divisi)->first();
-            $pdf  = PDF::loadview('karyawan.absensi.absensistaff_pdf',['data'=>$data,'departemen'=>$departemen,'iduser'=>$iduser, 'nama'=> $nama, 'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
-            ->setPaper('A4','landscape');
+            $nama = Karyawan::where('id', $iduser)->first();
+            $departemen = Departemen::where('id', $nama->divisi)->first();
+            $pdf = PDF::loadview('karyawan.absensi.absensistaff_pdf', ['data' => $data, 'departemen' => $departemen, 'iduser' => $iduser, 'nama' => $nama, 'nbulan' => $nbulan, 'setorganisasi' => $setorganisasi])
+                ->setPaper('A4', 'landscape');
 
-        return $pdf->stream("Report Absensi {$nama->nama} Bulan {$nbulan}.pdf");
+            return $pdf->stream("Report Absensi {$nama->nama} Bulan {$nbulan}.pdf");
         }
-
-
     }
 }
