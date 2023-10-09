@@ -34,6 +34,7 @@ use App\Http\Controllers\admin\MasterkpiController;
 use App\Http\Controllers\admin\UserMesinController;
 use App\Http\Controllers\karyawan\ResignController;
 use App\Http\Controllers\manager\ManagerController;
+use App\Http\Controllers\superadmin\BankController;
 use App\Http\Controllers\admin\DepartemenController;
 use App\Http\Controllers\admin\OrganisasiController;
 use App\Http\Controllers\admin\PenggajianController;
@@ -796,6 +797,12 @@ Route::post('/list-mesin/daftar-user/{id}', [ListmesinController::class, 'getuse
 Route::get('/settingorganisasi', [SettingorganisasiSAController::class, 'index'])->name('organisasiindex');
 Route::post('/settingorganisasi', [SettingorganisasiSAController::class, 'store'])->name('organisasistore');
 Route::put('/settingorganisasi/update/{id}', [SettingorganisasiSAController::class, 'update'])->name('organisasiupdate');
+
+//master partnert
+Route::get('/bank', [BankController::class, 'index'])->name('bank.index');
+Route::post('/bank', [BankController::class, 'store'])->name('bank.store');
+Route::put('/bank/update/{id}', [BankController::class, 'update'])->name('bank.update');
+Route::delete('/bank/delete/{id}', [BankController::class, 'destroy'])->name('bank.delete');
 
 //role 7 partner
 Route::post('set/partner/{id}', [SettingController::class, 'setPartner'])->name('set.partner');

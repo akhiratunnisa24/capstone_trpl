@@ -18,6 +18,7 @@ use App\Models\Rorganisasi;
 use App\Models\Rpendidikan;
 use Illuminate\Http\Request;
 use App\Models\SettingOrganisasi;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RekruitmenApplyNotification;
@@ -52,10 +53,11 @@ class FormPelamarController extends Controller
         // $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         // $posisi = Lowongan::all()->where('status', '=', 'Aktif');
         $posisi = Lowongan::all()
-        ->where('status', '=', 'Aktif')
-        ->where('jumlah_dibutuhkan', '>', 0)
-        ->where('tgl_selesai','>',Carbon::now());
+            ->where('status', '=', 'Aktif')
+            ->where('jumlah_dibutuhkan', '>', 0)
+            ->where('tgl_selesai','>',Carbon::now());
         $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
+        $bank           = DB::table('bank')->get();
 
         $pelamar = $request->session()->get('pelamar');
         if (!$pelamar) {
@@ -63,7 +65,7 @@ class FormPelamarController extends Controller
         }
 
         if ($openRekruitmen->count() > 0) {
-            return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar'))->with('success', 'Data berhasil disimpan.');
+            return view('admin.rekruitmen.formPelamar', compact('posisi', 'bank','pelamar'))->with('success', 'Data berhasil disimpan.');
         }
 
         return view('admin.rekruitmen.viewTidakAdaLowongan');
@@ -79,6 +81,7 @@ class FormPelamarController extends Controller
         ->get();
 
         $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
+        $bank           = DB::table('bank')->get();
 
         $pelamar = $request->session()->get('pelamar');
         if (!$pelamar) {
@@ -86,7 +89,7 @@ class FormPelamarController extends Controller
         }
 
         if ($openRekruitmen->count() > 0) {
-            return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
+            return view('admin.rekruitmen.formPelamar', compact('posisi', 'bank','pelamar','partner'))->with('success', 'Data berhasil disimpan.');
         }
         return view('admin.rekruitmen.formPelamar')->with('partner', 2);
     }
@@ -101,14 +104,14 @@ class FormPelamarController extends Controller
         ->get();
 
         $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
-
+        $bank           = DB::table('bank')->get();
         $pelamar = $request->session()->get('pelamar');
         if (!$pelamar) {
             $pelamar = new Rekruitmen;
         }
 
         if ($openRekruitmen->count() > 0) {
-            return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
+            return view('admin.rekruitmen.formPelamar', compact('posisi', 'bank','pelamar','partner'))->with('success', 'Data berhasil disimpan.');
         }
         return view('admin.rekruitmen.formPelamar')->with('partner', 1);
     }
@@ -123,14 +126,14 @@ class FormPelamarController extends Controller
         ->get();
 
         $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
-
+        $bank           = DB::table('bank')->get();
         $pelamar = $request->session()->get('pelamar');
         if (!$pelamar) {
             $pelamar = new Rekruitmen;
         }
 
         if ($openRekruitmen->count() > 0) {
-            return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
+            return view('admin.rekruitmen.formPelamar', compact('posisi','bank', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
         }
         return view('admin.rekruitmen.formPelamar')->with('partner', 3);
     }
@@ -145,14 +148,14 @@ class FormPelamarController extends Controller
         ->get();
 
         $openRekruitmen = Lowongan::where('status', 'Aktif')->get();
-
+        $bank           = DB::table('bank')->get();
         $pelamar = $request->session()->get('pelamar');
         if (!$pelamar) {
             $pelamar = new Rekruitmen;
         }
 
         if ($openRekruitmen->count() > 0) {
-            return view('admin.rekruitmen.formPelamar', compact('posisi', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
+            return view('admin.rekruitmen.formPelamar', compact('posisi','bank', 'pelamar','partner'))->with('success', 'Data berhasil disimpan.');
         }
         return view('admin.rekruitmen.formPelamar')->with('partner', 4);
     }

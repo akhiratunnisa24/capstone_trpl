@@ -44,27 +44,28 @@ class KaryawansController extends Controller
     {
         $role = Auth::user()->role;
         if ($role == 1 || $role == 2) {
-            $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
+            $row            = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $departemen     = Departemen::where('partner',Auth::user()->partner)->get();
             $atasan_pertama = Karyawan::where('partner',Auth::user()->partner)->whereIn('jabatan', ['Asistant Manager', 'Manager','Direksi'])->get();
             $atasan_kedua   = Karyawan::where('partner',Auth::user()->partner)->whereIn('jabatan', ['Manager','Direksi'])->get();
-            $leveljabatan = LevelJabatan::all();
-            $namajabatan = Jabatan::where('partner',Auth::user()->partner)->get();
+            $leveljabatan   = LevelJabatan::all();
+            $namajabatan    = Jabatan::where('partner',Auth::user()->partner)->get();
+            $bank           = DB::table('bank')->get();
 
-            // dd($atasan_pertama,$atasan_kedua);
 
             $karyawan = $request->session()->get('karyawan');
             if (!$karyawan) {
                 $karyawan = new Karyawan;
             }
             $output = [
-                'row' => $row,
-                'departemen' => $departemen,
-                'atasan_pertama' => $atasan_pertama,
-                'atasan_kedua' => $atasan_kedua,
-                'karyawan' => $karyawan,
-                'leveljabatan' => $leveljabatan,
-                'namajabatan' => $namajabatan,
+                'row'           => $row,
+                'departemen'    => $departemen,
+                'atasan_pertama'=> $atasan_pertama,
+                'atasan_kedua'  => $atasan_kedua,
+                'karyawan'      => $karyawan,
+                'leveljabatan'  => $leveljabatan,
+                'namajabatan'   => $namajabatan,
+                'bank'          => $bank
             ];
             return view('admin.karyawan.creates', $output);
         } else {

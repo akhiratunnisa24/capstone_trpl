@@ -1,7 +1,12 @@
 @extends('layouts.default')
 @section('content')
     <!-- Header -->
-
+    <style>
+        .btn-custom {
+            width: 35px; /* Sesuaikan ukuran sesuai kebutuhan */
+            height: 30px; /* Sesuaikan ukuran sesuai kebutuhan */
+        }
+    </style>
     <div class="row">
         <div class="col-sm-12">
 
@@ -31,18 +36,23 @@
                         <div class="panel-heading  col-sm-15 m-b-10">
                             {{-- <a href="karyawancreate" type="button" class="btn btn-sm btn-dark fa fa-user-plus "> Tambah
                                 Data Karyawan</a> --}}
-                            <a type="button" class="btn btn-sm btn-dark fa fa-at " data-toggle="modal"
-                                data-target="#myModal"> Buat Akun Karyawan</a>
+                            @if(Auth::user()->role !== 6 )
+                                <a type="button" class="btn btn-sm btn-dark fa fa-at " data-toggle="modal"
+                                    data-target="#myModal"> Buat Akun Karyawan</a>
 
-                            {{-- <a href="/karyawanupload" class="btn btn-sm btn-dark fa fa-upload"> Upload File Digital</a> --}}
+                                {{-- <a href="/karyawanupload" class="btn btn-sm btn-dark fa fa-upload"> Upload File Digital</a> --}}
 
-                            <a href="" class="btn btn-sm btn-dark fa fa-cloud-download" data-toggle="modal"
-                                data-target="#Modal2"> Impor Excel</a>
-                            {{-- <a href="/exportexcelkaryawan" class="btn btn-sm btn-dark fa fa-cloud-upload "> Export Excel
-                            </a> --}}
+                                <a href="" class="btn btn-sm btn-dark fa fa-cloud-download" data-toggle="modal"
+                                    data-target="#Modal2"> Impor Excel</a>
+                                {{-- <a href="/exportexcelkaryawan" class="btn btn-sm btn-dark fa fa-cloud-upload "> Export Excel
+                                </a> --}}
 
-                            <a href="karyawancreates" type="button" class="btn btn-sm btn-dark fa fa-user-plus pull-right">
-                                Tambah Data Karyawan</a>
+                                <a href="karyawancreates" type="button" class="btn btn-sm btn-dark fa fa-user-plus pull-right">
+                                    Tambah Data Karyawan
+                                </a>
+                            @else
+                                <h2></h2>
+                            @endif
                         </div>
                         @include('admin.karyawan.addAkunModal')
                         <div class="panel-body">
@@ -111,10 +121,10 @@
                                                                         aria-label="Basic example">
                                                                         {{-- <a href="karyawanshow{{ $k->id }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a> --}}
 
-                                                                        <a href="showidentitas{{ $k->id }}" class="btn btn-info btn-sm" title="Lihat Identitas" target="_blank"><i class="fa fa-eye" style="font-size: 15px;"></i></a>
-                                                                        <a href="showfile{{ $k->id }}" class="btn btn-success btn-sm " title="Open Digital File"><i class="fa fa fa-file-photo-o (alias)" style="font-size: 15px;"></i></a>
-                                                                        <a href="downloadpdf{{ $k->id }}" class="btn btn-dark btn-sm "  title="Download PDF" target="_blank"><i class="fa fa fa-download" style="font-size: 15px;"></i></a>
-                                                                        <a href="showinformasigaji{{ $k->id }}" class="btn btn-warning btn-sm " title="Informasi Gaji" target="_blank"><i class="mdi mdi-cash-multiple" style="font-size: 15px;"></i></a>
+                                                                        <a href="showidentitas{{ $k->id }}" class="btn btn-info btn-custom btn-sm" title="Lihat Identitas" target="_blank"><i class="fa fa-eye" style="font-size: 13px;"></i></a>
+                                                                        <a href="showfile{{ $k->id }}" class="btn btn-success btn-custom btn-sm " title="Open Digital File"><i class="fa fa fa-file-photo-o (alias)" style="font-size: 13px;"></i></a>
+                                                                        <a href="downloadpdf{{ $k->id }}" class="btn btn-dark btn-custom btn-sm "  title="Download PDF" target="_blank"><i class="fa fa fa-download" style="font-size: 13px;"></i></a>
+                                                                        <a href="showinformasigaji{{ $k->id }}" class="btn btn-warning btn-custom btn-sm " title="Informasi Gaji" target="_blank"><i class="mdi mdi-cash-multiple" style="font-size: 15px;"></i></a>
                                                                         {{-- <button  onclick="hapus_karyawan({{ $k->id }})"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                                                     </div>
                                                                     <!-- <button class="btn btn-default waves-effect waves-light" id="sa-success">Click me</button> -->

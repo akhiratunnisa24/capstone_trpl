@@ -1189,7 +1189,10 @@ class PenggajianController extends Controller
             $slipgaji = Penggajian::where('id',$request->id_slip)->first();
             $karyawan = Karyawan::where('id',$request->id_karyawan)->first();
             $informasigaji = Informasigaji::with('karyawans')->where('id_karyawan',$karyawan->id)->where('status',1)->first();
-            $kehadiran = Detailkehadiran::where('id_karyawan',$karyawan->id)->first();
+            $kehadiran = Detailkehadiran::where('id_karyawan',$karyawan->id)
+                ->where('tgl_awal',$slipgaji->tglawal)
+                ->where('tgl_akhir',$slipgaji->tglakhir)
+                ->first();
             $strukturgaji = SalaryStructure::where('id',$informasigaji->id_strukturgaji)->first();
             $detailstruktur = DetailSalaryStructure::where('id_salary_structure',$strukturgaji->id)->get();
 
@@ -1229,8 +1232,7 @@ class PenggajianController extends Controller
                             $tunjangan += $detail->nominal * $jumlah_hadir;
                         } elseif ($detail->siklus_bayar == 'Jam') {
                             // dd($detail);
-                            if(Str::contains($detail->nama_benefit, 'Lembur'))
-                            {
+                            if(Str::contains($detail->nama_benefit, 'Lembur')) {
                                 $jam = $kehadiran->jam_lembur;
                                 $tunjangan += $detail->nominal * $jam;
                                 $lembur = $detail->nominal * $jam;
@@ -1266,7 +1268,6 @@ class PenggajianController extends Controller
                 'pajak'      => 0,
                 'gaji_bersih'=> $gajibersih ? $gajibersih : 0,
             ];
-            // dd($dataupdate);
 
             $slipgaji->update($dataupdate);
 
@@ -1372,7 +1373,6 @@ class PenggajianController extends Controller
                     $detailgaji->nominal = isset($nominal) ? $nominal : 0;
                     $detailgaji->jumlah  = isset($jumlah) ?  $jumlah : 0;
                     $detailgaji->total   = isset($total) ? $total : 0;
-
                     $detailgaji->save();
                 }
                 // dd($detail,$detail->id_benefit,$slipgaji->id,$slipgaji->id_karyawan,$detail->id_informasigaji);

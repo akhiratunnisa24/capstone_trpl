@@ -197,8 +197,7 @@
                                                         <div class="row">
 
                                                             @if ($informasigaji == null)
-                                                                <label class="form-label col-sm-3 text-end">Struktur
-                                                                    Gaji</label>
+                                                                <label class="form-label col-sm-3 text-end">Struktur Gaji</label>
                                                                 <div class="col-sm-7">
                                                                     <input type="text" class="form-control"
                                                                         name="id_strukturgaji" id="id_strukturgaji"
@@ -239,18 +238,19 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                   
                                     <div class="modal-footer">
                                         @if ($informasigaji !== null)
                                             <a href="" class="btn btn-success" title="Edit Informasi Gaji" data-toggle="modal" data-target="#editInfor{{ $informasigaji->id }}">Edit Informasi Gaji <i class="fa fa-money"></i></a>
+                                            <a class="btn btn-info" title="Edit Data Karyawan" data-toggle="modal" data-target="#editDatakaryawan{{ $karyawan->id }}">Edit Data Karyawan <i class="fa fa-user"></i></a>
                                         @endif
-                                        <a class="btn btn-info" title="Edit Data Karyawan" data-toggle="modal" data-target="#editDatakaryawan{{ $karyawan->id }}">Edit Data Karyawan <i class="fa fa-user"></i></a>
+                                    
                                         <a href="karyawan" class="btn btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
                                     </div>
                                 </form>
                                 @include('admin.karyawan.editdatashowinformasi')
                                 @include('admin.karyawan.tambahstruktur')
-                                @if($informasigaji != null)
+                                @if($informasigaji !== null)
                                     @include('admin.karyawan.editInformasigaji')
                                 @endif
                             </div>
