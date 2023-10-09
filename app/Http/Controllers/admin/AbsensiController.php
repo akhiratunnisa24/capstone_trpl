@@ -466,8 +466,16 @@ class AbsensiController extends Controller
             }
         }else
         {
-            $data = Absensi::with('karyawans','departemens')->where('absensi.partner',Auth::user()->partner)
-            ->orderBy('id_karyawan', 'asc')->get();
+            $bulanSekarang = Carbon::now()->format('m');
+            $tahunSekarang = Carbon::now()->format('Y');
+
+            $data = Absensi::with('karyawans','departemens')
+            ->where('absensi.partner',Auth::user()->partner)
+            ->whereMonth('tanggal', $bulanSekarang)
+            ->whereYear('tanggal', $tahunSekarang)
+            ->orderBy('id_karyawan', 'asc')
+            ->orderBy('tanggal', 'asc')
+            ->get();
             $nbulan = "-";
             $pdfName = "Rekap Absensi Karyawan ". $nbulan .".pdf";
 
@@ -542,8 +550,16 @@ class AbsensiController extends Controller
         }
         else
         {
-            $data = Absensi::with('karyawans','departemens')->where('absensi.partner',Auth::user()->partner)
-            ->orderBy('id_karyawan', 'asc')->get();
+            $bulanSekarang = Carbon::now()->format('m');
+            $tahunSekarang = Carbon::now()->format('Y');
+
+            $data = Absensi::with('karyawans','departemens')
+            ->where('absensi.partner',Auth::user()->partner)
+            ->whereMonth('tanggal', $bulanSekarang)
+            ->whereYear('tanggal', $tahunSekarang)
+            ->orderBy('id_karyawan', 'asc')
+            ->orderBy('tanggal', 'asc')
+            ->get();
             $nbulan = "-";
             if ($data->isEmpty())
             {
