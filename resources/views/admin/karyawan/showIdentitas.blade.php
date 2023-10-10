@@ -47,7 +47,7 @@
                                     @csrf
                                     @method('post') --}}
                                     <div class="control-group after-add-more">
-                                    
+
                                         <div class="modal-body">
                                             <table class="table table-bordered table-striped">
                                                 <div class="col-md-12">
@@ -57,18 +57,19 @@
                                                                 <label class="text-white">A. IDENTITAS DIRI</label>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group">
+                                                            <div class="text-center">
+                                                                <label  class="form-label ">Foto Karyawan</label>
+                                                            </div>
+                                                            <div class="mb-3 col-sm-12 text-center">
+                                                            <img src="{{ asset('Foto_Profile/'.$karyawan->foto) }}" style="width:299px;" >
+                                                            </div>
+                                                        </div>
                                                         <div class="col-md-6 m-t-10">
 
-                                                            
+
                                                             <div class="row">
-                                                            <div class="form-group">
-                                                                <div class="mb-3 col-sm-12 text-center">
-                                                                    <label  class="form-label ">Foto Karyawan</label>
-                                                                </div>
-                                                                <div class="mb-3 col-sm-12 text-center">
-                                                                <img src="{{ asset('Foto_Profile/'.$karyawan->foto) }}" style="width:299px;" >
-                                                                </div>
-                                                            </div>
+
                                                             </div>
 
                                                                 <div class="form-group">
@@ -84,65 +85,64 @@
                                                                     <label class="form-control">{{ $karyawan->nama ?? '-' }}</label>
                                                                 </div>
                                                             </div>
-                        
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label  class="form-label">No. KTP</label>
+                                                                    <label class="form-control">{{ $karyawan->nik ?? '-' }}</label>
+                                                                </div>
+                                                            </div>
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Tanggal Lahir</label>
                                                                     <label class="form-control">{{\Carbon\Carbon::parse($karyawan->tgllahir)->format('d/m/Y') ?? '-' }}</label>
                                                                 </div>
                                                             </div>
-                        
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label  class="form-label">Tempat Lahir</label>
                                                                     <label class="form-control">{{ $karyawan->tempatlahir ?? '-' }}</label>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                             <div class="form-group">
                                                                 <label  class="form-label">Jenis Kelamin</label>@if($karyawan->jenis_kelamin == 'Perempuan')<label class="form-control" >Perempuan</label>
                                                                 @else
                                                                 <label class="form-control">Laki-Laki</label>
                                                                 @endif
-                                                            </div>  
-                        
-                                                            <div class="form-group">
-                                                                <label  class="form-label">Divisi</label>
-                                                                <label class="form-control">{{ $karyawan->departemen->nama_departemen ?? '-' }}</label>
-                                                            </div>
-                        
-                                                            <div class="form-group">
-                                                                <label  class="form-label">Atasan Langsung (Asisten Manager/Manager/Direksi)</label>
-                                                                <label class="form-control">{{ $karyawan->atasan_pertamaa->nama ?? '-' }}</label>
-                                                            </div>
-                                                            
-                                                            <div class="form-group">
-                                                                <label  class="form-label">Atasan/Pimpinan (Manager/Direksi)</label>
-                                                                <label class="form-control">{{ $karyawan->atasan_keduab->nama ?? '-' }}</label>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label  class="form-label">Nama Jabatan</label>
-                                                                <label class="form-control">{{ $karyawan->nama_jabatan ?? '-' }}</label>
+                                                                <div class="mb-3">
+                                                                    <label  class="form-label">No. Handphone</label>
+                                                                    <label class="form-control">{{ $karyawan->no_hp ?? '-' }}</label>
+                                                                </div>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label  class="form-label">Level Jabatan</label>
-                                                                <label class="form-control">{{ $karyawan->jabatan ?? '-' }}</label>
+                                                                <div class="mb-3">
+                                                                    <label  class="form-label">Alamat E-mail</label>
+                                                                    <label class="form-control">{{ $karyawan->email ?? '-' }}</label>
+                                                                </div>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label  class="form-label">Status Karyawan</label>
-                                                                <label class="form-control">{{ $karyawan->status_karyawan ?? '-' }}</label>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Agama</label>
+                                                                    <label class="form-control">{{ $karyawan->agama ?? '-' }}</label>
+                                                                </div>
                                                             </div>
+
 
                                                             <div class="form-group">
                                                                     <label  class="form-label">Golongan Darah</label>
                                                                     <label class="form-control">{{ $karyawan->gol_darah ?? '-' }}</label>
-                                                                </div>
+                                                            </div>
 
-                                                                
-                        
+
+
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label  class="form-label">Alamat</label>
@@ -150,15 +150,75 @@
                                                                 </div>
                                                             </div>
 
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                <label  class="form-label">Nama Bank</label>
+                                                                <label class="form-control">{{ $karyawan->nama_bank ?? '-' }}</label>
+                                                            </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">No. Rekening</label>
+                                                                    <label class="form-control">{{ $karyawan->no_rek ?? '-' }}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Gaji Pokok</label>
+                                                                    <label  class="form-control">{{ number_format($karyawan->gaji, 0, ',', '.') ?? '-' }}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Status Kerja</label>
+                                                                    <label class="form-control">{{ $karyawan->status_kerja ?? '-' }}</label>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                        
+
                                                         <!-- baris sebelah kanan  -->
-                        
+
                                                         <div class="col-md-6 m-t-10">
                                                             <div class="form-group">
 
-                                                                
-                        
+                                                                <div class="form-group">
+                                                                    <label  class="form-label">Divisi</label>
+                                                                    <label class="form-control">{{ $karyawan->departemen->nama_departemen ?? '-' }}</label>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label  class="form-label">Atasan Langsung (Asisten Manager/Manager/Direksi)</label>
+                                                                    <label class="form-control">{{ $karyawan->atasan_pertamaa->nama ?? '-' }}</label>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label  class="form-label">Atasan/Pimpinan (Manager/Direksi)</label>
+                                                                    <label class="form-control">{{ $karyawan->atasan_keduab->nama ?? '-' }}</label>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label  class="form-label">Nama Jabatan</label>
+                                                                    <label class="form-control">{{ $karyawan->nama_jabatan ?? '-' }}</label>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label  class="form-label">Level Jabatan</label>
+                                                                    <label class="form-control">{{ $karyawan->jabatan ?? '-' }}</label>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label  class="form-label">Status Karyawan</label>
+                                                                    <label class="form-control">{{ $karyawan->status_karyawan ?? '-' }}</label>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="mb-3">
+                                                                        <label  class="form-label">Tanggal Masuk</label>
+                                                                        <label class="form-control">{{ \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') ?? '-' }}</label>
+                                                                    </div>
+                                                                </div>
+
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                     <label  class="form-label">Status Pernikahan</label>
@@ -171,41 +231,6 @@
                                                                     <label  class="form-label">Jumlah Anak</label>
                                                                     <label class="form-control">{{ $karyawan->jumlah_anak ?? '-' }}</label>
                                                                 </div>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <div class="mb-3">
-                                                                        <label  class="form-label">No. Handphone</label>
-                                                                        <label class="form-control">{{ $karyawan->no_hp ?? '-' }}</label>
-                                                                    </div>
-                                                                </div>
-                        
-                                                                <div class="form-group">
-                                                                    <div class="mb-3">
-                                                                        <label  class="form-label">Alamat E-mail</label>
-                                                                        <label class="form-control">{{ $karyawan->email ?? '-' }}</label>
-                                                                    </div>
-                                                                </div>
-                        
-                                                                <div class="form-group">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Agama</label>
-                                                                        <label class="form-control">{{ $karyawan->agama ?? '-' }}</label>
-                                                                    </div>
-                                                                </div>
-                        
-                                                                <div class="form-group">
-                                                                    <div class="mb-3">
-                                                                        <label  class="form-label">Tanggal Masuk</label>
-                                                                        <label class="form-control">{{ \Carbon\Carbon::parse($karyawan->tglmasuk)->format('d/m/Y') ?? '-' }}</label>
-                                                                    </div>
-                                                                </div>
-                        
-                                                                <div class="form-group">
-                                                                    <div class="mb-3">
-                                                                        <label  class="form-label">No. KTP</label>
-                                                                        <label class="form-control">{{ $karyawan->nik ?? '-' }}</label>
-                                                                    </div>
                                                                 </div>
 
                                                                 <div class="form-group">
@@ -257,26 +282,8 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="form-group">
-                                                                    <div class="mb-3">
-                                                                    <label  class="form-label">Nama Bank</label>
-                                                                    <label class="form-control">{{ $karyawan->nama_bank ?? '-' }}</label>
-                                                                </div>
-                                                                </div>
 
-                                                                <div class="form-group">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">No. Rekening</label>
-                                                                        <label class="form-control">{{ $karyawan->no_rek ?? '-' }}</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Gaji Pokok</label>
-                                                                        <label  class="form-control">{{ number_format($karyawan->gaji, 0, ',', '.') ?? '-' }}</label>
-                                                                    </div>
-                                                                </div>
-                        
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -285,7 +292,7 @@
                                                     @if(Auth::user()->role !== 6)
                                                         <a href="/karyawan" class="btn btn-sm btn-info"><i class="fa fa-backward"></i> Sebelumnya</a>
                                                         <a href="editidentitas{{ $karyawan->id }}" class="btn btn-sm btn-primary" type="button">Edit Data <i class="fa fa-edit"></i></a>
-                                                        
+
                                                         {{-- <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#updateIdentitas{{$karyawan->id}}" >
                                                         <i class="fa fa-edit"> <strong>Edit Identitas Diri</strong></i></a> --}}
                                                         {{-- @include('admin.karyawan.editIdentitas') --}}
@@ -300,12 +307,12 @@
                                     </div>
                                 {{-- </form> --}}
                             </div>
-                        </div> 
-                    </div> 
-                </div> 
-            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>  
+    </div>
 
 
 @endsection
