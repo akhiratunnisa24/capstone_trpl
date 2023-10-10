@@ -37,60 +37,51 @@ class AbsensiController extends Controller
     {
         $row  = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
-        
-        if ($role == 1 || $role == 2 ) {
-            //filter data
-            $karyawan   = Karyawan::where('partner',Auth::user()->partner)->get();
+
+        if ($role == 1 || $role == 2) {
+            // filter data
+            $karyawan   = Karyawan::where('partner', Auth::user()->partner)->orderBy('nama','asc')->get();
 
             $idkaryawan = $request->id_karyawan;
-            $bulan      = $request->query('bulan',Carbon::now()->format('m'));
-            $tahun      = $request->query('tahun',Carbon::now()->format('Y'));
+            $bulan      = $request->query('bulan', Carbon::now()->format('m'));
+            $tahun      = $request->query('tahun', Carbon::now()->format('Y'));
 
             // simpan session
-            $request->session()->put('idkaryawan',$idkaryawan);
+            $request->session()->put('idkaryawan', $idkaryawan);
             $request->session()->put('bulan', $bulan);
             $request->session()->put('tahun', $tahun);
 
-            if($idkaryawan !=="Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
-            {
-                $absensi = Absensi::with('karyawans','departemens')
+            if ($idkaryawan !== "Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun)) {
+                $absensi = Absensi::with('karyawans', 'departemens')
                     ->where('id_karyawan', $idkaryawan)
                     ->whereMonth('tanggal', $bulan)
-                    ->whereYear('tanggal',$tahun)
+                    ->whereYear('tanggal', $tahun)
                     ->get();
-            }
-            else if($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
-            {
+            } else if ($idkaryawan == "Semua" && isset($bulan) && isset($tahun)) {
                 $absensi = Absensi::whereHas('karyawans', function ($query) {
                     $query->where('absensi.partner', Auth::user()->partner)
                         ->whereHas('departemens', function ($subQuery) {
                             $subQuery->where('absensi.partner', Auth::user()->partner);
                         });
-                    })
+                })
                     ->whereMonth('tanggal', $bulan)
                     ->whereYear('tanggal', $tahun)
                     ->get();
-            }
-            else
-            {
-                $absensi = Absensi::with('karyawans','departemens')
-                    ->where('absensi.partner',Auth::user()->partner)
-                    ->orderBy('tanggal','desc')
+            } else {
+                $bulanSekarang = Carbon::now()->format('m');
+                $tahunSekarang = Carbon::now()->format('Y');
+
+                $absensi = Absensi::with('karyawans', 'departemens')
+                    ->where('absensi.partner', Auth::user()->partner)
+                    ->whereMonth('tanggal', $bulanSekarang)
+                    ->whereYear('tanggal', $tahunSekarang)
+                    ->orderBy('tanggal', 'desc')
                     ->get();
             }
 
-            return view('admin.absensi.index',compact('absensi','karyawan','row','role'));
-        
-            //menghapus filter data
-            $request->session()->forget('id_karyawan');
-            $request->session()->forget('bulan');
-            $request->session()->forget('tahun');
-
-        }
-        else
-         {
-        
-            return redirect()->back(); 
+            return view('admin.absensi.index', compact('absensi', 'karyawan', 'row', 'role'));
+        } else {
+            return redirect()->back();
         }
 
         //   elseif(($role == 1) || $role == 2)
@@ -105,7 +96,7 @@ class AbsensiController extends Controller
         //     $request->session()->put('idkaryawan', $request->id_karyawan);
         //     $request->session()->put('bulan', $bulan);
         //     $request->session()->put('tahun', $tahun);
-    
+
         //     if(isset($idkaryawan) && isset($bulan) && isset($tahun))
         //     {
         //         $absensi = Absensi::with('karyawans','departemens')->where('id_karyawan', $idkaryawan)
@@ -121,7 +112,7 @@ class AbsensiController extends Controller
         //         ->get();
         //     }
         //     return view('admin.absensi.index',compact('absensi','karyawan','row','role'));
-        
+
         //     //menghapus filter data
         //     $request->session()->forget('id_karyawan');
         //     $request->session()->forget('bulan');
@@ -161,7 +152,7 @@ class AbsensiController extends Controller
         //$depart = Karyawan::select('divisi')->where('id','=', Auth::user()->id_pegawai)->first();
         $depart = DB::table('karyawan')->join('departemen', 'karyawan.divisi','=','departemen.id')
                   ->where('karyawan.id','=',Auth::user()->id_pegawai)->first();
-        
+
         $jadwalkaryawan = Jadwal::join('shift','jadwal.id_shift','shift.id')
             ->where('jadwal.id_pegawai',Auth::user()->id_pegawai)
             ->whereDate('jadwal.tanggal', Carbon::now()->format("Y-m-d"))
@@ -235,7 +226,7 @@ class AbsensiController extends Controller
         // $jp = $ak;//jadwal pulang sama nilainya dengan $ak
         // $plcpt= $jdplg->diff($jp)->format("%H:%I:%S");//value untuk pulang cepat
 
-        
+
         // Mencari value apakah pegawai pulang cepat
         // $jdp = $jadwalkaryawan->jadwal_pulang;
         // $jdplg = Carbon::parse($jdp);
@@ -305,7 +296,7 @@ class AbsensiController extends Controller
     //             $ak=Carbon::parse($value->jam_keluar);
     //             $diff=$aw->diff($ak)->format("%H:%I:%S");
     //             $data[$key]['diff'] = $diff;
-    //         }   
+    //         }
 
     //     }
     //     dd($data->toArray());
@@ -330,18 +321,18 @@ class AbsensiController extends Controller
             Excel::import($import, $file,$format);
 
             // dd($import->getJumlahDataDiimport(),$import->getDataImportTidakMasuk(),$import->getJumlahData());
-            
+
             $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $import->getJumlahDataDiimport() . "</strong>" . "<br>" .
             "Data diimport ke Tidak Masuk: <strong>" . $import->getDataImportTidakMasuk() . "</strong>" . "<br>" .
             "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
             "Jumlah Data Keseluruhan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $import->getJumlahData(). "</strong>";
             // return $pesan;
-        
+
             $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
             // return $pesan;
             $pesan = nl2br(html_entity_decode($pesan));
-            return redirect()->back()->with('pesan', $pesan);  
-                
+            return redirect()->back()->with('pesan', $pesan);
+
         }catch (\Throwable $th) {
             // Tangani jika terjadi kesalahan
             return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari Excel.');
@@ -355,15 +346,15 @@ class AbsensiController extends Controller
             $request->validate([
                 'uploaded_file' => 'required|mimes:xls,xlsx',
             ]);
-        
+
             $importer = new DataImport();
             $importer->importDataExcel($request);
-           
+
             $pesan = "Data diimport ke Absensi &nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <strong>" . $importer->getJumlahDataDiimport() . "</strong>" . "<br>" .
             "Data diimport ke Tidak Masuk: <strong>" . $importer->getDataImportTidakMasuk() . "</strong>" . "<br>" .
             "Data tidak bisa diimport &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $importer->getDatatTidakBisaDiimport() . "</strong>" . "<br>" .
             "Jumlah Data Keseluruhan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <strong>" . $importer->getJumlahData(). "</strong>";
-        
+
             $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
 
             $pesan = nl2br(html_entity_decode($pesan));
@@ -373,7 +364,7 @@ class AbsensiController extends Controller
             // Tangani jika terjadi kesalahan
             return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari Excel.');
         }
-        
+
     }
 
     public function importcsv(Request $request)
@@ -420,9 +411,9 @@ class AbsensiController extends Controller
         $tahun      = $request->session()->get('tahun');
 
         $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
-       
+
         // dd($idkaryawan,$bulan,$tahun );
-    
+
         if($idkaryawan !== "Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
             $data = Absensi::where('id_karyawan', $idkaryawan)
@@ -434,16 +425,16 @@ class AbsensiController extends Controller
             $nbulan    = $namaBulan . ' ' . $tahun;
             $pdfName = "Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf";
 
-            if ($data->isEmpty()) 
+            if ($data->isEmpty())
             {
                 return redirect()->back()->with('pesa','Tidak Data Ada.');
             } else {
-            
+
                 $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
                 ->setPaper('a4','landscape');
                 // return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
                 return $pdf->stream($pdfName);
-            } 
+            }
 
         }
         elseif($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
@@ -463,24 +454,32 @@ class AbsensiController extends Controller
             $nbulan    = $namaBulan . ' ' . $tahun;
             $pdfName = "Rekap Absensi Bulan ". $nbulan .".pdf";
 
-            if ($data->isEmpty()) 
+            if ($data->isEmpty())
             {
                 return redirect()->back()->with('pesa','Tidak Data Ada.');
             } else {
-            
+
                 $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
                 ->setPaper('a4','landscape');
                 // return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
                 return $pdf->stream($pdfName);
-            } 
+            }
         }else
         {
-            $data = Absensi::with('karyawans','departemens')->where('absensi.partner',Auth::user()->partner)
-            ->orderBy('id_karyawan', 'asc')->get();
+            $bulanSekarang = Carbon::now()->format('m');
+            $tahunSekarang = Carbon::now()->format('Y');
+
+            $data = Absensi::with('karyawans','departemens')
+            ->where('absensi.partner',Auth::user()->partner)
+            ->whereMonth('tanggal', $bulanSekarang)
+            ->whereYear('tanggal', $tahunSekarang)
+            ->orderBy('id_karyawan', 'asc')
+            ->orderBy('tanggal', 'asc')
+            ->get();
             $nbulan = "-";
             $pdfName = "Rekap Absensi Karyawan ". $nbulan .".pdf";
 
-            if ($data->isEmpty()) 
+            if ($data->isEmpty())
             {
                 return redirect()->back()->with('pesa','Tidak Ada Data');
             } else {
@@ -488,8 +487,8 @@ class AbsensiController extends Controller
                 ->setPaper('a4','landscape');
                 // return $pdf->stream("Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".pdf");
                 return $pdf->stream($pdfName);
-            }  
-        } 
+            }
+        }
     }
 
     public function rekapabsensiExcel(Request $request)
@@ -503,9 +502,9 @@ class AbsensiController extends Controller
         $idkaryawan = $request->session()->get('idkaryawan');
         $bulan      = $request->session()->get('bulan');
         $tahun      = $request->session()->get('tahun',);
-    
+
         // dd($idkaryawan,$bulan,$tahun );
-    
+
         if($idkaryawan !=="Semua" && isset($idkaryawan) && isset($bulan) && isset($tahun))
         {
             $data = Absensi::with('karyawans','departemens')
@@ -513,16 +512,16 @@ class AbsensiController extends Controller
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal',$tahun)
             ->get();
-            
+
             $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
             $nbulan    = $namaBulan . ' ' . $tahun;
-            
-            if ($data->isEmpty()) 
+
+            if ($data->isEmpty())
             {
                 return redirect()->back()->with('pesa','Tidak Ada Data');
             } else {
                 return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".xlsx");
-            }  
+            }
         }elseif($idkaryawan =="Semua" && isset($bulan) && isset($tahun))
         {
             $data = Absensi::whereHas('karyawans', function ($query) {
@@ -541,26 +540,34 @@ class AbsensiController extends Controller
             $nbulan    = $namaBulan . ' ' . $tahun;
             $pdfName = "Rekap Absensi Bulan ". $nbulan .".pdf";
 
-            if ($data->isEmpty()) 
+            if ($data->isEmpty())
             {
                 return redirect()->back()->with('pesa','Tidak Ada Data');
             } else {
                 return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan " . $nbulan .".xlsx");
-            }  
+            }
 
         }
         else
         {
-            $data = Absensi::with('karyawans','departemens')->where('absensi.partner',Auth::user()->partner)
-            ->orderBy('id_karyawan', 'asc')->get();
+            $bulanSekarang = Carbon::now()->format('m');
+            $tahunSekarang = Carbon::now()->format('Y');
+
+            $data = Absensi::with('karyawans','departemens')
+            ->where('absensi.partner',Auth::user()->partner)
+            ->whereMonth('tanggal', $bulanSekarang)
+            ->whereYear('tanggal', $tahunSekarang)
+            ->orderBy('id_karyawan', 'asc')
+            ->orderBy('tanggal', 'asc')
+            ->get();
             $nbulan = "-";
-            if ($data->isEmpty()) 
+            if ($data->isEmpty())
             {
                 return redirect()->back()->with('pesa','Tidak Ada Data');
             } else {
                 return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan " . $nbulan .".xlsx");
-            }  
-        } 
+            }
+        }
     }
 
     public function storeTidakmasuk(Request $data)
@@ -569,7 +576,7 @@ class AbsensiController extends Controller
         $status   = Tidakmasuk::where('id', Auth::user()->id_pegawai)->first();
         $depart   = DB::table('karyawan')->join('departemen', 'karyawan.divisi','=','departemen.id')
                   ->where('karyawan.id','=',Auth::user()->id_pegawai)->first();
- 
+
         $tidakmasuk = array(
             'id_pegawai' => $karyawan->id,
             'nama'       => $karyawan->nama,
@@ -596,7 +603,7 @@ class AbsensiController extends Controller
             'lemakpek'      => 0,
             'lemhali'       => 0,
         );
-        // dd($absensi); 
+        // dd($absensi);
 
         Tidakmasuk::insert($tidakmasuk);
         Absensi::insert($absensi);
@@ -633,7 +640,7 @@ class AbsensiController extends Controller
         //     return view('tidakkonekip');
         // }
 
-       
+
 
     }
 
@@ -651,7 +658,7 @@ class AbsensiController extends Controller
         // $IP = '192.168.1.8';
         $absensiHelper = new absensiHelper();
         $isConnected = $absensiHelper->connectToIP($IP);
-        
+
         if ($isConnected) {
             // Koneksi berhasil
             return 'Berhasil terkoneksi ke '. $IP;
@@ -711,14 +718,14 @@ class AbsensiController extends Controller
         $result = $absensiRequest->xmlRpcRequest($IP, $Key);
 
         if ($result === null) {
-    
+
             return "DATA KOSONG";
         }
-    
+
         $logData = $result; // Ubah ini sesuai dengan format data yang diterima dari permintaan XML-RPC
-    
-        return view('php.tarik-data', compact('logData','row')); 
-        
+
+        return view('php.tarik-data', compact('logData','row'));
+
     }
 
     public function showDownloadLog()
