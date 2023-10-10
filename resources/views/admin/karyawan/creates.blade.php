@@ -192,6 +192,13 @@
                                                                     </select>
                                                                 </div>
 
+
+                                                            <div class="form-group">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Alamat <span style="color: red;">*</span></label>
+                                                                    <textarea class="form-control" autocomplete="off" name="alamatKaryawan" rows="5" required>{{ $karyawan->alamat ?? '' }}</textarea><br>
+                                                                </div>
+                                                            </div>
                                                             <div class="form-group">
                                                                 <div class="mb-3">
                                                                     <label class="form-label col-sm-4">Pilih Foto Karyawan <span style="color: red;">*</span></label>
@@ -203,12 +210,6 @@
                                                                         <input type="file" name="foto" class="form-control" id="foto" onchange="previewImage()" required>
                                                                     @endif
 
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Alamat <span style="color: red;">*</span></label>
-                                                                    <textarea class="form-control" autocomplete="off" name="alamatKaryawan" rows="5" required>{{ $karyawan->alamat ?? '' }}</textarea><br>
                                                                 </div>
                                                             </div>
 
@@ -357,14 +358,14 @@
                                                                             placeholder="Masukkan No. Rekening" required>
                                                                     </div>
                                                                 </div>
-                                                                @if(Auth::check() && Auth::user()->role === 6)
+                                                                {{-- @if(Auth::check() && Auth::user()->role === 6) --}}
                                                                 <div class="form-group">
                                                                     <div class="mb-3">
                                                                         <label class="form-label">Gaji Pokok <span style="color: red;">*</span></label>
                                                                         <input type="text" name="gaji" class="form-control input-formats" value="{{ number_format($karyawan->gaji, 0, ',', '.') ?? '' }}" placeholder="Masukkan Gaji Pokok" required>
                                                                     </div>
                                                                 </div>
-                                                                @endif
+                                                                {{-- @endif --}}
                                                             </div>
                                                         </div>
                                                     </div>
