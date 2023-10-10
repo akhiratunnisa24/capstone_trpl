@@ -44,7 +44,7 @@ class karyawanImport implements ToModel, WithHeadingRow
             $carbonDate = Carbon::createFromTimestamp(($excelDateB - 25569) * 86400)->format('Y-m-d');
             $tgl_masuk = $carbonDate;
 
-            $divisi = Departemen::whereRaw('LOWER(nama_departemen) = ?', [strtolower($row['divisi'])])->select('id')->first();
+            // $divisi = Departemen::whereRaw('LOWER(nama_departemen) = ?', [strtolower($row['divisi'])])->select('id')->first();
             $cek = !Karyawan::where('nik', $row['no_ktp'])->where('tgllahir',$tgl_lahir)->where('partner',$partner)->exists();
             if($cek)
             {
