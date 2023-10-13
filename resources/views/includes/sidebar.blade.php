@@ -36,7 +36,56 @@
                                 class="text-info panel-title">Dashboard</span></a></li>
                     <li><a href="/kalender" class="waves-effect"><i class="fa fa-calendar"></i><span
                                 class="text-info panel-title">Kalender</span></a></li>
-                    <li class="has_sub">
+
+                                <li class="has_sub">
+                                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-database"></i><span
+                                            class="text-info panel-title">DATA POKOK</span><span class="pull-right"><i
+                                                class="mdi mdi-plus"></i></span></a>
+                                    <ul class="list-unstyled">
+                                        @if(Auth::check() && Auth::user()->role !== 6)
+                                            <li><a href="/divisi"><i class="fa fa-sitemap"></i><span></span>Divisi</a></li>
+                                            <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a>
+                                            </li>
+                                            <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>
+                                            <li><a href="/atasan"><i class="mdi mdi-account-star-variant"></i><span></span>Atasan</a>
+                                            </li>
+                                            <li><a href="/informasi"><i
+                                                        class="fa fa-exclamation-circle"></i><span></span>Informasi</a></li>
+                                            <li><a href="/user_mesin"><i class="fa fa-user"></i><span></span>User Mesin</a></li>
+                                            <li class="has_sub">
+                                                <a href="#"><i class="mdi mdi-calendar-clock"></i><span></span>Jadwal
+                                                    Karyawan<span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                                <ul class="list-unstyled">
+                                                    <li><a href="/shift"><i class="mdi mdi-calendar"></i><span></span>Shift</a></li>
+                                                    <li><a href="jadwal"><i
+                                                                class="mdi mdi-calendar-multiple-check"></i><span></span>Jadwal</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        @endif
+                                        @if(Auth::check() && Auth::user()->role === 1 || Auth::check() && Auth::user()->role === 6)
+                                            <li class="has_sub">
+                                                <a href="#"><i class="fa fa-money"></i><span></span>Master Penggajian<span
+                                                        class="pull-right"><i class="mdi mdi-plus"></i></span></a>
+                                                <ul class="list-unstyled">
+                                                    {{-- <li><a href="/kategori-salary"><i
+                                                                class="fa fa-reorder (alias)"></i><span></span>Kategori Salary</a></li> --}}
+                                                    <li><a href="/struktur-penggajian"><i class="mdi mdi-clipboard-text"></i><span></span>Struktur Penggajian</a></li>
+                                                </ul>
+                                            </li>
+                                        @endif
+                                        @if(Auth::check() && Auth::user()->role !== 6)
+                                            <li><a href="/manajemen-harilibur"><i class="ti-calendar"></i><span>Manajemen
+                                                        Libur</span></a></li>
+                                        @endif
+                                        {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li> --}}
+                                        {{-- <li><a href="#"><i class="fa fa-institution (alias)"></i><span></span>Setting
+                                                Organisasi</a></li> --}}
+                                        {{-- <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span> Managemen User</span></a></li>      --}}
+                                        {{-- <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span
+                                           >Managemen User</span></a></li> --}}
+                                    </ul>
+                                </li>                    <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-circle"></i><span
                                 class="text-info panel-title">Informasi Pribadi</span><span class="pull-right"><i
                                     class="mdi mdi-plus"></i></span></a>
@@ -173,55 +222,7 @@
                             </ul>
                         </li>
                     @endif
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-database"></i><span
-                                class="text-info panel-title">DATA POKOK</span><span class="pull-right"><i
-                                    class="mdi mdi-plus"></i></span></a>
-                        <ul class="list-unstyled">
-                            @if(Auth::check() && Auth::user()->role !== 6)
-                                <li><a href="/divisi"><i class="fa fa-sitemap"></i><span></span>Divisi</a></li>
-                                <li><a href="/level-jabatan"><i class="fa fa-briefcase"></i><span></span>Level Jabatan</a>
-                                </li>
-                                <li><a href="/jabatan"><i class="fa fa-briefcase"></i><span></span>Jabatan</a></li>
-                                <li><a href="/atasan"><i class="mdi mdi-account-star-variant"></i><span></span>Atasan</a>
-                                </li>
-                                <li><a href="/informasi"><i
-                                            class="fa fa-exclamation-circle"></i><span></span>Informasi</a></li>
-                                <li><a href="/user_mesin"><i class="fa fa-user"></i><span></span>User Mesin</a></li>
-                                <li class="has_sub">
-                                    <a href="#"><i class="mdi mdi-calendar-clock"></i><span></span>Jadwal
-                                        Karyawan<span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        <li><a href="/shift"><i class="mdi mdi-calendar"></i><span></span>Shift</a></li>
-                                        <li><a href="jadwal"><i
-                                                    class="mdi mdi-calendar-multiple-check"></i><span></span>Jadwal</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            @endif
-                            @if(Auth::check() && Auth::user()->role === 1 || Auth::check() && Auth::user()->role === 6)
-                                <li class="has_sub">
-                                    <a href="#"><i class="fa fa-money"></i><span></span>Master Penggajian<span
-                                            class="pull-right"><i class="mdi mdi-plus"></i></span></a>
-                                    <ul class="list-unstyled">
-                                        {{-- <li><a href="/kategori-salary"><i
-                                                    class="fa fa-reorder (alias)"></i><span></span>Kategori Salary</a></li> --}}
-                                        <li><a href="/struktur-penggajian"><i class="mdi mdi-clipboard-text"></i><span></span>Struktur Penggajian</a></li>
-                                    </ul>
-                                </li>
-                            @endif
-                            @if(Auth::check() && Auth::user()->role !== 6)
-                                <li><a href="/manajemen-harilibur"><i class="ti-calendar"></i><span>Manajemen
-                                            Libur</span></a></li>
-                            @endif
-                            {{-- <li><a href="settingrole"><i class="fa fa-sign-in"></i><span></span>Role</a></li> --}}
-                            {{-- <li><a href="#"><i class="fa fa-institution (alias)"></i><span></span>Setting
-                                    Organisasi</a></li> --}}
-                            {{-- <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span> Managemen User</span></a></li>      --}}
-                            {{-- <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span
-                               >Managemen User</span></a></li> --}}
-                        </ul>
-                    </li>
+
                     @if(Auth::check() && Auth::user()->role !== 6)
                         {{-- <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-server"></i><span
