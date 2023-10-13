@@ -134,7 +134,7 @@
                                 <li><a href="#"><i class="mdi mdi-cash-usd"></i><span></span>Kompensasi</a></li>
                             </ul>
                         </li>
-                        @if(Auth::check() && Auth::user()->role === 6)
+                        @if(Auth::check() && Auth::user()->role === 1 || Auth::check() && Auth::user()->role === 6)
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i
                                         class="fa fa-usd"></i><span
