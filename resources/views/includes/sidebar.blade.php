@@ -53,7 +53,7 @@
                             </li>
                         </ul>
                     </li>
-                   
+
                     <li><a href="{{ route('karyawan.index') }}" class="waves-effect"><i
                                     class="mdi mdi-account-multiple-plus"></i><span class="text-info panel-title">Data
                                     Karyawan</span>
@@ -223,7 +223,7 @@
                         </ul>
                     </li>
                     @if(Auth::check() && Auth::user()->role !== 6)
-                        <li class="has_sub">
+                        {{-- <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-server"></i><span
                                     class="text-info panel-title">Data Pokok KPI</span><span class="pull-right"><i
                                         class="mdi mdi-plus"></i></span></a>
@@ -233,7 +233,7 @@
                                             class="fa fa-book"></i><span>Indikator</span></a></li>
                                 <li><a href="#"><i class="fa fa-file-text"></i><span></span>Penilaian</a></li>
                             </ul>
-                        </li>
+                        </li> --}}
 
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-gears"></i><span
@@ -244,7 +244,7 @@
                                             class="fa fa-institution (alias)"></i><span></span>Organisasi</a></li>
                                 <li><a href="settinguser" class="waves-effect"><i class="mdi mdi-account-settings-variant"></i><span
                                                 class="text-info panel-title">User</span></a></li>
-                                {{-- <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li> --}}
+                               <!-- <li><a href="/setting-kalender"><i class="ti-calendar"></i><span>Manajemen Libur</span></a></li> -->
                             </ul>
                         </li>
                     @endif
@@ -411,11 +411,11 @@
 
                         </ul>
                     </li>
-                   
+
                 </ul>
             </div>
         @endif --}}
-    
+
 
         <div class="clearfix"></div>
     </div> <!-- end sidebarinner -->
