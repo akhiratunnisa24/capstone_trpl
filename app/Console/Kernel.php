@@ -85,7 +85,9 @@ class Kernel extends ConsoleKernel
 
                     $karyawan = DB::table('karyawan')
                     ->whereNotIn('id', $karyawanSudahAbsen)
-                    ->where('partner',$jadwal->partner)->get();
+                    ->where('partner',$jadwal->partner)
+                    ->where('partner',$jadwal->partner)
+                    ->get();
                     //pengecekan ke data cuti apakah ada atau tidak
 
                     $cuti = Cuti::join('karyawan','cuti.id_karyawan','=','karyawan.id')

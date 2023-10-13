@@ -542,10 +542,10 @@ class ListmesinController extends Controller
             $mesin = Listmesin::find($id);
             $ip = $mesin->ip_mesin;
             $com_key = $mesin->comm_key;
-            $soap_port = $mesin->port;
+            $port = $mesin->port;
             $partner = $mesin->partner;
 
-            $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key,'soap_port' => $soap_port]))->get_instance();
+            $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key,'soap_port' => $port]))->get_instance();
             $con = $tad->is_alive();
             if ($con)
             {
@@ -554,7 +554,7 @@ class ListmesinController extends Controller
                 {
                     $u = $user->get_response(['format' => 'json']);
                     $uArray = json_decode($u, true);
-                    // dd($uArray);
+                    dd($uArray);
 
                     $usermesin = UserMesin::where('partner',$partner)->get();
                     $registeredUsers = [];
