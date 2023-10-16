@@ -791,7 +791,7 @@ Route::post('/list-mesin', [ListmesinController::class, 'store'])->name('listmes
 Route::put('/list-mesin/update/{id}', [ListmesinController::class, 'update'])->name('listmesin.update');
 Route::post('/connect/{id}', [ListmesinController::class, 'connect'])->name('connect');
 Route::post('/list-mesin/tarikdata/{id}', [ListmesinController::class, 'tarikAbsen'])->name('listmesin.tarikdata');
-Route::post('/list-mesin/daftar-user/{id}', [ListmesinController::class, 'getuser'])->name('listmesin.getuser');
+Route::get('/list-mesin/daftar-user/{id}', [ListmesinController::class, 'getuser'])->name('listmesin.getuser');
 
 //setting organisasi
 Route::get('/settingorganisasi', [SettingorganisasiSAController::class, 'index'])->name('organisasiindex');
