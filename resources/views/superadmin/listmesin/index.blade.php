@@ -88,8 +88,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            
-                            <div id="resultContainer"></div>
+                          
                         </div>
                     </div>
                 </div>
@@ -118,9 +117,8 @@
         });
     </script> --}}
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
-            // Tangkap event klik tombol "Tarik Absen"
             $('#getUserButton').click(function() {
                 $.ajax({
                     type: "POST",
@@ -130,17 +128,17 @@
                     },
                     success: function(response) {
                         // Tampilkan respons dari server pada elemen dengan id "resultContainer"
-                        $('#resultContainer').html(response);
+                        $('.modal-body').html(data);
                     },
                     error: function(error) {
                         console.log(error);
                     }
                 });
+                $('#userModal').modal('show');
             });
         });
-    </script> 
-    
-    
+    </script>  --}}
+  
     @if(Session::has('pesan'))
         <script>
             swal("Selamat","{{ Session::get('pesan')}}", 'success', {

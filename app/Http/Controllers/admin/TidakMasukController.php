@@ -30,7 +30,7 @@ class TidakMasukController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         
         if ($role == 1 || $role == 2) {
-            $karyawan = Karyawan::where('partner',Auth::user()->partner)->get();
+            $karyawan = Karyawan::where('partner',Auth::user()->partner)->orderBy('nama','asc')->get();
             $idkaryawan = $request->id_karyawan;
 
             $bulan = $request->query('bulan',Carbon::now()->format('m'));

@@ -536,16 +536,18 @@ class ListmesinController extends Controller
             }
     }
 
-    public function getuser($id)
+    public function getuser(Request $request,$id)
     {
+        $row = Karyawan::where('id',Auth::user()->id_pegawai)->first();
         try {
+           
             $mesin = Listmesin::find($id);
-            $ip = $mesin->ip_mesin;
+            $ip      = $mesin->ip_mesin;
             $com_key = $mesin->comm_key;
-            $soap_port = $mesin->port;
+            $port    = $mesin->port;
             $partner = $mesin->partner;
 
-            $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key,'soap_port' => $soap_port]))->get_instance();
+            $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key,'soap_port' => $port]))->get_instance();
             $con = $tad->is_alive();
             if ($con)
             {
@@ -554,11 +556,10 @@ class ListmesinController extends Controller
                 {
                     $u = $user->get_response(['format' => 'json']);
                     $uArray = json_decode($u, true);
-                    // dd($uArray);
 
                     $usermesin = UserMesin::where('partner',$partner)->get();
                     $registeredUsers = [];
-                    $unregisteredUsers = [];
+                    $unregisteredUser = [];
                     foreach ($uArray['Row'] as $data)
                     {
                         $pin = $data['PIN'];
@@ -578,18 +579,19 @@ class ListmesinController extends Controller
                                 $registeredUsers[] = $data;
                             }
                             else{
-                                $unregisteredUsers[] = $data;
+                                $unregisteredUser[] = $data;
                             }
 
                         }
-
                     }
+                    // dd($unregisteredUser);
                     $registeredUsersJSON = json_encode($registeredUsers);
-                    $unregisteredUsersJSON = json_encode($unregisteredUsers);
-                    return redirect()->back()->with(compact('registeredUsers', 'unregisteredUsers'));
-
+                    $unregisteredUsersJSON = json_encode($unregisteredUser);
+                    // dd($unregisteredUsersJSON);
+                    // return redirect()->back()->with(compact('registeredUsers', 'unregisteredUsers'));
+                    return view('superadmin.listmesin.usermesin', compact('unregisteredUsersJSON', 'row'));
                 } else {
-                    return "Tidak ada data user.\n";
+                    return redirect()->back()->with('pesa','Tidak ada data user');
                 }
             } else {
                 return redirect()->back()->with('pesa','Koneksi ke ' . $ip . ' Gagal');
