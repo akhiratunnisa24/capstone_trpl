@@ -807,6 +807,10 @@ Route::delete('/bank/delete/{id}', [BankController::class, 'destroy'])->name('ba
 //role 7 partner
 Route::post('set/partner/{id}', [SettingController::class, 'setPartner'])->name('set.partner');
 
+Route::get('/phpinfo', function () {
+    phpinfo();
+});
+
 
 
 
