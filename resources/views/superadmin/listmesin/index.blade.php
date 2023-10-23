@@ -27,12 +27,15 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading  clearfix">
-                            <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                data-target="#AddMesin"> Tambah Data List Mesin</a>
+                            <h5> List Mesin <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right"
+                                    data-toggle="modal" data-target="#AddMesin"> Tambah Data List Mesin</a> </h5>
+
                         </div>
                         @include('superadmin.listmesin.add')
                         <div class="panel-body">
-                            <table id="datatable-responsive42" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
+                            <table id="datatable-responsive42"
+                                class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
+                                width="100%">
 
                                 <thead>
                                     <tr>
@@ -51,33 +54,37 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $data->ip_mesin }}</td>
-                                            <td>{{ $data->port}}</td>
+                                            <td>{{ $data->port }}</td>
                                             <td>{{ $data->comm_key }}</td>
-                                            <td>{{ $data->partners->nama_partner}}</td>
+                                            <td>{{ $data->partners->nama_partner }}</td>
 
                                             <td>
                                                 @if ($data->status == 1)
-                                                   <span class="badge badge-success">Sukses</span>
+                                                    <span class="badge badge-success">Sukses</span>
                                                 @else
                                                     <span class="badge badge-danger">Idle</span>
                                                 @endif
                                             </td>
                                             <td class="">
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a href="" class="btn btn-success btn-sm editmesin" data-toggle="modal"
-                                                        data-target="#editMesin{{ $data->id }}"><i class="fa fa-edit"></i>
+                                                    <a href="" class="btn btn-success btn-sm editmesin"
+                                                        data-toggle="modal" data-target="#editMesin{{ $data->id }}"><i
+                                                            class="fa fa-edit"></i>
                                                     </a>
-                                                    <form action="{{ route('listmesin.tarikdata', ['id' => $data->id]) }}" method="POST">
+                                                    <form action="{{ route('listmesin.tarikdata', ['id' => $data->id]) }}"
+                                                        method="POST">
                                                         @csrf
                                                         <button type="submit" class="btn btn-dark btn-sm">GA</button>
                                                     </form>
 
-                                                    <form action="{{ route('listmesin.getuser', ['id' => $data->id]) }}" method="POST">
-                                                        @csrf
-                                                        <button id="getUserButton" type="submit" class="btn btn-warning btn-sm">GU</button>
+                                                    <form action="{{ route('listmesin.getuser', ['id' => $data->id]) }}"
+                                                        method="get">
+                                                        <button id="getUserButton" type="submit"
+                                                            class="btn btn-warning btn-sm">GU</button>
                                                     </form>
-                                                    
-                                                    <form action="{{ route('connect', ['id' => $data->id]) }}" method="POST">
+
+                                                    <form action="{{ route('connect', ['id' => $data->id]) }}"
+                                                        method="POST">
                                                         @csrf
                                                         <button type="submit" class="btn btn-primary btn-sm">CN</button>
                                                     </form>
@@ -88,17 +95,77 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                          
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading  clearfix">
+                            <h5> Get User <a href="/user_mesin" class="btn btn-sm btn-dark fa fa-plus pull-right">
+                                Tambahkan User Mesin</a></h5>
+                        </div>
+                        <div class="panel-body">
+                            <table id="datatable-responsive51"
+                                class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0"
+                                width="100%">
+
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Mesin</th>
+                                        <th>PIN Mesin</th>
+                                        <th>Status</th>
+                                        <th>Partner</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach ($user_mesin as $data)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $data->Name }}</td>
+                                            <td>{{ $data->PIN }}</td>
+                                            <td>
+                                                @if ($data->status == 1)
+                                                    Sudah Terdaftar
+                                                @else
+                                                    <span style="color: red"> Belum Terdaftar</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @php
+                                                    foreach ($partner as $key) {
+                                                        if ($data->partner == $key->id) {
+                                                            echo $key->nama_partner;
+                                                        }
+                                                    }
+                                                @endphp
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
     <!-- jangan lupa menambahkan script js sweet alert di bawah ini  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
@@ -110,7 +177,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             const getUserButton = document.getElementById("getUserButton");
             const userTable = document.getElementById("userTable");
-    
+
             getUserButton.addEventListener("click", function () {
                 userTable.style.display = "block"; // Tampilkan tabel saat tombol diklik
             });
@@ -138,21 +205,21 @@
             });
         });
     </script>  --}}
-  
-    @if(Session::has('pesan'))
+
+    @if (Session::has('pesan'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
-                button:true,
-                button:"OK",
+            swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+                button: true,
+                button: "OK",
             });
         </script>
     @endif
 
-    @if(Session::has('pesa'))
+    @if (Session::has('pesa'))
         <script>
-            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
-                button:true,
-                button:"OK",
+            swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+                button: true,
+                button: "OK",
             });
         </script>
     @endif
