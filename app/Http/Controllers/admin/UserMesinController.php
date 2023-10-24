@@ -76,6 +76,11 @@ class UserMesinController extends Controller
             ]);
             $userMesin->save();
 
+            $getUser = GetUser::where('PIN', $request->noid)->first();
+            if ($getUser) {
+                $getUser->update(['status' => 1]);
+            }
+
             return redirect()->route('user_mesin.index')->with('pesan', 'Data user mesin berhasil ditambahkan.');
         }else
         {
