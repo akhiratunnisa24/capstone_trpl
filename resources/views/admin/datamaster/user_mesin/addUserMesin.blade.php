@@ -35,17 +35,25 @@
                     </div>
                     <div class="form-group">
                         <label for="noid" class="col-form-label">No ID</label>
-                        <input type="text" class="form-control" name="noid" id="noid" autocomplete="off"
-                            placeholder="Masukkan No ID / PIN1" required>
+                        <select class="form-control" name="noid" id="noid" required>
+                            <option value="">Pilih User</option>
+                            @foreach ($user_mesin as $user)
+                                @if ($user->partner == Auth::user()->partner || Auth::user()->role == 5)
+                                    <option value="{{ $user->PIN }}">{{ $user->Name }} (ID: {{ $user->PIN }})</option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="form-group">
+
+
+                    {{-- <div class="form-group">
                         <label for="noid" class="col-form-label">No ID 2</label>
                         <input type="text" class="form-control" name="noid2" id="noid2" value="{{ old('noid2') }}" autocomplete="off"
                             placeholder="Masukkan No ID 2 / PIN2">
                             @error('noid2')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
-                    </div>
+                    </div> --}}
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-danger waves-effect" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-sm btn-success waves-effect waves-light" name="submit" value="save">Simpan</button>
