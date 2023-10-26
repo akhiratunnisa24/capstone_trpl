@@ -10,6 +10,7 @@ use App\Models\Partner;
 use App\Models\Karyawan;
 use App\Models\Listmesin;
 use App\Models\UserMesin;
+use App\Models\GetUser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,8 @@ class ListmesinController extends Controller
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $listmesin = Listmesin::with('partners')->orderBy('id', 'asc')->get();
             $partner = Partner::all();
-            return view('superadmin.listmesin.index', compact('listmesin', 'row','partner'));
+            $user_mesin = GetUser::where('status','0')->orderBy('status', 'asc')->get();
+            return view('superadmin.listmesin.index', compact('listmesin', 'row','partner','user_mesin'));
         } else {
 
             return redirect()->back();
@@ -167,7 +169,7 @@ class ListmesinController extends Controller
                             $matchedUser = $usermesin->where('noid', $pin)->first();
 
                             if (isset($matchedUser))
-                            {                            
+                            {
                                 dd($matchedUser);
                                 $jadwals = Jadwal::where('tanggal', $tanggal)
                                 ->where('partner', Auth::user()->partner)
@@ -184,7 +186,7 @@ class ListmesinController extends Controller
                                                         ->first();
 
                                         if($existingAbsensi)
-                                        { 
+                                        {
                                             if($existingAbsensi->jam_keluar !== $jam || $existingAbsensi->jam_keluar === null)
                                             {
                                                 $jadwal_masuk  = $jadwal->jadwal_masuk;
@@ -230,7 +232,7 @@ class ListmesinController extends Controller
 
 
                                                 if($jam_masuk < $jadwal_masuk && $jam_keluar >= $jadwal_pulang)
-                                                {                                     
+                                                {
                                                     $jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
                                                     $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
 
@@ -333,7 +335,7 @@ class ListmesinController extends Controller
                                                 $absensi->id_departement = $matchedUser->departemen;
                                                 $absensi->jam_kerja     = null;
                                                 $absensi->partner       = $matchedUser->partner;
-                                                
+
                                                 $absensi->save();
                                             }
                                         }
@@ -484,7 +486,7 @@ class ListmesinController extends Controller
 
                                                 if(!Absensi::where('id_karyawan',$matchedUser->id_pegawai)->where('tanggal',$tanggal)->where('partner',$matchedUser->partner)->exists())
                                                 {
-                                                    
+
                                                     $batasmasuk =Carbon::createFromFormat('H:i:s','16:00:00');
 
                                                     $absensi = new Absensi();
@@ -523,83 +525,124 @@ class ListmesinController extends Controller
                                 }
                             }
                         }
-                       
+
                     } else {
                         return "Tidak ada data kehadiran.\n";
                     }
                 }else {
                     return 'Koneksi ke ' . $ip . ' Gagal';
                 }
-            }catch(\Exception $e) 
+            }catch(\Exception $e)
             {
                 return "Error: " . $e->getMessage() . "\n";
             }
     }
 
-    public function getuser(Request $request,$id)
+    public function getuser(Request $request, $id)
     {
-        $row = Karyawan::where('id',Auth::user()->id_pegawai)->first();
+        $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         try {
-           
             $mesin = Listmesin::find($id);
-            $ip      = $mesin->ip_mesin;
+            $ip = $mesin->ip_mesin;
             $com_key = $mesin->comm_key;
-            $port    = $mesin->port;
+            $port = $mesin->port;
             $partner = $mesin->partner;
 
-            $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key,'soap_port' => $port]))->get_instance();
+            $tad = (new TADFactory(['ip' => $ip, 'com_key' => $com_key, 'soap_port' => $port]))->get_instance();
             $con = $tad->is_alive();
-            if ($con)
-            {
+
+            if ($con) {
                 $user = $tad->get_all_user_info();
-                if ($user)
-                {
+
+                if ($user) {
                     $u = $user->get_response(['format' => 'json']);
                     $uArray = json_decode($u, true);
 
-                    $usermesin = UserMesin::where('partner',$partner)->get();
+                    $usermesin = UserMesin::where('partner', $partner)->get();
                     $registeredUsers = [];
-                    $unregisteredUser = [];
-                    foreach ($uArray['Row'] as $data)
-                    {
+                    $unregisteredUsers = [];
+
+                    foreach ($uArray['Row'] as $data) {
                         $pin = $data['PIN'];
                         $pin2 = $data['PIN2'];
                         $nama = $data['Name'];
                         $kartu = $data['Card'];
 
                         $matchedUser = $usermesin->where('noid', $pin)->first();
-                        if (isset($matchedUser))
-                        {
-                            $registeredUsers[] = $data;
-                        }
-                        else{
-                            $matchedUser = $usermesin->where('noid2', $pin2)->first();
-                            if (isset($matchedUser))
-                            {
-                                $registeredUsers[] = $data;
-                            }
-                            else{
-                                $unregisteredUser[] = $data;
-                            }
 
+                        if (isset($matchedUser)) {
+                            // Set the status to 1 for registered users
+                            $data['status'] = 1;
+                            $registeredUsers[] = $data;
+                        } else {
+                            $matchedUser = $usermesin->where('noid2', $pin2)->first();
+
+                            if (isset($matchedUser)) {
+                                // Set the status to 1 for registered users
+                                $data['status'] = 1;
+                                $registeredUsers[] = $data;
+                            } else {
+                                // Set the status to 0 for unregistered users
+                                $data['status'] = 0;
+                                $unregisteredUsers[] = $data;
+                            }
                         }
                     }
-                    // dd($unregisteredUser);
+
+
+                   // Save unregistered users to the "get_user" table with Password as null
+                    foreach ($unregisteredUsers as $userData) {
+                        $pin2 = $userData['PIN2'];
+                        $existingUser = GetUser::where('PIN', $pin2)->where('partner', $partner)->first();
+
+                        if (!$existingUser) {
+                            // Data doesn't exist, create a new entry
+                            GetUser::create([
+                                'PIN' => $pin2,
+                                'Name' => json_encode($userData['Name']),
+                                'Password' => json_encode($userData['Password']),
+                                'Group' => json_encode($userData['Group']),
+                                'Privilege' => json_encode($userData['Password']),
+                                'Card' => $userData['Card'],
+                                'status' => 0,
+                                'partner' => $partner,
+                            ]);
+                        }
+                    }
+
+                    // Save registered users to the "get_user" table with Password as null
+                    foreach ($registeredUsers as $userData) {
+                        $pin2 = $userData['PIN2'];
+                        $existingUser = GetUser::where('PIN', $pin2)->where('partner', $partner)->first();
+
+                        if (!$existingUser) {
+                            // Data doesn't exist, create a new entry
+                            GetUser::create([
+                                'PIN' => $pin2,
+                                'Name' => json_encode($userData['Name']),
+                                'Password' => json_encode($userData['Password']),
+                                'Group' => json_encode($userData['Group']),
+                                'Privilege' => json_encode($userData['Password']),
+                                'Card' => $userData['Card'],
+                                'status' => 1, // Set status to 1 for registered users
+                                'partner' => $partner,
+                            ]);
+                        }
+                    }
+
                     $registeredUsersJSON = json_encode($registeredUsers);
-                    $unregisteredUsersJSON = json_encode($unregisteredUser);
-                    // dd($unregisteredUsersJSON);
-                    // return redirect()->back()->with(compact('registeredUsers', 'unregisteredUsers'));
-                    return view('superadmin.listmesin.usermesin', compact('unregisteredUsersJSON', 'row'));
-                } else {
-                    return redirect()->back()->with('pesa','Tidak ada data user');
+                    $unregisteredUsersJSON = json_encode($unregisteredUsers);
+
+                    return redirect()->back()->with('success', 'Data berhasil diambil.');
+
                 }
-            } else {
-                return redirect()->back()->with('pesa','Koneksi ke ' . $ip . ' Gagal');
             }
         } catch (\Exception $e) {
             return "Error: " . $e->getMessage() . "\n";
         }
     }
+
+
 
 }
 
