@@ -1443,6 +1443,7 @@ class PenggajianController extends Controller
                 ->get();
 
             $detailgaji = DetailPenggajian::where('id_penggajian',$slipgaji->id)->get();
+            // dd($detailgaji);
             return view('admin.penggajian.slipgajifix', compact('slipgaji', 'detailinformasi', 'role', 'pesan', 'kehadiran', 'row', 'detailgaji'))
             ->with('pesan', $pesan);
         }
