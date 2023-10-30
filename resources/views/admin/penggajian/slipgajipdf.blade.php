@@ -162,7 +162,7 @@
         <div class="col-md-6 row-table">
             <table id="absensi">
                <h3>POTONGAN:</h3>
-                @if($detailgaji !== null && $detail->benefit->id_kategori === 5 || $detail->benefit->id_kategori === 6)
+                @if($detailgaji !== null)
                     @foreach($detailgaji as $detail)
                         @if($detail->benefit->id_kategori === 5 && $detail->benefit->dibayarkan_oleh === "Karyarwan" ||  $detail->benefit->id_kategori === 6)
                             <tr>
