@@ -561,40 +561,38 @@ class ListmesinController extends Controller
                     $usermesin = UserMesin::where('partner', $partner)->get();
                     $registeredUsers = [];
                     $unregisteredUsers = [];
-
                     foreach ($uArray['Row'] as $data) {
                         $pin = $data['PIN'];
                         $pin2 = $data['PIN2'];
                         $nama = $data['Name'];
                         $kartu = $data['Card'];
 
-                        $matchedUser = $usermesin->where('noid', $pin)->first();
+                        $matchedUser = $usermesin->where('noid', $pin2)->where('partner',$partner)->first();
 
                         if (isset($matchedUser)) {
                             // Set the status to 1 for registered users
                             $data['status'] = 1;
                             $registeredUsers[] = $data;
                         } else {
-                            $matchedUser = $usermesin->where('noid2', $pin2)->first();
+                            // $matchedUser = $usermesin->where('noid2', $pin2)->first();
 
-                            if (isset($matchedUser)) {
-                                // Set the status to 1 for registered users
-                                $data['status'] = 1;
-                                $registeredUsers[] = $data;
-                            } else {
+                            // if (isset($matchedUser)) {
+                            //     // Set the status to 1 for registered users
+                            //     $data['status'] = 1;
+                            //     $registeredUsers[] = $data;
+                            // } else {
                                 // Set the status to 0 for unregistered users
                                 $data['status'] = 0;
                                 $unregisteredUsers[] = $data;
-                            }
+                            // }
                         }
                     }
-
-
+                    // dd($unregisteredUsers);
                    // Save unregistered users to the "get_user" table with Password as null
                     foreach ($unregisteredUsers as $userData) {
                         $pin2 = $userData['PIN2'];
                         $existingUser = GetUser::where('PIN', $pin2)->where('partner', $partner)->first();
-
+                        // dd($existingUser);
                         if (!$existingUser) {
                             // Data doesn't exist, create a new entry
                             GetUser::create([
