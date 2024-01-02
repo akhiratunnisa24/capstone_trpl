@@ -138,8 +138,11 @@ class AbsensiKaryawanController extends Controller
         $bulan = $request->query('bulan', Carbon::now()->format('m'));
         $tahun = $request->query('tahun', Carbon::now()->format('Y'));
 
-        $bulanSekarang = $bulan ?? Carbon::now()->format('m');
-        $tahunSekarang = $tahun ?? Carbon::now()->format('Y');
+        $bulan      = $request->session()->get('bulan') ?? Carbon::now()->format('m');
+        $tahun      = $request->session()->get('tahun') ?? Carbon::now()->format('Y');
+
+        // $bulanSekarang = $bulan ?? Carbon::now()->format('m');
+        // $tahunSekarang = $tahun ?? Carbon::now()->format('Y');
         // // Jika bulan dan tahun tidak disetel dalam permintaan, gunakan bulan dan tahun saat ini
         // if (!$request->has('bulan') || !$request->has('tahun')) {
         //     $bulan = Carbon::now()->format('m');
@@ -150,16 +153,16 @@ class AbsensiKaryawanController extends Controller
         //     $request->session()->put('tahun', $tahun);
         // }
 
-        $namaBulan = Carbon::createFromDate(null, $bulanSekarang, null)->locale('id')->monthName;
-        $nbulan = $namaBulan . ' ' . $tahunSekarang;
+        $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
+        $nbulan = $namaBulan . ' ' . $tahun;
 
         $data = Absensi::with('karyawans', 'departemens')
             ->where('id_karyawan', $iduser)
-            ->whereMonth('tanggal', $bulanSekarang)
-            ->whereYear('tanggal', $tahunSekarang)
+            ->whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal', $tahun)
             ->get();
 
-        dd($bulanSekarang, $tahunSekarang,$data,$namaBulan,$nbulan);
+        dd($bulan, $tahun,$data,$namaBulan,$nbulan);
         if ($data->isEmpty()) {
             return redirect()->back()->with('pesa', 'Tidak Data Ada.');
         } else {
