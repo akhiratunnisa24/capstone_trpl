@@ -56,7 +56,6 @@ class ShiftController extends Controller
             'partner' => 'required',
         ]);
 
-        return $request->all();
         $nama_shift = $request->nama_shift;
         $jam_masuk = \Carbon\Carbon::parse($request->jam_masuk)->format('H:i:s');
         $jam_pulang = \Carbon\Carbon::parse($request->jam_pulang)->format('H:i:s');
