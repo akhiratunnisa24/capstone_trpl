@@ -165,7 +165,7 @@ class AbsensiKaryawanController extends Controller
             ->whereYear('tanggal', $tahun)
             ->get();
 
-        dd($bulan, $tahun,$data,$namaBulan,$nbulan);
+        // dd($bulan, $tahun,$data,$namaBulan,$nbulan);
         if ($data->isEmpty()) {
             return redirect()->back()->with('pesa', 'Tidak Data Ada.');
         } else {
