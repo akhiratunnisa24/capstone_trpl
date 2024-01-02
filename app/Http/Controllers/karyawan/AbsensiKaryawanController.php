@@ -138,8 +138,8 @@ class AbsensiKaryawanController extends Controller
         $bulan = $request->query('bulan', Carbon::now()->format('m'));
         $tahun = $request->query('tahun', Carbon::now()->format('Y'));
 
-        $bulanSekarang = $request->session()->put('bulan', $bulan) ?? Carbon::now()->format('m');
-        $tahunSekarang = $request->session()->put('tahun', $tahun) ?? Carbon::now()->format('Y');
+        $bulanSekarang = $bulan ?? Carbon::now()->format('m');
+        $tahunSekarang = $tahun ?? Carbon::now()->format('Y');
         // // Jika bulan dan tahun tidak disetel dalam permintaan, gunakan bulan dan tahun saat ini
         // if (!$request->has('bulan') || !$request->has('tahun')) {
         //     $bulan = Carbon::now()->format('m');
@@ -159,7 +159,7 @@ class AbsensiKaryawanController extends Controller
             ->whereYear('tanggal', $tahunSekarang)
             ->get();
 
-        dd($data);
+        dd($bulanSekarang, $tahunSekarang,$data,$namaBulan,$nbulan);
         if ($data->isEmpty()) {
             return redirect()->back()->with('pesa', 'Tidak Data Ada.');
         } else {
