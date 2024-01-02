@@ -31,7 +31,7 @@
                                                     >{{ $data->nama }}
                                                 </option>
                                             @endforeach
-                                        </select> 
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -167,7 +167,7 @@
                             <div class="col-lg-5">
                                 <input type="file" name="file" required>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
@@ -192,7 +192,7 @@
                             <div class="col-lg-5">
                                 <input type="file" name="file" required>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
@@ -225,7 +225,7 @@
                             <div class="col-lg-5">
                                 <input type="file" name="file" required>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
@@ -258,7 +258,7 @@
                             <div class="col-lg-5">
                                 <input type="file" name="file" required>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
@@ -281,7 +281,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                    
+
                             <div class="input-group">
                                 <input type="file" required class="form-control-file" name="uploaded_file" id="uploaded_file">
                             </div>
@@ -296,12 +296,12 @@
             </div>
         </div>
     </div>
-    
+
 
     {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script> --}}
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -330,11 +330,11 @@
         //         icon: 'success',
         //         button: true,
         //         button: "OK",
-               
+
         //     });
         // </script>
     @endif
-    
+
 
 
     @if(Session::has('pesa'))
@@ -351,11 +351,11 @@
         $(function() {
             $('#exportToExcel').prop("hidden", true);
             $('#exportToPdf').prop("hidden", true);
-    
+
             $('#search').on('click', function(a) {
                 $('#exportToExcel').prop("hidden", false);
                 $('#exportToPdf').prop("hidden", false);
             });
         });
-    </script>    
+    </script>
 @endsection

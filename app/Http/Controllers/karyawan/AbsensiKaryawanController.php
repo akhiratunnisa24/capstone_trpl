@@ -40,10 +40,8 @@ class AbsensiKaryawanController extends Controller
         $tahun = $request->query('tahun');
 
         // Jika bulan dan tahun tidak ada dalam permintaan, gunakan bulan dan tahun saat ini
-        if (!$bulan || !$tahun) {
-            $bulanSekarang = Carbon::now()->format('m');
-            $tahunSekarang = Carbon::now()->format('Y');
-        }
+        $bulanSekarang = $bulan ?? Carbon::now()->format('m');
+        $tahunSekarang = $tahun ?? Carbon::now()->format('Y');
 
         // Ambil data absensi hanya untuk bulan dan tahun yang sedang berjalan
         $absensi = Absensi::with('karyawans', 'departemens')
