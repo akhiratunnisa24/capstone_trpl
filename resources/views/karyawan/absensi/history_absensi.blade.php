@@ -84,7 +84,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <a href="/export-absensi" id="exportToExcel" class="btn btn-dark btn-sm fa fa-file-excel-o">  Ekspor Excel</a>
-                        <a href="/export-absensi-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o" target="_blank"> Ekspor PDF</a>
+                        <a href="/export-absensi-pdf"  id="exportToPdf" class="btn btn-dark btn-sm fa fa fa-file-pdf-o"> Ekspor PDF</a>
                     </div>
                     <div class="panel-body m-b-5">
                         <div class="row">
