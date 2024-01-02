@@ -98,6 +98,9 @@ class AbsensiKaryawanController extends Controller
         $bulan  = $request->query('bulan', Carbon::now()->format('m'));
         $tahun  = $request->query('tahun', Carbon::now()->format('Y'));
 
+        $bulan      = $request->session()->get('bulan') ?? Carbon::now()->format('m');
+        $tahun      = $request->session()->get('tahun') ?? Carbon::now()->format('Y');
+
         // Cek apakah bulan dan tahun diatur dalam permintaan
         if (isset($bulan) && isset($tahun)) {
             $data = Absensi::with('karyawans', 'departemens')
