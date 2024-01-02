@@ -138,23 +138,25 @@ class AbsensiKaryawanController extends Controller
         $bulan = $request->query('bulan', Carbon::now()->format('m'));
         $tahun = $request->query('tahun', Carbon::now()->format('Y'));
 
-        // Jika bulan dan tahun tidak disetel dalam permintaan, gunakan bulan dan tahun saat ini
-        if (!$request->has('bulan') || !$request->has('tahun')) {
-            $bulan = Carbon::now()->format('m');
-            $tahun = Carbon::now()->format('Y');
-        } else {
-            // Simpan session jika bulan dan tahun disetel dalam permintaan
-            $request->session()->put('bulan', $bulan);
-            $request->session()->put('tahun', $tahun);
-        }
+        $bulanSekarang = $request->session()->put('bulan', $bulan) ?? Carbon::now()->format('m');
+        $tahunSekarang = $request->session()->put('tahun', $tahun) ?? Carbon::now()->format('Y');
+        // // Jika bulan dan tahun tidak disetel dalam permintaan, gunakan bulan dan tahun saat ini
+        // if (!$request->has('bulan') || !$request->has('tahun')) {
+        //     $bulan = Carbon::now()->format('m');
+        //     $tahun = Carbon::now()->format('Y');
+        // } else {
+        //     // Simpan session jika bulan dan tahun disetel dalam permintaan
+        //     $request->session()->put('bulan', $bulan);
+        //     $request->session()->put('tahun', $tahun);
+        // }
 
-        $namaBulan = Carbon::createFromDate(null, $bulan, null)->locale('id')->monthName;
-        $nbulan = $namaBulan . ' ' . $tahun;
+        $namaBulan = Carbon::createFromDate(null, $bulanSekarang, null)->locale('id')->monthName;
+        $nbulan = $namaBulan . ' ' . $tahunSekarang;
 
         $data = Absensi::with('karyawans', 'departemens')
             ->where('id_karyawan', $iduser)
-            ->whereMonth('tanggal', $bulan)
-            ->whereYear('tanggal', $tahun)
+            ->whereMonth('tanggal', $bulanSekarang)
+            ->whereYear('tanggal', $tahunSekarang)
             ->get();
 
         if ($data->isEmpty()) {
