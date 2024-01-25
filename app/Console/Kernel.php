@@ -372,6 +372,8 @@ class Kernel extends ConsoleKernel
             try
             {
                 $partners = Partner::all();
+                // $partners = Partner::find(2);
+
                 $partnerIds = $partners->pluck('id'); // Ambil semua ID partner
 
                 $mesin = Listmesin::whereIn('partner', $partnerIds)->get();
@@ -397,7 +399,6 @@ class Kernel extends ConsoleKernel
                             // );
                             // $j = $filtered_attendance->get_response(['format' => 'json']);
                             $jArray = json_decode($j, true);
-
                             $usermesin = UserMesin::where('partner',$partner)->get();
 
                             // Loop melalui data $jArray untuk mencocokkan nilai PIN
@@ -423,34 +424,136 @@ class Kernel extends ConsoleKernel
                                             $existingAbsensi = Absensi::where('id_karyawan', $matchedUser->id_pegawai)
                                                             ->where('tanggal', $tanggal)
                                                             ->where('partner', $matchedUser->partner)
-                                                            ->where('jam_masuk','!=',$jam)
                                                             ->first();
+                                            // ->where('jam_keluar','!=',$jam)
 
                                             if($existingAbsensi)
                                             {
-                                                if ($existingAbsensi->jam_keluar !== $jam || $existingAbsensi->jam_keluar === null)
+                                                if($existingAbsensi->jam_masuk !== $jam && $existingAbsensi->jam_masuk !== null)
+                                                {
+                                                    if ($existingAbsensi->jam_keluar !== $jam || $existingAbsensi->jam_keluar === null)
+                                                    {
+                                                        $jadwal_masuk  = $jadwal->jadwal_masuk;
+                                                        $jadwal_pulang = $jadwal->jadwal_pulang;
+                                                        $jam_keluar    = Carbon::createFromFormat('H:i:s', $jam);
+
+                                                        //jika data ada lakukan pembaruan data, karena ada absensi yang terdapat 2 record data
+                                                        $absensi = $existingAbsensi;
+                                                        $absensi->jam_keluar   = $jam_keluar;
+
+                                                        //menghitung jumlah jam kerja
+                                                        $jam_masuk    = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
+                                                        $jadwal_pulang = Carbon::createFromFormat('H:i:s', $jadwal_pulang);
+
+                                                        $jmlhadir           = $jam_keluar->diff($jam_masuk);
+                                                        $total_jmlhadir     = ($jmlhadir->h * 60) + $jmlhadir->i;
+                                                        $absensi->jam_kerja =  $jmlhadir->format('%H:%I:%S');
+
+                                                        if($jam_keluar < $jadwal_pulang)
+                                                        {
+                                                            $plgcpt = $jadwal_pulang->diff($jam_keluar);
+
+                                                            $telatMinutes = ($plgcpt->h * 60) + $plgcpt->i; // Konversi jam ke menit
+
+                                                            if ($telatMinutes > 0)
+                                                            {
+                                                                $plgcpt  = $plgcpt->format('%H:%I:%S');
+                                                            }
+                                                            elseif($jam_keluar < "12:00:00")
+                                                            {
+                                                                $plgcpt = null;
+                                                            }
+                                                            else
+                                                            {
+                                                                $plgcpt = null;
+                                                            }
+                                                        }
+                                                        elseif($jam_keluar > $jadwal_pulang)
+                                                        {
+                                                            $plgcpt     = null;
+                                                        }
+
+                                                        $absensi->plg_cepat = $plgcpt;
+
+                                                        if($jam_masuk <= $jadwal_masuk && $jam_keluar >= $jadwal_pulang)
+                                                        {
+
+                                                            $jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
+                                                            $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
+
+                                                            //lembur
+                                                            $lembur = $jam_keluar->diff($jadwal_pulang);
+                                                            $absensi->lembur = $lembur->format('%H:%I:%S');
+                                                        }
+                                                        elseif($jam_masuk < $jadwal_masuk && $jam_keluar < $jadwal_pulang)
+                                                        {//pulangcepat
+                                                            // $jml_jamkerja = $jam_keluar->diff($jam_masuk);
+                                                            $jml_jamkerja = $jam_keluar->diff($jadwal_masuk);
+                                                            $total_minutes = ($jml_jamkerja->h * 60) + $jml_jamkerja->i;
+
+                                                            if ($total_minutes < 540 || $total_jmlhadir < $total_minutes) { // 9 jam = 540 menit
+                                                                $jml_jamkerja = $absensi->jam_kerja;
+                                                            } else {
+                                                                $jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
+                                                            }
+
+                                                            $absensi->jml_jamkerja = $jml_jamkerja;
+                                                            $absensi->lembur = null;
+                                                        }
+                                                        elseif($jam_masuk > $jadwal_masuk && $jam_keluar < $jadwal_pulang)
+                                                        {
+                                                            // $jml_jamkerja = $jadwal_pulang->diff($jam_masuk);
+                                                            $jml_jamkerja = $jam_keluar->diff($jam_masuk);
+                                                            $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
+
+                                                            $absensi->lembur = null;
+
+                                                        }
+                                                        elseif($jam_masuk > $jadwal_masuk && $jam_keluar > $jadwal_pulang)
+                                                        {
+                                                            $lembur = $jam_keluar->diff($jadwal_pulang);
+                                                            $absensi->lembur = $lembur->format('%H:%I:%S');
+
+                                                            // $jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
+                                                            $jml_jamkerja = $jadwal_pulang->diff($jam_masuk);
+                                                            $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
+
+                                                        }
+
+                                                        $absensi->update();
+                                                    }
+                                                    else if($existingAbsensi->jam_keluar == $jam)
+                                                    {
+                                                        $absensi = $existingAbsensi;
+                                                    }
+                                                }
+                                                elseif($existingAbsensi->jam_masuk == null && $existingAbsensi->jam_keluar !== null && $existingAbsensi->jam_keluar < $jam)
                                                 {
                                                     $jadwal_masuk  = $jadwal->jadwal_masuk;
                                                     $jadwal_pulang = $jadwal->jadwal_pulang;
                                                     $jam_keluar    = Carbon::createFromFormat('H:i:s', $jam);
 
-                                                    //jika data ada lakukan pembaruan data, karena ada absensi yang terdapat 2 record data
-                                                    $absensi = $existingAbsensi;
-                                                    $absensi->jam_keluar   = $jam_keluar;
+                                                    $absensi             = $existingAbsensi;
+                                                    $absensi->jam_masuk  = $existingAbsensi->jam_keluar;
+                                                    $absensi->jam_keluar = $jam;
+
+                                                    Log::info("DATA : " . $existingAbsensi);
 
                                                     //menghitung jumlah jam kerja
-                                                    $jam_masuk    = Carbon::createFromFormat('H:i:s', $existingAbsensi->jam_masuk);
+                                                    $jam_masuk     = Carbon::createFromFormat('H:i:s', $absensi->jam_masuk);
                                                     $jadwal_pulang = Carbon::createFromFormat('H:i:s', $jadwal_pulang);
 
                                                     $jmlhadir           = $jam_keluar->diff($jam_masuk);
                                                     $total_jmlhadir     = ($jmlhadir->h * 60) + $jmlhadir->i;
                                                     $absensi->jam_kerja =  $jmlhadir->format('%H:%I:%S');
 
+                                                    Log::info('jam masuk: '.  $jam_masuk .' jam keluar: '.  $jam_keluar . ' total: ' . $jmlhadir->format('%H:%I:%S') . ' Total berada dikantor: '. $absensi->jam_kerja);
+
                                                     if($jam_keluar < $jadwal_pulang)
                                                     {
                                                         $plgcpt = $jadwal_pulang->diff($jam_keluar);
 
-                                                        $telatMinutes = ($plgcpt->h * 60) + $plgcpt->i; // Konversi jam ke menit
+                                                        $telatMinutes = ($plgcpt->h * 60) + $plgcpt->i;
 
                                                         if ($telatMinutes > 0)
                                                         {
@@ -464,8 +567,7 @@ class Kernel extends ConsoleKernel
                                                         {
                                                             $plgcpt = null;
                                                         }
-                                                    }
-                                                    elseif($jam_keluar > $jadwal_pulang)
+                                                    }elseif($jam_keluar > $jadwal_pulang)
                                                     {
                                                         $plgcpt     = null;
                                                     }
@@ -481,8 +583,10 @@ class Kernel extends ConsoleKernel
                                                         //lembur
                                                         $lembur = $jam_keluar->diff($jadwal_pulang);
                                                         $absensi->lembur = $lembur->format('%H:%I:%S');
+                                                        Log::info('JAM KERJA : ' . $absensi->jml_jamkerja);
+
                                                     }
-                                                    elseif($jam_masuk < $jadwal_masuk && $jam_keluar < $jadwal_pulang)
+                                                    elseif($jam_masuk <= $jadwal_masuk && $jam_keluar <= $jadwal_pulang)
                                                     {//pulangcepat
                                                         // $jml_jamkerja = $jam_keluar->diff($jam_masuk);
                                                         $jml_jamkerja = $jam_keluar->diff($jadwal_masuk);
@@ -496,6 +600,8 @@ class Kernel extends ConsoleKernel
 
                                                         $absensi->jml_jamkerja = $jml_jamkerja;
                                                         $absensi->lembur = null;
+
+
                                                     }
                                                     elseif($jam_masuk > $jadwal_masuk && $jam_keluar < $jadwal_pulang)
                                                     {
@@ -514,14 +620,12 @@ class Kernel extends ConsoleKernel
                                                         // $jml_jamkerja = $jadwal_pulang->diff($jadwal_masuk);
                                                         $jml_jamkerja = $jadwal_pulang->diff($jam_masuk);
                                                         $absensi->jml_jamkerja = $jml_jamkerja->format('%H:%I:%S');
-
+                                                        Log::info('DATA : '. $existingAbsensi . "Perbaikian : " . $absensi);
                                                     }
 
                                                     $absensi->update();
-                                                }
-                                                else if($existingAbsensi->jam_keluar === $jam)
-                                                {
-                                                    $absensi = $existingAbsensi;
+
+                                                    Log::info("DATA UPDATE ABSENSI: " . $absensi);
                                                 }
                                             }
                                             else
@@ -778,7 +882,7 @@ class Kernel extends ConsoleKernel
                 }
 
             } catch (\Exception $e) {
-                return "Error: " . $e->getMessage() . "\n";
+                Log::info("Error: " . $e->getMessage());
             }
         })->everyMinute();
 

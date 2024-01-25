@@ -1724,9 +1724,7 @@
     <script src="assets/js/jquery.min.js"></script>
 
     <!--Morris Chart-->
-    <script src="assets/plugins/morris/morris.min.js"></script>
     <script src="assets/plugins/raphael/raphael-min.js"></script>
-    <script src="assets/pages/morris.init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
