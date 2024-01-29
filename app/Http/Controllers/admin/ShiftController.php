@@ -49,7 +49,7 @@ class ShiftController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'nama_shift' => 'required',
             'jam_masuk' => 'required',
             'jam_pulang' => 'required',

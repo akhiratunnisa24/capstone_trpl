@@ -1,6 +1,8 @@
 @extends('layouts.default')
 @section('content')
     <!-- Header -->
+    <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+        <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     <div class="row">
         <div class="col-sm-12">
 

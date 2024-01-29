@@ -27,8 +27,9 @@ class JadwalkerjaController extends Controller
 
         if ($role == 1 || $role == 2)
         {
+            $year = Carbon::now()->year;
             $row    = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $jadwal = Jadwal::where('partner',Auth::user()->partner)->get();
+            $jadwal = Jadwal::where('partner',Auth::user()->partner)->whereYear('tanggal',$year)->get();
             $karyawan= Karyawan::where('partner',Auth::user()->partner)->get();
             $shift= Shift::where('partner',Auth::user()->partner)->get();
             // dd($jadwal);

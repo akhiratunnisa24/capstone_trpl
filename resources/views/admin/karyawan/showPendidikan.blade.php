@@ -1,8 +1,10 @@
 @extends('layouts.default')
 @section('content')
+   <head>
+        {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
+        <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+        <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
 
-    <head>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <style>
             input::-webkit-outer-spin-button,
             input::-webkit-inner-spin-button {
@@ -248,19 +250,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
-        
-        @if (Session::has('pesan'))
+
+        @if (Session::has('success'))
             <script>
-                swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+                swal("Selamat", "{{ Session::get('success') }}", 'success', {
                     button: true,
                     button: "OK",
                 });
             </script>
         @endif
 
-        @if (Session::has('pesa'))
+        @if (Session::has('error'))
             <script>
-                swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+                swal("Mohon Maaf", "{{ Session::get('error') }}", 'error', {
                     button: true,
                     button: "OK",
                 });

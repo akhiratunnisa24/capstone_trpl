@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title text-center" id="myLargeModalLabel">Edit Data Keluarga & Tanggungan</h4>
+                <h4 class="modal-title text-center" id="myLargeModalLabel">Edit Data Keluarga</h4>
             </div>
             <div class="modal-body">
                 <form id="" action="/updateKeluarga/{{$kel->id}}" method="POST" enctype="multipart/form-data">
@@ -52,7 +52,7 @@
                                 <div class="mb-3">
                                     <label>Tanggal Lahir </label>
                                     <input type="date" name="tgllahirKeluarga"
-                                    autocomplete="off" class="form-control" placeholder="yyyy/mm/dd" 
+                                    autocomplete="off" class="form-control" placeholder="yyyy/mm/dd"
                                     value="{{ $kel->tgllahir }}">
                                 </div>
                             </div>
@@ -82,11 +82,11 @@
                                     <label>Pekerjaan</label>
                                     <input type="text" name="pekerjaanKeluarga" autocomplete="off" class="form-control" value="{{$kel->pekerjaan}}">
                                 </div>
-                            </div> 
-                            
+                            </div>
+
                         </div>
                     </div>
-            
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-sm btn-success">Update</button>

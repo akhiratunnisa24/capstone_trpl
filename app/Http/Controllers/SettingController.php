@@ -43,7 +43,7 @@ class SettingController extends Controller
             $partner = Partner::all();
 
             return view('admin.datamaster.user.settingUser', compact('user','row','partner','role'));
-        }elseif(($role == 5)||$role == 7)
+        }elseif($role == 5 ||$role == 7)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $user = User::all();
@@ -63,6 +63,7 @@ class SettingController extends Controller
     public function editUser(Request $request, $id)
     {
         $role = Auth::user()->role;
+
         if ($role == 5 || $role == 7)
         {
             $user = User::all();
@@ -74,12 +75,12 @@ class SettingController extends Controller
 
                 ]
             );
-            return back()->with("status", "Password changed successfully!");
+            return redirect('settinguser')->with('status', 'Password changed successfully!');
         }elseif($role == 1 || $role == 2 || $role == 7)
         {
             $user = User::find($id);
 
-            User::where('id', $id)->update(
+            $data = User::where('id', $id)->update(
                 [
                     'partner'=> $user->partner,
                     'role' => $request->post('role'),
@@ -87,15 +88,15 @@ class SettingController extends Controller
 
                 ]
             );
-            return back()->with("status", "Password changed successfully!");
+
+            return redirect('settinguser')->with('status', 'Password changed successfully!');
         }
         else {
 
                 return redirect()->back();
         }
-
-
     }
+
     public function hapususer($id)
     {
         $user = User::find($id);

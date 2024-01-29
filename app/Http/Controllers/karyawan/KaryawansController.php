@@ -493,7 +493,7 @@ class KaryawansController extends Controller
         $pendidikan[$index]['nama_lembaga']         = $request->namaLembaga;
         $pendidikan[$index]['kota_pformal']         = $request->kotaPendidikanFormal;
         $pendidikan[$index]['jurusan']              = $request->jurusan;
-    
+
         // $pendidikan[$index]['tahun_masuk_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d');
         // $pendidikan[$index]['tahun_lulus_formal'] = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d');
         $pendidikan[$index]['tahun_masuk_formal'] = $request->tahun_masukFormal ? $request->tahun_masukFormal : null;
@@ -513,7 +513,7 @@ class KaryawansController extends Controller
         return redirect()->back();
     }
 
-    //delete data pendidikan pada session 
+    //delete data pendidikan pada session
     public function deletePendidikan(Request $request)
     {
         $key = $request->input('key');
@@ -650,9 +650,9 @@ class KaryawansController extends Controller
             'nama_organisasi' => $request->namaOrganisasi,
             'alamat'          => $request->alamatOrganisasi,
             'tgl_mulai'       => $request->tglmulai,
-            'tgl_selesai'     => $request->tglselesai,    
+            'tgl_selesai'     => $request->tglselesai,
             // 'tgl_mulai'     => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglmulai)->format('Y-m-d'),
-            // 'tgl_selesai'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d'),    
+            // 'tgl_selesai'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglselesai)->format('Y-m-d'),
             'jabatan'     => $request->jabatanRorganisasi,
             'no_sk'   => $request->noSKorganisasi,
         ];
@@ -736,7 +736,7 @@ class KaryawansController extends Controller
             'alamat'        => $request->alamatInstansi,
             'no_surat'      => $request->noSurat,
             // 'tanggal_surat' => $request->tgl_surat,
-            'tanggal_surat'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d'),    
+            'tanggal_surat'   => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d'),
 
         ];
 
@@ -817,9 +817,9 @@ class KaryawansController extends Controller
         //     // Tambahkan kode untuk menampilkan alert di sini
         //     echo '<script>alert("Data sudah ada di database!");</script>';
         // }
-       
+
         //Jika NIP tidak ditemukan, simpan data ke database
-        if ($request->session()->has('karyawan')) 
+        if ($request->session()->has('karyawan'))
         {
             $karyawan = $request->session()->get('karyawan');
 
@@ -828,14 +828,14 @@ class KaryawansController extends Controller
                 ->orWhere('nik', $karyawan->nik)
                 ->first();
 
-            if ($existingKaryawan) 
+            if ($existingKaryawan)
             {
                 return redirect()->back()->with('pesa', 'Email atau NIK sudah terdaftar pada sistem');
             }
-            
+
             $karyawan->save();
-            $idKaryawan = $karyawan->id; 
-            $namakaryawan = $karyawan->nama; 
+            $idKaryawan = $karyawan->id;
+            $namakaryawan = $karyawan->nama;
         }
 
         if ($request->session()->has('datakeluarga')) {
@@ -847,7 +847,7 @@ class KaryawansController extends Controller
             }, $datakeluarga);
             $datakeluargaModel = Keluarga::insert($datakeluargaMerged);
         }
-        
+
         if ($request->session()->has('kontakdarurat')) {
 
             $kontakdarurat = json_decode($request->session()->get('kontakdarurat', []), true);
@@ -935,7 +935,7 @@ class KaryawansController extends Controller
             'updated_at'         => new \DateTime(),
         );
         Keluarga::insert($data_keluarga);
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->with('success','Data Keluarga berhasil ditambahkan');
     }
 
     //store kontak darurat ketika show data
@@ -952,7 +952,7 @@ class KaryawansController extends Controller
             'updated_at' => new \DateTime(),
         );
         Kdarurat::insert($data_kdarurat);
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->with('success','Data Kontak Darurat berhasil ditambahkan');
     }
 
     //store pendidikan setelah show data karyawan
@@ -960,51 +960,66 @@ class KaryawansController extends Controller
     {
         $idk = Karyawan::findorFail($id);
         $nilaiNull = null;
+
         if ($request->tingkat_pendidikan) {
-            $r_pendidikan = array(
-                'id_pegawai' => $idk->id,
-                'tingkat' => $request->post('tingkat_pendidikan'),
-                'nama_sekolah' => $request->post('nama_sekolah'),
-                'kota_pformal' => $request->post('kotaPendidikanFormal'),
-                'jurusan' => $request->post('jurusan'),
-                'tahun_masuk_formal' => $request->post('tahun_masukFormal'),
-                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
-                'ijazah_formal' => $request->post('noijazahPformal'),
+            $cek = Rpendidikan::where('id_pegawai',$idk->id)->where('tingkat',$request->tingkat_pendidikan)->first();
+            if(!$cek)
+            {
+                $r_pendidikan = array(
+                    'id_pegawai' => $idk->id,
+                    'tingkat' => $request->post('tingkat_pendidikan'),
+                    'nama_sekolah' => $request->post('nama_sekolah'),
+                    'kota_pformal' => $request->post('kotaPendidikanFormal'),
+                    'jurusan' => $request->post('jurusan'),
+                    'tahun_masuk_formal' => $request->post('tahun_masukFormal'),
+                    'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
+                    'ijazah_formal' => $request->post('noijazahPformal'),
 
-                'jenis_pendidikan' => null,
-                'kota_pnonformal' => null,
-                'tahun_lulus_nonformal' => null,
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
+                    'jenis_pendidikan' => null,
+                    'kota_pnonformal' => null,
+                    'tahun_lulus_nonformal' => null,
+                    'created_at' => new \DateTime(),
+                    'updated_at' => new \DateTime(),
+                );
 
-            Rpendidikan::insert($r_pendidikan);
-            return redirect()->back()->withInput();
+                Rpendidikan::insert($r_pendidikan);
+                return redirect()->back()->withInput()->with('success','Data Pendidikan Formal '. $idk->nama . ' Berhasil ditambahkan');
+            }else{
+                return redirect()->back()->withInput()->with('error','Data Pendidikan Formal sudah ada');
+            }
+
         } else {
-            $r_pendidikan = array(
-                'id_pegawai' => $idk->id,
-                'tingkat' => null,
-                'nama_sekolah' => null,
-                'kota_pformal' => null,
-                'jurusan' => null,
-                'tahun_lulus_formal' => null,
+            $cek = Rpendidikan::where('id_pegawai',$idk->id)->where('jenis_pendidikan',$request->jenis_pendidikan)->where('tahun_masuk_nonformal',$request->tahun_masukNonFormal)->first();
+            if(!$cek)
+            {
+                $r_pendidikan = array(
+                    'id_pegawai' => $idk->id,
+                    'tingkat' => null,
+                    'nama_sekolah' => null,
+                    'kota_pformal' => null,
+                    'jurusan' => null,
+                    'tahun_lulus_formal' => null,
 
 
-                'nama_lembaga' => $request->post('namaLembaga'),
-                'jenis_pendidikan' => $request->post('jenis_pendidikan'),
-                'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-                'tahun_masuk_nonformal'=> $request->tahun_masukNonFormal,
-                'tahun_lulus_nonformal'=> $request->tahun_lulusNonFormal,
-                // 'tahun_masuk_nonformal' => $request->tahun_masukNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d') : $nilaiNull,
-                // 'tahun_lulus_nonformal' => $request->tahun_lulusNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d') : $nilaiNull,
+                    'nama_lembaga' => $request->post('namaLembaga'),
+                    'jenis_pendidikan' => $request->post('jenis_pendidikan'),
+                    'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
+                    'tahun_masuk_nonformal'=> $request->tahun_masukNonFormal,
+                    'tahun_lulus_nonformal'=> $request->tahun_lulusNonFormal,
+                    // 'tahun_masuk_nonformal' => $request->tahun_masukNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d') : $nilaiNull,
+                    // 'tahun_lulus_nonformal' => $request->tahun_lulusNonFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusNonFormal)->format('Y-m-d') : $nilaiNull,
 
-                'ijazah_nonformal' => $request->post('noijazahPnonformal'),
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
+                    'ijazah_nonformal' => $request->post('noijazahPnonformal'),
+                    'created_at' => new \DateTime(),
+                    'updated_at' => new \DateTime(),
+                );
 
-            Rpendidikan::insert($r_pendidikan);
-            return redirect()->back()->withInput();
+                Rpendidikan::insert($r_pendidikan);
+                return redirect()->back()->withInput()->with('success','Data Pendidikan Non Formal '. $idk->nama . ' Berhasil ditambahkan');
+            }
+            else{
+                return redirect()->back()->withInput()->with('error','Data Pendidikan sudah ada');
+            }
         }
     }
 
@@ -1034,7 +1049,7 @@ class KaryawansController extends Controller
             'updated_at' => new \DateTime(),
         );
         Rpekerjaan::insert($r_pekerjaan);
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->with('success','Data Pekerjaan berhasil ditambahkan');
     }
 
     //store Organisasi ketika show data
@@ -1059,7 +1074,7 @@ class KaryawansController extends Controller
         );
 
         Rorganisasi::insert($r_organisasi);
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->with('success','Data Organisasi berhasil ditambahkan');
     }
 
     public function storesprestasi(Request $request, $id)
@@ -1079,7 +1094,7 @@ class KaryawansController extends Controller
         );
 
         Rprestasi::insert($r_prestasi);
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->with('success','Data Prestasi berhasil ditambahkan');
     }
 
     //===================================================================================
@@ -1184,14 +1199,14 @@ class KaryawansController extends Controller
             'nama' => $request->namaKeluarga,
             'hubungan' => $request->hubungankeluarga,
             'jenis_kelamin' => $request->jenis_kelaminKeluarga,
-            'tgllahir' => $request->tgllahirKeluarga,   
+            'tgllahir' => $request->tgllahirKeluarga,
             // 'tgllahir' => $request->tgllahirKeluarga ? \Carbon\Carbon::parse($request->tgllahirKeluarga)->format('Y-m-d') : $nilaiNull,
 
             'tempatlahir' => $request->tempatlahirKeluarga,
             'pendidikan_terakhir' => $request->pendidikan_terakhirKeluarga,
             'pekerjaan' => $request->pekerjaanKeluarga,
         ]);
-        return redirect()->back();
+        return redirect()->back()->with('success','Data Keluarga berhasil di Update');
     }
 
     //update data kontak darurat
@@ -1205,7 +1220,7 @@ class KaryawansController extends Controller
             'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data Kontak Darurat berhasil di Update');
     }
 
     //update data pendidikan
@@ -1238,7 +1253,7 @@ class KaryawansController extends Controller
                 'updated_at' => \Carbon\Carbon::now()->format('Y-m-d'),
             ]);
         }
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Data Pendidikan berhasil di Update.');
     }
 
     //update data pekerjaan
@@ -1263,7 +1278,7 @@ class KaryawansController extends Controller
 
         $idPekerjaan = $request->post('id_pekerjaan');
         Rpekerjaan::where('id', $idPekerjaan)->update($r_pekerjaan);
-        return redirect()->back();
+        return redirect()->back()->with('success','Data Pekerjaan berhasil diUpdate');
     }
 
     //hapus data pekerjaan
@@ -1290,10 +1305,10 @@ class KaryawansController extends Controller
 
         $idOrganisasi = $request->post('id_organisasi');
         Rorganisasi::where('id', $idOrganisasi)->update($r_organisasi);
-        return redirect()->back();
+        return redirect()->back()->with('success','Data Organisasi berhasil diUpdate');
     }
 
-    //update data pekerjaan
+    //update data prestasi
     public function updatePrestasi(Request $request, $id)
     {
         $nilaiNull = null;
@@ -1305,7 +1320,7 @@ class KaryawansController extends Controller
             'no_surat' => $request->post('noSurat'),
             // 'tanggal_surat' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d'),
             'tanggal_surat' => $request->tgl_surat ? \Carbon\Carbon::parse($request->tgl_surat)->format('Y-m-d') : $nilaiNull,
-        
+
             // 'tanggal_surat' => $request->tgl_surat ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d') : $nilaiNull,
 
             'updated_at' => new \DateTime(),
@@ -1314,6 +1329,6 @@ class KaryawansController extends Controller
 
         $idOrganisasi = $request->post('id_organisasi');
         Rprestasi::where('id', $idOrganisasi)->update($r_prestasi);
-        return redirect()->back();
+        return redirect()->back()->with('success','Data Prestasi berhasil di Update');
     }
 }

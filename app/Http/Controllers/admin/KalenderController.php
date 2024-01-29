@@ -16,7 +16,7 @@ class KalenderController extends Controller
     public function index()
     {
         $role = Auth::user()->role;
-        if($role != 5) 
+        if($role != 5)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $id_pegawai = Auth::user()->id_pegawai;
@@ -28,10 +28,10 @@ class KalenderController extends Controller
                     'title' => $harilibur->keterangan,
                     'type' => $harilibur->tipe,
                 ];
-               
+
             }
             // return $events;
-           
+
             return view('admin.kalender.index',compact('row','id_pegawai','getHarilibur','role'));
         }else{
             return redirect()->back();
@@ -113,7 +113,7 @@ class KalenderController extends Controller
         $kegiatan->tglmulai = $request->input('tgl');
         $kegiatan->tglselesai = $request->input('end');
         $kegiatan->update();
-        
+
         return redirect()->route('kegiatan.index')->with('success', 'Data kegiatan berhasil diupdate');
     }
 
@@ -127,10 +127,11 @@ class KalenderController extends Controller
     public function setting()
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2 || $role == 5) 
+        if ($role == 1 || $role == 2 || $role == 5)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-            $settingharilibur = SettingHarilibur::all();
+            $year = Carbon::now()->year;
+            $settingharilibur = SettingHarilibur::whereYear('tanggal',$year)->get();
             return view('admin.kalender.setting', compact('settingharilibur','row'));
 
         }else{
@@ -192,7 +193,7 @@ class KalenderController extends Controller
 
         DB::table('setting_harilibur')->where('id',$id)->update($settingharilibur);
         return redirect('/manajemen-harilibur');
-        
+
     }
 
     public function destroy($id)
