@@ -1368,11 +1368,12 @@
                                                     $jmlcuti = $k->jmlhakcuti;
                                                     $durasi = $k->durasi;
                                                     $sisa = $jmlcuti - $durasi;
+                                                    $tahun  = \Carbon\Carbon::now()->year;
                                                 @endphp
                                                 <tr>
                                                 <tr>
                                                     <td>1</td>
-                                                    <td>Jumlah Hak Cuti Tahun 2023</td>
+                                                    <td>Jumlah Hak Cuti Tahun {{$tahun}}</td>
                                                     <td>{{ $k->jmlhakcuti }}</td>
                                                 </tr>
                                                 <tr>

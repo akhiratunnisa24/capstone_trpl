@@ -39,7 +39,14 @@
                                     </tr>
                                     <tr>
                                         <td scope="row">Divisi / Departemen</td>
-                                        <td id="a">{{$data->departemens->nama_departemen}}</td>
+                                        <td id="a">
+                                            @if($data->departemens)
+                                                {{$data->departemens->nama_departemen}}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+
                                     </tr>
                                     <tr>
                                         <td scope="row">Kategori Cuti</td>
@@ -54,7 +61,7 @@
                                             <td scope="row">Jatuh Tempo Pengambilan Hak Cuti</td>
                                             <td id="a">{{ \Carbon\Carbon::parse($data->jatuhtempo_awal)->format('d/m/Y') }} s.d {{ \Carbon\Carbon::parse($data->jatuhtempo_akhir)->format('d/m/Y') }}</td>
                                         </tr>
-                                    
+
                                         <tr>
                                             <td scope="row">Jumlah Hak Cuti {{$year}}</td>
                                             <td id="a">{{$data->jmlhakcuti}}</td>

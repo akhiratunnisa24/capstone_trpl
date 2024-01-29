@@ -264,7 +264,7 @@ class karyawanController extends Controller
             ->select('email as email','nama as nama','nama_jabatan as jabatan')
             ->first();
         $partner = $emailkry->partner;
-            
+
         $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
 
         if($hrdmanager !== null){
@@ -2928,7 +2928,7 @@ class karyawanController extends Controller
             //     Izin::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
             // }
 
-            return redirect()->back();
+            return redirect()->back()->with('success','Data '. $karyawan->nama . ' Berhasil di Update');
         } else {
 
             $data = array(
@@ -2991,7 +2991,7 @@ class karyawanController extends Controller
             //     Izin::where('id_karyawan', $id)->update(['jabatan' => $namaJabatanBaru]);
             // }
 
-            return redirect()->back();
+            return redirect()->back()->with('success','Data '. $karyawan->nama . ' Berhasil di Update');
         }
     }
 
@@ -3030,55 +3030,67 @@ class karyawanController extends Controller
         $nilaiNull = null;
 
         if ($request->tingkat_pendidikan) {
-            $r_pendidikan = array(
-                'id_pegawai' => $idk->id,
-                'tingkat' => $request->post('tingkat_pendidikan'),
-                'nama_sekolah' => $request->post('nama_sekolah'),
-                'kota_pformal' => $request->post('kotaPendidikanFormal'),
-                'jurusan' => $request->post('jurusan'),
-                'tahun_masuk_formal' =>  $request->post('tahun_masukFormal'),
-                'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
-                // 'tahun_masuk_formal' => $request->tahun_masukFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : $nilaiNull,
-                // 'tahun_lulus_formal' => $request->tahun_lulusFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : $nilaiNull,
+            $cek = Rpendidikan::where('id_pegawai',$idk->id)->where('tingkat',$request->tingkat_pendidikan)->first();
+            if(!$cek)
+            {
+                $r_pendidikan = array(
+                    'id_pegawai' => $idk->id,
+                    'tingkat' => $request->post('tingkat_pendidikan'),
+                    'nama_sekolah' => $request->post('nama_sekolah'),
+                    'kota_pformal' => $request->post('kotaPendidikanFormal'),
+                    'jurusan' => $request->post('jurusan'),
+                    'tahun_masuk_formal' =>  $request->post('tahun_masukFormal'),
+                    'tahun_lulus_formal' => $request->post('tahun_lulusFormal'),
+                    // 'tahun_masuk_formal' => $request->tahun_masukFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukFormal)->format('Y-m-d') : $nilaiNull,
+                    // 'tahun_lulus_formal' => $request->tahun_lulusFormal ? \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_lulusFormal)->format('Y-m-d') : $nilaiNull,
 
 
-                'ijazah_formal' => $request->post('noijazahPformal'),
-                'jenis_pendidikan' => null,
-                'kota_pnonformal' => null,
-                'tahun_lulus_nonformal' => null,
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
+                    'ijazah_formal' => $request->post('noijazahPformal'),
+                    'jenis_pendidikan' => null,
+                    'kota_pnonformal' => null,
+                    'tahun_lulus_nonformal' => null,
+                    'created_at' => new \DateTime(),
+                    'updated_at' => new \DateTime(),
+                );
 
-            Rpendidikan::insert($r_pendidikan);
-            return redirect()->back()->withInput();
+                Rpendidikan::insert($r_pendidikan);
+                return redirect()->back()->withInput()->with('success','Data Pendidikan Formal untuk  '. $idk->nama . ' Berhasil Ditambahkan');
+            }else{
+                return redirect()->back()->with('error','Data Pendidikan sudah ada');
+            }
         } else {
-            $r_pendidikan = array(
-                'id_pegawai' => $idk->id,
-                'tingkat' => null,
-                'nama_sekolah' => null,
-                'kota_pformal' => null,
-                'jurusan' => null,
-                'tahun_lulus_formal' => null,
+            $cek = Rpendidikan::where('id_pegawai',$idk->id)->where('jenis_pendidikan',$request->jenis_pendidikan)->where('tahun_masuk_nonformal',$request->tahun_masukNonFormal)->first();
+            if(!$cek)
+            {
+                $r_pendidikan = array(
+                    'id_pegawai' => $idk->id,
+                    'tingkat' => null,
+                    'nama_sekolah' => null,
+                    'kota_pformal' => null,
+                    'jurusan' => null,
+                    'tahun_lulus_formal' => null,
 
 
-                'nama_lembaga' => $request->post('namaLembaga'),
-                'jenis_pendidikan' => $request->post('jenis_pendidikan'),
-                'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
-                'tahun_masuk_nonformal' => $request->post('tahun_masukNonFormal'),
-                'tahun_lulus_nonformal' => $request->post('tahun_lulusNonFormal'),
+                    'nama_lembaga' => $request->post('namaLembaga'),
+                    'jenis_pendidikan' => $request->post('jenis_pendidikan'),
+                    'kota_pnonformal' => $request->post('kotaPendidikanNonFormal'),
+                    'tahun_masuk_nonformal' => $request->post('tahun_masukNonFormal'),
+                    'tahun_lulus_nonformal' => $request->post('tahun_lulusNonFormal'),
 
-                // 'tahun_masuk_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d'),
-                // 'tahun_lulus_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusNonFormal'))->format('Y-m-d'),
+                    // 'tahun_masuk_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tahun_masukNonFormal)->format('Y-m-d'),
+                    // 'tahun_lulus_nonformal' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->post('tahun_lulusNonFormal'))->format('Y-m-d'),
 
-                // 'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
-                'ijazah_nonformal' => $request->post('noijazahPnonformal'),
-                'created_at' => new \DateTime(),
-                'updated_at' => new \DateTime(),
-            );
+                    // 'tahun_lulus_nonformal' => $request->post('tahunLulusNonFormal'),
+                    'ijazah_nonformal' => $request->post('noijazahPnonformal'),
+                    'created_at' => new \DateTime(),
+                    'updated_at' => new \DateTime(),
+                );
 
-            Rpendidikan::insert($r_pendidikan);
-            return redirect()->back()->withInput();
+                Rpendidikan::insert($r_pendidikan);
+                return redirect()->back()->withInput()->with('success','Data Pendidikan untuk  '. $idk->nama . ' Berhasil Ditambahkan');
+            }else{
+                return redirect()->back()->with('error','Data Pendidikan sudah ada');
+            }
         }
     }
 
@@ -3161,7 +3173,7 @@ class karyawanController extends Controller
     {
         Rpekerjaan::destroy($id);
 
-        return redirect()->back();
+        return redirect()->back()->with('pesan','Data sudah dihapus');
     }
 
     public function showorganisasi($id)
@@ -4059,7 +4071,7 @@ class karyawanController extends Controller
                     ->where('status_karyawan',$karyawan->status_karyawan)
                     ->where('level_jabatan',$level->id)
                     ->where('status',1)->first();
-                    
+
                 if ($informasigaji === null)
                 {
                     $informasigaji = null;

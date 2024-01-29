@@ -2,9 +2,78 @@
 @section('content')
     <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
     <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+    <style>
+        .card {
+          border-radius: 20px;
+          /* box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1); */
+        }
 
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #d1d1d1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            border-radius: 10px;
+        }
+
+        .popup-content {
+            text-align: left;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .image-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popover.tour {
+            max-width: 500px;
+            background-color: rgb(96, 96, 211);
+        }
+
+        .popover-body {
+            /* Gaya lainnya sesuai kebutuhan Anda */
+        }
+
+      </style>
 
     <!-- Header -->
+    @if($status == 0)
+    <div class="overlay" id="overlay"></div>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <div class="image-container text-center mb-3">
+            </div>
+            <h4 class="text-center text-danger">
+                IMPORTANT!
+            </h4>
+            <h6 class="mt-5 text-center" style="margin-left: 70px; margin-right: 70px;">Pastikan  Anda sudah <b style="color:#4D96FF">UPDATED</b>
+                @if($status == 0) Jabatan Karyawan,@endif
+                Sebelum Menyeting Alokasi Cuti untuk Karyawan</h6>
+
+            <p class="mt-5 text-center">
+                @if($status == 0)
+                    <a href="{{url('karyawan')}}" class="btn btn-primary btn-md mr-3">UPDATE JABATAN</a>
+                @endif
+            </p>
+        </div>
+    </div>
+
+    @endif
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
@@ -109,6 +178,29 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
+        <script>
+            function openPopup() {
+                var popup = document.getElementById("popup");
+                if (popup) {
+                    popup.style.display = "block";
+                } else {
+                    console.error("Element with ID 'popup' not found.");
+                }
+            }
+
+            function closePopup() {
+                var popup = document.getElementById("popup");
+                if (popup) {
+                    popup.style.display = "none";
+                } else {
+                    console.error("Element with ID 'popup' not found.");
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                openPopup();
+            });
+        </script>
         @if (Session::has('pesan'))
             <script>
                 swal("Selamat", "{{ Session::get('pesan') }}", 'success', {

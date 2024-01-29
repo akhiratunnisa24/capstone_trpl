@@ -95,8 +95,8 @@
                             <li><a href="/riwayat-absensi"><i class="fa fa-history"></i><span>Riwayat
                                         Absensi</span></a></li>
                             <li><a href="/alokasi-cuti"><i class="mdi mdi-walk"></i><span>Alokasi Cuti</span></a> </li>
-                            <li><a href="/cuti-karyawan"><i class="mdi mdi-walk"></i><span>Permohonan Cuti &
-                                        Sakit/Ijin</span></a>
+                            <li><a href="/cuti-karyawan"><i class="mdi mdi-walk"></i><span>Ajukan Cuti &
+                                        Izin</span></a>
                             <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan
                                         Resign</span></a>
                             </li>
@@ -291,7 +291,7 @@
                                         class="fa fa-history"></i><span>Riwayat Absensi</span></a>
                             </li>
                             <li><a href="/cuti-karyawan" class="waves-effect"><i
-                                        class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a></li>
+                                        class="mdi mdi-walk"></i><span>Permohonan Cuti & Izin</span></a></li>
                             <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan
                                         Resign</span></a>
                         </ul>

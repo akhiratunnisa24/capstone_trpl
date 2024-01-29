@@ -214,7 +214,7 @@ class HomeController extends Controller
         }
 
         //ambil jumlah Karyawan
-        $totalKaryawan = Karyawan::where('partner',Auth::user()->partner)->count('id');
+        $totalKaryawan = Karyawan::where('partner',Auth::user()->partner)->where('status_kerja','Aktif')->where('tglkeluar','!=',null)->count('id');
 
         // ambil jumlah karyawan yang sudah absen
         $totalabsen = DB::table('absensi')

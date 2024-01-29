@@ -66,7 +66,7 @@
                                             <a class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#myModal{{ $data->id }}"><i
                                                     class="fa fa-pencil"></i></a>
-                                            
+
                                             {{-- <button  onclick="hapus_karyawan({{ $data->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> --}}
                                         </div>
                                     </td>
@@ -81,9 +81,9 @@
             </div>
         </div>
     </div>
-    @if(Session::has('pesan'))
+    @if(Session::has('status'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            swal("Selamat","{{ Session::get('status')}}", 'success', {
                 button:true,
                 button:"OK",
             });
