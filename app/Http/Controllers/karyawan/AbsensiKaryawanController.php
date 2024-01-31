@@ -171,7 +171,8 @@ class AbsensiKaryawanController extends Controller
         } else {
 
             $nama = Karyawan::where('id', $iduser)->first();
-            $departemen = Departemen::where('id', $nama->divisi)->first();
+            $departemen = Departemen::find($nama->divisi);
+            dd($departemen,$data,$nama);
             $pdf = PDF::loadview('karyawan.absensi.absensistaff_pdf', ['data' => $data, 'departemen' => $departemen, 'iduser' => $iduser, 'nama' => $nama, 'nbulan' => $nbulan, 'setorganisasi' => $setorganisasi])
                 ->setPaper('A4', 'landscape');
 

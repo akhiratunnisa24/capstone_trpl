@@ -93,7 +93,7 @@ class CutikaryawanController extends Controller
     public function getDurasi(Request $request)
     {
         try {
-            $getDurasi = Alokasicuti::select('alokasicuti.id', 'settingalokasi.id as id_settingalokasi', 'alokasicuti.durasi', 'alokasicuti.aktif_dari', 'alokasicuti.sampai', 'alokasicuti.id_jeniscuti')
+            $getDurasi = Alokasicuti::select('alokasicuti.id', 'alokasicuti.id_jeniscuti', 'settingalokasi.id as id_settingalokasi', 'alokasicuti.durasi', 'alokasicuti.aktif_dari', 'alokasicuti.sampai', 'alokasicuti.id_jeniscuti')
                 ->join('settingalokasi', 'alokasicuti.id_settingalokasi', '=', 'settingalokasi.id')
                 ->where('alokasicuti.id_jeniscuti', '=', $request->id_jeniscuti)
                 ->where('alokasicuti.id_karyawan', '=', Auth::user()->id_pegawai)
@@ -115,8 +115,8 @@ class CutikaryawanController extends Controller
     public function getLibur()
     {
         try {
-            // $getLibur = SettingHarilibur::all();
-            $getLibur = SettingHarilibur::where('tipe', 'Hari Libur Nasional')->get();
+            $getLibur = SettingHarilibur::all();
+            // $getLibur = SettingHarilibur::where('tipe', 'Hari Libur Nasional')->get();
             if (!$getLibur) {
                 throw new \Exception('Data not found');
             }
@@ -143,10 +143,10 @@ class CutikaryawanController extends Controller
                         ->where('tgl_permohonan',  $tglpermohonan)
                         ->exists();
 
-        if($existingCuti)    
+        if($existingCuti)
         {
             return redirect()->back()->with('pesa', 'Anda sudah mengajukan cuti !');
-        }            
+        }
         else
         {
             $cuti = new Cuti;
@@ -182,11 +182,12 @@ class CutikaryawanController extends Controller
                 $cuti->keterangan     = $jeniscuti->jenis_cuti;
                 // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti,$cuti->sisacuti);
             } else {
+                // dd($request->all());
             }
 
             $cuti->tgl_mulai      = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_mulai)->format("Y-m-d");
             $cuti->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
-    
+
             $cuti->status         = $status->id;
             $cuti->save();
 
@@ -197,7 +198,7 @@ class CutikaryawanController extends Controller
                 ->first();
 
             $jeniscuti = Jeniscuti::where('id', $cuti->id_jeniscuti)->first();
-        
+
             $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
                 ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
                 ->first();
@@ -218,11 +219,6 @@ class CutikaryawanController extends Controller
                 $hrdmng = $hrdmng->email;
             }
 
-            $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
-            if($hrdstaff !== null){
-                $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
-                $hrdstf = $hrdstf->email;
-            }
             $data = [
                 'subject' => 'Notifikasi Permohonan ' . $jeniscuti->jenis_cuti . ' ' . '#' . $cuti->id . ' ' . ucwords(strtolower($emailkry->nama)),
                 'noregistrasi' => $cuti->id,
@@ -253,14 +249,31 @@ class CutikaryawanController extends Controller
                 $data['hrdmanager'] = $hrdmng;
             }
 
-            if($hrdstf !== null)
-            {
-                $data['hrdstaff'] = $hrdstf;
+            $hrdstaff = User::where('partner', $partner)->where('role', 2)->first();
+            $data['hrdstaff'] = null; // Inisialisasi variabel di luar blok if
+
+            if ($hrdstaff !== null) {
+                $hrdstf = Karyawan::where('id', $hrdstaff->id_pegawai)->first();
+                if ($hrdstf !== null) {
+                    $data['hrdstaff'] = $hrdstf->email;
+                }
+            }
+
+
+            $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+            $data['hrdstaff'] = null;
+            if($hrdstaff !== null){
+                $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                $hrdst = $hrdstf->email;
+                if($hrdstf !== null)
+                {
+                    $data['hrdstaff'] = $hrdst;
+                }
             }
 
             Mail::to($tujuan)->send(new CutiNotification($data));
-    
-            return redirect()->back()->with('pesan', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
+
+            return redirect('cuti-karyawan')->with('pesan', 'Permohonan Cuti Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
 
         }
     }
@@ -341,7 +354,7 @@ class CutikaryawanController extends Controller
         $karyawan = Auth::user()->id_pegawai;
         $status = Status::find(14);
         $cuti = Cuti::find($id);
-        
+
         // $saldo = $cuti->saldohakcuti;
         // $jmlcuti = $request->jml_cuti;
         // $selisih = $saldo - $jmlcuti;
@@ -361,15 +374,15 @@ class CutikaryawanController extends Controller
         $cuti->keperluan      = $request->keperluan;
         $cuti->catatan        = $status->name_status;
         $cuti->jmlharikerja   = $request->jml_cuti;
-        
+
         if($request->id_jeniscuti == 1)
-        {  
+        {
             $cuti->saldohakcuti   = $cuti->saldohakcuti;
             $cuti->jml_cuti       = $request->jml_cuti;
             $sisa                 = $cuti->saldohakcuti -  $cuti->jml_cuti;
             $cuti->sisacuti       = $sisa;
             $cuti->keterangan     = "-";
-           
+
             // dd($cuti->saldohakcuti, $cuti->jml_cuti, $cuti->sisacuti);
 
             // dd($cuti->jmlharikerja, $cuti->jml_cuti, $cuti->saldohakcuti, $sisa,$cuti->sisacuti);
@@ -412,7 +425,7 @@ class CutikaryawanController extends Controller
         $atasan = Karyawan::where('id', $emailkry->atasan_pertama)
             ->select('email as email', 'nama as nama', 'nama_jabatan as jabatan')
             ->first();
-        
+
         $atasan2 = NULL;
         if($emailkry->atasan_kedua != NULL)
         {

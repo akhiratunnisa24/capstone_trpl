@@ -125,22 +125,22 @@
 
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-walk"></i><span
-                                    class="text-info panel-title">Cuti & Sakit/Ijin</span><span class="pull-right"><i
+                                    class="text-info panel-title">Cuti & Sakit/Izin</span><span class="pull-right"><i
                                         class="mdi mdi-plus"></i></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Ijin</span></a>
+                                <li><a href="/permintaan_cuti"><i class="fa fa-server"></i><span>Data Cuti & Izin</span></a>
                                 </li>
                                 <li><a href="/kategori_cuti"><i class="mdi mdi-calendar"></i><span>Kategori Cuti &
-                                            Ijin</span></a></li>
+                                            Izin</span></a></li>
                                 <li><a href="/settingalokasi"><i class="fa fa-gears"></i><span>Setting Alokasi</span></a>
                                 </li>
                                 <li><a href="/alokasicuti"><i class="mdi mdi-chart-arc"></i><span>Master Alokasi
                                             Cuti</span></a>
                                 </li>
-                                <li><a href="/settingcuti"><i class="fa fa-gear (alias)"></i><span>Setting Cuti
+                                {{-- <li><a href="/settingcuti"><i class="fa fa-gear (alias)"></i><span>Setting Cuti
                                             Tahunan</span></a>
                                 </li>
-                                <li><a href="/sisacuti"><i class="fa fa-hourglass-2"></i><span>Sisa Cuti</span></a></li>
+                                <li><a href="/sisacuti"><i class="fa fa-hourglass-2"></i><span>Sisa Cuti</span></a></li> --}}
                             </ul>
                         </li>
                     @endif
@@ -264,8 +264,7 @@
                     {{-- <li><a href="/absensi-karyawan" class="waves-effect"><i class="mdi mdi-account-check"></i><span>Absensi</span></a></li> --}}
                     <li><a href="/riwayat-absensi" class="waves-effect"><i class="fa fa-history"></i><span>Riwayat
                                 Absensi</span></a></li>
-                    <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-walk"></i><span>Permohonan
-                                Cuti & Sakit/Ijin</span></a></li>
+                    <li><a href="/cuti-karyawan" class="waves-effect"><i class="mdi mdi-airplane"></i><span>Ajukan Cuti & Izin</span></a></li>
                     <li><a href="/resign-karyawan" class="waves-effect"><i
                                 class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
                 </ul>
@@ -401,7 +400,7 @@
                         </a>
                         <ul class="list-unstyled">
                             <li><a href="/riwayat-absensi" class="waves-effect"><i class="fa fa-history"></i><span>Riwayat Absensi</span></a></li>
-                            <li><a href="/cuti-karyawan" class="waves-effect"><i  class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Ijin</span></a></li>
+                            <li><a href="/cuti-karyawan" class="waves-effect"><i  class="mdi mdi-walk"></i><span>Permohonan Cuti & Sakit/Izin</span></a></li>
                             <li><a href="/resign-karyawan"><i class="mdi mdi-account-off"></i><span>Ajukan Resign</span></a>
                         </ul>
                     </li>

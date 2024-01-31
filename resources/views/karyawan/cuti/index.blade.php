@@ -28,7 +28,7 @@
                 <li class="" id="aiz">
                     <a id="tab2" href="#izin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
-                        <span class="hidden-xs">Sakit/Ijin</span>
+                        <span class="hidden-xs">Sakit/Izin</span>
                     </a>
                 </li>
             </ul>
@@ -141,7 +141,7 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-heading clearfix">
                                             <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal"
-                                                data-target="#smallModal"> Sakit/Ijin/Alpa/Lain-lain</a>
+                                                data-target="#smallModal"> Sakit/Izin/Alpa/Lain-lain</a>
                                         </div>
                                         {{-- modals tambah data izin --}}
                                         @include('karyawan.cuti.addizin')

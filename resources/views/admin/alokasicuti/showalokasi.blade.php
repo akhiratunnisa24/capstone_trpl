@@ -74,10 +74,10 @@
                                             <td scope="row">Cuti Minus {{$year}}</td>
                                             <td id="a">{{$data->cutiminus}}</td>
                                         </tr>
-                                        <tr>
+                                        {{-- <tr>
                                             <td scope="row">Cuti Bersama {{$year}}</td>
                                             <td id="a">{{$data->jmlcutibersama}}</td>
-                                        </tr>
+                                        </tr> --}}
                                         <tr>
                                             <td scope="row">Saldo Hak Cuti {{$year}}</td>
                                             <td id="a">{{$data->durasi}}</td>

@@ -4,7 +4,7 @@
         <div class="col-md-12 modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-center" id="Showcuti">DETAIL DATA IJIN</h4>
+                <h4 class="modal-title text-center" id="Showcuti">DETAIL DATA IZIN</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
@@ -49,7 +49,7 @@
                         <label>: {{\Carbon\Carbon::parse($data->tgl_mulai)->format("d/m/Y")}} @if($data->tgl_selesai !== NULL) s.d {{\Carbon\Carbon::parse($data->tgl_selesai)->format("d/m/Y")}} @endif</label>
                     </div>
                 </div>
-               
+
                 <div class="form-group row">
                     <label for="id_jeniscuti" class="col-sm-5 col-form-label">Status Ketidakhadiran</label>
                     <div class="col-sm-7">
@@ -126,7 +126,7 @@
                         <div class="col-sm-7">
                             <label>: {{$data->alasan}}</label>
                         </div>
-                    </div>        
+                    </div>
                 @endif
 
                 <div class="modal-footer">

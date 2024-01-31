@@ -7,11 +7,11 @@
     <div class="col-sm-12">
 
         <div class="page-header-title">
-            <h4 class="pull-left page-title">Data Cuti dan Ijin </h4>
+            <h4 class="pull-left page-title">Data Cuti dan Izin </h4>
 
             <ol class="breadcrumb pull-right">
                 <li>Rynest Employee Management System</li>
-                <li class="active">Data Cuti dan Ijin </li>
+                <li class="active">Data Cuti dan Izin </li>
             </ol>
 
             <div class="clearfix">
@@ -31,7 +31,7 @@
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading  col-15 m-b-10">
-                    <h4>Ijin Hari Ini</h4>
+                    <h4>Izin Hari Ini</h4>
 
                     </div>
                     <div class="panel-body" >
@@ -55,13 +55,13 @@
                                         <td>{{\Carbon\Carbon::parse($k->tgl_mulai)->format('d/m/Y')}} @if($k->tgl_selesai != NULL) s.d {{\Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y')}} @endif</td>
                                         {{-- <td>{{$k->status}}</td>               --}}
                                         <td>
-                                            @if($k->status == $k->statuses->id) 
+                                            @if($k->status == $k->statuses->id)
                                                 <span class="badge badge-{{ $k->status == 1 ? 'warning' : ($k->status == 2 ? 'info' : ($k->status == 5 ? 'danger' : ($k->status == 6 ? 'secondary' : ($k->status == 7 ? 'success' : ($k->status == 9 ? 'danger' : ($k->status == 10 ? 'danger' : ($k->status == 11 ? 'warning' : ($k->status == 12 ? 'secondary' : ($k->status == 13 ? 'success' : ($k->status == 14 ? 'warning' :($k->status == 15 ? 'primary' : ($k->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
                                                     {{ $k->status == 1 ? $k->statuses->name_status : ($k->status == 2 ?  $k->statuses->name_status : ($k->status == 5 ?  $k->statuses->name_status : ($k->status == 6 ?  $k->statuses->name_status : ($k->status == 7 ?  $k->statuses->name_status : ($k->status == 9 ?  $k->statuses->name_status : ($k->status == 10 ?  $k->statuses->name_status : ($k->status == 11 ?  $k->statuses->name_status : ($k->status == 12 ?  $k->statuses->name_status : ($k->status == 13 ?  $k->statuses->name_status :  ($k->status == 14 ?  $k->statuses->name_status :  ($k->status == 15 ?  $k->statuses->name_status :  ($k->status == 16 ?  $k->statuses->name_status : '')))))))))))) }}
                                                 </span>
                                             @endif
                                         </td>
-                                    
+
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -101,13 +101,13 @@
                                         <td>{{$k->jml_cuti}}</td>
                                         <td>
                                             {{-- {{$k->status}} --}}
-                                            @if($k->status == $k->statuses->id) 
+                                            @if($k->status == $k->statuses->id)
                                                 <span class="badge badge-{{ $k->status == 1 ? 'warning' : ($k->status == 2 ? 'info' : ($k->status == 5 ? 'danger' : ($k->status == 6 ? 'secondary' : ($k->status == 7 ? 'success' : ($k->status == 9 ? 'danger' : ($k->status == 10 ? 'danger' : ($k->status == 11 ? 'warning' : ($k->status == 12 ? 'secondary' : ($k->status == 13 ? 'success' : ($k->status == 14 ? 'warning' :($k->status == 15 ? 'primary' : ($k->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
                                                     {{ $k->status == 1 ? $k->statuses->name_status : ($k->status == 2 ?  $k->statuses->name_status : ($k->status == 5 ?  $k->statuses->name_status : ($k->status == 6 ?  $k->statuses->name_status : ($k->status == 7 ?  $k->statuses->name_status : ($k->status == 9 ?  $k->statuses->name_status : ($k->status == 10 ?  $k->statuses->name_status : ($k->status == 11 ?  $k->statuses->name_status : ($k->status == 12 ?  $k->statuses->name_status : ($k->status == 13 ?  $k->statuses->name_status :  ($k->status == 14 ?  $k->statuses->name_status :  ($k->status == 15 ?  $k->statuses->name_status :  ($k->status == 16 ?  $k->statuses->name_status : '')))))))))))) }}
                                                 </span>
                                             @endif
-                                        </td>   
-                                    
+                                        </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -143,12 +143,12 @@
                                         <td>{{$k->jenisizins->jenis_izin}}</td>
                                         <td>{{\Carbon\Carbon::parse($k->tgl_mulai)->format('d/m/Y')}} @if($k->tgl_selesai !== NULL) s.d {{\Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y')}} @endif</td>
                                         <td>
-                                            @if($k->status == $k->statuses->id) 
+                                            @if($k->status == $k->statuses->id)
                                                 <span class="badge badge-{{ $k->status == 1 ? 'warning' : ($k->status == 2 ? 'info' : ($k->status == 5 ? 'danger' : ($k->status == 6 ? 'secondary' : ($k->status == 7 ? 'success' : ($k->status == 9 ? 'danger' : ($k->status == 10 ? 'danger' : ($k->status == 11 ? 'warning' : ($k->status == 12 ? 'secondary' : ($k->status == 13 ? 'success' : ($k->status == 14 ? 'warning' :($k->status == 15 ? 'primary' : ($k->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
                                                     {{ $k->status == 1 ? $k->statuses->name_status : ($k->status == 2 ?  $k->statuses->name_status : ($k->status == 5 ?  $k->statuses->name_status : ($k->status == 6 ?  $k->statuses->name_status : ($k->status == 7 ?  $k->statuses->name_status : ($k->status == 9 ?  $k->statuses->name_status : ($k->status == 10 ?  $k->statuses->name_status : ($k->status == 11 ?  $k->statuses->name_status : ($k->status == 12 ?  $k->statuses->name_status : ($k->status == 13 ?  $k->statuses->name_status :  ($k->status == 14 ?  $k->statuses->name_status :  ($k->status == 15 ?  $k->statuses->name_status :  ($k->status == 16 ?  $k->statuses->name_status : '')))))))))))) }}
                                                 </span>
                                             @endif
-                                        </td>       
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -187,13 +187,13 @@
                                         <td>{{\Carbon\Carbon::parse($k->tgl_mulai)->format('d/m/Y')}} @if($k->tgl_selesai != NULL) s.d {{\Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y')}} @endif</td>
                                         <td>{{$k->jml_cuti}}</td>
                                         <td>
-                                            @if($k->status == $k->statuses->id) 
+                                            @if($k->status == $k->statuses->id)
                                                 <span class="badge badge-{{ $k->status == 1 ? 'warning' : ($k->status == 2 ? 'info' : ($k->status == 5 ? 'danger' : ($k->status == 6 ? 'secondary' : ($k->status == 7 ? 'success' : ($k->status == 9 ? 'danger' : ($k->status == 10 ? 'danger' : ($k->status == 11 ? 'warning' : ($k->status == 12 ? 'secondary' : ($k->status == 13 ? 'success' : ($k->status == 14 ? 'warning' :($k->status == 15 ? 'primary' : ($k->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
                                                     {{ $k->status == 1 ? $k->statuses->name_status : ($k->status == 2 ?  $k->statuses->name_status : ($k->status == 5 ?  $k->statuses->name_status : ($k->status == 6 ?  $k->statuses->name_status : ($k->status == 7 ?  $k->statuses->name_status : ($k->status == 9 ?  $k->statuses->name_status : ($k->status == 10 ?  $k->statuses->name_status : ($k->status == 11 ?  $k->statuses->name_status : ($k->status == 12 ?  $k->statuses->name_status : ($k->status == 13 ?  $k->statuses->name_status :  ($k->status == 14 ?  $k->statuses->name_status :  ($k->status == 15 ?  $k->statuses->name_status :  ($k->status == 16 ?  $k->statuses->name_status : '')))))))))))) }}
                                                 </span>
                                             @endif
-                                        </td>        
-                                    
+                                        </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -227,16 +227,16 @@
                                         <td>{{$k->karyawan->nama}}</td>
                                         <td>{{$k->jenisizins->jenis_izin}}</td>
                                         <td>{{\Carbon\Carbon::parse($k->tgl_mulai)->format('d/m/Y')}} @if($k->tgl_selesai !== NULL) s.d {{\Carbon\Carbon::parse($k->tgl_selesai)->format('d/m/Y')}} @endif</td>
-                                       
+
                                         {{-- <td>{{$k->status}}</td>               --}}
                                         <td>
-                                            @if($k->status == $k->statuses->id) 
+                                            @if($k->status == $k->statuses->id)
                                                 <span class="badge badge-{{ $k->status == 1 ? 'warning' : ($k->status == 2 ? 'info' : ($k->status == 5 ? 'danger' : ($k->status == 6 ? 'secondary' : ($k->status == 7 ? 'success' : ($k->status == 9 ? 'danger' : ($k->status == 10 ? 'danger' : ($k->status == 11 ? 'warning' : ($k->status == 12 ? 'secondary' : ($k->status == 13 ? 'success' : ($k->status == 14 ? 'warning' :($k->status == 15 ? 'primary' : ($k->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
                                                     {{ $k->status == 1 ? $k->statuses->name_status : ($k->status == 2 ?  $k->statuses->name_status : ($k->status == 5 ?  $k->statuses->name_status : ($k->status == 6 ?  $k->statuses->name_status : ($k->status == 7 ?  $k->statuses->name_status : ($k->status == 9 ?  $k->statuses->name_status : ($k->status == 10 ?  $k->statuses->name_status : ($k->status == 11 ?  $k->statuses->name_status : ($k->status == 12 ?  $k->statuses->name_status : ($k->status == 13 ?  $k->statuses->name_status :  ($k->status == 14 ?  $k->statuses->name_status :  ($k->status == 15 ?  $k->statuses->name_status :  ($k->status == 16 ?  $k->statuses->name_status : '')))))))))))) }}
                                                 </span>
                                             @endif
-                                        </td>       
-                                    
+                                        </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -276,12 +276,12 @@
                                         <td>{{$k->jml_cuti}}</td>
                                         <td>
                                             {{-- {{$k->status}} --}}
-                                            @if($k->status == $k->statuses->id) 
+                                            @if($k->status == $k->statuses->id)
                                                 <span class="badge badge-{{ $k->status == 1 ? 'warning' : ($k->status == 2 ? 'info' : ($k->status == 5 ? 'danger' : ($k->status == 6 ? 'secondary' : ($k->status == 7 ? 'success' : ($k->status == 9 ? 'danger' : ($k->status == 10 ? 'danger' : ($k->status == 11 ? 'warning' : ($k->status == 12 ? 'secondary' : ($k->status == 13 ? 'success' : ($k->status == 14 ? 'warning' :($k->status == 15 ? 'primary' : ($k->status == 16 ? 'primary' :  'secondary' )))))))))))) }}">
                                                     {{ $k->status == 1 ? $k->statuses->name_status : ($k->status == 2 ?  $k->statuses->name_status : ($k->status == 5 ?  $k->statuses->name_status : ($k->status == 6 ?  $k->statuses->name_status : ($k->status == 7 ?  $k->statuses->name_status : ($k->status == 9 ?  $k->statuses->name_status : ($k->status == 10 ?  $k->statuses->name_status : ($k->status == 11 ?  $k->statuses->name_status : ($k->status == 12 ?  $k->statuses->name_status : ($k->status == 13 ?  $k->statuses->name_status :  ($k->status == 14 ?  $k->statuses->name_status :  ($k->status == 15 ?  $k->statuses->name_status :  ($k->status == 16 ?  $k->statuses->name_status : '')))))))))))) }}
                                                 </span>
                                             @endif
-                                        </td>   
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

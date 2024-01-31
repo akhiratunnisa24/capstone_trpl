@@ -7,11 +7,11 @@
     <div class="col-sm-12">
 
         <div class="page-header-title">
-            <h4 class="pull-left page-title">Kategori Cuti dan Ijin</h4>
+            <h4 class="pull-left page-title">Kategori Cuti dan Izin</h4>
 
             <ol class="breadcrumb pull-right">
                 <li>Rynest Employee Management System</li>
-                <li class="active">Kategori Cuti dan Ijin</li>
+                <li class="active">Kategori Cuti dan Izin</li>
             </ol>
 
             <div class="clearfix">
@@ -32,7 +32,7 @@
             <li class="" id="b">
                 <a id="tab2" href="#kategori_izin" data-toggle="tab" aria-expanded="true">
                     <span class="visible-xs"><i class="fa fa-user"></i></span>
-                    <span class="hidden-xs">Kategori Ijin</span>
+                    <span class="hidden-xs">Kategori Izin</span>
                 </a>
             </li>
 
@@ -99,7 +99,7 @@
             </div>
             {{-- END CUTI --}}
 
-            {{-- LIST Ijin --}}
+            {{-- LIST Izin --}}
             <div class="tab-pane" id="kategori_izin">
                 {{-- Start content --> --}}
                 <div class="content">
@@ -107,16 +107,16 @@
                         <div class="row">
                             <div class="col-md-20">
                                 <div class="panel panel-primary">
-                                    
+
                                     <div class="panel-heading clearfix">
-                                        {{-- <strong>Kategori Ijin</strong> --}}
+                                        {{-- <strong>Kategori Izin</strong> --}}
                                         @if($role == 1)
-                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#smallModal"> Tambah Kategori Ijin</a>
+                                        <a href="" class="btn btn-sm btn-dark fa fa-plus pull-right" data-toggle="modal" data-target="#smallModal"> Tambah Kategori Izin</a>
                                         @endif
-                                        
+
                                     </div>
                                 </div>
-                                {{-- MODALS TAMBAH KATEGORI Ijin --}}
+                                {{-- MODALS TAMBAH KATEGORI Izin --}}
                                 @include('admin.kategori.addizin')
                                 <div class="panel-body m-b-5">
                                     <div class="row">
@@ -126,7 +126,7 @@
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Kode Kategori</th>
-                                                        <th>Kategori Ijin</th>
+                                                        <th>Kategori Izin</th>
                                                         {{-- <th>Aksi</th> --}}
                                                     </tr>
                                                 </thead>
