@@ -227,7 +227,6 @@ class HomeController extends Controller
 
         $totalTidakAbsenHariInihrd = $totalKaryawan - $totalabsen;
         $totalTidakAbsenHariIni = $totalKaryawan - $totalabsen;
-        dd($totalKaryawan,$totalabsen,$totalTidakAbsenHariInihrd,$totalTidakAbsenHariIni);
 
         // Data Cuti dan Izin Bulan Lalu
         $dataIzinbulanlaluhrd   = Izin::whereYear('tgl_mulai', '=', Carbon::now()->year)
