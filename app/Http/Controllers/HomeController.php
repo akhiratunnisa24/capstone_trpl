@@ -214,7 +214,8 @@ class HomeController extends Controller
         }
 
         //ambil jumlah Karyawan
-        $totalKaryawan = Karyawan::where('partner',Auth::user()->partner)->where('status_kerja','Aktif')->where('tglkeluar','!=',null)->count('id');
+        $totalKaryawan = Karyawan::where('partner',Auth::user()->partner)->where('status_kerja','Aktif')->where('tglkeluar','!=',null)->count();
+
 
         // ambil jumlah karyawan yang sudah absen
         $totalabsen = DB::table('absensi')
@@ -226,6 +227,7 @@ class HomeController extends Controller
 
         $totalTidakAbsenHariInihrd = $totalKaryawan - $totalabsen;
         $totalTidakAbsenHariIni = $totalKaryawan - $totalabsen;
+        dd($totalKaryawan,$totalabsen,$totalTidakAbsenHariInihrd,$totalTidakAbsenHariIni);
 
         // Data Cuti dan Izin Bulan Lalu
         $dataIzinbulanlaluhrd   = Izin::whereYear('tgl_mulai', '=', Carbon::now()->year)
