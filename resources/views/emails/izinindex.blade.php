@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
             integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <title>Pemberitahuan - Permintaan Ijin Karyawan</title>
+    <title>Pemberitahuan - Permintaan Izin Karyawan</title>
 	<style type="text/css">
 		/* Reset CSS */
 		body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, table, tr, td, img {
@@ -98,7 +98,7 @@
             background-color: #dffb07;
         }
         .badge-info {
-            background-color: #1acce8; 
+            background-color: #1acce8;
         }
         .badge-success {
             background-color: #11e041;
@@ -169,7 +169,7 @@
 		<div class="footer">
 			<p><em>Email ini dikirim secara otomatis kepada yang berkepentingan. Email ini tidak perlu dibalas (no-reply) dan apabila ada kendala harap hubungi administrator-REMS melalui email ke Departemen HR.</em></p>
 		</div>
-		
+
 	</div>
 </body>
 </html>

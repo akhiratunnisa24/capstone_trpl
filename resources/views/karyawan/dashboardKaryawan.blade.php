@@ -1,6 +1,8 @@
 @extends('layouts.default')
 
 @section('content')
+    <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
+    <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
@@ -813,7 +815,7 @@
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#2"
                                     class="collapsed" aria-expanded="false">
-                                    Permintaan Sakit/Ijin/Dinas/lain-lain
+                                    Permintaan Sakit/Izin/Dinas/lain-lain
 
                                     @if ($izinjumlah)
                                         <span class="badge badge badge-danger"
@@ -834,7 +836,7 @@
                                                 <tr class="info">
                                                     <th>No</th>
                                                     <th>Karyawan</th>
-                                                    <th>Ijin</th>
+                                                    <th>Izin</th>
                                                     <th>Tanggal</th>
                                                     {{-- <th>Hari</th> --}}
                                                     {{-- <th>Jam</th> --}}
@@ -1103,7 +1105,7 @@
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#8"
                                     class="collapsed" aria-expanded="false">
-                                    Pembatalan/Perubahan Sakit/Ijin
+                                    Pembatalan/Perubahan Sakit/Izin
 
                                     @if ($jumizin)
                                         <span class="badge badge badge-danger"
@@ -1123,7 +1125,7 @@
                                                 <tr class="info">
                                                     <th>No</th>
                                                     <th>Karyawan</th>
-                                                    <th>Ijin</th>
+                                                    <th>Izin</th>
                                                     <th>Tanggal</th>
                                                     <th>Catatan</th>
                                                     <th>Action</th>
@@ -2295,7 +2297,7 @@
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#2"
                                     class="collapsed" aria-expanded="false">
-                                    Permintaan Sakit/Ijin/Dinas/lain-lain
+                                    Permintaan Sakit/Izin/Dinas/lain-lain
 
                                     @if ($izinjumlah)
                                         <span class="badge badge badge-danger"
@@ -2316,7 +2318,7 @@
                                                 <tr class="info">
                                                     <th>No</th>
                                                     <th>Karyawan</th>
-                                                    <th>Ijin</th>
+                                                    <th>Izin</th>
                                                     <th>Tanggal</th>
                                                     {{-- <th>Hari</th> --}}
                                                     {{-- <th>Jam</th> --}}
@@ -2585,7 +2587,7 @@
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#8"
                                     class="collapsed" aria-expanded="false">
-                                    Pembatalan/Perubahan Sakit/Ijin
+                                    Pembatalan/Perubahan Sakit/Izin
 
                                     @if ($jumizin)
                                         <span class="badge badge badge-danger"
@@ -2605,7 +2607,7 @@
                                                 <tr class="info">
                                                     <th>No</th>
                                                     <th>Karyawan</th>
-                                                    <th>Ijin</th>
+                                                    <th>Izin</th>
                                                     <th>Tanggal</th>
                                                     <th>Catatan</th>
                                                     <th>Action</th>
@@ -3281,8 +3283,6 @@
         </div> <!-- end row -->
     @endif
 
-
-
     <!-- baris kedua -->
     <div class="row">
         <div id="a" class="col-md-9">
@@ -3578,7 +3578,7 @@
                 <div class="col-lg-3">
                     <div class="panel panel-border panel-warning">
                         <div class="panel-heading">
-                            <h3 class="panel-title text-white text-center">Cuti & Ijin Bulan Ini</h3>
+                            <h3 class="panel-title text-white text-center">Cuti & Izin Bulan Ini</h3>
                         </div>
                         <div class="panel-body">
                             <div>
@@ -3593,7 +3593,7 @@
             <div class="col-lg-3">
                 <div class="panel panel-border panel-warning">
                     <div class="panel-heading">
-                        <h3 class="panel-title text-white text-center">Cuti & Ijin Bulan Lalu</h3>
+                        <h3 class="panel-title text-white text-center">Cuti & Izin Bulan Lalu</h3>
                     </div>
                     <div class="panel-body">
                         <div>
@@ -3622,7 +3622,7 @@
             <div class="col-lg-6">
                 <div class="panel panel-border panel-warning">
                     <div class="panel-heading" style="height:40px;">
-                        <h3 class="panel-title text-white text-center">Cuti & Ijin Tahun Ini</h3>
+                        <h3 class="panel-title text-white text-center">Cuti & Izin Tahun Ini</h3>
                     </div>
                     <div class="panel-body">
                         <div>
@@ -3643,8 +3643,32 @@
             border-radius: 10px;
         }
     </style>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @if (Session::has('success'))
+        <script>
+            swal("Selamat", "{{ Session::get('success') }}", 'success', {
+                button: true,
+                button: "OK",
+            });
+        </script>
+    @endif
+
+    @if (Session::has('error'))
+        <script>
+            swal("Mohon Maaf", "{{ Session::get('error') }}", 'error', {
+                button: true,
+                button: "OK",
+            });
+        </script>
+    @endif
     @if (Auth::user()->role == 3 && $row->jabatan == "Manager" || Auth::user()->role == 3 && $row->jabatan == "Asistant Manager")
         <script>
             var absenBulaninimanager = {{ $absenBulaninimanager }};
@@ -3672,7 +3696,7 @@
             };
 
             const data1 = {
-                labels: ['Cuti', 'Ijin'],
+                labels: ['Cuti', 'Iin'],
                 datasets: [{
                     label: '',
                     backgroundColor: ['#18bae2', '#FF8C00'],
@@ -3693,7 +3717,7 @@
             };
 
             const data3 = {
-                labels: ['Cuti', 'Ijin'],
+                labels: ['Cuti', 'Izin'],
                 datasets: [{
                     label: '',
                     backgroundColor: ['#18bae2', '#FF8C00'],
@@ -3843,7 +3867,7 @@
                             data: leaveArray,
                         },
                         {
-                            label: 'Ijin',
+                            label: 'izin',
                             backgroundColor: ['#18bae2'],
                             borderColor: ['#18bae2'],
                             borderWidth: 1,
@@ -3890,4 +3914,6 @@
             </script>
         @endif
     @endif
+
+
 @endsection

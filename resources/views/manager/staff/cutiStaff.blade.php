@@ -7,10 +7,10 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Data Cuti dan Ijin Karyawan</h4>
+                <h4 class="pull-left page-title">Data Cuti dan Izin Karyawan</h4>
                 <ol class="breadcrumb pull-right">
                     <li><a href="#">Human Resources Direksi System</a></li>
-                    <li class="active">Data Cuti & Ijin</li>
+                    <li class="active">Data Cuti & Izin</li>
                 </ol>
                 <div class="clearfix"></div>
             </div>
@@ -29,7 +29,7 @@
                 <li class="" id="bb">
                     <a id="tabs_b" href="#mizin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
-                        <span class="hidden-xs">Data Ijin</span>
+                        <span class="hidden-xs">Data Izin</span>
                     </a>
                 </li>
             </ul>

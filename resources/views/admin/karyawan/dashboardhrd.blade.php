@@ -403,7 +403,7 @@
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#2" class="collapsed"
                                 aria-expanded="false">
-                                Permintaan Sakit/Ijin/Dinas/lain-lain
+                                Permintaan Sakit/Izin/Dinas/lain-lain
 
                                 @if ($izinjumlah)
                                     <span class="badge badge badge-danger"
@@ -423,7 +423,7 @@
                                             <tr class="info">
                                                 <th>No</th>
                                                 <th>Karyawan</th>
-                                                <th>Ijin</th>
+                                                <th>Izin</th>
                                                 <th>Tanggal</th>
                                                 {{-- <th>Hari</th> --}}
                                                 {{-- <th>Jam</th> --}}
@@ -550,7 +550,7 @@
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion-test-2" href="#9" class="collapsed"
                                 aria-expanded="false">
-                                Pembatalan/Perubahan Sakit/Ijin
+                                Pembatalan/Perubahan Sakit/Izin
 
                                 @if ($jumizin)
                                     <span class="badge badge badge-danger"
@@ -1500,12 +1500,12 @@
             <div class="panel panel-warning text-center">
                 <div class="panel-heading btn-warning">
                     <a href="{{ url('showkaryawancuti') }}" class="panel-title ">
-                        <h4 class="panel-title ">Cuti dan Ijin Hari Ini</h4>
+                        <h4 class="panel-title ">Cuti dan Izin Hari Ini</h4>
                     </a>
                 </div>
                 <div class="panel-body">
                     <h3 class=""><b>{{ $cutidanizin }}</b></h3>
-                    <p class="text-muted"><b>Total Cuti dan Ijin </b> </p>
+                    <p class="text-muted"><b>Total Cuti dan Izin </b> </p>
                 </div>
             </div>
         </div>
@@ -1582,7 +1582,7 @@
         <div class="col-lg-4">
             <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
-                    <h3 class="panel-title text-white text-center">Ijin Hari Ini</h3>
+                    <h3 class="panel-title text-white text-center">Izin Hari Ini</h3>
                 </div>
                 <div class="panel-body">
                     <div>
@@ -1622,7 +1622,7 @@
         <div class="col-lg-4">
             <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
-                    <h3 class="panel-title text-white text-center">Ijin Hari Ini</h3>
+                    <h3 class="panel-title text-white text-center">Izin Hari Ini</h3>
                 </div>
                 <div class="panel-body">
                     <div>
@@ -1662,7 +1662,7 @@
         <div class="col-lg-4">
             <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
-                    <h3 class="panel-title text-white text-center">Ijin Bulan Ini</h3>
+                    <h3 class="panel-title text-white text-center">Izin Bulan Ini</h3>
                 </div>
                 <div class="panel-body">
                     <div>
@@ -1702,7 +1702,7 @@
         <div class="col-lg-4">
             <div class="panel panel-border panel-warning">
                 <div class="panel-heading">
-                    <h3 class="panel-title text-white text-center">Ijin Bulan Lalu</h3>
+                    <h3 class="panel-title text-white text-center">Izin Bulan Lalu</h3>
                 </div>
                 <div class="panel-body">
                     <div>

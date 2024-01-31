@@ -41,14 +41,14 @@ class IzinkaryawanController extends Controller
                 throw new \Exception('Data not found');
             }
             return response()->json($getLibur,200);
-            
+
         } catch (\Exception $e){
             return response()->json([
                 'message' =>$e->getMessage()
             ], 500);
-        } 
+        }
     }
-    
+
     public function store(Request $request)
     {
         $karyawan = Auth::user()->id_pegawai;
@@ -65,10 +65,10 @@ class IzinkaryawanController extends Controller
             // dd($validate);
             $today = \Carbon\Carbon::today();
             $existingIzin = Izin::where('id_karyawan', $karyawan)
-                            ->where('id_jenisizin', $request->id_jenisizin) 
+                            ->where('id_jenisizin', $request->id_jenisizin)
                             ->whereDate('tgl_permohonan', $today)
                             ->first();
-            
+
             if(!$existingIzin)
             {
                 $izin = New Izin;
@@ -84,27 +84,27 @@ class IzinkaryawanController extends Controller
                 $izin->jam_mulai      = $request->jam_mulai;
                 $izin->jam_selesai    = $request->jam_selesai;
                 $izin->jml_hari       = 0;
-    
+
                 $jammulai  = Carbon::parse($request->jam_mulai);
                 $jamselesai= Carbon::parse($request->jam_selesai);
                 $time_range= $jamselesai->diff($jammulai)->format("%H:%I");
-    
+
                 $izin->jml_jam     = $time_range;
                 $izin->status      = $status->id;
                 $izin->catatan     = $request->catatan ?? NULL;
                 $izin->save();
-    
+
                 $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
                     ->join('departemen','izin.departemen','=','departemen.id')
                     ->where('izin.id_karyawan','=',$izin->id_karyawan)
                     ->select('karyawan.email','karyawan.partner','karyawan.nama','karyawan.atasan_pertama','karyawan.atasan_kedua','izin.*','karyawan.nama_jabatan','departemen.nama_departemen')
                     ->first();
                 $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
-    
+
                 $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan as jabatan','divisi as departemen')
                     ->first();
-    
+
                 $atasan2 = NULL;
                 if($emailkry->atasan_kedua != NULL)
                 {
@@ -114,21 +114,15 @@ class IzinkaryawanController extends Controller
                 }
 
                 $partner = $emailkry->partner;
-            
+
                 $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
                 if($hrdmanager !== null){
                     $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
                     $hrdmng = $hrdmng->email;
                 }
-    
-                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
-                if($hrdstaff !== null){
-                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
-                    $hrdstf = $hrdstf->email;
-                }
-               
+
                 $tujuan = $atasan->email;
-    
+
                 $data = [
                     'subject' => 'Notifikasi Permohonan ' . $jenisizin->jenis_izin . ' ' . '#'. $izin->id. ' ' . ucwords(strtolower($emailkry->nama)) ,
                     'noregistrasi' => $izin->id,
@@ -160,12 +154,20 @@ class IzinkaryawanController extends Controller
                     $data['hrdmanager'] = $hrdmng;
                 }
 
-                if($hrdstf !== null)
-                {
-                    $data['hrdstaff'] = $hrdstf;
+                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                $data['hrdstaff'] = null;
+                if($hrdstaff !== null){
+                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                    $hrdstf = $hrdstf->email;
+
+                    if($hrdstf !== null)
+                    {
+                        $data['hrdstaff'] = $hrdstf;
+                    }
                 }
+
                 Mail::to($tujuan)->send(new IzinNotification($data));
-                
+
                 return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
             }
             else
@@ -188,7 +190,7 @@ class IzinkaryawanController extends Controller
                             ->where('id_jenisizin', $request->id_jenisizin)
                             ->whereDate('tgl_permohonan', $today)
                             ->first();
-            
+
             if(!$existingIzin)
             {
                 // dd($request->all());
@@ -230,17 +232,11 @@ class IzinkaryawanController extends Controller
                 }
 
                 $partner = $emailkry->partner;
-            
+
                 $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
                 if($hrdmanager !== null){
                     $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
                     $hrdmng = $hrdmng->email;
-                }
-    
-                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
-                if($hrdstaff !== null){
-                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
-                    $hrdstf = $hrdstf->email;
                 }
 
                 $tujuan = $atasan->email;
@@ -276,10 +272,18 @@ class IzinkaryawanController extends Controller
                     $data['hrdmanager'] = $hrdmng;
                 }
 
-                if($hrdstf !== null)
-                {
-                    $data['hrdstaff'] = $hrdstf;
+                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                $data['hrdstaff'] = null;
+                if($hrdstaff !== null){
+                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                    $hrdstf = $hrdstf->email;
+
+                    if($hrdstf !== null)
+                    {
+                        $data['hrdstaff'] = $hrdstf;
+                    }
                 }
+
                 Mail::to($tujuan)->send(new IzinNotification($data));
                 // dd($data);
                 return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
@@ -287,8 +291,8 @@ class IzinkaryawanController extends Controller
             else
             {
                 return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesa', 'Anda sudah mengajukan izin dengan kategori yang sama pada hari ini!');
-            } 
-        }  
+            }
+        }
 
     }
 
@@ -305,13 +309,13 @@ class IzinkaryawanController extends Controller
 
         $izin = Izin::where('id', $id)->first();
         // return $izin;
-        
+
         $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
             ->join('departemen','izin.departemen','=','departemen.id')
             ->where('izin.id_karyawan','=',$izin->id_karyawan)
             ->select('karyawan.email','karyawan.nama','izin.*','karyawan.atasan_pertama','karyawan.atasan_kedua','karyawan.nama_jabatan','departemen.nama_departemen')
             ->first();
-        
+
         $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
         //atasan pertama
         $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
@@ -325,8 +329,8 @@ class IzinkaryawanController extends Controller
             ->select('email as email','nama as nama','nama_jabatan as jabatan')
             ->first();
         }
-        
-    
+
+
         $tujuan = $atasan->email;
         $data = [
             'subject' => 'Notifikasi Pembatalan Permohonan ' . $jenisizin->jenis_izin . ' ' . '#'. $izin->id. ' ' . ucwords(strtolower($emailkry->nama)) ,
@@ -374,7 +378,7 @@ class IzinkaryawanController extends Controller
 
         $status = Status::find(14);
         $izin = Izin::find($id);
-    
+
         $jenisizin = Jenisizin::where('id',$izin->id_jeniscuti)->first();
 
         $izin->keperluan      = $request->keperluan;
@@ -388,7 +392,7 @@ class IzinkaryawanController extends Controller
             $izin->tgl_selesai    = \Carbon\Carbon::createFromFormat("d/m/Y", $request->tgl_selesai)->format("Y-m-d");
             // $izin->saldohakcuti   = $request->durasi;
             // $izin->jml_hari       = $request->jml_hari;
-            // $sisa                 = $izin->saldohakcuti -  $izin->jml_hari;  
+            // $sisa                 = $izin->saldohakcuti -  $izin->jml_hari;
             // $izin->sisacuti       = $sisa;
             // $izin->keterangan     = "-";
 
@@ -457,13 +461,13 @@ class IzinkaryawanController extends Controller
         // dd($izin);
 
         // return $izin;
-        
+
         $emailkry = DB::table('izin')->join('karyawan','izin.id_karyawan','=','karyawan.id')
             ->join('departemen','izin.departemen','=','departemen.id')
             ->where('izin.id_karyawan','=',$izin->id_karyawan)
             ->select('karyawan.email','karyawan.nama','izin.*','karyawan.atasan_pertama','karyawan.atasan_kedua','karyawan.nama_jabatan','departemen.nama_departemen')
             ->first();
-        
+
         $jenisizin = Jenisizin::where('id',$izin->id_jenisizin)->first();
         //atasan pertama
         $atasan = Karyawan::where('id',$emailkry->atasan_pertama)
@@ -475,7 +479,7 @@ class IzinkaryawanController extends Controller
                 ->select('email as email','nama as nama','nama_jabatan as jabatan')
                 ->first();
         }
-    
+
         $tujuan = $atasan->email;
         $data = [
             'subject' => 'Notifikasi Perubahan Permohonan ' . $jenisizin->jenis_izin . ' ' . '#'. $izin->id. ' ' . ucwords(strtolower($emailkry->nama)) ,

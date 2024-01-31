@@ -6,13 +6,12 @@
 
     <div class="row">
         <div class="col-sm-12">
-
             <div class="page-header-title">
-                <h4 class="pull-left page-title">Data Cuti dan Ijin</h4>
+                <h4 class="pull-left page-title">Data Cuti dan Izin</h4>
 
                 <ol class="breadcrumb pull-right">
                     <li>Rynest Employee Management System</li>
-                    <li class="active">Data Cuti dan Ijin</li>
+                    <li class="active">Data Cuti dan Izin</li>
                 </ol>
 
                 <div class="clearfix"></div>
@@ -35,7 +34,7 @@
                 <li class="" id="b">
                     <a id="tab2" href="#izin" data-toggle="tab" aria-expanded="true">
                         <span class="visible-xs"><i class="fa fa-user"></i></span>
-                        <span class="hidden-xs">Data Ijin</span>
+                        <span class="hidden-xs">Data Izin</span>
                     </a>
                 </li>
             </ul>
@@ -246,7 +245,7 @@
                                                                 @php
                                                                     use Carbon\Carbon;
                                                                     $year = Carbon::now()->year;
-                                                                    
+
                                                                 @endphp
                                                                 <th>No</th>
                                                                 <th>Tgl Permohonan</th>
@@ -736,7 +735,7 @@
     </style>
 
     <!-- jQuery  -->
-    <script src="assets/js/jquery.min.js"></script>
+    {{-- <script src="assets/js/jquery.min.js"></script> --}}
     <script src="assets/pages/datatables.init.js"></script>
     <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="assets/pages/form-advanced.js"></script>

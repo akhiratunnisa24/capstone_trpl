@@ -23,6 +23,9 @@
                         @method('POST')
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div id="warning-alert" class="alert alert-warning" style="display: none;"></div>
+                                </div>
                                 <div class="col-md-6">
                                     {{-- <div class="form-group col-sm">
                                         <label class="col-form-label">Tanggal Permohonan</label>
@@ -155,6 +158,10 @@
 
     <script  type="text/javascript">
         var durasi;
+        var today = new Date();
+        var currentYear = today.getFullYear();
+        var nextYear    = currentYear + 1;
+
         $('#id_jeniscuti').on('change',function(e){
             var id_jeniscuti = e.target.value;
             $.ajaxSetup({
@@ -175,8 +182,29 @@
                     $('#sampai').val(data.sampai);
                     // console.log(data?.durasi)
                     durasi     = data.durasi;
+
+                    if(data.id_jeniscuti == 1)
+                    {
+                        console.log(data.durasi);
+                        if (data.durasi == 0  || data.durasi < 0) {
+                            $('#warning-alert').html('Meskipun jatah cuti Tahunan Anda tahun '+ currentYear +' adalah ' + durasi + ', Anda tetap dapat Mengajukan Cuti Tahunan. Namun, durasi Cuti Tahunan Anda untuk tahun ' + nextYear + ' akan dipotong sebanyak Durasi Cuti yang Anda ajukan di tahun '+ currentYear + ' ini.');
+                            $('#warning-alert').show();
+                        } else {
+                            $('#warning-alert').hide();
+                        }
+                    }else{
+                        $('#warning-alert').hide();
+                    }
                 }
             });
+        });
+
+        $('#durasi').on('change', function () {
+            if (data.durasi == 0) {
+                $('#warning-alert').show();
+            } else {
+                $('#warning-alert').hide();
+            }
         });
     </script>
 

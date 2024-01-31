@@ -868,10 +868,10 @@
             format: "dd/mm/yyyy",
             autoclose: true,
             minDate: minDate,
-            maxDate: maxDate,
+            maxDate: day,
             todayHighlight: true,
             beforeShowDay: function (date) {
-                if (date < minDate || date > maxDate) return { enabled: false };
+                if (date < minDate || date > today) return { enabled: false };
                 return;
             },
         });

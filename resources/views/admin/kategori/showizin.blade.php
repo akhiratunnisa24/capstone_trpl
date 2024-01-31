@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="jenis_izin" class="col-sm-3 col-form-label">Kategori Ijin</label>
+                    <label for="jenis_izin" class="col-sm-3 col-form-label">Kategori Izin</label>
                     <div class="col-sm-9">
                         <label>: {{$data->jenis_izin}}</label>
                     </div>

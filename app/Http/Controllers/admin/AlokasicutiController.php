@@ -48,7 +48,7 @@ class AlokasicutiController extends Controller
                         ->where('alokasicuti.status',1)
                         ->where('karyawan.partner',Auth::user()->partner)
                         ->get();
-            
+
             return view('admin.alokasicuti.index', compact('alokasicuti','row'));
         } else {
 
