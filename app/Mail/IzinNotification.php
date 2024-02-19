@@ -26,14 +26,14 @@ class IzinNotification extends Mailable
     public function build()
     {
         $hrdmanager = $this->data['hrdmanager'] ?? null;
-        $hrdstaff = $this->data['hrdstaff'] ?? null;
+        // $hrdstaff = $this->data['hrdstaff'] ?? null;
+
 
         return $this->from('no-reply@rynest.com')
             ->subject($this->data['subject'])
             ->cc($this->data['karyawan_email'], 'Karyawan')
             ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '', 'Pimpinan')
             ->cc($hrdmanager,'HRD Manager')
-            ->cc($hrdstaff,'HRD Staff')
             ->view('emails.izinindex')->with('data',$this->data);
 
               // ->cc('hrd-global@grm-risk.com','HRD GRM')

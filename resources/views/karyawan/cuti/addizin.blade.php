@@ -25,7 +25,7 @@
                                     <div class="form-group col-sm">
                                         <label for="tglpermohonan" class="form-label">Tanggal Permohonan</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosex" name="tglpermohonan"  autocomplete="off" rows="10" required readonly>
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosex" name="tglpermohonan"  autocomplete="off" rows="10" required>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>
@@ -176,6 +176,7 @@
     </script>
 
     <script type="text/javascript">
+    $('#id_jenisizin').prop('required', true);
         //show/hide clockpicker when id_jenisizin selected
         $(function()
         {
@@ -201,6 +202,7 @@
                     $('#tanggalmulai').prop("hidden", false);
                     $('#tanggalselesai').prop("hidden", false);
                     $('#jumlahhari').prop("hidden", false);
+                    $('#datepicker-autoclosed').prop('required', true);
                 }
                 // alert('id:' + e.target.value);
             });

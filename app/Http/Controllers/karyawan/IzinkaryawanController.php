@@ -258,34 +258,26 @@ class IzinkaryawanController extends Controller
                     'jml_hari'    =>$izin->jml_hari,
                     'jml_jam'     => 0,
                     'status'      =>$status->name_status,
-                    'jam_mulai'   =>$izin->jam_mulai,
-                    'jam_selesai' =>$izin->jam_selesai,
+                    'jam_mulai'   =>$izin->jam_mulai ?? "-" ,
+                    'jam_selesai' =>$izin->jam_selesai ?? "-",
                     'nama_atasan' =>$atasan->nama,
                     'jabatan'     =>strtoupper($atasan->jabatan),
                 ];
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
+                }else{
+                    $data['atasan2'] = '-';
                 }
 
                 if($hrdmng !== null)
                 {
                     $data['hrdmanager'] = $hrdmng;
-                }
-
-                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
-                $data['hrdstaff'] = null;
-                if($hrdstaff !== null){
-                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
-                    $hrdstf = $hrdstf->email;
-
-                    if($hrdstf !== null)
-                    {
-                        $data['hrdstaff'] = $hrdstf;
-                    }
+                }else{
+                    $data['hrdmanager'] = '-';
                 }
 
                 Mail::to($tujuan)->send(new IzinNotification($data));
-                // dd($data);
+
                 return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
             }
             else
