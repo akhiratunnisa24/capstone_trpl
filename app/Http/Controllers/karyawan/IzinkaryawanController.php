@@ -276,9 +276,9 @@ class IzinkaryawanController extends Controller
                     $data['hrdmanager'] = '';
                 }
 
-
-                Mail::to($tujuan)->send(new IzinNotification($data));
                 dd($data);
+                Mail::to($tujuan)->send(new IzinNotification($data));
+
                 return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
             }
             else
