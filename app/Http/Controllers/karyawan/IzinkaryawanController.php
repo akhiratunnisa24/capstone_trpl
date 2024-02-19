@@ -266,18 +266,19 @@ class IzinkaryawanController extends Controller
                 if($atasan2 !== NULL){
                     $data['atasan2'] = $atasan2->email;
                 }else{
-                    $data['atasan2'] = '-';
+                    $data['atasan2'] = '';
                 }
 
                 if($hrdmng !== null)
                 {
                     $data['hrdmanager'] = $hrdmng;
                 }else{
-                    $data['hrdmanager'] = '-';
+                    $data['hrdmanager'] = '';
                 }
 
-                Mail::to($tujuan)->send(new IzinNotification($data));
 
+                Mail::to($tujuan)->send(new IzinNotification($data));
+                dd($data);
                 return redirect()->route('cuti_karyawan',['tipe'=>2])->with('pesan','Permohonan Izin Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim kepada Atasan');
             }
             else
