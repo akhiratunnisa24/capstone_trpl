@@ -31,7 +31,7 @@ class ResignAtasan2Notification extends Mailable
      */
     public function build()
     {
-        return $this->from('no-reply@rynest.com')
+        return $this->from('no-reply@rynest-technology.com')
             ->subject($this->data['subject'])
             ->cc($this->data['karyawan_email'], 'Karyawan')
             ->view('emails.resign2index')->with('data',$this->data);

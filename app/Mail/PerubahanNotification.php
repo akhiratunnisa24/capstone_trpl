@@ -28,52 +28,47 @@ class PerubahanNotification extends Mailable
     {
        if($this->data['status'] == "Mengajukan Perubahan")
        {
-            return $this->from('no-reply@rynest.com')
+            return $this->from('no-reply@rynest-technology.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['karyawan_email'], 'Karyawan')
                 ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '','Pimpinan Unit Kerja')
-                ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
-                ->view('emails.cutibatal')->with('data',$this->data);   
+                ->cc('akhiratunnisahasanah0917@gmail.com','HRD')
+                ->view('emails.cutibatal')->with('data',$this->data);
        }
        elseif($this->data['status'] == "Perubahan Disetujui Atasan")
        {
-            return $this->from('no-reply@rynest.com')
+            return $this->from('no-reply@rynest-technology.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['karyawan_email'], 'Karyawan')
-                ->view('emails.cutibatal')->with('data',$this->data);  
+                ->view('emails.cutibatal')->with('data',$this->data);
        }
        elseif($this->data['status'] == "Perubahan Disetujui")
        {
-            return $this->from('no-reply@rynest.com')
+            return $this->from('no-reply@rynest-technology.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['atasan1'], 'Atasan')
                 ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '','Pimpinan Unit Kerja')
-                ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
-                ->view('emails.cutibatal')->with('data',$this->data);  
+                ->cc('akhiratunnisahasanah0917@gmail.com','HRD')
+                ->view('emails.cutibatal')->with('data',$this->data);
        }
        elseif($this->data['status'] == "Pending Atasan")
        {
-            return $this->from('no-reply@rynest.com')
+            return $this->from('no-reply@rynest-technology.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['atasan1'], 'Atasan')
                 ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '','Pimpinan Unit Kerja')
-                ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
-                ->view('emails.cutibatal')->with('data',$this->data);  
+                ->cc('akhiratunnisahasanah0917@gmail.com','HRD')
+                ->view('emails.cutibatal')->with('data',$this->data);
        }
        else
        {
-            return $this->from('no-reply@rynest.com')
+            return $this->from('no-reply@rynest-technology.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['atasan1'], 'Atasan')
                 ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '','Pimpinan Unit Kerja')
-                ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
-                ->view('emails.cutibatal')->with('data',$this->data); 
+                ->cc('akhiratunnisahasanah0917@gmail.com','HRD')
+                ->view('emails.cutibatal')->with('data',$this->data);
        }
-      
-
-            // ->cc('hrd-global@grm-risk.com','HRD GRM')
-            // ->cc('pandu@grm-risk.com','HRD Staff')
-            // ->cc('ariswan@grm-risk.com','HRD Manager')
     }
 
 }

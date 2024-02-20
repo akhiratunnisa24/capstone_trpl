@@ -29,16 +29,12 @@ class CutiNotification extends Mailable
         $hrdmanager = $this->data['hrdmanager'] ?? null;
         $hrdstaff = $this->data['hrdstaff'] ?? null;
 
-        return $this->from('no-reply@rynest.com')
+        return $this->from('no-reply@rynest-technology.com')
             ->subject($this->data['subject'])
             ->cc($this->data['karyawan_email'], 'Karyawan')
             ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '','Pimpinan Unit Kerja')
             ->cc($hrdmanager,'HRD Manager')
             ->cc($hrdstaff,'HRD Staff')
-            ->view('emails.cutiindex')->with('data',$this->data);   
-
-            // ->cc('hrd-global@grm-risk.com','HRD GRM')
-            // ->cc('pandu@grm-risk.com','HRD Staff')
-            // ->cc('ariswan@grm-risk.com','HRD Manager')
+            ->view('emails.cutiindex')->with('data',$this->data);
     }
 }

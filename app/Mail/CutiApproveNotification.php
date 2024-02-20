@@ -43,14 +43,13 @@ class CutiApproveNotification extends Mailable
             $hrdmanager = $this->data['hrdmanager'] ?? null;
             $hrdstaff = $this->data['hrdstaff'] ?? null;
 
-            $email = $this->from('no-reply@rynest.com')
+            $email = $this->from('no-reply@rynest-technology.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['atasan1'], 'Atasan Pertama')
                 ->cc($hrdmanager,'HRD Manager')
                 ->cc($hrdstaff,'HRD Staff')
-                // ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
                 ->view('emails.cutiApprove')->with('data',$this->data);
-                
+
             if (isset($this->data['atasan2']) && $this->data['atasan2'] !== null) {
                 $email->cc($this->data['atasan2'], 'Atasan Kedua');
             }

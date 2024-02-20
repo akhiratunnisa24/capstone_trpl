@@ -29,7 +29,7 @@ class ResignTolakNotification extends Mailable
         $hrdmanager = $this->data['hrdmanager'] ?? null;
         $hrdstaff = $this->data['hrdstaff'] ?? null;
 
-        return $this->from('no-reply@rynest.com')
+        return $this->from('no-reply@rynest-technology.com')
             ->subject($this->data['subject'])
             ->cc($this->data['karyawan_email'], 'Karyawan')
             ->cc($this->data['atasan1'], 'Atasan Karyawan')

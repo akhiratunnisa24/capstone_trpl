@@ -35,10 +35,10 @@ class RekruitmenNotification extends Mailable
         // ->view('emails.cutiindex')->with('data', $this->data);
 
         return $this
-        ->from('no-reply@rynest.com')
+        ->from('no-reply@rynest-technology.com')
         ->subject('Pemberitahuan Hasil Rekruitmen ' . $this->data->nama_perusahaan)
         ->view('emails.RekruitmenNotif')->with('data', $this->data);
     }
 
-    
+
 }
