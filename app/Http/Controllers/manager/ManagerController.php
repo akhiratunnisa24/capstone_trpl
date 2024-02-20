@@ -2216,7 +2216,7 @@ class ManagerController extends Controller
 
                 Mail::to($tujuan)->send(new IzinApproveNotification($data));
 
-                return redirect()->route('cuti.Staff',['tp'=>2])->with('success','Permintaan ' . $jenisizin->jenis_izin . ' dari ' . ucwords(strtolower($emailkry->nama)) . ' disetujui');
+                return redirect()->route('cuti_Staff',['tp'=>2])->with('success','Permintaan ' . $jenisizin->jenis_izin . ' dari ' . ucwords(strtolower($emailkry->nama)) . ' disetujui');
             }
             else{
                 return redirect()->back();
@@ -2460,7 +2460,7 @@ class ManagerController extends Controller
             }
 
             Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-            return redirect()->route('cuti.Staff',['type'=>2])->withInput();
+            return redirect()->route('cuti_Staff',['type'=>2])->withInput();
 
         }
         elseif($dataizin && $role == 1 && $row->jabatan == "Asistant Manager")
@@ -2558,7 +2558,7 @@ class ManagerController extends Controller
                 }
             }
             Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-            return redirect()->route('cuti.Staff',['type'=>2])->withInput();
+            return redirect()->route('cuti_Staff',['type'=>2])->withInput();
 
         }
         elseif($dataizin && $role == 3 && $row->jabatan == "Manager")
@@ -2762,7 +2762,7 @@ class ManagerController extends Controller
                 }
 
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->route('cuti.Staff',['type'=>2])->withInput();
+                return redirect()->route('cuti_Staff',['type'=>2])->withInput();
 
             }else{
                 return redirect()->back();
