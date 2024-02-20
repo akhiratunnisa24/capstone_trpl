@@ -43,7 +43,7 @@ class ResignApproveNotification extends Mailable
             $hrdmanager = $this->data['hrdmanager'] ?? null;
             $hrdstaff = $this->data['hrdstaff'] ?? null;
 
-            $email = $this->from('no-reply@rynest.com')
+            $email = $this->from('no-reply@rynest-technology.com')
                 ->subject($this->data['subject'])
                 ->cc($this->data['atasan1'], 'Atasan Pertama')
                 ->cc($hrdmanager,'HRD Manager')

@@ -32,7 +32,7 @@ class RekruitmenDiterimaNotification extends Mailable
         }
 
         $this->lowongan = $lowongan;
-    }   
+    }
 
 
     /**
@@ -47,7 +47,7 @@ class RekruitmenDiterimaNotification extends Mailable
         // ->view('emails.cutiindex')->with('data', $this->data);
 
         return $this
-            ->from('no-reply@rynest.com')
+            ->from('no-reply@rynest-technology.com')
             ->subject('Pemberitahuan Penerimaan di ' . $this->data->nama_perusahaan)
             ->view('emails.RekruitmenDiterimaNotif')
             ->with('data', $this->data)

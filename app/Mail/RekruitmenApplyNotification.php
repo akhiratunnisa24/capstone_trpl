@@ -36,7 +36,7 @@ class RekruitmenApplyNotification extends Mailable
     {
 
         return $this
-            ->from( 'no-reply@rynest.com')
+            ->from( 'no-reply@rynest-technology.com')
             ->subject('Pemberitahuan Apply Rekruitmen GRM')
             ->subject('Pemberitahuan Apply Rekruitmen ' . $this->data->nama_perusahaan)
             ->view('emails.RekruitmenApplyNotif')
@@ -44,5 +44,5 @@ class RekruitmenApplyNotification extends Mailable
             ->with('posisi', $this->lowongan);
 
     }
-    
+
 }

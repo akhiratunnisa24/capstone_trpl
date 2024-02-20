@@ -28,14 +28,13 @@ class CutiIzinTolakNotification extends Mailable
         $hrdmanager = $this->data['hrdmanager'] ?? null;
         $hrdstaff = $this->data['hrdstaff'] ?? null;
 
-        return $this->from('no-reply@rynest.com')
+        return $this->from('no-reply@rynest-technology.com')
             ->subject($this->data['subject'])
             ->cc($this->data['karyawan_email'], 'Karyawan')
             ->cc($this->data['atasan1'], 'Atasan Karyawan')
             ->cc(isset($this->data['atasan2']) ? $this->data['atasan2'] : '', 'Pimpinan')
             ->cc($hrdmanager,'HRD Manager')
             ->cc($hrdstaff,'HRD Staff')
-            // ->cc('akhiratunnisahasanah0917@gmail.com','HRD GRM')
             ->view('emails.tolakindex')->with('data',$this->data);
     }
     /**
