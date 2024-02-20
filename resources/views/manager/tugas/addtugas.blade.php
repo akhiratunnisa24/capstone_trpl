@@ -14,7 +14,7 @@
                 <h4 class="modal-title text-center" id="myModalLabel">Tambah Tugas</h4>
             </div>
             <div class="modal-body">
-                <form action="{{route ('timkaryawan.store')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route ('tugaskaryawan.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="form-group col-sm">

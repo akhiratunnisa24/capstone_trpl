@@ -20,12 +20,12 @@ class TimKaryawanController extends Controller
     public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $role = Auth::user()->role;  
+        $role = Auth::user()->role;
         if($role == 3)
         {
             $tim = Tim::where('divisi',$row->divisi)->get();
             $departemen = Departemen::where('id', $row->divisi)->first();
-    
+
             return view('manager.tugas.index', compact('departemen','tim','row','role'));
         }
         else{
@@ -46,7 +46,7 @@ class TimKaryawanController extends Controller
         $tim->deskripsi = $request->deskripsi;
 
         $tim->save();
-    
+
         return redirect()->back()->with('pesan','Data Tim berhasil ditambahkan !');
 
     }
@@ -57,7 +57,7 @@ class TimKaryawanController extends Controller
         $tim->update($request->all());
 
         return redirect()->back();
-        
+
     }
 
     public function destroy($id)
@@ -73,14 +73,14 @@ class TimKaryawanController extends Controller
     public function indexs(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $role = Auth::user()->role;  
+        $role = Auth::user()->role;
         if($role == 3)
         {
             $timkaryawan = Timkaryawan::where('divisi', $row->divisi)->get();
             $tim         = Tim::where('divisi', $row->divisi)->get();
             $departemen = Departemen::where('id', $row->divisi)->first();
             $karyawan   = Karyawan::where('divisi',$row->divisi)->get();
-    
+
             return view('manager.tugas.indexs', compact('tim','departemen','timkaryawan','row','role','karyawan'));
         }
         else{
@@ -112,30 +112,30 @@ class TimKaryawanController extends Controller
             'id_karyawan' => 'required',
             'divisi' => 'required',
         ]);
-    
+
         // Melakukan pengecekan untuk memastikan data tidak terduplikasi
         $timkaryawan = Timkaryawan::firstOrNew([
             'id_tim' => $request->id_tim,
             'id_karyawan' => $request->id_karyawan,
             'divisi' => $request->divisi,
         ]);
-    
+
         if (!$timkaryawan->exists) {
             $timkaryawan->save();
             return redirect()->back()->with('pesan', 'Data Tim berhasil ditambahkan!');
         }
-    
+
         return redirect()->back()->with('pesa', 'Data Tim sudah ada!');
     }
-    
-    
+
+
     // public function updates(Request $request, $id)
     // {
     //     $timkaryawan = Timkaryawan::find($id);
     //     $timkaryawan->update($request->all());
 
     //     return redirect()->back();
-        
+
     // }
 
     public function destroys($id)

@@ -145,7 +145,7 @@ Route::get('data_rekrutmen', [RekruitmenController::class, 'index'])->name('data
 Route::post('store_rekrutmen', [RekruitmenController::class, 'store'])->name('store_rekrutmen');
 Route::get('show_rekrutmen{id}', [RekruitmenController::class, 'show'])->name('show_rekrutmen');
 
-Route::put('rekrutmenupdate{id}', [RekruitmenController::class, 'rekrutmenupdate'])->name('update');
+Route::put('rekrutmenupdate{id}', [RekruitmenController::class, 'rekrutmenupdate'])->name('rekrutmenupdate');
 
 Route::get('show_formSelesai', [RekruitmenController::class, 'formSelesai'])->name('formSelesai');
 Route::get('show_kanidat{id}', [RekruitmenController::class, 'show_kanidat'])->name('show_kanidat');
@@ -280,7 +280,7 @@ Route::get('/getlibursdata', [IzinkaryawanController::class, 'getLiburdata'])->n
 //resign
 Route::get('/resign-karyawan', [ResignController::class, 'index'])->name('resign_karyawan');
 Route::post('/resign_karyawan', [ResignController::class, 'store'])->name('resignkaryawan.store');
-Route::get('/resign_karyawan/{id}', [ResignController::class, 'show'])->name('resign.show');
+Route::get('/resign_karyawan/{id}', [ResignController::class, 'show'])->name('resignshow');
 Route::get('resigndelete{id}', [ResignController::class, 'delete'])->name('resign.delete');
 
 
@@ -317,7 +317,7 @@ Route::post('/import-csv', [AbsensisController::class, 'importcsv'])->name('impo
 
 //cuti
 Route::get('/permintaan_cuti', [CutiadminController::class, 'index'])->name('permintaancuti.index');
-Route::post('/permintaan_cuti/{id}', [CutiadminController::class, 'update'])->name('cuti.update');
+Route::post('/permintaan_cuti/{id}', [CutiadminController::class, 'update'])->name('cuti.updates');
 Route::post('/permintaan/{id}', [CutiadminController::class, 'tolak'])->name('cuti.tolak');
 Route::get('/getkaryawan', [CutiadminController::class, 'getkaryawan'])->name('get.Karyawan');
 Route::get('/getcuti', [CutiadminController::class, 'getCuti'])->name('get.Cuti');
@@ -480,7 +480,7 @@ Route::get('/export-all-excel', [ManagerController::class, 'exportallExcel'])->n
 Route::get('/export-to-excel', [ManagerController::class, 'exportToExcel'])->name('export.ToExcel');
 //cuti dan izin
 
-Route::get('/cuti-staff', [ManagerController::class, 'cutiStaff'])->name('cuti.Staff');
+Route::get('/cuti-staff', [ManagerController::class, 'cutiStaff'])->name('cuti_Staff');
 Route::post('/cuti-staff/{id}', [ManagerController::class, 'cutiapproved'])->name('cuti.approved');
 Route::post('/cuti-reject/{id}', [ManagerController::class, 'cutireject'])->name('cuti.reject');
 Route::post('/batal-cuti-staff/{id}', [PembatalanPerubahanController::class, 'batalApprove'])->name('batal.approved');
@@ -500,7 +500,7 @@ Route::get('/rekapizinexcel', [CutiizinController::class, 'rekapizinExcel'])->na
 Route::get('/rekapizinPdf', [CutiizinController::class, 'rekapizinpdf'])->name('rekapizin.pdf');
 
 Route::get('/resign_manager', [ManagerController::class, 'resignStaff'])->name('resignstaff');
-Route::get('/resignmanager/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
+Route::get('/resignmanager/{id}', [ResignAdminController::class, 'show'])->name('resign_show');
 Route::post('/permintaan_resign/{id}', [ResignAdminController::class, 'approve_atasan2'])->name('resign_approved');
 Route::post('/permintaan_resign_manager/{id}', [ResignAdminController::class, 'approve_atasan1'])->name('resign_approved_manager');
 Route::post('/permintaanresign_reject/{id}', [ResignAdminController::class, 'reject'])->name('resign_reject');
@@ -518,13 +518,13 @@ Route::get('/tim-delete{id}', [TimKaryawanController::class, 'destroy'])->name('
 //tim karyawan
 Route::get('/tim-karyawan', [TimKaryawanController::class, 'indexs'])->name('timkaryawan.index');
 Route::post('/tim-karyawan', [TimKaryawanController::class, 'stores'])->name('timkaryawan.store');
-Route::put('/tugas-update/{id}', [TimKaryawanController::class, 'update'])->name('tim.update');
+Route::put('/tugas-update/{id}', [TimKaryawanController::class, 'update'])->name('tugas.update');
 Route::get('/tim-karyawan-delete{id}', [TimKaryawanController::class, 'destroys'])->name('timkaryawan.delete');
 // Route::post('/getNik', [TimKaryawanController::class, 'getNik'])->name('get.nik');
 
 //tugas karyawan
 Route::get('/tugas-karyawan', [TugasKaryawanController::class, 'index'])->name('tugas.index');
-Route::post('/tugas-karyawan', [TugasKaryawanController::class, 'stores'])->name('timkaryawan.store');
+Route::post('/tugas-karyawan', [TugasKaryawanController::class, 'stores'])->name('tugaskaryawan.store');
 Route::post('/getNik', [TugasKaryawanController::class, 'getNik'])->name('get.nik');
 Route::post('/getTim', [TugasKaryawanController::class, 'getTim'])->name('get.tim');
 
@@ -618,11 +618,11 @@ Route::delete('/delete-pendidikan', [KaryawansController::class, 'deletePendidik
 // Show Pendidikan Karyawan
 Route::get('showpendidikan{id}', [karyawanController::class, 'showpendidikan'])->name('showpendidikan');
 // Update saat data sudah di database
-Route::put('/updatePendidikan/{id}', [karyawansController::class, 'updatePendidikan'])->name('updatePendidikan');
+Route::put('/updatePendidikan/{id}', [karyawansController::class, 'updatePendidikan'])->name('update_Pendidikan');
 // Tambah Data Pendidikan Formal Karyawan saat data sudah di database / saat Show
 Route::post('addpformal{id}', [karyawanController::class, 'addpformal'])->name('addpformal');
 // Tambah Data Pendidikan nonFormal Karyawan saat data sudah di database / saat Show
-Route::post('/storespnformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
+Route::post('/storespnformal/{id}', [karyawansController::class, 'storespformal'])->name('stores_pformal');
 // Delete Pendidikan
 Route::get('/destroyPendidikan{id}', [karyawanController::class, 'destroyPendidikan'])->name('destroyPendidikan');
 Route::get('/deletePendidikan{id}', [karyawanController::class, 'deletePendidikan'])->name('deletePendidikan');
@@ -639,7 +639,7 @@ Route::post('/storepekerjaan', [karyawansController::class, 'storepekerjaan'])->
 // Show Data Pekerjaan
 Route::get('showpekerjaan{id}', [karyawanController::class, 'showpekerjaan'])->name('showpekerjaan');
 // Edit Data Pekerjaan saat data sudah di database / saat Show
-Route::put('/updatePekerjaan/{id}', [karyawansController::class, 'updatePekerjaan'])->name('updatePekerjaan');
+Route::put('/updatePekerjaan/{id}', [karyawansController::class, 'updatePekerjaan'])->name('update_Pekerjaan');
 // Delete Pekerjaan
 Route::get('/destroyPekerjaan{id}', [karyawanController::class, 'destroyPekerjaan'])->name('destroyPekerjaan');
 
@@ -652,7 +652,7 @@ Route::delete('/delete-organisasi', [KaryawansController::class, 'deleteOrganisa
 // Tambah Data Organisasi saat data sudah di database / saat Show
 Route::post('/storesorganisasi/{id}', [karyawansController::class, 'storesorganisasi'])->name('storesorganisasi');
 // Edit Data Pekerjaan saat data sudah di database / saat Show
-Route::put('/updateOrganisasi/{id}', [karyawansController::class, 'updateOrganisasi'])->name('updateOrganisasi');
+Route::put('/updateOrganisasi/{id}', [karyawansController::class, 'updateOrganisasi'])->name('update_Organisasi');
 // Delete Organisasi
 Route::get('/destroyOrganisasi{id}', [karyawanController::class, 'destroyOrganisasi'])->name('destroyOrganisasi');
 

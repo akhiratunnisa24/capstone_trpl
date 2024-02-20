@@ -68,7 +68,7 @@
                                                 <div class="form-group">
                                                     <label for="tgl_mulai" class="form-label">Tanggal Pelaksanaan</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosec" name="tgl_mulai" onchange=(jumlahhari()) autocomplete="off" required readonly>
+                                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosec" name="tgl_mulai" onchange=(jumlahhari()) autocomplete="off" required>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
@@ -80,7 +80,7 @@
                                                 <div class="form-group">
                                                     <label for="tgl_selesai" class="form-label">Sampai</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosed" name="tgl_selesai"  onchange=(jumlahhari()) autocomplete="off" readonly>
+                                                        <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosed" name="tgl_selesai"  onchange=(jumlahhari()) autocomplete="off">
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>

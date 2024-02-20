@@ -51,8 +51,8 @@ return [
             'host' => 'smtp.sendgrid.net',
             'port' => 587,
             'encryption' => 'tls',
-            'username' => env('SENDGRID_USERNAME'),
-            'password' => env('SENDGRID_PASSWORD'),
+            'username' => env('MAIL_USERNAME'),
+            'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
         ],
 
