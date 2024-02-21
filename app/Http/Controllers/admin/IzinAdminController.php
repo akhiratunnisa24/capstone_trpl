@@ -27,7 +27,7 @@ use App\Mail\CutiIzinTolakNotification;
 
 class IzinAdminController extends Controller
 {
-    
+
     /**
      * Create a new controller instance.
      *
@@ -41,8 +41,8 @@ class IzinAdminController extends Controller
      public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $role = Auth::user()->role; 
-        if ($role == 1 || $role == 2) 
+        $role = Auth::user()->role;
+        if ($role == 1 || $role == 2)
         {
             $type = $request->query('type', 1);
 
@@ -59,13 +59,13 @@ class IzinAdminController extends Controller
              $idpegawai = $request->id_karyawan;
              $month = $request->query('month', Carbon::now()->format('m'));
              $year = $request->query('year', Carbon::now()->format('Y'));
- 
+
              // simpan session
              $request->session()->put('idpegawai', $request->id_karyawan);
              $request->session()->put('month', $month);
              $request->session()->put('year', $year);
- 
-            if(isset($idpegawai) && isset($month) && isset($year)) 
+
+            if(isset($idpegawai) && isset($month) && isset($year))
             {
                 $izin = DB::table('izin')->leftjoin('statuses','izin.status','=','statuses.id')
                     ->leftjoin('datareject','datareject.id_izin','=','izin.id')
@@ -106,9 +106,9 @@ class IzinAdminController extends Controller
                     ->orderBy('created_at', 'DESC')
                     ->get();
         return view('admin.cuti.index', compact('izin','cuti','type','row','karyawann','karyawan','pegawais','role'));
-        } else 
+        } else
         {
-            return redirect()->back(); 
+            return redirect()->back();
         }
 
             $request->session()->forget('id_karyawan');
@@ -120,12 +120,12 @@ class IzinAdminController extends Controller
             $request->session()->forget('month');
             $request->session()->forget('year');
     }
-    
+
     public function show($id)
     {
         $izin = Izin::findOrFail($id);
         $karyawan = Auth::user()->id_pegawai;
- 
+
         return view('admin.cuti.index',compact('izin','karyawan',['type'=>2]));
     }
 
@@ -168,7 +168,7 @@ class IzinAdminController extends Controller
                 ->first();
             $atasan2 = Auth::user()->email;
             $tujuan = $emailkry->email;
-            
+
             $partner = $emailkry->partner;
             $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
             if($hrdmanager !== null){
@@ -248,11 +248,11 @@ class IzinAdminController extends Controller
                     ->select('email as email','nama as nama','nama_jabatan as jabatan','divisi as departemen')
                     ->first();
             }
-            
+
             $tujuan =$atasan2->email ?? null;
 
             //email atasan kedua adalah tujuan utama
-            
+
             $data = [
                 'subject'     =>'Notifikasi Approval Pertama Permohonan Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
                 'id'          =>$izinn->id,
@@ -307,13 +307,13 @@ class IzinAdminController extends Controller
                     'tgl_ditolak' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $izz = Izin::where('id',$id)->first();
-    
+
                 $datareject          = new Datareject;
                 $datareject->id_cuti = NULL;
                 $datareject->id_izin = $izz->id;
                 $datareject->alasan  = $request->alasan;
-                $datareject->save();   
-        
+                $datareject->save();
+
                 $izin = DB::table('izin')
                     ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
                     ->join('statuses','izin.status','=','statuses.id')
@@ -321,15 +321,15 @@ class IzinAdminController extends Controller
                     ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
                     ->first();
                 $alasan = Datareject::where('id_izin',$izin->id)->first();
-        
+
                 //KIRIM EMAIL KE KARAYWAN> 2 tingkat atasan
                 $karyawan = DB::table('izin')
                     ->join('karyawan','izin.id_karyawan','=','karyawan.id')
                     ->join('departemen','izin.departemen','=','departemen.id')
                     ->where('izin.id',$izin->id)
                     ->select('karyawan.email as email','karyawan.partner','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
-               
+                    ->first();
+
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -343,13 +343,13 @@ class IzinAdminController extends Controller
                 }
 
                 $partner = $karyawan->partner;
-            
+
                 $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
                 if($hrdmanager !== null){
                     $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
                     $hrdmng = $hrdmng->email;
                 }
-    
+
                 $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
                 if($hrdstaff !== null){
                     $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
@@ -401,7 +401,7 @@ class IzinAdminController extends Controller
                 }
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
                 return redirect()->back()->withInput();
-                
+
             }elseif($dataizin && $dataizin->atasan_pertama == Auth::user()->id_pegawai)
             {
                 $status = Status::find(9);
@@ -410,13 +410,13 @@ class IzinAdminController extends Controller
                     'tgl_ditolak' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $izz = Izin::where('id',$id)->first();
-    
+
                 $datareject          = new Datareject;
                 $datareject->id_cuti = NULL;
                 $datareject->id_izin = $izz->id;
                 $datareject->alasan  = $request->alasan;
-                $datareject->save();   
-        
+                $datareject->save();
+
                 $izin = DB::table('izin')
                     ->join('jenisizin','izin.id_jenisizin','=','jenisizin.id')
                     ->join('statuses','izin.status','=','statuses.id')
@@ -424,18 +424,18 @@ class IzinAdminController extends Controller
                     ->select('izin.*','jenisizin.jenis_izin as jenis_izin','statuses.name_status')
                     ->first();
                 $alasan = Datareject::where('id_izin',$izin->id)->first();
-        
+
                 //KIRIM EMAIL KE KARAYWAN> 2 tingkat atasan
                 $karyawan = DB::table('izin')
                     ->join('karyawan','izin.id_karyawan','=','karyawan.id')
                     ->join('departemen','izin.departemen','=','departemen.id')
                     ->where('izin.id',$izin->id)
                     ->select('karyawan.email as email','karyawan.partner','departemen.nama_departemen','karyawan.nama as nama','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
-        
+
                 $atasan2 = NULL;
                 if($karyawan->atasan_kedua !== NULL){
                     $atasan2 = Karyawan::where('id',$karyawan->atasan_kedua)
@@ -444,13 +444,13 @@ class IzinAdminController extends Controller
                 }
 
                 $partner = $karyawan->partner;
-            
+
                 $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
                 if($hrdmanager !== null){
                     $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
                     $hrdmng = $hrdmng->email;
                 }
-    
+
                 $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
                 if($hrdstaff !== null){
                     $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
@@ -486,7 +486,7 @@ class IzinAdminController extends Controller
                     'tglditolak' => Carbon::parse($izin->tgl_ditolak)->format("d/m/Y H:i"),
                 ];
 
-                
+
                 if($atasan2 !== NULL)
                 {
                     $data['atasan2'] = $atasan2->email;
@@ -497,14 +497,14 @@ class IzinAdminController extends Controller
                 {
                     $data['hrdmanager'] = $hrdmng;
                 }
-    
+
                 if($hrdstf !== null)
                 {
                     $data['hrdstaff'] = $hrdstf;
                 }
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
                 return redirect()->back()->withInput();
-                
+
             }else{
                 return redirect()->back();
             }
@@ -512,7 +512,7 @@ class IzinAdminController extends Controller
         else{
             return redirect()->back();
         }
-        
+
     }
 
     public function rekapizinExcel(Request $request)
@@ -537,11 +537,11 @@ class IzinAdminController extends Controller
                 ->whereMonth('izin.tgl_mulai', $month)
                 ->whereYear('izin.tgl_mulai', $year)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
-               
-            if ($data->isEmpty()) 
+
+            if ($data->isEmpty())
             {
                 return redirect()->back()->with('pesa','Tidak Ada Data');
-            } 
+            }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
                 return Excel::download(new IzinExport($data, $idpegawai), "Rekap Ijin dan Sakit Bulan " . $nbulan . " " . ucwords(strtolower($data->first()->karyawans->nama)) . ".xlsx");
@@ -556,11 +556,11 @@ class IzinAdminController extends Controller
             ->whereYear('izin.tgl_mulai', $year)
             ->where('karyawan.partner', Auth::user()->partner)
             ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
-           
-            if ($data->isEmpty()) 
+
+            if ($data->isEmpty())
             {
                 return redirect()->back()->with('pesa','Tidak Ada Data');
-            } 
+            }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
                 return Excel::download(new IzinExport($data, $idpegawai), "Rekap Ijin dan Sakit Bulan " . $nbulan . " " . ".xlsx");
@@ -573,17 +573,17 @@ class IzinAdminController extends Controller
                 ->leftjoin('jenisizin','izin.id_jenisizin','=','jenisizin.id')
                 ->where('karyawan.partner', Auth::user()->partner)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
-            
-           
-            if ($data->isEmpty()) 
+
+
+            if ($data->isEmpty())
             {
                 return redirect()->back()->with('pesa','Tidak Ada Data');
-            } 
+            }
             else {
                  return Excel::download(new IzinExport($data, $idpegawai), "Rekap Ijin dan Sakit Karyawan.xlsx");
             }
         }
-       
+
     }
 
     public function rekapizinpdf(Request $request)
@@ -594,7 +594,7 @@ class IzinAdminController extends Controller
         // $data = Izin::leftjoin('statuses', 'izin.status', '=', 'statuses.id')
         // ->leftjoin('karyawan', 'izin.id_karyawan', '=', 'karyawan.id')
         // ->leftjoin('departemen','izin.departemen','=','departemen.id')
-        // ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']); 
+        // ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
 
         $idpegawai = $request->idpegawai;
         $month     = $request->query('month', Carbon::now()->format('m'));
@@ -615,11 +615,11 @@ class IzinAdminController extends Controller
                 ->whereMonth('izin.tgl_mulai', $month)
                 ->whereYear('izin.tgl_mulai', $year)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
-            
-            if ($data->isEmpty()) 
+
+            if ($data->isEmpty())
             {
                 return redirect()->back()->with('pesa','Tidak Ada Data');
-            } 
+            }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
                 $pdfName = "Rekap Ijin dan Sakit Bulan " . $nbulan . " " . ucwords(strtolower($data->first()->karyawans->nama)) . ".pdf";
@@ -639,10 +639,10 @@ class IzinAdminController extends Controller
                 ->where('karyawan.partner', Auth::user()->partner)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen','jenisizin.jenis_izin']);
 
-                if ($data->isEmpty()) 
+                if ($data->isEmpty())
                 {
                     return redirect()->back()->with('pesa','Tidak Ada Data');
-                } 
+                }
                 else {
                     $pdfName = "Rekap Ijin dan Sakit Karyawan.pdf";
                     $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai,'setorganisasi'=> $setorganisasi])
@@ -656,11 +656,11 @@ class IzinAdminController extends Controller
                 ->leftjoin('departemen','izin.departemen','=','departemen.id')
                 ->where('karyawan.partner', Auth::user()->partner)
                 ->get(['izin.*', 'statuses.name_status','karyawan.nama','departemen.nama_departemen']);
-            
-            if ($data->isEmpty()) 
+
+            if ($data->isEmpty())
             {
                 return redirect()->back()->with('pesa','Tidak Ada Data');
-            } 
+            }
             else {
                 $pdfName = "Rekap Ijin dan Sakit Karyawan.pdf";
                 $pdf = PDF::loadview('admin.cuti.izinpdf', ['data' => $data, 'idpegawai' => $idpegawai,'setorganisasi'=> $setorganisasi])

@@ -1613,7 +1613,6 @@ class ManagerController extends Controller
 
     public function cutireject(Request $request, $id)
     {
-
         $cutis = Cuti::where('id',$id)->first();
         $datacuti = Cuti::leftjoin('karyawan','cuti.id_karyawan','=','karyawan.id')
             ->where('cuti.id', '=',$cutis->id)
@@ -1624,6 +1623,7 @@ class ManagerController extends Controller
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
         // return $row->jabatan;
+
         if($datacuti && $role == 3 && $row->jabatan == "Asistant Manager")
         {
             if($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
@@ -1724,7 +1724,7 @@ class ManagerController extends Controller
                 }
 
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('error', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
             }else{
                 return redirect()->back();
             }
@@ -1833,7 +1833,7 @@ class ManagerController extends Controller
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
                 // return $data;
             // }else{
-                return redirect()->back();
+                return redirect()->back()->with('error', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
             // }
         }
         else if($datacuti && $role == 3 && $row->jabatan == "Manager")
@@ -1933,10 +1933,11 @@ class ManagerController extends Controller
                 }
 
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('error', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
+
                 // return $datacuti;
                 $status = Status::find(9);
                 // return $status->id;
@@ -2032,8 +2033,8 @@ class ManagerController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->back();
-                // return $data;
+                return redirect()->back()->with('error', 'Permintaan ' . $ct->jenis_cuti . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+
             }
             else{
                 return redirect()->back();
@@ -2276,7 +2277,8 @@ class ManagerController extends Controller
                     'jabatanatasan'=>$atasan->jabatan,
                 ];
                 Mail::to($tujuan)->send(new IzinAtasan2Notification($data));
-                return redirect()->back()->withInput();
+                // return redirect()->back()->withInput();
+                return redirect()->back()->withInput()->with('success','Permintaan ' . $jenisizin->jenis_izin . ' dari ' . ucwords(strtolower($emailkry->nama)) . ' disetujui');
             }
             else
             {
@@ -2342,7 +2344,8 @@ class ManagerController extends Controller
                 // return $data;
                 Mail::to($tujuan)->send(new IzinAtasan2Notification($data));
                 // return $data;
-                return redirect()->back()->withInput();
+                // return redirect()->back()->withInput();
+                return redirect()->back()->withInput()->with('success','Permintaan ' . $jenisizin->jenis_izin . ' dari ' . ucwords(strtolower($emailkry->nama)) . ' disetujui');
             }
             else
             {
@@ -2358,6 +2361,7 @@ class ManagerController extends Controller
 
     public function izinReject(Request $request, $id)
     {
+
         $iz = Izin::where('id',$id)->first();
         $dataizin = Izin::leftjoin('karyawan','izin.id_karyawan','=','karyawan.id')
             ->where('izin.id', '=',$iz->id)
@@ -2411,7 +2415,6 @@ class ManagerController extends Controller
                 $hrdmng = $hrdmng->email;
             }
 
-
             $tujuan = $karyawan->email;
             $data = [
                 'subject'  =>'Notifikasi Permohonan Izin Ditolak, Izin ' . $izin->jenis_izin . ' #' . $izin->id . ' ' . $karyawan->nama,
@@ -2460,7 +2463,8 @@ class ManagerController extends Controller
             }
 
             Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-            return redirect()->route('cuti_Staff',['type'=>2])->withInput();
+            return redirect()->back()->with('error', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+            // return redirect()->route('cuti_Staff',['type'=>2])->withInput();
 
         }
         elseif($dataizin && $role == 1 && $row->jabatan == "Asistant Manager")
@@ -2558,12 +2562,12 @@ class ManagerController extends Controller
                 }
             }
             Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-            return redirect()->route('cuti_Staff',['type'=>2])->withInput();
+            return redirect()->back()->with('error', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+            // return redirect()->route('cuti_Staff',['type'=>2])->withInput();
 
         }
         elseif($dataizin && $role == 3 && $row->jabatan == "Manager")
         {
-
             if($dataizin->atasan_kedua == Auth::user()->id_pegawai)
             {
                 $status = Status::find(10);
@@ -2658,11 +2662,13 @@ class ManagerController extends Controller
                     }
                 }
 
+
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('error', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
 
             }elseif($dataizin && $dataizin->atasan_pertama == Auth::user()->id_pegawai)
             {
+
                 $status = Status::find(9);
                 Izin::where('id',$id)->update([
                     'status' => $status->id,
@@ -2762,7 +2768,8 @@ class ManagerController extends Controller
                 }
 
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->route('cuti_Staff',['type'=>2])->withInput();
+                return redirect()->back()->with('error', 'Permintaan ' . $izin->jenis_izin . ' dari ' . ucwords(strtolower($karyawan->nama)) . ' ditolak');
+                // return redirect()->route('cuti_Staff',['type'=>2])->withInput();
 
             }else{
                 return redirect()->back();
