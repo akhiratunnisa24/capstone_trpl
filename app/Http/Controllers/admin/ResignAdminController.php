@@ -162,7 +162,7 @@ class ResignAdminController extends Controller
         if($hrdmanager !== null){
             $hrdmng = $hrdmanager->karyawans->email;
         }
-        
+
         $hrdstaff   = User::where('partner',$partner->id)->where('role',2)->first();
         if($hrdstaff !== null){
             $hrdstf = $hrdstaff->karyawans->email;
@@ -250,17 +250,13 @@ class ResignAdminController extends Controller
         }
         $tujuan = $emailkry->email;
         $alasan ='';
-        
+
         $partner = $emailkry->partner;
 
-        $hrdmanager = User::where('partner',$partner->id)->where('role',1)->first();
+        $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
         if($hrdmanager !== null){
-            $hrdmng = $hrdmanager->karyawans->email;
-        }
-        
-        $hrdstaff   = User::where('partner',$partner->id)->where('role',2)->first();
-        if($hrdstaff !== null){
-            $hrdstf = $hrdstaff->karyawans->email;
+            $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+            $hrdmng = $hrdmng->email;
         }
 
         $data = [
@@ -295,13 +291,21 @@ class ResignAdminController extends Controller
             $data['hrdmanager'] = $hrdmng;
         }
 
-        if($hrdstf !== null)
-        {
-            $data['hrdstaff'] = $hrdstf;
+        $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+        $data['hrdstaff'] = null;
+        if($hrdstaff !== null){
+            $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+            $hrdstf = $hrdstf->email;
+
+            if($hrdstf !== null)
+            {
+                $data['hrdstaff'] = $hrdstf;
+            }
         }
+
         Mail::to($tujuan)->send(new ResignApproveNotification($data));
 
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->with('success','Permintaan Resign dari ' . $emailkry->nama . ' disetujui');
     }
 
     public function approve_atasan1($id)
@@ -362,7 +366,7 @@ class ResignAdminController extends Controller
         }
         Mail::to($tujuan)->send(new ResignAtasan2Notification($data));
         // dd($resign);
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->with('success','Permintaan Resign dari ' . $emailkry->nama . ' disetujui');
     }
 
     public function reject( $id)
@@ -395,14 +399,10 @@ class ResignAdminController extends Controller
 
         $partner = $emailkry->partner;
 
-        $hrdmanager = User::where('partner',$partner->id)->where('role',1)->first();
+        $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
         if($hrdmanager !== null){
-            $hrdmng = $hrdmanager->karyawans->email;
-        }
-        
-        $hrdstaff   = User::where('partner',$partner->id)->where('role',2)->first();
-        if($hrdstaff !== null){
-            $hrdstf = $hrdstaff->karyawans->email;
+            $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+            $hrdmng = $hrdmng->email;
         }
 
         $data = [
@@ -437,13 +437,21 @@ class ResignAdminController extends Controller
             $data['hrdmanager'] = $hrdmng;
         }
 
-        if($hrdstf !== null)
-        {
-            $data['hrdstaff'] = $hrdstf;
+        $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+        $data['hrdstaff'] = null;
+        if($hrdstaff !== null){
+            $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+            $hrdstf = $hrdstf->email;
+
+            if($hrdstf !== null)
+            {
+                $data['hrdstaff'] = $hrdstf;
+            }
         }
+
         Mail::to($tujuan)->send(new ResignTolakNotification($data));
 
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->with('error','Permintaan Resign dari ' . $emailkry->nama . ' ditolak');
     }
 
     public function getUserData($id)

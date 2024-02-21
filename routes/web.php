@@ -390,7 +390,7 @@ Route::post('/getsettingalokas', [AlokasicutiController::class, 'getSettingaloka
 Route::get('/resign_admin', [ResignAdminController::class, 'index'])->name('resignkaryawan');
 Route::post('/resignadmin', [ResignAdminController::class, 'store'])->name('resign.store');
 Route::get('/resignadmin/{id}', [ResignAdminController::class, 'show'])->name('resign.show');
-Route::post('/permintaanresign/{id}', [ResignAdminController::class, 'approved'])->name('resignapproved');
+Route::post('/permintaanresign/{id}', [ResignAdminController::class, 'approve_atasan2'])->name('resignapproved');
 Route::post('/permintaanresignreject/{id}', [ResignAdminController::class, 'reject'])->name('resignreject');
 Route::get('/getUserData/{id}', [ResignAdminController::class, 'getUserData'])->name('getUserData');
 
