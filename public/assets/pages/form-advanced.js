@@ -38,6 +38,9 @@
         var nextDate = new Date();
         var next = nextDate.setMonth(nextDate.getMonth() + 2);
 
+        var nextDt = new Date();
+        var besok  = nextDt.setDate(nextDt.getDate() + 1);
+
         jQuery("#datepicker-autoclose2").datepicker({
             format: "yyyy/mm/dd",
             autoclose: true,
@@ -872,6 +875,17 @@
             todayHighlight: true,
             beforeShowDay: function (date) {
                 if (date < minDate || date > today) return { enabled: false };
+                return;
+            },
+        });
+        jQuery("#datepicker-autoclosews").datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minDate: minDate,
+            maxDate: besok,
+            todayHighlight: true,
+            beforeShowDay: function (date) {
+                if (date < minDate || date > besok) return { enabled: false };
                 return;
             },
         });

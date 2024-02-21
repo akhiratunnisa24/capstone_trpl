@@ -52,7 +52,7 @@
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $data->nik }}</td>
                                                         <td>{{ $data->karyawans->nama }}</td>
-                                                        <td>{{ $data->jabatan }}</td>
+                                                        <td>{{ $data->karyawans->jabatan }}</td>
                                                         <td>{{ $data->jeniscutis->jenis_cuti }}</td>
                                                         <td>{{ $data->durasi }}</td>
                                                         <td class="text-center">

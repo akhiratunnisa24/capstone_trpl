@@ -45,7 +45,12 @@ class SettingalokasicutiController extends Controller
             $jabatanNull   = Karyawan::where('partner', Auth::user()->partner)->whereNull('nama_jabatan')->where('status_kerja','Aktif')->count();
             $status = ($jabatanNull > 0) ? 0 : 1;
 
-            return view('admin.settingalokasi.setting_index', compact('settingalokasi', 'jeniscuti', 'setal', 'departemen', 'row','jabatanNull','status'));
+            //edit
+            $year = Carbon::now()->format('Y');
+            $alokasiCuti = Alokasicuti::where('partner',$row->partner)->whereYear('aktif_dari',$year)->get();
+            $karyawan   = Karyawan::where('partner',$row->partner)->where('status_kerja','Aktif')->where('tglkeluar', null)->get();
+
+            return view('admin.settingalokasi.setting_index', compact('settingalokasi', 'jeniscuti', 'setal', 'departemen', 'row','jabatanNull','status','karyawan','alokasiCuti'));
         } else {
 
             return redirect()->back();
@@ -54,8 +59,6 @@ class SettingalokasicutiController extends Controller
 
     public function store(Request $request)
     {
-
-        // dd($request->id_jeniscuti);
         $year = date('Y');
 
         if ($request->id_jeniscuti != 1)
@@ -69,7 +72,6 @@ class SettingalokasicutiController extends Controller
                 ->where('partner', $request->partner)
                 ->whereYear('periode', '=', $year)
                 ->first();
-            // dd($cek);
             if(!$cek)
             {
                 $settingalokasi = new Settingalokasi;
@@ -81,7 +83,6 @@ class SettingalokasicutiController extends Controller
                 $settingalokasi->periode = $year;
                 $settingalokasi->status  = 1;
                 $settingalokasi->partner  = $request->partner;
-                // dd($settingalokasi);
 
                 $settingalokasi->save();
 
@@ -170,7 +171,7 @@ class SettingalokasicutiController extends Controller
                 Log::info('data sudah ada');
             }
             // dd($cek);
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->with('success','Setting Alokasi Cuti untuk karyawan berhasil di buat');
         } else
         {
             $validate = $request->validate([
@@ -355,10 +356,10 @@ class SettingalokasicutiController extends Controller
                 });
 
                 // return $hasil;
-                return redirect()->back()->withInput();
+                return redirect()->back()->withInput()->with('success','Setting Alokasi Cuti untuk karyawan berhasil di buat');
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('success','Data Sudah Ada didalam sistem');
                 Log::info('data sudah ada');
             }
         }
@@ -372,6 +373,163 @@ class SettingalokasicutiController extends Controller
 
     public function update(Request $request, $id)
     {
+        $settingalokasi = Settingalokasi::find($id);
+        $validate = $request->validate([
+            'id_jeniscuti' => 'required',
+            'durasi'       => 'required',
+            'nama_karyawan' => 'required',
+        ]);
+
+        foreach($request->nama_karyawan as $nama)
+        {
+            $check = Alokasicuti::where('id_jeniscuti', $settingalokasi->id_jeniscuti)
+                    ->where('id_karyawan', $nama)
+                    ->where('partner', Auth::user()->partner)
+                    ->where(function ($query) {
+                        $query->whereYear('aktif_dari', '=', Carbon::now()->year)
+                            ->orWhereNull('aktif_dari');
+                    })->first();
+
+            if($check == null)
+            {
+                $dataKaryawan = Karyawan::find($nama);
+                $year          = Carbon::now()->year;
+                if($settingalokasi->id_jeniscuti == 1)
+                {
+                    $tglMasuk      = Carbon::parse($dataKaryawan->tglmasuk);
+                    $tglJatuhTempo = $tglMasuk->copy()->addDays(365);
+                    $tglHakCutiTahunan = Carbon::createFromDate($year, 12, 31);
+
+                    $selisih    = $tglJatuhTempo->diffInMonths($tglHakCutiTahunan, false);
+                    if ($tglMasuk->format('m-d') == '01-01') {
+                        $tglHakCutiTahunan = Carbon::createFromDate($year + 1, 1, 1);
+                        $selisih    = $tglJatuhTempo->diffInMonths($tglHakCutiTahunan, true);
+                    }else{
+                        $selisih = $selisih;
+                    }
+
+                    $keterangan = "";
+                    $cutidimuka = 0;
+
+                    //cek cuti bersama ke daftar hari libur
+                    $settinglibur = SettingHarilibur::where('tipe', '=', 'Cuti Bersama')
+                        ->whereYear('tanggal', '=', Carbon::now()->year)
+                        ->get();
+
+                    $jumsetting = $settinglibur->count();
+                    $jum = 0;
+
+                    $cutiminus = Alokasicuti::where('durasi', '<', 0)
+                        ->whereYear('aktif_dari', '=', Carbon::now()->subMonth()->year)
+                        ->where('id_karyawan', '=', $dataKaryawan->id)
+                        ->select('durasi')
+                        ->get();
+
+                    $cutmin = $cutiminus->sum('durasi');
+
+                    if ($selisih >= 12) {
+                        $selisih    = 12;
+                        $keterangan = "Karyawan Lama";
+                        $cutmin     = $cutmin;
+                        $aktifdari  = $year . '-01-01';
+                        $sampai     = $year . '-12-31';
+                    } elseif ($selisih > 0 && $selisih < 12) {
+                        $selisih = 0;
+                        $keterangan = "Karyawan Baru (Transisi)";
+                        $cutmin = 0;
+                        $tgljatuhtempo = $tglJatuhTempo->format('-m-d');
+                        $aktifdari = $year . $tgljatuhtempo;
+                        $sampai    = $year . '-12-31';
+                    } else {
+                        $selisih   = 0;
+                        $keterangan = "Hak Cuti Belum Timbul";
+                        $cutmin = 0;
+                        $aktifdari = null;
+                        $sampai = null;
+                    }
+                    $saldo   = $selisih - abs($cutidimuka) - abs($cutmin) - abs($jum);
+
+                    $alokasicuti                    = new Alokasicuti();
+                    $alokasicuti->nik               = $dataKaryawan->nip;
+                    $alokasicuti->id_karyawan       = $dataKaryawan->id;
+                    $alokasicuti->jabatan           = $dataKaryawan->nama_jabatan;
+                    $alokasicuti->departemen        = $dataKaryawan->divisi;
+                    $alokasicuti->id_settingalokasi = $settingalokasi->id;
+                    $alokasicuti->id_jeniscuti      = $settingalokasi->id_jeniscuti;
+                    $alokasicuti->tgl_masuk         = $dataKaryawan->tglmasuk;
+                    $alokasicuti->tgl_sekarang      = $year . '-01-01';
+                    $alokasicuti->jatuhtempo_awal   = $tglJatuhTempo->format('Y-m-d');
+                    $alokasicuti->jatuhtempo_akhir  = $tglJatuhTempo->year . '-12-31';
+                    $alokasicuti->jmlhakcuti        = $selisih;
+                    $alokasicuti->cutidimuka        = $cutidimuka;
+                    $alokasicuti->cutiminus         = $cutmin;
+                    $alokasicuti->jmlcutibersama    = $jum;
+                    $alokasicuti->durasi            = $saldo;
+                    $alokasicuti->keterangan        = $keterangan;
+                    $alokasicuti->aktif_dari        = $aktifdari;
+                    $alokasicuti->sampai            = $sampai;
+                    $alokasicuti->status            = 1;
+                    $alokasicuti->partner           = $settingalokasi->partner;
+                    $alokasicuti->status_durasialokasi = null;
+
+                    $alokasicuti->save();
+                }else{
+
+                    $alokasicuti = new Alokasicuti;
+                    $alokasicuti->nik              = $dataKaryawan->nip;
+                    $alokasicuti->id_karyawan      = $dataKaryawan->id;
+                    $alokasicuti->jabatan          = $dataKaryawan->nama_jabatan;
+                    $alokasicuti->departemen       = $dataKaryawan->divisi;
+                    $alokasicuti->id_settingalokasi= $settingalokasi->id;
+                    $alokasicuti->id_jeniscuti     = $request->id_jeniscuti;
+                    $alokasicuti->durasi           = $request->durasi;
+                    $alokasicuti->status_durasialokasi = null;
+                    $alokasicuti->tgl_masuk        = null;
+                    $alokasicuti->tgl_sekarang     = null;
+                    $alokasicuti->aktif_dari       = $year . '-01-01';
+                    $alokasicuti->sampai           = $year . '-12-31';
+                    $alokasicuti->status           = 1;
+                    $alokasicuti->partner          = $settingalokasi->partner;
+
+                    $alokasicuti->jatuhtempo_awal  = null;
+                    $alokasicuti->jatuhtempo_akhir = null;
+                    $alokasicuti->jmlhakcuti       = null;
+                    $alokasicuti->cutidimuka       = null;
+                    $alokasicuti->cutiminus        = null;
+                    $alokasicuti->jmlcutibersama   = null;
+                    $alokasicuti->keterangan       = null;
+
+                    $alokasicuti->save();
+                }
+            }
+        }
+
+        return redirect()->back()->with('success','Karyawan berhasil ditambahkan');
+    }
+
+    public function destroy($id)
+    {
+        $alokasicutiCount = Alokasicuti::where('id_settingalokasi', $id)->count();
+
+        if ($alokasicutiCount > 0) {
+            // Jika id_settingalokasi digunakan di tabel Alokasicuti, tidak bisa dihapus
+            return redirect()->back()->with('error', 'Data tidak bisa dihapus karena digunakan di tabel Alokasicuti.');
+        }
+
+        // Jika tidak digunakan di tabel Alokasicuti, hapus data dari tabel Settingalokasi
+        $settingalokasi = Settingalokasi::find($id);
+
+        if ($settingalokasi) {
+            $settingalokasi->delete();
+            return redirect()->back()->with('success', 'Data berhasil dihapus.');
+        } else {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
+    }
+
+    public function updates(Request $request, $id)
+    {
+        dd($request->all(),$id);
         $settingalokasi = Settingalokasi::find($id);
         if ($request->mode_alokasi == 'Berdasarkan Departemen') {
             // dd($settingalokasi->departemen);
@@ -391,7 +549,7 @@ class SettingalokasicutiController extends Controller
             $validate = $request->validate([
                 'id_jeniscuti' => 'required',
                 'durasi'       => 'required',
-                'mode_karyawan' => 'required',
+                'nama_karyawan' => 'required',
             ]);
             $settingalokasi->id_jeniscuti = $request->id_jeniscuti;
             $settingalokasi->durasi       = $request->durasi;
@@ -401,27 +559,8 @@ class SettingalokasicutiController extends Controller
         }
         return redirect()->back();
     }
-
-    public function destroy($id)
-    {
-        $alokasicutiCount = Alokasicuti::where('id_settingalokasi', $id)->count();
-
-        if ($alokasicutiCount > 0) {
-            // Jika id_settingalokasi digunakan di tabel Alokasicuti, tidak bisa dihapus
-            return redirect()->back()->with('pesa', 'Data tidak bisa dihapus karena digunakan di tabel Alokasicuti.');
-        }
-
-        // Jika tidak digunakan di tabel Alokasicuti, hapus data dari tabel Settingalokasi
-        $settingalokasi = Settingalokasi::find($id);
-
-        if ($settingalokasi) {
-            $settingalokasi->delete();
-            return redirect()->back()->with('pesan', 'Data berhasil dihapus.');
-        } else {
-            return redirect()->back()->with('pesa', 'Data tidak ditemukan.');
-        }
-    }
 }
+
 
      // $karyawan = DB::table('karyawan')
             // ->join('keluarga','karyawan.id','keluarga.id_pegawai')
