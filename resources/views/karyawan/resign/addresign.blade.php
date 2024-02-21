@@ -40,7 +40,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="dd/mm/yyyy"
                                 id="datepicker-autoclose23" name="tgl_resign" onchange=(tgl_resign())
-                                autocomplete="off" readonly>
+                                autocomplete="off" required>
                             <span class="input-group-addon bg-custom b-0"><i
                                     class="mdi mdi-calendar text-white"></i></span>
                         </div>
@@ -62,7 +62,7 @@
                     <div class="form-group col-xs-15">
                         <label for="alasan" class="form-label">Alasan Resign</label>
                         <textarea id="alasan" type="text" class="form-control" name="alasan" autocomplete="off"
-                            placeholder="Alasan Resign"></textarea>
+                            placeholder="Alasan Resign" required></textarea>
 
                     </div>
 

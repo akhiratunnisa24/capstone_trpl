@@ -22,7 +22,6 @@
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->select('jabatan')->first();
 
     ?> --}}
-
     @if (Auth::check() && (Auth::user()->role == 1 || Auth::check() && Auth::user()->role == 3 || Auth::check() && Auth::user()->role == 7))
         {{-- @php dd($row->jabatan, Auth::user()->role) @endphp --}}
         <div class="row">
@@ -83,6 +82,7 @@
                                                                 <div class="row">
 
                                                                     @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == 'Manager')
+
                                                                         <div class="col-sm-3">
                                                                             <form
                                                                                 action="{{ route('cuti.approved', $data->id) }}"
@@ -106,6 +106,7 @@
                                                                                 </a>
                                                                             </form>
                                                                         </div>
+                                                                        @include('manager.staff.cutiReject')
                                                                     @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == 'Asistant Manager')
                                                                         <div class="col-sm-3">
                                                                             <form
@@ -816,7 +817,7 @@
                                 <a data-toggle="collapse" data-parent="#accordion-test-2" href="#2"
                                     class="collapsed" aria-expanded="false">
                                     Permintaan Sakit/Izin/Dinas/lain-lain
-
+                                    {{-- {{dd($izinjumlah)}} --}}
                                     @if ($izinjumlah)
                                         <span class="badge badge badge-danger"
                                             style="background-color:red">{{ $izinjumlah }}</span>
@@ -872,6 +873,7 @@
                                                         <td>
                                                             <div class="row">
                                                                 @if ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == 'Manager')
+
                                                                     <div class="col-sm-3">
                                                                         <form
                                                                             action="{{ route('izin.approved', $data->id) }}"
@@ -889,7 +891,7 @@
                                                                         <form action="" method="POST">
                                                                             <a class="btn btn-danger btn-sm"
                                                                                 style="height:26px" data-toggle="modal"
-                                                                                data-target="#cutiTolak{{ $data->id }}">
+                                                                                data-target="#izReject{{ $data->id }}">
                                                                                 <i class="fa fa-times fa-md"
                                                                                     title="Tolak"></i>
                                                                             </a>
@@ -897,6 +899,7 @@
                                                                     </div>
                                                                     @include('admin.cuti.izinReject')
                                                                 @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == 'Asistant Manager')
+
                                                                     <div class="col-sm-3">
                                                                         <form
                                                                             action="{{ route('izin.approved', $data->id) }}"
@@ -922,6 +925,7 @@
                                                                     </div>
                                                                     @include('manager.staff.izinReject')
                                                                 @elseif ($data->atasan_pertama == Auth::user()->id_pegawai && $data->status == 1 && $row->jabatan == 'Direksi')
+
                                                                     <div class="col-sm-3">
                                                                         <form
                                                                             action="{{ route('izin.approv', $data->id) }}"
@@ -947,6 +951,7 @@
                                                                     </div>
                                                                     @include('direktur.cuti.izinReject')
                                                                 @elseif($data->atasan_kedua == Auth::user()->id_pegawai && $data->status == 2 && $row->jabatan == 'Asistant Manager')
+
                                                                     <div class="col-sm-3">
                                                                         <form
                                                                             action="{{ route('izin.approved', $data->id) }}"

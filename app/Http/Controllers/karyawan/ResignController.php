@@ -51,12 +51,9 @@ class ResignController extends Controller
             }
         }
 
-
         $karyawan = karyawan::where('id', Auth::user()->id_pegawai)->first();
         // dd($karyawan);
         $resign = Resign::orderBy('created_at', 'desc')->get();
-
-
 
         // $tes = Auth::user()->karyawan->divisi;
         $tes = DB::table('karyawan')
@@ -65,24 +62,9 @@ class ResignController extends Controller
             ->select('departemen.id as id_dep','departemen.nama_departemen as departemen')
             ->first();
 
-
-
             return view('karyawan.resign.index', compact('karyawan','tes','resign','row','status0', 'status1','jumlah_resign'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         // $karyawan = Auth::user()->id_pegawai;
@@ -168,17 +150,12 @@ class ResignController extends Controller
         $tujuan = $atasan->email;
         // dd($tujuan);
         $partner = $emailkry->partner;
-
-        $hrdmanager = User::where('partner',$partner->id)->where('role',1)->first();
+        $hrdmanager = User::where('partner',$partner)->where('role',1)->first();
         if($hrdmanager !== null){
-            $hrdmng = $hrdmanager->karyawans->email;
+            $hrdmng = Karyawan::where('id',$hrdmanager->id_pegawai)->first();
+            $hrdmng = $hrdmng->email;
         }
-        
-        $hrdstaff   = User::where('partner',$partner->id)->where('role',2)->first();
-        if($hrdstaff !== null){
-            $hrdstf = $hrdstaff->karyawans->email;
-        }
-        
+
         $data = [
             'subject' => 'Notifikasi Permohonan ' . ' ' . '#' . $resign->id . ' ' . ucwords(strtolower($emailkry->nama)),
             'noregistrasi' => $resign->id,
@@ -209,16 +186,19 @@ class ResignController extends Controller
             $data['hrdmanager'] = $hrdmng;
         }
 
-        if($hrdstf !== null)
-        {
-            $data['hrdstaff'] = $hrdstf;
+        $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+        $data['hrdstaff'] = null;
+        if($hrdstaff !== null){
+            $hrdstf = $hrdstaff->karyawans->email;
+            if($hrdstf !== null)
+            {
+                $data['hrdstaff'] = $hrdstf;
+            }
         }
-        
+
         Mail::to($tujuan)->send(new ResignNotification($data));
 
-        return redirect()->back()->with('pesan', 'Permohonan Resign Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim');
-            // return redirect()->back();
-
+        return redirect()->back()->with('success', 'Permohonan Resign Berhasil Dibuat dan Email Notifikasi Berhasil Dikirim');
     }
 
     public function show($id)

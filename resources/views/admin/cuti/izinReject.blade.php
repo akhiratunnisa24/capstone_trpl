@@ -5,10 +5,14 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title text-center" id="myModalLabel">Form Alasan Penolakan</h4>
-            </div> 
-    
+            </div>
+
             <div class="modal-body">
-                <form class="input" action="{{ route('izinreject',$data->id)}}" method="POST" enctype="multipart/form-data">
+                @if(Auth()->user()->role == 1)
+                    <form class="input" action="{{ route('izinreject',$data->id)}}" method="POST" enctype="multipart/form-data">
+                @else
+                    <form class="input" action="{{ route('izin.reject',$data->id)}}" method="POST" enctype="multipart/form-data">
+                @endif
                     @csrf
                     @method('POST')
                     <div class="form-group col-sm">
