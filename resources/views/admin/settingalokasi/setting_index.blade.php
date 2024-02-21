@@ -136,10 +136,10 @@
                                                                 data-target="#Modalshowsetting{{ $data->id }}">
                                                                 <i class="fa fa-eye" title="Lihat Detail"></i>
                                                             </a>
-                                                            {{-- <a id="bs" class="btn btn-sm btn-success editsetting"
-                                                    data-toggle="modal" data-target="#editsetting{{$data->id}}">
-                                                    <i class="fa fa-edit"></i>
-                                                </a> --}}
+                                                            <a id="bs" class="btn btn-sm btn-success editsetting"
+                                                                data-toggle="modal" data-target="#editsetting{{$data->id}}">
+                                                                <i class="fa fa-user-plus" title="Tambah Karyawan"></i>
+                                                            </a>
                                                             <button onclick="settingalokasi({{ $data->id }})"
                                                                 class="btn btn-danger btn-sm">
                                                                 <i class="fa fa-trash" title="Hapus"></i>
@@ -238,18 +238,18 @@
         </script>
 
 
-        @if (Session::has('pesan'))
+        @if (Session::has('success'))
             <script>
-                swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+                swal("Selamat", "{{ Session::get('success') }}", 'success', {
                     button: true,
                     button: "OK",
                 });
             </script>
         @endif
 
-        @if (Session::has('pesa'))
+        @if (Session::has('error'))
             <script>
-                swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+                swal("Mohon Maaf", "{{ Session::get('error') }}", 'error', {
                     button: true,
                     button: "OK",
                 });

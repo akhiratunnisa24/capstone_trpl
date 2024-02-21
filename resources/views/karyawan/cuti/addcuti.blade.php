@@ -34,7 +34,7 @@
                                     <div class="form-group col-sm">
                                         <label class="form-label">Tanggal Permohonan</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosew" name="tgl_permohonan"  autocomplete="off" rows="10" required readonly>
+                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="datepicker-autoclosews" name="tgl_permohonan"  autocomplete="off" rows="10" required>
                                             <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
                                                 <div class="form-group">
                                                     <label  class="form-label">Tanggal Pelaksanaan</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="dd/mm/yyyy" id="datepicker-autoclosef" name="tgl_mulai"  autocomplete="off" rows="10" required readonly>
+                                                        <input type="text" class="form-control" onchange="(jumlahcuti())" placeholder="dd/mm/yyyy" id="datepicker-autoclosef" name="tgl_mulai"  autocomplete="off" rows="10" required>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
@@ -88,7 +88,7 @@
                                                 <div class="form-group">
                                                     <label  class="form-label">Sampai</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="dd/mm/yyyy" id="datepicker-autocloseg" name="tgl_selesai"  autocomplete="off" rows="10" required readonly>
+                                                        <input type="text" class="form-control" onchange=(jumlahcuti()) placeholder="dd/mm/yyyy" id="datepicker-autocloseg" name="tgl_selesai"  autocomplete="off" rows="10" required>
                                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                                     </div>
                                                 </div>
