@@ -435,11 +435,9 @@ Route::post('/jadwal', [JadwalkerjaController::class, 'store'])->name('jadwal.st
 Route::put('/jadwal/update/{id}', [JadwalkerjaController::class, 'update'])->name('jadwal.update');
 Route::get('/jadwal/delete/{id}', [JadwalkerjaController::class, 'destroy'])->name('jadwal.delete');
 
-
 //setting organisasi
 Route::get('/setting-organisasi', [SettingorganisasiController::class, 'index'])->name('organisasi.index');
 Route::put('/setting-organisasi/update/{id}', [SettingorganisasiController::class, 'update'])->name('organisasi.update');
-
 
 //Absensi Tidak Masuk
 Route::get('/absensi-tidak-masuk', [TidakMasukController::class, 'index'])->name('tidakmasuk.index');
@@ -449,7 +447,6 @@ Route::get('/tindakan-tidak-masuk', [TidakMasukController::class, 'tampil'])->na
 Route::get('/show-detail{id}', [TidakMasukController::class, 'show'])->name('tidakmasuk.show');
 Route::get('/tindakan-terlambat', [TidakMasukController::class, 'tampilTerlambat'])->name('terlambat.tampil');
 Route::get('/terlambat-detail{id}', [TidakMasukController::class, 'showTerlambat'])->name('terlambat.show');
-
 
 //KPI
 Route::get('/masterkpi', [MasterkpiController::class, 'index'])->name('master.index');
@@ -592,8 +589,6 @@ Route::put('/updateKeluarga/{id}', [karyawansController::class, 'updateKeluarga'
 // Delete Keluarga saat show data
 Route::get('/destroyKeluarga{id}', [karyawanController::class, 'destroyKeluarga'])->name('destroyKeluarga');
 
-
-
 //form data kontak darurat
 Route::get('/create-kontak-darurat', [KaryawansController::class, 'createkonrat'])->name('create.konrat');
 Route::post('/storekontakdarurat', [KaryawansController::class, 'storekd'])->name('storekd');
@@ -626,8 +621,6 @@ Route::post('/storespnformal/{id}', [karyawansController::class, 'storespformal'
 // Delete Pendidikan
 Route::get('/destroyPendidikan{id}', [karyawanController::class, 'destroyPendidikan'])->name('destroyPendidikan');
 Route::get('/deletePendidikan{id}', [karyawanController::class, 'deletePendidikan'])->name('deletePendidikan');
-
-
 
 //form data pekerjaan
 Route::get('/create-data-pekerjaan', [KaryawansController::class, 'createpekerjaan'])->name('create.pekerjaan');
@@ -684,7 +677,6 @@ Route::put('/updateIdentitas/{id}', [karyawansController::class, 'update'])->nam
 //store setelah show data
 Route::post('/storespformal/{id}', [karyawansController::class, 'storespformal'])->name('storespformal');
 Route::post('/storespekerjaan/{id}', [karyawansController::class, 'storespekerjaan'])->name('storespekerjaan');
-
 Route::get('/delete-pekerjaan/{id}', [karyawansController::class, 'destroy'])->name('destroy.pekerjaan');
 
 //Kalender
@@ -810,6 +802,8 @@ Route::post('set/partner/{id}', [SettingController::class, 'setPartner'])->name(
 Route::get('/phpinfo', function () {
     phpinfo();
 });
+
+
 
 
 
