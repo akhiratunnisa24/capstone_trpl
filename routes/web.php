@@ -71,6 +71,7 @@ use App\Http\Controllers\karyawan\AbsensiKaryawanController;
 use App\Http\Controllers\admin\NotifMailRekruitmenController;
 use App\Http\Controllers\manager\PembatalanPerubahanController;
 use App\Http\Controllers\superadmin\SettingorganisasiSAController;
+use App\Http\Controllers\Testmail;
 
 /*
 |--------------------------------------------------------------------------
@@ -810,6 +811,8 @@ Route::post('set/partner/{id}', [SettingController::class, 'setPartner'])->name(
 Route::get('/phpinfo', function () {
     phpinfo();
 });
+Route::get('/testmail', [Testmail::class, 'index'])->name('index');
+
 
 
 
