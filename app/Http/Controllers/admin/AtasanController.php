@@ -14,12 +14,12 @@ class AtasanController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $role = Auth::user()->role;        
-        if ($role == 1 || $role == 2) 
+        $role = Auth::user()->role;
+        if ($role == 1 || $role == 2)
         {
             // $atasan = Atasan::all();
             $atasan = Karyawan::whereIn('jabatan', ['Asistant Manager','Manager','Direksi'])
@@ -28,8 +28,8 @@ class AtasanController extends Controller
             return view('admin.datamaster.atasan.index', compact('atasan','row','role'));
 
         } else {
-            
-            return redirect()->back(); 
+
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -42,7 +42,7 @@ class AtasanController extends Controller
                 ->where('nik', $data->nip)
                 ->where('level_jabatan', $data->jabatan)
                 ->first();
-            
+
             if (!$cek) {
                 // dd($karyawan);
                 $atasan = new Atasan;
@@ -50,7 +50,7 @@ class AtasanController extends Controller
                 $atasan->nik = $data->nip;
                 $atasan->level_jabatan = $data->jabatan;
                 $atasan->jabatan = $data->nama_jabatan;
-        
+
                 $atasan->save();
 
                 $pesan = 'Data Atasan berhasil disimpan !';
@@ -66,7 +66,7 @@ class AtasanController extends Controller
             }
         }
 
-        return redirect()->back()->with('pesan', $pesan);
+        return redirect()->back()->with('success', $pesan);
     }
 
 }

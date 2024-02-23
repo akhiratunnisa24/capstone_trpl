@@ -34,7 +34,7 @@
                                 data-target="#createInformasi"> Tambah Data Informasi</a>
                         </div>
                         @include('admin.datamaster.informasi.create')
-                        
+
                         <div class="panel-body">
                             <table id="datatable-responsive39" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
@@ -55,14 +55,14 @@
                                             <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $data->judul }}</td>
                                             <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: normal;">{!! nl2br(html_entity_decode($data->konten)) !!}</td>
                                             <td>{{ \Carbon\Carbon::parse($data->tanggal_aktif)->format('d/m/Y') }} @if($data->tanggal_berakhir !== NULL) s.d {{ \Carbon\Carbon::parse($data->tanggal_berakhir)->format('d/m/Y') }} @endif</td>
-                                            <td id="b" class="text-center" > 
+                                            <td id="b" class="text-center" >
                                                 <div class="row">
                                                     <div class="col-sm-3" style="margin-left:6px">
-                                                        <form action="" method="POST"> 
+                                                        <form action="" method="POST">
                                                             <a  class="btn btn-success btn-sm" style="height:26px" data-toggle="modal" data-target="#ShowInformasi{{$data->id}}">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
-                                                        </form> 
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </td>
@@ -92,18 +92,18 @@
     <script type="text/javascript" src="assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
 
 
-    @if(Session::has('pesan'))
+    @if(Session::has('success'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            swal("Selamat","{{ Session::get('success')}}", 'success', {
                 button:true,
                 button:"OK",
             });
         </script>
     @endif
 
-    @if(Session::has('pesa'))
+    @if(Session::has('error'))
     <script>
-        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+        swal("Mohon Maaf","{{ Session::get('error')}}", 'error', {
             button:true,
             button:"OK",
         });

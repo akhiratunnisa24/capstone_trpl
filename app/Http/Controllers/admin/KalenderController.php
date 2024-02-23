@@ -34,7 +34,7 @@ class KalenderController extends Controller
 
             return view('admin.kalender.index',compact('row','id_pegawai','getHarilibur','role'));
         }else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -45,11 +45,9 @@ class KalenderController extends Controller
         $kegiatan->tglmulai = \Carbon\Carbon::createFromTimestamp(strtotime($request->input('tglmulai')))->format('Y-m-d H:i:s');
         $kegiatan->tglselesai = \Carbon\Carbon::createFromTimestamp(strtotime($request->input('tglselesai')))->format('Y-m-d H:i:s') ?? null;
         $kegiatan->id_pegawai = $request->id_pegawai;
-
         $kegiatan->save();
-        // return redirect()->back();
 
-        return redirect('/kalender')->with('pesan','Data berhasil disimpan !');
+        return redirect('/kalender')->with('success','Data berhasil disimpan !');
     }
 
     public function getHarilibur()
@@ -135,7 +133,7 @@ class KalenderController extends Controller
             return view('admin.kalender.setting', compact('settingharilibur','row'));
 
         }else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -147,7 +145,7 @@ class KalenderController extends Controller
     //      $settingharilibur ->keterangan = $request->input('keterangan');
     //      $settingharilibur ->save();
 
-    //      return redirect('/setting-kalender')->with('pesan','Data berhasil disimpan !');
+    //      return redirect('/setting-kalender')->with('success','Data berhasil disimpan !');
     // }
 
     public function storeSetting(Request $request)
@@ -167,7 +165,7 @@ class KalenderController extends Controller
 
         if ($existingData) {
             // Jika data sudah ada, kembalikan pesan bahwa data sudah ada dalam tabel
-            return redirect()->back()->with('pesa', 'Data sudah ada dalam tabel!');
+            return redirect()->back()->with('error', 'Data sudah ada dalam tabel!');
         } else {
             // Jika data belum ada, simpan data baru
             $settingharilibur = new SettingHarilibur;
@@ -176,7 +174,7 @@ class KalenderController extends Controller
             $settingharilibur->keterangan = $request->input('keterangan');
             $settingharilibur->save();
 
-            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+            return redirect()->back()->with('success', 'Data berhasil disimpan!');
         }
     }
 

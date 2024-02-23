@@ -29,7 +29,7 @@ class TimKaryawanController extends Controller
             return view('manager.tugas.index', compact('departemen','tim','row','role'));
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -47,7 +47,7 @@ class TimKaryawanController extends Controller
 
         $tim->save();
 
-        return redirect()->back()->with('pesan','Data Tim berhasil ditambahkan !');
+        return redirect()->back()->with('success','Data Tim berhasil ditambahkan !');
 
     }
 
@@ -56,8 +56,7 @@ class TimKaryawanController extends Controller
         $tim = Tim::find($id);
         $tim->update($request->all());
 
-        return redirect()->back();
-
+        return redirect()->back()->with('success','Data berhasil diupdate');
     }
 
     public function destroy($id)
@@ -65,7 +64,7 @@ class TimKaryawanController extends Controller
         $tim = Tim::find($id);
         $tim->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil dihapus');
     }
 
 
@@ -84,7 +83,7 @@ class TimKaryawanController extends Controller
             return view('manager.tugas.indexs', compact('tim','departemen','timkaryawan','row','role','karyawan'));
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -122,10 +121,10 @@ class TimKaryawanController extends Controller
 
         if (!$timkaryawan->exists) {
             $timkaryawan->save();
-            return redirect()->back()->with('pesan', 'Data Tim berhasil ditambahkan!');
+            return redirect()->back()->with('success', 'Data Tim berhasil ditambahkan!');
         }
 
-        return redirect()->back()->with('pesa', 'Data Tim sudah ada!');
+        return redirect()->back()->with('error', 'Data Tim sudah ada!');
     }
 
 
@@ -143,6 +142,6 @@ class TimKaryawanController extends Controller
         $timkaryawan = Timkaryawan::find($id);
         $timkaryawan->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil dihapus');
     }
 }

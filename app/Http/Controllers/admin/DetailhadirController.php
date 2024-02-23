@@ -50,7 +50,8 @@ class DetailhadirController extends Controller
 
            }else {
 
-               return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
+
            }
 
        }
@@ -303,12 +304,12 @@ class DetailhadirController extends Controller
                 $detailkehadiran->jam_izin = $totalJamIzin ? $totalJamIzin : 0;
                 $detailkehadiran->jam_sakit = $totalJamSakit ? $totalJamSakit : 0;
                 $detailkehadiran->partner = $data->partner;
-                
+
                 $detailkehadiran->save();
 
            }
 
-           return redirect()->back()->with('pesan','Data berhasil disimpan');
+           return redirect()->back()->with('success','Data berhasil disimpan');
 
        }
 

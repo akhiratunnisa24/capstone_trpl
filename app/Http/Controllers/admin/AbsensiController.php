@@ -81,7 +81,7 @@ class AbsensiController extends Controller
 
             return view('admin.absensi.index', compact('absensi', 'karyawan', 'row', 'role'));
         } else {
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
 
         //   elseif(($role == 1) || $role == 2)
@@ -200,7 +200,7 @@ class AbsensiController extends Controller
         $absensi->lemhali      = 0;
 
         $absensi->save();
-        return redirect()->back();
+        return redirect()->back()->with('success','Data Berhasil Ditambahkan');
     }
 
     public function update(Request $request, $id)
@@ -275,7 +275,7 @@ class AbsensiController extends Controller
         $absensi = Absensi::where('id',$id)->first();
         // return $absensi;
 
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->with('success','Data Absensi berhasil diupdate');
     }
 
     // public function exportpdf()
@@ -331,11 +331,11 @@ class AbsensiController extends Controller
             $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
             // return $pesan;
             $pesan = nl2br(html_entity_decode($pesan));
-            return redirect()->back()->with('pesan', $pesan);
+            return redirect()->back()->with('success', $pesan);
 
         }catch (\Throwable $th) {
             // Tangani jika terjadi kesalahan
-            return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari Excel.');
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengimport data dari Excel.');
         }
     }
 
@@ -358,11 +358,11 @@ class AbsensiController extends Controller
             $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
 
             $pesan = nl2br(html_entity_decode($pesan));
-            return redirect()->back()->with('pesan', $pesan);
+            return redirect()->back()->with('success', $pesan);
 
         }catch (\Throwable $th) {
             // Tangani jika terjadi kesalahan
-            return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari Excel.');
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengimport data dari Excel.');
         }
 
     }
@@ -388,11 +388,11 @@ class AbsensiController extends Controller
 
             $pesan = '<div class="text-left" style="margin-left: 75px;">' . $pesan . '</div>';
             $pesan = nl2br(html_entity_decode($pesan));
-            return redirect()->back()->with('pesan', $pesan);
+            return redirect()->back()->with('success', $pesan);
 
         } catch (\Throwable $th) {
             // Tangani jika terjadi kesalahan
-            return redirect()->back()->with('pesa', 'Terjadi kesalahan saat mengimport data dari CSV.');
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengimport data dari CSV.');
         }
     }
 
@@ -427,7 +427,7 @@ class AbsensiController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Data Ada.');
+                return redirect()->back()->with('error','Tidak Data Ada.');
             } else {
 
                 $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
@@ -456,7 +456,7 @@ class AbsensiController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Data Ada.');
+                return redirect()->back()->with('error','Tidak Data Ada.');
             } else {
 
                 $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
@@ -481,7 +481,7 @@ class AbsensiController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             } else {
                 $pdf = PDF::loadview('admin.absensi.rekapabsensipdf',['data'=>$data, 'idkaryawan'=>$idkaryawan,'nbulan'=>$nbulan,'setorganisasi'=> $setorganisasi])
                 ->setPaper('a4','landscape');
@@ -518,7 +518,7 @@ class AbsensiController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             } else {
                 return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan ".$nbulan." ".$data->first()->karyawans->nama.".xlsx");
             }
@@ -542,7 +542,7 @@ class AbsensiController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             } else {
                 return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan " . $nbulan .".xlsx");
             }
@@ -563,7 +563,7 @@ class AbsensiController extends Controller
             $nbulan = "-";
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             } else {
                 return Excel::download(new RekapabsensiExport($data,$idkaryawan),"Rekap Absensi Bulan " . $nbulan .".xlsx");
             }
@@ -608,7 +608,7 @@ class AbsensiController extends Controller
         Tidakmasuk::insert($tidakmasuk);
         Absensi::insert($absensi);
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil ditambahkan');
     }
 
     //Fungsi tes koneksi ke Ip lain

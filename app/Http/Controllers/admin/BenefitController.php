@@ -21,7 +21,7 @@ class BenefitController extends Controller
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
-        
+
         if ($role == 1 || $role == 6) {
             $benefit = Benefit::where('partner',Auth::user()->partner)->get();
             $kategori = Kategoribenefit::where(function($query) {
@@ -37,7 +37,7 @@ class BenefitController extends Controller
         }
         else
         {
-            return redirect()->back(); 
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -185,7 +185,7 @@ class BenefitController extends Controller
 
         $benefit->save();
 
-        return redirect()->back()->with('pesan', 'Data Benefit berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'Data Benefit berhasil ditambahkan.');
     }
 
     public function update(Request $request, $id)
@@ -204,10 +204,10 @@ class BenefitController extends Controller
         $besaranHarian   = $request->has('besaran_harian') ? floatval(str_replace(['.', ','], '', $request['besaran_harian'])) : $benefit->besaran_harian;
         $besaranJam      = $request->has('besaran_jam') ? floatval(str_replace(['.', ','], '', $request['besaran_jam'])) : $benefit->besaran_jam;
         $besaran         = $request->has('besaran') ? floatval(str_replace(['.', ','], '', $request['besaran'])) : $benefit->besaran;
-        
+
         $gaji_minimum    = $request->has('gaji_minimum') ? floatval(str_replace(['.', ','], '', $request['gaji_minimum'])) : $benefit->gaji_minimum;
         $gaji_maksimum   = $request->has('gaji_maksimum') ? floatval(str_replace(['.', ','], '', $request['gaji_maksimum'])) : $benefit->gaji_maksimum;
-        
+
         $benefit->nama_benefit          = $request->nama_benefit !== null ? $request->nama_benefit : $benefit->nama_benefit;
         $benefit->id_kategori           = $request->id_kategori !== null ? $request->id_kategori : $benefit->id_kategori;
         $benefit->kode                  = $request->kode !== null ? $request->kode : $benefit->kode;
@@ -229,7 +229,7 @@ class BenefitController extends Controller
             $benefit->gaji_minimum  = null;
             $benefit->gaji_maksimum = null;
         }
-        
+
         if($kategoribenefit !== '1' && $kategoribenefit !== '2' && $kategoribenefit !== '3')
         {
             if($jenis == "Bulan")
@@ -295,7 +295,7 @@ class BenefitController extends Controller
 
         $benefit->update();
 
-        return redirect()->back()->with('pesan', 'Data Benefit berhasil diupdate.');
+        return redirect()->back()->with('success', 'Data Benefit berhasil diupdate.');
     }
 
     public function destroy($id)

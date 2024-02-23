@@ -58,7 +58,7 @@ class CutiizinController extends Controller
             if ($data->isEmpty())
             {
                 // dd($data);
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
@@ -90,7 +90,7 @@ class CutiizinController extends Controller
             if ($data->isEmpty())
             {
                 // dd($data);
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
@@ -181,7 +181,7 @@ class CutiizinController extends Controller
             if ($data->isEmpty())
             {
                 // return $data;
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 // return $data;
@@ -219,7 +219,7 @@ class CutiizinController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             } else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
                 $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan,'setorganisasi'=> $setorganisasi])
@@ -250,7 +250,7 @@ class CutiizinController extends Controller
             if ($data->isEmpty())
             {
                 // dd($data);
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
@@ -281,7 +281,7 @@ class CutiizinController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             } else {
                 $pdf = PDF::loadview('admin.cuti.cutipdf', ['data' => $data, 'idkaryawan' => $idkaryawan,'setorganisasi'=> $setorganisasi])
                 ->setPaper('a4', 'landscape');
@@ -336,7 +336,7 @@ class CutiizinController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
@@ -363,7 +363,7 @@ class CutiizinController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
@@ -385,7 +385,7 @@ class CutiizinController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $nbulan = "-";
@@ -432,7 +432,7 @@ class CutiizinController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
@@ -460,7 +460,7 @@ class CutiizinController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $nbulan = $request->query('bulan', Carbon::now()->format('M Y'));
@@ -485,7 +485,7 @@ class CutiizinController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $pdfName = "Rekap Izin dan Sakit Karyawan.pdf";

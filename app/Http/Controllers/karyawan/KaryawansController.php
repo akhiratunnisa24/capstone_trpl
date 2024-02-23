@@ -830,7 +830,7 @@ class KaryawansController extends Controller
 
             if ($existingKaryawan)
             {
-                return redirect()->back()->with('pesa', 'Email atau NIK sudah terdaftar pada sistem');
+                return redirect()->back()->with('error', 'Email atau NIK sudah terdaftar pada sistem');
             }
 
             $karyawan->save();
@@ -907,7 +907,7 @@ class KaryawansController extends Controller
         $request->session()->forget('prestasi');
 
 
-        return redirect('/karyawan')->with('pesan','Data '.$namakaryawan . ' Berhasil disimpan.');
+        return redirect('/karyawan')->with('success','Data '.$namakaryawan . ' Berhasil disimpan.');
     }
 
     //===================================================================================

@@ -46,14 +46,14 @@ class MasterkpiController extends Controller
             $masterKpi->tglaktif        = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglaktif)->format('Y-m-d');
             $masterKpi->tglberakhir     = \Carbon\Carbon::createFromFormat('d/m/Y', $request->tglberakhir)->format('Y-m-d');
             $masterKpi->status          = 1;
-    
+
             $masterKpi->save();
-    
-            return redirect()->back()->with('pesan', 'Master KPI berhasil ditambahkan');
+
+            return redirect()->back()->with('success', 'Master KPI berhasil ditambahkan');
         }else{
-            return redirect()->back()->with('pesa', 'Master KPI dengan nama tersebut sudah ada');
+            return redirect()->back()->with('error', 'Master KPI dengan nama tersebut sudah ada');
         }
-       
+
     }
 
     public function update(Request $request, $id)
@@ -69,20 +69,20 @@ class MasterkpiController extends Controller
 
         $masterKpi->update();
 
-        return redirect()->back()->with('pesan', 'Data berhasil diupdate');
+        return redirect()->back()->with('success', 'Data berhasil diupdate');
     }
 
     public function destroy($id)
     {
         $masterKpi = Masterkpi::find($id);
-    
+
         // // Cek data ke tabel "indikator"
         // $indikator = Indikator::where('id_master', $masterKpi->id)->first();
         // if ($indikator !== null) {
-        //     return redirect()->back()->with('pesa', 'Master KPI tidak dapat dihapus');
+        //     return redirect()->back()->with('error', 'Master KPI tidak dapat dihapus');
         // } else {
         //     $indikator->delete();
-        //     return redirect()->back()->with('pesan', 'Data Master KPI berhasil dihapus');
+        //     return redirect()->back()->with('success', 'Data Master KPI berhasil dihapus');
         // }
     }
 
@@ -114,14 +114,14 @@ class MasterkpiController extends Controller
             $indikator->bobot       = $request->bobot;
             $indikator->target      = $request->target;
             $indikator->nilai       = null;
-           
+
             $indikator->save();
-            return redirect()->back()->with('pesan', 'Indikator KPI berhasil ditambahkan');
+            return redirect()->back()->with('success', 'Indikator KPI berhasil ditambahkan');
         }else
         {
-            return redirect()->back()->with('pesa', 'Indikator KPI dengan nama tersebut sudah ada');
+            return redirect()->back()->with('error', 'Indikator KPI dengan nama tersebut sudah ada');
         }
-       
+
     }
 
     public function updates(Request $request, $id)
@@ -135,7 +135,7 @@ class MasterkpiController extends Controller
 
         $indikator->update();
 
-        return redirect()->back()->with('pesan', 'Data berhasil diupdate');
+        return redirect()->back()->with('success', 'Data berhasil diupdate');
     }
-    
+
 }

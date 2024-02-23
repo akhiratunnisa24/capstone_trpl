@@ -21,17 +21,17 @@ class TugasKaryawanController extends Controller
     public function index(Request $request)
     {
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
-        $role = Auth::user()->role;  
+        $role = Auth::user()->role;
         if($role == 3)
         {
             $tim = Tim::where('divisi',$row->divisi)->get();
             $departemen = Departemen::where('id', $row->divisi)->first();
             $tugas = Tugas::where('divisi',$row->divisi)->get();
-    
+
             return view('manager.tugas.indextugas', compact('departemen','tugas','tim','row','role'));
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -72,20 +72,20 @@ class TugasKaryawanController extends Controller
             'id_karyawan' => 'required',
             'divisi' => 'required',
         ]);
-    
+
         // Melakukan pengecekan untuk memastikan data tidak terduplikasi
         $timkaryawan = Timkaryawan::firstOrNew([
             'id_tim' => $request->id_tim,
             'id_karyawan' => $request->id_karyawan,
             'divisi' => $request->divisi,
         ]);
-    
+
         if (!$timkaryawan->exists) {
             $timkaryawan->save();
-            return redirect()->back()->with('pesan', 'Data Tim berhasil ditambahkan!');
+            return redirect()->back()->with('success', 'Data Tim berhasil ditambahkan!');
         }
-    
-        return redirect()->back()->with('pesa', 'Data Tim sudah ada!');
+
+        return redirect()->back()->with('error', 'Data Tim sudah ada!');
     }
-    
+
 }

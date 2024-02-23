@@ -7,6 +7,7 @@ use App\Models\Karyawan;
 use App\Models\Sisacuti;
 use App\Models\Jeniscuti;
 use Illuminate\Http\Request;
+use App\Models\SettingOrganisasi;
 use App\Mail\SisacutiNotification;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -19,18 +20,17 @@ class SisacutiController extends Controller
     public function index()
     {
         $role = Auth::user()->role;
-        if ($role == 1 || $role == 2) 
+        if ($role == 1 || $role == 2)
         {
             $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
             $sisacuti = Sisacuti::all();
-            
+
             return view('admin.sisacuti.index', compact('sisacuti','row'));
 
         } else {
-    
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
-       
+
     }
 
     public function sendEmail($id)
@@ -43,9 +43,9 @@ class SisacutiController extends Controller
             ->where('sisacuti.id_pegawai',$id)
             ->select('sisacuti.id_pegawai as id','karyawan.id as id_karyawan','karyawan.partner','karyawan.email as email','karyawan.nama as nama','sisacuti.id_jeniscuti as jeniscuti','jeniscuti.jenis_cuti as kategori','sisacuti.sisa_cuti as sisa','sisacuti.periode as tahun')
             ->first();
-        
+
         $partner = $sisacuti->partner;
-        
+
         $settingorganisasi = SettingOrganisasi::where('partner',$partner)->first();
 
         $hrdmanager = User::where('partner',$partner->id)->where('role',1)->first();
@@ -88,10 +88,10 @@ class SisacutiController extends Controller
             }
 
             Mail::to($tujuan)->send(new SisacutiNotification($data));
-            
+
         }
-        return redirect()->back();
-        
+        return redirect()->back()->with('success','Email berhasil dikirim');
+
     }
-    
+
 }

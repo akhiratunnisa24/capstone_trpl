@@ -233,18 +233,18 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                     <div class="modal-footer">
                                         @if ($informasigaji !== null)
                                             <a href="" class="btn btn-success" title="Edit Informasi Gaji" data-toggle="modal" data-target="#editInfor{{ $informasigaji->id }}">Edit Informasi Gaji <i class="fa fa-money"></i></a>
                                             <a class="btn btn-info" title="Edit Data Karyawan" data-toggle="modal" data-target="#editDatakaryawan{{ $karyawan->id }}">Edit Data Karyawan <i class="fa fa-user"></i></a>
                                         @endif
-                                    
+
                                         <a href="karyawan" class="btn btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
                                     </div>
                                 </form>
@@ -275,18 +275,18 @@
     @endif
 
 
-    @if (Session::has('pesan'))
+    @if (Session::has('success'))
         <script>
-            swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+            swal("Selamat", "{{ Session::get('success') }}", 'success', {
                 button: true,
                 button: "OK",
             });
         </script>
     @endif
 
-    @if (Session::has('pesa'))
+    @if (Session::has('error'))
         <script>
-            swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+            swal("Mohon Maaf", "{{ Session::get('error') }}", 'error', {
                 button: true,
                 button: "OK",
             });

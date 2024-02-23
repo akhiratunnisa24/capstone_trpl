@@ -32,7 +32,7 @@
                                                     >{{ $data->nama }}
                                                 </option>
                                             @endforeach
-                                        </select> 
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -146,9 +146,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
-    @if(Session::has('pesa'))
+    @if(Session::has('error'))
         <script>
-            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+            swal("Mohon Maaf","{{ Session::get('error')}}", 'error', {
                 button:true,
                 button:"OK",
             });

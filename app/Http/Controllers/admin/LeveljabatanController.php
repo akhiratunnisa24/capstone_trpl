@@ -14,7 +14,7 @@ class LeveljabatanController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
         $role = Auth::user()->role;
@@ -26,17 +26,17 @@ class LeveljabatanController extends Controller
 
             return view('admin.datamaster.leveljabatan.index', compact('leveljabatan', 'row'));
         } else {
-    
-            return redirect()->back();
+
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
-    
+
     public function store(Request $request)
     {
         $request->validate([
             'nama_level' => 'required',
         ]);
-       
+
         $nama_level = $request->nama_level;
 
         // Cek apakah data level jabatan sudah ada di dalam database
@@ -46,18 +46,18 @@ class LeveljabatanController extends Controller
 
         if ($leveljabatan) {
             // Jika data level jabatan sudah ada, kembalikan pesan bahwa data sudah ada
-            return redirect()->back()->with('pesa', 'Data ' . $nama_level . ' sudah ada !');
+            return redirect()->back()->with('error', 'Data ' . $nama_level . ' sudah ada !');
         } else {
             // Jika data level jabatan belum ada, simpan data baru
             $leveljabatan = new LevelJabatan;
             $leveljabatan->nama_level = $nama_level;
             $leveljabatan->save();
 
-            return redirect('/level-jabatan')->with('pesan', 'Data berhasil disimpan!');
+            return redirect('/level-jabatan')->with('success', 'Data berhasil disimpan!');
         }
 
     }
-    
+
     public function update(Request $request, $id)
     {
         $leveljabatan = LevelJabatan::find($id);
@@ -70,10 +70,10 @@ class LeveljabatanController extends Controller
 
         Karyawan::where('jabatan',  $levelsebelum)
             ->update(['jabatan' =>  $levelSesudah]);
-    
-        return redirect()->back()->with('pesan','Data berhasil diupdate !');
+
+        return redirect()->back()->with('success','Data berhasil diupdate !');
     }
-    
+
     public function destroy($id)
     {
         $leveljabatan = LevelJabatan::find($id);
@@ -83,9 +83,9 @@ class LeveljabatanController extends Controller
         if (!$karyawan) {
             $leveljabatan = LevelJabatan::find($id);
             $leveljabatan->delete();
-            return redirect()->back()->with('pesan', 'Level Jabatan berhasil dihapus');
+            return redirect()->back()->with('success', 'Level Jabatan berhasil dihapus');
         } else {
-            return redirect()->back()->with('pesa', 'Level Jabatan tidak dapat dihapus karena digunakan dalam tabel karyawan.');
+            return redirect()->back()->with('error', 'Level Jabatan tidak dapat dihapus karena digunakan dalam tabel karyawan.');
         }
 
     }

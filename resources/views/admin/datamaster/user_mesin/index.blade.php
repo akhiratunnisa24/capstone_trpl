@@ -68,11 +68,11 @@
                                             <td class="text-center">
                                                 <div class="d-grid gap-2 " role="group" aria-label="Basic example">
                                                 @if (in_array(auth()->user()->role, [1, 5]))
-                                                    <a class="btn btn-success btn-sm editUserMesin" data-toggle="modal" 
+                                                    <a class="btn btn-success btn-sm editUserMesin" data-toggle="modal"
                                                            data-target="#editUserMesin{{$data->id}}"><i class="fa fa-edit"></i></a>
                                                         <button class="btn btn-danger btn-sm" onclick="hapus('{{ $data->id}}')"><i class="fa fa-trash"></i></button>
                                                     @else
-                                                    <a class="btn btn-success btn-sm editUserMesin" data-toggle="modal" 
+                                                    <a class="btn btn-success btn-sm editUserMesin" data-toggle="modal"
                                                            data-target="#editUserMesin{{$data->id}}"><i class="fa fa-edit"></i></a>
                                                     @endif
                                                 </div>
@@ -101,18 +101,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
-    @if(Session::has('pesan'))
+    @if(Session::has('success'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            swal("Selamat","{{ Session::get('success')}}", 'success', {
                 button:true,
                 button:"OK",
             });
         </script>
     @endif
 
-    @if(Session::has('pesa'))
+    @if(Session::has('error'))
     <script>
-        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+        swal("Mohon Maaf","{{ Session::get('error')}}", 'error', {
             button:true,
             button:"OK",
         });

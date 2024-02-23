@@ -123,7 +123,7 @@ class AbsensiKaryawanController extends Controller
         }
 
         if ($data->isEmpty()) {
-            return redirect()->back()->with('pesa', 'Tidak Ada Data');
+            return redirect()->back()->with('error', 'Tidak Ada Data');
         } else {
             return Excel::download(new AbsensiPeroranganExport($data, $iduser), "Rekap Absensi {$nama->nama} {$nbulan}.xlsx");
         }
@@ -167,7 +167,7 @@ class AbsensiKaryawanController extends Controller
 
         // dd($bulan, $tahun,$data,$namaBulan,$nbulan);
         if ($data->isEmpty()) {
-            return redirect()->back()->with('pesa', 'Tidak Data Ada.');
+            return redirect()->back()->with('error', 'Tidak Data Ada.');
         } else {
 
             $nama = Karyawan::where('id', $iduser)->first();

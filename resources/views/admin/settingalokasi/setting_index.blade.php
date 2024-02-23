@@ -201,9 +201,9 @@
                 openPopup();
             });
         </script>
-        @if (Session::has('pesan'))
+        @if (Session::has('success'))
             <script>
-                swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+                swal("Selamat", "{{ Session::get('success') }}", 'success', {
                     button: true,
                     button: "OK",
                 });

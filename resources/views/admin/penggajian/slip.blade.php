@@ -5,7 +5,7 @@
         .alert-info1
         {
             color: #000;
-            background-color: rgba(24, 186, 226, 0.2); 
+            background-color: rgba(24, 186, 226, 0.2);
         }
     </style>
     <div class="row">
@@ -83,7 +83,7 @@
                                                     </div>
 
                                                     <div class="col-md-6 m-t-10">
-                                            
+
                                                         <div class="form-group col-sm">
                                                             <div class="row">
                                                                 <label class="form-label col-sm-3 text-end">Jabatan</label>
@@ -130,7 +130,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                   
+
                                                 </div>
                                                 <div class="col-md-6">
                                                     <table class="table dt-responsive nowrap table-striped" cellpadding="0" style="margin: auto; width:500px; margin-bottom:15px;">
@@ -140,10 +140,10 @@
                                                                 <th>Komponen</th>
                                                                 <th>Jumlah Hari</th>
                                                                 <th>Jumlah Jam</th>
-                                                               
+
                                                             </tr>
                                                         </thead>
-                                                    
+
                                                         <tbody>
                                                             @if($kehadiran!== NULL)
                                                                 <tr>
@@ -178,7 +178,7 @@
                                                                 </tr>
                                                             @endif
                                                         </tbody>
-                    
+
                                                     </table>
                                                 </div>
                                         </div>
@@ -188,12 +188,12 @@
                                         @if($detailgaji === null)
                                             <button type="submit" class="btn btn-success" title="Hitung Gaji Karyawan" >Hitung Gaji <i class="mdi mdi-calculator"></i></button>
                                         @else
-                                            <button type="submit" class="btn btn-info" title="Lihat Slip Gaji" >Slip Gaji <i class="fa fa-wpforms"></i></button> 
+                                            <button type="submit" class="btn btn-info" title="Lihat Slip Gaji" >Slip Gaji <i class="fa fa-wpforms"></i></button>
                                         @endif
                                             <a href="slipgaji-karyawan" class="btn btn-danger" type="button">Kembali <i class="fa fa-home"></i></a>
                                     </div>
                                 </form>
-                              
+
                             </div>
                         </div>
                     </div>
@@ -211,18 +211,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
 
-    @if (Session::has('pesan'))
+    @if (Session::has('success'))
         <script>
-            swal("Selamat", "{{ Session::get('pesan') }}", 'success', {
+            swal("Selamat", "{{ Session::get('success') }}", 'success', {
                 button: true,
                 button: "OK",
             });
         </script>
     @endif
 
-    @if (Session::has('pesa'))
+    @if (Session::has('error'))
         <script>
-            swal("Mohon Maaf", "{{ Session::get('pesa') }}", 'error', {
+            swal("Mohon Maaf", "{{ Session::get('error') }}", 'error', {
                 button: true,
                 button: "OK",
             });

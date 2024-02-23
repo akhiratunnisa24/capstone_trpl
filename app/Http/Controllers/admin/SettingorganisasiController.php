@@ -26,7 +26,7 @@ class SettingorganisasiController extends Controller
         }
         else
         {
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -73,7 +73,7 @@ class SettingorganisasiController extends Controller
         // dd($settingorganisasi);
         $settingorganisasi->update();
 
-        return redirect('/setting-organisasi')->with('pesan','Data Organisasi berhasil diperbaharui !');
+        return redirect('/setting-organisasi')->with('success','Data Organisasi berhasil diperbaharui !');
     }
 
 }

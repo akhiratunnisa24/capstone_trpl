@@ -65,7 +65,7 @@ class SalaryController extends Controller
 
         if(isset($cek))
         {
-            return redirect()->back()->with('pesa','Data Struktur Sudah Ada pada sistem');
+            return redirect()->back()->with('error','Data Struktur Sudah Ada pada sistem');
         }
         else
         {
@@ -239,7 +239,7 @@ class SalaryController extends Controller
                 // }
             }
 
-            return redirect()->back()->with('pesan', 'Data berhasil disimpan.');
+            return redirect()->back()->with('success', 'Data berhasil disimpan.');
         }
     }
 
@@ -287,7 +287,7 @@ class SalaryController extends Controller
             $benefitId        = array_merge($selectedBenefits, $benefit);
             $benefits         = Benefit::whereIn('id', $benefitId)->get();
             $detail           = Detailinformasigaji::where('id_informasigaji',$informasi->id)->get();
-           
+
             // dd($informasi,$detail);
             $idbenefit = $benefits->pluck('id')->toArray();
             $iddetail  = $detail->pluck('id_benefit')->toArray();
@@ -358,7 +358,7 @@ class SalaryController extends Controller
             }
         }
         return redirect()->back()
-                        ->with('pesan', 'Data berhasil disimpan.')
+                        ->with('success', 'Data berhasil disimpan.')
                         ->with(compact('benefits', 'selectedBenefits', 'salaryStructure', 'levelJabatanOptions', 'statusKaryawanOptions'));
     }
 
@@ -372,7 +372,7 @@ class SalaryController extends Controller
         // Delete the main salary structure record
         $salaryStructure->delete();
 
-        return redirect()->route('salary')->with('pesan', 'Data berhasil dihapus.');
+        return redirect()->route('salary')->with('success', 'Data berhasil dihapus.');
     }
 
 

@@ -30,7 +30,7 @@ class PembatalanPerubahanController extends Controller
         // dd($datacuti,$datacut);
         $row = Karyawan::where('id', Auth::user()->id_pegawai)->first();
         $role = Auth::user()->role;
-        // return $row->jabatan;
+        // dd($datacuti,$row->jabatan,$role);
         if($datacuti && $role == 3 && $row->jabatan == "Asistant Manager")
         {
                 $status = Status::find(12);
@@ -52,7 +52,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -96,7 +96,7 @@ class PembatalanPerubahanController extends Controller
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
                 // return $data;
             // }else{
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan '.$ct->jenis_cuti . ' dari '. $karyawan->nama . ' disetujui');
             // }
         }
         elseif($datacuti && $role == 1 && $row->jabatan == "Asistant Manager")
@@ -120,7 +120,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -164,7 +164,7 @@ class PembatalanPerubahanController extends Controller
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
                 // return $data;
             // }else{
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan '.$ct->jenis_cuti . ' dari '. $karyawan->nama . ' disetujui');
             // }
         }
         elseif($datacuti && $role == 3 && $row->jabatan == "Manager")
@@ -197,15 +197,15 @@ class PembatalanPerubahanController extends Controller
                     ->where('sisacuti.id_alokasi',$cuti->id_alokasi)
                     ->where('sisacuti.id_pegawai',$cuti->id_karyawan)
                     ->exists();
-                 
+
                 if($cekSisacuti)
                 {
                     $sisacuti = Sisacuti::where('jenis_cuti', $cuti->id_jeniscuti)
                         ->where('id_pegawai', $cuti->id_karyawan)
                         ->first();
-    
+
                     $sisacuti_baru = $sisacuti->sisacuti - $jml_cuti;
-    
+
                     Sisacuti::where('id', $sisacuti->id)
                     ->update(
                             ['sisa_cuti' => $sisacuti_baru]
@@ -226,7 +226,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -267,7 +267,7 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan '.$ct->jenis_cuti . ' dari '. $karyawan->nama . ' disetujui');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -295,7 +295,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -337,11 +337,11 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan '.$ct->jenis_cuti . ' dari '. $karyawan->nama . ' disetujui');
                 // return $data;
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki akses');
             }
         }
         elseif($datacuti && $role == 1 && $row->jabatan == "Manager")
@@ -362,7 +362,7 @@ class PembatalanPerubahanController extends Controller
                     ->first();
 
                 $durasibaru = $cuti->saldohakcuti;
-    
+
                 Alokasicuti::where('id', $alokasicuti->id)
                 ->update(
                     ['durasi' => $durasibaru]
@@ -391,7 +391,7 @@ class PembatalanPerubahanController extends Controller
                     );
 
                 }
-                
+
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
                 $ct = DB::table('cuti')
@@ -406,7 +406,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -447,7 +447,7 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan '.$ct->jenis_cuti . ' dari '. $karyawan->nama . ' disetujui');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -475,7 +475,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -517,11 +517,11 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan '.$ct->jenis_cuti . ' dari '. $karyawan->nama . ' disetujui');
                 // return $data;
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki akses');
             }
         }
         elseif($datacuti && $role == 3 && $row->jabatan == "Direksi")
@@ -534,6 +534,7 @@ class PembatalanPerubahanController extends Controller
                 $status = Status::find(13);
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
+                    'status'  => $status->id,
                     'batal_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
@@ -546,7 +547,7 @@ class PembatalanPerubahanController extends Controller
 
                 $durasibaru = $cuti->saldohakcuti;
                 // dd($cuti,$alokasicuti);
-    
+
                 Alokasicuti::where('id', $alokasicuti->id)
                 ->update(
                     ['durasi' => $durasibaru]
@@ -575,7 +576,7 @@ class PembatalanPerubahanController extends Controller
                     );
 
                 }
-                
+
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
                 $ct = DB::table('cuti')
@@ -590,7 +591,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -631,9 +632,9 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan '.$ct->jenis_cuti . ' dari '. $karyawan->nama . ' disetujui');
             }
-            elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
+            elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai && $datacuti->atasan_kedua !== null)
             {
                 // return $datacuti;
                 $status = Status::find(12);
@@ -659,7 +660,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -701,15 +702,15 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan '.$ct->jenis_cuti . ' dari '. $karyawan->nama . ' disetujui');
                 // return $data;
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak akses');
             }
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -747,7 +748,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -791,7 +792,7 @@ class PembatalanPerubahanController extends Controller
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
                 // return $data;
             // }else{
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan ' .$ct->jenis_cuti . ' dari ' .$karyawan->nama . ' ditolak');
             // }
         }
         elseif($datacuti && $role == 1 && $row->jabatan == "Asistant Manager")
@@ -816,7 +817,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -860,7 +861,7 @@ class PembatalanPerubahanController extends Controller
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
                 // return $data;
             // }else{
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan ' .$ct->jenis_cuti . ' dari ' .$karyawan->nama . ' ditolak');
             // }
         }
         else if($datacuti && $role == 3 && $row->jabatan == "Manager")
@@ -889,7 +890,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -930,7 +931,7 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan ' .$ct->jenis_cuti . ' dari ' .$karyawan->nama . ' ditolak');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -958,7 +959,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1000,11 +1001,11 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan ' .$ct->jenis_cuti . ' dari ' .$karyawan->nama . ' ditolak');
                 // return $data;
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak Akses');
             }
         }
         else if($datacuti && $role == 3 && $row->jabatan == "Direksi")
@@ -1034,7 +1035,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1075,7 +1076,7 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan ' .$ct->jenis_cuti . ' dari ' .$karyawan->nama . ' ditolak');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -1103,7 +1104,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1145,11 +1146,11 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan ' .$ct->jenis_cuti . ' dari ' .$karyawan->nama . ' ditolak');
                 // return $data;
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki Akses');
             }
         }
         else if($datacuti && $role == 1 && $row->jabatan == "Manager")
@@ -1178,7 +1179,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1219,7 +1220,7 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan ' .$ct->jenis_cuti . ' dari ' .$karyawan->nama . ' ditolak');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -1247,7 +1248,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1289,15 +1290,15 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PembatalanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Pembatalan ' .$ct->jenis_cuti . ' dari ' .$karyawan->nama . ' ditolak');
                 // return $data;
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki Akses');
             }
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki Akses');
         }
     }
 
@@ -1336,7 +1337,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1378,7 +1379,7 @@ class PembatalanPerubahanController extends Controller
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
                 // return $data;
             // }else{
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' disetujui');
             // }
         }
         elseif($datacuti && $role == 1 && $row->jabatan == "Asistant Manager")
@@ -1404,7 +1405,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1446,7 +1447,7 @@ class PembatalanPerubahanController extends Controller
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
                 // return $data;
             // }else{
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' disetujui');
             // }
         }
         elseif($datacuti && $role == 3 && $row->jabatan == "Manager")
@@ -1467,7 +1468,7 @@ class PembatalanPerubahanController extends Controller
                     ->where('id_jeniscuti', $cuti->id_jeniscuti)
                     ->where('id_settingalokasi', $cuti->id_settingalokasi)
                     ->first();
-        
+
                 Alokasicuti::where('id', $alokasicuti->id)
                     ->update(
                         ['durasi' => $jml_cuti]
@@ -1496,7 +1497,7 @@ class PembatalanPerubahanController extends Controller
 
                     // dd($sisacuti);
                 }
-        
+
                 // dd($alokasicuti,$jml_cuti,$al->durasi);
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
@@ -1513,7 +1514,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1554,7 +1555,7 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' disetujui');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -1582,7 +1583,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1594,7 +1595,7 @@ class PembatalanPerubahanController extends Controller
                     ->first();
                 }
                 $tujuan = $atasan2->email;
-              
+
                 $data = [
                     'subject'     => 'Notifikasi Approval Pertama Formulir Perubahan ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$cuti->id,
@@ -1650,7 +1651,7 @@ class PembatalanPerubahanController extends Controller
                     ->where('id_jeniscuti', $cuti->id_jeniscuti)
                     ->where('id_settingalokasi', $cuti->id_settingalokasi)
                     ->first();
-        
+
                 Alokasicuti::where('id', $alokasicuti->id)
                     ->update(
                         ['durasi' => $jml_cuti]
@@ -1679,7 +1680,7 @@ class PembatalanPerubahanController extends Controller
 
                     // dd($sisacuti);
                 }
-        
+
                 // dd($alokasicuti,$jml_cuti,$al->durasi);
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
@@ -1696,7 +1697,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1737,7 +1738,7 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' disetujui');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -1765,7 +1766,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1777,7 +1778,7 @@ class PembatalanPerubahanController extends Controller
                     ->first();
                 }
                 $tujuan = $atasan2->email;
-              
+
                 $data = [
                     'subject'     => 'Notifikasi Approval Pertama Formulir Perubahan ' . $ct->jenis_cuti . ' #' . $ct->id . ' ' . $karyawan->nama,
                     'noregistrasi'=>$cuti->id,
@@ -1808,19 +1809,20 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' disetujui');
                 // return $data;
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak emiliki akses');
             }
         }
         elseif($datacuti && $role == 1 && $row->jabatan == "Manager")
         {
             if($datacuti && $datacuti->atasan_kedua == Auth::user()->id_pegawai)
             {
+
                 $status = Status::find(16);
-               
+
                 Cuti::where('id',$id)->update([
                     'catatan' => $status->name_status,
                     'ubah_pimpinan' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -1833,7 +1835,7 @@ class PembatalanPerubahanController extends Controller
                     ->where('id_jeniscuti', $cuti->id_jeniscuti)
                     ->where('id_settingalokasi', $cuti->id_settingalokasi)
                     ->first();
-        
+
                 Alokasicuti::where('id', $alokasicuti->id)
                     ->update(
                         ['durasi' => $jml_cuti]
@@ -1862,7 +1864,7 @@ class PembatalanPerubahanController extends Controller
 
                     // dd($sisacuti);
                 }
-        
+
                 // dd($alokasicuti,$jml_cuti);
 
                 //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
@@ -1880,7 +1882,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1921,7 +1923,7 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' disetujui');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -1933,7 +1935,7 @@ class PembatalanPerubahanController extends Controller
                     'ubah_atasan' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 $cuti = Cuti::where('id',$id)->first();
-                
+
                  //----SEND EMAIL KE KARYAWAN DAN SEMUA ATASAN -------
                 //ambil nama jeniscuti
                 $ct = DB::table('cuti')
@@ -1949,7 +1951,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -1991,15 +1993,15 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' disetujui');
                 // return $data;
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki akses');
             }
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki akses');
         }
     }
 
@@ -2037,7 +2039,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -2081,7 +2083,7 @@ class PembatalanPerubahanController extends Controller
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
                 // return $data;
             // }else{
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' ditolak');
             // }
         }
         else if($datacuti && $role == 1 && $row->jabatan == "Asistant Manager")
@@ -2106,7 +2108,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -2150,7 +2152,7 @@ class PembatalanPerubahanController extends Controller
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
                 // return $data;
             // }else{
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' ditolak');
             // }
         }
         else if($datacuti && $role == 3 && $row->jabatan == "Manager")
@@ -2178,7 +2180,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -2219,7 +2221,7 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' ditolak');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -2247,7 +2249,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -2289,11 +2291,11 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' ditolak');
                 // return $data;
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki akses');
             }
         }
         else if($datacuti && $role == 3 && $row->jabatan == "Direksi")
@@ -2322,7 +2324,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -2363,7 +2365,7 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' ditolak');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -2391,7 +2393,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -2433,11 +2435,11 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' ditolak');
                 // return $data;
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki Akses');
             }
         }
         else if($datacuti && $role == 1 && $row->jabatan == "Manager")
@@ -2465,7 +2467,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -2506,7 +2508,7 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' ditolak');
             }
             elseif($datacuti && $datacuti->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -2534,7 +2536,7 @@ class PembatalanPerubahanController extends Controller
                     ->join('departemen','cuti.departemen','=','departemen.id')
                     ->where('cuti.id',$cuti->id)
                     ->select('karyawan.email as email','karyawan.nama as nama','departemen.nama_departemen','karyawan.atasan_pertama','karyawan.atasan_kedua')
-                    ->first(); 
+                    ->first();
                 $atasan1 = Karyawan::where('id',$karyawan->atasan_pertama)
                     ->select('email as email','nama as nama','jabatan')
                     ->first();
@@ -2576,15 +2578,15 @@ class PembatalanPerubahanController extends Controller
                 }
                 // return $data;
                 Mail::to($tujuan)->send(new PerubahanNotification($data));
-                return redirect()->back();
+                return redirect()->back()->with('success','Permohonan Perubahan '. $ct->jenis_cuti. ' dari '. $karyawan->nama . ' ditolak');
                 // return $data;
             }
             else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki akses');
             }
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki akses');
         }
     }
 }

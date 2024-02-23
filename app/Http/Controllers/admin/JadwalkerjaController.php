@@ -54,7 +54,7 @@ class JadwalkerjaController extends Controller
         }
         else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -126,7 +126,7 @@ class JadwalkerjaController extends Controller
                         }
                     }
                 // }
-                return redirect('/jadwal')->with('pesan',$pesan);
+                return redirect('/jadwal')->with('success',$pesan);
             }else{
                 $request->validate([
                     'id_shift'     => 'required',
@@ -147,9 +147,9 @@ class JadwalkerjaController extends Controller
                 // return $jadwal;
 
                 if ($jadwal->wasRecentlyCreated) {
-                    return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');
+                    return redirect('/jadwal')->with('success','Data berhasil disimpan !');
                 } else {
-                    return redirect('/jadwal')->with('pesa','Data sudah ada !');
+                    return redirect('/jadwal')->with('error','Data sudah ada !');
                 }
 
             }
@@ -197,7 +197,7 @@ class JadwalkerjaController extends Controller
                         }
                     }
                 // }
-                return redirect('/jadwal')->with('pesan',$pesan);
+                return redirect('/jadwal')->with('success',$pesan);
             }else{
                 $request->validate([
                     'id_shift'     => 'required',
@@ -217,15 +217,15 @@ class JadwalkerjaController extends Controller
                 // return $jadwal;
 
                 if ($jadwal->wasRecentlyCreated) {
-                    return redirect('/jadwal')->with('pesan','Data berhasil disimpan !');
+                    return redirect('/jadwal')->with('success','Data berhasil disimpan !');
                 } else {
-                    return redirect('/jadwal')->with('pesa','Data sudah ada !');
+                    return redirect('/jadwal')->with('error','Data sudah ada !');
                 }
 
             }
         }else
         {
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -246,18 +246,18 @@ class JadwalkerjaController extends Controller
        if ($existingData)
         {
             // Data sudah ada di database
-            return redirect()->back()->with('pesa','Data sudah ada.');
+            return redirect()->back()->with('error','Data sudah ada.');
         }
 
         $jadwal->update();
 
-        return redirect()->back()->with('pesan', 'Data berhasil diupdate!');
+        return redirect()->back()->with('success', 'Data berhasil diupdate!');
     }
 
     public function destroy($id)
     {
         DB::table('jadwal')->where('id', $id)->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success','Data berhasil dihapus');
     }
 
 }

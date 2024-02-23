@@ -92,7 +92,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach($slipgrupindex as $data)
-                                               
+
                                                     <tr>
                                                         <td>{{$loop->iteration}}</td>
                                                         <td>{{$data->nama_grup}}</td>
@@ -109,7 +109,7 @@
                                                         </td>
                                                         <td>
                                                             <div  class="d-grid gap-2" role="group" aria-label="Basic example">
-                                                                {{-- <a href="/slipgaji-karyawan-grup/{{$data->id}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a> 
+                                                                {{-- <a href="/slipgaji-karyawan-grup/{{$data->id}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
                                                                  --}}
                                                                  <a href="/slipgaji-grup{{ $data->id }}" class="btn btn-info btn-sm" title="Lihat Identitas" target="_blank"><i class="fa fa-eye" style="font-size: 15px;"></i></a>
                                                                  {{-- <a href="{{ route('showslipgroup', ['id' => $data->id]) }}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a> --}}
@@ -117,7 +117,7 @@
                                                           </div>
                                                         </td>
                                                     </tr>
-                                                
+
                                                 {{-- @include('admin.penggajian.editgrup') --}}
                                             @endforeach
                                         </tbody>
@@ -142,18 +142,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
-    @if(Session::has('pesan'))
+    @if(Session::has('success'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            swal("Selamat","{{ Session::get('success')}}", 'success', {
                 button:true,
                 button:"OK",
             });
         </script>
     @endif
 
-    @if(Session::has('pesa'))
+    @if(Session::has('error'))
         <script>
-            swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+            swal("Mohon Maaf","{{ Session::get('error')}}", 'error', {
                 button:true,
                 button:"OK",
             });

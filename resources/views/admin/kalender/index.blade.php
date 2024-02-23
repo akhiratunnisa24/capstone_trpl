@@ -39,9 +39,9 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="panel panel-secondary">
-                        @if(Session::has('pesan'))
+                        @if(Session::has('success'))
                             <script>
-                                swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+                                swal("Selamat","{{ Session::get('success')}}", 'success', {
                                     button:true,
                                     button:"OK",
                                 });
@@ -51,7 +51,7 @@
                             <h4  style="margin-left:35px">Form Kegiatan</h4>
                         </div>
                         {{-- @include('admin.kalender.updateKegiatan') --}}
-                       
+
                         <div class="panel-body">
                             <form method="POST" id="add_event_form" action="/store-kegiatan">
                                 @csrf
@@ -79,7 +79,7 @@
                 <div id='calendar' class="col-md- col-lg-9"></div>
             </div>
         </div> <!-- container -->
-    </div> 
+    </div>
 
     <script src="assets/plugins/moment/moment.js"></script>
     <script src='assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>

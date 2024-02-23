@@ -46,7 +46,7 @@ class ListmesinController extends Controller
             return view('superadmin.listmesin.index', compact('listmesin', 'row','partner','user_mesin'));
         } else {
 
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -65,7 +65,7 @@ class ListmesinController extends Controller
 
         if ($listmesin) {
             // Jika data Listmesin sudah ada, kembalikan pesan bahwa data sudah ada
-            return redirect()->back()->with('pesa', 'Data List Mesin dengan IP :  ' . $request->ip_mesin . ' sudah ada !');
+            return redirect()->back()->with('error', 'Data List Mesin dengan IP :  ' . $request->ip_mesin . ' sudah ada !');
         } else {
             // Jika data Listmesin belum ada, simpan data baru
             $listmesin = new Listmesin;
@@ -77,7 +77,7 @@ class ListmesinController extends Controller
             $listmesin->status      = 0;
             $listmesin->save();
 
-            return redirect()->back()->with('pesan', 'Data berhasil disimpan!');
+            return redirect()->back()->with('success', 'Data berhasil disimpan!');
         }
     }
 
@@ -97,9 +97,9 @@ class ListmesinController extends Controller
 
             $listmesin->update();
 
-            return redirect()->back()->with('pesan','Data berhasil diupdate !');
+            return redirect()->back()->with('success','Data berhasil diupdate !');
         }else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -118,12 +118,12 @@ class ListmesinController extends Controller
             {
                 $mesin->status = 1;
                 $mesin->update();
-                return redirect()->back()->with('pesan','Berhasil terkoneksi ke mesin absensi ' . $ip);
+                return redirect()->back()->with('success','Berhasil terkoneksi ke mesin absensi ' . $ip);
             } else
             {
                 $mesin->status = 0;
                 $mesin->update();
-                return redirect()->back()->with('pesa','Koneksi ke ' . $ip . ' Gagal');
+                return redirect()->back()->with('error','Koneksi ke ' . $ip . ' Gagal');
             }
         } catch (\Exception $e) {
             return "Error: " . $e->getMessage() . "\n";
@@ -521,7 +521,7 @@ class ListmesinController extends Controller
                                             }
                                         }   ///
                                     }
-                                    return redirect()->back()->with('pesan','Data Absensi Berhasil disimpan');
+                                    return redirect()->back()->with('success','Data Absensi Berhasil disimpan');
                                 }
                             }
                         }
@@ -652,10 +652,10 @@ class ListmesinController extends Controller
     //     // Cek data ke tabel "karyawan"
     //     $karyawan = Karyawan::where('Listmesin', $listmesin->id)->first();
     //     if ($karyawan !== null) {
-    //         return redirect()->back()->with('pesa', 'Listmesin tidak dapat dihapus karena digunakan dalam tabel karyawan.');
+    //         return redirect()->back()->with('error', 'Listmesin tidak dapat dihapus karena digunakan dalam tabel karyawan.');
     //     } else {
     //         $listmesin->delete();
-    //         return redirect()->back()->with('pesan', 'Data Listmesin berhasil dihapus');
+    //         return redirect()->back()->with('success', 'Data Listmesin berhasil dihapus');
     //     }
     // }
 

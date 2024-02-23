@@ -35,7 +35,7 @@
                                 <button type="submit" class="btn btn-dark btn-sm fa fa-refresh pull-right"> Generate Atasan</button>
                             </form> --}}
                         </div>
-                        
+
                         <div class="panel-body">
                             <table id="datatable-responsive15" class="table dt-responsive nowrap table-striped table-bordered" cellpadding="0" width="100%">
 
@@ -78,18 +78,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
 
-    @if(Session::has('pesan'))
+    @if(Session::has('success'))
         <script>
-            swal("Selamat","{{ Session::get('pesan')}}", 'success', {
+            swal("Selamat","{{ Session::get('success')}}", 'success', {
                 button:true,
                 button:"OK",
             });
         </script>
     @endif
 
-    @if(Session::has('pesa'))
+    @if(Session::has('error'))
     <script>
-        swal("Mohon Maaf","{{ Session::get('pesa')}}", 'error', {
+        swal("Mohon Maaf","{{ Session::get('error')}}", 'error', {
             button:true,
             button:"OK",
         });

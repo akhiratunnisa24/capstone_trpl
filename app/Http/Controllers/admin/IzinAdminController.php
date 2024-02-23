@@ -105,10 +105,10 @@ class IzinAdminController extends Controller
                     ->distinct()
                     ->orderBy('created_at', 'DESC')
                     ->get();
-        return view('admin.cuti.index', compact('izin','cuti','type','row','karyawann','karyawan','pegawais','role'));
+            return view('admin.cuti.index', compact('izin','cuti','type','row','karyawann','karyawan','pegawais','role'));
         } else
         {
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
 
             $request->session()->forget('id_karyawan');
@@ -146,7 +146,6 @@ class IzinAdminController extends Controller
             })
             ->select('izin.*', 'karyawan.nama', 'karyawan.atasan_pertama', 'karyawan.atasan_kedua')
             ->first();
-        // return $izin;
         if($role == 1 && $izin && $izin->atasan_kedua == Auth::user()->id_pegawai)
         {
             $status = Status::find(7);
@@ -176,11 +175,6 @@ class IzinAdminController extends Controller
                 $hrdmng = $hrdmng->email;
             }
 
-            $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
-            if($hrdstaff !== null){
-                $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
-                $hrdstf = $hrdstf->email;
-            }
             $data = [
                 'title'       =>$izinn->id,
                 'subject'     =>'Notifikasi Izin Disetujui, Izin '  . $jenisizin->jenis_izin . ' #' . $izinn->id . ' ' . $emailkry->nama,
@@ -216,12 +210,21 @@ class IzinAdminController extends Controller
                 $data['hrdmanager'] = $hrdmng;
             }
 
-            if($hrdstf !== null)
-            {
-                $data['hrdstaff'] = $hrdstf;
-            }
+            $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                $data['hrdstaff'] = null;
+                if($hrdstaff !== null){
+                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                    $hrdstf = $hrdstf->email;
+
+                    if($hrdstf !== null)
+                    {
+                        $data['hrdstaff'] = $hrdstf;
+                    }
+                }
+
             Mail::to($tujuan)->send(new IzinApproveNotification($data));
-            return redirect()->route('cuti.Staff',['tp'=>2]);
+            // return redirect()->route('cuti.Staff',['tp'=>2]);
+            return redirect()->back()->with('success','Permohonan ' . $jenisizin->jenis_izin . ' dari '. $emailkry->nama . ' disetujui');
         }
         elseif($role == 1 && $izin && $izin->atasan_pertama == Auth::user()->id_pegawai)
         {
@@ -281,10 +284,10 @@ class IzinAdminController extends Controller
                 $data['jabatanatasan'] =$atasan2->jabatan;
             }
             Mail::to($tujuan)->send(new IzinAtasan2Notification($data));
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->with('success','Permohonan ' . $jenisizin->jenis_izin . ' dari '. $emailkry->nama . ' disetujui');
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -350,11 +353,6 @@ class IzinAdminController extends Controller
                     $hrdmng = $hrdmng->email;
                 }
 
-                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
-                if($hrdstaff !== null){
-                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
-                    $hrdstf = $hrdstf->email;
-                }
                 $tujuan = $karyawan->email;
                 $data = [
                     'subject'  =>'Notifikasi Permohonan Izin Ditolak, Izin ' . $izin->jenis_izin . ' #' . $izin->id . ' ' . $karyawan->nama,
@@ -395,12 +393,20 @@ class IzinAdminController extends Controller
                     $data['hrdmanager'] = $hrdmng;
                 }
 
-                if($hrdstf !== null)
-                {
-                    $data['hrdstaff'] = $hrdstf;
+                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                $data['hrdstaff'] = null;
+                if($hrdstaff !== null){
+                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                    $hrdstf = $hrdstf->email;
+
+                    if($hrdstf !== null)
+                    {
+                        $data['hrdstaff'] = $hrdstf;
+                    }
                 }
+
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->back()->withInput();
+                return redirect()->back()->with('success','Permohonan ' .$izin->jenis_izin . ' dari '. $karyawan->nama . ' ditolak');
 
             }elseif($dataizin && $dataizin->atasan_pertama == Auth::user()->id_pegawai)
             {
@@ -451,11 +457,6 @@ class IzinAdminController extends Controller
                     $hrdmng = $hrdmng->email;
                 }
 
-                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
-                if($hrdstaff !== null){
-                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
-                    $hrdstf = $hrdstf->email;
-                }
                 $tujuan = $karyawan->email;
                 $data = [
                     'subject'  =>'Notifikasi Permohonan Izin Ditolak, Izin ' . $izin->jenis_izin . ' #' . $izin->id . ' ' . $karyawan->nama,
@@ -498,19 +499,27 @@ class IzinAdminController extends Controller
                     $data['hrdmanager'] = $hrdmng;
                 }
 
-                if($hrdstf !== null)
-                {
-                    $data['hrdstaff'] = $hrdstf;
+                $hrdstaff   = User::where('partner',$partner)->where('role',2)->first();
+                $data['hrdstaff'] = null;
+                if($hrdstaff !== null){
+                    $hrdstf = Karyawan::where('id',$hrdstaff->id_pegawai)->first();
+                    $hrdstf = $hrdstf->email;
+
+                    if($hrdstf !== null)
+                    {
+                        $data['hrdstaff'] = $hrdstf;
+                    }
                 }
+
                 Mail::to($tujuan)->send(new CutiIzinTolakNotification($data));
-                return redirect()->back()->withInput();
+                return redirect()->back()->with('success','Permohonan ' .$izin->jenis_izin . ' dari '. $karyawan->nama . ' ditolak');
 
             }else{
-                return redirect()->back();
+                return redirect()->back()->with('error','Anda tidak memiliki hak akses');
             }
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
 
     }
@@ -540,7 +549,7 @@ class IzinAdminController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
@@ -559,7 +568,7 @@ class IzinAdminController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
@@ -577,7 +586,7 @@ class IzinAdminController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                  return Excel::download(new IzinExport($data, $idpegawai), "Rekap Ijin dan Sakit Karyawan.xlsx");
@@ -618,7 +627,7 @@ class IzinAdminController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $nbulan = \Carbon\Carbon::parse($data->first()->tgl_mulai)->format('M Y');
@@ -641,7 +650,7 @@ class IzinAdminController extends Controller
 
                 if ($data->isEmpty())
                 {
-                    return redirect()->back()->with('pesa','Tidak Ada Data');
+                    return redirect()->back()->with('error','Tidak Ada Data');
                 }
                 else {
                     $pdfName = "Rekap Ijin dan Sakit Karyawan.pdf";
@@ -659,7 +668,7 @@ class IzinAdminController extends Controller
 
             if ($data->isEmpty())
             {
-                return redirect()->back()->with('pesa','Tidak Ada Data');
+                return redirect()->back()->with('error','Tidak Ada Data');
             }
             else {
                 $pdfName = "Rekap Ijin dan Sakit Karyawan.pdf";
