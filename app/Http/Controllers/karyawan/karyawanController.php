@@ -2099,7 +2099,7 @@ class karyawanController extends Controller
             return view('admin.karyawan.create', $output);
         } else {
 
-            return redirect()->back()->with('error','Anda tidak memiliki hak akses');\
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
@@ -2452,7 +2452,7 @@ class karyawanController extends Controller
             ]);
         } else {
 
-            return redirect()->back()->with('error','Anda tidak memiliki hak akses');\
+            return redirect()->back()->with('error','Anda tidak memiliki hak akses');
         }
     }
 
